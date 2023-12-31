@@ -84,7 +84,61 @@ object.</p>
     <div class="section level2">
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="co"># \donttest{</span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fl">1</span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="mockSummarisedResult.html">mockSummarisedResult</a></span><span class="op">(</span><span class="op">)</span></span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">|&gt;</span> <span class="fu">formatEstimateValue</span><span class="op">(</span>decimals <span class="op">=</span> <span class="fl">1</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18 × 15</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    cdm_name result_type package_name      package_version group_name group_level</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: strata_name &lt;chr&gt;, strata_level &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   variable_name &lt;chr&gt;, variable_level &lt;chr&gt;, estimate_name &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   estimate_type &lt;chr&gt;, estimate_value &lt;chr&gt;, additional_name &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   additional_level &lt;chr&gt;</span></span>
+<span class="r-in"><span></span></span>
+<span class="r-in"><span><span class="va">result</span> <span class="op">|&gt;</span> <span class="fu">formatEstimateValue</span><span class="op">(</span>decimals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>integer <span class="op">=</span> <span class="fl">0</span>, numeric <span class="op">=</span> <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18 × 15</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    cdm_name result_type package_name      package_version group_name group_level</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span> mock     <span style="color: #BB0000;">NA</span>          gtSummarisedResu… 0.0.1           cohort_na… cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: strata_name &lt;chr&gt;, strata_level &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   variable_name &lt;chr&gt;, variable_level &lt;chr&gt;, estimate_name &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   estimate_type &lt;chr&gt;, estimate_value &lt;chr&gt;, additional_name &lt;chr&gt;,</span></span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   additional_level &lt;chr&gt;</span></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
