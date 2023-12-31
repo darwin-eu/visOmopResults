@@ -5,7 +5,7 @@
 #' @param result A summarised_result or compared_result.
 #' @param decimals Number of decimals per estimate_type.
 #' @param decimalMark Decimal separator mark.
-#' @param thousandsMark Thousand and millions separator mark.
+#' @param bigMark Thousand and millions separator mark.
 #'
 #' @export
 #'
@@ -20,6 +20,27 @@ formatEstimateValue <- function(result,
                                   proportion = 3
                                 ),
                                 decimalMark = ".",
-                                thousandsMark = ",") {
-  omopgenerics::resultColumns("summarised_result")
+                                bigMark = ",") {
+  # initial checks
+  result <- validateSummarisedResult(result)
+  decimals <- validateDecimals(decimals)
+  checkmate::assertCharacter(decimalMark, len = 1, any.missing = FALSE)
+  checkmate::assertCharacter(bigMark, len = 1, any.missing = FALSE)
+
+  # format estimate
+  result <- formatEstimateValueInternal(result, decimals, decimalMark, bigMark)
+
+  return(result)
+}
+
+formatEstimateValueInternal <- function(result, decimals, decimalMark, bigMark) {
+  for (nm in names(decimals)) {
+    n <- decimals[nm] |> unname()
+    id <- result$estimate_name == nm
+    result$estimate_value[id] <- result$estimate_value[id] |>
+      as.numeric() |>
+      round(digits = n) |>
+      base::format(nsmall = n, big.mark = bigMark, decimal.mark = decimalMark)
+  }
+  return(result)
 }

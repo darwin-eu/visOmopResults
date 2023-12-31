@@ -9,7 +9,7 @@ formatEstimateValue(
   result,
   decimals = c(integer = 0, numeric = 2, percentage = 1, proportion = 3),
   decimalMark = ".",
-  thousandsMark = ","
+  bigMark = ","
 )
 }
 \arguments{
@@ -19,7 +19,7 @@ formatEstimateValue(
 
 \item{decimalMark}{Decimal separator mark.}
 
-\item{thousandsMark}{Thousand and millions separator mark.}
+\item{bigMark}{Thousand and millions separator mark.}
 }
 \description{
 Format estimate_value column of summarised_result and compared_result
