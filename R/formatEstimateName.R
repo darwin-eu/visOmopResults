@@ -22,7 +22,7 @@ formatEstimateName <- function(result,
   checkmate::assertLogical(keepNotFormatted, len = 1, any.missing = FALSE)
 
   # format estimate
-  result <- keepNotFormatted(result, format, keepNotFormatted)
+  result <- formatEstimateValueInternal(result, format, keepNotFormatted)
 
   return(result)
 }
