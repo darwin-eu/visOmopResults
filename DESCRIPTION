@@ -1,9 +1,12 @@
 Package: gtSummarisedResult
 Title: What the Package Does (One Line, Title Case)
-Version: 0.0.0.9000
-Authors@R: 
-    person("First", "Last", , "first.last@example.com", role = c("aut", "cre"),
-           comment = c(ORCID = "YOUR-ORCID-ID"))
+Version: 0.0.1
+Authors@R: c(
+    person(
+        "Marti", "Catala", , "marti.catalasabate@ndorms.ox.ac.uk", 
+        role = c("aut", "cre"), comment = c(ORCID = "0000-0003-3308-9905")
+    )
+    )
 Description: What the package does (one paragraph).
 License: Apache License (>= 2)
 Encoding: UTF-8
@@ -14,4 +17,8 @@ Suggests:
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Imports: 
-    cli
+    cli,
+    dplyr,
+    omopgenerics
+Remotes:
+    darwin-eu-dev/omopgenerics
