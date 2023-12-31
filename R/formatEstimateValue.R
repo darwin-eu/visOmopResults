@@ -11,7 +11,11 @@
 #'
 #' @examples
 #' \donttest{
-#' x <- 1
+#' result <- mockSummarisedResult()
+#'
+#' result |> formatEstimateValue(decimals = 1)
+#'
+#' result |> formatEstimateValue(decimals = c(integer = 0, numeric = 1))
 #' }
 #'
 formatEstimateValue <- function(result,
@@ -22,7 +26,7 @@ formatEstimateValue <- function(result,
                                 decimalMark = ".",
                                 bigMark = ",") {
   # initial checks
-  result <- validateSummarisedResult(result)
+  result <- validateResult(result)
   decimals <- validateDecimals(decimals)
   checkmate::assertCharacter(decimalMark, len = 1, any.missing = FALSE)
   checkmate::assertCharacter(bigMark, len = 1, any.missing = FALSE)

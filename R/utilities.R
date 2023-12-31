@@ -1,9 +1,34 @@
 
+validateResult <- function(x, call = parent.frame()) {
+  xn <- tryCatch(
+    validateSummarisedResult(x = x, call = call),
+    error = function(e){NULL}
+  )
+  if (inherits(xn, "summarised_result")) {
+    return(xn)
+  }
+  xn <- tryCatch(
+    validateSummarisedResult(x = x, call = call),
+    error = function(e){NULL}
+  )
+  if (inherits(xn, "summarised_result")) {
+    return(xn)
+  }
+  cli::cli_abort("Please provide a valid result object.", call = call)
+}
+
 validateSummarisedResult <- function(x, call = parent.frame()) {
   if (inherits(x, "summarised_result")) {
     return(x)
   }
   omopgenerics::summarisedResult(x)
+}
+
+validateComparedResult <- function(x, call = parent.frame()) {
+  if (inherits(x, "compared_result")) {
+    return(x)
+  }
+  omopgenerics::comparedResult(x)
 }
 
 validateDecimals <- function(decimals, call = parent.frame()) {

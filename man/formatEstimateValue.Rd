@@ -27,7 +27,11 @@ object.
 }
 \examples{
 \donttest{
-x <- 1
+result <- mockSummarisedResult()
+
+result |> formatEstimateValue(decimals = 1)
+
+result |> formatEstimateValue(decimals = c(integer = 0, numeric = 1))
 }
 
 }
