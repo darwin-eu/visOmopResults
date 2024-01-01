@@ -99,8 +99,10 @@ evalName <- function(result, format, keys) {
   if (substr(format, 1 ,1) == "#") ik <- 1
   format <- strsplit(x = format, split = "#") |> unlist()
   for (k in seq_along(format)) {
-    if ((k + ik) %% 2) {
-
+    if ((k + ik) %% 2) { # what happens if two are consecutives #1##2#
+      key <- keys[as.numeric(format[k])]
+      format[k] <- paste0(".data[[\"", key, "\"]]")
     }
   }
+  format <- paste0(format, collapse = "")
 }
