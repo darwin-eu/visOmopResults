@@ -20,8 +20,10 @@ Imports:
     checkmate,
     cli,
     dplyr,
+    gt,
     omopgenerics,
     rlang,
+    snakecase,
     stringr,
     tidyr
 Remotes:
