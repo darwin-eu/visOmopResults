@@ -20,7 +20,10 @@ Imports:
     checkmate,
     cli,
     dplyr,
-    omopgenerics
+    omopgenerics,
+    rlang,
+    stringr,
+    tidyr
 Remotes:
     darwin-eu-dev/omopgenerics
 URL: https://catalamarti.github.io/gtSummarisedResult/

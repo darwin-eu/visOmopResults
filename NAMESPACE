@@ -3,3 +3,5 @@
 export(formatEstimateName)
 export(formatEstimateValue)
 export(mockSummarisedResult)
+importFrom(rlang,.data)
+importFrom(rlang,.env)
