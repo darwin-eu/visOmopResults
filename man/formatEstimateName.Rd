@@ -5,7 +5,7 @@
 \title{Format estimate_value column of summarised_result and compared_result
 object.}
 \usage{
-formatEstimateName(result, format, keepNotFormatted = TRUE)
+formatEstimateName(result, format = NULL, keepNotFormatted = TRUE)
 }
 \arguments{
 \item{result}{A summarised_result or compared_result.}

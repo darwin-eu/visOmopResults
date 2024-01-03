@@ -14,11 +14,11 @@
 #' }
 #'
 formatEstimateName <- function(result,
-                               format,
+                               format = NULL,
                                keepNotFormatted = TRUE) {
   # initial checks
   result <- validateResult(result)
-  checkmate::assertCharacter(format, any.missing = FALSE, unique = TRUE, min.chars = 1)
+  checkmate::assertCharacter(format, any.missing = FALSE, unique = TRUE, min.chars = 1, null.ok = TRUE)
   checkmate::assertLogical(keepNotFormatted, len = 1, any.missing = FALSE)
 
   # format estimate
@@ -37,6 +37,11 @@ formatEstimateName <- function(result,
 }
 
 formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
+  # if no format no action is performed
+  if (length(format) == 0) {
+    return(result)
+  }
+
   # correct names
   if (is.null(names(format))) {
     nms <- rep("", length(format))
