@@ -23,9 +23,6 @@ gtHeader <- function(result,
   checkmate::checkCharacter(header, any.missing = FALSE)
   # check style
 
-  # reverse oder
-  header <- rev(header)
-
   # pivot wider
   cols <- header[header %in% colnames(result)]
   if (length(cols) > 0) {
@@ -41,6 +38,9 @@ gtHeader <- function(result,
   } else {
     columns <- "estimate_value"
   }
+
+  # reverse oder
+  header <- rev(header)
 
   # add spanners
   headerCols <- character()
