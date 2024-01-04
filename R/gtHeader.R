@@ -94,6 +94,8 @@ gtHeader <- function(result,
     }
   }
 
+  gtResult <- gtResult |> gt::cols_move_to_start(columns = colnames(result))
+
   return(gtResult)
 }
 
