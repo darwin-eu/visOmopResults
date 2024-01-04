@@ -9,8 +9,7 @@ gtHeader(
   header = character(),
   style = list(header = list(gt::cell_fill(color = "#c8c8c8"), gt::cell_text(weight =
     "bold")), header_name = list(gt::cell_fill(color = "#e1e1e1")), header_level =
-    list(gt::cell_fill(color = "#ffffff"))),
-  na = "-"
+    list(gt::cell_fill(color = "#ffffff")))
 )
 }
 \arguments{
@@ -22,8 +21,6 @@ used as header.}
 \item{style}{Set style for the different headers. Use the labels header (a
 header name), header_name () and header_level (). If name is not provided
 \code{header} is assumed.}
-
-\item{na}{Substitute for NA.}
 }
 \description{
 Add headers to a omop result_object.

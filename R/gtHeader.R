@@ -7,7 +7,6 @@
 #' @param style Set style for the different headers. Use the labels header (a
 #' header name), header_name () and header_level (). If name is not provided
 #' `header` is assumed.
-#' @param na Substitute for NA.
 #'
 gtHeader <- function(result,
                      header = character(),
@@ -18,13 +17,11 @@ gtHeader <- function(result,
                        ),
                        "header_name" = list(gt::cell_fill(color = "#e1e1e1")),
                        "header_level" = list(gt::cell_fill(color = "#ffffff"))
-                     ),
-                     na = "-") {
+                     )) {
   # initial checks
   result <- validateResult(result)
   checkmate::checkCharacter(header, any.missing = FALSE)
   # check style
-  checkmate::checkCharacter(na, any.missing = FALSE, len = 1)
 
   # reverse oder
   header <- rev(header)
@@ -32,10 +29,6 @@ gtHeader <- function(result,
   # pivot wider
   cols <- header[header %in% colnames(result)]
   if (length(cols) > 0) {
-    result <- result |>
-      dplyr::mutate(dplyr::across(
-        dplyr::all_of(cols), ~ dplyr::if_else(is.na(.x), .env$na, .x)
-      ))
     colDetails <- result |>
       dplyr::select(dplyr::all_of(cols)) |>
       dplyr::distinct() |>
@@ -105,9 +98,11 @@ gtHeader <- function(result,
 }
 
 styleName <- function(x) {
-  x <- snakecase::to_sentence_case(x)
-  if (x == "") {
-    x <- "-"
-  }
+  x <- gsub(pattern = "_", replacement = " ", x = x)
+  x[is.na(x)] <- "-"
+  x[x == ""] <- "-"
+  n <- nchar(x)
+  id <- which(n > 1)
+  x[id] <- paste0(toupper(substr(x[id], 1, 1)), tolower(substr(x[id], 2, n[id])))
   return(x)
 }

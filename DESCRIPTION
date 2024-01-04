@@ -1,4 +1,4 @@
-Package: gtSummarisedResult
+Package: gtResult
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.1
 Authors@R: c(
@@ -23,7 +23,6 @@ Imports:
     gt,
     omopgenerics,
     rlang,
-    snakecase,
     stringr,
     tidyr
 Remotes:
