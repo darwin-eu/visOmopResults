@@ -19,12 +19,21 @@
     <loc>https://catalamarti.github.io/gtSummarisedResult/reference/formatEstimateValue.html</loc>
   </url>
   <url>
-    <loc>https://catalamarti.github.io/gtSummarisedResult/reference/gtSummarisedResult-package.html</loc>
+    <loc>https://catalamarti.github.io/gtSummarisedResult/reference/gtHeader.html</loc>
+  </url>
+  <url>
+    <loc>https://catalamarti.github.io/gtSummarisedResult/reference/gtResult-package.html</loc>
+  </url>
+  <url>
+    <loc>https://catalamarti.github.io/gtSummarisedResult/reference/gtSummarisedResult.html</loc>
   </url>
   <url>
     <loc>https://catalamarti.github.io/gtSummarisedResult/reference/index.html</loc>
   </url>
   <url>
     <loc>https://catalamarti.github.io/gtSummarisedResult/reference/mockSummarisedResult.html</loc>
+  </url>
+  <url>
+    <loc>https://catalamarti.github.io/gtSummarisedResult/reference/reexports.html</loc>
   </url>
 </urlset>
