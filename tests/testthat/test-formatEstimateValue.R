@@ -32,14 +32,13 @@ test_that("formatEstimateValue", {
   # check type of mark
   expect_identical(as.integer(counts_in), as.integer(base::gsub("=", "", counts_out)))
 
-
-  # Test decimals ----
+  # Test decimals (default input) ----
   # check estimate types
-  expect_true(all(result_output |>
+  expect_equal(result_output |>
                     dplyr::filter(grepl("@", .data$estimate_value)) |>
                     dplyr::distinct(estimate_type) |>
-                    dplyr::pull() %in%
-                    c("numeric", "percentage", "proportion")))
+                    dplyr::pull(),
+                    c("numeric", "percentage"))
 
   # check number of decimals
   ## numeric
@@ -54,10 +53,33 @@ test_that("formatEstimateValue", {
     expect_true(lapply(strsplit(percentage, "@"), function(x) {x[[2]]}) |>
                   unlist() |> nchar() |> mean() == 1)
   }
-  ## proportion
-  proportion <- result_output$estimate_value[result_output$estimate_type == "proportion"]
-  if (length(proportion) > 0) {
-    expect_true(lapply(strsplit(proportion, "@"), function(x) {x[[2]]}) |>
+
+  # Test decimals ----
+  result_output <- formatEstimateValue(result,
+                                       decimals = c(
+                                         integer = 3, numeric = 0
+                                       ),
+                                       decimalMark = "_",
+                                       bigMark = "%")
+  # check estimate types
+  expect_true(result_output |>
+                    dplyr::filter(grepl("_", .data$estimate_value)) |>
+                    dplyr::distinct(estimate_type) |>
+                    dplyr::pull() == "integer")
+
+  # check number of decimals
+  ## integer
+  integer <- result_output$estimate_value[result_output$estimate_type == "integer"]
+  if (length(integer) > 0) {
+    expect_true(lapply(strsplit(integer, "_"), function(x) {x[[2]]}) |>
                   unlist() |> nchar() |> mean() == 3)
   }
+  ## numeric
+  numeric <- result_output$estimate_value[result_output$estimate_type == "numeric"]
+  if (length(numeric) > 0) {
+    expect_false(all(grepl("_", numeric)))
+  }
+  ## percentage
+  expect_identical(result_output$estimate_value[result_output$estimate_type == "percentage"],
+                   result$estimate_value[result$estimate_type == "percentage"])
 })

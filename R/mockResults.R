@@ -79,7 +79,7 @@ mockSummarisedResult <- function() {
         ), 2),
         "variable_name" = "age",
         "variable_level" = NA_character_,
-        "estimate_name" = "mean",
+        "estimate_name" = "sd",
         "estimate_type" = "numeric",
         "estimate_value" = c(10*stats::runif(18)) |> as.character(),
         "additional_name" = "overall",
@@ -112,7 +112,7 @@ mockSummarisedResult <- function() {
         "additional_level" = "overall"
       )
     ) |>
-    # medication - proportion
+    # medication - percentage
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",

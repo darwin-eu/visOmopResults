@@ -61,6 +61,7 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
   ]
   result <- result |>
     dplyr::mutate("formatted" = FALSE, "id" = dplyr::row_number())
+
   for (k in seq_along(format)) {
     nameK <- nms[k]
     formatK <- format[k] |> unname()
@@ -69,14 +70,19 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
     keysK <- x$keys
     len <- length(keysK)
     if (len > 0) {
+      rows <- result |>
+        dplyr::count(dplyr::across(dplyr::all_of(c(cols)))) |>
+        dplyr::filter(.data$n == .env$len) |>
+        dplyr::select(-"n")
       res <- result |>
         dplyr::filter(!.data$formatted) |>
         dplyr::filter(.data$estimate_name %in% .env$keysK) |>
-        dplyr::group_by(dplyr::across(dplyr::all_of(cols))) |>
-        dplyr::filter(dplyr::n() == .env$len) |>
+        dplyr::inner_join(rows , by = cols) |>
+        dplyr::group_by((dplyr::across(dplyr::all_of(cols)))) |>
         dplyr::mutate("id" = min(.data$id)) |>
         dplyr::ungroup()
       resF <- res |>
+        dplyr::select(-"estimate_type") |>
         tidyr::pivot_wider(
           names_from = "estimate_name", values_from = "estimate_value"
         ) |>
@@ -101,7 +107,7 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
 
   # keepNotFormated
   if (!keepNotFormatted) {
-    result <- result |> dplyr::filter(.data$formated)
+    result <- result |> dplyr::filter(.data$formatted)
   }
 
   result <- result |> dplyr::select(-"formatted")
