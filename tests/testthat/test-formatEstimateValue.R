@@ -1,14 +1,14 @@
-test_that("formatEstimateValue", "correct decimal mark" {
+test_that("formatEstimateValue", {
 
   result <- mockSummarisedResult()
 
-  expect_no_error(result_output <- formatEstimateValue(result,
-                                                       decimals = c(
-                                                         integer = 0, numeric = 2, percentage = 1,
-                                                         proportion = 3
-                                                       ),
-                                                       decimalMark = "@",
-                                                       bigMark = "="))
+  result_output <- formatEstimateValue(result,
+                                       decimals = c(
+                                         integer = 0, numeric = 2, percentage = 1,
+                                         proportion = 3
+                                       ),
+                                       decimalMark = "@",
+                                       bigMark = "=")
 
   # Test big Mark ----
   counts_in  <- result$estimate_value[result_output$estimate_type == "integer"]

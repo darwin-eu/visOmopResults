@@ -40,7 +40,7 @@ formatEstimateValue <- function(result,
 formatEstimateValueInternal <- function(result, decimals, decimalMark, bigMark) {
   for (nm in names(decimals)) {
     n <- decimals[nm] |> unname()
-    id <- result$estimate_type == nm
+    id <- result[["estimate_type"]] == nm
     result$estimate_value[id] <- result$estimate_value[id] |>
       as.numeric() |>
       round(digits = n) |>
