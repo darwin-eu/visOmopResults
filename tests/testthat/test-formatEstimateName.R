@@ -4,8 +4,8 @@ test_that("formatEstimateName", {
 
   # input 1 ----
   result_output <-  formatEstimateName(result,
-                                       format = c("N" = "count",
-                                                  "N (%)" = "count (percentage%)"),
+                                       format = c("N (%)" = "count (percentage%)",
+                                                  "N" = "count"),
                                        keepNotFormatted = TRUE)
   # check count as "N"
   expect_identical(unique(result_output$estimate_name[result_output$variable_name == "number subjects"]),
@@ -71,6 +71,10 @@ test_that("formatEstimateName", {
 
   # Wrong input ----
   expect_error(result |> dplyr::select(-"cdm_name") |> formatEstimateName())
+  expect_error(formatEstimateName(result,
+                                  format = c("N" = "count",
+                                             "N (%)" = "count (percentage%)"),
+                                  keepNotFormatted = TRUE))
 
   # Null format ----
   expect_identical(result |> formatEstimateName(),

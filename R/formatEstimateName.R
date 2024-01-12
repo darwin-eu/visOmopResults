@@ -70,15 +70,11 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
     keysK <- x$keys
     len <- length(keysK)
     if (len > 0) {
-      rows <- result |>
-        dplyr::count(dplyr::across(dplyr::all_of(c(cols)))) |>
-        dplyr::filter(.data$n == .env$len) |>
-        dplyr::select(-"n")
       res <- result |>
         dplyr::filter(!.data$formatted) |>
         dplyr::filter(.data$estimate_name %in% .env$keysK) |>
-        dplyr::inner_join(rows , by = cols) |>
-        dplyr::group_by((dplyr::across(dplyr::all_of(cols)))) |>
+        dplyr::group_by(dplyr::across(dplyr::all_of(cols))) |>
+        dplyr::filter(dplyr::n() == .env$len) |>
         dplyr::mutate("id" = min(.data$id)) |>
         dplyr::ungroup()
       resF <- res |>
