@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(gtResult)
+library(formatTable)
 
-test_check("gtResult")
+test_check("formatTable")

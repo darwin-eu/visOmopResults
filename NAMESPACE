@@ -3,6 +3,7 @@
 export(formatEstimateName)
 export(formatEstimateValue)
 export(mockSummarisedResult)
+export(spanHeader)
 export(splitGroup)
 export(uniteGroup)
 importFrom(omopgenerics,splitGroup)

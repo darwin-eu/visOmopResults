@@ -1,4 +1,4 @@
-Package: gtResult
+Package: formatTable
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.1
 Authors@R: c(
@@ -27,5 +27,5 @@ Imports:
     tidyr
 Remotes:
     darwin-eu-dev/omopgenerics
-URL: https://catalamarti.github.io/gtSummarisedResult/
-BugReports: https://github.com/catalamarti/gtSummarisedResult/issues
+URL: https://github.com/oxford-pharmacoepi/formatTable
+BugReports: https://github.com/oxford-pharmacoepi/formatTable/issues

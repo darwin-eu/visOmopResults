@@ -14,8 +14,8 @@ mockSummarisedResult <- function() {
   dplyr::tibble(
     "cdm_name" = "mock",
     "result_type" = NA_character_,
-    "package_name" = "gtResult",
-    "package_version" = utils::packageVersion("gtResult") |>
+    "package_name" = "formatTable",
+    "package_version" = utils::packageVersion("formatTable") |>
       as.character(),
     "group_name" = "cohort_name",
     "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
@@ -39,8 +39,8 @@ mockSummarisedResult <- function() {
       dplyr::tibble(
         "cdm_name" = "mock",
         "result_type" = NA_character_,
-        "package_name" = "gtResult",
-        "package_version" = utils::packageVersion("gtResult") |>
+        "package_name" = "formatTable",
+        "package_version" = utils::packageVersion("formatTable") |>
           as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
@@ -65,8 +65,8 @@ mockSummarisedResult <- function() {
       dplyr::tibble(
         "cdm_name" = "mock",
         "result_type" = NA_character_,
-        "package_name" = "gtResult",
-        "package_version" = utils::packageVersion("gtResult") |>
+        "package_name" = "formatTable",
+        "package_version" = utils::packageVersion("formatTable") |>
           as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
@@ -91,8 +91,8 @@ mockSummarisedResult <- function() {
       dplyr::tibble(
         "cdm_name" = "mock",
         "result_type" = NA_character_,
-        "package_name" = "gtResult",
-        "package_version" = utils::packageVersion("gtResult") |>
+        "package_name" = "formatTable",
+        "package_version" = utils::packageVersion("formatTable") |>
           as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
@@ -117,8 +117,8 @@ mockSummarisedResult <- function() {
       dplyr::tibble(
         "cdm_name" = "mock",
         "result_type" = NA_character_,
-        "package_name" = "gtResult",
-        "package_version" = utils::packageVersion("gtResult") |>
+        "package_name" = "formatTable",
+        "package_version" = utils::packageVersion("formatTable") |>
           as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
