@@ -3,8 +3,8 @@
 #' object.
 #'
 #' @param result A summarised_result or compared_result.
-#' @param format Named list of estimate name's to join.
-#' @param keepNotFormatted Whether to keep not formatted.
+#' @param format Named list of estimate name's to join, sorted by computation order.
+#' @param keepNotFormatted Whether to keep not formatted rows.
 #'
 #' @export
 #'

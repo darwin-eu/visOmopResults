@@ -2,6 +2,7 @@ test_that("formatEstimateValue", {
 
   result <- mockSummarisedResult()
 
+  # default decimal input ----
   result_output <- formatEstimateValue(result,
                                        decimals = c(
                                          integer = 0, numeric = 2, percentage = 1,
@@ -10,7 +11,7 @@ test_that("formatEstimateValue", {
                                        decimalMark = "@",
                                        bigMark = "=")
 
-  # Test big Mark ----
+  ## Test big Mark ----
   counts_in  <- result$estimate_value[result_output$estimate_type == "integer"]
   counts_out <- result_output$estimate_value[result_output$estimate_type == "integer"]
 
@@ -32,7 +33,7 @@ test_that("formatEstimateValue", {
   # check type of mark
   expect_identical(as.integer(counts_in), as.integer(base::gsub("=", "", counts_out)))
 
-  # Test decimals (default input) ----
+  ## Test decimals (default input) ----
   # check estimate types
   expect_equal(result_output |>
                     dplyr::filter(grepl("@", .data$estimate_value)) |>
@@ -82,4 +83,34 @@ test_that("formatEstimateValue", {
   ## percentage
   expect_identical(result_output$estimate_value[result_output$estimate_type == "percentage"],
                    result$estimate_value[result$estimate_type == "percentage"])
+
+  # Test decimals ----
+  result_output <- formatEstimateValue(result,
+                                       decimals = 4,
+                                       decimalMark = "_",
+                                       bigMark = "%")
+  # check estimate types
+  expect_true(all(result_output |>
+                    dplyr::filter(grepl("_", .data$estimate_value)) |>
+                    dplyr::distinct(estimate_type) |>
+                    dplyr::pull() ==
+                    unique(result$estimate_type)))
+
+  # check number of decimals
+    expect_true(lapply(strsplit(result_output$estimate_value, "_"), function(x) {x[[2]]}) |>
+                  unlist() |> nchar() |> mean() == 4)
+
+    # Wroing input ----
+    expect_error(formatEstimateValue(result,
+                                     decimals = NA,
+                                     decimalMark = "_",
+                                     bigMark = "%"))
+    expect_error(formatEstimateValue(result,
+                                     decimals = c("hola" = 0),
+                                     decimalMark = "_",
+                                     bigMark = "%"))
+    expect_error(formatEstimateValue(result,
+                                     decimals = 2,
+                                     decimalMark = NA,
+                                     bigMark = "%"))
 })

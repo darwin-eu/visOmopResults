@@ -75,8 +75,7 @@ test_that("formatEstimateName", {
                                   format = c("N" = "count",
                                              "N (%)" = "count (percentage%)"),
                                   keepNotFormatted = TRUE))
-
-  # Null format ----
-  expect_identical(result |> formatEstimateName(),
-                   result)
+  expect_error(formatEstimateName(result,
+                                  format = NA,
+                                  keepNotFormatted = TRUE))
 })
