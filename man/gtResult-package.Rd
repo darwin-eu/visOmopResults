@@ -12,12 +12,18 @@ What the package does (one paragraph).
 Useful links:
 \itemize{
   \item \url{https://catalamarti.github.io/gtSummarisedResult/}
+  \item \url{https://oxford-pharmacoepi.github.io/formatTable/}
   \item Report bugs at \url{https://github.com/catalamarti/gtSummarisedResult/issues}
 }
 
 }
 \author{
 \strong{Maintainer}: Marti Catala \email{marti.catalasabate@ndorms.ox.ac.uk} (\href{https://orcid.org/0000-0003-3308-9905}{ORCID})
+
+Authors:
+\itemize{
+  \item Nuria Mercade-Besora \email{nuria.mercadebesora@ndorms.ox.ac.uk} (\href{https://orcid.org/0009-0006-7948-3747}{ORCID})
+}
 
 }
 \keyword{internal}
