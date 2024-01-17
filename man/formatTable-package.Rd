@@ -11,13 +11,18 @@ What the package does (one paragraph).
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://github.com/oxford-pharmacoepi/formatTable}
+  \item \url{https://oxford-pharmacoepi.github.io/formatTable/}
   \item Report bugs at \url{https://github.com/oxford-pharmacoepi/formatTable/issues}
 }
 
 }
 \author{
 \strong{Maintainer}: Marti Catala \email{marti.catalasabate@ndorms.ox.ac.uk} (\href{https://orcid.org/0000-0003-3308-9905}{ORCID})
+
+Authors:
+\itemize{
+  \item Nuria Mercade-Besora \email{nuria.mercadebesora@ndorms.ox.ac.uk} (\href{https://orcid.org/0009-0006-7948-3747}{ORCID})
+}
 
 }
 \keyword{internal}

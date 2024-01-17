@@ -71,10 +71,10 @@ test_that("formatEstimateName", {
 
   # Wrong input ----
   expect_error(result |> dplyr::select(-"cdm_name") |> formatEstimateName())
-  expect_error(formatEstimateName(result,
-                                  format = c("N" = "count",
-                                             "N (%)" = "count (percentage%)"),
-                                  keepNotFormatted = TRUE))
+  expect_warning(expect_error(formatEstimateName(result,
+                                                 format = c("N" = "count",
+                                                            "N (%)" = "count (percentage%)"),
+                                                 keepNotFormatted = TRUE)))
   expect_error(formatEstimateName(result,
                                   format = NA,
                                   keepNotFormatted = TRUE))

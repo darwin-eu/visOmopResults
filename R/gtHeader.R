@@ -1,4 +1,3 @@
-
 #' Add headers to a omop result_object.
 #'
 #' @param result A result object.
