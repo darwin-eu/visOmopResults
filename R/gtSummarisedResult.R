@@ -22,7 +22,7 @@
 #'
 #' @return A formatted gt table.
 #'
-gtSummarisedResult <- function(result,
+gtsumm <- function(result,
                                format = NULL,
                                splitGroup = TRUE,
                                splitStrata = TRUE,
