@@ -29,5 +29,5 @@ Imports:
     rlang,
     stringr,
     tidyr
-URL: https://catalamarti.github.io/gtSummarisedResult/
-BugReports: https://github.com/catalamarti/gtSummarisedResult/issues
+URL: https://oxford-pharmacoepi.github.io/formatTable/
+BugReports: https://github.com/oxford-pharmacoepi/formatTable/issues
