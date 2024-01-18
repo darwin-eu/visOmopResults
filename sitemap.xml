@@ -19,13 +19,13 @@
     <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/formatEstimateValue.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/gtHeader.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/formatSummarisedResult.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/gtResult-package.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/formatTable-package.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/gtSummarisedResult.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/gtTable.html</loc>
   </url>
   <url>
     <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/index.html</loc>
@@ -35,5 +35,8 @@
   </url>
   <url>
     <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/reexports.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/spanHeader.html</loc>
   </url>
 </urlset>
