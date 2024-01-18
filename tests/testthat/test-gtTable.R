@@ -1,0 +1,166 @@
+test_that("gtTable", {
+
+  table_to_format <- mockSummarisedResult() |>
+    spanHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
+               includeHeaderName = FALSE)
+  # Input 1 ----
+  # Title but no subtitle
+  # Styles
+  gtResult <- gtTable(
+    table_to_format,
+    style = list(
+      "header" = list(
+        gt::cell_fill(color = "#c8c8c8"),
+        gt::cell_text(weight = "bold")
+      ),
+      "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
+                           gt::cell_text(weight = "bold")),
+      "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
+                            gt::cell_text(weight = "bold")),
+      "column_name" = list(gt::cell_text(weight = "bold")),
+      "title" = list(gt::cell_text(weight = "bold", color = "blue"))
+    ),
+    na = NULL,
+    title = "Test 1",
+    subtitle = NULL,
+    caption = NULL,
+    groupNameCol = NULL,
+    groupNameAsColumn = FALSE,
+    groupOrder = NULL
+  )
+
+  # Spanners
+  expect_equal(
+    gtResult$`_spanners`$spanner_label |> unlist(),
+    c("overall", "age_group and sex", "sex", "age_group", "overall", "age_group and sex",
+      "sex", "age_group", "Study strata", "cohort1", "cohort2", "Study cohorts")
+  )
+  expect_true(sum(gtResult$`_spanners`$spanner_level == 1) == 8)
+  expect_true(sum(gtResult$`_spanners`$spanner_level == 2) == 1)
+  expect_true(sum(gtResult$`_spanners`$spanner_level == 3) == 2)
+  expect_true(sum(gtResult$`_spanners`$spanner_level == 4) == 1)
+  # spanner styles
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level %in% c(1,3)]] |>
+                 unlist() |> unique(),
+               c("#E1E1E1", "bold"))
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level %in% c(2,4)]] |>
+                 unlist() |> unique(),
+               c("#C8C8C8", "bold"))
+  # title
+  expect_true(gtResult$`_heading`$title == "Test 1")
+  expect_true(is.null(gtResult$`_heading`$subtitle))
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "title"] |> unlist(),
+               c("cell_text.color" = "#0000FF", "cell_text.weight" = "bold"))
+  # column names
+  expect_true(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"] |> unlist() |> unique() == "bold")
+  expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[column_name\\]", x)}) |> unlist() |> unique())
+  # na
+  expect_identical(gtResult$`_substitutions`, list())
+  # Group labels
+  expect_true(is.null(gtResult$`_stub_df`$group_label |> unlist()))
+  expect_false(gtResult$`_options`$value[gtResult$`_options`$parameter == "row_group_as_column"] |> unlist())
+
+  # Input 1 ----
+  table_to_format <- mockSummarisedResult() |>
+    formatEstimateName(format = c("N (%)" = "count (percentage%)",
+                                  "N" = "count")) |>
+    spanHeader(header = c("strata_name", "strata_level"),
+               includeHeaderName = TRUE)
+  gtResult <- gtTable(
+    table_to_format,
+    style = list(
+      "subtitle" = list(gt::cell_text(weight = "lighter", size = "large", color = "blue")),
+      "body" = list(gt::cell_text(color = "red"), gt::cell_borders(sides = "all")),
+      "group_label" = list(gt::cell_fill(color = "#e1e1e1")),
+      "header_name" = list(gt::cell_fill(color = "black"), gt::cell_text(color = "white"))
+    ),
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupNameCol = "group_level",
+    groupNameAsColumn = FALSE,
+    groupOrder = NULL
+  )
+
+  # Spanners
+  expect_equal(
+    gtResult$`_spanners`$spanner_label |> unlist(),
+    c("strata_level", "overall", "age_group and sex", "sex", "age_group", "strata_name")
+  )
+  expect_true(sum(gtResult$`_spanners`$spanner_level == 1) == 1)
+  expect_true(sum(gtResult$`_spanners`$spanner_level == 2) == 4)
+  expect_true(sum(gtResult$`_spanners`$spanner_level == 3) == 1)
+  # spanner styles
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level %in% c(1,3)]] |>
+                 unlist() |> unique(),
+               c("#000000", "#FFFFFF"))
+  expect_true(is.null(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level == 2]] |>
+                 unlist() |> unique()))
+  # title and subtitle
+  expect_true(gtResult$`_heading`$title == "Title test 2")
+  expect_true(gtResult$`_heading`$subtitle == "Subtitle for test 2")
+  expect_true(is.null(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "title"] |> unlist()))
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "subtitle"] |> unlist(),
+               c("cell_text.color" = "#0000FF", "cell_text.size" = "large", "cell_text.weight" = "lighter"))
+  # column names
+  expect_true(is.null(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"] |> unlist()))
+  expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[column_name\\]", x)}) |> unlist() |> unique())
+  # na
+  expect_false(is.null(gtResult$`_substitutions`[[1]]$func$default))
+  # Group labels
+  expect_equal(gtResult$`_stub_df`$group_label |> unlist() |> unique(), c("cohort1", "cohort2"))
+  expect_false(gtResult$`_options`$value[gtResult$`_options`$parameter == "row_group_as_column"] |> unlist())
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "row_groups"] |> unique() |> unlist(),
+               c("cell_fill.color" = "#E1E1E1"))
+  # caption
+  expect_equal(gtResult$`_options`[2, "value"] |> unlist(), c("value" = "*This* is the caption"))
+  expect_equal(gtResult$`_options`$value[gtResult$`_options`$parameter == "table_caption"][[1]] |> attr("class"),
+               "from_markdown")
+  # body
+  body_style <- gtResult$`_styles`$styles[gtResult$`_styles`$locname == "data" & gtResult$`_styles`$rownum %in% 2:8] |> unlist()
+  expect_equal(body_style[names(body_style) %in% c("cell_text.color", "cell_border_top.color", "cell_border_top.style")] |> unique(),
+               c("#FF0000", "solid", "#000000"))
+
+  # Input 3 ----
+  table_to_format <- mockSummarisedResult() |>
+    formatEstimateName(format = c("N (%)" = "count (percentage%)",
+                                  "N" = "count")) |>
+    spanHeader(header = c("strata_name", "strata_level"),
+               delim = ":",
+               includeHeaderName = TRUE)
+  gtResult <- gtTable(
+    table_to_format,
+    delim = ":",
+    style = list(
+      "subtitle" = list(gt::cell_text(weight = "lighter", size = "large", color = "blue")),
+      "body" = list(gt::cell_text(color = "red"), gt::cell_borders(sides = "all")),
+      "group_label" = list(gt::cell_fill(color = "#e1e1e1")),
+      "header_name" = list(gt::cell_fill(color = "black"), gt::cell_text(color = "white"))
+    ),
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupNameCol = "group_level",
+    groupNameAsColumn = TRUE,
+    groupOrder = c("cohort2", "cohort1")
+  )
+  # groupNameAsColumn
+  expect_true(gtResult$`_options`$value[gtResult$`_options`$parameter == "row_group_as_column"] |> unlist())
+  # groupOrder
+  expect_identical(gtResult$`_row_groups`, c( "cohort2", "cohort1"))
+
+  # Wrong inputs ----
+  expect_error(gtTable(
+    table_to_format,
+    style = NA,
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupNameCol = "group_level",
+    groupNameAsColumn = TRUE,
+    groupOrder = c("cohort2", "cohort1")
+  ))
+})

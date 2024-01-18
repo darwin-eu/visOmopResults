@@ -15,7 +15,8 @@ formatEstimateValue(
 \arguments{
 \item{result}{A summarised_result or compared_result.}
 
-\item{decimals}{Number of decimals per estimate_type.}
+\item{decimals}{Number of decimals per estimate_type (integer, numeric,
+percentage, proportion).}
 
 \item{decimalMark}{Decimal separator mark.}
 

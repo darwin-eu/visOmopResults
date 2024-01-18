@@ -3,7 +3,8 @@
 #' object.
 #'
 #' @param result A summarised_result or compared_result.
-#' @param decimals Number of decimals per estimate_type.
+#' @param decimals Number of decimals per estimate_type (integer, numeric,
+#' percentage, proportion).
 #' @param decimalMark Decimal separator mark.
 #' @param bigMark Thousand and millions separator mark.
 #'
@@ -40,7 +41,7 @@ formatEstimateValue <- function(result,
 formatEstimateValueInternal <- function(result, decimals, decimalMark, bigMark) {
   for (nm in names(decimals)) {
     n <- decimals[nm] |> unname()
-    id <- result$estimate_name == nm
+    id <- result[["estimate_type"]] == nm
     result$estimate_value[id] <- result$estimate_value[id] |>
       as.numeric() |>
       round(digits = n) |>

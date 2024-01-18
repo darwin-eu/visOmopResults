@@ -3,8 +3,9 @@
 #' object.
 #'
 #' @param result A summarised_result or compared_result.
-#' @param format Named list of estimate name's to join.
-#' @param keepNotFormatted Whether to keep not formatted.
+#' @param format Named list of estimate name's to join, sorted by computation
+#' order.
+#' @param keepNotFormatted Whether to keep rows not formatted.
 #'
 #' @export
 #'
@@ -61,6 +62,7 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
   ]
   result <- result |>
     dplyr::mutate("formatted" = FALSE, "id" = dplyr::row_number())
+
   for (k in seq_along(format)) {
     nameK <- nms[k]
     formatK <- format[k] |> unname()
@@ -77,6 +79,7 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
         dplyr::mutate("id" = min(.data$id)) |>
         dplyr::ungroup()
       resF <- res |>
+        dplyr::select(-"estimate_type") |>
         tidyr::pivot_wider(
           names_from = "estimate_name", values_from = "estimate_value"
         ) |>
@@ -101,7 +104,7 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
 
   # keepNotFormated
   if (!keepNotFormatted) {
-    result <- result |> dplyr::filter(.data$formated)
+    result <- result |> dplyr::filter(.data$formatted)
   }
 
   result <- result |> dplyr::select(-"formatted")

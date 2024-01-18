@@ -1,4 +1,4 @@
-Package: gtResult
+Package: formatTable
 Title: What the Package Does (One Line, Title Case)
 Version: 0.0.1
 Authors@R: c(
@@ -7,7 +7,7 @@ Authors@R: c(
         role = c("aut", "cre"), comment = c(ORCID = "0000-0003-3308-9905")
     ),
     person(
-        "Nuria", "Mercade-Besora", , "nuria.mercadebesora@ndorms.ox.ac.uk", 
+        "Núria", "Mercadé-Besora", , "nuria.mercadebesora@ndorms.ox.ac.uk", 
         role = c("aut"), comment = c(ORCID = "0009-0006-7948-3747")
     )
     )
