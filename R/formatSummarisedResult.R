@@ -24,6 +24,8 @@
 #' groupNameCol = NULL, groupNameAsColumn = FALSE, groupOrder = NULL).
 #'
 #' @order 2
+#' @export
+#'
 #' @examples
 #' \donttest{
 #' mockSummarisedResult() |>
@@ -37,9 +39,6 @@
 #'                            integer = 0, numeric = 2, percentage = 1,
 #'                            proportion = 3
 #'                          ),
-#'                          title = NULL,
-#'                          subtitle = NULL,
-#'                          caption = NULL,
 #'                          .options = list("groupNameCol" = "group_level",
 #'                                          "groupNameAsColumn" = FALSE,
 #'                                          "groupOrder" = c("cohort1",
