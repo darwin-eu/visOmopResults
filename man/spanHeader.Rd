@@ -5,16 +5,18 @@
 \title{Format estimate_value column of summarised_result and compared_result
 object.}
 \usage{
-spanHeader(result, header, delim = "\\n", includeHeader = TRUE)
+spanHeader(result, header, delim = "\\n", includeHeaderName = TRUE)
 }
 \arguments{
 \item{result}{A summarised_result or compared_result.}
 
-\item{header}{Names of the columns to make headers. Names not corresponding to a column of the table result, will be used as headers at the defined position.}
+\item{header}{Names of the columns to make headers. Names not corresponding
+to a column of the table result, will be used as headers at the defined
+position.}
 
-\item{delim}{Delimiter to use to separate headers (don't use "_").}
+\item{delim}{Delimiter to use to separate headers.}
 
-\item{includeHeader}{Wheather to include the column name as header.}
+\item{includeHeaderName}{Wheather to include the column name as header.}
 }
 \description{
 Format estimate_value column of summarised_result and compared_result
@@ -27,6 +29,6 @@ result <- mockSummarisedResult()
 result |>
   spanHeader(header = c("Study cohorts", "group_level", "Study strata",
                         "strata_name", "strata_level"),
-             includeHeader = FALSE)
+             includeHeaderName = FALSE)
 }
 }

@@ -3,7 +3,8 @@
 #' object.
 #'
 #' @param result A summarised_result or compared_result.
-#' @param decimals Number of decimals per estimate_type.
+#' @param decimals Number of decimals per estimate_type (integer, numeric,
+#' percentage, proportion).
 #' @param decimalMark Decimal separator mark.
 #' @param bigMark Thousand and millions separator mark.
 #'

@@ -6,11 +6,11 @@
 #' @param style Named list that specifies how to style the different parts of
 #' the table. Accepted entries are: title, subtitle, header, header_name,
 #' header_level, column_name, group_label, and body.
-#' @param na How to display missing values
+#' @param na How to display missing values.
 #' @param title Title of the table, or NULL for no title.
 #' @param subtitle Subtitle of the table, or NULL for no subtitle.
 #' @param caption Caption for the table, or NULL for no caption. Text in
-#' markdown formatting style (e.g. `Your caption here` for caption in
+#' markdown formatting style (e.g. `*Your caption here*` for caption in
 #' italics).
 #' @param groupNameCol Column to use as group labels.
 #' @param groupNameAsColumn Whether to display the group labels as a column

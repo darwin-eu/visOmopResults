@@ -29,14 +29,14 @@ gtTable(
 the table. Accepted entries are: title, subtitle, header, header_name,
 header_level, column_name, group_label, and body.}
 
-\item{na}{How to display missing values}
+\item{na}{How to display missing values.}
 
 \item{title}{Title of the table, or NULL for no title.}
 
 \item{subtitle}{Subtitle of the table, or NULL for no subtitle.}
 
 \item{caption}{Caption for the table, or NULL for no caption. Text in
-markdown formatting style (e.g. \verb{Your caption here} for caption in
+markdown formatting style (e.g. \verb{*Your caption here*} for caption in
 italics).}
 
 \item{groupNameCol}{Column to use as group labels.}

@@ -4,7 +4,7 @@ test_that("spanHeader", {
   # Include headers + noncolumn names----
   result_output <- spanHeader(result = result,
                              header = c("group_name", "group_level", "strata", "strata_name", "strata_level"),
-                             includeHeader = TRUE)
+                             includeHeaderName = TRUE)
 
   # column: group_name\ncohort_name\ngroup_level\ncohort2\nstrata\nstrata_name\nsex\nstrata_level\nMale
   values_in <- result |>
@@ -32,7 +32,7 @@ test_that("spanHeader", {
   # Not include headers + noncolumn names----
   result_output <- spanHeader(result = result,
                               header = c("group_name", "group_level", "strata", "strata_name", "strata_level"),
-                              includeHeader = FALSE)
+                              includeHeaderName = FALSE)
 
   # column: cohort_name\ncohort2\nstrata\nsex\nMale
   values_in <- result |>
@@ -57,7 +57,7 @@ test_that("spanHeader", {
   # Not include headers + only column names----
   result_output <- spanHeader(result = result,
                               header = c("group_name", "group_level"),
-                              includeHeader = FALSE)
+                              includeHeaderName = FALSE)
   # column: cohort_name\ncohort1
   values_in <- result |>
     dplyr::filter(.data$group_level == "cohort1") |>
@@ -71,7 +71,7 @@ test_that("spanHeader", {
   # Not include headers + noncolumn names----
   result_output <- spanHeader(result = result,
                               header = c("test_spanHeader", "group_name", "next_row", "group_level", "end_spanner"),
-                              includeHeader = TRUE)
+                              includeHeaderName = TRUE)
   # column: cohort_name\ncohort1
   values_in <- result |>
     dplyr::filter(.data$group_level == "cohort1") |>
@@ -86,7 +86,7 @@ test_that("spanHeader", {
   result_output <- spanHeader(result = result,
                               header = c("test_spanHeader", "end_spanner"),
                               delim = ":",
-                              includeHeader = TRUE)
+                              includeHeaderName = TRUE)
   expect_true(
     result_output |>
       dplyr::anti_join(result |> dplyr::rename("[header]test_spanHeader:[column_name]end_spanner" = "estimate_value"),
@@ -99,9 +99,9 @@ test_that("spanHeader", {
   # Wrong input ----
   expect_error(spanHeader(result = result,
                           header = NULL,
-                          includeHeader = TRUE))
+                          includeHeaderName = TRUE))
   expect_error(spanHeader(result = result,
                           header = NA,
-                          includeHeader = TRUE))
+                          includeHeaderName = TRUE))
 
 })

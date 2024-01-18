@@ -3,9 +3,11 @@
 #' object.
 #'
 #' @param result A summarised_result or compared_result.
-#' @param header Names of the columns to make headers. Names not corresponding to a column of the table result, will be used as headers at the defined position.
-#' @param delim Delimiter to use to separate headers (don't use "_").
-#' @param includeHeader Wheather to include the column name as header.
+#' @param header Names of the columns to make headers. Names not corresponding
+#' to a column of the table result, will be used as headers at the defined
+#' position.
+#' @param delim Delimiter to use to separate headers.
+#' @param includeHeaderName Wheather to include the column name as header.
 #'
 #' @export
 #'
@@ -16,18 +18,18 @@
 #' result |>
 #'   spanHeader(header = c("Study cohorts", "group_level", "Study strata",
 #'                         "strata_name", "strata_level"),
-#'              includeHeader = FALSE)
+#'              includeHeaderName = FALSE)
 #' }
 
 spanHeader<- function(result,
                       header,
                       delim = "\n",
-                      includeHeader = TRUE) {
+                      includeHeaderName = TRUE) {
   # initial checks
   result <- validateResult(result)
   checkmate::assertCharacter(x = header, any.missing = FALSE)
   checkmate::assertCharacter(delim, min.chars = 1, len = 1, any.missing = FALSE, max.len = 1)
-  checkmate::assertLogical(includeHeader, any.missing = FALSE, len = 1)
+  checkmate::assertLogical(includeHeaderName, any.missing = FALSE, len = 1)
   if (!rlang::is_character(delim)) {
     cli::cli_abort("The value supplied for `delim` must be of type `character`.")
   }
@@ -59,13 +61,13 @@ spanHeader<- function(result,
         for (span in spanners) {
           colsSpanner <- colDetails$name[colDetails[[header[k]]] == span]
           if (k < length(header)) {
-            if (includeHeader) {
+            if (includeHeaderName) {
               colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_name]", header[k], delim, "[header_level]", span, delim)
             } else {
               colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_level]", span, delim)
             }
           } else {
-            if (includeHeader) {
+            if (includeHeaderName) {
               colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_name]", header[k], delim, "[column_name]", span, delim)
             } else {
               colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[column_name]", span, delim)

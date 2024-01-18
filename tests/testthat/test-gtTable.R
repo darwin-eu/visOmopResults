@@ -2,7 +2,7 @@ test_that("gtTable", {
 
   table_to_format <- mockSummarisedResult() |>
     spanHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
-               includeHeader = FALSE)
+               includeHeaderName = FALSE)
   # Input 1 ----
   # Title but no subtitle
   # Styles
@@ -65,7 +65,7 @@ test_that("gtTable", {
     formatEstimateName(format = c("N (%)" = "count (percentage%)",
                                   "N" = "count")) |>
     spanHeader(header = c("strata_name", "strata_level"),
-               includeHeader = TRUE)
+               includeHeaderName = TRUE)
   gtResult <- gtTable(
     table_to_format,
     style = list(
@@ -128,7 +128,7 @@ test_that("gtTable", {
                                   "N" = "count")) |>
     spanHeader(header = c("strata_name", "strata_level"),
                delim = ":",
-               includeHeader = TRUE)
+               includeHeaderName = TRUE)
   gtResult <- gtTable(
     table_to_format,
     delim = ":",
