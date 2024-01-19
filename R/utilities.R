@@ -53,3 +53,8 @@ validateDecimals <- function(decimals, call = parent.frame()) {
   }
   return(decimals)
 }
+validateEstimateNameFormat <- function(format) {
+  if (length(stringr::str_match_all(format, "(?<=\\<).+?(?=\\>)") |> unlist()) == 0) {
+    cli::cli_abort("format input does not contain any estimate name indicated by <...>.")
+  }
+}

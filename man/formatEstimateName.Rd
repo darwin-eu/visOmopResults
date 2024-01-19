@@ -5,12 +5,12 @@
 \title{Format estimate_value column of summarised_result and compared_result
 object.}
 \usage{
-formatEstimateName(result, format = NULL, keepNotFormatted = TRUE)
+formatEstimateName(result, estimateNameFormat = NULL, keepNotFormatted = TRUE)
 }
 \arguments{
 \item{result}{A summarised_result or compared_result.}
 
-\item{format}{Named list of estimate name's to join, sorted by computation
+\item{estimateNameFormat}{Named list of estimate name's to join, sorted by computation
 order.}
 
 \item{keepNotFormatted}{Whether to keep rows not formatted.}

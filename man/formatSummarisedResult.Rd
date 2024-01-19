@@ -63,7 +63,7 @@ mockSummarisedResult() |>
                          header = c("Study strata","strata_name",
                                     "strata_level"),
                          estimateNameFormat = c("N(\%)" =
-                                                  "count (percentage\%)"),
+                                                  "<count> (<percentage>\%)"),
                          style = "default",
                          decimals = c(
                            integer = 0, numeric = 2, percentage = 1,

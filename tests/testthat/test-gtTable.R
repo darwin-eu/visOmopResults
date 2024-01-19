@@ -62,8 +62,8 @@ test_that("gtTable", {
 
   # Input 1 ----
   table_to_format <- mockSummarisedResult() |>
-    formatEstimateName(format = c("N (%)" = "count (percentage%)",
-                                  "N" = "count")) |>
+    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
+                                  "N" = "<count>")) |>
     spanHeader(header = c("strata_name", "strata_level"),
                includeHeaderName = TRUE)
   gtResult <- gtTable(
@@ -124,8 +124,8 @@ test_that("gtTable", {
 
   # Input 3 ----
   table_to_format <- mockSummarisedResult() |>
-    formatEstimateName(format = c("N (%)" = "count (percentage%)",
-                                  "N" = "count")) |>
+    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
+                                  "N" = "<count>")) |>
     spanHeader(header = c("strata_name", "strata_level"),
                delim = ":",
                includeHeaderName = TRUE)

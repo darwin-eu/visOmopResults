@@ -3,7 +3,7 @@
 #' object.
 #'
 #' @param result A summarised_result or compared_result.
-#' @param format Named list of estimate name's to join, sorted by computation
+#' @param estimateNameFormat Named list of estimate name's to join, sorted by computation
 #' order.
 #' @param keepNotFormatted Whether to keep rows not formatted.
 #'
@@ -15,16 +15,17 @@
 #' }
 #'
 formatEstimateName <- function(result,
-                               format = NULL,
+                               estimateNameFormat = NULL,
                                keepNotFormatted = TRUE) {
   # initial checks
   result <- validateResult(result)
-  checkmate::assertCharacter(format, any.missing = FALSE, unique = TRUE, min.chars = 1, null.ok = TRUE)
+  validateEstimateNameFormat(estimateNameFormat)
+  checkmate::assertCharacter(estimateNameFormat, any.missing = FALSE, unique = TRUE, min.chars = 1, null.ok = TRUE)
   checkmate::assertLogical(keepNotFormatted, len = 1, any.missing = FALSE)
 
   # format estimate
   resultFormatted <- formatEstimateNameInternal(
-    result = result, format = format, keepNotFormatted = keepNotFormatted
+    result = result, format = estimateNameFormat, keepNotFormatted = keepNotFormatted
   )
 
   # class
@@ -49,11 +50,7 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
   } else {
     nms <- names(format)
   }
-  nms[nms == ""] <- format[nms == ""]
-
-  # keys
-  keys <- result[["estimate_name"]] |> unique()
-  keys <- keys[order(nchar(keys), decreasing = TRUE)]
+  nms[nms == ""] <- gsub("<|>", "", format[nms == ""])
 
   # format
   ocols <- colnames(result)
@@ -66,11 +63,12 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
   for (k in seq_along(format)) {
     nameK <- nms[k]
     formatK <- format[k] |> unname()
-    x <- getKeys(formatK, keys)
-    formatK <- x$format
-    keysK <- x$keys
+    keys <- result[["estimate_name"]] |> unique()
+    keysK <- stringr::str_match_all(formatK, "(?<=\\<).+?(?=\\>)") |> unlist()
+    format_boolean <- all(keysK %in% keys)
     len <- length(keysK)
-    if (len > 0) {
+    if (len > 0 & format_boolean) {
+      formatKNum <- getFormatNum(formatK, keysK)
       res <- result |>
         dplyr::filter(!.data$formatted) |>
         dplyr::filter(.data$estimate_name %in% .env$keysK) |>
@@ -83,7 +81,7 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
         tidyr::pivot_wider(
           names_from = "estimate_name", values_from = "estimate_value"
         ) |>
-        evalName(formatK, keysK) |>
+        evalName(formatKNum, keysK) |>
         dplyr::mutate(
           "estimate_name" = nameK,
           "formatted" = TRUE,
@@ -96,6 +94,9 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
           by = c(cols, "estimate_name")
         ) |>
         dplyr::union_all(resF)
+    } else {
+      if (len > 0) {warning(glue::glue("{formatK} has not been formatted."), call. = FALSE)
+       } else {warning(glue::glue("{formatK} does not contain an estimate name indicated by <...>"), call. = FALSE)}
     }
   }
   result <- result |>
@@ -111,25 +112,20 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
 
   return(result)
 }
-getKeys <- function(format, keys) {
-  keysK <- character()
+getFormatNum <- function(format, keys) {
   ik <- 1
   for (k in seq_along(keys)) {
-    counts <- stringr::str_count(string = format, pattern = keys[k])
-    if (counts > 0) {
-      format <- gsub(
-        pattern = keys[k], replacement = paste0("#", ik, "#"), x = format
-      )
-      keysK <- c(keysK, keys[k])
-      ik <- ik + 1
-    }
+    format <- gsub(
+      pattern = keys[k], replacement = paste0("#", ik, "#"), x = format
+    )
+    ik <- ik + 1
   }
-  return(list(format = format, keys = keysK))
+  return(format)
 }
 evalName <- function(result, format, keys) {
   for (k in seq_along(keys)) {
     format <- gsub(
-      pattern = paste0("#", k, "#"),
+      pattern = paste0("<#", k, "#>"),
       replacement = paste0("#x#.data[[\"", keys[k], "\"]]#x#"),
       x = format
     )
