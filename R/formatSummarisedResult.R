@@ -23,7 +23,6 @@
 #' keepNotFormatted = TRUE, decimalMark = ".", bigMark = ",", na = "-",
 #' groupNameCol = NULL, groupNameAsColumn = FALSE, groupOrder = NULL).
 #'
-#' @order 2
 #' @export
 #'
 #' @examples
