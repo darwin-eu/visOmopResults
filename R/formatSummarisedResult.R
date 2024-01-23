@@ -32,7 +32,7 @@
 #'                          header = c("Study strata","strata_name",
 #'                                     "strata_level"),
 #'                          estimateNameFormat = c("N(%)" =
-#'                                                   "count (percentage%)"),
+#'                                                   "<count> (<percentage>%)"),
 #'                          style = "default",
 #'                          decimals = c(
 #'                            integer = 0, numeric = 2, percentage = 1,
@@ -92,7 +92,7 @@ formatSummarisedResult <- function(result,
   # format estimate_name
   if (! is.null(estimateNameFormat)) {
     result <- formatEstimateName(
-      result = result, format = estimateNameFormat,
+      result = result, estimateNameFormat = estimateNameFormat,
       keepNotFormatted = options$keepNotFormatted
     )
   }
