@@ -1,4 +1,4 @@
-#' Format estimate_value column of summarised_result and compared_result
+#' Format estimate_name and estimate_value column of summarised_result and compared_result
 #' object, by change the name of the estimate name, or joining diferent
 #' estimate names together in a row.
 #'
