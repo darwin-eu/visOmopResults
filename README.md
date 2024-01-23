@@ -1,4 +1,4 @@
-# FormatTable
+# VisOmop
 
 <!-- badges: start -->
 
@@ -7,41 +7,40 @@
 
 ## Package overview
 
-FormatTable contains functions for formmating objects of the class "summarisedResult" (see R package [omopgenerics](https://cran.r-project.org/web/packages/omopgenerics/index.html). This package allows to manipulate them easly to obtain nice output tables in format gt or flextable to use in shiny apps, RMarkdown, Quarto...
+VisOmop contains functions for formatting objects of the class *summarised_result* and *compared_result* (see R package [omopgenerics](https://cran.r-project.org/web/packages/omopgenerics/index.html). This package simplifies the handling of these objects to obtain nice output tables in the format of *gt* or *flextable*' to report results via Shiny apps, RMarkdown, Quarto, and more.
 
 
 ## Installation
 
-You can install the development version of FormatTable from
+You can install the development version of VisOmop from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("oxford-pharmacoepi/formatTable")
+devtools::install_github("oxford-pharmacoepi/VisOmop")
 ```
 
 ## Example
 
-In this example we show how to use the package to format a mock summarisedResult object into a nice gt or flextable object.
+In this example we show how to use the package to format a mock *summarised_result* object into a nice gt object.
 
-First we load the package and create a mock summarisedResult object.
+First we load the package and create the mock *summarised_result* object.
 
 ``` r
-library(formatTable)
+library(VisOmop)
 library(dplyr)
-result <- mockSummarisedResult() # mock summarisedResult object
-result %>% glimpse()
+result <- mockSummarisedResult()
 ```
 
-#### 1. formatEstimateValue()
-We use `formatEstimateValue` to transform the column estimate_value into our desired format. In this case, we use the deafult values of the function, which use 0 decimals for integer values, 2 for numeric, 1 for percentage and 3 for proportion. The function also defaults the decimal mark to "." and the thousand/millions separator to ".".
+### 1. formatEstimateValue
+We utilize the `formatEstimateValue` function to modify the *estimate_value* column. In this case, we will apply the default settings of the function, which include using 0 decimals for integer values, 2 decimals for numeric values, 1 decimal for percentages, and 3 decimals for proportions. Additionally, the function sets the decimal mark to '.', and the thousand/millions separator to ',' by default."
 
 ``` r
 result <- result %>% formatEstimateValue()
 ```
 
-#### 2. formatEstimateName()
-The function `formatEstimateName` will allow us to tranform the estimate_name and estimate_value columns. For instance, we can join in the same row counts and percentages refering to the same variable (from the same group and strata). Notice, the estimate_name is written within <...> in the `estimateNameFormat` argument.
+#### 2. formatEstimateName
+The `formatEstimateName` function enables the transformation of the *estimate_name* and *estimate_value* columns. For example, it allows to consolidate into one row counts and percentages related to the same variable within the same group and strata. It's worth noting that the estimate_name is enclosed within <...> in the *estimateNameFormat* argument."
 ``` r
 result <- result %>% formatEstimateName(
   estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
@@ -50,11 +49,7 @@ result <- result %>% formatEstimateName(
   keepNotFormatted = FALSE)
 ```
 
-#### 3. spanHeader()
-We can set the stratification into columns instead of rows using the ``
-
-To make our result table more readble, we want to set new columns with the stratifications. We use `spanHeader` to do this. Each new column will have a descriptive name, with different labels separated by a deliminter that can be later use in gt and/or flextable objects to create a header. 
-In the header input, we specify those columns we want to pivot in the order we want them. Additonally, we can state names not corresponding to table columns that we want to incorporate into the header at that position. Lastly, the boolean input "includeHeaderName" wheather to inclue the column name (e.g. "strata_name") as a header or not. In this example we set this to FALSE since we included our own headers ("Study cohorts" and "Study strata").
+#### 3. formatTable
 ``` r
 result <- result %>%
   spanHeader(header = c("Study cohorts", "group_level", "Study strata",
@@ -63,7 +58,7 @@ result <- result %>%
              includeHeaderName = FALSE)
 ```
 
-#### 4. gtTable() 
+#### 4. gtTable
 Finally, we can convert the obtained `result` table to either a gt or flextable object using the function `gtTable` and `fxTable` respectively. For illustrative purposes, we are going to create a gt table object. 
 We use the same delimiter object as in `spanHeader` in order to span the headers at the desired positions. Additonally, we wan to group data from the different group_level within the table, for which we use the  groupNameCol argument.
 ``` r
@@ -82,7 +77,7 @@ result <- result %>%
       "title" = list(gt::cell_text(color = "blue", weight = "bold")
     ),
     na = "-",
-    title = "My first gt table with FormatTable!),
+    title = "My first gt table with VisOmop!),
     groupNameCol = "group_level",
     groupNameAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2")
