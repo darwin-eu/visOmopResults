@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(formatTable)
+library(VisOmop)
 
-test_check("formatTable")
+test_check("VisOmop")

@@ -1,5 +1,5 @@
-Package: formatTable
-Title: What the Package Does (One Line, Title Case)
+Package: VisOmop
+Title: Format summarisedResult objects into gt and flextable objects
 Version: 0.0.1
 Authors@R: c(
     person(
@@ -32,5 +32,5 @@ Imports:
     rlang,
     stringr,
     tidyr
-URL: https://oxford-pharmacoepi.github.io/formatTable/
-BugReports: https://github.com/oxford-pharmacoepi/formatTable/issues
+URL: https://oxford-pharmacoepi.github.io/VisOmop/
+BugReports: https://github.com/oxford-pharmacoepi/VisOmop/issues
