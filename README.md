@@ -1,54 +1,83 @@
-
-<!-- README.md is generated from README.Rmd. Please edit that file -->
-
-# gtSummarisedResult
+# FormatTable
 
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/catalamarti/gtSummarisedResult/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/catalamarti/gtSummarisedResult/actions/workflows/R-CMD-check.yaml)
 <!-- badges: end -->
 
-The goal of gtSummarisedResult is to …
+## Package overview
+
+FormatTable contains functions for formmating objects of the class "summarisedResult" (see R package [omopgenerics](https://cran.r-project.org/web/packages/omopgenerics/index.html). This package allows to manipulate them easly to obtain nice output tables in format gt or flextable to use in shiny apps, RMarkdown, Quarto...
+
 
 ## Installation
 
-You can install the development version of gtSummarisedResult from
+You can install the development version of FormatTable from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("catalamarti/gtSummarisedResult")
+devtools::install_github("oxford-pharmacoepi/formatTable")
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+In this example we show how to use the package to format a mock summarisedResult object into a nice gt or flextable object.
+
+First we load the package and create a mock summarisedResult object.
 
 ``` r
-library(gtSummarisedResult)
-## basic example code
+library(formatTable)
+library(dplyr)
+result <- mockSummarisedResult() # mock summarisedResult object
+result %>% glimpse()
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`?
-You can include R chunks like so:
+We use `formatEstimateValue` to transform the column estimate_value into our desired format. In this case, we use the deafult values of the function, which use 0 decimals for integer values, 2 for numeric, 1 for percentage and 3 for proportion. Also, the function defaults the decimal mark to "." and the thousand/millions separator to ".".
 
 ``` r
-summary(cars)
-#>      speed           dist       
-#>  Min.   : 4.0   Min.   :  2.00  
-#>  1st Qu.:12.0   1st Qu.: 26.00  
-#>  Median :15.0   Median : 36.00  
-#>  Mean   :15.4   Mean   : 42.98  
-#>  3rd Qu.:19.0   3rd Qu.: 56.00  
-#>  Max.   :25.0   Max.   :120.00
+result <- result %>% formatEstimateValue()
 ```
 
-You’ll still need to render `README.Rmd` regularly, to keep `README.md`
-up-to-date. `devtools::build_readme()` is handy for this.
+The function `formatEstimateName` will allow us to tranform the estimate_name and estimate_value columns. For instance, we can join within the same row counts and percentages of the same variable estimate. At the same time, we can do the same for the mean and standard deviation (sd) estimates, and change the name of the counts to "N". Notice, the estimate_name is written within <...> in the estimateNameFormat argument.
+``` r
+result <- result %>% formatEstimateName(
+  estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
+                         "N" = "<count>",
+                         "Mean (SD)" = "<mean> (<sd>)"),
+  keepNotFormatted = FALSE)
+```
+To make our result table more readble, we want to set new columns with the stratifications. We use `spanHeader` to do this. Each new column will have a descriptive name, with different labels separated by a deliminter that can be later use in gt and/or flextable objects to create a header. 
+In the header input, we specify those columns we want to pivot in the order we want them. Additonally, we can state names not corresponding to table columns that we want to incorporate into the header at that position. Lastly, the boolean input "includeHeaderName" wheather to inclue the column name (e.g. "strata_name") as a header or not. In this example we set this to FALSE since we included our own headers ("Study cohorts" and "Study strata").
+``` r
+result <- result %>%
+  spanHeader(header = c("Study cohorts", "group_level", "Study strata",
+                         "strata_name", "strata_level"),
+             delim = "\n", 
+             includeHeaderName = FALSE)
+```
 
-You can also embed plots, for example:
-
-<img src="man/figures/README-pressure-1.png" width="100%" />
-
-In that case, don’t forget to commit and push the resulting figure
-files, so they display on GitHub and CRAN.
+Finally, we can convert the obtained `result` table to either a gt or flextable object using the function `gtTable` and `fxTable` respectively. For illustrative purposes, we are going to create a gt table object. 
+We use the same delimiter object as in `spanHeader` in order to span the headers at the desired positions. Additonally, we wan to group data from the different group_level within the table, for which we use the  groupNameCol argument.
+``` r
+result <- result %>%
+  gtTable(
+    delim = "\n",
+    style = list("header" = list(gt::cell_fill(color = "#c8c8c8"),
+                                 gt::cell_text(weight = "bold")),
+      "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
+                           gt::cell_text(weight = "bold")),
+      "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
+                            gt::cell_text(weight = "bold")),
+      "column_name" = list(gt::cell_text(weight = "bold")),
+      "group_label" = list(gt::cell_fill(color = "#e9ecef"),
+                           gt::cell_text(weight = "bold")),
+      "title" = list(gt::cell_text(color = "blue", weight = "bold")
+    ),
+    na = "-",
+    title = "My first gt table with FormatTable!),
+    groupNameCol = "group_level",
+    groupNameAsColumn = FALSE,
+    groupOrder = c("cohort1", "cohort2")
+    )
+```
