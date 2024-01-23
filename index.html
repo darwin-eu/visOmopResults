@@ -85,16 +85,28 @@
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mockSummarisedResult.html">mockSummarisedResult</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># mock summarisedResult object</span></span>
 <span><span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>We use <code>formatEstimateValue</code> to transform the column estimate_value into our desired format. In this case, we use the deafult values of the function, which use 0 decimals for integer values, 2 for numeric, 1 for percentage and 3 for proportion. Also, the function defaults the decimal mark to “.” and the thousand/millions separator to “.”.</p>
+<div class="section level4">
+<h4 id="id_1-formatestimatevalue">1. formatEstimateValue()<a class="anchor" aria-label="anchor" href="#id_1-formatestimatevalue"></a>
+</h4>
+<p>We use <code>formatEstimateValue</code> to transform the column estimate_value into our desired format. In this case, we use the deafult values of the function, which use 0 decimals for integer values, 2 for numeric, 1 for percentage and 3 for proportion. The function also defaults the decimal mark to “.” and the thousand/millions separator to “.”.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/formatEstimateValue.html">formatEstimateValue</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>The function <code>formatEstimateName</code> will allow us to tranform the estimate_name and estimate_value columns. For instance, we can join within the same row counts and percentages of the same variable estimate. At the same time, we can do the same for the mean and standard deviation (sd) estimates, and change the name of the counts to “N”. Notice, the estimate_name is written within &lt;…&gt; in the estimateNameFormat argument.</p>
+</div>
+<div class="section level4">
+<h4 id="id_2-formatestimatename">2. formatEstimateName()<a class="anchor" aria-label="anchor" href="#id_2-formatestimatename"></a>
+</h4>
+<p>The function <code>formatEstimateName</code> will allow us to tranform the estimate_name and estimate_value columns. For instance, we can join in the same row counts and percentages refering to the same variable (from the same group and strata). Notice, the estimate_name is written within &lt;…&gt; in the <code>estimateNameFormat</code> argument.</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/formatEstimateName.html">formatEstimateName</a></span><span class="op">(</span></span>
 <span>  estimateNameFormat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N (%)"</span> <span class="op">=</span> <span class="st">"&lt;count&gt; (&lt;percentage&gt;%)"</span>,</span>
 <span>                         <span class="st">"N"</span> <span class="op">=</span> <span class="st">"&lt;count&gt;"</span>,</span>
 <span>                         <span class="st">"Mean (SD)"</span> <span class="op">=</span> <span class="st">"&lt;mean&gt; (&lt;sd&gt;)"</span><span class="op">)</span>,</span>
 <span>  keepNotFormatted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="id_3-spanheader">3. spanHeader()<a class="anchor" aria-label="anchor" href="#id_3-spanheader"></a>
+</h4>
+<p>We can set the stratification into columns instead of rows using the ``</p>
 <p>To make our result table more readble, we want to set new columns with the stratifications. We use <code>spanHeader</code> to do this. Each new column will have a descriptive name, with different labels separated by a deliminter that can be later use in gt and/or flextable objects to create a header. In the header input, we specify those columns we want to pivot in the order we want them. Additonally, we can state names not corresponding to table columns that we want to incorporate into the header at that position. Lastly, the boolean input “includeHeaderName” wheather to inclue the column name (e.g. “strata_name”) as a header or not. In this example we set this to FALSE since we included our own headers (“Study cohorts” and “Study strata”).</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
@@ -102,6 +114,10 @@
 <span>                         <span class="st">"strata_name"</span>, <span class="st">"strata_level"</span><span class="op">)</span>,</span>
 <span>             delim <span class="op">=</span> <span class="st">"\n"</span>, </span>
 <span>             includeHeaderName <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+</div>
+<div class="section level4">
+<h4 id="id_3-gttable-or-fxtable">3. gtTable() [or fxTable()]<a class="anchor" aria-label="anchor" href="#id_3-gttable-or-fxtable"></a>
+</h4>
 <p>Finally, we can convert the obtained <code>result</code> table to either a gt or flextable object using the function <code>gtTable</code> and <code>fxTable</code> respectively. For illustrative purposes, we are going to create a gt table object. We use the same delimiter object as in <code>spanHeader</code> in order to span the headers at the desired positions. Additonally, we wan to group data from the different group_level within the table, for which we use the groupNameCol argument.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> result <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gtTable</span>(</span>
@@ -123,6 +139,7 @@
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="st">    groupNameAsColumn = FALSE,</span></span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="st">    groupOrder = c("</span>cohort1<span class="st">", "</span>cohort2<span class="st">")</span></span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span></code></pre></div>
+</div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
