@@ -60,26 +60,15 @@ spanHeader<- function(result,
         spanners <- colDetails[[header[k]]] |> unique()
         for (span in spanners) {
           colsSpanner <- colDetails$name[colDetails[[header[k]]] == span]
-          if (k < length(header)) {
-            if (includeHeaderName) {
-              colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_name]", header[k], delim, "[header_level]", span, delim)
-            } else {
-              colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_level]", span, delim)
-            }
+
+          if (includeHeaderName) {
+            colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_name]", header[k], delim, "[header_level]", span, delim)
           } else {
-            if (includeHeaderName) {
-              colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_name]", header[k], delim, "[column_name]", span, delim)
-            } else {
-              colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[column_name]", span, delim)
-            }
+            colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_level]", span, delim)
           }
         }
       } else {
-        if (k < length(header)) {
-          colDetails$new_name <- paste0(colDetails$new_name, "[header]", header[k], delim)
-        } else {
-          colDetails$new_name <- paste0(colDetails$new_name, "[column_name]", header[k], delim)
-        }
+        colDetails$new_name <- paste0(colDetails$new_name, "[header]", header[k], delim)
       }
     }
     colDetails <- colDetails |> dplyr::mutate(new_name = base::substring(.data$new_name, 0, nchar(.data$new_name)-1))
@@ -88,7 +77,7 @@ spanHeader<- function(result,
     names(result)[names(result) %in% colDetails$name] <- colDetails$new_name
 
   } else {
-    new_name <- paste0("[header]", paste(header[1:(length(header)-1)], collapse = delim), delim, "[column_name]", header[-1])
+    new_name <- paste0("[header]", paste(header, collapse = paste0(delim, "[header]")))
     result <- result |> dplyr::rename(!!new_name := "estimate_value")
     class(result) <- c("tbl_df", "tbl", "data.frame")
   }

@@ -2,7 +2,7 @@
 
 export(formatEstimateName)
 export(formatEstimateValue)
-export(formatSummarisedResult)
+export(fxTable)
 export(gtTable)
 export(mockSummarisedResult)
 export(spanHeader)
