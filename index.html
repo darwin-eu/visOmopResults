@@ -116,7 +116,7 @@
 <span>             includeHeaderName <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level4">
-<h4 id="id_3-gttable-or-fxtable">3. gtTable() [or fxTable()]<a class="anchor" aria-label="anchor" href="#id_3-gttable-or-fxtable"></a>
+<h4 id="id_4-gttable">4. gtTable()<a class="anchor" aria-label="anchor" href="#id_4-gttable"></a>
 </h4>
 <p>Finally, we can convert the obtained <code>result</code> table to either a gt or flextable object using the function <code>gtTable</code> and <code>fxTable</code> respectively. For illustrative purposes, we are going to create a gt table object. We use the same delimiter object as in <code>spanHeader</code> in order to span the headers at the desired positions. Additonally, we wan to group data from the different group_level within the table, for which we use the groupNameCol argument.</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> result <span class="sc">%&gt;%</span></span>
