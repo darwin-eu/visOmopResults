@@ -8,10 +8,10 @@ validateResult <- function(x, call = parent.frame()) {
     return(xn)
   }
   xn <- tryCatch(
-    validateSummarisedResult(x = x, call = call),
+    validateComparedResult(x = x, call = call),
     error = function(e){NULL}
   )
-  if (inherits(xn, "summarised_result")) {
+  if (inherits(xn, "compared_result")) {
     return(xn)
   }
   cli::cli_abort("Please provide a valid result object.", call = call)
