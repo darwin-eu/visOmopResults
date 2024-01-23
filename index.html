@@ -58,40 +58,71 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="gtsummarisedresult">gtSummarisedResult<a class="anchor" aria-label="anchor" href="#gtsummarisedresult"></a>
+<div class="page-header"><h1 id="formattable">FormatTable<a class="anchor" aria-label="anchor" href="#formattable"></a>
 </h1></div>
 <!-- badges: start -->
 
-<p>The goal of gtSummarisedResult is to …</p>
+<div class="section level2">
+<h2 id="package-overview">Package overview<a class="anchor" aria-label="anchor" href="#package-overview"></a>
+</h2>
+<p>FormatTable contains functions for formmating objects of the class “summarisedResult” (see R package <a href="https://cran.r-project.org/web/packages/omopgenerics/index.html" class="external-link">omopgenerics</a>. This package allows to manipulate them easly to obtain nice output tables in format gt or flextable to use in shiny apps, RMarkdown, Quarto…</p>
+</div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
 </h2>
-<p>You can install the development version of gtSummarisedResult from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
+<p>You can install the development version of FormatTable from <a href="https://github.com/" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"catalamarti/gtSummarisedResult"</span><span class="op">)</span></span></code></pre></div>
+<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"oxford-pharmacoepi/formatTable"</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="example">Example<a class="anchor" aria-label="anchor" href="#example"></a>
 </h2>
-<p>This is a basic example which shows you how to solve a common problem:</p>
+<p>In this example we show how to use the package to format a mock summarisedResult object into a nice gt or flextable object.</p>
+<p>First we load the package and create a mock summarisedResult object.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va">gtSummarisedResult</span><span class="op">)</span></span>
-<span><span class="co">## basic example code</span></span></code></pre></div>
-<p>What is special about using <code>README.Rmd</code> instead of just <code>README.md</code>? You can include R chunks like so:</p>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://oxford-pharmacoepi.github.io/formatTable/">formatTable</a></span><span class="op">)</span></span>
+<span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mockSummarisedResult.html">mockSummarisedResult</a></span><span class="op">(</span><span class="op">)</span> <span class="co"># mock summarisedResult object</span></span>
+<span><span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>We use <code>formatEstimateValue</code> to transform the column estimate_value into our desired format. In this case, we use the deafult values of the function, which use 0 decimals for integer values, 2 for numeric, 1 for percentage and 3 for proportion. Also, the function defaults the decimal mark to “.” and the thousand/millions separator to “.”.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/summary.html" class="external-link">summary</a></span><span class="op">(</span><span class="va">cars</span><span class="op">)</span></span>
-<span><span class="co">#&gt;      speed           dist       </span></span>
-<span><span class="co">#&gt;  Min.   : 4.0   Min.   :  2.00  </span></span>
-<span><span class="co">#&gt;  1st Qu.:12.0   1st Qu.: 26.00  </span></span>
-<span><span class="co">#&gt;  Median :15.0   Median : 36.00  </span></span>
-<span><span class="co">#&gt;  Mean   :15.4   Mean   : 42.98  </span></span>
-<span><span class="co">#&gt;  3rd Qu.:19.0   3rd Qu.: 56.00  </span></span>
-<span><span class="co">#&gt;  Max.   :25.0   Max.   :120.00</span></span></code></pre></div>
-<p>You’ll still need to render <code>README.Rmd</code> regularly, to keep <code>README.md</code> up-to-date. <code>devtools::build_readme()</code> is handy for this.</p>
-<p>You can also embed plots, for example:</p>
-<p><img src="reference/figures/README-pressure-1.png" width="100%"></p>
-<p>In that case, don’t forget to commit and push the resulting figure files, so they display on GitHub and CRAN.</p>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/formatEstimateValue.html">formatEstimateValue</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<p>The function <code>formatEstimateName</code> will allow us to tranform the estimate_name and estimate_value columns. For instance, we can join within the same row counts and percentages of the same variable estimate. At the same time, we can do the same for the mean and standard deviation (sd) estimates, and change the name of the counts to “N”. Notice, the estimate_name is written within &lt;…&gt; in the estimateNameFormat argument.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/formatEstimateName.html">formatEstimateName</a></span><span class="op">(</span></span>
+<span>  estimateNameFormat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N (%)"</span> <span class="op">=</span> <span class="st">"&lt;count&gt; (&lt;percentage&gt;%)"</span>,</span>
+<span>                         <span class="st">"N"</span> <span class="op">=</span> <span class="st">"&lt;count&gt;"</span>,</span>
+<span>                         <span class="st">"Mean (SD)"</span> <span class="op">=</span> <span class="st">"&lt;mean&gt; (&lt;sd&gt;)"</span><span class="op">)</span>,</span>
+<span>  keepNotFormatted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>To make our result table more readble, we want to set new columns with the stratifications. We use <code>spanHeader</code> to do this. Each new column will have a descriptive name, with different labels separated by a deliminter that can be later use in gt and/or flextable objects to create a header. In the header input, we specify those columns we want to pivot in the order we want them. Additonally, we can state names not corresponding to table columns that we want to incorporate into the header at that position. Lastly, the boolean input “includeHeaderName” wheather to inclue the column name (e.g. “strata_name”) as a header or not. In this example we set this to FALSE since we included our own headers (“Study cohorts” and “Study strata”).</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/spanHeader.html">spanHeader</a></span><span class="op">(</span>header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Study cohorts"</span>, <span class="st">"group_level"</span>, <span class="st">"Study strata"</span>,</span>
+<span>                         <span class="st">"strata_name"</span>, <span class="st">"strata_level"</span><span class="op">)</span>,</span>
+<span>             delim <span class="op">=</span> <span class="st">"\n"</span>, </span>
+<span>             includeHeaderName <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<p>Finally, we can convert the obtained <code>result</code> table to either a gt or flextable object using the function <code>gtTable</code> and <code>fxTable</code> respectively. For illustrative purposes, we are going to create a gt table object. We use the same delimiter object as in <code>spanHeader</code> in order to span the headers at the desired positions. Additonally, we wan to group data from the different group_level within the table, for which we use the groupNameCol argument.</p>
+<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> result <span class="sc">%&gt;%</span></span>
+<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gtTable</span>(</span>
+<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">delim =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
+<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">list</span>(<span class="st">"header"</span> <span class="ot">=</span> <span class="fu">list</span>(gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"#c8c8c8"</span>),</span>
+<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                                 gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>)),</span>
+<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">"header_name"</span> <span class="ot">=</span> <span class="fu">list</span>(gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"#d9d9d9"</span>),</span>
+<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                           gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>)),</span>
+<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"header_level"</span> <span class="ot">=</span> <span class="fu">list</span>(gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"#e1e1e1"</span>),</span>
+<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                            gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>)),</span>
+<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">"column_name"</span> <span class="ot">=</span> <span class="fu">list</span>(gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>)),</span>
+<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">"group_label"</span> <span class="ot">=</span> <span class="fu">list</span>(gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"#e9ecef"</span>),</span>
+<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                           gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>)),</span>
+<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      <span class="st">"title"</span> <span class="ot">=</span> <span class="fu">list</span>(gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">weight =</span> <span class="st">"bold"</span>)</span>
+<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    ),</span>
+<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">na =</span> <span class="st">"-"</span>,</span>
+<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"My first gt table with FormatTable!),</span></span>
+<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="st">    groupNameCol = "</span>group_level<span class="st">",</span></span>
+<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="st">    groupNameAsColumn = FALSE,</span></span>
+<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="st">    groupOrder = c("</span>cohort1<span class="st">", "</span>cohort2<span class="st">")</span></span>
+<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
