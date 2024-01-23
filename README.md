@@ -33,13 +33,15 @@ result <- mockSummarisedResult() # mock summarisedResult object
 result %>% glimpse()
 ```
 
-We use `formatEstimateValue` to transform the column estimate_value into our desired format. In this case, we use the deafult values of the function, which use 0 decimals for integer values, 2 for numeric, 1 for percentage and 3 for proportion. Also, the function defaults the decimal mark to "." and the thousand/millions separator to ".".
+#### 1. formatEstimateValue()
+We use `formatEstimateValue` to transform the column estimate_value into our desired format. In this case, we use the deafult values of the function, which use 0 decimals for integer values, 2 for numeric, 1 for percentage and 3 for proportion. The function also defaults the decimal mark to "." and the thousand/millions separator to ".".
 
 ``` r
 result <- result %>% formatEstimateValue()
 ```
 
-The function `formatEstimateName` will allow us to tranform the estimate_name and estimate_value columns. For instance, we can join within the same row counts and percentages of the same variable estimate. At the same time, we can do the same for the mean and standard deviation (sd) estimates, and change the name of the counts to "N". Notice, the estimate_name is written within <...> in the estimateNameFormat argument.
+#### 2. formatEstimateName()
+The function `formatEstimateName` will allow us to tranform the estimate_name and estimate_value columns. For instance, we can join in the same row counts and percentages refering to the same variable (from the same group and strata). Notice, the estimate_name is written within <...> in the `estimateNameFormat` argument.
 ``` r
 result <- result %>% formatEstimateName(
   estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
@@ -47,6 +49,10 @@ result <- result %>% formatEstimateName(
                          "Mean (SD)" = "<mean> (<sd>)"),
   keepNotFormatted = FALSE)
 ```
+
+#### 3. spanHeader()
+We can set the stratification into columns instead of rows using the ``
+
 To make our result table more readble, we want to set new columns with the stratifications. We use `spanHeader` to do this. Each new column will have a descriptive name, with different labels separated by a deliminter that can be later use in gt and/or flextable objects to create a header. 
 In the header input, we specify those columns we want to pivot in the order we want them. Additonally, we can state names not corresponding to table columns that we want to incorporate into the header at that position. Lastly, the boolean input "includeHeaderName" wheather to inclue the column name (e.g. "strata_name") as a header or not. In this example we set this to FALSE since we included our own headers ("Study cohorts" and "Study strata").
 ``` r
@@ -57,6 +63,7 @@ result <- result %>%
              includeHeaderName = FALSE)
 ```
 
+#### 3. gtTable() [or fxTable()]
 Finally, we can convert the obtained `result` table to either a gt or flextable object using the function `gtTable` and `fxTable` respectively. For illustrative purposes, we are going to create a gt table object. 
 We use the same delimiter object as in `spanHeader` in order to span the headers at the desired positions. Additonally, we wan to group data from the different group_level within the table, for which we use the  groupNameCol argument.
 ``` r
