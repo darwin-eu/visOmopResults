@@ -63,7 +63,7 @@ result <- result %>%
              includeHeaderName = FALSE)
 ```
 
-#### 3. gtTable() [or fxTable()]
+#### 4. gtTable() 
 Finally, we can convert the obtained `result` table to either a gt or flextable object using the function `gtTable` and `fxTable` respectively. For illustrative purposes, we are going to create a gt table object. 
 We use the same delimiter object as in `spanHeader` in order to span the headers at the desired positions. Additonally, we wan to group data from the different group_level within the table, for which we use the  groupNameCol argument.
 ``` r
