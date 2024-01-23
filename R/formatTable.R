@@ -1,6 +1,4 @@
-#' Pivots a summarised_result object based on the column names in header. The
-#' names of the new columns refer to the information on the column based on
-#' the header input, with labels are separated using a delimiter.
+#' Creats a tibble with specific rows pivotted into columns
 #'
 #' @param result A summarised_result or compared_result.
 #' @param header Names of the columns to make headers. Names not corresponding
@@ -9,6 +7,14 @@
 #' @param delim Delimiter to use to separate headers.
 #' @param includeHeaderName Wheather to include the column name as header.
 #'
+#' @return A tibble with rows pivotted into columns with column names for future
+#' spanner headers.
+#'
+#' @description
+#' Pivots a summarised_result object based on the column names in header. The
+#' names of the new columns refer to the information on the column based on
+#' the header input, with labels are separated using a delimiter.
+#'
 #' @export
 #'
 #' @examples
@@ -16,15 +22,15 @@
 #' result <- mockSummarisedResult()
 #'
 #' result |>
-#'   spanHeader(header = c("Study cohorts", "group_level", "Study strata",
-#'                         "strata_name", "strata_level"),
-#'              includeHeaderName = FALSE)
+#'   formatTable(header = c("Study cohorts", "group_level", "Study strata",
+#'                          "strata_name", "strata_level"),
+#'               includeHeaderName = FALSE)
 #' }
 
-spanHeader<- function(result,
-                      header,
-                      delim = "\n",
-                      includeHeaderName = TRUE) {
+formatTable <- function(result,
+                        header,
+                        delim = "\n",
+                        includeHeaderName = TRUE) {
   # initial checks
   result <- validateResult(result)
   checkmate::assertCharacter(x = header, any.missing = FALSE)

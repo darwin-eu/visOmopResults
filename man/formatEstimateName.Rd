@@ -2,26 +2,34 @@
 % Please edit documentation in R/formatEstimateName.R
 \name{formatEstimateName}
 \alias{formatEstimateName}
-\title{Format estimate_value column of summarised_result and compared_result
-object.}
+\title{Format estimate_name and estimate_value column}
 \usage{
 formatEstimateName(result, estimateNameFormat = NULL, keepNotFormatted = TRUE)
 }
 \arguments{
 \item{result}{A summarised_result or compared_result.}
 
-\item{estimateNameFormat}{Named list of estimate name's to join, sorted by computation
-order.}
+\item{estimateNameFormat}{Named list of estimate name's to join, sorted by
+computation order. Indicate estimate_name's between <...>.}
 
 \item{keepNotFormatted}{Whether to keep rows not formatted.}
 }
+\value{
+A summarised_result object withspecified changes in estimate_name and
+estimate_value.
+}
 \description{
-Format estimate_value column of summarised_result and compared_result
-object.
+Format estimate_name and estimate_value column of summarised_result and
+compared_result object, by changing the name of the estimate name and/or joining
+diferent estimate names together in a row.
 }
 \examples{
 \donttest{
-x <- 1
+result <- mockSummarisedResult()
+result |> formatEstimateName(
+    estimateNameFormat = c("N (\%)" = "<count> (<percentage>\%)",
+                           "N" = "<count>"),
+    keepNotFormatted = FALSE)
 }
 
 }

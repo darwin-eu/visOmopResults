@@ -2,7 +2,7 @@
 % Please edit documentation in R/fxTable.R
 \name{fxTable}
 \alias{fxTable}
-\title{Creats a flextable from a dataframe using as deliminter (\code{delim}) for spanners.}
+\title{Creats a flextable object from a dataframe}
 \usage{
 fxTable(
   x,
@@ -12,10 +12,7 @@ fxTable(
     officer::fp_cell(background.color = "#d9d9d9"), text = officer::fp_text(bold =
     TRUE)), header_level = list(cell = officer::fp_cell(background.color = "#e1e1e1"),
     text = officer::fp_text(bold = TRUE)), column_name = list(text =
-    officer::fp_text(bold = TRUE)), group_label = list(cell =
-    officer::fp_cell(background.color = "#e9ecef", border = officer::fp_border(width = 1,
-    
-     color = "gray")), text = officer::fp_text(bold = TRUE))),
+    officer::fp_text(bold = TRUE))),
   na = "-",
   title = NULL,
   subtitle = NULL,
@@ -31,7 +28,7 @@ fxTable(
 \item{delim}{Delimiter.}
 
 \item{style}{Named list that specifies how to style the different parts of
-the table. Accepted entries are: title, subtitle, header, header_name,
+the flextable. Accepted entries are: title, subtitle, header, header_name,
 header_level, column_name, group_label, and body.}
 
 \item{na}{How to display missing values.}
@@ -55,14 +52,15 @@ italics).}
 A flextable.
 }
 \description{
-Creats a flextable from a dataframe using as deliminter (\code{delim}) for spanners.
+Creats a flextable object from a dataframe using as delimiter (\code{delim}) to span
+the header, and the specified styles for different parts of the table.
 }
 \examples{
 \donttest{
 mockSummarisedResult() |>
   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-  spanHeader(header = c("Study strata", "strata_level"),
-             includeHeader = FALSE) |>
+  formatTable(header = c("Study strata", "strata_level"),
+              includeHeader = FALSE) |>
   fxTable(
     style = list(
       "header" = list(
@@ -78,12 +76,12 @@ mockSummarisedResult() |>
         "text" = officer::fp_text(bold = TRUE))
     ),
     na = "--",
-   title = "fxTable example",
-   subtitle = NULL,
-   caption = NULL,
-  groupNameCol = "group_level",
-   groupNameAsColumn = TRUE,
-   groupOrder = c("cohort1", "cohort2")
+    title = "fxTable example",
+    subtitle = NULL,
+    caption = NULL,
+    groupNameCol = "group_level",
+    groupNameAsColumn = TRUE,
+    groupOrder = c("cohort1", "cohort2")
  )
 }
 

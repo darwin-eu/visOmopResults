@@ -1,11 +1,17 @@
-#' Format estimate_name and estimate_value column of summarised_result and compared_result
-#' object, by change the name of the estimate name, or joining diferent
-#' estimate names together in a row.
+#' Format estimate_name and estimate_value column
 #'
 #' @param result A summarised_result or compared_result.
 #' @param estimateNameFormat Named list of estimate name's to join, sorted by
 #' computation order. Indicate estimate_name's between <...>.
 #' @param keepNotFormatted Whether to keep rows not formatted.
+#'
+#' @description
+#' Format estimate_name and estimate_value column of summarised_result and
+#' compared_result object, by changing the name of the estimate name and/or joining
+#' diferent estimate names together in a row.
+#'
+#' @return A summarised_result object withspecified changes in estimate_name and
+#' estimate_value.
 #'
 #' @export
 #'

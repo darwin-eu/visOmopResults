@@ -1,12 +1,18 @@
-#' Format the estimate_value column of summarised_result and compared_result
-#' object by editing number of decimals, decimal and thousand/millions separator
-#' marks.
+#' Format the estimate_value column
 #'
 #' @param result A summarised_result or compared_result.
 #' @param decimals Number of decimals per estimate_type (integer, numeric,
 #' percentage, proportion).
 #' @param decimalMark Decimal separator mark.
 #' @param bigMark Thousand and millions separator mark.
+#'
+#' @return A summarised_result object with the estimate_value column formatted.
+#'
+#' @description
+#' Format the estimate_value column of summarised_result and compared_result
+#' object by editing number of decimals, decimal and thousand/millions separator
+#' marks.
+#'
 #'
 #' @export
 #'

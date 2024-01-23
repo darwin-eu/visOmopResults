@@ -1,5 +1,4 @@
-#' Creats a gt table from a dataframe using as deliminter (`delim`) to span
-#' the header.
+#' Creats a gt object from a dataframe
 #'
 #' @param x A dataframe.
 #' @param delim Delimiter.
@@ -17,12 +16,18 @@
 #' (TRUE) or rows (FALSE).
 #' @param groupOrder Order in which to display group labels.
 #'
+#' @return gt object
+#'
+#' @description
+#' Creats a gt object from a dataframe using as delimiter (`delim`) to span
+#' the header, and the specified styles for different parts of the table.
+#'
 #' @examples
 #' \donttest{
 #' mockSummarisedResult() |>
 #'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-#'   spanHeader(header = c("Study strata", "strata_level"),
-#'              includeHeader = FALSE) |>
+#'   formatTable(header = c("Study strata", "strata_level"),
+#'               includeHeader = FALSE) |>
 #'   gtTable(
 #'     style = list("header" = list(
 #'       gt::cell_fill(color = "#d9d9d9"),

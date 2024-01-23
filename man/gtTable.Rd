@@ -2,7 +2,8 @@
 % Please edit documentation in R/gtTable.R
 \name{gtTable}
 \alias{gtTable}
-\title{Creats a gt table from a dataframe using as deliminter (\code{delim}) for spanners.}
+\title{Creats a gt table from a dataframe using as deliminter (\code{delim}) to span
+the header.}
 \usage{
 gtTable(
   x,
@@ -27,7 +28,7 @@ gtTable(
 \item{delim}{Delimiter.}
 
 \item{style}{Named list that specifies how to style the different parts of
-the table. Accepted entries are: title, subtitle, header, header_name,
+the gt table. Accepted entries are: title, subtitle, header, header_name,
 header_level, column_name, group_label, and body.}
 
 \item{na}{How to display missing values.}
@@ -51,14 +52,15 @@ italics).}
 A gt table.
 }
 \description{
-Creats a gt table from a dataframe using as deliminter (\code{delim}) for spanners.
+Creats a gt table from a dataframe using as deliminter (\code{delim}) to span
+the header.
 }
 \examples{
 \donttest{
 mockSummarisedResult() |>
   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-  spanHeader(header = c("Study strata", "strata_level"),
-             includeHeader = FALSE) |>
+  formatTable(header = c("Study strata", "strata_level"),
+              includeHeader = FALSE) |>
   gtTable(
     style = list("header" = list(
       gt::cell_fill(color = "#d9d9d9"),

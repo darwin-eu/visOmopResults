@@ -1,8 +1,8 @@
-test_that("spanHeader", {
+test_that("formatTable", {
   result <- mockSummarisedResult()
 
   # Include headers + noncolumn names----
-  result_output <- spanHeader(result = result,
+  result_output <- formatTable(result = result,
                              header = c("group_name", "group_level", "strata", "strata_name", "strata_level"),
                              includeHeaderName = TRUE)
 
@@ -30,7 +30,7 @@ test_that("spanHeader", {
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # Not include headers + noncolumn names----
-  result_output <- spanHeader(result = result,
+  result_output <- formatTable(result = result,
                               header = c("group_name", "group_level", "strata", "strata_name", "strata_level"),
                               includeHeaderName = FALSE)
 
@@ -55,7 +55,7 @@ test_that("spanHeader", {
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # Not include headers + only column names----
-  result_output <- spanHeader(result = result,
+  result_output <- formatTable(result = result,
                               header = c("group_name", "group_level"),
                               includeHeaderName = FALSE)
   # column: cohort_name\ncohort1
@@ -69,7 +69,7 @@ test_that("spanHeader", {
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # Not include headers + noncolumn names----
-  result_output <- spanHeader(result = result,
+  result_output <- formatTable(result = result,
                               header = c("test_spanHeader", "group_name", "next_row", "group_level", "end_spanner"),
                               includeHeaderName = TRUE)
   # column: cohort_name\ncohort1
@@ -83,7 +83,7 @@ test_that("spanHeader", {
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # Just not column name ----
-  result_output <- spanHeader(result = result,
+  result_output <- formatTable(result = result,
                               header = c("test_spanHeader", "end_spanner"),
                               delim = ":",
                               includeHeaderName = TRUE)
@@ -97,10 +97,10 @@ test_that("spanHeader", {
   expect_false("summarised_result" %in% class(result_output))
 
   # Wrong input ----
-  expect_error(spanHeader(result = result,
+  expect_error(formatTable(result = result,
                           header = NULL,
                           includeHeaderName = TRUE))
-  expect_error(spanHeader(result = result,
+  expect_error(formatTable(result = result,
                           header = NA,
                           includeHeaderName = TRUE))
 

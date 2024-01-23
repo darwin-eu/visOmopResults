@@ -1,5 +1,4 @@
-#' Creats a fx table from a dataframe using as deliminter (`delim`) to span
-#' the header.
+#' Creats a flextable object from a dataframe
 #'
 #' @param x A dataframe.
 #' @param delim Delimiter.
@@ -17,12 +16,18 @@
 #' (TRUE) or rows (FALSE).
 #' @param groupOrder Order in which to display group labels.
 #'
+#' @return flextable object
+#'
+#' @description
+#' Creats a flextable object from a dataframe using as delimiter (`delim`) to span
+#' the header, and the specified styles for different parts of the table.
+#'
 #' @examples
 #' \donttest{
 #' mockSummarisedResult() |>
 #'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-#'   spanHeader(header = c("Study strata", "strata_level"),
-#'              includeHeader = FALSE) |>
+#'   formatTable(header = c("Study strata", "strata_level"),
+#'               includeHeader = FALSE) |>
 #'   fxTable(
 #'     style = list(
 #'       "header" = list(
@@ -38,12 +43,12 @@
 #'         "text" = officer::fp_text(bold = TRUE))
 #'     ),
 #'     na = "--",
-#'    title = "fxTable example",
-#'    subtitle = NULL,
-#'    caption = NULL,
-#'   groupNameCol = "group_level",
-#'    groupNameAsColumn = TRUE,
-#'    groupOrder = c("cohort1", "cohort2")
+#'     title = "fxTable example",
+#'     subtitle = NULL,
+#'     caption = NULL,
+#'     groupNameCol = "group_level",
+#'     groupNameAsColumn = TRUE,
+#'     groupOrder = c("cohort1", "cohort2")
 #'  )
 #' }
 #'
@@ -61,10 +66,7 @@ fxTable <- function(
                            "text" = officer::fp_text(bold = TRUE)),
       "header_level" = list("cell" = officer::fp_cell(background.color = "#e1e1e1"),
                             "text" = officer::fp_text(bold = TRUE)),
-      "column_name" = list("text" = officer::fp_text(bold = TRUE)),
-      "group_label" = list("cell" = officer::fp_cell(background.color = "#e9ecef",
-                                                     border = officer::fp_border(width = 1, color = "gray")),
-                           "text" = officer::fp_text(bold = TRUE))
+      "column_name" = list("text" = officer::fp_text(bold = TRUE))
     ),
     na = "-",
     title = NULL,
