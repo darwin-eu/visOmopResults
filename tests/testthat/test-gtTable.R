@@ -52,15 +52,16 @@ test_that("gtTable", {
   expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "title"] |> unlist(),
                c("cell_text.color" = "#0000FF", "cell_text.weight" = "bold"))
   # column names
-  expect_true(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"] |> unlist() |> unique() == "bold")
-  expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[column_name\\]", x)}) |> unlist() |> unique())
+  expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[1:36] |> unique(), c("#E1E1E1", "bold"))
+  expect_true(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[37:47] |> unique() == "bold")
+  expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
   # na
   expect_identical(gtResult$`_substitutions`, list())
   # Group labels
   expect_true(is.null(gtResult$`_stub_df`$group_label |> unlist()))
   expect_false(gtResult$`_options`$value[gtResult$`_options`$parameter == "row_group_as_column"] |> unlist())
 
-  # Input 1 ----
+  # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                   "N" = "<count>")) |>
@@ -72,7 +73,8 @@ test_that("gtTable", {
       "subtitle" = list(gt::cell_text(weight = "lighter", size = "large", color = "blue")),
       "body" = list(gt::cell_text(color = "red"), gt::cell_borders(sides = "all")),
       "group_label" = list(gt::cell_fill(color = "#e1e1e1")),
-      "header_name" = list(gt::cell_fill(color = "black"), gt::cell_text(color = "white"))
+      "header_name" = list(gt::cell_fill(color = "black"), gt::cell_text(color = "white")),
+      "column_name" = list(gt::cell_text(weight = "bold"))
     ),
     na = "-",
     title = "Title test 2",
@@ -104,8 +106,8 @@ test_that("gtTable", {
   expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "subtitle"] |> unlist(),
                c("cell_text.color" = "#0000FF", "cell_text.size" = "large", "cell_text.weight" = "lighter"))
   # column names
-  expect_true(is.null(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"] |> unlist()))
-  expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[column_name\\]", x)}) |> unlist() |> unique())
+  expect_true(length(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"] |> unlist()) == 11)
+  expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header\\]|\\[header_name\\]", x)}) |> unlist() |> unique())
   # na
   expect_false(is.null(gtResult$`_substitutions`[[1]]$func$default))
   # Group labels

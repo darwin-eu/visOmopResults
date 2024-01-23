@@ -23,7 +23,7 @@
 #' keepNotFormatted = TRUE, decimalMark = ".", bigMark = ",", na = "-",
 #' groupNameCol = NULL, groupNameAsColumn = FALSE, groupOrder = NULL).
 #'
-#' @export
+#' @noRd
 #'
 #' @examples
 #' \donttest{
@@ -109,29 +109,65 @@ formatSummarisedResult <- function(result,
   if (tableType == "gt") {
     if (is.character(style)) {
       if(style == "default") {
-        style = list(
-          "header" = list(
-            gt::cell_fill(color = "#c8c8c8"),
-            gt::cell_text(weight = "bold")
-          ),
-          "header_name" = list(gt::cell_fill(color = "#d9d9d9"), gt::cell_text(weight = "bold")),
-          "header_level" = list(gt::cell_fill(color = "#e1e1e1"), gt::cell_text(weight = "bold")),
-          "column_name" = list(gt::cell_text(weight = "bold"))
+        result <- gtTable(
+          x = result,
+          delim = "\n",
+          na = options$na,
+          title = title,
+          subtitle = subtitle,
+          caption = caption,
+          groupNameCol = options$groupNameCol,
+          groupNameAsColumn = options$groupNameAsColumn,
+          groupOrder = options$groupOrder
         )
+      } else {
+        cli::cli_abort("Style must be a list names of styles, NULL, or set to 'default'")
       }
+    } else{
+      result <- gtTable(
+        x = result,
+        delim = "\n",
+        style = style,
+        na = options$na,
+        title = title,
+        subtitle = subtitle,
+        caption = caption,
+        groupNameCol = options$groupNameCol,
+        groupNameAsColumn = options$groupNameAsColumn,
+        groupOrder = options$groupOrder
+      )
     }
-    result <- gtTable(
-      x = result,
-      delim = "\n",
-      style = style,
-      na = options$na,
-      title = title,
-      subtitle = subtitle,
-      caption = caption,
-      groupNameCol = options$groupNameCol,
-      groupNameAsColumn = options$groupNameAsColumn,
-      groupOrder = options$groupOrder
-    )
+  } else if (tableType == "fx") {
+    if (is.character(style)) {
+      if(style == "default") {
+        result <- fxTable(
+          x = result,
+          delim = "\n",
+          na = options$na,
+          title = title,
+          subtitle = subtitle,
+          caption = caption,
+          groupNameCol = options$groupNameCol,
+          groupNameAsColumn = options$groupNameAsColumn,
+          groupOrder = options$groupOrder
+        )
+      } else {
+        cli::cli_abort("Style must be a list names of styles, NULL, or set to 'default'")
+      }
+    } else {
+      result <- fxTable(
+        x = result,
+        delim = "\n",
+        style = style,
+        na = options$na,
+        title = title,
+        subtitle = subtitle,
+        caption = caption,
+        groupNameCol = options$groupNameCol,
+        groupNameAsColumn = options$groupNameAsColumn,
+        groupOrder = options$groupOrder
+      )
+    }
   }
 
 return(result)

@@ -1,5 +1,5 @@
 
-#' Creats a gt table from a tibble using as deliminter (`delim`) for spanners.
+#' Creats a gt table from a dataframe using as deliminter (`delim`) for spanners.
 #'
 #' @param x A dataframe.
 #' @param delim Delimiter.
@@ -50,16 +50,15 @@
 gtTable <- function(
     x,
     delim = "\n",
-    style = list(
-      "header" = list(
-        gt::cell_fill(color = "#c8c8c8"),
-        gt::cell_text(weight = "bold")
-      ),
-      "header_name" = list(gt::cell_fill(color = "#e1e1e1"),
+    style = list("header" = list(gt::cell_fill(color = "#c8c8c8"),
+                                 gt::cell_text(weight = "bold")),
+      "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
                            gt::cell_text(weight = "bold")),
-      "header_level" = list(gt::cell_fill(color = "#ffffff"),
+      "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
                             gt::cell_text(weight = "bold")),
-      "column_name" = list(gt::cell_text(weight = "bold"))
+      "column_name" = list(gt::cell_text(weight = "bold")),
+      "group_label" = list(gt::cell_fill(color = "#e9ecef"),
+                           gt::cell_text(weight = "bold"))
     ),
     na = "-",
     title = NULL,
@@ -103,12 +102,22 @@ gtTable <- function(
   header_name_id <- grepl("\\[header_name\\]", style_ids)
   header_level_id <- grepl("\\[header_level\\]", style_ids)
 
+  # column names in spanner: header_level or header?
+  header_level <- all(grepl("header_level", lapply(strsplit(colnames(x)[grepl(delim, colnames(x))], delim), function(x) {x[length(x)]}) |> unlist()))
+
   if (sum(header_id) > 0 & "header" %in% names(style)) {
     gtResult <- gtResult |>
       gt::tab_style(
         style = style$header,
         locations = gt::cells_column_spanners(spanners = spanner_ids[header_id])
       )
+    if (!header_level) {
+      gtResult <- gtResult |>
+        gt::tab_style(
+          style = style$header,
+          locations = gt::cells_column_labels(columns = which(grepl("\\[header\\]", colnames(x))))
+        )
+    }
   }
   if (sum(header_name_id) > 0 & "header_name" %in% names(style)) {
     gtResult <- gtResult |>
@@ -123,12 +132,20 @@ gtTable <- function(
         style = style$header_level,
         locations = gt::cells_column_spanners(spanners = spanner_ids[header_level_id])
       )
+    if (header_level) {
+      gtResult <- gtResult |>
+        gt::tab_style(
+          style = style$header_level,
+          locations = gt::cells_column_labels(columns = which(grepl("\\[header_level\\]", colnames(x))))
+        )
+    }
   }
   if ("column_name" %in% names(style)) {
+    col_name_ids <- which(!grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]", colnames(x)))
     gtResult <- gtResult |>
       gt::tab_style(
         style = style$column_name,
-        locations = gt::cells_column_labels()
+        locations = gt::cells_column_labels(columns = col_name_ids)
       )
   }
 
@@ -137,8 +154,8 @@ gtTable <- function(
                                                function(label){
                                                  gsub("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", "", label)
                                                  })
-  gtResult <- gtResult |> gt::cols_label_with(columns = tidyr::contains("[column_name]"),
-                                  fn = ~ gsub("\\[column_name\\]", "", .))
+  gtResult <- gtResult |> gt::cols_label_with(columns = tidyr::contains("header"),
+                                  fn = ~ gsub("\\[header\\]|\\[header_level\\]", "", .))
   # Other options:
   ## na
   if (!is.null(na)){
