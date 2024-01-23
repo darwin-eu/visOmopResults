@@ -65,7 +65,7 @@
 <div class="section level2">
 <h2 id="package-overview">Package overview<a class="anchor" aria-label="anchor" href="#package-overview"></a>
 </h2>
-<p>VisOmop contains functions for formatting objects of the class <em>summarised_result</em> and <em>compared_result</em> (see R package <a href="https://cran.r-project.org/web/packages/omopgenerics/index.html" class="external-link">omopgenerics</a>. This package simplifies the handling of these objects to obtain nice output tables in the format of <em>gt</em> or <em>flextable</em>’ to report results via Shiny apps, RMarkdown, Quarto, and more.</p>
+<p>VisOmop contains functions for formatting objects of the class <em>summarised_result</em> and <em>compared_result</em> (see R package <a href="https://cran.r-project.org/web/packages/omopgenerics/index.html" class="external-link">omopgenerics</a>). This package simplifies the handling of these objects to obtain nice output tables in the format of <em>gt</em> or <em>flextable</em>’ to report results via Shiny apps, RMarkdown, Quarto, and more.</p>
 </div>
 <div class="section level2">
 <h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
@@ -90,9 +90,10 @@
 <p>We utilize the <code>formatEstimateValue</code> function to modify the <em>estimate_value</em> column. In this case, we will apply the default settings of the function, which include using 0 decimals for integer values, 2 decimals for numeric values, 1 decimal for percentages, and 3 decimals for proportions. Additionally, the function sets the decimal mark to ‘.’, and the thousand/millions separator to ‘,’ by default.”</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/formatEstimateValue.html">formatEstimateValue</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<div class="section level4">
-<h4 id="id_2-formatestimatename">2. formatEstimateName<a class="anchor" aria-label="anchor" href="#id_2-formatestimatename"></a>
-</h4>
+</div>
+<div class="section level3">
+<h3 id="id_2-formatestimatename">2. formatEstimateName<a class="anchor" aria-label="anchor" href="#id_2-formatestimatename"></a>
+</h3>
 <p>The <code>formatEstimateName</code> function enables the transformation of the <em>estimate_name</em> and <em>estimate_value</em> columns. For example, it allows to consolidate into one row counts and percentages related to the same variable within the same group and strata. It’s worth noting that the estimate_name is enclosed within &lt;…&gt; in the <em>estimateNameFormat</em> argument.”</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/formatEstimateName.html">formatEstimateName</a></span><span class="op">(</span></span>
@@ -101,9 +102,10 @@
 <span>                         <span class="st">"Mean (SD)"</span> <span class="op">=</span> <span class="st">"&lt;mean&gt; (&lt;sd&gt;)"</span><span class="op">)</span>,</span>
 <span>  keepNotFormatted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="id_3-formattable">3. formatTable<a class="anchor" aria-label="anchor" href="#id_3-formattable"></a>
-</h4>
+<div class="section level3">
+<h3 id="id_3-formattable">3. formatTable<a class="anchor" aria-label="anchor" href="#id_3-formattable"></a>
+</h3>
+<p>[to do]</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/spanHeader.html">spanHeader</a></span><span class="op">(</span>header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Study cohorts"</span>, <span class="st">"group_level"</span>, <span class="st">"Study strata"</span>,</span>
@@ -111,10 +113,10 @@
 <span>             delim <span class="op">=</span> <span class="st">"\n"</span>, </span>
 <span>             includeHeaderName <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
-<div class="section level4">
-<h4 id="id_4-gttable">4. gtTable<a class="anchor" aria-label="anchor" href="#id_4-gttable"></a>
-</h4>
-<p>Finally, we can convert the obtained <code>result</code> table to either a gt or flextable object using the function <code>gtTable</code> and <code>fxTable</code> respectively. For illustrative purposes, we are going to create a gt table object. We use the same delimiter object as in <code>spanHeader</code> in order to span the headers at the desired positions. Additonally, we wan to group data from the different group_level within the table, for which we use the groupNameCol argument.</p>
+<div class="section level3">
+<h3 id="id_4-gttable">4. gtTable<a class="anchor" aria-label="anchor" href="#id_4-gttable"></a>
+</h3>
+<p>[to do]</p>
 <div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> result <span class="sc">%&gt;%</span></span>
 <span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gtTable</span>(</span>
 <span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">delim =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
@@ -135,7 +137,6 @@
 <span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="st">    groupNameAsColumn = FALSE,</span></span>
 <span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="st">    groupOrder = c("</span>cohort1<span class="st">", "</span>cohort2<span class="st">")</span></span>
 <span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span></code></pre></div>
-</div>
 </div>
 </div>
 </div>
