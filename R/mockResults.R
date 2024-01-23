@@ -1,4 +1,3 @@
-
 #' A summarised_result mock object.
 #'
 #' @export

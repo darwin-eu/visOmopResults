@@ -1,6 +1,6 @@
-#'
-#' Format estimate_value column of summarised_result and compared_result
-#' object.
+#' Pivots a summarised_result object based on the column names in header. The
+#' names of the new columns refer to the information on the column based on
+#' the header input, with labels are separated using a delimiter.
 #'
 #' @param result A summarised_result or compared_result.
 #' @param header Names of the columns to make headers. Names not corresponding

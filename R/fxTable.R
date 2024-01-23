@@ -1,9 +1,10 @@
-#' Creats a flextable from a dataframe using as deliminter (`delim`) for spanners.
+#' Creats a fx table from a dataframe using as deliminter (`delim`) to span
+#' the header.
 #'
 #' @param x A dataframe.
 #' @param delim Delimiter.
 #' @param style Named list that specifies how to style the different parts of
-#' the table. Accepted entries are: title, subtitle, header, header_name,
+#' the flextable. Accepted entries are: title, subtitle, header, header_name,
 #' header_level, column_name, group_label, and body.
 #' @param na How to display missing values.
 #' @param title Title of the table, or NULL for no title.
