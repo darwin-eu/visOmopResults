@@ -39,7 +39,7 @@ We utilize the `formatEstimateValue` function to modify the *estimate_value* col
 result <- result %>% formatEstimateValue()
 ```
 
-#### 2. formatEstimateName
+### 2. formatEstimateName
 The `formatEstimateName` function enables the transformation of the *estimate_name* and *estimate_value* columns. For example, it allows to consolidate into one row counts and percentages related to the same variable within the same group and strata. It's worth noting that the estimate_name is enclosed within <...> in the *estimateNameFormat* argument."
 ``` r
 result <- result %>% formatEstimateName(
@@ -49,7 +49,7 @@ result <- result %>% formatEstimateName(
   keepNotFormatted = FALSE)
 ```
 
-#### 3. formatTable
+### 3. formatTable
 ``` r
 result <- result %>%
   spanHeader(header = c("Study cohorts", "group_level", "Study strata",
@@ -58,7 +58,7 @@ result <- result %>%
              includeHeaderName = FALSE)
 ```
 
-#### 4. gtTable
+### 4. gtTable
 Finally, we can convert the obtained `result` table to either a gt or flextable object using the function `gtTable` and `fxTable` respectively. For illustrative purposes, we are going to create a gt table object. 
 We use the same delimiter object as in `spanHeader` in order to span the headers at the desired positions. Additonally, we wan to group data from the different group_level within the table, for which we use the  groupNameCol argument.
 ``` r
