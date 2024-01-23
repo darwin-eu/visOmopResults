@@ -2,8 +2,7 @@
 % Please edit documentation in R/gtTable.R
 \name{gtTable}
 \alias{gtTable}
-\title{Creats a gt table from a dataframe using as deliminter (\code{delim}) to span
-the header.}
+\title{Creats a gt object from a dataframe}
 \usage{
 gtTable(
   x,
@@ -49,11 +48,13 @@ italics).}
 \item{groupOrder}{Order in which to display group labels.}
 }
 \value{
+gt object
+
 A gt table.
 }
 \description{
-Creats a gt table from a dataframe using as deliminter (\code{delim}) to span
-the header.
+Creats a gt object from a dataframe using as delimiter (\code{delim}) to span
+the header, and the specified styles for different parts of the table.
 }
 \examples{
 \donttest{

@@ -458,7 +458,7 @@ test_that("formatSummarisedResult, fxTable", {
   expect_equal(fxResult$body$spans$columns[,1], c(5, rep(0,4), 5, rep(0,4)))
   expect_equal(fxResult$body$dataset[,1] |>  levels(), c("cohort1", "cohort2"))
   expect_equal(fxResult$body$spans$rows[3,], rep(1, 21))
-  expect_equal(fxResult$body$styles$cells$background.color$data[,1] |> unique(), "#e9ecef")
+  expect_equal(fxResult$body$styles$cells$background.color$data[,1] |> unique(), "#transparent")
   expect_equal(fxResult$body$styles$cells$background.color$data[,2] |> unique(), "transparent")
 })
 

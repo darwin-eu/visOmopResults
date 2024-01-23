@@ -49,6 +49,8 @@ italics).}
 \item{groupOrder}{Order in which to display group labels.}
 }
 \value{
+flextable object
+
 A flextable.
 }
 \description{
