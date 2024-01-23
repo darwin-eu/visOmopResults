@@ -2,7 +2,7 @@ pandoc: 2.19.2
 pkgdown: 2.0.7
 pkgdown_sha: ~
 articles: {}
-last_built: 2024-01-22T13:18Z
+last_built: 2024-01-23T10:30Z
 urls:
   reference: https://oxford-pharmacoepi.github.io/formatTable/reference
   article: https://oxford-pharmacoepi.github.io/formatTable/articles
