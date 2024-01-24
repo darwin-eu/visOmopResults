@@ -58,7 +58,7 @@
 </nav><div class="container template-home">
 <div class="row">
   <main id="main" class="col-md-9"><div class="section level1">
-<div class="page-header"><h1 id="visomop">VisOmop<a class="anchor" aria-label="anchor" href="#visomop"></a>
+<div class="page-header"><h1 id="visomopresults">VisOmopResults<a class="anchor" aria-label="anchor" href="#visomopresults"></a>
 </h1></div>
 <!-- badges: start -->
 
@@ -111,32 +111,24 @@
 <span>  <span class="fu">spanHeader</span><span class="op">(</span>header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Study cohorts"</span>, <span class="st">"group_level"</span>, <span class="st">"Study strata"</span>,</span>
 <span>                         <span class="st">"strata_name"</span>, <span class="st">"strata_level"</span><span class="op">)</span>,</span>
 <span>             delim <span class="op">=</span> <span class="st">"\n"</span>, </span>
-<span>             includeHeaderName <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span>             includeHeaderName <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>             includeHeaderKey <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="id_4-gttable">4. gtTable<a class="anchor" aria-label="anchor" href="#id_4-gttable"></a>
 </h3>
 <p>[to do]</p>
-<div class="sourceCode" id="cb6"><pre class="sourceCode r"><code class="sourceCode r"><span id="cb6-1"><a href="#cb6-1" aria-hidden="true" tabindex="-1"></a>result <span class="ot">&lt;-</span> result <span class="sc">%&gt;%</span></span>
-<span id="cb6-2"><a href="#cb6-2" aria-hidden="true" tabindex="-1"></a>  <span class="fu">gtTable</span>(</span>
-<span id="cb6-3"><a href="#cb6-3" aria-hidden="true" tabindex="-1"></a>    <span class="at">delim =</span> <span class="st">"</span><span class="sc">\n</span><span class="st">"</span>,</span>
-<span id="cb6-4"><a href="#cb6-4" aria-hidden="true" tabindex="-1"></a>    <span class="at">style =</span> <span class="fu">list</span>(<span class="st">"header"</span> <span class="ot">=</span> <span class="fu">list</span>(gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"#c8c8c8"</span>),</span>
-<span id="cb6-5"><a href="#cb6-5" aria-hidden="true" tabindex="-1"></a>                                 gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>)),</span>
-<span id="cb6-6"><a href="#cb6-6" aria-hidden="true" tabindex="-1"></a>      <span class="st">"header_name"</span> <span class="ot">=</span> <span class="fu">list</span>(gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"#d9d9d9"</span>),</span>
-<span id="cb6-7"><a href="#cb6-7" aria-hidden="true" tabindex="-1"></a>                           gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>)),</span>
-<span id="cb6-8"><a href="#cb6-8" aria-hidden="true" tabindex="-1"></a>      <span class="st">"header_level"</span> <span class="ot">=</span> <span class="fu">list</span>(gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"#e1e1e1"</span>),</span>
-<span id="cb6-9"><a href="#cb6-9" aria-hidden="true" tabindex="-1"></a>                            gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>)),</span>
-<span id="cb6-10"><a href="#cb6-10" aria-hidden="true" tabindex="-1"></a>      <span class="st">"column_name"</span> <span class="ot">=</span> <span class="fu">list</span>(gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>)),</span>
-<span id="cb6-11"><a href="#cb6-11" aria-hidden="true" tabindex="-1"></a>      <span class="st">"group_label"</span> <span class="ot">=</span> <span class="fu">list</span>(gt<span class="sc">::</span><span class="fu">cell_fill</span>(<span class="at">color =</span> <span class="st">"#e9ecef"</span>),</span>
-<span id="cb6-12"><a href="#cb6-12" aria-hidden="true" tabindex="-1"></a>                           gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">weight =</span> <span class="st">"bold"</span>)),</span>
-<span id="cb6-13"><a href="#cb6-13" aria-hidden="true" tabindex="-1"></a>      <span class="st">"title"</span> <span class="ot">=</span> <span class="fu">list</span>(gt<span class="sc">::</span><span class="fu">cell_text</span>(<span class="at">color =</span> <span class="st">"blue"</span>, <span class="at">weight =</span> <span class="st">"bold"</span>)</span>
-<span id="cb6-14"><a href="#cb6-14" aria-hidden="true" tabindex="-1"></a>    ),</span>
-<span id="cb6-15"><a href="#cb6-15" aria-hidden="true" tabindex="-1"></a>    <span class="at">na =</span> <span class="st">"-"</span>,</span>
-<span id="cb6-16"><a href="#cb6-16" aria-hidden="true" tabindex="-1"></a>    <span class="at">title =</span> <span class="st">"My first gt table with VisOmop!),</span></span>
-<span id="cb6-17"><a href="#cb6-17" aria-hidden="true" tabindex="-1"></a><span class="st">    groupNameCol = "</span>group_level<span class="st">",</span></span>
-<span id="cb6-18"><a href="#cb6-18" aria-hidden="true" tabindex="-1"></a><span class="st">    groupNameAsColumn = FALSE,</span></span>
-<span id="cb6-19"><a href="#cb6-19" aria-hidden="true" tabindex="-1"></a><span class="st">    groupOrder = c("</span>cohort1<span class="st">", "</span>cohort2<span class="st">")</span></span>
-<span id="cb6-20"><a href="#cb6-20" aria-hidden="true" tabindex="-1"></a><span class="st">    )</span></span></code></pre></div>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<span>  <span class="fu"><a href="reference/gtTable.html">gtTable</a></span><span class="op">(</span></span>
+<span>    delim <span class="op">=</span> <span class="st">"\n"</span>,</span>
+<span>    style <span class="op">=</span> <span class="st">"default"</span>,</span>
+<span>    na <span class="op">=</span> <span class="st">"-"</span>,</span>
+<span>    title <span class="op">=</span> <span class="st">"My first gt table with VisOmop!"</span>,</span>
+<span>    groupNameCol <span class="op">=</span> <span class="st">"group_level"</span>,</span>
+<span>    groupNameAsColumn <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    groupOrder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cohort1"</span>, <span class="st">"cohort2"</span><span class="op">)</span></span>
+<span>    <span class="op">)</span></span></code></pre></div>
 </div>
 </div>
 </div>
