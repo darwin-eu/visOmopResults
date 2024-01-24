@@ -1,4 +1,4 @@
-# VisOmop
+# VisOmopResults
 
 <!-- badges: start -->
 
@@ -56,7 +56,8 @@ result <- result %>%
   spanHeader(header = c("Study cohorts", "group_level", "Study strata",
                          "strata_name", "strata_level"),
              delim = "\n", 
-             includeHeaderName = FALSE)
+             includeHeaderName = FALSE,
+             includeHeaderKey = FALSE)
 ```
 
 ### 4. gtTable
@@ -65,19 +66,9 @@ result <- result %>%
 result <- result %>%
   gtTable(
     delim = "\n",
-    style = list("header" = list(gt::cell_fill(color = "#c8c8c8"),
-                                 gt::cell_text(weight = "bold")),
-      "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
-                           gt::cell_text(weight = "bold")),
-      "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
-                            gt::cell_text(weight = "bold")),
-      "column_name" = list(gt::cell_text(weight = "bold")),
-      "group_label" = list(gt::cell_fill(color = "#e9ecef"),
-                           gt::cell_text(weight = "bold")),
-      "title" = list(gt::cell_text(color = "blue", weight = "bold")
-    ),
+    style = "default",
     na = "-",
-    title = "My first gt table with VisOmop!),
+    title = "My first gt table with VisOmop!",
     groupNameCol = "group_level",
     groupNameAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2")
