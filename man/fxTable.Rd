@@ -7,14 +7,7 @@
 fxTable(
   x,
   delim = "\\n",
-  style = list(header = list(cell = officer::fp_cell(background.color = "#c8c8c8"), text
-    = officer::fp_text(bold = TRUE)), header_name = list(cell =
-    officer::fp_cell(background.color = "#d9d9d9"), text = officer::fp_text(bold =
-    TRUE)), header_level = list(cell = officer::fp_cell(background.color = "#e1e1e1"),
-    text = officer::fp_text(bold = TRUE)), column_name = list(text =
-    officer::fp_text(bold = TRUE)), group_label = list(cell =
-    officer::fp_cell(background.color = "#e9ecef"), text = officer::fp_text(bold =
-    TRUE))),
+  style = "default",
   na = "-",
   title = NULL,
   subtitle = NULL,
@@ -30,8 +23,9 @@ fxTable(
 \item{delim}{Delimiter.}
 
 \item{style}{Named list that specifies how to style the different parts of
-the flextable. Accepted entries are: title, subtitle, header, header_name,
-header_level, column_name, group_label, and body.}
+the gt table. Accepted entries are: title, subtitle, header, header_name,
+header_level, column_name, group_label, and body. Alternatively, use
+"default" to get visOmopResult style, or NULL for gt style}
 
 \item{na}{How to display missing values.}
 
@@ -66,19 +60,7 @@ mockSummarisedResult() |>
   formatTable(header = c("Study strata", "strata_level"),
               includeHeaderName = FALSE) |>
   fxTable(
-    style = list(
-      "header" = list(
-        "cell" = officer::fp_cell(background.color = "#c8c8c8"),
-        "text" = officer::fp_text(bold = TRUE)),
-      "header_level" = list(
-        "cell" = officer::fp_cell(background.color = "#e1e1e1"),
-        "text" = officer::fp_text(bold = TRUE)),
-      "group_label" = list(
-        "cell" = officer::fp_cell(
-          background.color = "#e9ecef",
-          border = officer::fp_border(width = 1, color = "gray")),
-        "text" = officer::fp_text(bold = TRUE))
-    ),
+    style = "default",
     na = "--",
     title = "fxTable example",
     subtitle = NULL,

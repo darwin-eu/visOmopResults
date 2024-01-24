@@ -4,7 +4,8 @@
 #' @param delim Delimiter.
 #' @param style Named list that specifies how to style the different parts of
 #' the gt table. Accepted entries are: title, subtitle, header, header_name,
-#' header_level, column_name, group_label, and body.
+#' header_level, column_name, group_label, and body. Alternatively, use
+#' "default" to get visOmopResult style, or NULL for gt style
 #' @param na How to display missing values.
 #' @param title Title of the table, or NULL for no title.
 #' @param subtitle Subtitle of the table, or NULL for no subtitle.
@@ -77,7 +78,6 @@ gtTable <- function(
   # Checks
   checkmate::assertDataFrame(x)
   checkmate::assertCharacter(delim, min.chars = 1, len = 1, any.missing = FALSE)
-  checkmate::assertList(style, null.ok = TRUE, any.missing = FALSE)
   checkmate::assertCharacter(na, len = 1, null.ok = TRUE)
   checkmate::assertCharacter(title, len = 1, null.ok = TRUE, any.missing = FALSE)
   checkmate::assertCharacter(subtitle, len = 1, null.ok = TRUE, any.missing = FALSE)
@@ -85,7 +85,18 @@ gtTable <- function(
   checkmate::assertCharacter(groupNameCol, null.ok = TRUE, any.missing = FALSE)
   checkmate::assertLogical(groupNameAsColumn, len = 1, any.missing = FALSE)
   checkmate::assertCharacter(groupOrder, null.ok = TRUE, any.missing = FALSE)
-
+  if (is.null(title) & !is.null(subtitle)) {
+    cli::cli_abort("There must be a title for a subtitle.")
+  }
+  if (is.list(style) | is.null(style)) {
+    checkmate::assertList(style, null.ok = TRUE, any.missing = FALSE)
+  } else if (is.character(style)) {
+    checkmate::assertCharacter(style, min.chars = 1, any.missing = FALSE, max.len = 1)
+    style <- gtStyles(styleName = style)
+  } else {
+    cli::cli_abort("Style must be a named list of gt styling function,
+                   the string 'default' for our default style, or NULL for gt default style.")
+  }
 
   # Spanners
   if (!is.null(groupNameCol)) {
@@ -226,4 +237,29 @@ gtTable <- function(
       )
   }
   return(gtResult)
+}
+
+gtStyles <- function(styleName) {
+  styles <- list (
+    "default" = list(
+      "header" = list(gt::cell_fill(color = "#c8c8c8"),
+                      gt::cell_text(weight = "bold")),
+      "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
+                           gt::cell_text(weight = "bold")),
+      "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
+                            gt::cell_text(weight = "bold")),
+      "column_name" = list(gt::cell_text(weight = "bold")),
+      "group_label" = list(gt::cell_fill(color = "#e9e9e9"),
+                           gt::cell_text(weight = "bold")),
+      "title" = list(gt::cell_text(weight = "bold", size = 15)),
+      "subtitle" = list(gt::cell_text(weight = "bold", size = 12)),
+      "body" = list()
+    )
+  )
+  if (! styleName %in% names(styles)) {
+    warning(glue::glue("{styleName} does not correspon to any of our defined styles. Returning default."),
+            call. = FALSE)
+    styleName <- "default"
+  }
+  return(styles[[styleName]])
 }

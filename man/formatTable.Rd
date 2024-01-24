@@ -24,7 +24,7 @@ position.}
 \item{includeHeaderName}{Wheather to include the column name as header.}
 
 \item{includeHeaderKey}{Wheather to include the header key (header,
-header_name, header_level) before each header type in the column name.}
+header_name, header_level) before each header type in the column names.}
 }
 \value{
 A tibble with rows pivotted into columns with column names for future

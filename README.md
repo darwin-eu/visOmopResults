@@ -1,4 +1,4 @@
-# VisOmop
+# VisOmopResults
 
 <!-- badges: start -->
 
@@ -7,17 +7,17 @@
 
 ## Package overview
 
-VisOmop contains functions for formatting objects of the class *summarised_result* and *compared_result* (see R package [omopgenerics](https://cran.r-project.org/web/packages/omopgenerics/index.html)). This package simplifies the handling of these objects to obtain nice output tables in the format of *gt* or *flextable*' to report results via Shiny apps, RMarkdown, Quarto, and more.
+VisOmopResults contains functions for formatting objects of the class *summarised_result* and *compared_result* (see R package [omopgenerics](https://cran.r-project.org/web/packages/omopgenerics/index.html)). This package simplifies the handling of these objects to obtain nice output tables in the format of *gt* or *flextable*' to report results via Shiny apps, RMarkdown, Quarto, and more.
 
 
 ## Installation
 
-You can install the development version of VisOmop from
+You can install the development version of VisOmopResults from
 [GitHub](https://github.com/) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("oxford-pharmacoepi/VisOmop")
+devtools::install_github("oxford-pharmacoepi/VisOmopResults")
 ```
 
 ## Example
@@ -27,7 +27,7 @@ In this example we show how to use the package to format a mock *summarised_resu
 First we load the package and create the mock *summarised_result* object.
 
 ``` r
-library(VisOmop)
+library(VisOmopResults)
 library(dplyr)
 result <- mockSummarisedResult()
 ```
@@ -56,7 +56,8 @@ result <- result %>%
   spanHeader(header = c("Study cohorts", "group_level", "Study strata",
                          "strata_name", "strata_level"),
              delim = "\n", 
-             includeHeaderName = FALSE)
+             includeHeaderName = FALSE,
+             includeHeaderKey = FALSE)
 ```
 
 ### 4. gtTable
@@ -65,19 +66,9 @@ result <- result %>%
 result <- result %>%
   gtTable(
     delim = "\n",
-    style = list("header" = list(gt::cell_fill(color = "#c8c8c8"),
-                                 gt::cell_text(weight = "bold")),
-      "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
-                           gt::cell_text(weight = "bold")),
-      "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
-                            gt::cell_text(weight = "bold")),
-      "column_name" = list(gt::cell_text(weight = "bold")),
-      "group_label" = list(gt::cell_fill(color = "#e9ecef"),
-                           gt::cell_text(weight = "bold")),
-      "title" = list(gt::cell_text(color = "blue", weight = "bold")
-    ),
+    style = "default",
     na = "-",
-    title = "My first gt table with VisOmop!),
+    title = "My first gt table with VisOmopResults!",
     groupNameCol = "group_level",
     groupNameAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2")

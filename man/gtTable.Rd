@@ -28,7 +28,8 @@ gtTable(
 
 \item{style}{Named list that specifies how to style the different parts of
 the gt table. Accepted entries are: title, subtitle, header, header_name,
-header_level, column_name, group_label, and body.}
+header_level, column_name, group_label, and body. Alternatively, use
+"default" to get visOmopResult style, or NULL for gt style}
 
 \item{na}{How to display missing values.}
 

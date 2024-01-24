@@ -35,7 +35,7 @@ test_that("fxTable", {
   header_col_style <- fxResult$header$styles$cells$background.color$data[, "Study cohorts\ncohort1\nStudy strata\noverall\noverall"]
   expect_equal(header_col_style, c("#c8c8c8", "#c8c8c8", "#e1e1e1", "#c8c8c8", "#e1e1e1", "#e1e1e1"))
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 2)
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1.2)
   expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
   expect_equal(fxResult$header$styles$text$bold$data[, "cdm_name"] |> unique(), TRUE)
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"][1], "blue")
@@ -85,7 +85,7 @@ test_that("fxTable", {
   header_col_style <- fxResult$header$styles$cells$background.color$data[, "strata_name\noverall\nstrata_level\noverall"]
   expect_equal(header_col_style, c("black", "black", "black", "transparent", "black", "transparent"))
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 2)
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1.2)
   expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
   expect_equal(fxResult$header$styles$text$bold$data[, "cdm_name"] |> unique(), TRUE)
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"], c("black", "blue", "black", "black", "black", "black"))
@@ -156,3 +156,94 @@ test_that("fxTable", {
     groupOrder = c("cohort2", "cohort1")
   ))
 })
+
+test_that("fxTable, test default styles and NULL", {
+  table_to_format <- mockSummarisedResult() |>
+    formatTable(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
+                includeHeaderName = FALSE)
+  # Input 1: NULL ----
+  fxResult <- fxTable(
+    table_to_format,
+    style = NULL,
+    na = NULL,
+    title = "Test 1",
+    subtitle = NULL,
+    caption = NULL,
+    groupNameCol = NULL,
+    groupNameAsColumn = FALSE,
+    groupOrder = NULL
+  )
+
+  # Spanner styles
+  expect_equal(unique(fxResult$header$styles$cells$background.color$data[, "Study cohorts\ncohort1\nStudy strata\noverall\noverall"]),
+               "transparent")
+  expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[1,] |> unique(), 1.5)
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[2,] |> unique(), 1.5)
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[3,] |> unique(), 0)
+  expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
+  expect_equal(fxResult$header$styles$cells$border.color.left$data[2:6, "cdm_name"] |> unique(), "black")
+  expect_true(fxResult$header$styles$text$bold$data[1, "cdm_name"] |> unique())
+  expect_false(fxResult$header$styles$text$bold$data[2:6, "cdm_name"] |> unique())
+
+
+  # default fxTable format
+  expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 0)
+  expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
+  expect_equal(fxResult$body$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
+
+
+  # Input 2 ----
+  table_to_format <- mockSummarisedResult() |>
+    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
+                                              "N" = "<count>")) |>
+    formatTable(header = c("Strata", "strata_name", "strata_level"),
+                includeHeaderName = TRUE)
+  fxResult <- fxTable(
+    table_to_format,
+    style = "default",
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupNameCol = "group_level",
+    groupNameAsColumn = FALSE,
+    groupOrder = NULL
+  )
+
+  # Spanner styles
+  header_col_style <- fxResult$header$styles$cells$background.color$data[, "Strata\nstrata_name\noverall\nstrata_level\noverall"]
+  expect_equal(header_col_style, c("#c8c8c8", "#c8c8c8", "#c8c8c8", "#d9d9d9", "#e1e1e1", "#d9d9d9", "#e1e1e1"))
+  expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1.2)
+  expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
+  expect_true(fxResult$header$styles$text$bold$data[, "cdm_name"] |> unique())
+  expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"] |> unique(), "black")
+  expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"] |> unique(), "black")
+  expect_equal(fxResult$header$styles$text$font.size$data[, "cdm_name"] |> unique(), c(15, 12, 10))
+
+  # body
+  expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
+  expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
+  expect_equal(fxResult$body$styles$cells$background.color$data[, "cdm_name"],
+               c("#e9e9e9", "transparent", "transparent", "transparent", "transparent", "#e9e9e9",
+                 "transparent", "transparent", "transparent", "transparent"))
+  expect_equal(fxResult$body$styles$text$color$data[, "cdm_name"] |> unique(), "black")
+
+  #Input 3: woring name style ----
+  expect_warning(
+    fxResult <- fxTable(
+      table_to_format,
+      style = "heythere",
+      na = "-",
+      title = "Title test 2",
+      subtitle = "Subtitle for test 2",
+      caption = "*This* is the caption",
+      groupNameCol = "group_level",
+      groupNameAsColumn = FALSE,
+      groupOrder = NULL
+    ),
+    "does not correspon to any of our defined styles. Returning default."
+  )
+})
+

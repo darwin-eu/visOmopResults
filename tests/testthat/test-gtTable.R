@@ -166,3 +166,86 @@ test_that("gtTable", {
     groupOrder = c("cohort2", "cohort1")
   ))
 })
+
+test_that("fxTable, test default styles and NULL", {
+  table_to_format <- mockSummarisedResult() |>
+    formatTable(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
+                includeHeaderName = FALSE)
+  # Input 1: NULL ----
+  gtResult <- gtTable(
+    table_to_format,
+    style = NULL,
+    na = NULL,
+    title = "Test 1",
+    subtitle = NULL,
+    caption = NULL,
+    groupNameCol = NULL,
+    groupNameAsColumn = FALSE,
+    groupOrder = NULL
+  )
+
+  # style
+  expect_true(nrow(gtResult$`_styles`) == 0)
+
+
+  # Input 2 ----
+  table_to_format <- mockSummarisedResult() |>
+    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
+                                              "N" = "<count>")) |>
+    formatTable(header = c("strata", "strata_name", "strata_level"),
+                includeHeaderName = TRUE)
+  gtResult <- gtTable(
+    table_to_format,
+    style = "default",
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupNameCol = "group_level",
+    groupNameAsColumn = FALSE,
+    groupOrder = NULL
+  )
+
+  # spanner styles
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level %in% c(1,3)]] |>
+                 unlist() |> unique(),
+               c("#D9D9D9", "bold"))
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level == 2]] |>
+                 unlist() |> unique(),
+               c("#E1E1E1", "bold"))
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level == 4]] |>
+                 unlist() |> unique(),
+               c("#C8C8C8", "bold"))
+  # title
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "title"] |> unlist() |> unique(),
+               c("15", "bold"))
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "subtitle"] |> unlist() |> unique(),
+               c("12", "bold"))
+  # column names
+  expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[1:18] |> unique(), c("#E1E1E1", "bold"))
+  expect_true(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[19:29] |> unique() == "bold")
+  expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
+
+  # Group labels
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "row_groups"] |> unlist() |> unique(),
+               c("#E9E9E9", "bold"))
+
+
+  #Input 3: woring name style ----
+  expect_warning(
+    gtResult <- gtTable(
+      table_to_format,
+      style = "heythere",
+      na = "-",
+      title = "Title test 2",
+      subtitle = "Subtitle for test 2",
+      caption = "*This* is the caption",
+      groupNameCol = "group_level",
+      groupNameAsColumn = FALSE,
+      groupOrder = NULL
+    ),
+    "does not correspon to any of our defined styles. Returning default."
+  )
+})
+
+
