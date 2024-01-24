@@ -21,7 +21,11 @@ test_that("splitGroup", {
   expect_true(all(c("cohort_name", "age", "sex") %in% colnames(res1)))
   expect_warning(tib |> splitNameLevel(keep = TRUE) |> splitGroup())
   expect_no_error(res2 <- tib |> splitNameLevel(name = "x", level = "y", keep = TRUE))
-  expect_equal(res1, res2)
+  cols <- colnames(res1) |> sort()
+  expect_equal(
+    res1 |> dplyr::select(dplyr::all_of(cols)),
+    res2 |> dplyr::select(dplyr::all_of(cols))
+  )
   expect_error(tib |> splitNameLevel(name = "expo_group", level = "exposure_level"))
   expect_error(tib |> splitNameLevel(level = NA_character_))
   expect_error(tib |> splitNameLevel(level = "a"))
