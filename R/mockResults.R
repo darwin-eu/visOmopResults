@@ -13,8 +13,8 @@ mockSummarisedResult <- function() {
   dplyr::tibble(
     "cdm_name" = "mock",
     "result_type" = NA_character_,
-    "package_name" = "VisOmop",
-    "package_version" = utils::packageVersion("VisOmop") |>
+    "package_name" = "visOmopResults",
+    "package_version" = utils::packageVersion("visOmopResults") |>
       as.character(),
     "group_name" = "cohort_name",
     "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
@@ -38,8 +38,8 @@ mockSummarisedResult <- function() {
       dplyr::tibble(
         "cdm_name" = "mock",
         "result_type" = NA_character_,
-        "package_name" = "VisOmop",
-        "package_version" = utils::packageVersion("VisOmop") |>
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
           as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
@@ -64,8 +64,8 @@ mockSummarisedResult <- function() {
       dplyr::tibble(
         "cdm_name" = "mock",
         "result_type" = NA_character_,
-        "package_name" = "VisOmop",
-        "package_version" = utils::packageVersion("VisOmop") |>
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
           as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
@@ -90,8 +90,8 @@ mockSummarisedResult <- function() {
       dplyr::tibble(
         "cdm_name" = "mock",
         "result_type" = NA_character_,
-        "package_name" = "VisOmop",
-        "package_version" = utils::packageVersion("VisOmop") |>
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
           as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
@@ -116,8 +116,8 @@ mockSummarisedResult <- function() {
       dplyr::tibble(
         "cdm_name" = "mock",
         "result_type" = NA_character_,
-        "package_name" = "VisOmop",
-        "package_version" = utils::packageVersion("VisOmop") |>
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
           as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),

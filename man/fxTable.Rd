@@ -12,7 +12,9 @@ fxTable(
     officer::fp_cell(background.color = "#d9d9d9"), text = officer::fp_text(bold =
     TRUE)), header_level = list(cell = officer::fp_cell(background.color = "#e1e1e1"),
     text = officer::fp_text(bold = TRUE)), column_name = list(text =
-    officer::fp_text(bold = TRUE))),
+    officer::fp_text(bold = TRUE)), group_label = list(cell =
+    officer::fp_cell(background.color = "#e9ecef"), text = officer::fp_text(bold =
+    TRUE))),
   na = "-",
   title = NULL,
   subtitle = NULL,

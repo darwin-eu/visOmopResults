@@ -60,13 +60,20 @@ fxTable <- function(
     x,
     delim = "\n",
     style = list(
-      "header" = list("cell" = officer::fp_cell(background.color = "#c8c8c8"),
-                      "text" = officer::fp_text(bold = TRUE)),
-      "header_name" = list("cell" = officer::fp_cell(background.color = "#d9d9d9"),
-                           "text" = officer::fp_text(bold = TRUE)),
-      "header_level" = list("cell" = officer::fp_cell(background.color = "#e1e1e1"),
-                            "text" = officer::fp_text(bold = TRUE)),
-      "column_name" = list("text" = officer::fp_text(bold = TRUE))
+      "header" = list(
+        "cell" = officer::fp_cell(background.color = "#c8c8c8"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "header_name" = list(
+        "cell" = officer::fp_cell(background.color = "#d9d9d9"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "header_level" = list(
+        "cell" = officer::fp_cell(background.color = "#e1e1e1"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "column_name" = list(
+        "text" = officer::fp_text(bold = TRUE)),
+      "group_label" = list(
+        "cell" = officer::fp_cell(background.color = "#e9ecef"),
+        "text" = officer::fp_text(bold = TRUE))
     ),
     na = "-",
     title = NULL,
@@ -148,8 +155,8 @@ fxTable <- function(
   }
   if ("column_name" %in% names(style)) {
     flex_x <- flex_x |>
-      flextable::style(part = "header", j = which(! 1:ncol(x) %in% spanCols_ids), pr_t = style$column_name$text,
-                       pr_c = style$column_name$cell, pr_p = style$column_name$paragraph)
+      flextable::style(part = "header", j = which(! 1:ncol(x) %in% spanCols_ids),
+                       pr_t = style$column_name$text, pr_c = style$column_name$cell, pr_p = style$column_name$paragraph)
   }
 
   # Our default

@@ -1,4 +1,4 @@
-Package: VisOmop
+Package: visOmopResults
 Title: Format summarisedResult objects into gt and flextable objects
 Version: 0.0.1
 Authors@R: c(
@@ -32,5 +32,5 @@ Imports:
     rlang,
     stringr,
     tidyr
-URL: https://oxford-pharmacoepi.github.io/VisOmop/
-BugReports: https://github.com/oxford-pharmacoepi/VisOmop/issues
+URL: https://oxford-pharmacoepi.github.io/visOmopResults/
+BugReports: https://github.com/oxford-pharmacoepi/visOmopResults/issues

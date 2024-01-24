@@ -6,6 +6,8 @@
 #' position.
 #' @param delim Delimiter to use to separate headers.
 #' @param includeHeaderName Wheather to include the column name as header.
+#' @param includeHeaderKey Wheather to include the header key (header,
+#' header_name, header_level) before each header type in the column name.
 #'
 #' @return A tibble with rows pivotted into columns with column names for future
 #' spanner headers.
@@ -30,7 +32,8 @@
 formatTable <- function(result,
                         header,
                         delim = "\n",
-                        includeHeaderName = TRUE) {
+                        includeHeaderName = TRUE,
+                        includeHeaderKey = TRUE) {
   # initial checks
   result <- validateResult(result)
   checkmate::assertCharacter(x = header, any.missing = FALSE)
@@ -66,15 +69,26 @@ formatTable <- function(result,
         spanners <- colDetails[[header[k]]] |> unique()
         for (span in spanners) {
           colsSpanner <- colDetails$name[colDetails[[header[k]]] == span]
-
-          if (includeHeaderName) {
-            colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_name]", header[k], delim, "[header_level]", span, delim)
+          if (includeHeaderKey) {
+            if (includeHeaderName) {
+              colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_name]", header[k], delim, "[header_level]", span, delim)
+            } else {
+              colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_level]", span, delim)
+            }
           } else {
-            colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_level]", span, delim)
+            if (includeHeaderName) {
+              colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], header[k], delim, span, delim)
+            } else {
+              colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], span, delim)
+            }
           }
         }
       } else {
-        colDetails$new_name <- paste0(colDetails$new_name, "[header]", header[k], delim)
+        if (includeHeaderKey) {
+          colDetails$new_name <- paste0(colDetails$new_name, "[header]", header[k], delim)
+        } else {
+          colDetails$new_name <- paste0(colDetails$new_name, header[k], delim)
+        }
       }
     }
     colDetails <- colDetails |> dplyr::mutate(new_name = base::substring(.data$new_name, 0, nchar(.data$new_name)-1))
@@ -83,9 +97,15 @@ formatTable <- function(result,
     names(result)[names(result) %in% colDetails$name] <- colDetails$new_name
 
   } else {
-    new_name <- paste0("[header]", paste(header, collapse = paste0(delim, "[header]")))
-    result <- result |> dplyr::rename(!!new_name := "estimate_value")
-    class(result) <- c("tbl_df", "tbl", "data.frame")
+    if (includeHeaderKey) {
+      new_name <- paste0("[header]", paste(header, collapse = paste0(delim, "[header]")))
+      result <- result |> dplyr::rename(!!new_name := "estimate_value")
+      class(result) <- c("tbl_df", "tbl", "data.frame")
+    } else {
+      new_name <- paste(header, collapse = delim)
+      result <- result |> dplyr::rename(!!new_name := "estimate_value")
+      class(result) <- c("tbl_df", "tbl", "data.frame")
+    }
   }
 
   return(result)

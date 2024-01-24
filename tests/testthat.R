@@ -7,6 +7,6 @@
 # * https://testthat.r-lib.org/articles/special-files.html
 
 library(testthat)
-library(VisOmop)
+library(visOmopResults)
 
-test_check("VisOmop")
+test_check("visOmopResults")
