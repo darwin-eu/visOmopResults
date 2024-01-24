@@ -61,12 +61,14 @@ getColumns <- function(result, prefix, overall) {
       dplyr::pull(paste0(prefix, "_name")) |>
       unique() |>
       lapply(strsplit, split = " and ") |>
+      unlist() |>
       unique()
   } else {
     x <- result |>
       dplyr::pull(paste0(prefix, "additional_name_reference")) |>
       unique() |>
       lapply(strsplit, split = " and ") |>
+      unlist() |>
       unique()
   }
 
