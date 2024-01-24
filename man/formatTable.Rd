@@ -4,7 +4,13 @@
 \alias{formatTable}
 \title{Creats a tibble with specific rows pivotted into columns}
 \usage{
-formatTable(result, header, delim = "\\n", includeHeaderName = TRUE)
+formatTable(
+  result,
+  header,
+  delim = "\\n",
+  includeHeaderName = TRUE,
+  includeHeaderKey = TRUE
+)
 }
 \arguments{
 \item{result}{A summarised_result or compared_result.}
@@ -16,6 +22,9 @@ position.}
 \item{delim}{Delimiter to use to separate headers.}
 
 \item{includeHeaderName}{Wheather to include the column name as header.}
+
+\item{includeHeaderKey}{Wheather to include the header key (header,
+header_name, header_level) before each header type in the column name.}
 }
 \value{
 A tibble with rows pivotted into columns with column names for future

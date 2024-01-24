@@ -64,7 +64,7 @@ the header, and the specified styles for different parts of the table.
 mockSummarisedResult() |>
   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
   formatTable(header = c("Study strata", "strata_level"),
-              includeHeader = FALSE) |>
+              includeHeaderName = FALSE) |>
   fxTable(
     style = list(
       "header" = list(

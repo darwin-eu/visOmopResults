@@ -27,7 +27,7 @@
 #' mockSummarisedResult() |>
 #'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
 #'   formatTable(header = c("Study strata", "strata_level"),
-#'               includeHeader = FALSE) |>
+#'               includeHeaderName = FALSE) |>
 #'   gtTable(
 #'     style = list("header" = list(
 #'       gt::cell_fill(color = "#d9d9d9"),

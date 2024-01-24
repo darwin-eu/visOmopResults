@@ -27,7 +27,7 @@
 #' mockSummarisedResult() |>
 #'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
 #'   formatTable(header = c("Study strata", "strata_level"),
-#'               includeHeader = FALSE) |>
+#'               includeHeaderName = FALSE) |>
 #'   fxTable(
 #'     style = list(
 #'       "header" = list(
