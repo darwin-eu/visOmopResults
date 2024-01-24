@@ -10,8 +10,8 @@
 #' @param style Named list that specifies how to style the different parts of
 #' the table. Accepted entries are: title, subtitle, header, header_name,
 #' header_level, column_name, group_label, and body. If NULL, the table will
-#' not be styled (deafult of the chosed tableType), and if "deafult" it will
-#' be styled as OMOP's deafult.
+#' not be styled (default of the chosed tableType), and if "deafult" it will
+#' be styled as OMOP's default
 #' @param decimals Number of decimals per estimate_type (integer, numeric,
 #' percentage, proportion).
 #' @param title Title of the table, or NULL for no title.
@@ -19,7 +19,7 @@
 #' @param caption Caption for the table, or NULL for no caption. Text in
 #' markdown formatting style (e.g. `*Your caption here*` for caption in
 #' italics).
-#' @param .options list of deafult options (includeHeaderName = TRUE,
+#' @param .options list of default options (includeHeaderName = TRUE,
 #' keepNotFormatted = TRUE, decimalMark = ".", bigMark = ",", na = "-",
 #' groupNameCol = NULL, groupNameAsColumn = FALSE, groupOrder = NULL).
 #'
