@@ -13,6 +13,9 @@
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/index.html</loc>
   </url>
   <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/additionalColumns.html</loc>
+  </url>
+  <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/formatEstimateName.html</loc>
   </url>
   <url>
@@ -25,6 +28,9 @@
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/fxTable.html</loc>
   </url>
   <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/groupColumns.html</loc>
+  </url>
+  <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/gtTable.html</loc>
   </url>
   <url>
@@ -34,7 +40,31 @@
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/mockSummarisedResult.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/reexports.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/splitAdditional.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/splitGroup.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/splitNameLevel.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/splitStrata.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/strataColumns.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/uniteAdditional.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/uniteGroup.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/uniteNameLevel.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/uniteStrata.html</loc>
   </url>
   <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/visOmopResults-package.html</loc>
