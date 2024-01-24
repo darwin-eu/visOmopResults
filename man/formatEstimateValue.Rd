@@ -2,8 +2,7 @@
 % Please edit documentation in R/formatEstimateValue.R
 \name{formatEstimateValue}
 \alias{formatEstimateValue}
-\title{Format estimate_value column of summarised_result and compared_result
-object.}
+\title{Format the estimate_value column}
 \usage{
 formatEstimateValue(
   result,
@@ -22,9 +21,13 @@ percentage, proportion).}
 
 \item{bigMark}{Thousand and millions separator mark.}
 }
+\value{
+A summarised_result object with the estimate_value column formatted.
+}
 \description{
-Format estimate_value column of summarised_result and compared_result
-object.
+Format the estimate_value column of summarised_result and compared_result
+object by editing number of decimals, decimal and thousand/millions separator
+marks.
 }
 \examples{
 \donttest{

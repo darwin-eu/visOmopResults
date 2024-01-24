@@ -1,10 +1,9 @@
-
-#' Creats a gt table from a dataframe using as deliminter (`delim`) for spanners.
+#' Creats a gt object from a dataframe
 #'
 #' @param x A dataframe.
 #' @param delim Delimiter.
 #' @param style Named list that specifies how to style the different parts of
-#' the table. Accepted entries are: title, subtitle, header, header_name,
+#' the gt table. Accepted entries are: title, subtitle, header, header_name,
 #' header_level, column_name, group_label, and body.
 #' @param na How to display missing values.
 #' @param title Title of the table, or NULL for no title.
@@ -17,12 +16,18 @@
 #' (TRUE) or rows (FALSE).
 #' @param groupOrder Order in which to display group labels.
 #'
+#' @return gt object
+#'
+#' @description
+#' Creats a gt object from a dataframe using as delimiter (`delim`) to span
+#' the header, and the specified styles for different parts of the table.
+#'
 #' @examples
 #' \donttest{
 #' mockSummarisedResult() |>
 #'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-#'   spanHeader(header = c("Study strata", "strata_level"),
-#'              includeHeader = FALSE) |>
+#'   formatTable(header = c("Study strata", "strata_level"),
+#'               includeHeaderName = FALSE) |>
 #'   gtTable(
 #'     style = list("header" = list(
 #'       gt::cell_fill(color = "#d9d9d9"),
