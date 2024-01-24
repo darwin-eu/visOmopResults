@@ -1,42 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/404.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/404.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/LICENSE.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/LICENSE.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/authors.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/authors.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/index.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/index.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/formatEstimateName.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/formatEstimateName.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/formatEstimateValue.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/formatEstimateValue.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/formatTable-package.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/formatTable.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/fxTable.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/fxTable.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/gtTable.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/gtTable.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/index.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/index.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/mockSummarisedResult.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/mockSummarisedResult.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/reexports.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/reexports.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/formatTable/reference/spanHeader.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/visOmopResults-package.html</loc>
   </url>
 </urlset>
