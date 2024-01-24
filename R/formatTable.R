@@ -7,7 +7,7 @@
 #' @param delim Delimiter to use to separate headers.
 #' @param includeHeaderName Wheather to include the column name as header.
 #' @param includeHeaderKey Wheather to include the header key (header,
-#' header_name, header_level) before each header type in the column name.
+#' header_name, header_level) before each header type in the column names.
 #'
 #' @return A tibble with rows pivotted into columns with column names for future
 #' spanner headers.

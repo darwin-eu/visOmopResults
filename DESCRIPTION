@@ -1,5 +1,5 @@
 Package: visOmopResults
-Title: Format summarisedResult objects into gt and flextable objects
+Title: Format summarised_result objects into gt and flextable objects
 Version: 0.0.1
 Authors@R: c(
     person(
