@@ -99,7 +99,7 @@ formatSummarisedResult <- function(result,
 
   # select columns
   if (! is.null(header)) {
-    result <- spanHeader(result = result,
+    result <- formatTable(result = result,
                  header = header,
                  delim = "\n",
                  includeHeaderName = options$includeHeaderName)

@@ -1,9 +1,9 @@
-#' Creats a flextable from a dataframe using as deliminter (`delim`) for spanners.
+#' Creats a flextable object from a dataframe
 #'
 #' @param x A dataframe.
 #' @param delim Delimiter.
 #' @param style Named list that specifies how to style the different parts of
-#' the table. Accepted entries are: title, subtitle, header, header_name,
+#' the flextable. Accepted entries are: title, subtitle, header, header_name,
 #' header_level, column_name, group_label, and body.
 #' @param na How to display missing values.
 #' @param title Title of the table, or NULL for no title.
@@ -16,12 +16,18 @@
 #' (TRUE) or rows (FALSE).
 #' @param groupOrder Order in which to display group labels.
 #'
+#' @return flextable object
+#'
+#' @description
+#' Creats a flextable object from a dataframe using as delimiter (`delim`) to span
+#' the header, and the specified styles for different parts of the table.
+#'
 #' @examples
 #' \donttest{
 #' mockSummarisedResult() |>
 #'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-#'   spanHeader(header = c("Study strata", "strata_level"),
-#'              includeHeader = FALSE) |>
+#'   formatTable(header = c("Study strata", "strata_level"),
+#'               includeHeaderName = FALSE) |>
 #'   fxTable(
 #'     style = list(
 #'       "header" = list(
@@ -37,12 +43,12 @@
 #'         "text" = officer::fp_text(bold = TRUE))
 #'     ),
 #'     na = "--",
-#'    title = "fxTable example",
-#'    subtitle = NULL,
-#'    caption = NULL,
-#'   groupNameCol = "group_level",
-#'    groupNameAsColumn = TRUE,
-#'    groupOrder = c("cohort1", "cohort2")
+#'     title = "fxTable example",
+#'     subtitle = NULL,
+#'     caption = NULL,
+#'     groupNameCol = "group_level",
+#'     groupNameAsColumn = TRUE,
+#'     groupOrder = c("cohort1", "cohort2")
 #'  )
 #' }
 #'
@@ -54,16 +60,20 @@ fxTable <- function(
     x,
     delim = "\n",
     style = list(
-      "header" = list("cell" = officer::fp_cell(background.color = "#c8c8c8"),
-                      "text" = officer::fp_text(bold = TRUE)),
-      "header_name" = list("cell" = officer::fp_cell(background.color = "#d9d9d9"),
-                           "text" = officer::fp_text(bold = TRUE)),
-      "header_level" = list("cell" = officer::fp_cell(background.color = "#e1e1e1"),
-                            "text" = officer::fp_text(bold = TRUE)),
-      "column_name" = list("text" = officer::fp_text(bold = TRUE)),
-      "group_label" = list("cell" = officer::fp_cell(background.color = "#e9ecef",
-                                                     border = officer::fp_border(width = 1, color = "gray")),
-                           "text" = officer::fp_text(bold = TRUE))
+      "header" = list(
+        "cell" = officer::fp_cell(background.color = "#c8c8c8"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "header_name" = list(
+        "cell" = officer::fp_cell(background.color = "#d9d9d9"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "header_level" = list(
+        "cell" = officer::fp_cell(background.color = "#e1e1e1"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "column_name" = list(
+        "text" = officer::fp_text(bold = TRUE)),
+      "group_label" = list(
+        "cell" = officer::fp_cell(background.color = "#e9ecef"),
+        "text" = officer::fp_text(bold = TRUE))
     ),
     na = "-",
     title = NULL,
@@ -145,8 +155,8 @@ fxTable <- function(
   }
   if ("column_name" %in% names(style)) {
     flex_x <- flex_x |>
-      flextable::style(part = "header", j = which(! 1:ncol(x) %in% spanCols_ids), pr_t = style$column_name$text,
-                       pr_c = style$column_name$cell, pr_p = style$column_name$paragraph)
+      flextable::style(part = "header", j = which(! 1:ncol(x) %in% spanCols_ids),
+                       pr_t = style$column_name$text, pr_c = style$column_name$cell, pr_p = style$column_name$paragraph)
   }
 
   # Our default
