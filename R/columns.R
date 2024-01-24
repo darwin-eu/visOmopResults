@@ -13,7 +13,7 @@
 #' }
 #'
 groupColumns <- function(result, overall = FALSE) {
-  getColumns(result = result, prefix = "group", overall = overall)
+  getColumns(result = result, col = "group_name", overall = overall)
 }
 
 #' Identify strata columns in an omop result object.
@@ -30,7 +30,7 @@ groupColumns <- function(result, overall = FALSE) {
 #' }
 #'
 strataColumns <- function(result, overall = FALSE) {
-  getColumns(result = result, prefix = "strata", overall = overall)
+  getColumns(result = result, col = "strata_name", overall = overall)
 }
 
 #' Identify additional columns in an omop result object.
@@ -47,30 +47,23 @@ strataColumns <- function(result, overall = FALSE) {
 #' }
 #'
 additionalColumns <- function(result, overall = FALSE) {
-  getColumns(result = result, prefix = "additional", overall = overall)
+  getColumns(result = result, col = "additional_name", overall = overall)
 }
 
-getColumns <- function(result, prefix, overall) {
+getColumns <- function(result, col, overall) {
   # initial checks
-  result <- validateResult(result)
+  checkmate::assertTibble(result)
+  checkmate::assertCharacter(col, any.missing = FALSE, len = 1)
+  checkmate::assertTRUE(col %in% colnames(result))
   checkmate::assertLogical(overall, any.missing = FALSE, len = 1)
 
   # extract columns
-  if (inherits(result, "summarised_result")) {
-    x <- result |>
-      dplyr::pull(paste0(prefix, "_name")) |>
+  x <- result |>
+      dplyr::pull(dplyr::all_of(col)) |>
       unique() |>
       lapply(strsplit, split = " and ") |>
       unlist() |>
       unique()
-  } else {
-    x <- result |>
-      dplyr::pull(paste0(prefix, "additional_name_reference")) |>
-      unique() |>
-      lapply(strsplit, split = " and ") |>
-      unlist() |>
-      unique()
-  }
 
   # eliminate overall
   if (!overall) {
