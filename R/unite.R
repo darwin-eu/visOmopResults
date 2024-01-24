@@ -1,0 +1,104 @@
+
+#' Unite one or more columns in name-level format.
+#'
+#' @param x Tibble or data.frame.
+#' @param cols Columns to aggregate.
+#' @param name Column name of the `name` column.
+#' @param level Column name of the `level` column.
+#' @param keep Whether to keep the original columns.
+#'
+#' @return A Tibble with the new columns.
+#'
+#' @export
+#'
+uniteNameLevel <- function(x,
+                           cols,
+                           name = "group_name",
+                           level = "group_level",
+                           keep = FALSE) {
+  # initial checks
+  checkmate::assertCharacter(cols)
+  checkmate::assertCharacter(name, len = 1, any.missing = FALSE)
+  checkmate::assertCharacter(level, len = 1, any.missing = FALSE)
+  checkmate::assertLogical(keep, len = 1, any.missing = FALSE)
+  checkmate::assertTibble(x)
+  checkmate::assertTRUE(all(cols %in% colnames(x)))
+
+  present <- c(name, level)[c(name, level) %in% colnames(x)]
+  if (length(present) > 0) {
+    cli::cli_warn(
+      "The following columns will be overwritten:
+      {paste0(present, collapse = ', ')}."
+    )
+  }
+
+  containAnd <- cols[grepl(" and ", cols)]
+  if (length(containAnd) > 0) {
+    cli::cli_abort("Column names must not contain ' and ' : `{paste0(containAnd, collapse = '`, `')}`")
+  }
+  containAnd <- cols[
+    lapply(cols, function(col){any(grepl(" and ", x[[col]]))}) |> unlist()
+  ]
+  if (length(containAnd) > 0) {
+    cli::cli_abort("Column values must not contain ' and '. Present in: `{paste0(containAnd, collapse = '`, `')}`.")
+  }
+
+  originalCols <- colnames(x)
+  if (!keep) {
+    originalCols <- originalCols[!originalCols %in% cols]
+  }
+
+  x |>
+    dplyr::mutate(!!name := paste0(cols, collapse = " and ")) |>
+    tidyr::unite(
+      col = !!level, dplyr::all_of(cols), sep = " and ", remove = !keep
+    ) |>
+    dplyr::select(dplyr::all_of(c(originalCols, name, level)))
+}
+
+#' Unite one or more columns in group_name-group_level format.
+#'
+#' @param x Tibble or data.frame.
+#' @param cols Columns to aggregate.
+#'
+#' @return A Tibble with the new columns.
+#'
+#' @export
+#'
+uniteGroup <- function(x, cols) {
+  uniteNameLevel(
+    x = x, cols = cols, name = "group_name", level = "group_level", keep = FALSE
+  )
+}
+
+#' Unite one or more columns in strata_name-strata_level format.
+#'
+#' @param x Tibble or data.frame.
+#' @param cols Columns to aggregate.
+#'
+#' @return A Tibble with the new columns.
+#'
+#' @export
+#'
+uniteStrata <- function(x, cols) {
+  uniteNameLevel(
+    x = x, cols = cols, name = "strata_name", level = "strata_level",
+    keep = FALSE
+  )
+}
+
+#' Unite one or more columns in additional_name-additional_level format.
+#'
+#' @param x Tibble or data.frame.
+#' @param cols Columns to aggregate.
+#'
+#' @return A Tibble with the new columns.
+#'
+#' @export
+#'
+uniteAdditional <- function(x, cols) {
+  uniteNameLevel(
+    x = x, cols = cols, name = "additional_name", level = "additional_level",
+    keep = FALSE
+  )
+}

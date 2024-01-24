@@ -1,0 +1,147 @@
+
+#' Split group_name and group_level into the columns.
+#'
+#' @param result Omop result object (summarised_result or compared_result).
+#' @param overall Whether to keep overall column if present.
+#'
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' #library(visOmop)
+#'
+#' mockSummarisedResult() |>
+#'   splitGroup()
+#' }
+#'
+splitGroup <- function(result,
+                       overall = FALSE) {
+  splitNameLevel(
+    result = result,
+    name = "group_name",
+    level = "group_level",
+    keep = FALSE,
+    overall = overall
+  )
+}
+
+#' Split strata_name and strata_level into the columns.
+#'
+#' @param result Omop result object (summarised_result or compared_result).
+#' @param overall Whether to keep overall column if present.
+#'
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' #library(visOmop)
+#'
+#' mockSummarisedResult() |>
+#'   splitStrata()
+#' }
+#'
+splitStrata <- function(result,
+                        overall = FALSE) {
+  splitNameLevel(
+    result = result,
+    name = "strata_name",
+    level = "strata_level",
+    keep = FALSE,
+    overall = overall
+  )
+}
+
+#' Split additional_name and additional_level into the columns.
+#'
+#' @param result Omop result object (summarised_result or compared_result).
+#' @param overall Whether to keep overall column if present.
+#'
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' #library(visOmop)
+#'
+#' mockSummarisedResult() |>
+#'   splitAdditional()
+#' }
+#'
+splitAdditional <- function(result,
+                            overall = FALSE) {
+  splitNameLevel(
+    result = result,
+    name = "additional_name",
+    level = "additional_level",
+    keep = FALSE,
+    overall = overall
+  )
+}
+
+#' Split strata_name and strata_level into the columns.
+#'
+#' @param result Omop result object (summarised_result or compared_result).
+#' @param name Column with the names.
+#' @param level Column with the levels.
+#' @param keep Whether to keep the original group_name and group_level columns.
+#' @param overall Whether to keep overall column if present.
+#'
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' #library(visOmop)
+#'
+#' mockSummarisedResult() |>
+#'   splitNameLevel()
+#' }
+#'
+splitNameLevel <- function(result,
+                           name = "group_name",
+                           level = "group_level",
+                           keep = FALSE,
+                           overall = FALSE) {
+  checkmate::assertCharacter(name, len = 1, any.missing = FALSE)
+  checkmate::assertCharacter(level, len = 1, any.missing = FALSE)
+  checkmate::assertLogical(keep, len = 1, any.missing = FALSE)
+  checkmate::assertTibble(result)
+  checkmate::assertTRUE(all(c(name, level) %in% colnames(result)))
+
+  newCols <- getColumns(result, name, TRUE)
+
+  nameValues <- result[[name]] |> stringr::str_split(" and ")
+  levelValues <- result[[level]] |> stringr::str_split(" and ")
+  if (!all(lengths(nameValues) == lengths(levelValues))) {
+    cli::cli_abort("Column names and levels number does not match")
+  }
+
+  nameValue <- unique(unlist(nameValues))
+  present <- nameValue[nameValue %in% colnames(result)]
+  if (length(present) > 0) {
+    cli::cli_warn(
+      "The following columns will be overwritten:
+      {paste0(present, collapse = ', ')}."
+    )
+  }
+  for (k in seq_along(nameValue)) {
+    col <- nameValue[k]
+    dat <- lapply(seq_along(nameValues), function(y) {
+      res <- levelValues[[y]][nameValues[[y]] == col]
+      if (length(res) == 0) {
+        return(as.character(NA))
+      } else {
+        return(res)
+      }
+    }) |>
+      unlist()
+    result[[col]] <- dat
+  }
+
+  if (!keep) {
+    result <- result |> dplyr::select(-dplyr::all_of(c(name, level)))
+  }
+
+  if ("overall" %in% newCols & !overall) {
+    result <- result |> dplyr::select(-"overall")
+  }
+  return(result)
+}
