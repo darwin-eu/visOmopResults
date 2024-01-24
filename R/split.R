@@ -77,6 +77,28 @@ splitAdditional <- function(result,
   )
 }
 
+#' Split group, strata and additional into their respective columns.
+#'
+#' @param result Omop result object (summarised_result or compared_result).
+#'
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' #library(visOmop)
+#'
+#' mockSummarisedResult() |>
+#'   splitAll()
+#' }
+#'
+splitAll <- function(result) {
+  result |>
+    validateResult() |>
+    splitGroup(overall = FALSE) |>
+    splitStrata(overall = FALSE) |>
+    splitAdditional(overall = FALSE)
+}
+
 #' Split strata_name and strata_level into the columns.
 #'
 #' @param result Omop result object (summarised_result or compared_result).
@@ -107,6 +129,7 @@ splitNameLevel <- function(result,
   checkmate::assertTRUE(all(c(name, level) %in% colnames(result)))
 
   newCols <- getColumns(result, name, TRUE)
+  id <- which(name == colnames(result))
 
   nameValues <- result[[name]] |> stringr::str_split(" and ")
   levelValues <- result[[level]] |> stringr::str_split(" and ")
@@ -138,10 +161,25 @@ splitNameLevel <- function(result,
 
   if (!keep) {
     result <- result |> dplyr::select(-dplyr::all_of(c(name, level)))
+    colskeep <- character()
+  } else {
+    colskeep <- c(name, level)
   }
 
   if ("overall" %in% newCols & !overall) {
     result <- result |> dplyr::select(-"overall")
   }
+
+  # move cols
+  if (id == 1) {
+    result <- result |> dplyr::relocate(dplyr::any_of(newCols))
+  } else {
+    id <- colnames(result)[id - 1]
+    result <- result |>
+      dplyr::relocate(
+        dplyr::any_of(c(colskeep, newCols)), .after = dplyr::all_of(id)
+      )
+  }
+
   return(result)
 }

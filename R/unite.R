@@ -24,6 +24,8 @@ uniteNameLevel <- function(x,
   checkmate::assertTibble(x)
   checkmate::assertTRUE(all(cols %in% colnames(x)))
 
+  id <- min(which(colnames(x) %in% cols))
+
   present <- c(name, level)[c(name, level) %in% colnames(x)]
   if (length(present) > 0) {
     cli::cli_warn(
@@ -43,17 +45,30 @@ uniteNameLevel <- function(x,
     cli::cli_abort("Column values must not contain ' and '. Present in: `{paste0(containAnd, collapse = '`, `')}`.")
   }
 
-  originalCols <- colnames(x)
-  if (!keep) {
-    originalCols <- originalCols[!originalCols %in% cols]
-  }
-
-  x |>
+  x <- x |>
     dplyr::mutate(!!name := paste0(cols, collapse = " and ")) |>
     tidyr::unite(
       col = !!level, dplyr::all_of(cols), sep = " and ", remove = !keep
-    ) |>
-    dplyr::select(dplyr::all_of(c(originalCols, name, level)))
+    )
+
+  if (keep) {
+    colskeep <- cols
+  } else {
+    colskeep <- character()
+  }
+
+  # move cols
+  if (id == 1) {
+    x <- x |> dplyr::relocate(dplyr::all_of(c(colskeep, name, level)))
+  } else {
+    id <- colnames(x)[id - 1]
+    x <- x |>
+      dplyr::relocate(
+        dplyr::all_of(c(colskeep, name, level)), .after = dplyr::all_of(id)
+      )
+  }
+
+  return(x)
 }
 
 #' Unite one or more columns in group_name-group_level format.
