@@ -3,8 +3,9 @@
 #' @param x A dataframe.
 #' @param delim Delimiter.
 #' @param style Named list that specifies how to style the different parts of
-#' the flextable. Accepted entries are: title, subtitle, header, header_name,
-#' header_level, column_name, group_label, and body.
+#' the gt table. Accepted entries are: title, subtitle, header, header_name,
+#' header_level, column_name, group_label, and body. Alternatively, use
+#' "default" to get visOmopResult style, or NULL for gt style
 #' @param na How to display missing values.
 #' @param title Title of the table, or NULL for no title.
 #' @param subtitle Subtitle of the table, or NULL for no subtitle.
@@ -29,19 +30,7 @@
 #'   formatTable(header = c("Study strata", "strata_level"),
 #'               includeHeaderName = FALSE) |>
 #'   fxTable(
-#'     style = list(
-#'       "header" = list(
-#'         "cell" = officer::fp_cell(background.color = "#c8c8c8"),
-#'         "text" = officer::fp_text(bold = TRUE)),
-#'       "header_level" = list(
-#'         "cell" = officer::fp_cell(background.color = "#e1e1e1"),
-#'         "text" = officer::fp_text(bold = TRUE)),
-#'       "group_label" = list(
-#'         "cell" = officer::fp_cell(
-#'           background.color = "#e9ecef",
-#'           border = officer::fp_border(width = 1, color = "gray")),
-#'         "text" = officer::fp_text(bold = TRUE))
-#'     ),
+#'     style = "default",
 #'     na = "--",
 #'     title = "fxTable example",
 #'     subtitle = NULL,
@@ -59,22 +48,7 @@
 fxTable <- function(
     x,
     delim = "\n",
-    style = list(
-      "header" = list(
-        "cell" = officer::fp_cell(background.color = "#c8c8c8"),
-        "text" = officer::fp_text(bold = TRUE)),
-      "header_name" = list(
-        "cell" = officer::fp_cell(background.color = "#d9d9d9"),
-        "text" = officer::fp_text(bold = TRUE)),
-      "header_level" = list(
-        "cell" = officer::fp_cell(background.color = "#e1e1e1"),
-        "text" = officer::fp_text(bold = TRUE)),
-      "column_name" = list(
-        "text" = officer::fp_text(bold = TRUE)),
-      "group_label" = list(
-        "cell" = officer::fp_cell(background.color = "#e9ecef"),
-        "text" = officer::fp_text(bold = TRUE))
-    ),
+    style = "default",
     na = "-",
     title = NULL,
     subtitle = NULL,
@@ -87,7 +61,6 @@ fxTable <- function(
   # Checks
   checkmate::assertDataFrame(x)
   checkmate::assertCharacter(delim, min.chars = 1, len = 1, any.missing = FALSE)
-  checkmate::assertList(style, null.ok = TRUE, any.missing = FALSE)
   checkmate::assertCharacter(na, len = 1, null.ok = TRUE)
   checkmate::assertCharacter(title, len = 1, null.ok = TRUE, any.missing = FALSE)
   checkmate::assertCharacter(subtitle, len = 1, null.ok = TRUE, any.missing = FALSE)
@@ -97,6 +70,15 @@ fxTable <- function(
   checkmate::assertCharacter(groupOrder, null.ok = TRUE, any.missing = FALSE)
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
+  }
+  if (is.list(style) | is.null(style)) {
+    checkmate::assertList(style, null.ok = TRUE, any.missing = FALSE)
+  } else if (is.character(style)) {
+    checkmate::assertCharacter(style, min.chars = 1, any.missing = FALSE, max.len = 1)
+    style <- fxStyles(styleName = style)
+  } else {
+    cli::cli_abort("Style must be a named list of flextable styling function,
+                   the string 'default' for our default style, or NULL for flextable default style.")
   }
 
   # Header id's
@@ -159,12 +141,14 @@ fxTable <- function(
                        pr_t = style$column_name$text, pr_c = style$column_name$cell, pr_p = style$column_name$paragraph)
   }
 
-  # Our default
-  flex_x <- flex_x |>
-    flextable::border(border = officer::fp_border(color = "gray"), part = "all") |>
-    flextable::border(border = officer::fp_border(color = "gray", width = 2), part = "header", i = 1:nrow(flex_x$header$dataset)) |>
-    flextable::align(part = "header", align = "center") |>
-    flextable::valign(part = "header", valign = "center")
+  # Basic default
+  if (!is.null(style)) {
+    flex_x <- flex_x |>
+      flextable::border(border = officer::fp_border(color = "gray"), part = "all") |>
+      flextable::border(border = officer::fp_border(color = "gray", width = 1.2), part = "header", i = 1:nrow(flex_x$header$dataset)) |>
+      flextable::align(part = "header", align = "center") |>
+      flextable::valign(part = "header", valign = "center")
+  }
 
   # Other options:
   # caption
@@ -219,4 +203,38 @@ fxTable <- function(
 
   }
   return(flex_x)
+}
+
+
+fxStyles <- function(styleName) {
+  styles <- list (
+    "default" = list(
+      "header" = list(
+        "cell" = officer::fp_cell(background.color = "#c8c8c8"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "header_name" = list(
+        "cell" = officer::fp_cell(background.color = "#d9d9d9"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "header_level" = list(
+        "cell" = officer::fp_cell(background.color = "#e1e1e1"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "column_name" = list(
+        "text" = officer::fp_text(bold = TRUE)),
+      "group_label" = list(
+        "cell" = officer::fp_cell(background.color = "#e9e9e9",
+                                  border = officer::fp_border(color = "gray")),
+        "text" = officer::fp_text(bold = TRUE)),
+      "title" = list(
+        "text" = officer::fp_text(bold = TRUE, font.size = 15)),
+      "subtitle" = list(
+        "text" = officer::fp_text(bold = TRUE, font.size = 12)),
+      "body" = list()
+    )
+  )
+  if (! styleName %in% names(styles)) {
+    warning(glue::glue("{styleName} does not correspon to any of our defined styles. Returning default."),
+            call. = FALSE)
+    styleName <- "default"
+  }
+  return(styles[[styleName]])
 }
