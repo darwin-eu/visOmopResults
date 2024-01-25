@@ -31,13 +31,10 @@ validateComparedResult <- function(x, call = parent.frame()) {
   omopgenerics::comparedResult(x)
 }
 
-validateDecimals <- function(decimals, call = parent.frame()) {
-  nms <- c("numeric", "integer", "proportion", "percentage")
-  errorMesssage <- c(
-    "`decimals` must be named integerish vector. Names refere to estimate_type.
-    Possible names: ", paste0(nms, collapse = ", "), "."
-  ) |>
-    paste0(collapse = "")
+validateDecimals <- function(result, decimals, call = parent.frame()) {
+  nm_type <- c("numeric", "integer", "proportion", "percentage")
+  nm_name <- result[["estimate_name"]] |> unique()
+  errorMesssage <- "`decimals` must be named integerish vector. Names refere to estimate_type or estimate_name columns."
   if (!is.numeric(decimals) | length(decimals) == 0) {
     cli::cli_abort(errorMesssage)
   }
@@ -45,16 +42,19 @@ validateDecimals <- function(decimals, call = parent.frame()) {
     cli::cli_abort(errorMesssage)
   }
   if (length(decimals) == 1 & is.null(names(decimals))) {
-    decimals <- rep(decimals, length(nms))
-    names(decimals) <- nms
+    decimals <- rep(decimals, length(nm_type))
+    names(decimals) <- nm_type
   }
-  if (!all(names(decimals) %in% nms)) {
+  if (!all(names(decimals) %in% c(nm_type, nm_name))) {
     cli::cli_abort(errorMesssage)
+  } else {
+    decimals <- c(decimals[names(decimals) %in% nm_name],
+                  decimals[names(decimals) %in% nm_type])
   }
   return(decimals)
 }
 
-validateEstimateNameFormat <- function(format) {
+validateEstimateNameFormat <- function(format, call = parent.frame()) {
   if (length(stringr::str_match_all(format, "(?<=\\<).+?(?=\\>)") |> unlist()) == 0) {
     cli::cli_abort("format input does not contain any estimate name indicated by <...>.")
   }

@@ -100,6 +100,48 @@ test_that("formatEstimateValue", {
     expect_true(lapply(strsplit(result_output$estimate_value, "_"), function(x) {x[[2]]}) |>
                   unlist() |> nchar() |> mean() == 4)
 
+
+    # Estimate name input ----
+    result_output <- formatEstimateValue(result,
+                                         decimals = c(mean = 2, sd = 3, count = 0))
+
+    # check number of decimals
+    ## mean
+    mean <- result_output$estimate_value[result_output$estimate_name == "mean"]
+    if (length(mean) > 0) {
+      expect_true(lapply(strsplit(mean, ".", fixed = TRUE), function(x) {x[[2]]}) |>
+                    unlist() |> nchar() |> mean() == 2)
+    }
+    ## sd
+    sd <- result_output$estimate_value[result_output$estimate_name == "sd"]
+    if (length(sd) > 0) {
+      expect_true(lapply(strsplit(sd, ".", fixed = TRUE), function(x) {x[[2]]}) |>
+                    unlist() |> nchar() |> mean() == 3)
+    }
+    ## count
+    count <- result_output$estimate_value[result_output$estimate_name == "count"]
+    if (length(count) > 0) {
+      expect_false(all(grepl(",", count)))
+    }
+    ## percentage
+    expect_identical(result_output$estimate_value[result_output$estimate_name == "percentage"],
+                     result$estimate_value[result$estimate_name == "percentage"])
+
+    # Hierarchy ----
+    result_output <- formatEstimateValue(result,
+                                         decimals = c(numeric = 2, mean = 3))
+    mean <- result_output$estimate_value[result_output$estimate_name == "mean"]
+    if (length(mean) > 0) {
+      expect_true(lapply(strsplit(mean, ".", fixed = TRUE), function(x) {x[[2]]}) |>
+                    unlist() |> nchar() |> mean() == 3)
+    }
+    numeric <- result_output$estimate_value[result_output$estimate_type == "numeric" & result_output$estimate_name != "mean"]
+    if (length(numeric) > 0) {
+      expect_true(lapply(strsplit(numeric, ".", fixed = TRUE), function(x) {x[[2]]}) |>
+                    unlist() |> nchar() |> mean() == 2)
+    }
+
+
     # Wroing input ----
     expect_error(formatEstimateValue(result,
                                      decimals = NA,
@@ -113,4 +155,6 @@ test_that("formatEstimateValue", {
                                      decimals = 2,
                                      decimalMark = NA,
                                      bigMark = "%"))
+    expect_error(formatEstimateValue(result,
+                                     decimals = c(count = 1, lala = 0)))
 })

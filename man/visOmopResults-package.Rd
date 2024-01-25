@@ -4,9 +4,9 @@
 \name{visOmopResults-package}
 \alias{visOmopResults}
 \alias{visOmopResults-package}
-\title{visOmopResults: Format summarisedResult objects into gt and flextable objects}
+\title{visOmopResults: Graphs and Tables for OMOP Results}
 \description{
-What the package does (one paragraph).
+To provide basic functionalities to visualise OMOP (Observational Medical Outcomes Partnership) results into tables and figures.
 }
 \seealso{
 Useful links:
