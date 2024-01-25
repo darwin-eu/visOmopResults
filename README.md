@@ -13,7 +13,7 @@ VisOmopResults contains functions for formatting objects of the class *summarise
 ## Installation
 
 You can install the development version of VisOmopResults from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/oxford-pharmacoepi/visOmopResults) with:
 
 ``` r
 # install.packages("devtools")
