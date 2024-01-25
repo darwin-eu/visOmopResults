@@ -91,7 +91,11 @@
 </h3>
 <p>We utilize this function to modify the <em>estimate_value</em> column. In this case, we will apply the default settings of the function, which include using 0 decimals for integer values, 2 decimals for numeric values, 1 decimal for percentages, and 3 decimals for proportions. Additionally, the function sets the decimal mark to ‘.’, and the thousand/millions separator to ‘,’ by default.”</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> <span class="fu"><a href="reference/formatEstimateValue.html">formatEstimateValue</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span> </span>
+<span>  <span class="fu"><a href="reference/formatEstimateValue.html">formatEstimateValue</a></span><span class="op">(</span></span>
+<span>    decimals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>integer <span class="op">=</span> <span class="fl">0</span>, numeric <span class="op">=</span> <span class="fl">2</span>, percentage <span class="op">=</span> <span class="fl">1</span>, proportion <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
+<span>    decimalMark <span class="op">=</span> <span class="st">"."</span>,</span>
+<span>    bigMark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="id_2-formatestimatename">2. formatEstimateName<a class="anchor" aria-label="anchor" href="#id_2-formatestimatename"></a>
@@ -110,10 +114,10 @@
 <p>Next step is to format our table before tranforming to gt object. We will pivot <em>strata_name</em> and <em>strata_level</em> columns to have the strata groups as columns under the header “Study strata”.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">spanHeader</span><span class="op">(</span>header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Study strata"</span>, <span class="st">"strata_name"</span>, <span class="st">"strata_level"</span><span class="op">)</span>,</span>
-<span>             delim <span class="op">=</span> <span class="st">"\n"</span>, </span>
-<span>             includeHeaderName <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>             includeHeaderKey <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="reference/formatTable.html">formatTable</a></span><span class="op">(</span>header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Study strata"</span>, <span class="st">"strata_name"</span>, <span class="st">"strata_level"</span><span class="op">)</span>,</span>
+<span>              delim <span class="op">=</span> <span class="st">"\n"</span>, </span>
+<span>              includeHeaderName <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>              includeHeaderKey <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="id_4-gttable">4. gtTable<a class="anchor" aria-label="anchor" href="#id_4-gttable"></a>
