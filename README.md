@@ -50,20 +50,19 @@ result <- result %>% formatEstimateName(
 ```
 
 ### 3. formatTable
-[to do]
+Next step is to format our table before tranforming to gt object. We will pivot *strata_name* and *strata_level* columns to have the strata groups as columns under the header "Study strata".
 ``` r
 result <- result %>%
-  spanHeader(header = c("Study cohorts", "group_level", "Study strata",
-                         "strata_name", "strata_level"),
+  spanHeader(header = c("Study strata", "strata_name", "strata_level"),
              delim = "\n", 
              includeHeaderName = FALSE,
-             includeHeaderKey = FALSE)
+             includeHeaderKey = TRUE)
 ```
 
 ### 4. gtTable
-[to do]
+Finally, we convert the transformed *summarised_result* object in steps 1, 2, and 3, into a nice gt object. We use the default visOmopResults style. Additonally, we separet data into groups specified by *group_level* column to differentiate between cohort1 and cohort2.
 ``` r
-result <- result %>%
+gtResult <- result %>%
   gtTable(
     delim = "\n",
     style = "default",
