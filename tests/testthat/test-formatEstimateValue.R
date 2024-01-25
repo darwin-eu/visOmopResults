@@ -121,7 +121,7 @@ test_that("formatEstimateValue", {
     ## count
     count <- result_output$estimate_value[result_output$estimate_name == "count"]
     if (length(count) > 0) {
-      expect_false(all(grepl(",", count)))
+      expect_false(all(grepl(".", count, fixed = TRUE)))
     }
     ## percentage
     expect_identical(result_output$estimate_value[result_output$estimate_name == "percentage"],
