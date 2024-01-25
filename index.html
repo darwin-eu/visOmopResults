@@ -107,21 +107,20 @@
 <div class="section level3">
 <h3 id="id_3-formattable">3. formatTable<a class="anchor" aria-label="anchor" href="#id_3-formattable"></a>
 </h3>
-<p>[to do]</p>
+<p>Next step is to format our table before tranforming to gt object. We will pivot <em>strata_name</em> and <em>strata_level</em> columns to have the strata groups as columns under the header “Study strata”.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
-<span>  <span class="fu">spanHeader</span><span class="op">(</span>header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Study cohorts"</span>, <span class="st">"group_level"</span>, <span class="st">"Study strata"</span>,</span>
-<span>                         <span class="st">"strata_name"</span>, <span class="st">"strata_level"</span><span class="op">)</span>,</span>
+<span>  <span class="fu">spanHeader</span><span class="op">(</span>header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Study strata"</span>, <span class="st">"strata_name"</span>, <span class="st">"strata_level"</span><span class="op">)</span>,</span>
 <span>             delim <span class="op">=</span> <span class="st">"\n"</span>, </span>
 <span>             includeHeaderName <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>             includeHeaderKey <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<span>             includeHeaderKey <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="id_4-gttable">4. gtTable<a class="anchor" aria-label="anchor" href="#id_4-gttable"></a>
 </h3>
-<p>[to do]</p>
+<p>Finally, we convert the transformed <em>summarised_result</em> object in steps 1, 2, and 3, into a nice gt object. We use the default visOmopResults style. Additonally, we separet data into groups specified by <em>group_level</em> column to differentiate between cohort1 and cohort2.</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
+<code class="sourceCode R"><span><span class="va">gtResult</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op"><a href="https://magrittr.tidyverse.org/reference/pipe.html" class="external-link">%&gt;%</a></span></span>
 <span>  <span class="fu"><a href="reference/gtTable.html">gtTable</a></span><span class="op">(</span></span>
 <span>    delim <span class="op">=</span> <span class="st">"\n"</span>,</span>
 <span>    style <span class="op">=</span> <span class="st">"default"</span>,</span>
