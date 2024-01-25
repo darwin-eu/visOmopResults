@@ -36,7 +36,11 @@ result <- mockSummarisedResult()
 We utilize this function to modify the *estimate_value* column. In this case, we will apply the default settings of the function, which include using 0 decimals for integer values, 2 decimals for numeric values, 1 decimal for percentages, and 3 decimals for proportions. Additionally, the function sets the decimal mark to '.', and the thousand/millions separator to ',' by default."
 
 ``` r
-result <- result %>% formatEstimateValue()
+result <- result %>% 
+  formatEstimateValue(
+    decimals = c(integer = 0, numeric = 2, percentage = 1, proportion = 3),
+    decimalMark = ".",
+    bigMark = ",")
 ```
 
 ### 2. formatEstimateName
@@ -53,10 +57,10 @@ result <- result %>% formatEstimateName(
 Next step is to format our table before tranforming to gt object. We will pivot *strata_name* and *strata_level* columns to have the strata groups as columns under the header "Study strata".
 ``` r
 result <- result %>%
-  spanHeader(header = c("Study strata", "strata_name", "strata_level"),
-             delim = "\n", 
-             includeHeaderName = FALSE,
-             includeHeaderKey = TRUE)
+  formatTable(header = c("Study strata", "strata_name", "strata_level"),
+              delim = "\n", 
+              includeHeaderName = FALSE,
+              includeHeaderKey = TRUE)
 ```
 
 ### 4. gtTable
