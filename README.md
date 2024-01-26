@@ -13,7 +13,7 @@ VisOmopResults contains functions for formatting objects of the class *summarise
 ## Installation
 
 You can install the development version of VisOmopResults from
-[GitHub](https://github.com/) with:
+[GitHub](https://github.com/oxford-pharmacoepi/visOmopResults) with:
 
 ``` r
 # install.packages("devtools")
@@ -33,14 +33,18 @@ result <- mockSummarisedResult()
 ```
 
 ### 1. formatEstimateValue
-We utilize the `formatEstimateValue` function to modify the *estimate_value* column. In this case, we will apply the default settings of the function, which include using 0 decimals for integer values, 2 decimals for numeric values, 1 decimal for percentages, and 3 decimals for proportions. Additionally, the function sets the decimal mark to '.', and the thousand/millions separator to ',' by default."
+We utilize this function to modify the *estimate_value* column. In this case, we will apply the default settings of the function, which include using 0 decimals for integer values, 2 decimals for numeric values, 1 decimal for percentages, and 3 decimals for proportions. Additionally, the function sets the decimal mark to '.', and the thousand/millions separator to ',' by default."
 
 ``` r
-result <- result |> formatEstimateValue()
+result <- result |> 
+  formatEstimateValue(
+    decimals = c(integer = 0, numeric = 2, percentage = 1, proportion = 3),
+    decimalMark = ".",
+    bigMark = ",")
 ```
 
 ### 2. formatEstimateName
-The `formatEstimateName` function enables the transformation of the *estimate_name* and *estimate_value* columns. For example, it allows to consolidate into one row counts and percentages related to the same variable within the same group and strata. It's worth noting that the estimate_name is enclosed within <...> in the *estimateNameFormat* argument."
+With this function we can transform the *estimate_name* and *estimate_value* columns. For example, it allows to consolidate into one row counts and percentages related to the same variable within the same group and strata. It's worth noting that the estimate_name is enclosed within <...> in the *estimateNameFormat* argument."
 ``` r
 result <- result |> formatEstimateName(
   estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
@@ -50,20 +54,19 @@ result <- result |> formatEstimateName(
 ```
 
 ### 3. formatTable
-[to do]
+Next step is to format our table before tranforming to gt object. We will pivot *strata_name* and *strata_level* columns to have the strata groups as columns under the header "Study strata".
 ``` r
 result <- result |>
-  spanHeader(header = c("Study cohorts", "group_level", "Study strata",
-                         "strata_name", "strata_level"),
-             delim = "\n", 
-             includeHeaderName = FALSE,
-             includeHeaderKey = FALSE)
+  formatTable(header = c("Study strata", "strata_name", "strata_level"),
+              delim = "\n", 
+              includeHeaderName = FALSE,
+              includeHeaderKey = TRUE)
 ```
 
 ### 4. gtTable
-[to do]
+Finally, we convert the transformed *summarised_result* object in steps 1, 2, and 3, into a nice gt object. We use the default visOmopResults style. Additonally, we separet data into groups specified by *group_level* column to differentiate between cohort1 and cohort2.
 ``` r
-result <- result |>
+gtResult <- result |>
   gtTable(
     delim = "\n",
     style = "default",
