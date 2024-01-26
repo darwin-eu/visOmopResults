@@ -56,16 +56,7 @@
 gtTable <- function(
     x,
     delim = "\n",
-    style = list("header" = list(gt::cell_fill(color = "#c8c8c8"),
-                                 gt::cell_text(weight = "bold")),
-      "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
-                           gt::cell_text(weight = "bold")),
-      "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
-                            gt::cell_text(weight = "bold")),
-      "column_name" = list(gt::cell_text(weight = "bold")),
-      "group_label" = list(gt::cell_fill(color = "#e9ecef"),
-                           gt::cell_text(weight = "bold"))
-    ),
+    style = "style",
     na = "-",
     title = NULL,
     subtitle = NULL,
@@ -243,16 +234,16 @@ gtStyles <- function(styleName) {
   styles <- list (
     "default" = list(
       "header" = list(gt::cell_fill(color = "#c8c8c8"),
-                      gt::cell_text(weight = "bold")),
+                      gt::cell_text(weight = "bold", align = "center")),
       "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
-                           gt::cell_text(weight = "bold")),
+                           gt::cell_text(weight = "bold", align = "center")),
       "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
-                            gt::cell_text(weight = "bold")),
-      "column_name" = list(gt::cell_text(weight = "bold")),
+                            gt::cell_text(weight = "bold", align = "center")),
+      "column_name" = list(gt::cell_text(weight = "bold", align = "center")),
       "group_label" = list(gt::cell_fill(color = "#e9e9e9"),
                            gt::cell_text(weight = "bold")),
-      "title" = list(gt::cell_text(weight = "bold", size = 15)),
-      "subtitle" = list(gt::cell_text(weight = "bold", size = 12)),
+      "title" = list(gt::cell_text(weight = "bold", size = 15, align = "center")),
+      "subtitle" = list(gt::cell_text(weight = "bold", size = 12, align = "center")),
       "body" = list()
     )
   )

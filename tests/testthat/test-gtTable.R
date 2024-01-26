@@ -209,21 +209,23 @@ test_that("fxTable, test default styles and NULL", {
   # spanner styles
   expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level %in% c(1,3)]] |>
                  unlist() |> unique(),
-               c("#D9D9D9", "bold"))
+               c("#D9D9D9", "center", "bold"))
   expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level == 2]] |>
                  unlist() |> unique(),
-               c("#E1E1E1", "bold"))
+               c("#E1E1E1", "center", "bold"))
   expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level == 4]] |>
                  unlist() |> unique(),
-               c("#C8C8C8", "bold"))
+               c("#C8C8C8", "center", "bold"))
   # title
   expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "title"] |> unlist() |> unique(),
-               c("15", "bold"))
+               c("15", "center", "bold"))
   expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "subtitle"] |> unlist() |> unique(),
-               c("12", "bold"))
+               c("12", "center", "bold"))
   # column names
-  expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[1:18] |> unique(), c("#E1E1E1", "bold"))
-  expect_true(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[19:29] |> unique() == "bold")
+  expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[1:27] |> unique(),
+               c("#E1E1E1", "center", "bold"))
+  expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[28:49] |> unique(),
+              c("center", "bold"))
   expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
 
   # Group labels

@@ -51,6 +51,13 @@ test_that("fxTable", {
   # caption
   expect_null(fxResult$caption$value)
 
+  # Alignment
+  expect_equal(fxResult$body$styles$pars$text.align$data[1,12:29] |> unique(), "right")
+  expect_equal(fxResult$body$styles$pars$text.align$data[3,12:29] |> unique(), "right")
+  expect_equal(fxResult$body$styles$pars$text.align$data[5,12:29] |> unique(), "right")
+  expect_equal(fxResult$body$styles$pars$text.align$data[1,1:11] |> unique(), "left")
+  expect_equal(fxResult$body$styles$pars$text.align$data[3,1:11] |> unique(), "left")
+  expect_equal(fxResult$body$styles$pars$text.align$data[5,1:11] |> unique(), "left")
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
@@ -99,8 +106,8 @@ test_that("fxTable", {
   expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(0,1))
   expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
   expect_equal(fxResult$body$styles$cells$background.color$data[, "cdm_name"],
-               c("#e1e1e1", "transparent", "transparent", "transparent", "transparent", "#e1e1e1",
-                 "transparent", "transparent", "transparent", "transparent"))
+               c("#e1e1e1", "transparent", "transparent", "transparent", "transparent", "transparent",
+                 "#e1e1e1", "transparent", "transparent", "transparent", "transparent", "transparent"))
   expect_equal(fxResult$body$styles$text$color$data[, "cdm_name"] |> unique(), "red")
 
   # caption
@@ -108,7 +115,7 @@ test_that("fxTable", {
 
   # group label
   expect_equal(fxResult$body$spans$rows[1,], c(1, 20, rep(0, 19)))
-  expect_equal(fxResult$body$spans$rows[6,], c(1, 20, rep(0, 19)))
+  expect_equal(fxResult$body$spans$rows[7,], c(1, 20, rep(0, 19)))
   expect_equal(fxResult$body$spans$rows[3,], rep(1, 21))
 
   # Input 3 ----
@@ -137,7 +144,7 @@ test_that("fxTable", {
   )
 
   # group label
-  expect_equal(fxResult$body$spans$columns[,1], c(4, rep(0,3), 4, rep(0,3)))
+  expect_equal(fxResult$body$spans$columns[,1], c(5, rep(0,4), 5, rep(0,4)))
   expect_equal(fxResult$body$dataset[,1] |>  levels(), c("cohort2", "cohort1"))
   expect_equal(fxResult$body$spans$rows[3,], rep(1, 21))
   expect_equal(fxResult$body$styles$cells$background.color$data[,1] |> unique(), "#e1e1e1")
@@ -226,8 +233,8 @@ test_that("fxTable, test default styles and NULL", {
   expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
   expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
   expect_equal(fxResult$body$styles$cells$background.color$data[, "cdm_name"],
-               c("#e9e9e9", "transparent", "transparent", "transparent", "transparent", "#e9e9e9",
-                 "transparent", "transparent", "transparent", "transparent"))
+               c("#e9e9e9", "transparent", "transparent", "transparent", "transparent","transparent",
+                 "#e9e9e9","transparent", "transparent", "transparent", "transparent", "transparent"))
   expect_equal(fxResult$body$styles$text$color$data[, "cdm_name"] |> unique(), "black")
 
   #Input 3: woring name style ----
