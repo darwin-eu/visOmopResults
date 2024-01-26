@@ -211,6 +211,7 @@ gtTable <- function(
         )
     }
   }
+
   ## body
   if ("body" %in% names(style)) {
     gtResult <- gtResult |>
@@ -227,6 +228,18 @@ gtTable <- function(
         locations = gt::cells_row_groups()
       )
   }
+
+  # Our default:
+  gtResult <- gtResult |>
+    gt::tab_style(
+      style = gt::cell_text(align = "right"),
+      locations = gt::cells_body(columns = which(grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x))))
+    ) |>
+    gt::tab_style(
+      style = gt::cell_text(align = "left"),
+      locations = gt::cells_body(columns = which(!grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x))))
+    )
+
   return(gtResult)
 }
 

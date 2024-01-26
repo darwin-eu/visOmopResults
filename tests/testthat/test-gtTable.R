@@ -185,8 +185,8 @@ test_that("fxTable, test default styles and NULL", {
   )
 
   # style
-  expect_true(nrow(gtResult$`_styles`) == 0)
-
+  expect_true(gtResult$`_styles`$styles[1][[1]]$cell_text$align == "right")
+  expect_true(gtResult$`_styles`$styles[203][[1]]$cell_text$align == "left")
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
