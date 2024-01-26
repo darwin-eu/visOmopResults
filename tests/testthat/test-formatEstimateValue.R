@@ -206,6 +206,36 @@ test_that("formatEstimateValue", {
       expect_equal(sd_out, base::format(as.numeric(sd_in), decimal.mark = ".", trim = TRUE, justify = "none"))
     }
 
+    # no warning when estimate value is NA
+    result <- mockSummarisedResult() |>
+      dplyr::union_all(dplyr::tibble(
+        "cdm_name" = "mock",
+        "result_type" = NA_character_,
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
+          as.character(),
+        "group_name" = "cohort_name",
+        "group_level" = "cohort3",
+        "strata_name" = rep(c(
+          "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+        ), 2),
+        "strata_level" = rep(c(
+          "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
+          ">=40 and Female", "Male", "Female", "<40", ">=40"
+        ), 2),
+        "variable_name" = "number subjects",
+        "variable_level" = NA_character_,
+        "estimate_name" = "count",
+        "estimate_type" = "integer",
+        "estimate_value" = NA_character_,
+        "additional_name" = "overall",
+        "additional_level" = "overall"
+      ))
+
+    expect_no_warning(formatEstimateValue(result,
+                                         decimals = 2,
+                                         decimalMark = ".",
+                                         bigMark = ","))
 
     # Wroing input ----
     expect_error(formatEstimateValue(result,
