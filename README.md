@@ -36,13 +36,13 @@ result <- mockSummarisedResult()
 We utilize the `formatEstimateValue` function to modify the *estimate_value* column. In this case, we will apply the default settings of the function, which include using 0 decimals for integer values, 2 decimals for numeric values, 1 decimal for percentages, and 3 decimals for proportions. Additionally, the function sets the decimal mark to '.', and the thousand/millions separator to ',' by default."
 
 ``` r
-result <- result %>% formatEstimateValue()
+result <- result |> formatEstimateValue()
 ```
 
 ### 2. formatEstimateName
 The `formatEstimateName` function enables the transformation of the *estimate_name* and *estimate_value* columns. For example, it allows to consolidate into one row counts and percentages related to the same variable within the same group and strata. It's worth noting that the estimate_name is enclosed within <...> in the *estimateNameFormat* argument."
 ``` r
-result <- result %>% formatEstimateName(
+result <- result |> formatEstimateName(
   estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                          "N" = "<count>",
                          "Mean (SD)" = "<mean> (<sd>)"),
@@ -52,7 +52,7 @@ result <- result %>% formatEstimateName(
 ### 3. formatTable
 [to do]
 ``` r
-result <- result %>%
+result <- result |>
   spanHeader(header = c("Study cohorts", "group_level", "Study strata",
                          "strata_name", "strata_level"),
              delim = "\n", 
@@ -63,7 +63,7 @@ result <- result %>%
 ### 4. gtTable
 [to do]
 ``` r
-result <- result %>%
+result <- result |>
   gtTable(
     delim = "\n",
     style = "default",

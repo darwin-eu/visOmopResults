@@ -31,26 +31,29 @@ validateComparedResult <- function(x, call = parent.frame()) {
   omopgenerics::comparedResult(x)
 }
 
-validateDecimals <- function(result, decimals, call = parent.frame()) {
+validateDecimals <- function(result, decimals) {
   nm_type <- c("numeric", "integer", "proportion", "percentage")
   nm_name <- result[["estimate_name"]] |> unique()
-  errorMesssage <- "`decimals` must be named integerish vector. Names refere to estimate_type or estimate_name columns."
-  if (!is.numeric(decimals) | length(decimals) == 0) {
+  errorMesssage <- "`decimals` must be named integerish vector. Names refere to estimate_type or estimate_name values."
+
+  if (is.null(decimals)) {
+  } else if (any(is.na(decimals))) { # NA
     cli::cli_abort(errorMesssage)
-  }
-  if (!all(decimals == floor(decimals))) {
+  } else if (!is.numeric(decimals)) { # not numeric
     cli::cli_abort(errorMesssage)
-  }
-  if (length(decimals) == 1 & is.null(names(decimals))) {
+  } else if (!all(decimals == floor(decimals))) { # not integer
+    cli::cli_abort(errorMesssage)
+  } else if (!all(names(decimals) %in% c(nm_type, nm_name))) { # not correctly named
+    conflict_nms <- names(decimals)[!names(decimals) %in% c(nm_type, nm_name)]
+    cli::cli_abort(glue::glue("{paste0(conflict_nms, collapse = ", ")} do not correspont to estimate_type or estimate_name values."))
+  } else if (length(decimals) == 1 & is.null(names(decimals))) { # same number to all
     decimals <- rep(decimals, length(nm_type))
     names(decimals) <- nm_type
-  }
-  if (!all(names(decimals) %in% c(nm_type, nm_name))) {
-    cli::cli_abort(errorMesssage)
   } else {
     decimals <- c(decimals[names(decimals) %in% nm_name],
                   decimals[names(decimals) %in% nm_type])
   }
+
   return(decimals)
 }
 

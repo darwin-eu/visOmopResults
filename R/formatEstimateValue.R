@@ -37,28 +37,36 @@ formatEstimateValue <- function(result,
   result <- validateResult(result)
   decimals <- validateDecimals(result, decimals)
   checkmate::assertCharacter(decimalMark, len = 1, any.missing = FALSE)
-  checkmate::assertCharacter(bigMark, len = 1, any.missing = FALSE)
+  checkmate::assertCharacter(bigMark, len = 1, any.missing = FALSE, null.ok = TRUE)
+  if (is.null(bigMark)) {bigMark <- ""}
 
-  # format estimate
   result <- formatEstimateValueInternal(result, decimals, decimalMark, bigMark)
-
   return(result)
 }
 
 formatEstimateValueInternal <- function(result, decimals, decimalMark, bigMark) {
-  formatted <- rep(FALSE, nrow(result))
-  for (nm in names(decimals)) {
-    n <- decimals[nm] |> unname()
-    if (nm %in% unique(result[["estimate_name"]])) {
-      id <- result[["estimate_name"]] == nm
-    } else {
-      id <- result[["estimate_type"]] == nm
+  nms_name <- unique(result[["estimate_name"]])
+  if (is.null(decimals)) { # default # decimal formatting
+    for (nm in nms_name) {
+      result$estimate_value[result[["estimate_name"]] == nm] <- result$estimate_value[result[["estimate_name"]] == nm] |>
+        as.numeric() |>
+        base::format(big.mark = bigMark, decimal.mark = decimalMark, trim = TRUE, justify = "none")
     }
-    result$estimate_value[id & !formatted] <- result$estimate_value[id & !formatted] |>
-      as.numeric() |>
-      round(digits = n) |>
-      base::format(nsmall = n, big.mark = bigMark, decimal.mark = decimalMark, trim = TRUE)
-    formatted[id] <- TRUE
+  } else {
+    formatted <- rep(FALSE, nrow(result))
+    for (nm in names(decimals)) {
+      if (nm %in% nms_name) {
+        id <- result[["estimate_name"]] == nm
+      } else {
+        id <- result[["estimate_type"]] == nm
+      }
+      n <- decimals[nm] |> unname()
+      result$estimate_value[id & !formatted] <- result$estimate_value[id & !formatted] |>
+        as.numeric() |>
+        round(digits = n) |>
+        base::format(nsmall = n, big.mark = bigMark, decimal.mark = decimalMark, trim = TRUE, justify = "none")
+      formatted[id] <- TRUE
+    }
   }
   return(result)
 }

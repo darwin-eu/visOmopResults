@@ -141,6 +141,71 @@ test_that("formatEstimateValue", {
                     unlist() |> nchar() |> mean() == 2)
     }
 
+    ## Test NULL decimals ----
+    result_output <- formatEstimateValue(result,
+                                         decimals = NULL,
+                                         decimalMark = "..",
+                                         bigMark = ",")
+
+    ## count
+    counts_in  <- result$estimate_value[result_output$estimate_type == "integer"]
+    counts_out <- result_output$estimate_value[result_output$estimate_type == "integer"]
+
+    zeroMarks_out <- base::paste(counts_out[base::nchar(counts_in) < 4], collapse = "")
+    zeroMarks_out <- nchar(zeroMarks_out) - nchar(gsub("=", "", zeroMarks_out))
+
+    oneMark_in  <- sum(base::nchar(counts_in) < 7 & base::nchar(counts_in) > 3)
+    oneMark_out <- base::paste(counts_out[base::nchar(counts_in) < 7 & base::nchar(counts_in) > 3], collapse = "")
+    oneMark_out <- nchar(oneMark_out) - nchar(gsub("=", "", oneMark_out))
+
+    twoMarks_in  <- sum(base::nchar(counts_in) == 7)*2
+    twoMarks_out <- base::paste(counts_out[base::nchar(counts_in) == 7], collapse = "")
+    twoMarks_out <- nchar(twoMarks_out) - nchar(gsub("=", "", twoMarks_out))
+
+    if (length(counts_out) > 0) {
+      expect_false(all(grepl("..", counts_out, fixed = TRUE)))
+    }
+    ## mean
+    mean_in <- result$estimate_value[result$estimate_name == "mean"]
+    mean_out <- result_output$estimate_value[result_output$estimate_name == "mean"]
+    if (length(mean) > 0) {
+      expect_equal(mean_out, base::format(as.numeric(mean_in), decimal.mark = "..", trim = TRUE, justify = "none"))
+    }
+    ## sd
+    sd_in <- result$estimate_value[result$estimate_name == "sd"]
+    sd_out <- result_output$estimate_value[result_output$estimate_name == "sd"]
+    if (length(sd) > 0) {
+      expect_equal(sd_out, base::format(as.numeric(sd_in), decimal.mark = "..", trim = TRUE, justify = "none"))
+    }
+
+    ## Test NULL bigMark ----
+    result_output <- formatEstimateValue(result,
+                                         decimals = 0,
+                                         decimalMark = ".",
+                                         bigMark = NULL)
+    expect_equal(result_output$estimate_value[result_output$estimate_name == "count"],
+                 result$estimate_value[result$estimate_name == "count"])
+
+    ## Test NULL decimals + NULL bigMark ----
+    result_output <- formatEstimateValue(result,
+                                         decimals = NULL,
+                                         decimalMark = ".",
+                                         bigMark = NULL)
+    expect_equal(result_output$estimate_value[result_output$estimate_name == "count"],
+                 result$estimate_value[result$estimate_name == "count"])
+    ## mean
+    mean_in <- result$estimate_value[result$estimate_name == "mean"]
+    mean_out <- result_output$estimate_value[result_output$estimate_name == "mean"]
+    if (length(mean) > 0) {
+      expect_equal(mean_out, base::format(as.numeric(mean_in), decimal.mark = ".", trim = TRUE, justify = "none"))
+    }
+    ## sd
+    sd_in <- result$estimate_value[result$estimate_name == "sd"]
+    sd_out <- result_output$estimate_value[result_output$estimate_name == "sd"]
+    if (length(sd) > 0) {
+      expect_equal(sd_out, base::format(as.numeric(sd_in), decimal.mark = ".", trim = TRUE, justify = "none"))
+    }
+
 
     # Wroing input ----
     expect_error(formatEstimateValue(result,
@@ -156,5 +221,10 @@ test_that("formatEstimateValue", {
                                      decimalMark = NA,
                                      bigMark = "%"))
     expect_error(formatEstimateValue(result,
-                                     decimals = c(count = 1, lala = 0)))
+                                     decimals = c(count = 1, lala = 0)),
+                 "lala do not correspont to estimate_type or estimate_name values.")
+    expect_error(formatEstimateValue(result,
+                                     decimals = 1,
+                                     decimalMark = NULL,
+                                     bigMark = ","))
 })
