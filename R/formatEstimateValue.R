@@ -56,12 +56,12 @@ formatEstimateValueInternal <- function(result, decimals, decimalMark, bigMark) 
     formatted <- rep(FALSE, nrow(result))
     for (nm in names(decimals)) {
       if (nm %in% nms_name) {
-        id <- result[["estimate_name"]] == nm
+        id <- result[["estimate_name"]] == nm & !formatted & !is.na(result$estimate_value)
       } else {
-        id <- result[["estimate_type"]] == nm
+        id <- result[["estimate_type"]] == nm & !formatted & !is.na(result$estimate_value)
       }
       n <- decimals[nm] |> unname()
-      result$estimate_value[id & !formatted] <- result$estimate_value[id & !formatted] |>
+      result$estimate_value[id] <- result$estimate_value[id] |>
         as.numeric() |>
         round(digits = n) |>
         base::format(nsmall = n, big.mark = bigMark, decimal.mark = decimalMark, trim = TRUE, justify = "none")
