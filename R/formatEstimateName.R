@@ -71,8 +71,14 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useNewF
   cols <- ocols[
     !ocols %in% c("estimate_name", "estimate_type", "estimate_value")
   ]
+
   # start formatting
-  result <- result |> dplyr::mutate("formatted" = FALSE, "id" = dplyr::row_number())
+  result <- result |>
+    dplyr::mutate("formatted" = FALSE, "id" = dplyr::row_number()) |>
+    dplyr::group_by(dplyr::across(dplyr::all_of(cols))) |>
+    dplyr::mutate(group_id = min(.data$id)) |>
+    dplyr::ungroup()
+
   resultF <- NULL
   for (k in seq_along(format)) {
     nameK <- nms[k]
@@ -101,13 +107,12 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useNewF
           "formatted" = TRUE,
           "estimate_type" = "character"
         ) |>
-        dplyr::select(dplyr::all_of(c(ocols, "id", "formatted")))
+        dplyr::select(dplyr::all_of(c(ocols, "id", "group_id", "formatted")))
       result <- result |>
         dplyr::anti_join(
           res |> dplyr::select(dplyr::all_of(c(cols, "estimate_name"))),
           by = c(cols, "estimate_name")
-        )
-      resultF <- resultF |>
+        ) |>
         dplyr::union_all(resF)
     } else {
       if (len > 0) {warning(glue::glue("{formatK} has not been formatted."), call. = FALSE)
@@ -116,19 +121,27 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useNewF
   }
   #useNewFormatOrder
   if (useNewFormatOrder) {
-    result <- resultF |>
-      dplyr::union_all(result)
+    new_order <- dplyr::tibble(estimate_name = nms, format_id = 1:length(nms)) |>
+      dplyr::union_all(result |>
+                         dplyr::select(estimate_name) |>
+                         dplyr::distinct() |>
+                         dplyr::filter(!.data$estimate_name %in% nms) |>
+                         dplyr::mutate(format_id = length(format) + dplyr::row_number()))
+    result <- result |>
+      dplyr::left_join(new_order)
+    result <- result[order(result$group_id, result$format_id, decreasing = FALSE),] |>
+      dplyr::select(-c("id", "group_id", "format_id"))
   } else {
     result <- result |>
-      dplyr::union_all(resultF) |>
-      dplyr::arrange(.data$id)
+      dplyr::arrange(.data$id) |>
+      dplyr::select(-"id", -"group_id")
   }
   # keepNotFormated
   if (!keepNotFormatted) {
     result <- result |> dplyr::filter(.data$formatted)
   }
   # result
-  result <- result |> dplyr::select(-"formatted", -"id")
+  result <- result |> dplyr::select(-"formatted")
   return(result)
 }
 getFormatNum <- function(format, keys) {

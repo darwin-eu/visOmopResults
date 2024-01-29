@@ -16,6 +16,10 @@
 #' @param groupNameAsColumn Whether to display the group labels as a column
 #' (TRUE) or rows (FALSE).
 #' @param groupOrder Order in which to display group labels.
+#' @param colsToMergeRows specify the names of the columns to vertically merge
+#' when consecutive cells have identical values. Alternatively, use 'all' to
+#' apply this merging to all columns, or use NULL to indicate no merging should
+#' be applied.
 #'
 #' @return gt object
 #'
@@ -45,7 +49,8 @@
 #'     caption = NULL,
 #'     groupNameCol = "group_level",
 #'     groupNameAsColumn = FALSE,
-#'     groupOrder = c("cohort1", "cohort2")
+#'     groupOrder = c("cohort1", "cohort2"),
+#'     colsToMergeRows = "all"
 #'   )
 #' }
 #'
@@ -63,7 +68,8 @@ gtTable <- function(
     caption = NULL,
     groupNameCol = NULL,
     groupNameAsColumn = FALSE,
-    groupOrder = NULL
+    groupOrder = NULL,
+    colsToMergeRows = NULL
     ) {
 
   # Checks
@@ -87,6 +93,9 @@ gtTable <- function(
   } else {
     cli::cli_abort("Style must be a named list of gt styling function,
                    the string 'default' for our default style, or NULL for gt default style.")
+  }
+  if (any(colsToMergeRows %in% groupNameAsColumn)) {
+    cli::cli_abort("groupNameCol and colsToMergeRows must have different column names.")
   }
 
   # Spanners
@@ -266,4 +275,43 @@ gtStyles <- function(styleName) {
     styleName <- "default"
   }
   return(styles[[styleName]])
+}
+
+gtMergeRows <- function(gt_x, colsToMergeRows, groupNameCol, groupOrder) {
+  for (col in colsToMergeRows) {
+    gt_x$`_data`[[col]][gt_x$`_data`[[col]] == "NA"] <- ""
+  }
+  for (k in seq_along(colsToMergeRows)) {
+    col <- colsToMergeRows[k]
+    # gt_x$`_data` <- gt_x$`_data` |>
+    #   dplyr::mutate(!!groupNameCol := factor(.data[[groupNameCol]])) |>
+    #   dplyr::arrange_at(groupNameCol, .by_group = TRUE)
+
+    mergeCol <- gt_x$`_data`[[col]]
+    groupCol <- gt_x$`_data`[[groupNameCol]]
+    id <- which(groupCol == dplyr::lag(groupCol) & mergeCol == dplyr::lag(mergeCol))
+
+    gt_x$`_data`[[col]][id] <- ""
+    gt_x <- gt_x |>
+      gt::tab_style(
+        style = list(gt::cell_borders(style = "hidden", sides = "top")),
+        locations = list(gt::cells_body(columns = col, rows = id))
+      )
+
+    # if ("separator-right" %in% long[[k]]) {
+    #   gt_x <- gt_x %>%
+    #     gt::tab_style(
+    #       style = list(gt::cell_borders(sides = "right")),
+    #       locations = list(gt::cells_body(columns = col))
+    #     )
+    # }
+    # if ("separator-left" %in% long[[k]]) {
+    #   gt_x <- gt_x %>%
+    #     gt::tab_style(
+    #       style = list(gt::cell_borders(sides = "left")),
+    #       locations = list(gt::cells_body(columns = col))
+    #     )
+    # }
+  }
+  return(gt_x)
 }
