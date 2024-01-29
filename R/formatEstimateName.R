@@ -4,6 +4,9 @@
 #' @param estimateNameFormat Named list of estimate name's to join, sorted by
 #' computation order. Indicate estimate_name's between <...>.
 #' @param keepNotFormatted Whether to keep rows not formatted.
+#' @param useNewFormatOrder Whether to use the order in which estimate names
+#' appear in the estimateNameFormat argument and send not formatted rows to the
+#' end, or to use the order in the input dataframe.
 #'
 #' @description
 #' Format estimate_name and estimate_value column of summarised_result and
@@ -26,16 +29,19 @@
 #'
 formatEstimateName <- function(result,
                                estimateNameFormat = NULL,
-                               keepNotFormatted = TRUE) {
+                               keepNotFormatted = TRUE,
+                               useNewFormatOrder = TRUE) {
   # initial checks
   result <- validateResult(result)
   validateEstimateNameFormat(estimateNameFormat)
   checkmate::assertCharacter(estimateNameFormat, any.missing = FALSE, unique = TRUE, min.chars = 1, null.ok = TRUE)
   checkmate::assertLogical(keepNotFormatted, len = 1, any.missing = FALSE)
+  checkmate::assertLogical(useNewFormatOrder, len = 1, any.missing = FALSE)
 
   # format estimate
   resultFormatted <- formatEstimateNameInternal(
-    result = result, format = estimateNameFormat, keepNotFormatted = keepNotFormatted
+    result = result, format = estimateNameFormat,
+    keepNotFormatted = keepNotFormatted, useNewFormatOrder = useNewFormatOrder
   )
 
   # class
@@ -48,12 +54,11 @@ formatEstimateName <- function(result,
   return(resultFormatted)
 }
 
-formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
+formatEstimateNameInternal <- function(result, format, keepNotFormatted, useNewFormatOrder) {
   # if no format no action is performed
   if (length(format) == 0) {
     return(result)
   }
-
   # correct names
   if (is.null(names(format))) {
     nms <- rep("", length(format))
@@ -61,15 +66,14 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
     nms <- names(format)
   }
   nms[nms == ""] <- gsub("<|>", "", format[nms == ""])
-
   # format
   ocols <- colnames(result)
   cols <- ocols[
     !ocols %in% c("estimate_name", "estimate_type", "estimate_value")
   ]
-  result <- result |>
-    dplyr::mutate("formatted" = FALSE, "id" = dplyr::row_number())
-
+  # start formatting
+  result <- result |> dplyr::mutate("formatted" = FALSE, "id" = dplyr::row_number())
+  resultF <- NULL
   for (k in seq_along(format)) {
     nameK <- nms[k]
     formatK <- format[k] |> unname()
@@ -84,9 +88,9 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
         dplyr::filter(.data$estimate_name %in% .env$keysK) |>
         dplyr::group_by(dplyr::across(dplyr::all_of(cols))) |>
         dplyr::filter(dplyr::n() == .env$len) |>
-        dplyr::mutate("id" = min(.data$id)) |>
-        dplyr::ungroup()
+          dplyr::mutate("id" = min(.data$id))
       resF <- res |>
+        dplyr::ungroup() |>
         dplyr::select(-"estimate_type") |>
         tidyr::pivot_wider(
           names_from = "estimate_name", values_from = "estimate_value"
@@ -102,24 +106,29 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted) {
         dplyr::anti_join(
           res |> dplyr::select(dplyr::all_of(c(cols, "estimate_name"))),
           by = c(cols, "estimate_name")
-        ) |>
+        )
+      resultF <- resultF |>
         dplyr::union_all(resF)
     } else {
       if (len > 0) {warning(glue::glue("{formatK} has not been formatted."), call. = FALSE)
        } else {warning(glue::glue("{formatK} does not contain an estimate name indicated by <...>"), call. = FALSE)}
     }
   }
-  result <- result |>
-    dplyr::arrange(.data$id) |>
-    dplyr::select(dplyr::all_of(c(ocols, "formatted")))
-
+  #useNewFormatOrder
+  if (useNewFormatOrder) {
+    result <- resultF |>
+      dplyr::union_all(result)
+  } else {
+    result <- result |>
+      dplyr::union_all(resultF) |>
+      dplyr::arrange(.data$id)
+  }
   # keepNotFormated
   if (!keepNotFormatted) {
     result <- result |> dplyr::filter(.data$formatted)
   }
-
-  result <- result |> dplyr::select(-"formatted")
-
+  # result
+  result <- result |> dplyr::select(-"formatted", -"id")
   return(result)
 }
 getFormatNum <- function(format, keys) {

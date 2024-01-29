@@ -6,7 +6,8 @@ test_that("formatEstimateName", {
   result_output <-  formatEstimateName(result,
                                        estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                                   "N" = "<count>"),
-                                       keepNotFormatted = TRUE)
+                                       keepNotFormatted = TRUE)|>
+    dplyr::mutate(id = dplyr::row_number())
   # check count as "N"
   expect_identical(unique(result_output$estimate_name[result_output$variable_name == "number subjects"]),
                    "N")
@@ -34,6 +35,23 @@ test_that("formatEstimateName", {
                      " (",
                      estimates_in$estimate_value[estimates_in$variable_name == "Medications" &  estimates_in$estimate_name == "percentage"],
                      "%)"))
+  # estimate_name order
+  expect_true(mean(result_output$id[result_output$estimate_name == "N (%)"]) <
+                mean(result_output$id[result_output$estimate_name == "N"]))
+  expect_true(mean(result_output$id[result_output$estimate_name == "N"]) <
+                mean(result_output$id[result_output$estimate_name == "mean"]))
+  # useNewFormatOrder false
+  result_output <-  formatEstimateName(result,
+                                       estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
+                                                              "N" = "<count>"),
+                                       keepNotFormatted = TRUE,
+                                       useNewFormatOrder = FALSE)|>
+    dplyr::mutate(id = dplyr::row_number())
+  expect_false(mean(result_output$id[result_output$estimate_name == "N (%)"]) <
+                mean(result_output$id[result_output$estimate_name == "N"]))
+  expect_true(mean(result_output$id[result_output$estimate_name == "N (%)"]) >
+                mean(result_output$id[result_output$estimate_name == "mean"]))
+
 
   # input 2 ----
   result_output <-  formatEstimateName(result,
