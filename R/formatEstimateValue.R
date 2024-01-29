@@ -1,8 +1,9 @@
 #' Format the estimate_value column
 #'
 #' @param result A summarised_result or compared_result.
-#' @param decimals Number of decimals per estimate_type (integer, numeric,
-#' percentage, proportion).
+#' @param decimals Number of decimals per estimate type (integer, numeric,
+#' percentage, proportion), estimate name, or all estimate values (introduce the
+#'  number of decimals).
 #' @param decimalMark Decimal separator mark.
 #' @param bigMark Thousand and millions separator mark.
 #'
@@ -34,24 +35,38 @@ formatEstimateValue <- function(result,
                                 bigMark = ",") {
   # initial checks
   result <- validateResult(result)
-  decimals <- validateDecimals(decimals)
+  decimals <- validateDecimals(result, decimals)
   checkmate::assertCharacter(decimalMark, len = 1, any.missing = FALSE)
-  checkmate::assertCharacter(bigMark, len = 1, any.missing = FALSE)
+  checkmate::assertCharacter(bigMark, len = 1, any.missing = FALSE, null.ok = TRUE)
+  if (is.null(bigMark)) {bigMark <- ""}
 
-  # format estimate
   result <- formatEstimateValueInternal(result, decimals, decimalMark, bigMark)
-
   return(result)
 }
 
 formatEstimateValueInternal <- function(result, decimals, decimalMark, bigMark) {
-  for (nm in names(decimals)) {
-    n <- decimals[nm] |> unname()
-    id <- result[["estimate_type"]] == nm
-    result$estimate_value[id] <- result$estimate_value[id] |>
-      as.numeric() |>
-      round(digits = n) |>
-      base::format(nsmall = n, big.mark = bigMark, decimal.mark = decimalMark)
+  nms_name <- unique(result[["estimate_name"]])
+  if (is.null(decimals)) { # default # decimal formatting
+    for (nm in nms_name) {
+      result$estimate_value[result[["estimate_name"]] == nm] <- result$estimate_value[result[["estimate_name"]] == nm] |>
+        as.numeric() |>
+        base::format(big.mark = bigMark, decimal.mark = decimalMark, trim = TRUE, justify = "none")
+    }
+  } else {
+    formatted <- rep(FALSE, nrow(result))
+    for (nm in names(decimals)) {
+      if (nm %in% nms_name) {
+        id <- result[["estimate_name"]] == nm & !formatted & !is.na(result$estimate_value)
+      } else {
+        id <- result[["estimate_type"]] == nm & !formatted & !is.na(result$estimate_value)
+      }
+      n <- decimals[nm] |> unname()
+      result$estimate_value[id] <- result$estimate_value[id] |>
+        as.numeric() |>
+        round(digits = n) |>
+        base::format(nsmall = n, big.mark = bigMark, decimal.mark = decimalMark, trim = TRUE, justify = "none")
+      formatted[id] <- TRUE
+    }
   }
   return(result)
 }

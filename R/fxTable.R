@@ -147,7 +147,8 @@ fxTable <- function(
       flextable::border(border = officer::fp_border(color = "gray"), part = "all") |>
       flextable::border(border = officer::fp_border(color = "gray", width = 1.2), part = "header", i = 1:nrow(flex_x$header$dataset)) |>
       flextable::align(part = "header", align = "center") |>
-      flextable::valign(part = "header", valign = "center")
+      flextable::valign(part = "header", valign = "center") |>
+      flextable::align(j = spanCols_ids, part = "body", align = "right")
   }
 
   # Other options:

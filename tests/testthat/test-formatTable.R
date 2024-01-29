@@ -184,6 +184,21 @@ test_that("formatTable. includeHeaderKey", {
 
   expect_false("summarised_result" %in% class(result_output))
 
+  # Empty header ----
+  result_output <- formatTable(result = result,
+                               header = character(),
+                               delim = ":",
+                               includeHeaderName = TRUE,
+                               includeHeaderKey = FALSE)
+  expect_equal(colnames(result), colnames(result_output))
+
+  result_output <- formatTable(result = result,
+                               header = character(),
+                               delim = ":",
+                               includeHeaderName = TRUE,
+                               includeHeaderKey = TRUE)
+  expect_equal(result$estimate_value, result_output$`[header]estimate_value`)
+
   # Wrong input ----
   expect_error(formatTable(result = result,
                            header = NULL,

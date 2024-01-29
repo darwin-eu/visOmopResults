@@ -97,15 +97,17 @@ formatTable <- function(result,
     names(result)[names(result) %in% colDetails$name] <- colDetails$new_name
 
   } else {
-    if (includeHeaderKey) {
+    if (includeHeaderKey & length(header)>0) {
       new_name <- paste0("[header]", paste(header, collapse = paste0(delim, "[header]")))
-      result <- result |> dplyr::rename(!!new_name := "estimate_value")
-      class(result) <- c("tbl_df", "tbl", "data.frame")
-    } else {
+    } else if (!includeHeaderKey & length(header)>0) {
       new_name <- paste(header, collapse = delim)
-      result <- result |> dplyr::rename(!!new_name := "estimate_value")
-      class(result) <- c("tbl_df", "tbl", "data.frame")
+    } else if (includeHeaderKey & length(header)==0) {
+      new_name <- "[header]estimate_value"
+    } else if (!includeHeaderKey & length(header)==0) {
+      new_name <- "estimate_value"
     }
+    result <- result |> dplyr::rename(!!new_name := "estimate_value")
+    class(result) <- c("tbl_df", "tbl", "data.frame")
   }
 
   return(result)

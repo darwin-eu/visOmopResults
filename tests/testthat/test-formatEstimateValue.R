@@ -100,6 +100,143 @@ test_that("formatEstimateValue", {
     expect_true(lapply(strsplit(result_output$estimate_value, "_"), function(x) {x[[2]]}) |>
                   unlist() |> nchar() |> mean() == 4)
 
+
+    # Estimate name input ----
+    result_output <- formatEstimateValue(result,
+                                         decimals = c(mean = 2, sd = 3, count = 0))
+
+    # check number of decimals
+    ## mean
+    mean <- result_output$estimate_value[result_output$estimate_name == "mean"]
+    if (length(mean) > 0) {
+      expect_true(lapply(strsplit(mean, ".", fixed = TRUE), function(x) {x[[2]]}) |>
+                    unlist() |> nchar() |> mean() == 2)
+    }
+    ## sd
+    sd <- result_output$estimate_value[result_output$estimate_name == "sd"]
+    if (length(sd) > 0) {
+      expect_true(lapply(strsplit(sd, ".", fixed = TRUE), function(x) {x[[2]]}) |>
+                    unlist() |> nchar() |> mean() == 3)
+    }
+    ## count
+    count <- result_output$estimate_value[result_output$estimate_name == "count"]
+    if (length(count) > 0) {
+      expect_false(all(grepl(".", count, fixed = TRUE)))
+    }
+    ## percentage
+    expect_identical(result_output$estimate_value[result_output$estimate_name == "percentage"],
+                     result$estimate_value[result$estimate_name == "percentage"])
+
+    # Hierarchy ----
+    result_output <- formatEstimateValue(result,
+                                         decimals = c(numeric = 2, mean = 3))
+    mean <- result_output$estimate_value[result_output$estimate_name == "mean"]
+    if (length(mean) > 0) {
+      expect_true(lapply(strsplit(mean, ".", fixed = TRUE), function(x) {x[[2]]}) |>
+                    unlist() |> nchar() |> mean() == 3)
+    }
+    numeric <- result_output$estimate_value[result_output$estimate_type == "numeric" & result_output$estimate_name != "mean"]
+    if (length(numeric) > 0) {
+      expect_true(lapply(strsplit(numeric, ".", fixed = TRUE), function(x) {x[[2]]}) |>
+                    unlist() |> nchar() |> mean() == 2)
+    }
+
+    ## Test NULL decimals ----
+    result_output <- formatEstimateValue(result,
+                                         decimals = NULL,
+                                         decimalMark = "..",
+                                         bigMark = ",")
+
+    ## count
+    counts_in  <- result$estimate_value[result_output$estimate_type == "integer"]
+    counts_out <- result_output$estimate_value[result_output$estimate_type == "integer"]
+
+    zeroMarks_out <- base::paste(counts_out[base::nchar(counts_in) < 4], collapse = "")
+    zeroMarks_out <- nchar(zeroMarks_out) - nchar(gsub("=", "", zeroMarks_out))
+
+    oneMark_in  <- sum(base::nchar(counts_in) < 7 & base::nchar(counts_in) > 3)
+    oneMark_out <- base::paste(counts_out[base::nchar(counts_in) < 7 & base::nchar(counts_in) > 3], collapse = "")
+    oneMark_out <- nchar(oneMark_out) - nchar(gsub("=", "", oneMark_out))
+
+    twoMarks_in  <- sum(base::nchar(counts_in) == 7)*2
+    twoMarks_out <- base::paste(counts_out[base::nchar(counts_in) == 7], collapse = "")
+    twoMarks_out <- nchar(twoMarks_out) - nchar(gsub("=", "", twoMarks_out))
+
+    if (length(counts_out) > 0) {
+      expect_false(all(grepl("..", counts_out, fixed = TRUE)))
+    }
+    ## mean
+    mean_in <- result$estimate_value[result$estimate_name == "mean"]
+    mean_out <- result_output$estimate_value[result_output$estimate_name == "mean"]
+    if (length(mean) > 0) {
+      expect_equal(mean_out, base::format(as.numeric(mean_in), decimal.mark = "..", trim = TRUE, justify = "none"))
+    }
+    ## sd
+    sd_in <- result$estimate_value[result$estimate_name == "sd"]
+    sd_out <- result_output$estimate_value[result_output$estimate_name == "sd"]
+    if (length(sd) > 0) {
+      expect_equal(sd_out, base::format(as.numeric(sd_in), decimal.mark = "..", trim = TRUE, justify = "none"))
+    }
+
+    ## Test NULL bigMark ----
+    result_output <- formatEstimateValue(result,
+                                         decimals = 0,
+                                         decimalMark = ".",
+                                         bigMark = NULL)
+    expect_equal(result_output$estimate_value[result_output$estimate_name == "count"],
+                 result$estimate_value[result$estimate_name == "count"])
+
+    ## Test NULL decimals + NULL bigMark ----
+    result_output <- formatEstimateValue(result,
+                                         decimals = NULL,
+                                         decimalMark = ".",
+                                         bigMark = NULL)
+    expect_equal(result_output$estimate_value[result_output$estimate_name == "count"],
+                 result$estimate_value[result$estimate_name == "count"])
+    ## mean
+    mean_in <- result$estimate_value[result$estimate_name == "mean"]
+    mean_out <- result_output$estimate_value[result_output$estimate_name == "mean"]
+    if (length(mean) > 0) {
+      expect_equal(mean_out, base::format(as.numeric(mean_in), decimal.mark = ".", trim = TRUE, justify = "none"))
+    }
+    ## sd
+    sd_in <- result$estimate_value[result$estimate_name == "sd"]
+    sd_out <- result_output$estimate_value[result_output$estimate_name == "sd"]
+    if (length(sd) > 0) {
+      expect_equal(sd_out, base::format(as.numeric(sd_in), decimal.mark = ".", trim = TRUE, justify = "none"))
+    }
+
+    # no warning when estimate value is NA
+    result <- mockSummarisedResult() |>
+      dplyr::union_all(dplyr::tibble(
+        "cdm_name" = "mock",
+        "result_type" = NA_character_,
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
+          as.character(),
+        "group_name" = "cohort_name",
+        "group_level" = "cohort3",
+        "strata_name" = rep(c(
+          "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+        ), 2),
+        "strata_level" = rep(c(
+          "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
+          ">=40 and Female", "Male", "Female", "<40", ">=40"
+        ), 2),
+        "variable_name" = "number subjects",
+        "variable_level" = NA_character_,
+        "estimate_name" = "count",
+        "estimate_type" = "integer",
+        "estimate_value" = NA_character_,
+        "additional_name" = "overall",
+        "additional_level" = "overall"
+      ))
+
+    expect_no_warning(formatEstimateValue(result,
+                                         decimals = 2,
+                                         decimalMark = ".",
+                                         bigMark = ","))
+
     # Wroing input ----
     expect_error(formatEstimateValue(result,
                                      decimals = NA,
@@ -113,4 +250,11 @@ test_that("formatEstimateValue", {
                                      decimals = 2,
                                      decimalMark = NA,
                                      bigMark = "%"))
+    expect_error(formatEstimateValue(result,
+                                     decimals = c(count = 1, lala = 0)),
+                 "lala do not correspont to estimate_type or estimate_name values.")
+    expect_error(formatEstimateValue(result,
+                                     decimals = 1,
+                                     decimalMark = NULL,
+                                     bigMark = ","))
 })
