@@ -4,7 +4,12 @@
 \alias{formatEstimateName}
 \title{Format estimate_name and estimate_value column}
 \usage{
-formatEstimateName(result, estimateNameFormat = NULL, keepNotFormatted = TRUE)
+formatEstimateName(
+  result,
+  estimateNameFormat = NULL,
+  keepNotFormatted = TRUE,
+  useNewFormatOrder = TRUE
+)
 }
 \arguments{
 \item{result}{A summarised_result or compared_result.}
@@ -13,6 +18,10 @@ formatEstimateName(result, estimateNameFormat = NULL, keepNotFormatted = TRUE)
 computation order. Indicate estimate_name's between <...>.}
 
 \item{keepNotFormatted}{Whether to keep rows not formatted.}
+
+\item{useNewFormatOrder}{Whether to use the order in which estimate names
+appear in the estimateNameFormat argument and send not formatted rows to the
+end, or to use the order in the input dataframe.}
 }
 \value{
 A summarised_result object withspecified changes in estimate_name and

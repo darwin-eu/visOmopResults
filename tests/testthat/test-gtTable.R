@@ -122,7 +122,7 @@ test_that("gtTable", {
   # body
   body_style <- gtResult$`_styles`$styles[gtResult$`_styles`$locname == "data" & gtResult$`_styles`$rownum %in% 2:8] |> unlist()
   expect_equal(body_style[names(body_style) %in% c("cell_text.color", "cell_border_top.color", "cell_border_top.style")] |> unique(),
-               c("#FF0000", "solid", "#000000"))
+               c("#FF0000", "solid", "#000000", "#D3D3D3"))
 
   # Input 3 ----
   table_to_format <- mockSummarisedResult() |>
@@ -167,7 +167,7 @@ test_that("gtTable", {
   ))
 })
 
-test_that("fxTable, test default styles and NULL", {
+test_that("gtTable, test default styles and NULL", {
   table_to_format <- mockSummarisedResult() |>
     formatTable(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
                 includeHeaderName = FALSE)
@@ -248,6 +248,77 @@ test_that("fxTable, test default styles and NULL", {
     ),
     "does not correspon to any of our defined styles. Returning default."
   )
+})
+test_that("gtTable, test colsToMergeRows", {
+  table_to_format<- mockSummarisedResult() |>
+    formatTable(header = c("strata_name", "strata_level"))
+  # colsToMergeRows = "all"
+  gtResult <- gtTable(
+    table_to_format,
+    style = "default",
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupNameCol = "group_level",
+    groupNameAsColumn = FALSE,
+    groupOrder = NULL,
+    colsToMergeRows = "all"
+  )
+  expect_equal(gtResult$`_data`$cdm_name,
+               c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
+  expect_equal(gtResult$`_data`$result_type,
+               c(NA_character_, "", "", "", "", "", "", NA_character_, "", "", "", "", "", ""))
+  expect_equal(gtResult$`_data`$variable_level,
+               c(NA_character_, "", "", "Amoxiciline", "", "Ibuprofen", "", NA_character_, "", "", "Amoxiciline",
+                 "","Ibuprofen",  ""  ))
+  expect_equal(gtResult$`_data`$group_level|> levels(),
+               c("cohort1", "cohort2"))
+
+  # colsToMergeRows = c("cdm_name", "variable_name")
+  gtResult <- gtTable(
+    table_to_format,
+    style = "default",
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupNameCol = "group_level",
+    groupNameAsColumn = TRUE,
+    groupOrder = NULL,
+    colsToMergeRows = c("cdm_name", "variable_level")
+  )
+  expect_equal(gtResult$`_data`$cdm_name,
+               c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
+  expect_equal(gtResult$`_data`$result_type,
+               rep(NA_character_, 14))
+  expect_equal(gtResult$`_data`$variable_level,
+               c(NA_character_, "", "", "Amoxiciline", "", "Ibuprofen", "", NA_character_, "", "", "Amoxiciline",
+                 "","Ibuprofen",  ""  ))
+  expect_equal(gtResult$`_data`$group_level|> levels(),
+               c("cohort1", "cohort2"))
+
+  # no groupNameCol
+  gtResult <- gtTable(
+    table_to_format,
+    style = "default",
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupNameCol = NULL,
+    groupNameAsColumn = FALSE,
+    groupOrder = NULL,
+    colsToMergeRows = "all"
+  )
+  expect_equal(gtResult$`_data`$cdm_name,
+               c("mock", "", "", "", "", "", "", "", "", "", "", "", "", ""))
+  expect_equal(gtResult$`_data`$result_type,
+               c(NA_character_, "", "", "", "", "", "", "", "", "", "", "", "", ""))
+  expect_equal(gtResult$`_data`$variable_level,
+               c(NA_character_, "", "", "", "", "", "Amoxiciline", "", "", "", "Ibuprofen", "",
+                 "",""))
+  expect_null(gtResult$`_data`$group_level|> levels())
 })
 
 

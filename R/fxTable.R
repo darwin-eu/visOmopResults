@@ -16,6 +16,10 @@
 #' @param groupNameAsColumn Whether to display the group labels as a column
 #' (TRUE) or rows (FALSE).
 #' @param groupOrder Order in which to display group labels.
+#' @param colsToMergeRows specify the names of the columns to vertically merge
+#' when consecutive cells have identical values. Alternatively, use 'all' to
+#' apply this merging to all columns, or use NULL to indicate no merging should
+#' be applied.
 #'
 #' @return flextable object
 #'
@@ -27,7 +31,7 @@
 #' \donttest{
 #' mockSummarisedResult() |>
 #'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-#'   formatTable(header = c("Study strata", "strata_level"),
+#'   formatTable(header = c("Study strata", "strata_name", "strata_level"),
 #'               includeHeaderName = FALSE) |>
 #'   fxTable(
 #'     style = "default",
@@ -37,7 +41,8 @@
 #'     caption = NULL,
 #'     groupNameCol = "group_level",
 #'     groupNameAsColumn = TRUE,
-#'     groupOrder = c("cohort1", "cohort2")
+#'     groupOrder = c("cohort1", "cohort2"),
+#'     colsToMergeRows = "all"
 #'  )
 #' }
 #'
@@ -55,7 +60,8 @@ fxTable <- function(
     caption = NULL,
     groupNameCol = NULL,
     groupNameAsColumn = FALSE,
-    groupOrder = NULL
+    groupOrder = NULL,
+    colsToMergeRows = NULL
 ) {
 
   # Checks
@@ -68,6 +74,7 @@ fxTable <- function(
   checkmate::assertCharacter(groupNameCol, null.ok = TRUE, any.missing = FALSE)
   checkmate::assertLogical(groupNameAsColumn, len = 1, any.missing = FALSE)
   checkmate::assertCharacter(groupOrder, null.ok = TRUE, any.missing = FALSE)
+  checkmate::assertCharacter(colsToMergeRows, null.ok = TRUE, any.missing = FALSE)
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
   }
@@ -79,6 +86,9 @@ fxTable <- function(
   } else {
     cli::cli_abort("Style must be a named list of flextable styling function,
                    the string 'default' for our default style, or NULL for flextable default style.")
+  }
+  if (any(colsToMergeRows %in% groupNameAsColumn)) {
+    cli::cli_abort("groupNameCol and colsToMergeRows must have different column names.")
   }
 
   # Header id's
@@ -117,6 +127,19 @@ fxTable <- function(
       flex_x <- flex_x |>
         flextable::merge_h(i = which(!is.na(flex_x$body$dataset[[groupNameCol]])), part = "body")
     }
+  }
+
+  # Merge vertical: colsToMergeRows
+  if (!is.null(colsToMergeRows)) {
+    if (colsToMergeRows[1] == "all") {
+      flex_x <- flex_x |> flextable::merge_v() |>
+        flextable::valign(valign = "top")
+    } else {
+      id_merge <- which(colnames(x) %in% colsToMergeRows)
+      flex_x <- flex_x |> flextable::merge_v(j = id_merge) |>
+        flextable::valign(valign = "top", j = id_merge)
+    }
+
   }
 
   # Headers

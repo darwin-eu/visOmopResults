@@ -14,7 +14,8 @@ gtTable(
   caption = NULL,
   groupNameCol = NULL,
   groupNameAsColumn = FALSE,
-  groupOrder = NULL
+  groupOrder = NULL,
+  colsToMergeRows = NULL
 )
 }
 \arguments{
@@ -43,6 +44,11 @@ italics).}
 (TRUE) or rows (FALSE).}
 
 \item{groupOrder}{Order in which to display group labels.}
+
+\item{colsToMergeRows}{specify the names of the columns to vertically merge
+when consecutive cells have identical values. Alternatively, use 'all' to
+apply this merging to all columns, or use NULL to indicate no merging should
+be applied.}
 }
 \value{
 gt object
@@ -57,7 +63,7 @@ the header, and the specified styles for different parts of the table.
 \donttest{
 mockSummarisedResult() |>
   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-  formatTable(header = c("Study strata", "strata_level"),
+  formatTable(header = c("Study strata", "strata_name", "strata_level"),
               includeHeaderName = FALSE) |>
   gtTable(
     style = list("header" = list(
@@ -75,7 +81,8 @@ mockSummarisedResult() |>
     caption = NULL,
     groupNameCol = "group_level",
     groupNameAsColumn = FALSE,
-    groupOrder = c("cohort1", "cohort2")
+    groupOrder = c("cohort1", "cohort2"),
+    colsToMergeRows = "all"
   )
 }
 

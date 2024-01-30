@@ -254,3 +254,38 @@ test_that("fxTable, test default styles and NULL", {
   )
 })
 
+test_that("fxTable, test colsToMergeRows", {
+  table_to_format<- mockSummarisedResult() |>
+  formatTable(header = c("strata_name", "strata_level"))
+  # colsToMergeRows = "all"
+  fxResult <- fxTable(
+    table_to_format,
+    style = "default",
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupNameCol = "group_level",
+    groupNameAsColumn = FALSE,
+    groupOrder = NULL,
+    colsToMergeRows = "all"
+  )
+  expect_true(all(fxResult$body$spans$columns[,c(1:6, 11,12)] == matrix(rep(c(1, 7, rep(0, 6), 1, 7, rep(0, 6)), 8), nrow = 16)))
+  expect_true(all(fxResult$body$spans$columns[,13:21] == matrix(rep(1, 16*9), nrow = 16)))
+  # colsToMergeRows = c("cdm_name", "variable_name")
+  fxResult <- fxTable(
+    table_to_format,
+    style = "default",
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupNameCol = "group_level",
+    groupNameAsColumn = FALSE,
+    groupOrder = NULL,
+    colsToMergeRows = c("cdm_name", "variable_name")
+  )
+  expect_true(all(fxResult$body$spans$columns[,c(2)] == c(1, 7, rep(0, 6), 1, 7, rep(0, 6))))
+  expect_true(all(fxResult$body$spans$columns[,c(7)] == c(1,1,2,0,4,0,0,0,1,1,2,0,4,0,0,0)))
+  expect_true(all(fxResult$body$spans$columns[,c(3:6)] == matrix(rep(1,16*4), ncol = 4)))
+})

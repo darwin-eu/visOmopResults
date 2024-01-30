@@ -6,7 +6,8 @@ test_that("formatEstimateName", {
   result_output <-  formatEstimateName(result,
                                        estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                                   "N" = "<count>"),
-                                       keepNotFormatted = TRUE)
+                                       keepNotFormatted = TRUE)|>
+    dplyr::mutate(id = dplyr::row_number())
   # check count as "N"
   expect_identical(unique(result_output$estimate_name[result_output$variable_name == "number subjects"]),
                    "N")
@@ -113,4 +114,140 @@ test_that("formatEstimateName", {
   expect_error(formatEstimateName(result,
                                   estimateNameFormat = NA,
                                   keepNotFormatted = TRUE))
+})
+
+test_that("formatEstimateName, useNewFormatOrder", {
+  result <-
+    # number subjects
+    dplyr::tibble(
+      "cdm_name" = "mock",
+      "result_type" = NA_character_,
+      "package_name" = "visOmopResults",
+      "package_version" = utils::packageVersion("visOmopResults") |>
+        as.character(),
+      "group_name" = "cohort_name",
+      "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
+      "strata_name" = rep(c(
+        "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+      ), 2),
+      "strata_level" = rep(c(
+        "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
+        ">=40 and Female", "Male", "Female", "<40", ">=40"
+      ), 2),
+      "variable_name" = "age",
+      "variable_level" = NA_character_,
+      "estimate_name" = "number subjects",
+      "estimate_type" = "numeric",
+      "estimate_value" = c(100*stats::runif(18)) |> as.character(),
+      "additional_name" = "overall",
+      "additional_level" = "overall"
+    )|>
+    dplyr::union_all(
+      # age - mean
+      dplyr::tibble(
+        "cdm_name" = "mock",
+        "result_type" = NA_character_,
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
+          as.character(),
+        "group_name" = "cohort_name",
+        "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
+        "strata_name" = rep(c(
+          "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+        ), 2),
+        "strata_level" = rep(c(
+          "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
+          ">=40 and Female", "Male", "Female", "<40", ">=40"
+        ), 2),
+        "variable_name" = "age",
+        "variable_level" = NA_character_,
+        "estimate_name" = "min",
+        "estimate_type" = "numeric",
+        "estimate_value" = c(100*stats::runif(18)) |> as.character(),
+        "additional_name" = "overall",
+        "additional_level" = "overall"
+      )
+    )|>
+    dplyr::union_all(
+      # age - mean
+      dplyr::tibble(
+        "cdm_name" = "mock",
+        "result_type" = NA_character_,
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
+          as.character(),
+        "group_name" = "cohort_name",
+        "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
+        "strata_name" = rep(c(
+          "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+        ), 2),
+        "strata_level" = rep(c(
+          "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
+          ">=40 and Female", "Male", "Female", "<40", ">=40"
+        ), 2),
+        "variable_name" = "age",
+        "variable_level" = NA_character_,
+        "estimate_name" = "mean",
+        "estimate_type" = "numeric",
+        "estimate_value" = c(100*stats::runif(18)) |> as.character(),
+        "additional_name" = "overall",
+        "additional_level" = "overall"
+      )
+    )|>
+    # age - max
+    dplyr::union_all(
+      dplyr::tibble(
+        "cdm_name" = "mock",
+        "result_type" = NA_character_,
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
+          as.character(),
+        "group_name" = "cohort_name",
+        "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
+        "strata_name" = rep(c(
+          "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+        ), 2),
+        "strata_level" = rep(c(
+          "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
+          ">=40 and Female", "Male", "Female", "<40", ">=40"
+        ), 2),
+        "variable_name" = "age",
+        "variable_level" = NA_character_,
+        "estimate_name" = "max",
+        "estimate_type" = "numeric",
+        "estimate_value" = c(100*stats::runif(18)) |> as.character(),
+        "additional_name" = "overall",
+        "additional_level" = "overall"
+      )
+    ) |>
+    omopgenerics::summarisedResult()
+
+  # FALSE ----
+  result_output <-  formatEstimateName(result,
+                                       estimateNameFormat = c("<mean>",
+                                                              "range" = "[<min> - <max>]"),
+                                       keepNotFormatted = TRUE,
+                                       useNewFormatOrder = FALSE)
+
+  expect_true(all(which(result_output$estimate_name %in% "number subjets") <
+                    which(result_output$estimate_name %in% "mean")))
+  expect_true(all(which(result_output$estimate_name %in% "number subjets") <
+                    which(result_output$estimate_name %in% "range")))
+  expect_true(all(which(result_output$estimate_name %in% "range") <
+                    which(result_output$estimate_name %in% "mean")))
+
+  # TRUE ----
+  result_output <-  formatEstimateName(result,
+                                       estimateNameFormat = c("<mean>",
+                                                              "range" = "[<min> - <max>]"),
+                                       keepNotFormatted = TRUE,
+                                       useNewFormatOrder = TRUE)
+
+  expect_false(any(which(result_output$estimate_name %in% "range") <
+                    which(result_output$estimate_name %in% "mean")))
+  expect_false(any(which(result_output$estimate_name %in% "number subjets") <
+                    which(result_output$estimate_name %in% "mean")))
+  expect_false(any(which(result_output$estimate_name %in% "number subjets") <
+                    which(result_output$estimate_name %in% "range")))
+
 })
