@@ -7,7 +7,7 @@
 gtTable(
   x,
   delim = "\\n",
-  style = "style",
+  style = "default",
   na = "-",
   title = NULL,
   subtitle = NULL,

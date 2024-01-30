@@ -32,7 +32,7 @@ validateComparedResult <- function(x, call = parent.frame()) {
 }
 
 validateDecimals <- function(result, decimals) {
-  nm_type <- c("numeric", "integer", "proportion", "percentage")
+  nm_type <- omopgenerics::estimateTypeChoices()
   nm_name <- result[["estimate_name"]] |> unique()
   errorMesssage <- "`decimals` must be named integerish vector. Names refere to estimate_type or estimate_name values."
 

@@ -116,7 +116,7 @@ test_that("formatEstimateName", {
                                   keepNotFormatted = TRUE))
 })
 
-test_that("formatEstimateName, useNewFormatOrder", {
+test_that("formatEstimateName, useFormatOrder", {
   result <-
     # number subjects
     dplyr::tibble(
@@ -227,7 +227,7 @@ test_that("formatEstimateName, useNewFormatOrder", {
                                        estimateNameFormat = c("<mean>",
                                                               "range" = "[<min> - <max>]"),
                                        keepNotFormatted = TRUE,
-                                       useNewFormatOrder = FALSE)
+                                       useFormatOrder = FALSE)
 
   expect_true(all(which(result_output$estimate_name %in% "number subjets") <
                     which(result_output$estimate_name %in% "mean")))
@@ -241,7 +241,7 @@ test_that("formatEstimateName, useNewFormatOrder", {
                                        estimateNameFormat = c("<mean>",
                                                               "range" = "[<min> - <max>]"),
                                        keepNotFormatted = TRUE,
-                                       useNewFormatOrder = TRUE)
+                                       useFormatOrder = TRUE)
 
   expect_false(any(which(result_output$estimate_name %in% "range") <
                     which(result_output$estimate_name %in% "mean")))

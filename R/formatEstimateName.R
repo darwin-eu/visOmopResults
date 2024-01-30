@@ -4,7 +4,7 @@
 #' @param estimateNameFormat Named list of estimate name's to join, sorted by
 #' computation order. Indicate estimate_name's between <...>.
 #' @param keepNotFormatted Whether to keep rows not formatted.
-#' @param useNewFormatOrder Whether to use the order in which estimate names
+#' @param useFormatOrder Whether to use the order in which estimate names
 #' appear in the estimateNameFormat argument and send not formatted rows to the
 #' end, or to use the order in the input dataframe.
 #'
@@ -30,18 +30,18 @@
 formatEstimateName <- function(result,
                                estimateNameFormat = NULL,
                                keepNotFormatted = TRUE,
-                               useNewFormatOrder = TRUE) {
+                               useFormatOrder = TRUE) {
   # initial checks
   result <- validateResult(result)
   validateEstimateNameFormat(estimateNameFormat)
   checkmate::assertCharacter(estimateNameFormat, any.missing = FALSE, unique = TRUE, min.chars = 1, null.ok = TRUE)
   checkmate::assertLogical(keepNotFormatted, len = 1, any.missing = FALSE)
-  checkmate::assertLogical(useNewFormatOrder, len = 1, any.missing = FALSE)
+  checkmate::assertLogical(useFormatOrder, len = 1, any.missing = FALSE)
 
   # format estimate
   resultFormatted <- formatEstimateNameInternal(
     result = result, format = estimateNameFormat,
-    keepNotFormatted = keepNotFormatted, useNewFormatOrder = useNewFormatOrder
+    keepNotFormatted = keepNotFormatted, useFormatOrder = useFormatOrder
   )
 
   # class
@@ -54,7 +54,7 @@ formatEstimateName <- function(result,
   return(resultFormatted)
 }
 
-formatEstimateNameInternal <- function(result, format, keepNotFormatted, useNewFormatOrder) {
+formatEstimateNameInternal <- function(result, format, keepNotFormatted, useFormatOrder) {
   # if no format no action is performed
   if (length(format) == 0) {
     return(result)
@@ -119,8 +119,8 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useNewF
        } else {warning(glue::glue("{formatK} does not contain an estimate name indicated by <...>"), call. = FALSE)}
     }
   }
-  #useNewFormatOrder
-  if (useNewFormatOrder) {
+  #useFormatOrder
+  if (useFormatOrder) {
     new_order <- dplyr::tibble(estimate_name = nms, format_id = 1:length(nms)) |>
       dplyr::union_all(result |>
                          dplyr::select("estimate_name") |>
