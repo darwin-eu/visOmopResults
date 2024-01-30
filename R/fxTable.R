@@ -31,7 +31,7 @@
 #' \donttest{
 #' mockSummarisedResult() |>
 #'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-#'   formatTable(header = c("Study strata", "strata_level"),
+#'   formatTable(header = c("Study strata", "strata_name", "strata_level"),
 #'               includeHeaderName = FALSE) |>
 #'   fxTable(
 #'     style = "default",
@@ -132,11 +132,14 @@ fxTable <- function(
   # Merge vertical: colsToMergeRows
   if (!is.null(colsToMergeRows)) {
     if (colsToMergeRows[1] == "all") {
-      flex_x <- flex_x |> flextable::merge_v()
+      flex_x <- flex_x |> flextable::merge_v() |>
+        flextable::valign(valign = "top")
     } else {
       id_merge <- which(colnames(x) %in% colsToMergeRows)
-      flex_x <- flex_x |> flextable::merge_v(j = id_merge)
+      flex_x <- flex_x |> flextable::merge_v(j = id_merge) |>
+        flextable::valign(valign = "top", j = id_merge)
     }
+
   }
 
   # Headers

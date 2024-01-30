@@ -123,7 +123,7 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useNewF
   if (useNewFormatOrder) {
     new_order <- dplyr::tibble(estimate_name = nms, format_id = 1:length(nms)) |>
       dplyr::union_all(result |>
-                         dplyr::select(estimate_name) |>
+                         dplyr::select("estimate_name") |>
                          dplyr::distinct() |>
                          dplyr::filter(!.data$estimate_name %in% nms) |>
                          dplyr::mutate(format_id = length(format) + dplyr::row_number()))

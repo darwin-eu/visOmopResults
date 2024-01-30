@@ -31,7 +31,7 @@
 #' \donttest{
 #' mockSummarisedResult() |>
 #'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-#'   formatTable(header = c("Study strata", "strata_level"),
+#'   formatTable(header = c("Study strata", "strata_name", "strata_level"),
 #'               includeHeaderName = FALSE) |>
 #'   gtTable(
 #'     style = list("header" = list(
@@ -98,18 +98,26 @@ gtTable <- function(
     cli::cli_abort("groupNameCol and colsToMergeRows must have different column names.")
   }
 
+
   # Spanners
   if (!is.null(groupNameCol)) {
+    if (is.null(groupOrder)) {
+      x <- x |>
+        dplyr::mutate(!!groupNameCol := factor(.data[[groupNameCol]])) |>
+        dplyr::arrange_at(groupNameCol, .by_group = TRUE)
+    } else {
+      x <- x |>
+        dplyr::mutate(!!groupNameCol := factor(.data[[groupNameCol]], levels = groupOrder)) |>
+        dplyr::arrange_at(groupNameCol, .by_group = TRUE)
+    }
     gtResult <- x |>
       gt::gt(groupname_col = groupNameCol, row_group_as_column = groupNameAsColumn) |>
-      gt::tab_spanner_delim(delim = delim)
-    if (!is.null(groupOrder)) {
-      gtResult <- gtResult |>
-        gt::row_group_order(groups = groupOrder)
-    }
+      gt::tab_spanner_delim(delim = delim) |>
+        gt::row_group_order(groups = x[[groupNameCol]] |> levels())
   } else {
     gtResult <- x |> gt::gt() |> gt::tab_spanner_delim(delim = delim)
   }
+
   # Header style
   spanner_ids <- gtResult$`_spanners`$spanner_id
   style_ids <- lapply(strsplit(spanner_ids, delim), function(vect){vect[[1]]}) |> unlist()
@@ -247,8 +255,16 @@ gtTable <- function(
     gt::tab_style(
       style = gt::cell_text(align = "left"),
       locations = gt::cells_body(columns = which(!grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x))))
+    ) |>
+    gt::tab_style(
+      style = list(gt::cell_borders(color = "#D3D3D3")),
+      locations = list(gt::cells_body())
     )
 
+  # Merge rows
+  if (!is.null(colsToMergeRows)) {
+    gtResult <- gtMergeRows(gtResult, colsToMergeRows, groupNameCol, groupOrder)
+  }
   return(gtResult)
 }
 
@@ -278,18 +294,28 @@ gtStyles <- function(styleName) {
 }
 
 gtMergeRows <- function(gt_x, colsToMergeRows, groupNameCol, groupOrder) {
-  for (col in colsToMergeRows) {
-    gt_x$`_data`[[col]][gt_x$`_data`[[col]] == "NA"] <- ""
+
+  if (is.null(groupNameCol)) {
+    if (colsToMergeRows[1] == "all") {
+      colsToMergeRows <- colnames(gt_x$`_data`)
+    }
+  } else {
+    if (colsToMergeRows[1] == "all") {
+      colsToMergeRows <- colnames(gt_x$`_data`)[!colnames(gt_x$`_data`) %in% groupNameCol]
+    }
   }
+
   for (k in seq_along(colsToMergeRows)) {
     col <- colsToMergeRows[k]
-    # gt_x$`_data` <- gt_x$`_data` |>
-    #   dplyr::mutate(!!groupNameCol := factor(.data[[groupNameCol]])) |>
-    #   dplyr::arrange_at(groupNameCol, .by_group = TRUE)
-
     mergeCol <- gt_x$`_data`[[col]]
-    groupCol <- gt_x$`_data`[[groupNameCol]]
-    id <- which(groupCol == dplyr::lag(groupCol) & mergeCol == dplyr::lag(mergeCol))
+    mergeCol[is.na(mergeCol)] <- "this is NA"
+
+    if (is.null(groupNameCol)) {
+      id <- which(mergeCol == dplyr::lag(mergeCol))
+    } else {
+      groupCol <- gt_x$`_data`[[groupNameCol]]
+      id <- which(groupCol == dplyr::lag(groupCol) & mergeCol == dplyr::lag(mergeCol))
+    }
 
     gt_x$`_data`[[col]][id] <- ""
     gt_x <- gt_x |>
@@ -298,20 +324,13 @@ gtMergeRows <- function(gt_x, colsToMergeRows, groupNameCol, groupOrder) {
         locations = list(gt::cells_body(columns = col, rows = id))
       )
 
-    # if ("separator-right" %in% long[[k]]) {
-    #   gt_x <- gt_x %>%
-    #     gt::tab_style(
-    #       style = list(gt::cell_borders(sides = "right")),
-    #       locations = list(gt::cells_body(columns = col))
-    #     )
-    # }
-    # if ("separator-left" %in% long[[k]]) {
-    #   gt_x <- gt_x %>%
-    #     gt::tab_style(
-    #       style = list(gt::cell_borders(sides = "left")),
-    #       locations = list(gt::cells_body(columns = col))
-    #     )
-    # }
+    if (which(col %in% colnames(gt_x$`_data`)) %in% 1:(ncol(gt_x$`_data`)-1)) {
+      gt_x <- gt_x |>
+        gt::tab_style(
+          style = list(gt::cell_borders(sides = "right", color = "#D3D3D3")),
+          locations = list(gt::cells_body(columns = col))
+        )
+    }
   }
   return(gt_x)
 }
