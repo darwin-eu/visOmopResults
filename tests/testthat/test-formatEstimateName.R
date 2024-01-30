@@ -220,7 +220,7 @@ test_that("formatEstimateName, useFormatOrder", {
         "additional_level" = "overall"
       )
     ) |>
-    omopgenerics::summarisedResult()
+    omopgenerics::newSummarisedResult()
 
   # FALSE ----
   result_output <-  formatEstimateName(result,
