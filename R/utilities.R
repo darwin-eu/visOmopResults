@@ -21,14 +21,14 @@ validateSummarisedResult <- function(x, call = parent.frame()) {
   if (inherits(x, "summarised_result")) {
     return(x)
   }
-  omopgenerics::summarisedResult(x)
+  omopgenerics::newSummarisedResult(x)
 }
 
 validateComparedResult <- function(x, call = parent.frame()) {
   if (inherits(x, "compared_result")) {
     return(x)
   }
-  omopgenerics::comparedResult(x)
+  omopgenerics::newComparedResult(x)
 }
 
 validateDecimals <- function(result, decimals) {
