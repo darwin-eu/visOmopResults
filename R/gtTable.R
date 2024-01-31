@@ -258,7 +258,7 @@ gtTable <- function(
     ) |>
     gt::tab_style(
       style = list(gt::cell_borders(color = "#D3D3D3")),
-      locations = list(gt::cells_body())
+      locations = list(gt::cells_body(columns = 2:(ncol(gtResult$`_data`)-1)))
     )
 
   # Merge rows
