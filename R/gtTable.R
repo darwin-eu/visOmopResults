@@ -17,9 +17,9 @@
 #' (TRUE) or rows (FALSE).
 #' @param groupOrder Order in which to display group labels.
 #' @param colsToMergeRows specify the names of the columns to vertically merge
-#' when consecutive cells have identical values. Alternatively, use 'all' to
-#' apply this merging to all columns, or use NULL to indicate no merging should
-#' be applied.
+#' when consecutive cells have identical values. Alternatively, use
+#' "all_columns" to apply this merging to all columns, or use NULL to indicate
+#' no merging should be applied.
 #'
 #' @return gt object
 #'
@@ -50,7 +50,7 @@
 #'     groupNameCol = "group_level",
 #'     groupNameAsColumn = FALSE,
 #'     groupOrder = c("cohort1", "cohort2"),
-#'     colsToMergeRows = "all"
+#'     colsToMergeRows = "all_columns"
 #'   )
 #' }
 #'
@@ -82,20 +82,10 @@ gtTable <- function(
   checkmate::assertCharacter(groupNameCol, null.ok = TRUE, any.missing = FALSE)
   checkmate::assertLogical(groupNameAsColumn, len = 1, any.missing = FALSE)
   checkmate::assertCharacter(groupOrder, null.ok = TRUE, any.missing = FALSE)
+  checkColsToMergeRows(x, colsToMergeRows, groupNameCol)
+  style <- checkStyle(style, "gt")
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
-  }
-  if (is.list(style) | is.null(style)) {
-    checkmate::assertList(style, null.ok = TRUE, any.missing = FALSE)
-  } else if (is.character(style)) {
-    checkmate::assertCharacter(style, min.chars = 1, any.missing = FALSE, max.len = 1)
-    style <- gtStyles(styleName = style)
-  } else {
-    cli::cli_abort("Style must be a named list of gt styling function,
-                   the string 'default' for our default style, or NULL for gt default style.")
-  }
-  if (any(colsToMergeRows %in% groupNameAsColumn)) {
-    cli::cli_abort("groupNameCol and colsToMergeRows must have different column names.")
   }
 
 
@@ -180,7 +170,28 @@ gtTable <- function(
                                                  })
   gtResult <- gtResult |> gt::cols_label_with(columns = tidyr::contains("header"),
                                   fn = ~ gsub("\\[header\\]|\\[header_level\\]", "", .))
-  # Other options:
+
+  # Our default:
+  gtResult <- gtResult |>
+    gt::tab_style(
+      style = gt::cell_text(align = "right"),
+      locations = gt::cells_body(columns = which(grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x))))
+    ) |>
+    gt::tab_style(
+      style = gt::cell_text(align = "left"),
+      locations = gt::cells_body(columns = which(!grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x))))
+    ) |>
+    gt::tab_style(
+      style = list(gt::cell_borders(color = "#D3D3D3")),
+      locations = list(gt::cells_body(columns = 2:(ncol(x)-1)))
+    )
+
+  # Merge rows
+  if (!is.null(colsToMergeRows)) {
+    gtResult <- gtMergeRows(gtResult, colsToMergeRows, groupNameCol, groupOrder)
+  }
+
+   # Other options:
   ## na
   if (!is.null(na)){
     gtResult <- gtResult |> gt::sub_missing(missing_text = na)
@@ -245,26 +256,6 @@ gtTable <- function(
         locations = gt::cells_row_groups()
       )
   }
-
-  # Our default:
-  gtResult <- gtResult |>
-    gt::tab_style(
-      style = gt::cell_text(align = "right"),
-      locations = gt::cells_body(columns = which(grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x))))
-    ) |>
-    gt::tab_style(
-      style = gt::cell_text(align = "left"),
-      locations = gt::cells_body(columns = which(!grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x))))
-    ) |>
-    gt::tab_style(
-      style = list(gt::cell_borders(color = "#D3D3D3")),
-      locations = list(gt::cells_body(columns = 2:(ncol(gtResult$`_data`)-1)))
-    )
-
-  # Merge rows
-  if (!is.null(colsToMergeRows)) {
-    gtResult <- gtMergeRows(gtResult, colsToMergeRows, groupNameCol, groupOrder)
-  }
   return(gtResult)
 }
 
@@ -295,26 +286,38 @@ gtStyles <- function(styleName) {
 
 gtMergeRows <- function(gt_x, colsToMergeRows, groupNameCol, groupOrder) {
 
-  if (is.null(groupNameCol)) {
-    if (colsToMergeRows[1] == "all") {
-      colsToMergeRows <- colnames(gt_x$`_data`)
-    }
-  } else {
-    if (colsToMergeRows[1] == "all") {
-      colsToMergeRows <- colnames(gt_x$`_data`)[!colnames(gt_x$`_data`) %in% groupNameCol]
+  colNms <- colnames(gt_x$`_data`)
+  if (colsToMergeRows[1] == "all_columns") {
+    if (is.null(groupNameCol)) {
+      colsToMergeRows <- colNms
+    } else {
+      colsToMergeRows <- colNms[!colNms %in% groupNameCol]
     }
   }
 
+  # sort
+  ind <- match(colsToMergeRows, colNms)
+  names(ind) <- colsToMergeRows
+  colsToMergeRows <- names(sort(ind))
+
   for (k in seq_along(colsToMergeRows)) {
+
+    if (k > 1) {
+      prevMerged <- mergeCol
+      prevId <- prevMerged == dplyr::lag(prevMerged) & prevId
+    } else {
+      prevId <- rep(TRUE, nrow(gt_x$`_data`))
+    }
+
     col <- colsToMergeRows[k]
     mergeCol <- gt_x$`_data`[[col]]
-    mergeCol[is.na(mergeCol)] <- "this is NA"
+    mergeCol[is.na(mergeCol)] <- "-"
 
     if (is.null(groupNameCol)) {
-      id <- which(mergeCol == dplyr::lag(mergeCol))
+      id <- which(mergeCol == dplyr::lag(mergeCol) & prevId)
     } else {
       groupCol <- gt_x$`_data`[[groupNameCol]]
-      id <- which(groupCol == dplyr::lag(groupCol) & mergeCol == dplyr::lag(mergeCol))
+      id <- which(groupCol == dplyr::lag(groupCol) & mergeCol == dplyr::lag(mergeCol) & prevId)
     }
 
     gt_x$`_data`[[col]][id] <- ""
@@ -323,14 +326,6 @@ gtMergeRows <- function(gt_x, colsToMergeRows, groupNameCol, groupOrder) {
         style = list(gt::cell_borders(style = "hidden", sides = "top")),
         locations = list(gt::cells_body(columns = col, rows = id))
       )
-
-    if (which(col %in% colnames(gt_x$`_data`)) %in% 1:(ncol(gt_x$`_data`)-1)) {
-      gt_x <- gt_x |>
-        gt::tab_style(
-          style = list(gt::cell_borders(sides = "right", color = "#D3D3D3")),
-          locations = list(gt::cells_body(columns = col))
-        )
-    }
   }
   return(gt_x)
 }

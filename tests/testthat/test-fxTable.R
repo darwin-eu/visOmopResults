@@ -185,18 +185,18 @@ test_that("fxTable, test default styles and NULL", {
   expect_equal(unique(fxResult$header$styles$cells$background.color$data[, "Study cohorts\ncohort1\nStudy strata\noverall\noverall"]),
                "transparent")
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[1,] |> unique(), 1.5)
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[2,] |> unique(), 1.5)
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[3,] |> unique(), 0)
-  expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
-  expect_equal(fxResult$header$styles$cells$border.color.left$data[2:6, "cdm_name"] |> unique(), "black")
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[1,] |> unique(), 1.2)
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[2,] |> unique(), 1.2)
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[3,] |> unique(), 1.2)
+  expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
+  expect_equal(fxResult$header$styles$cells$border.color.left$data[2:6, "cdm_name"] |> unique(), "gray")
   expect_true(fxResult$header$styles$text$bold$data[1, "cdm_name"] |> unique())
   expect_false(fxResult$header$styles$text$bold$data[2:6, "cdm_name"] |> unique())
 
 
   # default fxTable format
-  expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 0)
-  expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
+  expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
+  expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
   expect_equal(fxResult$body$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
 
 
@@ -259,7 +259,7 @@ test_that("fxTable, test colsToMergeRows", {
   formatTable(header = c("strata_name", "strata_level"))
   # colsToMergeRows = "all"
   fxResult <- fxTable(
-    table_to_format,
+    x = table_to_format,
     style = "default",
     na = "-",
     title = "Title test 2",
@@ -268,10 +268,25 @@ test_that("fxTable, test colsToMergeRows", {
     groupNameCol = "group_level",
     groupNameAsColumn = FALSE,
     groupOrder = NULL,
-    colsToMergeRows = "all"
+    colsToMergeRows = "all_columns"
   )
-  expect_true(all(fxResult$body$spans$columns[,c(1:6, 11,12)] == matrix(rep(c(1, 7, rep(0, 6), 1, 7, rep(0, 6)), 8), nrow = 16)))
-  expect_true(all(fxResult$body$spans$columns[,13:21] == matrix(rep(1, 16*9), nrow = 16)))
+
+  expect_equal(fxResult$body$styles$cells$border.color.top$data[,1],
+               c("gray", "black", "black", "black", "black", "black", "black", "black",
+                 "gray", "black", "black", "black", "black", "black", "black", "black"))
+  expect_equal(fxResult$body$styles$cells$border.color.top$data[,2],
+               c("gray", "gray", "black", "black", "black", "black", "black", "black",
+                 "gray", "gray", "black", "black", "black", "black", "black", "black"))
+  expect_equal(fxResult$body$styles$cells$border.color.top$data[,7],
+               c("gray", "gray", "gray", "black", "gray", "black", "black", "black",
+                 "gray", "gray", "gray", "black", "gray", "black", "black", "black"))
+  expect_equal(fxResult$body$styles$cells$border.color.top$data[,8],
+               c("gray", "gray", "gray", "black", "gray", "black", "gray", "black",
+                 "gray", "gray", "gray", "black", "gray", "black", "gray", "black"))
+  expect_equal(fxResult$body$styles$cells$border.color.top$data[,19],
+               c("gray", "gray", "gray", "gray", "gray", "gray", "gray", "gray",
+                 "gray", "gray", "gray", "gray", "gray", "gray", "gray", "gray"))
+
   # colsToMergeRows = c("cdm_name", "variable_name")
   fxResult <- fxTable(
     table_to_format,
@@ -285,7 +300,27 @@ test_that("fxTable, test colsToMergeRows", {
     groupOrder = NULL,
     colsToMergeRows = c("cdm_name", "variable_name")
   )
-  expect_true(all(fxResult$body$spans$columns[,c(2)] == c(1, 7, rep(0, 6), 1, 7, rep(0, 6))))
-  expect_true(all(fxResult$body$spans$columns[,c(7)] == c(1,1,2,0,4,0,0,0,1,1,2,0,4,0,0,0)))
-  expect_true(all(fxResult$body$spans$columns[,c(3:6)] == matrix(rep(1,16*4), ncol = 4)))
+  expect_equal(fxResult$body$styles$cells$border.color.top$data[,1],
+               c("gray", "black", "black", "black", "black", "black", "black", "black",
+                 "gray", "black", "black", "black", "black", "black", "black", "black"))
+  expect_equal(fxResult$body$styles$cells$border.color.top$data[,2],
+               c("gray", "gray", "black", "black", "black", "black", "black", "black",
+                 "gray", "gray", "black", "black", "black", "black", "black", "black"))
+  expect_equal(fxResult$body$styles$cells$border.color.top$data[,7],
+               c("gray", "gray", "gray", "black", "gray", "black", "black", "black",
+                 "gray", "gray", "gray", "black", "gray", "black", "black", "black"))
+
+  # Wroing input
+  expect_warning(fxTable(
+    table_to_format,
+    style = "default",
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupNameCol = "group_level",
+    groupNameAsColumn = FALSE,
+    groupOrder = NULL,
+    colsToMergeRows = c("cdm_name", "lala")
+  ), "lala is not a column in the dataframe.")
 })
