@@ -17,9 +17,9 @@
 #' (TRUE) or rows (FALSE).
 #' @param groupOrder Order in which to display group labels.
 #' @param colsToMergeRows specify the names of the columns to vertically merge
-#' when consecutive cells have identical values. Alternatively, use 'all' to
-#' apply this merging to all columns, or use NULL to indicate no merging should
-#' be applied.
+#' when consecutive cells have identical values. Alternatively, use
+#' "all_columns" to apply this merging to all columns, or use NULL to indicate
+#' no merging should be applied.
 #'
 #' @return flextable object
 #'
@@ -42,7 +42,7 @@
 #'     groupNameCol = "group_level",
 #'     groupNameAsColumn = TRUE,
 #'     groupOrder = c("cohort1", "cohort2"),
-#'     colsToMergeRows = "all"
+#'     colsToMergeRows = "all_columns"
 #'  )
 #' }
 #'
@@ -75,21 +75,12 @@ fxTable <- function(
   checkmate::assertLogical(groupNameAsColumn, len = 1, any.missing = FALSE)
   checkmate::assertCharacter(groupOrder, null.ok = TRUE, any.missing = FALSE)
   checkmate::assertCharacter(colsToMergeRows, null.ok = TRUE, any.missing = FALSE)
+  checkColsToMergeRows(x, colsToMergeRows, groupNameCol)
+  style <- checkStyle(style, "fx")
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
   }
-  if (is.list(style) | is.null(style)) {
-    checkmate::assertList(style, null.ok = TRUE, any.missing = FALSE)
-  } else if (is.character(style)) {
-    checkmate::assertCharacter(style, min.chars = 1, any.missing = FALSE, max.len = 1)
-    style <- fxStyles(styleName = style)
-  } else {
-    cli::cli_abort("Style must be a named list of flextable styling function,
-                   the string 'default' for our default style, or NULL for flextable default style.")
-  }
-  if (any(colsToMergeRows %in% groupNameAsColumn)) {
-    cli::cli_abort("groupNameCol and colsToMergeRows must have different column names.")
-  }
+
 
   # Header id's
   spanCols_ids <- which(grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x)))
@@ -129,19 +120,6 @@ fxTable <- function(
     }
   }
 
-  # Merge vertical: colsToMergeRows
-  if (!is.null(colsToMergeRows)) {
-    if (colsToMergeRows[1] == "all") {
-      flex_x <- flex_x |> flextable::merge_v() |>
-        flextable::valign(valign = "top")
-    } else {
-      id_merge <- which(colnames(x) %in% colsToMergeRows)
-      flex_x <- flex_x |> flextable::merge_v(j = id_merge) |>
-        flextable::valign(valign = "top", j = id_merge)
-    }
-
-  }
-
   # Headers
   if (length(header_rows)>0 & "header" %in% names(style)) {
     flex_x <- flex_x |>
@@ -164,15 +142,48 @@ fxTable <- function(
                        pr_t = style$column_name$text, pr_c = style$column_name$cell, pr_p = style$column_name$paragraph)
   }
 
-  # Basic default
-  if (!is.null(style)) {
-    flex_x <- flex_x |>
-      flextable::border(border = officer::fp_border(color = "gray"), part = "all") |>
-      flextable::border(border = officer::fp_border(color = "gray", width = 1.2), part = "header", i = 1:nrow(flex_x$header$dataset)) |>
-      flextable::align(part = "header", align = "center") |>
-      flextable::valign(part = "header", valign = "center") |>
-      flextable::align(j = spanCols_ids, part = "body", align = "right")
+  # Basic default + merge columns
+  if (!is.null(colsToMergeRows)) { # style while merging rows
+    flex_x <- fxMergeRows(flex_x, colsToMergeRows, groupNameCol)
+  } else {
+    if (!is.null(groupNameCol)) { # style group different
+      indRowGroup <- which(!is.na(flex_x$body$dataset[[groupNameCol]]))
+      flex_x <- flex_x |>
+        flextable::border(
+          j = 1,
+          i = indRowGroup,
+          border = officer::fp_border(color = "gray"),
+          part = "body") |>
+        flextable::border(border = officer::fp_border(color = "gray"),
+                          j = 2:ncol(x),
+                          part = "body") |>
+        flextable::border(
+          j = 1,
+          border.left = officer::fp_border(color = "gray"),
+          part = "body") |>
+        flextable::border( # correct group level bottom
+          i = nrow(flex_x$body$dataset),
+          border.bottom = officer::fp_border(color = "gray"),
+          part = "body") |>
+        flextable::border( # correct group level right border
+          i = which(!is.na(flex_x$body$dataset[[groupNameCol]])),
+          j = 1,
+          border.right = officer::fp_border(color = "transparent"),
+          part = "body")
+    } else { # style body equally
+      flex_x <- flex_x |>
+        flextable::border(border = officer::fp_border(color = "gray"),
+                          part = "body")
+    }
   }
+  flex_x <- flex_x |>
+    flextable::border(border = officer::fp_border(color = "gray", width = 1.2),
+                      part = "header",
+                      i = 1:nrow(flex_x$header$dataset)) |>
+    flextable::align(part = "header", align = "center") |>
+    flextable::valign(part = "header", valign = "center") |>
+    flextable::align(j = spanCols_ids, part = "body", align = "right") |>
+    flextable::align(j = which(!1:ncol(x) %in% spanCols_ids), part = "body", align = "left")
 
   # Other options:
   # caption
@@ -261,4 +272,97 @@ fxStyles <- function(styleName) {
     styleName <- "default"
   }
   return(styles[[styleName]])
+}
+
+fxMergeRows <- function(fx_x, colsToMergeRows, groupNameCol) {
+  colNms <- colnames(fx_x$body$dataset)
+  if (colsToMergeRows[1] == "all_columns") {
+    if (is.null(groupNameCol)) {
+      colsToMergeRows <- colNms
+    } else {
+      colsToMergeRows <- colNms[!colNms %in% groupNameCol]
+    }
+  }
+
+  # sort
+  ind <- match(colsToMergeRows, colNms)
+  names(ind) <- colsToMergeRows
+  colsToMergeRows <- names(sort(ind))
+
+  # fill groupCol
+  indColGroup <- NULL
+  if ( !is.null(groupNameCol)) {
+    groupCol <- as.character(fx_x$body$dataset[[groupNameCol]])
+    for (k in 2:length(groupCol)){
+      if (is.na(groupCol[k])) {
+        groupCol[k] <- groupCol[k-1]
+      }
+    }
+    indColGroup <- which(groupNameCol %in% colNms)
+    indRowGroup <- which(!is.na(fx_x$body$dataset[[groupNameCol]]))
+  }
+
+
+  for (k in seq_along(colsToMergeRows)) {
+
+    if (k > 1) {
+      prevMerged <- mergeCol
+      prevId <- prevMerged == dplyr::lag(prevMerged) & prevId
+    } else {
+      prevId <- rep(TRUE, nrow(fx_x$body$dataset))
+    }
+
+    col <- colsToMergeRows[k]
+    mergeCol <- fx_x$body$dataset[[col]]
+    mergeCol[is.na(mergeCol)] <- "this is NA"
+
+    if (is.null(groupNameCol)) {
+      id <- which(mergeCol == dplyr::lag(mergeCol) & prevId)
+    } else {
+      id <- which(groupCol == dplyr::lag(groupCol) & mergeCol == dplyr::lag(mergeCol) & prevId)
+    }
+
+    fx_x <- fx_x |> flextable::compose(i = id, j = ind[k], flextable::as_paragraph(flextable::as_chunk("")))
+    fx_x <- fx_x |>
+      flextable::border(
+        i = which(!1:nrow(fx_x$body$dataset) %in% id),
+        j = ind[k],
+        border.top = officer::fp_border(color = "gray"),
+        part = "body")
+  }
+
+  # style the rest
+  fx_x <- fx_x |>
+    flextable::border(
+      j = which(! 1:ncol(fx_x$body$dataset) %in% c(ind, indColGroup)),
+      border.top = officer::fp_border(color = "gray"),
+      part = "body") |>
+    flextable::border(
+      j = 1:ncol(fx_x$body$dataset),
+      border.right = officer::fp_border(color = "gray"),
+      part = "body") |>
+    flextable::border(
+      j = 1,
+      border.left = officer::fp_border(color = "gray"),
+      part = "body") |>
+    flextable::border( # correct bottom
+      i = nrow(fx_x$body$dataset),
+      border.bottom = officer::fp_border(color = "gray"),
+      part = "body")
+  if (!is.null(groupNameCol)) {
+    fx_x <- fx_x |>
+      flextable::border(
+        j = indColGroup,
+        i = indRowGroup,
+        border = officer::fp_border(color = "gray"),
+        part = "body") |>
+      flextable::border(
+        i = which(!is.na(fx_x$body$dataset[[groupNameCol]])),
+        j = 1,
+        border.right = officer::fp_border(color = "transparent"),
+        part = "body")
+  }
+
+
+  return(fx_x)
 }

@@ -113,8 +113,8 @@ test_that("gtTable", {
   # Group labels
   expect_equal(gtResult$`_stub_df`$group_label |> unlist() |> unique(), c("cohort1", "cohort2"))
   expect_false(gtResult$`_options`$value[gtResult$`_options`$parameter == "row_group_as_column"] |> unlist())
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "row_groups"] |> unique() |> unlist(),
-               c("cell_fill.color" = "#E1E1E1"))
+  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "row_groups"] |> unlist() |> unique(),
+               c("#E1E1E1"))
   # caption
   expect_equal(gtResult$`_options`[2, "value"] |> unlist(), c("value" = "*This* is the caption"))
   expect_equal(gtResult$`_options`$value[gtResult$`_options`$parameter == "table_caption"][[1]] |> attr("class"),
@@ -122,7 +122,7 @@ test_that("gtTable", {
   # body
   body_style <- gtResult$`_styles`$styles[gtResult$`_styles`$locname == "data" & gtResult$`_styles`$rownum %in% 2:8] |> unlist()
   expect_equal(body_style[names(body_style) %in% c("cell_text.color", "cell_border_top.color", "cell_border_top.style")] |> unique(),
-               c("#FF0000", "solid", "#000000", "#D3D3D3"))
+               c("solid","#D3D3D3", "#FF0000", "#000000"))
 
   # Input 3 ----
   table_to_format <- mockSummarisedResult() |>
@@ -263,14 +263,14 @@ test_that("gtTable, test colsToMergeRows", {
     groupNameCol = "group_level",
     groupNameAsColumn = FALSE,
     groupOrder = NULL,
-    colsToMergeRows = "all"
+    colsToMergeRows = "all_columns"
   )
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$result_type,
                c(NA_character_, "", "", "", "", "", "", NA_character_, "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$variable_level,
-               c(NA_character_, "", "", "Amoxiciline", "", "Ibuprofen", "", NA_character_, "", "", "Amoxiciline",
+               c(NA_character_, NA_character_, "", "Amoxiciline", "", "Ibuprofen", "", NA_character_, NA_character_, "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
   expect_equal(gtResult$`_data`$group_level|> levels(),
                c("cohort1", "cohort2"))
@@ -309,15 +309,16 @@ test_that("gtTable, test colsToMergeRows", {
     groupNameCol = NULL,
     groupNameAsColumn = FALSE,
     groupOrder = NULL,
-    colsToMergeRows = "all"
+    colsToMergeRows = "all_columns"
   )
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$result_type,
                c(NA_character_, "", "", "", "", "", "", "", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$variable_level,
-               c(NA_character_, "", "", "", "", "", "Amoxiciline", "", "", "", "Ibuprofen", "",
-                 "",""))
+               c(NA_character_, NA_character_, NA_character_, NA_character_, NA_character_, NA_character_,
+                 "Amoxiciline", "Amoxiciline", "Amoxiciline", "Amoxiciline", "Ibuprofen", "Ibuprofen",
+                 "Ibuprofen","Ibuprofen"))
   expect_null(gtResult$`_data`$group_level|> levels())
 })
 

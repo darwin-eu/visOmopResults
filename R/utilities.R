@@ -32,7 +32,7 @@ validateComparedResult <- function(x, call = parent.frame()) {
 }
 
 validateDecimals <- function(result, decimals) {
-  nm_type <- c("numeric", "integer", "proportion", "percentage")
+  nm_type <- omopgenerics::estimateTypeChoices()
   nm_name <- result[["estimate_name"]] |> unique()
   errorMesssage <- "`decimals` must be named integerish vector. Names refere to estimate_type or estimate_name values."
 
@@ -60,5 +60,32 @@ validateDecimals <- function(result, decimals) {
 validateEstimateNameFormat <- function(format, call = parent.frame()) {
   if (length(stringr::str_match_all(format, "(?<=\\<).+?(?=\\>)") |> unlist()) == 0) {
     cli::cli_abort("format input does not contain any estimate name indicated by <...>.")
+  }
+}
+
+checkStyle <- function(style, tableFormatType) {
+  if (is.list(style) | is.null(style)) {
+    checkmate::assertList(style, null.ok = TRUE, any.missing = FALSE)
+  } else if (is.character(style)) {
+    checkmate::assertCharacter(style, min.chars = 1, any.missing = FALSE, max.len = 1)
+    eval(parse(text = paste0("style <- ", tableFormatType, "Styles(styleName = style)")))
+  } else {
+    cli::cli_abort("Style must be one of 1) a named list of flextable styling function,
+                   2) the string 'default' for our default style, or 3) NULL to indicate no styling.")
+  }
+  return(style)
+}
+
+checkColsToMergeRows <- function(x, colsToMergeRows, groupNameCol) {
+  if (!is.null(colsToMergeRows)) {
+    if (any(colsToMergeRows %in% groupNameCol)) {
+      cli::cli_abort("groupNameCol and colsToMergeRows must have different column names.")
+    }
+    ind <- ! colsToMergeRows %in% c(colnames(x), "all_columns")
+    if (sum(ind) == 1) {
+      warning(glue::glue("{colsToMergeRows[ind]} is not a column in the dataframe."))
+    } else if (sum(ind) > 1) {
+      warning(glue::glue("{colsToMergeRows[ind]} are not columns in the dataframe."))
+    }
   }
 }

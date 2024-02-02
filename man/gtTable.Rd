@@ -7,7 +7,7 @@
 gtTable(
   x,
   delim = "\\n",
-  style = "style",
+  style = "default",
   na = "-",
   title = NULL,
   subtitle = NULL,
@@ -46,9 +46,9 @@ italics).}
 \item{groupOrder}{Order in which to display group labels.}
 
 \item{colsToMergeRows}{specify the names of the columns to vertically merge
-when consecutive cells have identical values. Alternatively, use 'all' to
-apply this merging to all columns, or use NULL to indicate no merging should
-be applied.}
+when consecutive cells have identical values. Alternatively, use
+"all_columns" to apply this merging to all columns, or use NULL to indicate
+no merging should be applied.}
 }
 \value{
 gt object
@@ -82,7 +82,7 @@ mockSummarisedResult() |>
     groupNameCol = "group_level",
     groupNameAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
-    colsToMergeRows = "all"
+    colsToMergeRows = "all_columns"
   )
 }
 

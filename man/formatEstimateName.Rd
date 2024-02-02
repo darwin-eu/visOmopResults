@@ -8,7 +8,7 @@ formatEstimateName(
   result,
   estimateNameFormat = NULL,
   keepNotFormatted = TRUE,
-  useNewFormatOrder = TRUE
+  useFormatOrder = TRUE
 )
 }
 \arguments{
@@ -19,7 +19,7 @@ computation order. Indicate estimate_name's between <...>.}
 
 \item{keepNotFormatted}{Whether to keep rows not formatted.}
 
-\item{useNewFormatOrder}{Whether to use the order in which estimate names
+\item{useFormatOrder}{Whether to use the order in which estimate names
 appear in the estimateNameFormat argument and send not formatted rows to the
 end, or to use the order in the input dataframe.}
 }
