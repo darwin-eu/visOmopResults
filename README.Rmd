@@ -9,48 +9,95 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%"
+  out.width = "100%",
+  warning = FALSE
 )
 ```
 
-# gtSummarisedResult
+# visOmopResults
 
 <!-- badges: start -->
 [![R-CMD-check](https://github.com/catalamarti/gtSummarisedResult/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/catalamarti/gtSummarisedResult/actions/workflows/R-CMD-check.yaml)
+[![CRAN status](https://www.r-pkg.org/badges/version/visOmopResults)](https://CRAN.R-project.org/package=visOmopResults)
+[![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 <!-- badges: end -->
 
-The goal of gtSummarisedResult is to ...
+## Package overview
+
+VisOmopResults contains functions for formatting objects of the class *summarised_result* and *compared_result* (see R package [omopgenerics](https://cran.r-project.org/web/packages/omopgenerics/index.html)). This package simplifies the handling of these objects to obtain nice output tables in the format of *gt* or *flextable*' to report results via Shiny apps, RMarkdown, Quarto, and more.
+
 
 ## Installation
 
-You can install the development version of gtSummarisedResult from [GitHub](https://github.com/) with:
+You can install the development version of VisOmopResults from
+[GitHub](https://github.com/oxford-pharmacoepi/visOmopResults) with:
 
-``` r
+```{r, eval = FALSE}
 # install.packages("devtools")
-devtools::install_github("catalamarti/gtSummarisedResult")
+devtools::install_github("oxford-pharmacoepi/visOmopResults")
 ```
 
 ## Example
 
-This is a basic example which shows you how to solve a common problem:
+In this example we show how to use the package to format a mock *summarised_result* object into a nice gt object.
 
-```{r example}
-library(gtSummarisedResult)
-## basic example code
+First we load the package and create the mock *summarised_result* object.
+
+```{r, message=F}
+library(visOmopResults)
+library(dplyr)
+result <- mockSummarisedResult()
 ```
 
-What is special about using `README.Rmd` instead of just `README.md`? You can include R chunks like so:
+### 1. formatEstimateValue
+We utilize this function to modify the *estimate_value* column. In this case, we will apply the default settings of the function, which include using 0 decimals for integer values, 2 decimals for numeric values, 1 decimal for percentages, and 3 decimals for proportions. Additionally, the function sets the decimal mark to '.', and the thousand/millions separator to ',' by default."
 
-```{r cars}
-summary(cars)
+```{r}
+result <- result |> 
+  formatEstimateValue(
+    decimals = c(integer = 0, numeric = 2, percentage = 1, proportion = 3),
+    decimalMark = ".",
+    bigMark = ",")
+result
 ```
 
-You'll still need to render `README.Rmd` regularly, to keep `README.md` up-to-date. `devtools::build_readme()` is handy for this.
-
-You can also embed plots, for example:
-
-```{r pressure, echo = FALSE}
-plot(pressure)
+### 2. formatEstimateName
+With this function we can transform the *estimate_name* and *estimate_value* columns. For example, it allows to consolidate into one row counts and percentages related to the same variable within the same group and strata. It's worth noting that the estimate_name is enclosed within <...> in the *estimateNameFormat* argument."
+```{r}
+result <- result |> formatEstimateName(
+  estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
+                         "N" = "<count>",
+                         "Mean (SD)" = "<mean> (<sd>)"),
+  keepNotFormatted = FALSE)
+result
 ```
 
-In that case, don't forget to commit and push the resulting figure files, so they display on GitHub and CRAN.
+### 3. formatTable
+Next step is to format our table before tranforming to gt object. We will pivot *strata_name* and *strata_level* columns to have the strata groups as columns under the header "Study strata".
+
+```{r}
+result <- result |>
+  formatTable(header = c("Study strata", "strata_name", "strata_level"),
+              delim = "\n", 
+              includeHeaderName = FALSE,
+              includeHeaderKey = TRUE)
+result
+```
+
+### 4. gtTable
+Finally, we convert the transformed *summarised_result* object in steps 1, 2, and 3, into a nice gt object. We use the default visOmopResults style. Additonally, we separet data into groups specified by *group_level* column to differentiate between cohort1 and cohort2.
+
+```{r}
+gtResult <- result |>
+  gtTable(
+    delim = "\n",
+    style = "default",
+    na = "-",
+    title = "My first gt table with VisOmopResults!",
+    groupNameCol = "group_level",
+    groupNameAsColumn = FALSE,
+    groupOrder = c("cohort1", "cohort2")
+    )
+gtResult
+```
+
