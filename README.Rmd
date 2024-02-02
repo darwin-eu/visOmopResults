@@ -98,6 +98,9 @@ Finally, we convert the transformed *summarised_result* object in steps 1, 2, an
 
 ```{r, eval = FALSE}
 gtResult <- result |>
+  dplyr::select(-c("result_type", "package_name", "package_version", 
+                   "group_name", "additional_name", "additional_level",
+                   "estimate_type")) |>
   gtTable(
     delim = "\n",
     style = "default",
@@ -114,16 +117,5 @@ gtResult <- result |>
 gtResult 
 ```
 
-```{r, echo=FALSE}
-result |>
-  gtTable(
-    delim = "\n",
-    style = "default",
-    na = "-",
-    title = "My first gt table with visOmopResults!",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
-    groupOrder = c("cohort1", "cohort2"),
-    colsToMergeRows = "all_columns"
-    )
-```
+![](./man/figures/gt_table.png)
+
