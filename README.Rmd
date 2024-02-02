@@ -87,17 +87,32 @@ result
 ### 4. gtTable
 Finally, we convert the transformed *summarised_result* object in steps 1, 2, and 3, into a nice gt object. We use the default visOmopResults style. Additonally, we separet data into groups specified by *group_level* column to differentiate between cohort1 and cohort2.
 
-```{r}
+```{r, eval = FALSE}
 gtResult <- result |>
   gtTable(
     delim = "\n",
     style = "default",
     na = "-",
-    title = "My first gt table with VisOmopResults!",
+    title = "My first gt table with visOmopResults!",
     groupNameCol = "group_level",
     groupNameAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2")
     )
 gtResult
 ```
+
+```{r, echo=FALSE}
+gtResult <- result |>
+  gtTable(
+    delim = "\n",
+    style = "default",
+    na = "-",
+    title = "My first gt table with visOmopResults!",
+    groupNameCol = "group_level",
+    groupNameAsColumn = FALSE,
+    groupOrder = c("cohort1", "cohort2")
+    )
+gt::as_raw_html(gtResult)
+```
+
 
