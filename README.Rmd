@@ -45,7 +45,6 @@ First we load the package and create the mock *summarised_result* object.
 
 ```{r, message=F}
 library(visOmopResults)
-library(dplyr)
 result <- mockSummarisedResult()
 ```
 
@@ -61,7 +60,7 @@ result <- result |>
 ```
 
 ```{r}
-result
+result |> dplyr::glimpse()
 ```
 
 
@@ -76,7 +75,7 @@ result <- result |> formatEstimateName(
 ```
 
 ```{r}
-result
+result |> dplyr::glimpse()
 ```
 
 ### 3. formatTable
@@ -91,7 +90,7 @@ result <- result |>
 ```
 
 ```{r}
-result
+result |> dplyr::glimpse()
 ```
 
 ### 4. gtTable
@@ -112,11 +111,11 @@ gtResult <- result |>
 ```
 
 ```{r, eval = FALSE}
-gtResult
+gtResult 
 ```
 
 ```{r, echo=FALSE}
-gtResult <- result |>
+result |>
   gtTable(
     delim = "\n",
     style = "default",
@@ -127,5 +126,4 @@ gtResult <- result |>
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
     )
-gt::fmt_markdown(gtResult)
 ```
