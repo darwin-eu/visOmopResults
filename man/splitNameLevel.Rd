@@ -28,8 +28,6 @@ Split strata_name and strata_level into the columns.
 }
 \examples{
 \donttest{
-#library(visOmop)
-
 mockSummarisedResult() |>
   splitNameLevel()
 }

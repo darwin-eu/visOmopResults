@@ -2,22 +2,20 @@
 % Please edit documentation in R/split.R
 \name{splitAdditional}
 \alias{splitAdditional}
-\title{Split additional_name and additional_level into the columns.}
+\title{Split additional_name and additional_level into columns.}
 \usage{
 splitAdditional(result, overall = FALSE)
 }
 \arguments{
-\item{result}{Omop result object (summarised_result or compared_result).}
+\item{result}{omop_result object.}
 
 \item{overall}{Whether to keep overall column if present.}
 }
 \description{
-Split additional_name and additional_level into the columns.
+Split additional_name and additional_level into columns.
 }
 \examples{
 \donttest{
-#library(visOmop)
-
 mockSummarisedResult() |>
   splitAdditional()
 }

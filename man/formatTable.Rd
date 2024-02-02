@@ -40,8 +40,12 @@ the header input, with labels are separated using a delimiter.
 result <- mockSummarisedResult()
 
 result |>
-  formatTable(header = c("Study cohorts", "group_level", "Study strata",
-                         "strata_name", "strata_level"),
-              includeHeaderName = FALSE)
+  formatTable(
+    header = c(
+      "Study cohorts", "group_level", "Study strata", "strata_name",
+      "strata_level"
+    ),
+    includeHeaderName = FALSE
+  )
 }
 }

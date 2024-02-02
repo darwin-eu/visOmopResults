@@ -5,8 +5,8 @@
 #' computation order. Indicate estimate_name's between <...>.
 #' @param keepNotFormatted Whether to keep rows not formatted.
 #' @param useFormatOrder Whether to use the order in which estimate names
-#' appear in the estimateNameFormat argument and send not formatted rows to the
-#' end, or to use the order in the input dataframe.
+#' appear in the estimateNameFormat argument (TRUE), or use the order in the
+#' input dataframe (FALSE).
 #'
 #' @description
 #' Format estimate_name and estimate_value column of summarised_result and
@@ -21,10 +21,13 @@
 #' @examples
 #' \donttest{
 #' result <- mockSummarisedResult()
-#' result |> formatEstimateName(
-#'     estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
-#'                            "N" = "<count>"),
-#'     keepNotFormatted = FALSE)
+#' result |>
+#'   formatEstimateName(
+#'     estimateNameFormat = c(
+#'       "N (%)" = "<count> (<percentage>%)", "N" = "<count>"
+#'     ),
+#'     keepNotFormatted = FALSE
+#'   )
 #' }
 #'
 formatEstimateName <- function(result,

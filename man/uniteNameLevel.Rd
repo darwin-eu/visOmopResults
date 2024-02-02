@@ -29,3 +29,23 @@ A Tibble with the new columns.
 \description{
 Unite one or more columns in name-level format.
 }
+\examples{
+\donttest{
+x <- dplyr::tibble(
+  variable = "number subjects",
+  value = c(10, 15, 40, 78),
+  sex = c("Male", "Female", "Male", "Female"),
+  age_group = c("<40", ">40", ">40", "<40")
+)
+
+x
+
+x |>
+  uniteNameLevel(
+    cols = c("sex", "age_group"),
+    name = "new_column_name",
+    level = "new_column_level"
+  )
+}
+
+}
