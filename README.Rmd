@@ -97,7 +97,7 @@ result
 ### 4. gtTable
 Finally, we convert the transformed *summarised_result* object in steps 1, 2, and 3, into a nice gt object. We use the default visOmopResults style. Additonally, we separet data into groups specified by *group_level* column to differentiate between cohort1 and cohort2.
 
-```{r}
+```{r, eval = FALSE}
 gtResult <- result |>
   gtTable(
     delim = "\n",
@@ -129,4 +129,3 @@ gtResult <- result |>
     )
 gt::fmt_markdown(gtResult)
 ```
-

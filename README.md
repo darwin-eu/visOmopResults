@@ -184,20 +184,20 @@ gtResult <- result |>
 gtResult
 ```
 
-<div id="hefwytmrke" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#hefwytmrke table {
+<div id="dhrxytqjwg" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#dhrxytqjwg table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
-&#10;#hefwytmrke thead, #hefwytmrke tbody, #hefwytmrke tfoot, #hefwytmrke tr, #hefwytmrke td, #hefwytmrke th {
+&#10;#dhrxytqjwg thead, #dhrxytqjwg tbody, #dhrxytqjwg tfoot, #dhrxytqjwg tr, #dhrxytqjwg td, #dhrxytqjwg th {
   border-style: none;
 }
-&#10;#hefwytmrke p {
+&#10;#dhrxytqjwg p {
   margin: 0;
   padding: 0;
 }
-&#10;#hefwytmrke .gt_table {
+&#10;#dhrxytqjwg .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -222,11 +222,11 @@ gtResult
   border-left-width: 2px;
   border-left-color: #D3D3D3;
 }
-&#10;#hefwytmrke .gt_caption {
+&#10;#dhrxytqjwg .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
-&#10;#hefwytmrke .gt_title {
+&#10;#dhrxytqjwg .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -237,7 +237,7 @@ gtResult
   border-bottom-color: #FFFFFF;
   border-bottom-width: 0;
 }
-&#10;#hefwytmrke .gt_subtitle {
+&#10;#dhrxytqjwg .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -248,7 +248,7 @@ gtResult
   border-top-color: #FFFFFF;
   border-top-width: 0;
 }
-&#10;#hefwytmrke .gt_heading {
+&#10;#dhrxytqjwg .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -259,12 +259,12 @@ gtResult
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#hefwytmrke .gt_bottom_border {
+&#10;#dhrxytqjwg .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#hefwytmrke .gt_col_headings {
+&#10;#dhrxytqjwg .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -278,7 +278,7 @@ gtResult
   border-right-width: 1px;
   border-right-color: #D3D3D3;
 }
-&#10;#hefwytmrke .gt_col_heading {
+&#10;#dhrxytqjwg .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -297,7 +297,7 @@ gtResult
   padding-right: 5px;
   overflow-x: hidden;
 }
-&#10;#hefwytmrke .gt_column_spanner_outer {
+&#10;#dhrxytqjwg .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -308,13 +308,13 @@ gtResult
   padding-left: 4px;
   padding-right: 4px;
 }
-&#10;#hefwytmrke .gt_column_spanner_outer:first-child {
+&#10;#dhrxytqjwg .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
-&#10;#hefwytmrke .gt_column_spanner_outer:last-child {
+&#10;#dhrxytqjwg .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
-&#10;#hefwytmrke .gt_column_spanner {
+&#10;#dhrxytqjwg .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -325,10 +325,10 @@ gtResult
   display: inline-block;
   width: 100%;
 }
-&#10;#hefwytmrke .gt_spanner_row {
+&#10;#dhrxytqjwg .gt_spanner_row {
   border-bottom-style: hidden;
 }
-&#10;#hefwytmrke .gt_group_heading {
+&#10;#dhrxytqjwg .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -353,7 +353,7 @@ gtResult
   vertical-align: middle;
   text-align: left;
 }
-&#10;#hefwytmrke .gt_empty_group_heading {
+&#10;#dhrxytqjwg .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -367,13 +367,13 @@ gtResult
   border-bottom-color: #D3D3D3;
   vertical-align: middle;
 }
-&#10;#hefwytmrke .gt_from_md > :first-child {
+&#10;#dhrxytqjwg .gt_from_md > :first-child {
   margin-top: 0;
 }
-&#10;#hefwytmrke .gt_from_md > :last-child {
+&#10;#dhrxytqjwg .gt_from_md > :last-child {
   margin-bottom: 0;
 }
-&#10;#hefwytmrke .gt_row {
+&#10;#dhrxytqjwg .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -391,7 +391,7 @@ gtResult
   vertical-align: middle;
   overflow-x: hidden;
 }
-&#10;#hefwytmrke .gt_stub {
+&#10;#dhrxytqjwg .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -403,7 +403,7 @@ gtResult
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#hefwytmrke .gt_stub_row_group {
+&#10;#dhrxytqjwg .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -416,13 +416,13 @@ gtResult
   padding-right: 5px;
   vertical-align: top;
 }
-&#10;#hefwytmrke .gt_row_group_first td {
+&#10;#dhrxytqjwg .gt_row_group_first td {
   border-top-width: 2px;
 }
-&#10;#hefwytmrke .gt_row_group_first th {
+&#10;#dhrxytqjwg .gt_row_group_first th {
   border-top-width: 2px;
 }
-&#10;#hefwytmrke .gt_summary_row {
+&#10;#dhrxytqjwg .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -431,14 +431,14 @@ gtResult
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#hefwytmrke .gt_first_summary_row {
+&#10;#dhrxytqjwg .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
-&#10;#hefwytmrke .gt_first_summary_row.thick {
+&#10;#dhrxytqjwg .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
-&#10;#hefwytmrke .gt_last_summary_row {
+&#10;#dhrxytqjwg .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -447,7 +447,7 @@ gtResult
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#hefwytmrke .gt_grand_summary_row {
+&#10;#dhrxytqjwg .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -456,7 +456,7 @@ gtResult
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#hefwytmrke .gt_first_grand_summary_row {
+&#10;#dhrxytqjwg .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -465,7 +465,7 @@ gtResult
   border-top-width: 6px;
   border-top-color: #D3D3D3;
 }
-&#10;#hefwytmrke .gt_last_grand_summary_row_top {
+&#10;#dhrxytqjwg .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -474,10 +474,10 @@ gtResult
   border-bottom-width: 6px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#hefwytmrke .gt_striped {
+&#10;#dhrxytqjwg .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
-&#10;#hefwytmrke .gt_table_body {
+&#10;#dhrxytqjwg .gt_table_body {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -485,7 +485,7 @@ gtResult
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
-&#10;#hefwytmrke .gt_footnotes {
+&#10;#dhrxytqjwg .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -498,7 +498,7 @@ gtResult
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#hefwytmrke .gt_footnote {
+&#10;#dhrxytqjwg .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -506,7 +506,7 @@ gtResult
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#hefwytmrke .gt_sourcenotes {
+&#10;#dhrxytqjwg .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -519,57 +519,57 @@ gtResult
   border-right-width: 2px;
   border-right-color: #D3D3D3;
 }
-&#10;#hefwytmrke .gt_sourcenote {
+&#10;#dhrxytqjwg .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
   padding-left: 5px;
   padding-right: 5px;
 }
-&#10;#hefwytmrke .gt_left {
+&#10;#dhrxytqjwg .gt_left {
   text-align: left;
 }
-&#10;#hefwytmrke .gt_center {
+&#10;#dhrxytqjwg .gt_center {
   text-align: center;
 }
-&#10;#hefwytmrke .gt_right {
+&#10;#dhrxytqjwg .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
-&#10;#hefwytmrke .gt_font_normal {
+&#10;#dhrxytqjwg .gt_font_normal {
   font-weight: normal;
 }
-&#10;#hefwytmrke .gt_font_bold {
+&#10;#dhrxytqjwg .gt_font_bold {
   font-weight: bold;
 }
-&#10;#hefwytmrke .gt_font_italic {
+&#10;#dhrxytqjwg .gt_font_italic {
   font-style: italic;
 }
-&#10;#hefwytmrke .gt_super {
+&#10;#dhrxytqjwg .gt_super {
   font-size: 65%;
 }
-&#10;#hefwytmrke .gt_footnote_marks {
+&#10;#dhrxytqjwg .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
-&#10;#hefwytmrke .gt_asterisk {
+&#10;#dhrxytqjwg .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
-&#10;#hefwytmrke .gt_indent_1 {
+&#10;#dhrxytqjwg .gt_indent_1 {
   text-indent: 5px;
 }
-&#10;#hefwytmrke .gt_indent_2 {
+&#10;#dhrxytqjwg .gt_indent_2 {
   text-indent: 10px;
 }
-&#10;#hefwytmrke .gt_indent_3 {
+&#10;#dhrxytqjwg .gt_indent_3 {
   text-indent: 15px;
 }
-&#10;#hefwytmrke .gt_indent_4 {
+&#10;#dhrxytqjwg .gt_indent_4 {
   text-indent: 20px;
 }
-&#10;#hefwytmrke .gt_indent_5 {
+&#10;#dhrxytqjwg .gt_indent_5 {
   text-indent: 25px;
 }
 </style>
@@ -647,39 +647,39 @@ gtResult
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]overall
-[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>2,764,246</p>
+[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>617,400</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>9,080,728</p>
+[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>70,173</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>6,623,438</p>
+[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>3,241,583</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>6,420,790</p>
+[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>6,118,453</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>7,735,393</p>
+[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>8,439,690</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]sex
-[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>8,773,879</p>
+[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>380,543</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]sex
-[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>1,094,926</p>
+[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>5,343,740</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group
-[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>3,607,004</p>
+[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>9,570,279</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group
-[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>1,006,218</p>
+[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>792,434</p>
 </div></td></tr>
     <tr><td headers="cohort1  cdm_name" class="gt_row gt_left" style="text-align: left; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000;"><div class='gt_from_md'></div></td>
 <td headers="cohort1  result_type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'></div></td>
@@ -699,39 +699,39 @@ gtResult
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]overall
-[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>49.08 (5.18)</p>
+[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>0.18 (7.87)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>5.45 (0.97)</p>
+[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>89.99 (8.86)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>54.46 (2.98)</p>
+[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>28.21 (5.11)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>1.94 (1.14)</p>
+[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>85.56 (8.06)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>66.54 (2.73)</p>
+[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>81.69 (2.78)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]sex
-[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>43.38 (5.44)</p>
+[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>1.80 (0.77)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]sex
-[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>12.81 (3.92)</p>
+[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>30.13 (2.01)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group
-[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>30.04 (1.19)</p>
+[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>4.44 (7.92)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group
-[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>94.21 (3.98)</p>
+[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>45.91 (9.67)</p>
 </div></td></tr>
     <tr><td headers="cohort1  cdm_name" class="gt_row gt_left" style="text-align: left; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000;"><div class='gt_from_md'></div></td>
 <td headers="cohort1  result_type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'></div></td>
@@ -752,39 +752,39 @@ gtResult
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]overall
-[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>91,861 (10.5%)</p>
+[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>71,561 (19.6%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>70,585 (54.8%)</p>
+[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>3,130 (38.8%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>64,357 (59.7%)</p>
+[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>58,244 (70.6%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>19,392 (80.5%)</p>
+[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>35,186 (35.8%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>48,737 (72.4%)</p>
+[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>32,863 (22.8%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]sex
-[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>40,902 (60.4%)</p>
+[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>97,052 (73.7%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]sex
-[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>32,194 (82.4%)</p>
+[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>75,470 (53.4%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group
-[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>3,310 (71.9%)</p>
+[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>81,915 (62.6%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group
-[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>69,638 (89.3%)</p>
+[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>28,296 (66.0%)</p>
 </div></td></tr>
     <tr><td headers="cohort1  cdm_name" class="gt_row gt_left" style="text-align: left; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000;"><div class='gt_from_md'></div></td>
 <td headers="cohort1  result_type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'></div></td>
@@ -804,39 +804,39 @@ gtResult
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]overall
-[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>11,781 (64.9%)</p>
+[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>29,297 (48.8%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>32,785 (63.4%)</p>
+[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>71,154 (97.6%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>78,205 (8.2%)</p>
+[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>99,888 (39.1%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>49,968 (2.8%)</p>
+[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>60,605 (69.2%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>78,558 (76.8%)</p>
+[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>60,177 (37.2%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]sex
-[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>38,021 (46.4%)</p>
+[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>53,792 (75.6%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]sex
-[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>96,344 (26.9%)</p>
+[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>20,111 (31.4%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group
-[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>41,723 (48.9%)</p>
+[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>37,089 (45.3%)</p>
 </div></td>
 <td headers="cohort1  [header]Study strata
 [header_level]age_group
-[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>36,890 (47.3%)</p>
+[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>60,320 (8.1%)</p>
 </div></td></tr>
     <tr class="gt_group_heading_row">
       <th colspan="20" class="gt_group_heading" style="background-color: #E9E9E9; font-weight: bold;" scope="colgroup" id="cohort2">cohort2</th>
@@ -863,39 +863,39 @@ gtResult
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]overall
-[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>1,685,714</p>
+[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>5,273,457</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>6,211,485</p>
+[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>3,071,341</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>7,995,163</p>
+[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>2,971,065</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>6,433,759</p>
+[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>2,344,573</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>6,166,227</p>
+[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>616,372</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]sex
-[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>1,064,276</p>
+[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>8,250,081</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]sex
-[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>1,140,244</p>
+[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>9,825,862</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group
-[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>3,185,201</p>
+[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>8,403,587</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group
-[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>182,830</p>
+[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>6,569,903</p>
 </div></td></tr>
     <tr><td headers="cohort2  cdm_name" class="gt_row gt_left" style="text-align: left; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000;"><div class='gt_from_md'></div></td>
 <td headers="cohort2  result_type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'></div></td>
@@ -915,39 +915,39 @@ gtResult
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]overall
-[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>88.41 (5.35)</p>
+[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>77.36 (2.99)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>85.50 (4.80)</p>
+[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>42.88 (7.23)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>21.32 (1.75)</p>
+[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>16.00 (0.24)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>28.37 (5.15)</p>
+[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>36.36 (6.80)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>51.02 (9.46)</p>
+[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>4.22 (2.97)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]sex
-[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>78.74 (2.45)</p>
+[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>24.40 (6.29)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]sex
-[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>96.62 (9.63)</p>
+[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>47.57 (1.60)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group
-[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>46.13 (0.82)</p>
+[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>74.52 (1.40)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group
-[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>11.99 (2.66)</p>
+[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>23.33 (1.30)</p>
 </div></td></tr>
     <tr><td headers="cohort2  cdm_name" class="gt_row gt_left" style="text-align: left; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000;"><div class='gt_from_md'></div></td>
 <td headers="cohort2  result_type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'></div></td>
@@ -968,39 +968,39 @@ gtResult
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]overall
-[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>83,071 (81.4%)</p>
+[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>64,840 (61.3%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>57,370 (7.4%)</p>
+[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>36,431 (45.0%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>33,451 (66.2%)</p>
+[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>99,110 (13.2%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>79,376 (49.3%)</p>
+[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>47,105 (45.3%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>50,996 (19.8%)</p>
+[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>44,761 (8.9%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]sex
-[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>77,692 (13.5%)</p>
+[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>39,217 (3.5%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]sex
-[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>34,941 (56.2%)</p>
+[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>41,988 (4.9%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group
-[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>6,977 (17.8%)</p>
+[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>17,295 (93.2%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group
-[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>34 (45.3%)</p>
+[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>68,197 (69.3%)</p>
 </div></td></tr>
     <tr><td headers="cohort2  cdm_name" class="gt_row gt_left" style="text-align: left; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000;"><div class='gt_from_md'></div></td>
 <td headers="cohort2  result_type" class="gt_row gt_left" style="text-align: left; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'></div></td>
@@ -1020,39 +1020,39 @@ gtResult
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]overall
-[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>16,534 (23.7%)</p>
+[header_level]overall" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>88,736 (2.2%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>32,536 (56.0%)</p>
+[header_level]<40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>92,307 (22.9%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>65,811 (59.6%)</p>
+[header_level]>=40 and Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>67,427 (75.1%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>17,160 (17.7%)</p>
+[header_level]<40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>17,714 (67.5%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group and sex
-[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>8,526 (28.1%)</p>
+[header_level]>=40 and Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>41,648 (67.4%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]sex
-[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>98,318 (16.3%)</p>
+[header_level]Male" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>58,969 (11.8%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]sex
-[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>76,286 (80.8%)</p>
+[header_level]Female" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>79,365 (59.4%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group
-[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>10,884 (6.2%)</p>
+[header_level]<40" class="gt_row gt_right" style="text-align: right; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"><div class='gt_from_md'><p>10,225 (87.6%)</p>
 </div></td>
 <td headers="cohort2  [header]Study strata
 [header_level]age_group
-[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>81,541 (50.2%)</p>
+[header_level]>=40" class="gt_row gt_right" style="text-align: right;"><div class='gt_from_md'><p>49,073 (97.2%)</p>
 </div></td></tr>
   </tbody>
   &#10;  
