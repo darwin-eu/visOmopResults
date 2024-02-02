@@ -45,7 +45,6 @@ First we load the package and create the mock *summarised_result* object.
 
 ```{r, message=F}
 library(visOmopResults)
-library(dplyr)
 result <- mockSummarisedResult()
 ```
 
@@ -61,7 +60,7 @@ result <- result |>
 ```
 
 ```{r}
-result
+result |> dplyr::glimpse()
 ```
 
 
@@ -76,7 +75,7 @@ result <- result |> formatEstimateName(
 ```
 
 ```{r}
-result
+result |> dplyr::glimpse()
 ```
 
 ### 3. formatTable
@@ -91,7 +90,7 @@ result <- result |>
 ```
 
 ```{r}
-result
+result |> dplyr::glimpse()
 ```
 
 ### 4. gtTable
@@ -99,6 +98,9 @@ Finally, we convert the transformed *summarised_result* object in steps 1, 2, an
 
 ```{r, eval = FALSE}
 gtResult <- result |>
+  dplyr::select(-c("result_type", "package_name", "package_version", 
+                   "group_name", "additional_name", "additional_level",
+                   "estimate_type")) |>
   gtTable(
     delim = "\n",
     style = "default",
@@ -112,20 +114,8 @@ gtResult <- result |>
 ```
 
 ```{r, eval = FALSE}
-gtResult
+gtResult 
 ```
 
-```{r, echo=FALSE}
-gtResult <- result |>
-  gtTable(
-    delim = "\n",
-    style = "default",
-    na = "-",
-    title = "My first gt table with visOmopResults!",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
-    groupOrder = c("cohort1", "cohort2"),
-    colsToMergeRows = "all_columns"
-    )
-gt::fmt_markdown(gtResult)
-```
+![](./man/figures/gt_table.png)
+
