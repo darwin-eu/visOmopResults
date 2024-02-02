@@ -2,22 +2,20 @@
 % Please edit documentation in R/split.R
 \name{splitStrata}
 \alias{splitStrata}
-\title{Split strata_name and strata_level into the columns.}
+\title{Split strata_name and strata_level into columns.}
 \usage{
 splitStrata(result, overall = FALSE)
 }
 \arguments{
-\item{result}{Omop result object (summarised_result or compared_result).}
+\item{result}{omop_result object.}
 
 \item{overall}{Whether to keep overall column if present.}
 }
 \description{
-Split strata_name and strata_level into the columns.
+Split strata_name and strata_level into columns.
 }
 \examples{
 \donttest{
-#library(visOmop)
-
 mockSummarisedResult() |>
   splitStrata()
 }

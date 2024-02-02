@@ -20,8 +20,8 @@ computation order. Indicate estimate_name's between <...>.}
 \item{keepNotFormatted}{Whether to keep rows not formatted.}
 
 \item{useFormatOrder}{Whether to use the order in which estimate names
-appear in the estimateNameFormat argument and send not formatted rows to the
-end, or to use the order in the input dataframe.}
+appear in the estimateNameFormat argument (TRUE), or use the order in the
+input dataframe (FALSE).}
 }
 \value{
 A summarised_result object withspecified changes in estimate_name and
@@ -35,10 +35,13 @@ diferent estimate names together in a row.
 \examples{
 \donttest{
 result <- mockSummarisedResult()
-result |> formatEstimateName(
-    estimateNameFormat = c("N (\%)" = "<count> (<percentage>\%)",
-                           "N" = "<count>"),
-    keepNotFormatted = FALSE)
+result |>
+  formatEstimateName(
+    estimateNameFormat = c(
+      "N (\%)" = "<count> (<percentage>\%)", "N" = "<count>"
+    ),
+    keepNotFormatted = FALSE
+  )
 }
 
 }

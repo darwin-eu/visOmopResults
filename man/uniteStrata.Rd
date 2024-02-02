@@ -17,3 +17,19 @@ A Tibble with the new columns.
 \description{
 Unite one or more columns in strata_name-strata_level format.
 }
+\examples{
+\donttest{
+x <- dplyr::tibble(
+  variable = "number subjects",
+  value = c(10, 15, 40, 78),
+  sex = c("Male", "Female", "Male", "Female"),
+  age_group = c("<40", ">40", ">40", "<40")
+)
+
+x
+
+x |>
+  uniteStrata(c("sex", "age_group"))
+}
+
+}

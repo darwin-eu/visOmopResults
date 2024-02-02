@@ -2,22 +2,20 @@
 % Please edit documentation in R/split.R
 \name{splitGroup}
 \alias{splitGroup}
-\title{Split group_name and group_level into the columns.}
+\title{Split group_name and group_level into columns.}
 \usage{
 splitGroup(result, overall = FALSE)
 }
 \arguments{
-\item{result}{Omop result object (summarised_result or compared_result).}
+\item{result}{omop_result object.}
 
 \item{overall}{Whether to keep overall column if present.}
 }
 \description{
-Split group_name and group_level into the columns.
+Split group_name and group_level into columns.
 }
 \examples{
 \donttest{
-#library(visOmop)
-
 mockSummarisedResult() |>
   splitGroup()
 }

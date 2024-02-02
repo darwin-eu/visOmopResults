@@ -14,8 +14,6 @@ Split group, strata and additional into their respective columns.
 }
 \examples{
 \donttest{
-#library(visOmop)
-
 mockSummarisedResult() |>
   splitAll()
 }

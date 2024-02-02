@@ -9,6 +9,25 @@
 #'
 #' @return A Tibble with the new columns.
 #'
+#' @examples
+#' \donttest{
+#' x <- dplyr::tibble(
+#'   variable = "number subjects",
+#'   value = c(10, 15, 40, 78),
+#'   sex = c("Male", "Female", "Male", "Female"),
+#'   age_group = c("<40", ">40", ">40", "<40")
+#' )
+#'
+#' x
+#'
+#' x |>
+#'   uniteNameLevel(
+#'     cols = c("sex", "age_group"),
+#'     name = "new_column_name",
+#'     level = "new_column_level"
+#'   )
+#' }
+#'
 #' @export
 #'
 uniteNameLevel <- function(x,
@@ -78,6 +97,21 @@ uniteNameLevel <- function(x,
 #'
 #' @return A Tibble with the new columns.
 #'
+#' @examples
+#' \donttest{
+#' x <- dplyr::tibble(
+#'   variable = "number subjects",
+#'   value = c(10, 15, 40, 78),
+#'   sex = c("Male", "Female", "Male", "Female"),
+#'   age_group = c("<40", ">40", ">40", "<40")
+#' )
+#'
+#' x
+#'
+#' x |>
+#'   uniteGroup(c("sex", "age_group"))
+#' }
+#'
 #' @export
 #'
 uniteGroup <- function(x, cols) {
@@ -92,6 +126,21 @@ uniteGroup <- function(x, cols) {
 #' @param cols Columns to aggregate.
 #'
 #' @return A Tibble with the new columns.
+#'
+#' @examples
+#' \donttest{
+#' x <- dplyr::tibble(
+#'   variable = "number subjects",
+#'   value = c(10, 15, 40, 78),
+#'   sex = c("Male", "Female", "Male", "Female"),
+#'   age_group = c("<40", ">40", ">40", "<40")
+#' )
+#'
+#' x
+#'
+#' x |>
+#'   uniteStrata(c("sex", "age_group"))
+#' }
 #'
 #' @export
 #'
@@ -108,6 +157,21 @@ uniteStrata <- function(x, cols) {
 #' @param cols Columns to aggregate.
 #'
 #' @return A Tibble with the new columns.
+#'
+#' @examples
+#' \donttest{
+#' x <- dplyr::tibble(
+#'   variable = "number subjects",
+#'   value = c(10, 15, 40, 78),
+#'   sex = c("Male", "Female", "Male", "Female"),
+#'   age_group = c("<40", ">40", ">40", "<40")
+#' )
+#'
+#' x
+#'
+#' x |>
+#'   uniteAdditional(c("sex", "age_group"))
+#' }
 #'
 #' @export
 #'

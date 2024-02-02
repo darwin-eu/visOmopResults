@@ -1,15 +1,13 @@
 
-#' Split group_name and group_level into the columns.
+#' Split group_name and group_level into columns.
 #'
-#' @param result Omop result object (summarised_result or compared_result).
+#' @param result omop_result object.
 #' @param overall Whether to keep overall column if present.
 #'
 #' @export
 #'
 #' @examples
 #' \donttest{
-#' #library(visOmop)
-#'
 #' mockSummarisedResult() |>
 #'   splitGroup()
 #' }
@@ -25,17 +23,15 @@ splitGroup <- function(result,
   )
 }
 
-#' Split strata_name and strata_level into the columns.
+#' Split strata_name and strata_level into columns.
 #'
-#' @param result Omop result object (summarised_result or compared_result).
+#' @param result omop_result object.
 #' @param overall Whether to keep overall column if present.
 #'
 #' @export
 #'
 #' @examples
 #' \donttest{
-#' #library(visOmop)
-#'
 #' mockSummarisedResult() |>
 #'   splitStrata()
 #' }
@@ -51,17 +47,15 @@ splitStrata <- function(result,
   )
 }
 
-#' Split additional_name and additional_level into the columns.
+#' Split additional_name and additional_level into columns.
 #'
-#' @param result Omop result object (summarised_result or compared_result).
+#' @param result omop_result object.
 #' @param overall Whether to keep overall column if present.
 #'
 #' @export
 #'
 #' @examples
 #' \donttest{
-#' #library(visOmop)
-#'
 #' mockSummarisedResult() |>
 #'   splitAdditional()
 #' }
@@ -85,8 +79,6 @@ splitAdditional <- function(result,
 #'
 #' @examples
 #' \donttest{
-#' #library(visOmop)
-#'
 #' mockSummarisedResult() |>
 #'   splitAll()
 #' }
@@ -111,8 +103,6 @@ splitAll <- function(result) {
 #'
 #' @examples
 #' \donttest{
-#' #library(visOmop)
-#'
 #' mockSummarisedResult() |>
 #'   splitNameLevel()
 #' }
