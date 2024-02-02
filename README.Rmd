@@ -24,12 +24,12 @@ knitr::opts_chunk$set(
 
 ## Package overview
 
-VisOmopResults contains functions for formatting objects of the class *summarised_result* and *compared_result* (see R package [omopgenerics](https://cran.r-project.org/web/packages/omopgenerics/index.html)). This package simplifies the handling of these objects to obtain nice output tables in the format of *gt* or *flextable*' to report results via Shiny apps, RMarkdown, Quarto, and more.
+visOmopResults contains functions for formatting objects of the class *summarised_result* and *compared_result* (see R package [omopgenerics](https://cran.r-project.org/web/packages/omopgenerics/index.html)). This package simplifies the handling of these objects to obtain nice output tables in the format of *gt* or *flextable*' to report results via Shiny apps, RMarkdown, Quarto, and more.
 
 
 ## Installation
 
-You can install the development version of VisOmopResults from
+You can install the development version of visOmopResults from
 [GitHub](https://github.com/oxford-pharmacoepi/visOmopResults) with:
 
 ```{r, eval = FALSE}
@@ -58,8 +58,12 @@ result <- result |>
     decimals = c(integer = 0, numeric = 2, percentage = 1, proportion = 3),
     decimalMark = ".",
     bigMark = ",")
+```
+
+```{r}
 result
 ```
+
 
 ### 2. formatEstimateName
 With this function we can transform the *estimate_name* and *estimate_value* columns. For example, it allows to consolidate into one row counts and percentages related to the same variable within the same group and strata. It's worth noting that the estimate_name is enclosed within <...> in the *estimateNameFormat* argument."
@@ -69,6 +73,9 @@ result <- result |> formatEstimateName(
                          "N" = "<count>",
                          "Mean (SD)" = "<mean> (<sd>)"),
   keepNotFormatted = FALSE)
+```
+
+```{r}
 result
 ```
 
@@ -81,6 +88,9 @@ result <- result |>
               delim = "\n", 
               includeHeaderName = FALSE,
               includeHeaderKey = TRUE)
+```
+
+```{r}
 result
 ```
 
@@ -93,11 +103,30 @@ gtResult <- result |>
     delim = "\n",
     style = "default",
     na = "-",
-    title = "My first gt table with VisOmopResults!",
+    title = "My first gt table with visOmopResults!",
     groupNameCol = "group_level",
     groupNameAsColumn = FALSE,
-    groupOrder = c("cohort1", "cohort2")
+    groupOrder = c("cohort1", "cohort2"),
+    colsToMergeRows = "all_columns"
     )
+```
+
+```{r, eval = FALSE}
 gtResult
+```
+
+```{r, echo=FALSE}
+gtResult <- result |>
+  gtTable(
+    delim = "\n",
+    style = "default",
+    na = "-",
+    title = "My first gt table with visOmopResults!",
+    groupNameCol = "group_level",
+    groupNameAsColumn = FALSE,
+    groupOrder = c("cohort1", "cohort2"),
+    colsToMergeRows = "all_columns"
+    )
+gt::fmt_markdown(gtResult)
 ```
 
