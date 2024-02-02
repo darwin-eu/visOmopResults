@@ -102,9 +102,13 @@ spanner headers.</p>
 <span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="mockSummarisedResult.html">mockSummarisedResult</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">formatTable</span><span class="op">(</span>header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Study cohorts"</span>, <span class="st">"group_level"</span>, <span class="st">"Study strata"</span>,</span></span>
-<span class="r-in"><span>                         <span class="st">"strata_name"</span>, <span class="st">"strata_level"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>              includeHeaderName <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></span>
+<span class="r-in"><span>  <span class="fu">formatTable</span><span class="op">(</span></span></span>
+<span class="r-in"><span>    header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>      <span class="st">"Study cohorts"</span>, <span class="st">"group_level"</span>, <span class="st">"Study strata"</span>, <span class="st">"strata_name"</span>,</span></span>
+<span class="r-in"><span>      <span class="st">"strata_level"</span></span></span>
+<span class="r-in"><span>    <span class="op">)</span>,</span></span>
+<span class="r-in"><span>    includeHeaderName <span class="op">=</span> <span class="cn">FALSE</span></span></span>
+<span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7 × 29</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   cdm_name result_type package_name   package_version group_name  variable_name </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span>
