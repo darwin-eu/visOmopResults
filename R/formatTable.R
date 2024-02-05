@@ -58,10 +58,10 @@ formatTable <- function(result,
   if (is.null(nms)) {
     nms <- rep("", length(header))
   }
-  nms[nms  == ""] <- header[names(header)  == ""]
+  nms[nms  == ""] <- header[nms  == ""]
 
   # pivot wider
-  cols <- header[header %in% colnames(result)]
+  cols <- header[header %in% colnames(result)] |> unname()
   if (length(cols) > 0) {
     colDetails <- result |>
       dplyr::select(dplyr::all_of(cols)) |>
@@ -79,26 +79,26 @@ formatTable <- function(result,
       if (header[k] %in% cols) { # Header in dataframe
         spanners <- colDetails[[header[k]]] |> unique()
         for (span in spanners) { # loop through column values
-          colsSpanner <- colDetails$name[colDetails[[header[k]]] == span]
+          colsSpanner <- colDetails[[header[k]]] == span
           if (includeHeaderKey) {
             if (includeHeaderName) {
-              colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_name]", header[k], delim, "[header_level]", span, delim)
+              colDetails$new_name[colsSpanner] <- paste0(colDetails$new_name[colsSpanner], "[header_name]", nms[k], delim, "[header_level]", span, delim)
             } else {
-              colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], "[header_level]", span, delim)
+              colDetails$new_name[colsSpanner] <- paste0(colDetails$new_name[colsSpanner], "[header_level]", span, delim)
             }
           } else {
             if (includeHeaderName) {
-              colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], header[k], delim, span, delim)
+              colDetails$new_name[colsSpanner] <- paste0(colDetails$new_name[colsSpanner], nms[k], delim, span, delim)
             } else {
-              colDetails$new_name[colDetails[[header[k]]] == span] <- paste0(colDetails$new_name[colDetails[[header[k]]] == span], span, delim)
+              colDetails$new_name[colsSpanner] <- paste0(colDetails$new_name[colsSpanner], span, delim)
             }
           }
         }
       } else {
         if (includeHeaderKey) {
-          colDetails$new_name <- paste0(colDetails$new_name, "[header]", header[k], delim)
+          colDetails$new_name <- paste0(colDetails$new_name, "[header]", nms[k], delim)
         } else {
-          colDetails$new_name <- paste0(colDetails$new_name, header[k], delim)
+          colDetails$new_name <- paste0(colDetails$new_name, nms[k], delim)
         }
       }
     }
