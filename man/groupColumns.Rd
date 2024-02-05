@@ -11,13 +11,14 @@ groupColumns(result, overall = FALSE)
 
 \item{overall}{Whether to keep overall column if present.}
 }
+\value{
+Unique values of the group name column.
+}
 \description{
-Identify group columns in an omop result object.
+Identifies and returns the unique values in group_name column.
 }
 \examples{
-\donttest{
 mockSummarisedResult() |>
   groupColumns()
-}
 
 }

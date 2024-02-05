@@ -6,7 +6,7 @@
 \alias{visOmopResults-package}
 \title{visOmopResults: Graphs and Tables for OMOP Results}
 \description{
-To provide basic functionalities to visualise OMOP (Observational Medical Outcomes Partnership) results into tables and figures.
+This package offers methods for converting result objects from the Observational Medical Outcomes Partnership (OMOP) into well-organized tables, facilitating the easy formatting and visualization of study result.
 }
 \seealso{
 Useful links:

@@ -1,11 +1,13 @@
 #' A summarised_result mock object.
+#' @return An object of the class summarised_result with mock data.
+#' @description Creates an object of the class summarised_result with mock data
+#' for illustration purposes.
 #'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' mockSummarisedResult()
-#' }
+#'
 #'
 mockSummarisedResult <- function() {
   # TO modify when PatientProfiles works with omopgenerics

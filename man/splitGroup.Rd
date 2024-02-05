@@ -11,13 +11,15 @@ splitGroup(result, overall = FALSE)
 
 \item{overall}{Whether to keep overall column if present.}
 }
+\value{
+A dataframe with group_name as columns
+}
 \description{
-Split group_name and group_level into columns.
+Pivots the input dataframe so the values of the column group_name are
+tranformed into columns with values from the group_level column
 }
 \examples{
-\donttest{
 mockSummarisedResult() |>
   splitGroup()
-}
 
 }
