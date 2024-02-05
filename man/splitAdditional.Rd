@@ -11,13 +11,15 @@ splitAdditional(result, overall = FALSE)
 
 \item{overall}{Whether to keep overall column if present.}
 }
+\value{
+A dataframe with additional_name as columns
+}
 \description{
-Split additional_name and additional_level into columns.
+Pivots the input dataframe so the values of the column additional_name are
+tranformed into columns with values from the additional_level column.
 }
 \examples{
-\donttest{
 mockSummarisedResult() |>
   splitAdditional()
-}
 
 }

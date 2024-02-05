@@ -11,13 +11,15 @@ splitStrata(result, overall = FALSE)
 
 \item{overall}{Whether to keep overall column if present.}
 }
+\value{
+A dataframe with strata_name as columns
+}
 \description{
-Split strata_name and strata_level into columns.
+Pivots the input dataframe so the values of the column strata_name are
+tranformed into columns with values from the strata_level column.
 }
 \examples{
-\donttest{
 mockSummarisedResult() |>
   splitStrata()
-}
 
 }

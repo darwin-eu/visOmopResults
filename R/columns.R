@@ -1,16 +1,16 @@
-
 #' Identify group columns in an omop result object.
 #'
 #' @param result An omop result object.
 #' @param overall Whether to keep overall column if present.
 #'
+#' @return Unique values of the group name column.
+#' @description Identifies and returns the unique values in group_name column.
+#'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' mockSummarisedResult() |>
 #'   groupColumns()
-#' }
 #'
 groupColumns <- function(result, overall = FALSE) {
   getColumns(result = result, col = "group_name", overall = overall)
@@ -21,13 +21,14 @@ groupColumns <- function(result, overall = FALSE) {
 #' @param result An omop result object.
 #' @param overall Whether to keep overall column if present.
 #'
+#' @return Unique values of the strata name column.
+#' @description Identifies and returns the unique values in strata_name column.
+#'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' mockSummarisedResult() |>
 #'   strataColumns()
-#' }
 #'
 strataColumns <- function(result, overall = FALSE) {
   getColumns(result = result, col = "strata_name", overall = overall)
@@ -38,13 +39,15 @@ strataColumns <- function(result, overall = FALSE) {
 #' @param result An omop result object.
 #' @param overall Whether to keep overall column if present.
 #'
+#' @return Unique values of the additional name column.
+#' @description Identifies and returns the unique values in additional_name
+#' column.
+#'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' mockSummarisedResult() |>
 #'   additionalColumns()
-#' }
 #'
 additionalColumns <- function(result, overall = FALSE) {
   getColumns(result = result, col = "additional_name", overall = overall)

@@ -1,16 +1,19 @@
-
 #' Split group_name and group_level into columns.
 #'
 #' @param result omop_result object.
 #' @param overall Whether to keep overall column if present.
 #'
+#' @return A dataframe with group_name as columns
+#' @description
+#' Pivots the input dataframe so the values of the column group_name are
+#' tranformed into columns with values from the group_level column
+#'
+#'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' mockSummarisedResult() |>
 #'   splitGroup()
-#' }
 #'
 splitGroup <- function(result,
                        overall = FALSE) {
@@ -28,13 +31,16 @@ splitGroup <- function(result,
 #' @param result omop_result object.
 #' @param overall Whether to keep overall column if present.
 #'
+#' @return A dataframe with strata_name as columns
+#' @description
+#' Pivots the input dataframe so the values of the column strata_name are
+#' tranformed into columns with values from the strata_level column.
+#'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' mockSummarisedResult() |>
 #'   splitStrata()
-#' }
 #'
 splitStrata <- function(result,
                         overall = FALSE) {
@@ -52,13 +58,16 @@ splitStrata <- function(result,
 #' @param result omop_result object.
 #' @param overall Whether to keep overall column if present.
 #'
+#' @return A dataframe with additional_name as columns
+#' @description
+#' Pivots the input dataframe so the values of the column additional_name are
+#' tranformed into columns with values from the additional_level column.
+#'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' mockSummarisedResult() |>
 #'   splitAdditional()
-#' }
 #'
 splitAdditional <- function(result,
                             overall = FALSE) {
@@ -74,6 +83,12 @@ splitAdditional <- function(result,
 #' Split group, strata and additional into their respective columns.
 #'
 #' @param result Omop result object (summarised_result or compared_result).
+#'
+#' @return A dataframe with group, strata and additional name as columns.
+#' @description
+#' Pivots the input dataframe so group, strata and additional name columns are
+#' tranformed into column names with values from the corresponding level columns
+#' (group, strata, and additional).
 #'
 #' @export
 #'
@@ -91,7 +106,7 @@ splitAll <- function(result) {
     splitAdditional(overall = FALSE)
 }
 
-#' Split strata_name and strata_level into the columns.
+#' Split name and level columns into the columns.
 #'
 #' @param result Omop result object (summarised_result or compared_result).
 #' @param name Column with the names.
@@ -99,13 +114,18 @@ splitAll <- function(result) {
 #' @param keep Whether to keep the original group_name and group_level columns.
 #' @param overall Whether to keep overall column if present.
 #'
+#' @return A dataframe with the specified name column values as columns.
+#' @description
+#' Pivots the input dataframe so the values of the name columns are tranformed
+#' into columns, which values come from the specified level column.
+#'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' mockSummarisedResult() |>
-#'   splitNameLevel()
-#' }
+#'   splitNameLevel(name = "group_name",
+#'                  level = "group_level",
+#'                  keep = FALSE)
 #'
 splitNameLevel <- function(result,
                            name = "group_name",

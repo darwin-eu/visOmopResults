@@ -11,13 +11,14 @@ strataColumns(result, overall = FALSE)
 
 \item{overall}{Whether to keep overall column if present.}
 }
+\value{
+Unique values of the strata name column.
+}
 \description{
-Identify strata columns in an omop result object.
+Identifies and returns the unique values in strata_name column.
 }
 \examples{
-\donttest{
 mockSummarisedResult() |>
   strataColumns()
-}
 
 }

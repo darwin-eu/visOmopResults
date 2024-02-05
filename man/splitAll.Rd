@@ -9,8 +9,13 @@ splitAll(result)
 \arguments{
 \item{result}{Omop result object (summarised_result or compared_result).}
 }
+\value{
+A dataframe with group, strata and additional name as columns.
+}
 \description{
-Split group, strata and additional into their respective columns.
+Pivots the input dataframe so group, strata and additional name columns are
+tranformed into column names with values from the corresponding level columns
+(group, strata, and additional).
 }
 \examples{
 \donttest{

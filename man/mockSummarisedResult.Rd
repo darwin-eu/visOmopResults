@@ -6,12 +6,15 @@
 \usage{
 mockSummarisedResult()
 }
+\value{
+An object of the class summarised_result with mock data.
+}
 \description{
-A summarised_result mock object.
+Creates an object of the class summarised_result with mock data
+for illustration purposes.
 }
 \examples{
-\donttest{
 mockSummarisedResult()
-}
+
 
 }

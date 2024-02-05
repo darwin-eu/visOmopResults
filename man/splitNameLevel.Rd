@@ -2,7 +2,7 @@
 % Please edit documentation in R/split.R
 \name{splitNameLevel}
 \alias{splitNameLevel}
-\title{Split strata_name and strata_level into the columns.}
+\title{Split name and level columns into the columns.}
 \usage{
 splitNameLevel(
   result,
@@ -23,13 +23,17 @@ splitNameLevel(
 
 \item{overall}{Whether to keep overall column if present.}
 }
+\value{
+A dataframe with the specified name column values as columns.
+}
 \description{
-Split strata_name and strata_level into the columns.
+Pivots the input dataframe so the values of the name columns are tranformed
+into columns, which values come from the specified level column.
 }
 \examples{
-\donttest{
 mockSummarisedResult() |>
-  splitNameLevel()
-}
+  splitNameLevel(name = "group_name",
+                 level = "group_level",
+                 keep = FALSE)
 
 }

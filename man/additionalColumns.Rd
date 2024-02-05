@@ -11,13 +11,15 @@ additionalColumns(result, overall = FALSE)
 
 \item{overall}{Whether to keep overall column if present.}
 }
+\value{
+Unique values of the additional name column.
+}
 \description{
-Identify additional columns in an omop result object.
+Identifies and returns the unique values in additional_name
+column.
 }
 \examples{
-\donttest{
 mockSummarisedResult() |>
   additionalColumns()
-}
 
 }
