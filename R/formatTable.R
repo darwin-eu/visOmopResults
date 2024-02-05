@@ -53,6 +53,13 @@ formatTable <- function(result,
     cli::cli_abort("The value supplied for `delim` must be a single character.")
   }
 
+  # correct names
+  nms <- names(header)
+  if (is.null(nms)) {
+    nms <- rep("", length(header))
+  }
+  nms[nms  == ""] <- header[names(header)  == ""]
+
   # pivot wider
   cols <- header[header %in% colnames(result)]
   if (length(cols) > 0) {
@@ -69,9 +76,9 @@ formatTable <- function(result,
     # create column names
     colDetails <- colDetails |> dplyr::mutate(new_name = "")
     for (k in seq_along(header)) {
-      if (header[k] %in% cols) {
+      if (header[k] %in% cols) { # Header in dataframe
         spanners <- colDetails[[header[k]]] |> unique()
-        for (span in spanners) {
+        for (span in spanners) { # loop through column values
           colsSpanner <- colDetails$name[colDetails[[header[k]]] == span]
           if (includeHeaderKey) {
             if (includeHeaderName) {

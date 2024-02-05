@@ -96,6 +96,12 @@ test_that("formatTable", {
 
   expect_false("summarised_result" %in% class(result_output))
 
+  # Named vector ----
+  # result_output <- formatTable(result = result,
+  #                              header = c("test_spanHeader", "end_spanner"),
+  #                              delim = ":",
+  #                              includeHeaderName = TRUE)
+
   # Wrong input ----
   expect_error(formatTable(result = result,
                           header = NULL,
