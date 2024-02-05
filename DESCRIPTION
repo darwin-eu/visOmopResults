@@ -11,9 +11,10 @@ Authors@R: c(
         role = c("aut"), comment = c(ORCID = "0009-0006-7948-3747")
     )
     )
-Description: This package offers methods for converting result objects from the
-    Observational Medical Outcomes Partnership (OMOP) into well-organized 
-    tables, facilitating the easy formatting and visualization of study result.
+Description: Provides methods to transform omop_result objects into formatted
+    tables and figures, facilitating the visualization of study results working 
+    with the Observational Medical Outcomes Partnership (OMOP) Common Data 
+    Model.
 License: Apache License (>= 2)
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
