@@ -47,9 +47,16 @@ validateDecimals <- function(result, decimals) {
 }
 
 validateEstimateNameFormat <- function(format, call = parent.frame()) {
-  if (length(stringr::str_match_all(format, "(?<=\\<).+?(?=\\>)") |> unlist()) == 0) {
-    cli::cli_abort("format input does not contain any estimate name indicated by <...>.")
+  if (!is.null(format)) {
+    if (length(format) > 0){
+      if (length(stringr::str_match_all(format, "(?<=\\<).+?(?=\\>)") |> unlist()) == 0) {
+        cli::cli_abort("format input does not contain any estimate name indicated by <...>.")
+      }
+    } else {
+      format <- NULL
+    }
   }
+  return(format)
 }
 
 checkStyle <- function(style, tableFormatType) {
