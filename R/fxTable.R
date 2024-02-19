@@ -94,7 +94,7 @@ fxTable <- function(
 
   # na
   if (!is.null(na)){
-    x[is.na(x)] <- na
+    x <- x |> dplyr::mutate(dplyr::across(colnames(x), ~ dplyr::if_else(is.na(.x), na, .x)))
   }
 
   # Flextable

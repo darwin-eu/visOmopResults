@@ -88,6 +88,10 @@ gtTable <- function(
     cli::cli_abort("There must be a title for a subtitle.")
   }
 
+  # na
+  if (!is.null(na)){
+    x <- x |> dplyr::mutate(dplyr::across(colnames(x), ~ dplyr::if_else(is.na(.x), na, .x)))
+  }
 
   # Spanners
   if (!is.null(groupNameCol)) {
@@ -193,9 +197,9 @@ gtTable <- function(
 
    # Other options:
   ## na
-  if (!is.null(na)){
-    gtResult <- gtResult |> gt::sub_missing(missing_text = na)
-  }
+  # if (!is.null(na)){
+  #   # gtResult <- gtResult |> gt::sub_missing(missing_text = na)
+  # }
   ## caption
   if(!is.null(caption)){
     gtResult <- gtResult |>
