@@ -1,8 +1,5 @@
 
 validateResult <- function(x, call = parent.frame()) {
-  if (inherits(x, "omop_result")) {
-    return(x)
-  }
   xn <- tryCatch(
     omopgenerics::newSummarisedResult(x),
     error = function(e){NULL}
