@@ -1,32 +1,27 @@
 test_that("splitGroup", {
   tib <- dplyr::tibble(
-    group_name = c("cohort_name", "cohort_name and age", "age and sex"),
-    group_level = c("acetaminophen", "ibuprofen and 10 to 19", "20 to 29 and Male"),
-    x = c("cohort_name", "cohort_name and age", "age and sex"),
-    y = c("acetaminophen", "ibuprofen and 10 to 19", "20 to 29 and Male"),
-    z = c(1, 2, 3),
-    a = c("a", "b", "c")
+    cohort_name = c("cohort1", "cohort1", "cohort2", "cohort2"),
+    prior_history = c(180, 365, 180, 365)
   )
-  expect_error(tib |> splitGroup(NA_character_))
-  expect_no_error(res0 <- tib |> splitGroup())
-  expect_false("group_name" %in% colnames(res0))
-  expect_false("group_level" %in% colnames(res0))
-  expect_true(all(c("cohort_name", "age", "sex") %in% colnames(res0)))
-  expect_equal(res0$cohort_name, c("acetaminophen", "ibuprofen", NA_character_))
-  expect_equal(res0$age, c(NA_character_, "10 to 19", "20 to 29"))
-  expect_equal(res0$sex, c(NA_character_, NA_character_, "Male"))
-  expect_no_error(res1 <- tib |> splitNameLevel(keep = TRUE))
-  expect_true("group_name" %in% colnames(res1))
-  expect_true("group_level" %in% colnames(res1))
-  expect_true(all(c("cohort_name", "age", "sex") %in% colnames(res1)))
-  expect_warning(tib |> splitNameLevel(keep = TRUE) |> splitGroup())
-  expect_no_error(res2 <- tib |> splitNameLevel(name = "x", level = "y", keep = TRUE))
-  cols <- colnames(res1) |> sort()
-  expect_equal(
-    res1 |> dplyr::select(dplyr::all_of(cols)),
-    res2 |> dplyr::select(dplyr::all_of(cols))
-  )
-  expect_error(tib |> splitNameLevel(name = "expo_group", level = "exposure_level"))
-  expect_error(tib |> splitNameLevel(level = NA_character_))
-  expect_error(tib |> splitNameLevel(level = "a"))
+
+  expect_error(tib |> uniteGroup(NA_character_))
+  expect_no_error(res0 <- tib |> uniteGroup(c("cohort_name", "prior_history")))
+  expect_true("group_name" %in% colnames(res0))
+  expect_true("group_level" %in% colnames(res0))
+  expect_true(unique(res0$group_name) == "cohort_name and prior_history")
+  expect_equal(res0$group_level, c("cohort1 and 180", "cohort1 and 365", "cohort2 and 180", "cohort2 and 365"))
+
+  expect_no_error(res1 <- uniteNameLevel(
+    tib,
+    cols = c("cohort_name", "prior_history"),
+    name = "strata_name",
+    level = "strata_level"))
+  expect_true("strata_name" %in% colnames(res1))
+  expect_true("strata_level" %in% colnames(res1))
+  expect_true(unique(res1$strata_name) == "cohort_name and prior_history")
+  expect_equal(res1$strata_level, c("cohort1 and 180", "cohort1 and 365", "cohort2 and 180", "cohort2 and 365"))
+
+  expect_error(tib |> uniteNameLevel(name = "expo_group", level = "exposure_level"))
+  expect_error(tib |> uniteNameLevel(level = NA_character_))
+  expect_error(tib |> uniteNameLevel(level = "a"))
 })
