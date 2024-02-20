@@ -4,12 +4,14 @@
 \alias{uniteAdditional}
 \title{Unite one or more columns in additional_name-additional_level format.}
 \usage{
-uniteAdditional(x, cols)
+uniteAdditional(x, cols, removeNA = TRUE)
 }
 \arguments{
 \item{x}{Tibble or data.frame.}
 
 \item{cols}{Columns to aggregate.}
+
+\item{removeNA}{Whether to remove NA values from the united columns.}
 }
 \value{
 A Tibble with the new columns.

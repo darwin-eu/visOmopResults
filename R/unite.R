@@ -115,6 +115,7 @@ uniteNameLevel <- function(x,
 #'
 #' @param x Tibble or data.frame.
 #' @param cols Columns to aggregate.
+#' @param removeNA Whether to remove NA values from the united columns.
 #'
 #' @return A Tibble with the new columns.
 #'
@@ -135,9 +136,9 @@ uniteNameLevel <- function(x,
 #'
 #' @export
 #'
-uniteGroup <- function(x, cols) {
+uniteGroup <- function(x, cols, removeNA = TRUE) {
   uniteNameLevel(
-    x = x, cols = cols, name = "group_name", level = "group_level", keep = FALSE
+    x = x, cols = cols, name = "group_name", level = "group_level", keep = FALSE, removeNA = removeNA
   )
 }
 
@@ -145,6 +146,7 @@ uniteGroup <- function(x, cols) {
 #'
 #' @param x Tibble or data.frame.
 #' @param cols Columns to aggregate.
+#' @param removeNA Whether to remove NA values from the united columns.
 #'
 #' @return A Tibble with the new columns.
 #'
@@ -165,10 +167,10 @@ uniteGroup <- function(x, cols) {
 #'
 #' @export
 #'
-uniteStrata <- function(x, cols) {
+uniteStrata <- function(x, cols, removeNA = TRUE) {
   uniteNameLevel(
     x = x, cols = cols, name = "strata_name", level = "strata_level",
-    keep = FALSE
+    keep = FALSE, removeNA = removeNA
   )
 }
 
@@ -176,6 +178,7 @@ uniteStrata <- function(x, cols) {
 #'
 #' @param x Tibble or data.frame.
 #' @param cols Columns to aggregate.
+#' @param removeNA Whether to remove NA values from the united columns.
 #'
 #' @return A Tibble with the new columns.
 #'
@@ -196,14 +199,14 @@ uniteStrata <- function(x, cols) {
 #'
 #' @export
 #'
-uniteAdditional <- function(x, cols) {
+uniteAdditional <- function(x, cols, removeNA = TRUE) {
   uniteNameLevel(
     x = x, cols = cols, name = "additional_name", level = "additional_level",
-    keep = FALSE
+    keep = FALSE, removeNA = removeNA
   )
 }
 
-# helpers ----
+## Helpers ---
 newName <- function(x) {
   ind <- which(!is.na(x))
   nms <- names(x)
