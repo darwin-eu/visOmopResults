@@ -1,27 +1,39 @@
-test_that("splitGroup", {
+test_that("uniteGroup", {
   tib <- dplyr::tibble(
-    cohort_name = c("cohort1", "cohort1", "cohort2", "cohort2"),
-    prior_history = c(180, 365, 180, 365)
+    age = c(NA, ">40", "<=40", NA, NA, NA, NA, NA, ">40", "<=40"),
+    sex = c(NA, NA, NA, "F", "M", NA, NA, NA, "F", "M"),
+    region = c(NA, NA, NA, NA, NA, "North", "South", "Center", NA, NA)
   )
 
   expect_error(tib |> uniteGroup(NA_character_))
-  expect_no_error(res0 <- tib |> uniteGroup(c("cohort_name", "prior_history")))
-  expect_true("group_name" %in% colnames(res0))
-  expect_true("group_level" %in% colnames(res0))
-  expect_true(unique(res0$group_name) == "cohort_name and prior_history")
-  expect_equal(res0$group_level, c("cohort1 and 180", "cohort1 and 365", "cohort2 and 180", "cohort2 and 365"))
-
-  expect_no_error(res1 <- uniteNameLevel(
-    tib,
-    cols = c("cohort_name", "prior_history"),
-    name = "strata_name",
-    level = "strata_level"))
-  expect_true("strata_name" %in% colnames(res1))
-  expect_true("strata_level" %in% colnames(res1))
-  expect_true(unique(res1$strata_name) == "cohort_name and prior_history")
-  expect_equal(res1$strata_level, c("cohort1 and 180", "cohort1 and 365", "cohort2 and 180", "cohort2 and 365"))
-
   expect_error(tib |> uniteNameLevel(name = "expo_group", level = "exposure_level"))
   expect_error(tib |> uniteNameLevel(level = NA_character_))
   expect_error(tib |> uniteNameLevel(level = "a"))
+
+
+  expect_no_error(res0 <- uniteNameLevel(tib,
+                                         c("age", "sex", "region"),
+                                         keep = FALSE))
+  expect_equal(colnames(res0),
+               c("group_name", "group_level"))
+  expect_true(res0[1,1] == "overall")
+  expect_true(res0[1,2] == "overall")
+  expect_equal(res0$group_name[grepl("40", res0$group_level)] |> unique(),
+               c("age", "age and sex"))
+  expect_equal(res0$group_name[grepl("region", res0$group_name)] |> unique(),
+               "region")
+
+  expect_no_error(res1 <- uniteNameLevel(tib,
+                                         c("age", "sex", "region"),
+                                         keep = TRUE))
+  expect_equal(colnames(res1),
+               c("age", "sex", "region", "group_name", "group_level"))
+  expect_true(all(is.na(res1[1,1:3])))
+
+  expect_no_error(res2 <- uniteNameLevel(tib,
+                                         c("age", "sex", "region"),
+                                         keep = FALSE,
+                                         removeNA = FALSE))
+  expect_true(res2$group_level[1] == "NA and NA and NA")
+  expect_true(res2$group_level[2] == ">40 and NA and NA")
 })

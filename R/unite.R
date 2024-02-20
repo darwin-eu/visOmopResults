@@ -6,6 +6,7 @@
 #' @param name Column name of the `name` column.
 #' @param level Column name of the `level` column.
 #' @param keep Whether to keep the original columns.
+#' @param removeNA Whether to remove NA values from the united columns.
 #'
 #' @return A Tibble with the new columns.
 #'
@@ -34,12 +35,14 @@ uniteNameLevel <- function(x,
                            cols,
                            name = "group_name",
                            level = "group_level",
-                           keep = FALSE) {
+                           keep = FALSE,
+                           removeNA = TRUE) {
   # initial checks
   checkmate::assertCharacter(cols)
   checkmate::assertCharacter(name, len = 1, any.missing = FALSE)
   checkmate::assertCharacter(level, len = 1, any.missing = FALSE)
   checkmate::assertLogical(keep, len = 1, any.missing = FALSE)
+  checkmate::assertLogical(removeNA, len = 1, any.missing = FALSE)
   checkmate::assertTibble(x)
   checkmate::assertTRUE(all(cols %in% colnames(x)))
 
@@ -64,24 +67,42 @@ uniteNameLevel <- function(x,
     cli::cli_abort("Column values must not contain ' and '. Present in: `{paste0(containAnd, collapse = '`, `')}`.")
   }
 
-  x <- x |>
-    dplyr::mutate(!!name := paste0(cols, collapse = " and ")) |>
-    tidyr::unite(
-      col = !!level, dplyr::all_of(cols), sep = " and ", remove = !keep
-    )
+  if (removeNA) {
+    x <- x |>
+      dplyr::rowwise() |>
+      dplyr::mutate(
+        !!name := dplyr::if_else(dplyr::if_all(dplyr::all_of(cols), is.na),
+                                      "overall",
+                                      apply(dplyr::across(cols), 1, newName)),
+        !!level := dplyr::if_else(dplyr::if_all(dplyr::all_of(cols), is.na),
+                                 "overall",
+                                 apply(dplyr::across(cols), 1, newLevel))
+        ) |>
+      dplyr::ungroup()
+
+  } else {
+    x <- x |>
+      dplyr::mutate(!!name := paste0(cols, collapse = " and ")) |>
+      tidyr::unite(
+        col = !!level, dplyr::all_of(cols), sep = " and ", remove = !keep
+      )
+  }
 
   if (keep) {
-    colskeep <- cols
+    colskeep <- colnames(x)
   } else {
-    colskeep <- character()
+    colskeep <- colnames(x)[!colnames(x) %in% cols]
   }
 
   # move cols
   if (id == 1) {
-    x <- x |> dplyr::relocate(dplyr::all_of(c(colskeep, name, level)))
+    x <- x |>
+      dplyr::select(dplyr::all_of(colskeep)) |>
+      dplyr::relocate(dplyr::all_of(c(colskeep, name, level)))
   } else {
     id <- colnames(x)[id - 1]
     x <- x |>
+      dplyr::select(dplyr::all_of(colskeep)) |>
       dplyr::relocate(
         dplyr::all_of(c(colskeep, name, level)), .after = dplyr::all_of(id)
       )
@@ -180,4 +201,15 @@ uniteAdditional <- function(x, cols) {
     x = x, cols = cols, name = "additional_name", level = "additional_level",
     keep = FALSE
   )
+}
+
+# helpers ----
+newName <- function(x) {
+  ind <- which(!is.na(x))
+  nms <- names(x)
+  return(paste0(nms[ind], collapse = " and "))
+}
+newLevel <- function(x) {
+  ind <- which(!is.na(x))
+  return(paste0(x[ind], collapse = " and "))
 }
