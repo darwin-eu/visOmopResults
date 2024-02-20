@@ -99,7 +99,7 @@
 #                    round(as.numeric(estimates_in$estimate_value[estimates_in$variable_name == "age"])))
 # })
 #
-# test_that("formatSummarisedResult, formatTable", {
+# test_that("formatSummarisedResult, formatHeader", {
 #   result <- mockSummarisedResult()
 #
 #   gtResult <- formatSummarisedResult(result,

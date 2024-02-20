@@ -83,10 +83,10 @@ Next step is to format our table before tranforming to gt object. We will pivot 
 
 ```{r}
 result <- result |>
-  formatTable(header = c("Study strata", "strata_name", "strata_level"),
-              delim = "\n", 
-              includeHeaderName = FALSE,
-              includeHeaderKey = TRUE)
+  formatHeader(header = c("Study strata", "strata_name", "strata_level"),
+               delim = "\n", 
+               includeHeaderName = FALSE,
+               includeHeaderKey = TRUE)
 ```
 
 ```{r}

@@ -56,7 +56,7 @@ validateEstimateNameFormat <- function(format, call = parent.frame()) {
   return(format)
 }
 
-checkStyle <- function(style, tableFormatType) {
+validateStyle <- function(style, tableFormatType) {
   if (is.list(style) | is.null(style)) {
     checkmate::assertList(style, null.ok = TRUE, any.missing = FALSE)
   } else if (is.character(style)) {
@@ -69,7 +69,7 @@ checkStyle <- function(style, tableFormatType) {
   return(style)
 }
 
-checkColsToMergeRows <- function(x, colsToMergeRows, groupNameCol) {
+validateColsToMergeRows <- function(x, colsToMergeRows, groupNameCol) {
   if (!is.null(colsToMergeRows)) {
     if (any(colsToMergeRows %in% groupNameCol)) {
       cli::cli_abort("groupNameCol and colsToMergeRows must have different column names.")
@@ -80,5 +80,17 @@ checkColsToMergeRows <- function(x, colsToMergeRows, groupNameCol) {
     } else if (sum(ind) > 1) {
       warning(glue::glue("{colsToMergeRows[ind]} are not columns in the dataframe."))
     }
+  }
+}
+
+validateDelim <- function(delim) {
+  if (!rlang::is_character(delim)) {
+    cli::cli_abort("The value supplied for `delim` must be of type `character`.")
+  }
+  if (length(delim) != 1) {
+    cli::cli_abort("`delim` must be a single value.")
+  }
+  if (nchar(delim) != 1) {
+    cli::cli_abort("The value supplied for `delim` must be a single character.")
   }
 }

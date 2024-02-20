@@ -29,6 +29,7 @@ Imports:
     flextable,
     glue,
     gt,
+    lifecycle,
     officer,
     omopgenerics (>= 0.0.2),
     rlang,

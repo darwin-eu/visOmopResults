@@ -1,8 +1,8 @@
-test_that("formatTable", {
+test_that("formatHeader", {
   result <- mockSummarisedResult()
 
   # Include headers + noncolumn names----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                              header = c("group_name", "group_level", "strata", "strata_name", "strata_level"),
                              includeHeaderName = TRUE)
 
@@ -30,7 +30,7 @@ test_that("formatTable", {
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # names in header ----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                                header = c("Group name" = "group_name", "group_level", "strata", "strata_name", "strata_level"),
                                includeHeaderName = TRUE)
 
@@ -46,7 +46,7 @@ test_that("formatTable", {
 
 
   # Not include headers + noncolumn names----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                               header = c("group_name", "group_level", "strata", "strata_name", "strata_level"),
                               includeHeaderName = FALSE)
 
@@ -61,7 +61,7 @@ test_that("formatTable", {
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # Named header ----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                                header = c("group_name", "Group level" = "group_level", "strata", "strata_name", "strata_level"),
                                includeHeaderName = FALSE)
 
@@ -76,7 +76,7 @@ test_that("formatTable", {
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # Not include headers + only column names----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                               header = c("group_name", "group_level"),
                               includeHeaderName = FALSE)
   # column: cohort_name\ncohort1
@@ -90,7 +90,7 @@ test_that("formatTable", {
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # Not include headers + noncolumn names----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                               header = c("test_spanHeader", "group_name", "next_row", "group_level", "end_spanner"),
                               includeHeaderName = TRUE)
   # column: cohort_name\ncohort1
@@ -104,7 +104,7 @@ test_that("formatTable", {
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # Not include headers + noncolumn names + named header----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                                header = c("TEST" = "test_spanHeader", "group_name", "next_row", "test_level" = "group_level", "end_spanner"),
                                includeHeaderName = TRUE)
   # column: cohort_name\ncohort1
@@ -119,7 +119,7 @@ test_that("formatTable", {
 
 
   # not column names ----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                               header = c("test_spanHeader", "end_spanner"),
                               delim = ":",
                               includeHeaderName = TRUE)
@@ -131,7 +131,7 @@ test_that("formatTable", {
   )
 
   # not column name + named header ----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                                header = c("test" = "test_spanHeader", "end" = "end_spanner"),
                                delim = ":",
                                includeHeaderName = TRUE)
@@ -145,26 +145,26 @@ test_that("formatTable", {
   expect_false("summarised_result" %in% class(result_output))
 
   # Named vector ----
-  # result_output <- formatTable(result = result,
+  # result_output <- formatHeader(result = result,
   #                              header = c("test_spanHeader", "end_spanner"),
   #                              delim = ":",
   #                              includeHeaderName = TRUE)
 
   # Wrong input ----
-  expect_error(formatTable(result = result,
+  expect_error(formatHeader(result = result,
                           header = NULL,
                           includeHeaderName = TRUE))
-  expect_error(formatTable(result = result,
+  expect_error(formatHeader(result = result,
                           header = NA,
                           includeHeaderName = TRUE))
 
 })
 
-test_that("formatTable. includeHeaderKey", {
+test_that("formatHeader. includeHeaderKey", {
   result <- mockSummarisedResult()
 
   # Include headers + noncolumn names----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                                header = c("group_name", "group_level", "strata_name", "strata_level"),
                                includeHeaderName = TRUE,
                                includeHeaderKey = FALSE)
@@ -194,7 +194,7 @@ test_that("formatTable. includeHeaderKey", {
 
 
   # Not include headers + only column names----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                                header = c("group_name", "group_level"),
                                includeHeaderName = FALSE,
                                includeHeaderKey = FALSE)
@@ -209,7 +209,7 @@ test_that("formatTable. includeHeaderKey", {
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # Not include headers + noncolumn names----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                                header = c("test_spanHeader", "group_name", "next_row", "group_level", "end_spanner"),
                                includeHeaderName = TRUE,
                                includeHeaderKey = FALSE)
@@ -224,7 +224,7 @@ test_that("formatTable. includeHeaderKey", {
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # Just not column name ----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                                header = c("test_spanHeader", "end_spanner"),
                                delim = ":",
                                includeHeaderName = TRUE,
@@ -239,14 +239,14 @@ test_that("formatTable. includeHeaderKey", {
   expect_false("summarised_result" %in% class(result_output))
 
   # Empty header ----
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                                header = character(),
                                delim = ":",
                                includeHeaderName = TRUE,
                                includeHeaderKey = FALSE)
   expect_equal(colnames(result), colnames(result_output))
 
-  result_output <- formatTable(result = result,
+  result_output <- formatHeader(result = result,
                                header = character(),
                                delim = ":",
                                includeHeaderName = TRUE,
@@ -254,10 +254,10 @@ test_that("formatTable. includeHeaderKey", {
   expect_equal(result$estimate_value, result_output$`[header]estimate_value`)
 
   # Wrong input ----
-  expect_error(formatTable(result = result,
+  expect_error(formatHeader(result = result,
                            header = NULL,
                            includeHeaderName = TRUE))
-  expect_error(formatTable(result = result,
+  expect_error(formatHeader(result = result,
                            header = NA,
                            includeHeaderName = TRUE))
 

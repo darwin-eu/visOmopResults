@@ -1,6 +1,6 @@
 test_that("fxTable", {
   table_to_format <- mockSummarisedResult() |>
-    formatTable(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
+    formatHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
                includeHeaderName = FALSE)
   # Input 1 ----
   # Title but no subtitle
@@ -63,7 +63,7 @@ test_that("fxTable", {
   table_to_format <- mockSummarisedResult() |>
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                               "N" = "<count>")) |>
-    formatTable(header = c("strata_name", "strata_level"),
+    formatHeader(header = c("strata_name", "strata_level"),
                includeHeaderName = TRUE)
   fxResult <- fxTable(
     table_to_format,
@@ -122,7 +122,7 @@ test_that("fxTable", {
   table_to_format <- mockSummarisedResult() |>
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                               "N" = "<count>")) |>
-    formatTable(header = c("strata_name", "strata_level"),
+    formatHeader(header = c("strata_name", "strata_level"),
                delim = ":",
                includeHeaderName = TRUE)
   fxResult <- fxTable(
@@ -166,7 +166,7 @@ test_that("fxTable", {
 
 test_that("fxTable, test default styles and NULL", {
   table_to_format <- mockSummarisedResult() |>
-    formatTable(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
+    formatHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
                 includeHeaderName = FALSE)
   # Input 1: NULL ----
   fxResult <- fxTable(
@@ -204,7 +204,7 @@ test_that("fxTable, test default styles and NULL", {
   table_to_format <- mockSummarisedResult() |>
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                               "N" = "<count>")) |>
-    formatTable(header = c("Strata", "strata_name", "strata_level"),
+    formatHeader(header = c("Strata", "strata_name", "strata_level"),
                 includeHeaderName = TRUE)
   fxResult <- fxTable(
     table_to_format,
@@ -256,7 +256,7 @@ test_that("fxTable, test default styles and NULL", {
 
 test_that("fxTable, test colsToMergeRows", {
   table_to_format<- mockSummarisedResult() |>
-  formatTable(header = c("strata_name", "strata_level"))
+  formatHeader(header = c("strata_name", "strata_level"))
   # colsToMergeRows = "all"
   fxResult <- fxTable(
     x = table_to_format,

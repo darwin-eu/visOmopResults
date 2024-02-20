@@ -1,7 +1,7 @@
 test_that("gtTable", {
 
   table_to_format <- mockSummarisedResult() |>
-    formatTable(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
+    formatHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
                includeHeaderName = FALSE)
   # Input 1 ----
   # Title but no subtitle
@@ -65,7 +65,7 @@ test_that("gtTable", {
   table_to_format <- mockSummarisedResult() |>
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                   "N" = "<count>")) |>
-    formatTable(header = c("strata_name", "strata_level"),
+    formatHeader(header = c("strata_name", "strata_level"),
                includeHeaderName = TRUE)
   gtResult <- gtTable(
     table_to_format,
@@ -128,7 +128,7 @@ test_that("gtTable", {
   table_to_format <- mockSummarisedResult() |>
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                   "N" = "<count>")) |>
-    formatTable(header = c("strata_name", "strata_level"),
+    formatHeader(header = c("strata_name", "strata_level"),
                delim = ":",
                includeHeaderName = TRUE)
   gtResult <- gtTable(
@@ -169,7 +169,7 @@ test_that("gtTable", {
 
 test_that("gtTable, test default styles and NULL", {
   table_to_format <- mockSummarisedResult() |>
-    formatTable(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
+    formatHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
                 includeHeaderName = FALSE)
   # Input 1: NULL ----
   gtResult <- gtTable(
@@ -192,7 +192,7 @@ test_that("gtTable, test default styles and NULL", {
   table_to_format <- mockSummarisedResult() |>
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                               "N" = "<count>")) |>
-    formatTable(header = c("strata", "strata_name", "strata_level"),
+    formatHeader(header = c("strata", "strata_name", "strata_level"),
                 includeHeaderName = TRUE)
   gtResult <- gtTable(
     table_to_format,
@@ -251,7 +251,7 @@ test_that("gtTable, test default styles and NULL", {
 })
 test_that("gtTable, test colsToMergeRows", {
   table_to_format<- mockSummarisedResult() |>
-    formatTable(header = c("strata_name", "strata_level"))
+    formatHeader(header = c("strata_name", "strata_level"))
   # colsToMergeRows = "all"
   gtResult <- gtTable(
     table_to_format,
