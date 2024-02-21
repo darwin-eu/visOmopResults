@@ -71,15 +71,17 @@ uniteNameLevel <- function(x,
     x <- x |>
       dplyr::rowwise() |>
       dplyr::mutate(
-        !!name := dplyr::if_else(dplyr::if_all(dplyr::all_of(cols), is.na),
-                                      "overall",
-                                      apply(dplyr::across(cols), 1, newName)),
-        !!level := dplyr::if_else(dplyr::if_all(dplyr::all_of(cols), is.na),
-                                 "overall",
-                                 apply(dplyr::across(cols), 1, newLevel))
-        ) |>
+        !!name := dplyr::if_else(
+          dplyr::if_all(dplyr::all_of(cols), is.na),
+          "overall", apply(dplyr::across(cols), 1, newName)),
+        !!level := dplyr::if_else(
+          dplyr::if_all(dplyr::all_of(cols), is.na),
+          "overall", apply(dplyr::across(cols), 1, newLevel))
+      ) |>
       dplyr::ungroup()
-
+    if (!keep) {
+      x <- x |> dplyr::select(!dplyr::all_of(cols))
+    }
   } else {
     x <- x |>
       dplyr::mutate(!!name := paste0(cols, collapse = " and ")) |>
@@ -89,20 +91,18 @@ uniteNameLevel <- function(x,
   }
 
   if (keep) {
-    colskeep <- colnames(x)
+    colskeep <- cols
   } else {
-    colskeep <- colnames(x)[!colnames(x) %in% cols]
+    colskeep <- character()
   }
 
   # move cols
   if (id == 1) {
     x <- x |>
-      dplyr::select(dplyr::all_of(colskeep)) |>
       dplyr::relocate(dplyr::all_of(c(colskeep, name, level)))
   } else {
     id <- colnames(x)[id - 1]
     x <- x |>
-      dplyr::select(dplyr::all_of(colskeep)) |>
       dplyr::relocate(
         dplyr::all_of(c(colskeep, name, level)), .after = dplyr::all_of(id)
       )

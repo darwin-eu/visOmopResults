@@ -267,5 +267,5 @@ test_that("empty format",{
     keepNotFormatted = TRUE,
     useFormatOrder = TRUE)
   )
-  expect_true(res1 |> dplyr::anti_join(result, by = colnames(res1)) |> nrow() == 0)
+  expect_identical(res1, result)
 })
