@@ -7,6 +7,15 @@
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/LICENSE.html</loc>
   </url>
   <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/articles/formatOmopResults.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/articles/index.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/articles/splitAndUnite.html</loc>
+  </url>
+  <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/authors.html</loc>
   </url>
   <url>
@@ -20,6 +29,9 @@
   </url>
   <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/formatEstimateValue.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/formatHeader.html</loc>
   </url>
   <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/formatTable.html</loc>
