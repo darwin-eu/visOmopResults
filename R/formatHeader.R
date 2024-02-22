@@ -34,10 +34,10 @@
 #' }
 
 formatHeader <- function(result,
-                        header,
-                        delim = "\n",
-                        includeHeaderName = TRUE,
-                        includeHeaderKey = TRUE) {
+                         header,
+                         delim = "\n",
+                         includeHeaderName = TRUE,
+                         includeHeaderKey = TRUE) {
   # initial checks
   result <- validateResult(result)
   checkmate::assertCharacter(x = header, any.missing = FALSE, null.ok = TRUE)
@@ -97,25 +97,19 @@ formatHeader <- function(result,
           }
         }
         colDetails <- colDetails |> dplyr::mutate(new_name = base::substring(.data$new_name, 0, nchar(.data$new_name)-1))
-
         # add column names
         names(result)[names(result) %in% colDetails$name] <- colDetails$new_name
 
       } else {
-        if (includeHeaderKey & length(header)>0) {
+        if (includeHeaderKey) {
           new_name <- paste0("[header]", paste(header, collapse = paste0(delim, "[header]")))
-        } else if (!includeHeaderKey & length(header)>0) {
+        } else {
           new_name <- paste(header, collapse = delim)
-        } else if (includeHeaderKey & length(header)==0) {
-          new_name <- "[header]estimate_value"
-        } else if (!includeHeaderKey & length(header)==0) {
-          new_name <- "estimate_value"
         }
         result <- result |> dplyr::rename(!!new_name := "estimate_value")
         class(result) <- c("tbl_df", "tbl", "data.frame")
       }
     }
   }
-
   return(result)
 }
