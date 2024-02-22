@@ -4,12 +4,14 @@
 \alias{uniteStrata}
 \title{Unite one or more columns in strata_name-strata_level format.}
 \usage{
-uniteStrata(x, cols)
+uniteStrata(x, cols, removeNA = TRUE)
 }
 \arguments{
 \item{x}{Tibble or data.frame.}
 
 \item{cols}{Columns to aggregate.}
+
+\item{removeNA}{Whether to remove NA values from the united columns.}
 }
 \value{
 A Tibble with the new columns.

@@ -31,7 +31,7 @@
 #' \donttest{
 #' mockSummarisedResult() |>
 #'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-#'   formatTable(header = c("Study strata", "strata_name", "strata_level"),
+#'   formatHeader(header = c("Study strata", "strata_name", "strata_level"),
 #'               includeHeaderName = FALSE) |>
 #'   gtTable(
 #'     style = list("header" = list(
@@ -82,12 +82,16 @@ gtTable <- function(
   checkmate::assertCharacter(groupNameCol, null.ok = TRUE, any.missing = FALSE)
   checkmate::assertLogical(groupNameAsColumn, len = 1, any.missing = FALSE)
   checkmate::assertCharacter(groupOrder, null.ok = TRUE, any.missing = FALSE)
-  checkColsToMergeRows(x, colsToMergeRows, groupNameCol)
-  style <- checkStyle(style, "gt")
+  validateColsToMergeRows(x, colsToMergeRows, groupNameCol)
+  style <- validateStyle(style, "gt")
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
   }
 
+  # na
+  if (!is.null(na)){
+    x <- x |> dplyr::mutate(dplyr::across(colnames(x), ~ dplyr::if_else(is.na(.x), na, .x)))
+  }
 
   # Spanners
   if (!is.null(groupNameCol)) {
@@ -193,9 +197,9 @@ gtTable <- function(
 
    # Other options:
   ## na
-  if (!is.null(na)){
-    gtResult <- gtResult |> gt::sub_missing(missing_text = na)
-  }
+  # if (!is.null(na)){
+  #   # gtResult <- gtResult |> gt::sub_missing(missing_text = na)
+  # }
   ## caption
   if(!is.null(caption)){
     gtResult <- gtResult |>

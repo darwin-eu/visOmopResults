@@ -36,22 +36,25 @@ formatEstimateName <- function(result,
                                useFormatOrder = TRUE) {
   # initial checks
   result <- validateResult(result)
-  validateEstimateNameFormat(estimateNameFormat)
+  estimateNameFormat <- validateEstimateNameFormat(estimateNameFormat)
   checkmate::assertCharacter(estimateNameFormat, any.missing = FALSE, unique = TRUE, min.chars = 1, null.ok = TRUE)
   checkmate::assertLogical(keepNotFormatted, len = 1, any.missing = FALSE)
   checkmate::assertLogical(useFormatOrder, len = 1, any.missing = FALSE)
 
   # format estimate
-  resultFormatted <- formatEstimateNameInternal(
-    result = result, format = estimateNameFormat,
-    keepNotFormatted = keepNotFormatted, useFormatOrder = useFormatOrder
-  )
-
-  # class
-  if (inherits(result, "summarised_result")) {
-    resultFormatted <- resultFormatted |> omopgenerics::newSummarisedResult()
+  if (!is.null(estimateNameFormat)) {
+    resultFormatted <- formatEstimateNameInternal(
+      result = result, format = estimateNameFormat,
+      keepNotFormatted = keepNotFormatted, useFormatOrder = useFormatOrder
+    )
+    # class
+    if (inherits(result, "summarised_result")) {
+      resultFormatted <- resultFormatted |> omopgenerics::newSummarisedResult()
+    } else {
+      resultFormatted <- resultFormatted |> omopgenerics::newComparedResult()
+    }
   } else {
-    resultFormatted <- resultFormatted |> omopgenerics::newComparedResult()
+    resultFormatted <- result
   }
 
   return(resultFormatted)
@@ -131,7 +134,8 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
                          dplyr::filter(!.data$estimate_name %in% nms) |>
                          dplyr::mutate(format_id = length(format) + dplyr::row_number()))
     result <- result |>
-      dplyr::left_join(new_order)
+      dplyr::left_join(new_order,
+                       by = "estimate_name")
     result <- result[order(result$group_id, result$format_id, decreasing = FALSE),] |>
       dplyr::select(-c("id", "group_id", "format_id"))
   } else {

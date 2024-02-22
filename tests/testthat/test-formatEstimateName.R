@@ -251,3 +251,21 @@ test_that("formatEstimateName, useFormatOrder", {
                     which(result_output$estimate_name %in% "range")))
 
 })
+
+test_that("empty format",{
+  result <- mockSummarisedResult()
+  expect_no_error(res0 <- formatEstimateName(
+    result,
+    estimateNameFormat = character(0),
+    keepNotFormatted = TRUE,
+    useFormatOrder = TRUE)
+  )
+  expect_true(res0 |> dplyr::anti_join(result, by = colnames(res0)) |> nrow() == 0)
+  expect_no_error(res1 <- formatEstimateName(
+    result,
+    estimateNameFormat = NULL,
+    keepNotFormatted = TRUE,
+    useFormatOrder = TRUE)
+  )
+  expect_identical(res1, result)
+})

@@ -4,12 +4,14 @@
 \alias{uniteGroup}
 \title{Unite one or more columns in group_name-group_level format.}
 \usage{
-uniteGroup(x, cols)
+uniteGroup(x, cols, removeNA = TRUE)
 }
 \arguments{
 \item{x}{Tibble or data.frame.}
 
 \item{cols}{Columns to aggregate.}
+
+\item{removeNA}{Whether to remove NA values from the united columns.}
 }
 \value{
 A Tibble with the new columns.

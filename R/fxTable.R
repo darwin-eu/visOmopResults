@@ -31,8 +31,8 @@
 #' \donttest{
 #' mockSummarisedResult() |>
 #'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-#'   formatTable(header = c("Study strata", "strata_name", "strata_level"),
-#'               includeHeaderName = FALSE) |>
+#'   formatHeader(header = c("Study strata", "strata_name", "strata_level"),
+#'                includeHeaderName = FALSE) |>
 #'   fxTable(
 #'     style = "default",
 #'     na = "--",
@@ -75,8 +75,8 @@ fxTable <- function(
   checkmate::assertLogical(groupNameAsColumn, len = 1, any.missing = FALSE)
   checkmate::assertCharacter(groupOrder, null.ok = TRUE, any.missing = FALSE)
   checkmate::assertCharacter(colsToMergeRows, null.ok = TRUE, any.missing = FALSE)
-  checkColsToMergeRows(x, colsToMergeRows, groupNameCol)
-  style <- checkStyle(style, "fx")
+  validateColsToMergeRows(x, colsToMergeRows, groupNameCol)
+  style <- validateStyle(style, "fx")
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
   }
@@ -94,7 +94,7 @@ fxTable <- function(
 
   # na
   if (!is.null(na)){
-    x[is.na(x)] <- na
+    x <- x |> dplyr::mutate(dplyr::across(colnames(x), ~ dplyr::if_else(is.na(.x), na, .x)))
   }
 
   # Flextable

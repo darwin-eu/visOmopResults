@@ -10,7 +10,7 @@ test_that("README works", {
                                "N" = "<count>",
                                "Mean (SD)" = "<mean> (<sd>)"),
         keepNotFormatted = FALSE) |>
-      formatTable(header = c("Study strata", "strata_name", "strata_level"),
+      formatHeader(header = c("Study strata", "strata_name", "strata_level"),
                  delim = "\n",
                  includeHeaderName = FALSE,
                  includeHeaderKey = TRUE) |>

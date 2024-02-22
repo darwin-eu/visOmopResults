@@ -9,7 +9,8 @@ uniteNameLevel(
   cols,
   name = "group_name",
   level = "group_level",
-  keep = FALSE
+  keep = FALSE,
+  removeNA = TRUE
 )
 }
 \arguments{
@@ -22,6 +23,8 @@ uniteNameLevel(
 \item{level}{Column name of the \code{level} column.}
 
 \item{keep}{Whether to keep the original columns.}
+
+\item{removeNA}{Whether to remove NA values from the united columns.}
 }
 \value{
 A Tibble with the new columns.

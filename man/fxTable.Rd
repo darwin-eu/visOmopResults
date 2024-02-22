@@ -63,8 +63,8 @@ the header, and the specified styles for different parts of the table.
 \donttest{
 mockSummarisedResult() |>
   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-  formatTable(header = c("Study strata", "strata_name", "strata_level"),
-              includeHeaderName = FALSE) |>
+  formatHeader(header = c("Study strata", "strata_name", "strata_level"),
+               includeHeaderName = FALSE) |>
   fxTable(
     style = "default",
     na = "--",
