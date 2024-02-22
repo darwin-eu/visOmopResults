@@ -73,10 +73,10 @@ uniteNameLevel <- function(x,
       dplyr::mutate(
         !!name := dplyr::if_else(
           dplyr::if_all(dplyr::all_of(cols), is.na),
-          "overall", apply(dplyr::across(cols), 1, newName)),
+          "overall", apply(dplyr::across(dplyr::all_of(cols)), 1, newName)),
         !!level := dplyr::if_else(
           dplyr::if_all(dplyr::all_of(cols), is.na),
-          "overall", apply(dplyr::across(cols), 1, newLevel))
+          "overall", apply(dplyr::across(dplyr::all_of(cols)), 1, newLevel))
       ) |>
       dplyr::ungroup()
     if (!keep) {
