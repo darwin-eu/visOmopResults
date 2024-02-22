@@ -144,16 +144,18 @@ test_that("formatHeader", {
 
   expect_false("summarised_result" %in% class(result_output))
 
-  # Named vector ----
-  # result_output <- formatHeader(result = result,
-  #                              header = c("test_spanHeader", "end_spanner"),
-  #                              delim = ":",
-  #                              includeHeaderName = TRUE)
+  # Empty input ----
+  expect_no_error(res <- formatHeader(result = result,
+                                      header = NULL,
+                                      includeHeaderName = TRUE))
+  expect_identical(result, res)
+
+  expect_no_error(res <- formatHeader(result = result,
+                                      header = character(0),
+                                      includeHeaderName = TRUE))
+  expect_identical(result, res)
 
   # Wrong input ----
-  expect_error(formatHeader(result = result,
-                          header = NULL,
-                          includeHeaderName = TRUE))
   expect_error(formatHeader(result = result,
                           header = NA,
                           includeHeaderName = TRUE))
@@ -244,19 +246,16 @@ test_that("formatHeader. includeHeaderKey", {
                                delim = ":",
                                includeHeaderName = TRUE,
                                includeHeaderKey = FALSE)
-  expect_equal(colnames(result), colnames(result_output))
+  expect_identical(result, result_output)
 
   result_output <- formatHeader(result = result,
                                header = character(),
                                delim = ":",
                                includeHeaderName = TRUE,
                                includeHeaderKey = TRUE)
-  expect_equal(result$estimate_value, result_output$`[header]estimate_value`)
+  expect_identical(result, result_output)
 
   # Wrong input ----
-  expect_error(formatHeader(result = result,
-                           header = NULL,
-                           includeHeaderName = TRUE))
   expect_error(formatHeader(result = result,
                            header = NA,
                            includeHeaderName = TRUE))
