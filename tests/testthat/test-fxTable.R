@@ -41,7 +41,7 @@ test_that("fxTable", {
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"][1], "blue")
 
   # na
-  expect_equal(fxResult$body$dataset$result_type |> unique(), as.character(NA))
+  expect_equal(fxResult$body$dataset$result_type |> unique(), "mock_summarised_result")
 
   # default fxTable format
   expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
@@ -100,7 +100,7 @@ test_that("fxTable", {
                c("black", "blue", "white", "black", "white", "black"))
 
   # na
-  expect_equal(fxResult$body$dataset$result_type |> unique(), c(as.character(NA), "-"))
+  expect_equal(fxResult$body$dataset$result_type |> unique(), c(NA, "mock_summarised_result"))
 
   # body
   expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(0,1))
@@ -324,3 +324,4 @@ test_that("fxTable, test colsToMergeRows", {
     colsToMergeRows = c("cdm_name", "lala")
   ), "lala is not a column in the dataframe.")
 })
+

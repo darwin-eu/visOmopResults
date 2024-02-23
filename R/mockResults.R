@@ -14,7 +14,7 @@ mockSummarisedResult <- function() {
   # number subjects
   dplyr::tibble(
     "cdm_name" = "mock",
-    "result_type" = NA_character_,
+    "result_type" = "mock_summarised_result",
     "package_name" = "visOmopResults",
     "package_version" = utils::packageVersion("visOmopResults") |>
       as.character(),
@@ -39,7 +39,7 @@ mockSummarisedResult <- function() {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = NA_character_,
+        "result_type" = "mock_summarised_result",
         "package_name" = "visOmopResults",
         "package_version" = utils::packageVersion("visOmopResults") |>
           as.character(),
@@ -65,7 +65,7 @@ mockSummarisedResult <- function() {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = NA_character_,
+        "result_type" = "mock_summarised_result",
         "package_name" = "visOmopResults",
         "package_version" = utils::packageVersion("visOmopResults") |>
           as.character(),
@@ -91,7 +91,7 @@ mockSummarisedResult <- function() {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = NA_character_,
+        "result_type" = "mock_summarised_result",
         "package_name" = "visOmopResults",
         "package_version" = utils::packageVersion("visOmopResults") |>
           as.character(),
@@ -117,7 +117,7 @@ mockSummarisedResult <- function() {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = NA_character_,
+        "result_type" = "mock_summarised_result",
         "package_name" = "visOmopResults",
         "package_version" = utils::packageVersion("visOmopResults") |>
           as.character(),
@@ -143,7 +143,7 @@ mockSummarisedResult <- function() {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = NA_character_,
+        "result_type" = "mock_summarised_result",
         "package_name" = "visOmopResults",
         "package_version" = utils::packageVersion("visOmopResults") |>
           as.character(),
@@ -169,7 +169,7 @@ mockSummarisedResult <- function() {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = NA_character_,
+        "result_type" = "mock_summarised_result",
         "package_name" = "visOmopResults",
         "package_version" = utils::packageVersion("visOmopResults") |>
           as.character(),
