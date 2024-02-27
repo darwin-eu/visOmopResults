@@ -21,7 +21,7 @@ Useful links:
 
 Authors:
 \itemize{
-  \item Núria Mercadé-Besora \email{nuria.mercadebesora@ndorms.ox.ac.uk} (\href{https://orcid.org/0009-0006-7948-3747}{ORCID})
+  \item N<U+00FA>ria Mercad<U+00E9>-Besora \email{nuria.mercadebesora@ndorms.ox.ac.uk} (\href{https://orcid.org/0009-0006-7948-3747}{ORCID})
 }
 
 }

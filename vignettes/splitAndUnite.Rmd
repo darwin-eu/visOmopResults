@@ -15,7 +15,7 @@ knitr::opts_chunk$set(
 )
 ```
 
-Split and unite are complementary functions to manipulate dataframes in R. They work with summarised_results objects (see R package omopgenerics), but they can also support R dataframes from other classes.
+**Split** and **unite** are complementary functions to manipulate dataframes in R. They work with summarised_results objects (see R package *omopgenerics*), but they can also support R dataframes from other classes.
 
 ## summarised_result
 
