@@ -28,8 +28,8 @@ diferent estimate names together in a row."><!-- mathjax --><script src="https:/
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/formatOmopResults.html">formatOmopResult</a>
-    <a class="dropdown-item" href="../articles/splitAndUnite.html">splitAndUnite</a>
+    <a class="dropdown-item" href="../articles/formatFunctions.html">format functions</a>
+    <a class="dropdown-item" href="../articles/splitAndUnite.html">split and unite functions</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -110,18 +110,18 @@ estimate_value.</p>
 <span class="r-in"><span>    keepNotFormatted <span class="op">=</span> <span class="cn">FALSE</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 54 × 15</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    cdm_name result_type package_name   package_version group_name  group_level</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name cohort1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name cohort1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name cohort1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name cohort1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name cohort1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name cohort1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name cohort1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name cohort1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name cohort1    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name cohort2    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    cdm_name result_type      package_name package_version group_name group_level</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span> mock     mock_summarised… visOmopResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span> mock     mock_summarised… visOmopResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span> mock     mock_summarised… visOmopResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span> mock     mock_summarised… visOmopResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span> mock     mock_summarised… visOmopResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span> mock     mock_summarised… visOmopResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span> mock     mock_summarised… visOmopResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span> mock     mock_summarised… visOmopResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span> mock     mock_summarised… visOmopResu… 0.0.1           cohort_na… cohort1    </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span> mock     mock_summarised… visOmopResu… 0.0.1           cohort_na… cohort2    </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 44 more rows</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 9 more variables: strata_name &lt;chr&gt;, strata_level &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   variable_name &lt;chr&gt;, variable_level &lt;chr&gt;, estimate_name &lt;chr&gt;,</span></span>

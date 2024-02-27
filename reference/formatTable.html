@@ -28,8 +28,8 @@ the header input, with labels are separated using a delimiter."><!-- mathjax -->
 <li class="nav-item dropdown">
   <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown" role="button" aria-expanded="false" aria-haspopup="true" id="dropdown-articles">Articles</a>
   <div class="dropdown-menu" aria-labelledby="dropdown-articles">
-    <a class="dropdown-item" href="../articles/formatOmopResults.html">formatOmopResult</a>
-    <a class="dropdown-item" href="../articles/splitAndUnite.html">splitAndUnite</a>
+    <a class="dropdown-item" href="../articles/formatFunctions.html">format functions</a>
+    <a class="dropdown-item" href="../articles/splitAndUnite.html">split and unite functions</a>
   </div>
 </li>
       </ul><form class="form-inline my-2 my-lg-0" role="search">
@@ -123,15 +123,15 @@ spanner headers.</p>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>`formatTable()` was deprecated in visOmopResults 0.0.2.</span>
 <span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use `formatHeader()` instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 7 × 29</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   cdm_name result_type package_name   package_version group_name  variable_name </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name number subjec…</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name age           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name age           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name Medications   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name Medications   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name Medications   </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> mock     <span style="color: #BB0000;">NA</span>          visOmopResults 0.0.1           cohort_name Medications   </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   cdm_name result_type     package_name package_version group_name variable_name</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> mock     mock_summarise… visOmopResu… 0.0.1           cohort_na… number subje…</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> mock     mock_summarise… visOmopResu… 0.0.1           cohort_na… age          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> mock     mock_summarise… visOmopResu… 0.0.1           cohort_na… age          </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> mock     mock_summarise… visOmopResu… 0.0.1           cohort_na… Medications  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">5</span> mock     mock_summarise… visOmopResu… 0.0.1           cohort_na… Medications  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">6</span> mock     mock_summarise… visOmopResu… 0.0.1           cohort_na… Medications  </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">7</span> mock     mock_summarise… visOmopResu… 0.0.1           cohort_na… Medications  </span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 23 more variables: variable_level &lt;chr&gt;, estimate_name &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   estimate_type &lt;chr&gt;, additional_name &lt;chr&gt;, additional_level &lt;chr&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   `[header]Study cohorts\n[header_level]cohort1\n[header]Study strata\n[header_level]overall\n[header_level]overall` &lt;chr&gt;,</span></span>
