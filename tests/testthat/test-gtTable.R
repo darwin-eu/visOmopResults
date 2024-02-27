@@ -109,7 +109,7 @@ test_that("gtTable", {
   expect_true(length(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"] |> unlist()) == 11)
   expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header\\]|\\[header_name\\]", x)}) |> unlist() |> unique())
   # na
-  expect_equal(unique(gtResult$`_data`$result_type), "-")
+  expect_equal(unique(gtResult$`_data`$variable_level[1:3]), "-")
   # Group labels
   expect_equal(gtResult$`_stub_df`$group_label |> unlist() |> unique(), c("cohort1", "cohort2"))
   expect_false(gtResult$`_options`$value[gtResult$`_options`$parameter == "row_group_as_column"] |> unlist())
@@ -268,7 +268,7 @@ test_that("gtTable, test colsToMergeRows", {
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$result_type,
-               c("-", "", "", "", "", "", "", "-", "", "", "", "", "", ""))
+               c("mock_summarised_result", "", "", "", "", "", "", "mock_summarised_result", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "-", "", "Amoxiciline", "", "Ibuprofen", "", "-", "-", "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
@@ -291,7 +291,7 @@ test_that("gtTable, test colsToMergeRows", {
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$result_type,
-               rep("-", 14))
+               rep("mock_summarised_result", 14))
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "", "", "Amoxiciline", "", "Ibuprofen", "", "-", "", "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
@@ -314,7 +314,7 @@ test_that("gtTable, test colsToMergeRows", {
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$result_type,
-               c("-", "", "", "", "", "", "", "", "", "", "", "", "", ""))
+               c("mock_summarised_result", "", "", "", "", "", "", "", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "-", "-", "-", "-", "-",
                  "Amoxiciline", "Amoxiciline", "Amoxiciline", "Amoxiciline", "Ibuprofen", "Ibuprofen",

@@ -1,8 +1,8 @@
 ---
-title: "splitAndUnite"
+title: "split and unite functions"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{splitAndUnite}
+  %\VignetteIndexEntry{split and unite functions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -10,10 +10,121 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  warning = FALSE
 )
 ```
 
+**Split** and **unite** are complementary functions to manipulate dataframes in R. They work with summarised_results objects (see R package *omopgenerics*), but they can also support R dataframes from other classes.
+
+## summarised_result
+
+First, let's load relevant libraries and generate a mock summarised_result object to use in the following examples.
 ```{r setup}
 library(visOmopResults)
+library(dplyr)
+mock_sr <- mockSummarisedResult()
+mock_sr |> glimpse()
+```
+
+A summarised_result contains 3 types of name-level paired columns which are targeted by the set of unite and split functions. These are the **group** columns which typically can contain information about cohorts, **strata** columns which have data on stratification for each group, and finally the **additional** columns which include further information not covered by group and strata.
+
+
+
+## Split functions
+The idea of the split functions is to pivot the "name" (e.g. *group_name*) column to split each value of that column into a column in the dataframe, which values are taken by the "level" (e.g. *group_level*) column.
+
+### splitGroup(), splitStrata(), and splitAdditional()
+
+For instance, the `splitGroup` function will target the *group_name-group_level* columns as seen below. After using `splitStrata` on our summarised_result object, we do no longer have a *strata_name-strata_level* pair, instead we have two new columns corresponding to the stratifications, *age_group* and *sex*.
+
+```{r}
+mock_sr |> splitStrata() |> glimpse()
+```
+
+Similar to `splitStrata`, the functions `splitGroup` will split *group_name* and *group_level* columns, while `splitAdditional` will split the additonal name-level pair. Finally, the function `splitAll` will split group, strata, and additonal at once.
+
+A part from the summarised_result object, another argument to these functions is `overall`. This argument is to specify whether to keep the *overall* column when splitting. It is setted to FALSE by default. Now, we repeat the previous example setting "overall" to TRUE. Notice how the output has one more column which refers to the overall strata.
+
+```{r}
+mock_sr |> splitStrata(overall = TRUE) |> glimpse()
+```
+
+#### !! Keyword: and
+Looking at the results below, observe how the splitting was not only done by values in the "name" column, but also within values containing the key word "**and**". That is, "sex and age_group" was splitted into *sex* and *age_group* columns, instead of generating a column called "*sex and age_group*".
+
+### splitNameLevel()
+The function `splitNameLevel` provides a more tailored splitting of the dataframe. This function can take any dataframe with no restrictions to the naming of the name-level pair columns, since these can be specified in the `name` and `level` arguments. 
+
+For instance let's use it in the following table:
+```{r}
+data_to_split <- tibble(
+  denominator = "general_population",
+  outcome = "stroke",
+  input_arguments = c("wash_out and previous_observation"),
+  input_arguments_values = c("60 and 180")
+)
+data_to_split 
+```
+
+
+```{r}
+data_to_split |>
+  splitNameLevel(
+    name = "input_arguments",
+    level = "input_arguments_values"
+  )
+```
+
+The function `splitNameLevel`, in additonally to the argument `overall` previously seen, has the argument `keep` to set whether we want to keep the columns before the splitting.
+
+
+
+## Unite functions
+
+The unite functions are the complementary to the split ones. These are meant to generate name-level pair columns from targeted columns within a dataframe. 
+
+### uniteGroup(), uniteStrata(), and uniteAdditional()
+To work with summarised_result objects, we have the `uniteGroup`, `uniteStrata`, and `uniteAdditional` functions which will generate the group, strata, and additional name-level columns respectivelly from a given set of columns. For instance, in the following example we want to create the *group_name* and *group_level* columns:
+
+```{r}
+to_unite_group <- tibble(
+  denominator_cohort_name = c("general_population", "older_than_60", "younger_than_60"),
+  outcome_cohort_name = c("stroke", "stroke", "stroke")
+)
+
+to_unite_group |>
+  uniteGroup(cols = c("denominator_cohort_name", "outcome_cohort_name"))
+```
+
+A part from the columns to unite argument (`cols`), there is the argument `removeNA`, defaulted to TRUE. This means that, if a row of the targeted column contain only "NA" values, it will be united as "overall", while if `removeNA` is set to FALSE, it will join them as if NA was a value. In the next example we use `removeNA` set to FALSE:
+
+```{r}
+to_unite_strata <- tibble(
+    age = c(NA, ">40", "<=40", NA, NA, NA, NA, NA, ">40", "<=40"),
+    sex = c(NA, NA, NA, "F", "M", NA, NA, NA, "F", "M"),
+    region = c(NA, NA, NA, NA, NA, "North", "South", "Center", NA, NA)
+  )
+
+to_unite_strata |>
+  uniteStrata(cols = c("age", "sex", "region"), 
+              removeNA = FALSE)
+```
+
+Now, if we set `removeNA` to TRUE, we obtain an output where only names and levels of non-NA values are returned, and fro those rows where all values are NA it uses "overall".
+```{r}
+to_unite_strata |>
+  uniteStrata(cols = c("age", "sex", "region"))
+```
+
+### uniteNameLevel()
+
+Lastly, the function `uniteNameLevel`, idem to `splitNameLevel`, provides more flexibility on the name-level column naming, in additon of the `keep` argument (FALSE by default) to choose whether to keep the targeted columns. For instance, if we repeat the previous example with `keep` set to TRUE we would obtain the following output:
+
+```{r}
+to_unite_strata |>
+  uniteNameLevel(cols = c("age", "sex", "region"),
+                 name = "name",
+                 level = "level",
+                 keep = TRUE)
 ```

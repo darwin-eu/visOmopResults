@@ -1,0 +1,183 @@
+---
+title: "format functions"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{format functions}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE
+)
+```
+
+The **format** set of functions can be combined to format a summarised_result object (see R package *omopgenerics*) into a nice dataframe, *flextable* or *gt* table to display. In what follows, we show the pipline for formatting summarised_results using these functions.
+
+First, we load the package and generate a mock summarised_result.
+
+```{r setup}
+library(visOmopResults)
+mock_sr <- mockSummarisedResult()
+mock_sr |> dplyr::glimpse()
+```
+
+## 1. formatEstimateValue
+This function provides tools to format the estimate_value column. It allows to change the number of decimals to display by estimate_type or *estimate_name* (`decimals`), and to change the decimal and thousand/million separator mark (`decimalMark` and `bigMark` respectively). By default,
+decimals of integer values are set to 0, numeric to 2, percentage to 1, and proportion to 3. The defaulted decimal mark is "." while the thousand/million separator is ",".
+
+```{r}
+mock_sr <- mock_sr |> formatEstimateValue()
+mock_sr |> dplyr::glimpse()
+```
+
+## 2. formatEstimateName
+This functions helps to manipulate *estimate_name* and *estimate_value* columns. For instance, if we want that all the variables for which we have counts and percentage to be display in a single row showing both as "N (%)" we can do it with this function. 
+
+The `estimateNameFormat` is where all combinations or renaming of estimates can be specified. Values from *estime_name*'s column should be specified between <...>. The new *estimate_name* values to use will be the names of the vector, or the value itself when it is not named. 
+
+```{r}
+mock_sr <- mock_sr |> 
+  formatEstimateName(
+    estimateNameFormat = c(
+      "N (%)" = "<count> (<percentage>%)", 
+      "N" = "<count>",
+      "Mean (SD)" = "<mean> (<sd>)"
+    ),
+    keepNotFormatted = FALSE,
+    useFormatOrder = FALSE
+  )
+mock_sr |> dplyr::glimpse()
+```
+
+Additonal input arguments are `keepNotFormatted` to specify whether not formatted rows should be returned or dropped, and `useFormatOrder` to define if rows should be sorted as in `estimateNameFormat` or if the original order should be kept. In the latter scenario, when more than one estimate is pulled together, the new estimate position will be the first of the estimates being merged.
+
+
+
+## 3. formatHeader
+
+This function helps to create a nice header for a *flextable*, *gt* table and other table formatting packages.
+
+To this aim, this function pivots the columns specified in `header` "widening" the table.  The name of the new columns can be formatted with the arguments `header`, `delim`, `inlcudeHeaderName`, and `includeHeaderKey` to later convert obtain a nice header of the formatted table (*flextable* or *gt* table).
+
+#### Header keys
+
+There are 3 different types of headers, identified with the keys "header", "header_name", and "header_level".
+
+- **header:** Header labels passed to `header` but which are not part of the input table (are not columns names or values).
+- **header_name:** Header labels that come from column names in the input table.
+- **header_level:** Header labels that come from values of selected columns in the input table.
+
+For instance, we might want to pivot by "group_level" and have an upper header called "Names of the cohorts". To do that we would proceed as follows:
+
+```{r}
+mock_sr |>
+  formatHeader(
+    header = c("Names of the cohorts", "group_level"),
+    delim = "\n",
+    includeHeaderName = TRUE,
+    includeHeaderKey = TRUE
+  ) |>
+  dplyr::glimpse()
+```
+
+The labels indicating which type of header refers to in the new column names can be removed with `includeHeaderKey`. However, having these keys in our header will allow to style separately the different header types in the next step (`fxTable` and `gtTable`).
+
+Continuing with our example, we want to pivot by strata (name and level), but, we do not want the column names to appear in the header:
+
+```{r}
+mock_sr <- mock_sr |>
+  formatHeader(
+    header = c("Stratifications", "strata_name", "strata_level"),
+    delim = "\n",
+    includeHeaderName = FALSE,
+    includeHeaderKey = TRUE
+  ) 
+
+mock_sr |> dplyr::glimpse()
+```
+
+ 
+
+## 4. gt and fx table
+
+Finally, we have the functions `gtTable` and `fxTable` which will transform our tibble into a *gt* or *flextable* object respectively. These functions provide several tools to personalise the formatted table. 
+
+### gtTable
+Let's start by maniupating the dataframe to have the columns that we want to display, and then use `gtTable` with default values:
+
+```{r}
+# first we select the columns we want:
+mock_sr <- mock_sr |>
+  splitGroup() |>
+  dplyr::select(!dplyr::all_of(c("cdm_name", "result_type", "package_name", 
+                                 "package_version", "estimate_type",
+                                 "additional_name", "additional_level")))
+mock_sr |>  gtTable()
+```
+
+Now, we want to group results by "cohort_name". More specifically we want to have a row which the name of each cohort before the results of that cohort, and that *cohort1* comes before *cohort2*. Additonally, we want to merge those rows what contain the same information for all the columns. To get this table we will use `gtTable` as follows:
+
+```{r}
+mock_sr |>  
+  gtTable(
+    groupNameCol = "cohort_name",
+    groupNameAsColumn = FALSE,
+    groupOrder = c("cohort1", "cohort2"),
+    colsToMergeRows = "all_columns"
+  )
+```
+
+
+We might also want to modify the default style of the table. For instance, we might want to higlight the cohort_name labels with a blue background, have the body text in red, and use a combination of orange and yellow for the header. We can do it with the `style` argument:
+
+```{r}
+mock_sr |>  
+  gtTable(
+    style = list(
+      "header" = list(gt::cell_text(weight = "bold"), 
+                      gt::cell_fill(color = "orange")),
+      "header_level" = list(gt::cell_text(weight = "bold"), 
+                      gt::cell_fill(color = "yellow")),
+      "column_name" = gt::cell_text(weight = "bold"),
+      "group_label" = list(gt::cell_fill(color = "blue"),
+                           gt::cell_text(color = "white", weight = "bold")),
+      "body" = gt::cell_text(color = "red")
+    ),
+    groupNameCol = "cohort_name",
+    groupNameAsColumn = FALSE,
+    groupOrder = c("cohort1", "cohort2"),
+    colsToMergeRows = "all_columns"
+  )
+```
+
+
+
+### fxTable
+To obtain a similar result but with a *flextable* object, we can use `fxTable` with the same arguments as before, however, `style` must be adapted to use the *officer* package since it is the accepted by *flextable.*
+
+```{r}
+mock_sr |>  
+  fxTable(
+    style = list(
+      "header" = list(
+        "cell" = officer::fp_cell(background.color = "orange"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "header_level" = list(
+        "cell" = officer::fp_cell(background.color = "yellow"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "column_name" = list("text" = officer::fp_text(bold = TRUE)),
+      "group_label" = list(
+        "cell" = officer::fp_cell(background.color = "blue"),
+        "text" = officer::fp_text(bold = TRUE, color = "white")),
+      "body" = list("text" = officer::fp_text(color = "red"))
+    ),
+    groupNameCol = "cohort_name",
+    groupNameAsColumn = FALSE,
+    groupOrder = c("cohort1", "cohort2"),
+    colsToMergeRows = "all_columns"
+  )
+```

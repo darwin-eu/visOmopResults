@@ -20,11 +20,12 @@ knitr::opts_chunk$set(
 [![R-CMD-check](https://github.com/oxford-pharmacoepi/visOmopResults/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/oxford-pharmacoepi/visOmopResults/actions/workflows/R-CMD-check.yaml)
 [![CRAN status](https://www.r-pkg.org/badges/version/visOmopResults)](https://CRAN.R-project.org/package=visOmopResults)
 [![Lifecycle: experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Codecov test coverage](https://codecov.io/gh/oxford-pharmacoepi/visOmopResults/branch/main/graph/badge.svg)](https://app.codecov.io/gh/oxford-pharmacoepi/visOmopResults?branch=main)
 <!-- badges: end -->
 
 ## Package overview
 
-visOmopResults contains functions for formatting objects of the class *summarised_result* and *compared_result* (see R package [omopgenerics](https://CRAN.R-project.org/package=omopgenerics)). This package simplifies the handling of these objects to obtain nice output tables in the format of *gt* or *flextable*' to report results via Shiny apps, RMarkdown, Quarto, and more.
+visOmopResults contains functions for formatting objects of the class *summarised_result* (see R package [omopgenerics](https://cran.r-project.org/web/packages/omopgenerics/index.html)). This package simplifies the handling of these objects to obtain nice output tables in the format of *gt* or *flextable*' to report results via Shiny apps, RMarkdown, Quarto, and more.
 
 
 ## Installation
