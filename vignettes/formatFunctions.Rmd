@@ -2,7 +2,7 @@
 title: "format functions"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{formatOmopResult}
+  %\VignetteIndexEntry{format functions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -153,6 +153,8 @@ mock_sr |>
     colsToMergeRows = "all_columns"
   )
 ```
+
+
 
 ### fxTable
 To obtain a similar result but with a *flextable* object, we can use `fxTable` with the same arguments as before, however, `style` must be adapted to use the *officer* package since it is the accepted by *flextable.*

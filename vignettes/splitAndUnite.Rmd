@@ -2,7 +2,7 @@
 title: "split and unite functions"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{2_split_unite_functions}
+  %\VignetteIndexEntry{split and unite functions}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
