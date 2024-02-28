@@ -2,7 +2,7 @@
 % Please edit documentation in R/gtTable.R
 \name{gtTable}
 \alias{gtTable}
-\title{Creats a gt object from a dataframe}
+\title{Creates a gt object from a dataframe}
 \usage{
 gtTable(
   x,
@@ -56,7 +56,7 @@ gt object
 A gt table.
 }
 \description{
-Creats a gt object from a dataframe using as delimiter (\code{delim}) to span
+Creates a gt object from a dataframe using as delimiter (\code{delim}) to span
 the header, and the specified styles for different parts of the table.
 }
 \examples{

@@ -24,13 +24,12 @@ appear in the estimateNameFormat argument (TRUE), or use the order in the
 input dataframe (FALSE).}
 }
 \value{
-A summarised_result object withspecified changes in estimate_name and
-estimate_value.
+A summarised_result object.
 }
 \description{
 Format estimate_name and estimate_value column of summarised_result and
 compared_result object, by changing the name of the estimate name and/or joining
-diferent estimate names together in a row.
+different estimate names together in a row.
 }
 \examples{
 \donttest{

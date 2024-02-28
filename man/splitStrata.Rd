@@ -16,7 +16,7 @@ A dataframe with strata_name as columns
 }
 \description{
 Pivots the input dataframe so the values of the column strata_name are
-tranformed into columns with values from the strata_level column.
+transformed into columns with values from the strata_level column.
 }
 \examples{
 mockSummarisedResult() |>

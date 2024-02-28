@@ -6,7 +6,7 @@
 #' @return A dataframe with group_name as columns
 #' @description
 #' Pivots the input dataframe so the values of the column group_name are
-#' tranformed into columns with values from the group_level column
+#' transformed into columns with values from the group_level column
 #'
 #'
 #' @export
@@ -34,7 +34,7 @@ splitGroup <- function(result,
 #' @return A dataframe with strata_name as columns
 #' @description
 #' Pivots the input dataframe so the values of the column strata_name are
-#' tranformed into columns with values from the strata_level column.
+#' transformed into columns with values from the strata_level column.
 #'
 #' @export
 #'
@@ -61,7 +61,7 @@ splitStrata <- function(result,
 #' @return A dataframe with additional_name as columns
 #' @description
 #' Pivots the input dataframe so the values of the column additional_name are
-#' tranformed into columns with values from the additional_level column.
+#' transformed into columns with values from the additional_level column.
 #'
 #' @export
 #'
@@ -87,7 +87,7 @@ splitAdditional <- function(result,
 #' @return A dataframe with group, strata and additional name as columns.
 #' @description
 #' Pivots the input dataframe so group, strata and additional name columns are
-#' tranformed into column names with values from the corresponding level columns
+#' transformed into column names with values from the corresponding level columns
 #' (group, strata, and additional).
 #'
 #' @export
@@ -116,7 +116,7 @@ splitAll <- function(result) {
 #'
 #' @return A dataframe with the specified name column values as columns.
 #' @description
-#' Pivots the input dataframe so the values of the name columns are tranformed
+#' Pivots the input dataframe so the values of the name columns are transformed
 #' into columns, which values come from the specified level column.
 #'
 #' @export

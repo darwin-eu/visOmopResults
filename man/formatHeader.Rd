@@ -2,7 +2,7 @@
 % Please edit documentation in R/formatHeader.R
 \name{formatHeader}
 \alias{formatHeader}
-\title{Creats a tibble with specific rows pivotted into columns}
+\title{Creates a tibble with specific rows pivotted into columns}
 \usage{
 formatHeader(
   result,
@@ -21,9 +21,9 @@ position.}
 
 \item{delim}{Delimiter to use to separate headers.}
 
-\item{includeHeaderName}{Wheather to include the column name as header.}
+\item{includeHeaderName}{Whether to include the column name as header.}
 
-\item{includeHeaderKey}{Wheather to include the header key (header,
+\item{includeHeaderKey}{Whether to include the header key (header,
 header_name, header_level) before each header type in the column names.}
 }
 \value{

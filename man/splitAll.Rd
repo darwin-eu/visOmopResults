@@ -14,7 +14,7 @@ A dataframe with group, strata and additional name as columns.
 }
 \description{
 Pivots the input dataframe so group, strata and additional name columns are
-tranformed into column names with values from the corresponding level columns
+transformed into column names with values from the corresponding level columns
 (group, strata, and additional).
 }
 \examples{

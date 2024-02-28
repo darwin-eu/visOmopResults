@@ -2,7 +2,7 @@
 % Please edit documentation in R/fxTable.R
 \name{fxTable}
 \alias{fxTable}
-\title{Creats a flextable object from a dataframe}
+\title{Creates a flextable object from a dataframe}
 \usage{
 fxTable(
   x,
@@ -56,7 +56,7 @@ flextable object
 A flextable.
 }
 \description{
-Creats a flextable object from a dataframe using as delimiter (\code{delim}) to span
+Creates a flextable object from a dataframe using as delimiter (\code{delim}) to span
 the header, and the specified styles for different parts of the table.
 }
 \examples{

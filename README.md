@@ -122,7 +122,7 @@ result |> dplyr::glimpse()
 
 ### 3. formatTable
 
-Next step is to format our table before tranforming to gt object. We
+Next step is to format our table before transforming to gt object. We
 will pivot *strata_name* and *strata_level* columns to have the strata
 groups as columns under the header “Study strata”.
 

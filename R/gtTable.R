@@ -1,4 +1,4 @@
-#' Creats a gt object from a dataframe
+#' Creates a gt object from a dataframe
 #'
 #' @param x A dataframe.
 #' @param delim Delimiter.
@@ -24,7 +24,7 @@
 #' @return gt object
 #'
 #' @description
-#' Creats a gt object from a dataframe using as delimiter (`delim`) to span
+#' Creates a gt object from a dataframe using as delimiter (`delim`) to span
 #' the header, and the specified styles for different parts of the table.
 #'
 #' @examples

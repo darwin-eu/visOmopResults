@@ -16,7 +16,7 @@ A dataframe with additional_name as columns
 }
 \description{
 Pivots the input dataframe so the values of the column additional_name are
-tranformed into columns with values from the additional_level column.
+transformed into columns with values from the additional_level column.
 }
 \examples{
 mockSummarisedResult() |>

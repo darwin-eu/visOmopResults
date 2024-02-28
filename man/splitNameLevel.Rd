@@ -27,7 +27,7 @@ splitNameLevel(
 A dataframe with the specified name column values as columns.
 }
 \description{
-Pivots the input dataframe so the values of the name columns are tranformed
+Pivots the input dataframe so the values of the name columns are transformed
 into columns, which values come from the specified level column.
 }
 \examples{

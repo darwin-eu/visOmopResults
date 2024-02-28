@@ -16,7 +16,7 @@ A dataframe with group_name as columns
 }
 \description{
 Pivots the input dataframe so the values of the column group_name are
-tranformed into columns with values from the group_level column
+transformed into columns with values from the group_level column
 }
 \examples{
 mockSummarisedResult() |>

@@ -53,7 +53,7 @@ mock_sr <- mock_sr |>
 mock_sr |> dplyr::glimpse()
 ```
 
-Additonal input arguments are `keepNotFormatted` to specify whether not formatted rows should be returned or dropped, and `useFormatOrder` to define if rows should be sorted as in `estimateNameFormat` or if the original order should be kept. In the latter scenario, when more than one estimate is pulled together, the new estimate position will be the first of the estimates being merged.
+Additional input arguments are `keepNotFormatted` to specify whether not formatted rows should be returned or dropped, and `useFormatOrder` to define if rows should be sorted as in `estimateNameFormat` or if the original order should be kept. In the latter scenario, when more than one estimate is pulled together, the new estimate position will be the first of the estimates being merged.
 
 
 
@@ -107,7 +107,7 @@ mock_sr |> dplyr::glimpse()
 Finally, we have the functions `gtTable` and `fxTable` which will transform our tibble into a *gt* or *flextable* object respectively. These functions provide several tools to personalise the formatted table. 
 
 ### gtTable
-Let's start by maniupating the dataframe to have the columns that we want to display, and then use `gtTable` with default values:
+Let's start by manipulating the dataframe to have the columns that we want to display, and then use `gtTable` with default values:
 
 ```{r}
 # first we select the columns we want:
@@ -119,7 +119,7 @@ mock_sr <- mock_sr |>
 mock_sr |>  gtTable()
 ```
 
-Now, we want to group results by "cohort_name". More specifically we want to have a row which the name of each cohort before the results of that cohort, and that *cohort1* comes before *cohort2*. Additonally, we want to merge those rows what contain the same information for all the columns. To get this table we will use `gtTable` as follows:
+Now, we want to group results by "cohort_name". More specifically we want to have a row which the name of each cohort before the results of that cohort, and that *cohort1* comes before *cohort2*. Additionally, we want to merge those rows what contain the same information for all the columns. To get this table we will use `gtTable` as follows:
 
 ```{r}
 mock_sr |>  
@@ -132,7 +132,7 @@ mock_sr |>
 ```
 
 
-We might also want to modify the default style of the table. For instance, we might want to higlight the cohort_name labels with a blue background, have the body text in red, and use a combination of orange and yellow for the header. We can do it with the `style` argument:
+We might also want to modify the default style of the table. For instance, we might want to highlight the cohort_name labels with a blue background, have the body text in red, and use a combination of orange and yellow for the header. We can do it with the `style` argument:
 
 ```{r}
 mock_sr |>  
