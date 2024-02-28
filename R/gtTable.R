@@ -21,14 +21,13 @@
 #' "all_columns" to apply this merging to all columns, or use NULL to indicate
 #' no merging should be applied.
 #'
-#' @return gt object
+#' @return gt object.
 #'
 #' @description
 #' Creates a gt object from a dataframe using as delimiter (`delim`) to span
 #' the header, and the specified styles for different parts of the table.
 #'
 #' @examples
-#' \donttest{
 #' mockSummarisedResult() |>
 #'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
 #'   formatHeader(header = c("Study strata", "strata_name", "strata_level"),
@@ -52,7 +51,6 @@
 #'     groupOrder = c("cohort1", "cohort2"),
 #'     colsToMergeRows = "all_columns"
 #'   )
-#' }
 #'
 #' @return A gt table.
 #'

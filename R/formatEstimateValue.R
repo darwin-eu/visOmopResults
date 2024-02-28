@@ -1,6 +1,6 @@
 #' Format the estimate_value column
 #'
-#' @param result A summarised_result or compared_result.
+#' @param result A summarised_result.
 #' @param decimals Number of decimals per estimate type (integer, numeric,
 #' percentage, proportion), estimate name, or all estimate values (introduce the
 #'  number of decimals).
@@ -10,15 +10,13 @@
 #' @return A summarised_result object with the estimate_value column formatted.
 #'
 #' @description
-#' Format the estimate_value column of summarised_result and compared_result
-#' object by editing number of decimals, decimal and thousand/millions separator
-#' marks.
+#' Format the estimate_value column of summarised_result object by editing
+#' number of decimals, decimal and thousand/millions separator marks.
 #'
 #'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' result <- mockSummarisedResult()
 #'
 #' result |> formatEstimateValue(decimals = 1)
@@ -27,7 +25,6 @@
 #'
 #' result |>
 #'   formatEstimateValue(decimals = c(numeric = 1, count = 0))
-#' }
 #'
 formatEstimateValue <- function(result,
                                 decimals = c(

@@ -1,6 +1,6 @@
 #' Format estimate_name and estimate_value column
 #'
-#' @param result A summarised_result or compared_result.
+#' @param result A summarised_result.
 #' @param estimateNameFormat Named list of estimate name's to join, sorted by
 #' computation order. Indicate estimate_name's between <...>.
 #' @param keepNotFormatted Whether to keep rows not formatted.
@@ -9,16 +9,15 @@
 #' input dataframe (FALSE).
 #'
 #' @description
-#' Format estimate_name and estimate_value column of summarised_result and
-#' compared_result object, by changing the name of the estimate name and/or joining
-#' different estimate names together in a row.
+#' Format estimate_name and estimate_value column of summarised_result object,
+#' by changing the name of the estimate name and/or joining different estimate
+#' names together in a row.
 #'
 #' @return A summarised_result object.
 #'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' result <- mockSummarisedResult()
 #' result |>
 #'   formatEstimateName(
@@ -27,7 +26,6 @@
 #'     ),
 #'     keepNotFormatted = FALSE
 #'   )
-#' }
 #'
 formatEstimateName <- function(result,
                                estimateNameFormat = NULL,

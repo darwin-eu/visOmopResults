@@ -2,7 +2,7 @@
 #'
 #' `r lifecycle::badge("deprecated")`
 #'
-#' @param result A summarised_result or compared_result.
+#' @param result A summarised_result.
 #' @param header Names of the columns to make headers. Names not corresponding
 #' to a column of the table result, will be used as headers at the defined
 #' position.
@@ -22,7 +22,6 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' result <- mockSummarisedResult()
 #'
 #' result |>
@@ -33,7 +32,6 @@
 #'     ),
 #'     includeHeaderName = FALSE
 #'   )
-#' }
 
 formatTable <- function(result,
                         header,

@@ -1,9 +1,9 @@
 #' Creates a tibble with specific rows pivotted into columns
 #'
-#' @param result A summarised_result or compared_result.
-#' @param header Names of the columns to make headers. Names not corresponding
-#' to a column of the table result, will be used as headers at the defined
-#' position.
+#' @param result A summarised_result.
+#' @param header Names of the columns to make headers. Names that doesn't
+#' correspnd to a column of the table result, will be used as headers at the
+#' defined position.
 #' @param delim Delimiter to use to separate headers.
 #' @param includeHeaderName Whether to include the column name as header.
 #' @param includeHeaderKey Whether to include the header key (header,
@@ -20,7 +20,6 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' result <- mockSummarisedResult()
 #'
 #' result |>
@@ -31,7 +30,6 @@
 #'     ),
 #'     includeHeaderName = FALSE
 #'   )
-#' }
 
 formatHeader <- function(result,
                          header,

@@ -1,12 +1,12 @@
-#' Split group_name and group_level into columns.
+#' Split group_name and group_level into columns
 #'
 #' @param result omop_result object.
 #' @param overall Whether to keep overall column if present.
 #'
-#' @return A dataframe with group_name as columns
+#' @return A dataframe with group_name as columns.
 #' @description
 #' Pivots the input dataframe so the values of the column group_name are
-#' transformed into columns with values from the group_level column
+#' transformed into columns with values from the group_level column.
 #'
 #'
 #' @export
@@ -26,12 +26,12 @@ splitGroup <- function(result,
   )
 }
 
-#' Split strata_name and strata_level into columns.
+#' Split strata_name and strata_level into columns
 #'
 #' @param result omop_result object.
 #' @param overall Whether to keep overall column if present.
 #'
-#' @return A dataframe with strata_name as columns
+#' @return A dataframe with strata_name as columns.
 #' @description
 #' Pivots the input dataframe so the values of the column strata_name are
 #' transformed into columns with values from the strata_level column.
@@ -53,12 +53,12 @@ splitStrata <- function(result,
   )
 }
 
-#' Split additional_name and additional_level into columns.
+#' Split additional_name and additional_level into columns
 #'
 #' @param result omop_result object.
 #' @param overall Whether to keep overall column if present.
 #'
-#' @return A dataframe with additional_name as columns
+#' @return A dataframe with additional_name as columns.
 #' @description
 #' Pivots the input dataframe so the values of the column additional_name are
 #' transformed into columns with values from the additional_level column.
@@ -80,9 +80,9 @@ splitAdditional <- function(result,
   )
 }
 
-#' Split group, strata and additional into their respective columns.
+#' Split group, strata and additional into their respective columns
 #'
-#' @param result Omop result object (summarised_result or compared_result).
+#' @param result A summarised_result object.
 #'
 #' @return A dataframe with group, strata and additional name as columns.
 #' @description
@@ -106,9 +106,9 @@ splitAll <- function(result) {
     splitAdditional(overall = FALSE)
 }
 
-#' Split name and level columns into the columns.
+#' Split name and level columns into the columns
 #'
-#' @param result Omop result object (summarised_result or compared_result).
+#' @param result A summarised_result object.
 #' @param name Column with the names.
 #' @param level Column with the levels.
 #' @param keep Whether to keep the original group_name and group_level columns.

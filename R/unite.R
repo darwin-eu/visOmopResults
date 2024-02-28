@@ -1,5 +1,4 @@
-
-#' Unite one or more columns in name-level format.
+#' Unite one or more columns in name-level format
 #'
 #' @param x Tibble or data.frame.
 #' @param cols Columns to aggregate.
@@ -111,7 +110,7 @@ uniteNameLevel <- function(x,
   return(x)
 }
 
-#' Unite one or more columns in group_name-group_level format.
+#' Unite one or more columns in group_name-group_level format
 #'
 #' @param x Tibble or data.frame.
 #' @param cols Columns to aggregate.
@@ -120,7 +119,6 @@ uniteNameLevel <- function(x,
 #' @return A Tibble with the new columns.
 #'
 #' @examples
-#' \donttest{
 #' x <- dplyr::tibble(
 #'   variable = "number subjects",
 #'   value = c(10, 15, 40, 78),
@@ -132,7 +130,6 @@ uniteNameLevel <- function(x,
 #'
 #' x |>
 #'   uniteGroup(c("sex", "age_group"))
-#' }
 #'
 #' @export
 #'
@@ -142,7 +139,7 @@ uniteGroup <- function(x, cols, removeNA = TRUE) {
   )
 }
 
-#' Unite one or more columns in strata_name-strata_level format.
+#' Unite one or more columns in strata_name-strata_level format
 #'
 #' @param x Tibble or data.frame.
 #' @param cols Columns to aggregate.
@@ -151,7 +148,6 @@ uniteGroup <- function(x, cols, removeNA = TRUE) {
 #' @return A Tibble with the new columns.
 #'
 #' @examples
-#' \donttest{
 #' x <- dplyr::tibble(
 #'   variable = "number subjects",
 #'   value = c(10, 15, 40, 78),
@@ -163,7 +159,6 @@ uniteGroup <- function(x, cols, removeNA = TRUE) {
 #'
 #' x |>
 #'   uniteStrata(c("sex", "age_group"))
-#' }
 #'
 #' @export
 #'
@@ -174,7 +169,7 @@ uniteStrata <- function(x, cols, removeNA = TRUE) {
   )
 }
 
-#' Unite one or more columns in additional_name-additional_level format.
+#' Unite one or more columns in additional_name-additional_level format
 #'
 #' @param x Tibble or data.frame.
 #' @param cols Columns to aggregate.
@@ -183,7 +178,6 @@ uniteStrata <- function(x, cols, removeNA = TRUE) {
 #' @return A Tibble with the new columns.
 #'
 #' @examples
-#' \donttest{
 #' x <- dplyr::tibble(
 #'   variable = "number subjects",
 #'   value = c(10, 15, 40, 78),
@@ -195,7 +189,6 @@ uniteStrata <- function(x, cols, removeNA = TRUE) {
 #'
 #' x |>
 #'   uniteAdditional(c("sex", "age_group"))
-#' }
 #'
 #' @export
 #'
