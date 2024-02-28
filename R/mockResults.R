@@ -192,5 +192,6 @@ mockSummarisedResult <- function() {
         "additional_level" = "overall"
       )
     ) |>
+
     omopgenerics::newSummarisedResult()
 }

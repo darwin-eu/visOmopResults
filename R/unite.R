@@ -44,66 +44,71 @@ uniteNameLevel <- function(x,
   checkmate::assertTibble(x)
   checkmate::assertTRUE(all(cols %in% colnames(x)))
 
-  id <- min(which(colnames(x) %in% cols))
+  if (length(cols) > 0) {
+    id <- min(which(colnames(x) %in% cols))
 
-  present <- c(name, level)[c(name, level) %in% colnames(x)]
-  if (length(present) > 0) {
-    cli::cli_warn(
-      "The following columns will be overwritten:
+    present <- c(name, level)[c(name, level) %in% colnames(x)]
+    if (length(present) > 0) {
+      cli::cli_warn(
+        "The following columns will be overwritten:
       {paste0(present, collapse = ', ')}."
-    )
-  }
+      )
+    }
 
-  containAnd <- cols[grepl(" and ", cols)]
-  if (length(containAnd) > 0) {
-    cli::cli_abort("Column names must not contain ' and ' : `{paste0(containAnd, collapse = '`, `')}`")
-  }
-  containAnd <- cols[
-    lapply(cols, function(col){any(grepl(" and ", x[[col]]))}) |> unlist()
-  ]
-  if (length(containAnd) > 0) {
-    cli::cli_abort("Column values must not contain ' and '. Present in: `{paste0(containAnd, collapse = '`, `')}`.")
-  }
+    containAnd <- cols[grepl(" and ", cols)]
+    if (length(containAnd) > 0) {
+      cli::cli_abort("Column names must not contain ' and ' : `{paste0(containAnd, collapse = '`, `')}`")
+    }
+    containAnd <- cols[
+      lapply(cols, function(col){any(grepl(" and ", x[[col]]))}) |> unlist()
+    ]
+    if (length(containAnd) > 0) {
+      cli::cli_abort("Column values must not contain ' and '. Present in: `{paste0(containAnd, collapse = '`, `')}`.")
+    }
 
-  if (removeNA) {
-    x <- x |>
-      dplyr::rowwise() |>
-      dplyr::mutate(
-        !!name := dplyr::if_else(
-          dplyr::if_all(dplyr::all_of(cols), is.na),
-          "overall", apply(dplyr::across(dplyr::all_of(cols)), 1, newName)),
-        !!level := dplyr::if_else(
-          dplyr::if_all(dplyr::all_of(cols), is.na),
-          "overall", apply(dplyr::across(dplyr::all_of(cols)), 1, newLevel))
-      ) |>
-      dplyr::ungroup()
-    if (!keep) {
-      x <- x |> dplyr::select(!dplyr::all_of(cols))
+    if (removeNA) {
+      x <- x |>
+        dplyr::rowwise() |>
+        dplyr::mutate(
+          !!name := dplyr::if_else(
+            dplyr::if_all(dplyr::all_of(cols), is.na),
+            "overall", apply(dplyr::across(dplyr::all_of(cols)), 1, newName)),
+          !!level := dplyr::if_else(
+            dplyr::if_all(dplyr::all_of(cols), is.na),
+            "overall", apply(dplyr::across(dplyr::all_of(cols)), 1, newLevel))
+        ) |>
+        dplyr::ungroup()
+      if (!keep) {
+        x <- x |> dplyr::select(!dplyr::all_of(cols))
+      }
+    } else {
+      x <- x |>
+        dplyr::mutate(!!name := paste0(cols, collapse = " and ")) |>
+        tidyr::unite(
+          col = !!level, dplyr::all_of(cols), sep = " and ", remove = !keep
+        )
+    }
+
+    if (keep) {
+      colskeep <- cols
+    } else {
+      colskeep <- character()
+    }
+
+    # move cols
+    if (id == 1) {
+      x <- x |>
+        dplyr::relocate(dplyr::all_of(c(colskeep, name, level)))
+    } else {
+      id <- colnames(x)[id - 1]
+      x <- x |>
+        dplyr::relocate(
+          dplyr::all_of(c(colskeep, name, level)), .after = dplyr::all_of(id)
+        )
     }
   } else {
     x <- x |>
-      dplyr::mutate(!!name := paste0(cols, collapse = " and ")) |>
-      tidyr::unite(
-        col = !!level, dplyr::all_of(cols), sep = " and ", remove = !keep
-      )
-  }
-
-  if (keep) {
-    colskeep <- cols
-  } else {
-    colskeep <- character()
-  }
-
-  # move cols
-  if (id == 1) {
-    x <- x |>
-      dplyr::relocate(dplyr::all_of(c(colskeep, name, level)))
-  } else {
-    id <- colnames(x)[id - 1]
-    x <- x |>
-      dplyr::relocate(
-        dplyr::all_of(c(colskeep, name, level)), .after = dplyr::all_of(id)
-      )
+      dplyr::mutate(!!name := "overall", !!level := "overall")
   }
 
   return(x)
