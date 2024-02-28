@@ -1,16 +1,18 @@
 #' Unite one or more columns in name-level format
 #'
-#' @param x Tibble or data.frame.
+#' @param x A dataframe.
 #' @param cols Columns to aggregate.
 #' @param name Column name of the `name` column.
 #' @param level Column name of the `level` column.
 #' @param keep Whether to keep the original columns.
 #' @param removeNA Whether to remove NA values from the united columns.
 #'
-#' @return A Tibble with the new columns.
+#' @return A tibble with the new columns.
+#' @description
+#' Unites targeted table columns into a pair of name-level columns.
+#'
 #'
 #' @examples
-#' \donttest{
 #' x <- dplyr::tibble(
 #'   variable = "number subjects",
 #'   value = c(10, 15, 40, 78),
@@ -18,15 +20,12 @@
 #'   age_group = c("<40", ">40", ">40", "<40")
 #' )
 #'
-#' x
-#'
 #' x |>
 #'   uniteNameLevel(
 #'     cols = c("sex", "age_group"),
 #'     name = "new_column_name",
 #'     level = "new_column_level"
 #'   )
-#' }
 #'
 #' @export
 #'
@@ -112,11 +111,13 @@ uniteNameLevel <- function(x,
 
 #' Unite one or more columns in group_name-group_level format
 #'
-#' @param x Tibble or data.frame.
+#' @param x Tibble or dataframe.
 #' @param cols Columns to aggregate.
 #' @param removeNA Whether to remove NA values from the united columns.
 #'
-#' @return A Tibble with the new columns.
+#' @return A tibble with the new columns.
+#' @description
+#' Unites targeted table columns into group_name-group_level columns.
 #'
 #' @examples
 #' x <- dplyr::tibble(
@@ -125,8 +126,6 @@ uniteNameLevel <- function(x,
 #'   sex = c("Male", "Female", "Male", "Female"),
 #'   age_group = c("<40", ">40", ">40", "<40")
 #' )
-#'
-#' x
 #'
 #' x |>
 #'   uniteGroup(c("sex", "age_group"))
@@ -141,11 +140,13 @@ uniteGroup <- function(x, cols, removeNA = TRUE) {
 
 #' Unite one or more columns in strata_name-strata_level format
 #'
-#' @param x Tibble or data.frame.
+#' @param x Tibble or dataframe.
 #' @param cols Columns to aggregate.
 #' @param removeNA Whether to remove NA values from the united columns.
 #'
-#' @return A Tibble with the new columns.
+#' @return A tibble with the new columns.
+#' @description
+#' Unites targeted table columns into strata_name-strata_level columns.
 #'
 #' @examples
 #' x <- dplyr::tibble(
@@ -154,8 +155,6 @@ uniteGroup <- function(x, cols, removeNA = TRUE) {
 #'   sex = c("Male", "Female", "Male", "Female"),
 #'   age_group = c("<40", ">40", ">40", "<40")
 #' )
-#'
-#' x
 #'
 #' x |>
 #'   uniteStrata(c("sex", "age_group"))
@@ -171,11 +170,13 @@ uniteStrata <- function(x, cols, removeNA = TRUE) {
 
 #' Unite one or more columns in additional_name-additional_level format
 #'
-#' @param x Tibble or data.frame.
+#' @param x Tibble or dataframe.
 #' @param cols Columns to aggregate.
 #' @param removeNA Whether to remove NA values from the united columns.
 #'
-#' @return A Tibble with the new columns.
+#' @return A tibble with the new columns.
+#' @description
+#' Unites targeted table columns into additional_name-additional_level columns.
 #'
 #' @examples
 #' x <- dplyr::tibble(
@@ -184,8 +185,6 @@ uniteStrata <- function(x, cols, removeNA = TRUE) {
 #'   sex = c("Male", "Female", "Male", "Female"),
 #'   age_group = c("<40", ">40", ">40", "<40")
 #' )
-#'
-#' x
 #'
 #' x |>
 #'   uniteAdditional(c("sex", "age_group"))

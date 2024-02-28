@@ -1,6 +1,6 @@
 #' Identify group columns in an omop result object
 #'
-#' @param result An omop result object.
+#' @param result A summarised_result.
 #' @param overall Whether to keep overall column if present.
 #'
 #' @return Unique values of the group name column.
@@ -18,7 +18,7 @@ groupColumns <- function(result, overall = FALSE) {
 
 #' Identify strata columns in an omop result object
 #'
-#' @param result An omop result object.
+#' @param result A summarised_result.
 #' @param overall Whether to keep overall column if present.
 #'
 #' @return Unique values of the strata name column.
@@ -36,7 +36,7 @@ strataColumns <- function(result, overall = FALSE) {
 
 #' Identify additional columns in an omop result object
 #'
-#' @param result An omop result object.
+#' @param result A summarised_result.
 #' @param overall Whether to keep overall column if present.
 #'
 #' @return Unique values of the additional name column.

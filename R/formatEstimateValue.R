@@ -1,4 +1,4 @@
-#' Format the estimate_value column
+#' Formats the estimate_value column
 #'
 #' @param result A summarised_result.
 #' @param decimals Number of decimals per estimate type (integer, numeric,
@@ -7,10 +7,10 @@
 #' @param decimalMark Decimal separator mark.
 #' @param bigMark Thousand and millions separator mark.
 #'
-#' @return A summarised_result object with the estimate_value column formatted.
+#' @return A summarised_result.
 #'
 #' @description
-#' Format the estimate_value column of summarised_result object by editing
+#' Formats the estimate_value column of summarised_result object by editing
 #' number of decimals, decimal and thousand/millions separator marks.
 #'
 #'

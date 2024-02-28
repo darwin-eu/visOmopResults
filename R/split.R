@@ -1,12 +1,13 @@
-#' Split group_name and group_level into columns
+#' Split group_name and group_level columns
 #'
-#' @param result omop_result object.
+#' @param result A dataframe with at least the columns group_name and
+#' group_level.
 #' @param overall Whether to keep overall column if present.
 #'
-#' @return A dataframe with group_name as columns.
+#' @return A dataframe.
 #' @description
 #' Pivots the input dataframe so the values of the column group_name are
-#' transformed into columns with values from the group_level column.
+#' transformed into columns that contain values from the group_level column.
 #'
 #'
 #' @export
@@ -26,15 +27,16 @@ splitGroup <- function(result,
   )
 }
 
-#' Split strata_name and strata_level into columns
+#' Split strata_name and strata_level columns
 #'
-#' @param result omop_result object.
+#' @param result A dataframe with at least the columns strata_name and
+#' strata_level.
 #' @param overall Whether to keep overall column if present.
 #'
-#' @return A dataframe with strata_name as columns.
+#' @return A dataframe.
 #' @description
 #' Pivots the input dataframe so the values of the column strata_name are
-#' transformed into columns with values from the strata_level column.
+#' transformed into columns that contain values from the strata_level column.
 #'
 #' @export
 #'
@@ -53,15 +55,16 @@ splitStrata <- function(result,
   )
 }
 
-#' Split additional_name and additional_level into columns
+#' Split additional_name and additional_level columns
 #'
-#' @param result omop_result object.
+#' @param result  A dataframe with at least the columns additional_name and
+#' additional_level.
 #' @param overall Whether to keep overall column if present.
 #'
-#' @return A dataframe with additional_name as columns.
+#' @return A dataframe.
 #' @description
 #' Pivots the input dataframe so the values of the column additional_name are
-#' transformed into columns with values from the additional_level column.
+#' transformed into columns that contain values from the additional_level column.
 #'
 #' @export
 #'
@@ -80,23 +83,21 @@ splitAdditional <- function(result,
   )
 }
 
-#' Split group, strata and additional into their respective columns
+#' Split group, strata and additional at once.
 #'
 #' @param result A summarised_result object.
 #'
 #' @return A dataframe with group, strata and additional name as columns.
 #' @description
 #' Pivots the input dataframe so group, strata and additional name columns are
-#' transformed into column names with values from the corresponding level columns
-#' (group, strata, and additional).
+#' transformed into columns that contain values from the corresponding level
+#'  columns (group, strata, and additional).
 #'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' mockSummarisedResult() |>
 #'   splitAll()
-#' }
 #'
 splitAll <- function(result) {
   result |>

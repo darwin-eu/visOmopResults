@@ -1,4 +1,5 @@
-#' Creates a tibble with specific rows pivotted into columns
+#' Creates a tibble with trageted rows pivotted into columns with header-ready
+#' names to get formatted tables (gt or flextable)
 #'
 #' @param result A summarised_result.
 #' @param header Names of the columns to make headers. Names that doesn't
@@ -9,13 +10,13 @@
 #' @param includeHeaderKey Whether to include the header key (header,
 #' header_name, header_level) before each header type in the column names.
 #'
-#' @return A tibble with rows pivotted into columns with column names for future
-#' spanner headers.
+#' @return A tibble with rows pivotted into columns with key names for
+#' subsequent header formatting.
 #'
 #' @description
-#' Pivots a summarised_result object based on the column names in header. The
-#' names of the new columns refer to the information on the column based on
-#' the header input, with labels are separated using a delimiter.
+#' Pivots a summarised_result object based on the column names in header,
+#' generating specific column names for subsequent header formatting in
+#' gtTable and fxTable functions.
 #'
 #' @export
 #'

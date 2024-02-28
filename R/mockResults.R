@@ -1,4 +1,4 @@
-#' A summarised_result mock object
+#' A summarised_result object filled with mock data
 #'
 #' @return An object of the class summarised_result with mock data.
 #' @description Creates an object of the class summarised_result with mock data
