@@ -7,10 +7,6 @@ validateResult <- function(x, call = parent.frame()) {
   if (!is.null(xn)) {
     return(xn)
   }
-  xn <- tryCatch(
-    omopgenerics::newComparedResult(x),
-    error = function(e){NULL}
-  )
   if (!is.null(xn)) {
     return(xn)
   }

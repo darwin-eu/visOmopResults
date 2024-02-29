@@ -2,7 +2,7 @@
 % Please edit documentation in R/unite.R
 \name{uniteNameLevel}
 \alias{uniteNameLevel}
-\title{Unite one or more columns in name-level format.}
+\title{Unite one or more columns in name-level format}
 \usage{
 uniteNameLevel(
   x,
@@ -14,7 +14,7 @@ uniteNameLevel(
 )
 }
 \arguments{
-\item{x}{Tibble or data.frame.}
+\item{x}{A dataframe.}
 
 \item{cols}{Columns to aggregate.}
 
@@ -27,13 +27,12 @@ uniteNameLevel(
 \item{removeNA}{Whether to remove NA values from the united columns.}
 }
 \value{
-A Tibble with the new columns.
+A tibble with the new columns.
 }
 \description{
-Unite one or more columns in name-level format.
+Unites targeted table columns into a pair of name-level columns.
 }
 \examples{
-\donttest{
 x <- dplyr::tibble(
   variable = "number subjects",
   value = c(10, 15, 40, 78),
@@ -41,14 +40,11 @@ x <- dplyr::tibble(
   age_group = c("<40", ">40", ">40", "<40")
 )
 
-x
-
 x |>
   uniteNameLevel(
     cols = c("sex", "age_group"),
     name = "new_column_name",
     level = "new_column_level"
   )
-}
 
 }

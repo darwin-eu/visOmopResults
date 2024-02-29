@@ -2,21 +2,22 @@
 % Please edit documentation in R/split.R
 \name{splitGroup}
 \alias{splitGroup}
-\title{Split group_name and group_level into columns.}
+\title{Split group_name and group_level columns}
 \usage{
 splitGroup(result, overall = FALSE)
 }
 \arguments{
-\item{result}{omop_result object.}
+\item{result}{A dataframe with at least the columns group_name and
+group_level.}
 
 \item{overall}{Whether to keep overall column if present.}
 }
 \value{
-A dataframe with group_name as columns
+A dataframe.
 }
 \description{
 Pivots the input dataframe so the values of the column group_name are
-transformed into columns with values from the group_level column
+transformed into columns that contain values from the group_level column.
 }
 \examples{
 mockSummarisedResult() |>

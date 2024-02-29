@@ -2,12 +2,12 @@
 % Please edit documentation in R/columns.R
 \name{strataColumns}
 \alias{strataColumns}
-\title{Identify strata columns in an omop result object.}
+\title{Identify strata columns in an omop result object}
 \usage{
 strataColumns(result, overall = FALSE)
 }
 \arguments{
-\item{result}{An omop result object.}
+\item{result}{A summarised_result.}
 
 \item{overall}{Whether to keep overall column if present.}
 }

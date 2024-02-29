@@ -13,7 +13,7 @@ formatTable(
 )
 }
 \arguments{
-\item{result}{A summarised_result or compared_result.}
+\item{result}{A summarised_result.}
 
 \item{header}{Names of the columns to make headers. Names not corresponding
 to a column of the table result, will be used as headers at the defined
@@ -39,7 +39,6 @@ the header input, with labels are separated using a delimiter.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \examples{
-\donttest{
 result <- mockSummarisedResult()
 
 result |>
@@ -50,5 +49,4 @@ result |>
     ),
     includeHeaderName = FALSE
   )
-}
 }

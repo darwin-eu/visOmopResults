@@ -2,7 +2,7 @@
 % Please edit documentation in R/mockResults.R
 \name{mockSummarisedResult}
 \alias{mockSummarisedResult}
-\title{A summarised_result mock object.}
+\title{A summarised_result object filled with mock data}
 \usage{
 mockSummarisedResult()
 }

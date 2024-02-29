@@ -10,16 +10,18 @@
 status](https://www.r-pkg.org/badges/version/visOmopResults)](https://CRAN.R-project.org/package=visOmopResults)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
+[![Codecov test
+coverage](https://codecov.io/gh/oxford-pharmacoepi/visOmopResults/branch/main/graph/badge.svg)](https://app.codecov.io/gh/oxford-pharmacoepi/visOmopResults?branch=main)
 <!-- badges: end -->
 
 ## Package overview
 
 visOmopResults contains functions for formatting objects of the class
-*summarised_result* and *compared_result* (see R package
-[omopgenerics](https://CRAN.R-project.org/package=omopgenerics)). This
-package simplifies the handling of these objects to obtain nice output
-tables in the format of *gt* or *flextable*’ to report results via Shiny
-apps, RMarkdown, Quarto, and more.
+*summarised_result* (see R package
+[omopgenerics](https://cran.r-project.org/web/packages/omopgenerics/index.html)).
+This package simplifies the handling of these objects to obtain nice
+output tables in the format of *gt* or *flextable*’ to report results
+via Shiny apps, RMarkdown, Quarto, and more.
 
 ## Installation
 
@@ -34,10 +36,9 @@ devtools::install_github("oxford-pharmacoepi/visOmopResults")
 ## Example
 
 In this example we show how to use the package to format a mock
-*summarised_result* object into a nice gt object.
+summarised_result object into a nice gt object.
 
-First we load the package and create the mock *summarised_result*
-object.
+First we load the package and create the mock summarised_result object.
 
 ``` r
 library(visOmopResults)
@@ -66,7 +67,7 @@ result |> dplyr::glimpse()
 #> Rows: 126
 #> Columns: 15
 #> $ cdm_name         <chr> "mock", "mock", "mock", "mock", "mock", "mock", "mock…
-#> $ result_type      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+#> $ result_type      <chr> "mock_summarised_result", "mock_summarised_result", "…
 #> $ package_name     <chr> "visOmopResults", "visOmopResults", "visOmopResults",…
 #> $ package_version  <chr> "0.0.1", "0.0.1", "0.0.1", "0.0.1", "0.0.1", "0.0.1",…
 #> $ group_name       <chr> "cohort_name", "cohort_name", "cohort_name", "cohort_…
@@ -77,7 +78,7 @@ result |> dplyr::glimpse()
 #> $ variable_level   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 #> $ estimate_name    <chr> "count", "count", "count", "count", "count", "count",…
 #> $ estimate_type    <chr> "integer", "integer", "integer", "integer", "integer"…
-#> $ estimate_value   <chr> "4,530,457", "7,827,494", "4,349,346", "1,962,506", "…
+#> $ estimate_value   <chr> "7,081,266", "1,164,087", "686,410", "8,715,458", "2,…
 #> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
 ```
@@ -87,8 +88,8 @@ result |> dplyr::glimpse()
 With this function we can transform the *estimate_name* and
 *estimate_value* columns. For example, it allows to consolidate into one
 row counts and percentages related to the same variable within the same
-group and strata. It’s worth noting that the estimate_name is enclosed
-within \<…\> in the *estimateNameFormat* argument.”
+group and strata. It’s worth noting that the *estimate_name* is enclosed
+within \<…\> in the `estimateNameFormat` argument.
 
 ``` r
 result <- result |> formatEstimateName(
@@ -96,7 +97,6 @@ result <- result |> formatEstimateName(
                          "N" = "<count>",
                          "Mean (SD)" = "<mean> (<sd>)"),
   keepNotFormatted = FALSE)
-#> Joining with `by = join_by(estimate_name)`
 ```
 
 ``` r
@@ -104,7 +104,7 @@ result |> dplyr::glimpse()
 #> Rows: 72
 #> Columns: 15
 #> $ cdm_name         <chr> "mock", "mock", "mock", "mock", "mock", "mock", "mock…
-#> $ result_type      <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
+#> $ result_type      <chr> "mock_summarised_result", "mock_summarised_result", "…
 #> $ package_name     <chr> "visOmopResults", "visOmopResults", "visOmopResults",…
 #> $ package_version  <chr> "0.0.1", "0.0.1", "0.0.1", "0.0.1", "0.0.1", "0.0.1",…
 #> $ group_name       <chr> "cohort_name", "cohort_name", "cohort_name", "cohort_…
@@ -115,7 +115,7 @@ result |> dplyr::glimpse()
 #> $ variable_level   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 #> $ estimate_name    <chr> "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N"…
 #> $ estimate_type    <chr> "character", "character", "character", "character", "…
-#> $ estimate_value   <chr> "4,530,457", "7,827,494", "4,349,346", "1,962,506", "…
+#> $ estimate_value   <chr> "7,081,266", "1,164,087", "686,410", "8,715,458", "2,…
 #> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
 ```
@@ -128,10 +128,10 @@ groups as columns under the header “Study strata”.
 
 ``` r
 result <- result |>
-  formatTable(header = c("Study strata", "strata_name", "strata_level"),
-              delim = "\n", 
-              includeHeaderName = FALSE,
-              includeHeaderKey = TRUE)
+  formatHeader(header = c("Study strata", "strata_name", "strata_level"),
+               delim = "\n", 
+               includeHeaderName = FALSE,
+               includeHeaderKey = TRUE)
 ```
 
 ``` r
@@ -165,7 +165,7 @@ result |> dplyr::glimpse()
 
 Finally, we convert the transformed *summarised_result* object in steps
 1, 2, and 3, into a nice gt object. We use the default visOmopResults
-style. Additonally, we separet data into groups specified by
+style. Additionally, we separate data into groups specified by
 *group_level* column to differentiate between cohort1 and cohort2.
 
 ``` r
