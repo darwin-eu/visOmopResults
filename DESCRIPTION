@@ -35,7 +35,7 @@ Imports:
     gt,
     lifecycle,
     officer,
-    omopgenerics (>= 0.0.2),
+    omopgenerics (>= 0.0.3),
     rlang,
     stringr,
     tidyr
