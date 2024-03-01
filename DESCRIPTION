@@ -40,5 +40,7 @@ Imports:
     stringr,
     tidyr
 URL: https://oxford-pharmacoepi.github.io/visOmopResults/
+Remotes: 
+    darwin-eu-dev/omopgenerics
 BugReports: https://github.com/oxford-pharmacoepi/visOmopResults/issues
 VignetteBuilder: knitr
