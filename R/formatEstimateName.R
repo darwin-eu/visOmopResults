@@ -31,7 +31,8 @@ formatEstimateName <- function(result,
                                keepNotFormatted = TRUE,
                                useFormatOrder = TRUE) {
   # initial checks
-  result <- validateResult(result)
+  # result <- validateResult(result)
+  checkmate::assertTRUE(all(c("estimate_name", "estimate_value") %in% colnames(result)))
   estimateNameFormat <- validateEstimateNameFormat(estimateNameFormat)
   checkmate::assertCharacter(estimateNameFormat, any.missing = FALSE, unique = TRUE, min.chars = 1, null.ok = TRUE)
   checkmate::assertLogical(keepNotFormatted, len = 1, any.missing = FALSE)

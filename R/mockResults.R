@@ -192,5 +192,27 @@ mockSummarisedResult <- function() {
         "additional_level" = "overall"
       )
     ) |>
+    # # settings
+    # dplyr::union_all(
+    #   dplyr::tibble(
+    #     "cdm_name" = "mock",
+    #     "result_type" = "mock_summarised_result",
+    #     "package_name" = "visOmopResults",
+    #     "package_version" = utils::packageVersion("visOmopResults") |>
+    #       as.character(),
+    #     "group_name" = "overall",
+    #     "group_level" = "overall",
+    #     "strata_name" = "overall",
+    #     "strata_level" = "overall",
+    #     "variable_name" = "settings",
+    #     "variable_level" = NA_character_,
+    #     "estimate_name" = "mock_default",
+    #     "estimate_type" = "logical",
+    #     "estimate_value" = "TRUE",
+    #     "additional_name" = "overall",
+    #     "additional_level" = "overall"
+    #   )
+    # ) |>
+    dplyr::mutate(result_id = "1") |>
     omopgenerics::newSummarisedResult()
 }

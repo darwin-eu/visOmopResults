@@ -114,8 +114,8 @@ Let's start by manipulating the dataframe to have the columns that we want to di
 mock_sr <- mock_sr |>
   splitGroup() |>
   dplyr::select(!dplyr::all_of(c("cdm_name", "result_type", "package_name", 
-                                 "package_version", "estimate_type",
-                                 "additional_name", "additional_level")))
+                                 "package_version", "estimate_type", "result_id",
+                                 "additional_name", "additional_level"))) 
 mock_sr |>  gtTable()
 ```
 

@@ -1,7 +1,6 @@
 test_that("formatEstimateValue", {
 
   result <- mockSummarisedResult()
-
   # default decimal input ----
   result_output <- formatEstimateValue(result,
                                        decimals = c(
@@ -209,6 +208,7 @@ test_that("formatEstimateValue", {
     # no warning when estimate value is NA
     result <- mockSummarisedResult() |>
       dplyr::union_all(dplyr::tibble(
+        "result_id" = "1",
         "cdm_name" = "mock",
         "result_type" = NA_character_,
         "package_name" = "visOmopResults",
@@ -257,4 +257,6 @@ test_that("formatEstimateValue", {
                                      decimals = 1,
                                      decimalMark = NULL,
                                      bigMark = ","))
+    expect_error(formatEstimateValue(result |> dplyr::select(-estimate_value)))
+
 })

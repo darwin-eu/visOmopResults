@@ -101,7 +101,6 @@ splitAdditional <- function(result,
 #'
 splitAll <- function(result) {
   result |>
-    validateResult() |>
     splitGroup(overall = FALSE) |>
     splitStrata(overall = FALSE) |>
     splitAdditional(overall = FALSE)
