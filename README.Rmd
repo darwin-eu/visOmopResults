@@ -79,7 +79,7 @@ result <- result |> formatEstimateName(
 result |> dplyr::glimpse()
 ```
 
-### 3. formatTable
+### 3. formatHeader
 Next step is to format our table before transforming to gt object. We will pivot *strata_name* and *strata_level* columns to have the strata groups as columns under the header "Study strata".
 
 ```{r}
@@ -101,7 +101,7 @@ Finally, we convert the transformed *summarised_result* object in steps 1, 2, an
 gtResult <- result |>
   dplyr::select(-c("result_type", "package_name", "package_version", 
                    "group_name", "additional_name", "additional_level",
-                   "estimate_type")) |>
+                   "estimate_type", "result_id")) |>
   gtTable(
     delim = "\n",
     style = "default",

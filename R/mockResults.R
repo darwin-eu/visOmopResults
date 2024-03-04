@@ -213,6 +213,6 @@ mockSummarisedResult <- function() {
     #     "additional_level" = "overall"
     #   )
     # ) |>
-    dplyr::mutate(result_id = "1") |>
+    dplyr::mutate(result_id = as.integer(1)) |>
     omopgenerics::newSummarisedResult()
 }

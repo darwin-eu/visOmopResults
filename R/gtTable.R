@@ -92,7 +92,11 @@ gtTable <- function(
 
   # na
   if (!is.null(na)){
-    x <- x |> dplyr::mutate(dplyr::across(colnames(x), ~ dplyr::if_else(is.na(.x), na, .x)))
+    x <- x |>
+      dplyr::mutate(
+        dplyr::across(dplyr::where(~is.numeric(.x)), ~as.character(.x)),
+        dplyr::across(colnames(x), ~ dplyr::if_else(is.na(.x), na, .x))
+      )
   }
 
   # Spanners

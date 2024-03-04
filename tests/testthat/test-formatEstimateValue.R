@@ -208,7 +208,7 @@ test_that("formatEstimateValue", {
     # no warning when estimate value is NA
     result <- mockSummarisedResult() |>
       dplyr::union_all(dplyr::tibble(
-        "result_id" = "1",
+        "result_id" = as.integer(1),
         "cdm_name" = "mock",
         "result_type" = NA_character_,
         "package_name" = "visOmopResults",
@@ -260,3 +260,4 @@ test_that("formatEstimateValue", {
     expect_error(formatEstimateValue(result |> dplyr::select(-estimate_value)))
 
 })
+
