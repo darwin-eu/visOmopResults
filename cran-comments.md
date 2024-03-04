@@ -2,4 +2,5 @@
 
 0 errors | 0 warnings | 1 note
 
-* This is a new release. We do not cite any reference.
+* This is a new release.
+There is a change of maintainer: Marti Catala -> Nuria Mercade-Besora
