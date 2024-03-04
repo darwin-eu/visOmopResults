@@ -38,10 +38,10 @@ formatHeader <- function(result,
                          includeHeaderName = TRUE,
                          includeHeaderKey = TRUE) {
   # initial checks
-  # result <- validateResult(result)
-  checkmate::assertCharacter(x = header, any.missing = FALSE, null.ok = TRUE)
-  checkmate::assertCharacter(delim, min.chars = 1, len = 1, any.missing = FALSE, max.len = 1)
-  checkmate::assertLogical(includeHeaderName, any.missing = FALSE, len = 1)
+  assertTibble(result)
+  assertCharacter(header, null = TRUE)
+  assertCharacter(delim, length = 1)
+  assertLogical(includeHeaderName, length = 1)
   validateDelim(delim)
 
   if (!is.null(header)) {

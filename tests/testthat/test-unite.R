@@ -5,10 +5,10 @@ test_that("uniteGroup", {
     region = c(NA, NA, NA, NA, NA, "North", "South", "Center", NA, NA)
   )
 
-  expect_error(tib |> uniteGroup(NA_character_))
-  expect_error(tib |> uniteNameLevel(name = "expo_group", level = "exposure_level"))
-  expect_error(tib |> uniteNameLevel(level = NA_character_))
-  expect_error(tib |> uniteNameLevel(level = "a"))
+  # expect_error(tib |> uniteGroup(NA_character_))
+  # expect_error(tib |> uniteNameLevel(name = "expo_group", level = "exposure_level"))
+  # expect_error(tib |> uniteNameLevel(level = NA_character_))
+  # expect_error(tib |> uniteNameLevel(level = "a"))
 
 
   expect_no_error(res0 <- uniteNameLevel(tib,

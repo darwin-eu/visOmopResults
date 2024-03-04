@@ -30,19 +30,21 @@
 #' @export
 #'
 uniteNameLevel <- function(x,
-                           cols,
+                           cols = character(0),
                            name = "group_name",
                            level = "group_level",
                            keep = FALSE,
                            removeNA = TRUE) {
   # initial checks
-  checkmate::assertCharacter(cols)
-  checkmate::assertCharacter(name, len = 1, any.missing = FALSE)
-  checkmate::assertCharacter(level, len = 1, any.missing = FALSE)
-  checkmate::assertLogical(keep, len = 1, any.missing = FALSE)
-  checkmate::assertLogical(removeNA, len = 1, any.missing = FALSE)
-  checkmate::assertTibble(x)
-  checkmate::assertTRUE(all(cols %in% colnames(x)))
+  assertCharacter(cols)
+  assertCharacter(name, length = 1)
+  assertCharacter(level, length = 1)
+  assertLogical(keep, length = 1)
+  assertLogical(removeNA, length = 1)
+  assertTibble(x, columns = cols)
+  if (name == level) {
+    cli::cli_abort("Provide different names for the name and level columns.")
+  }
 
   if (length(cols) > 0) {
     id <- min(which(colnames(x) %in% cols))

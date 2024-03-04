@@ -132,17 +132,16 @@ splitNameLevel <- function(result,
                            level = "group_level",
                            keep = FALSE,
                            overall = FALSE) {
-  checkmate::assertCharacter(name, len = 1, any.missing = FALSE)
-  checkmate::assertCharacter(level, len = 1, any.missing = FALSE)
-  checkmate::assertLogical(keep, len = 1, any.missing = FALSE)
-  checkmate::assertTibble(result)
-  checkmate::assertTRUE(all(c(name, level) %in% colnames(result)))
+  assertCharacter(name, length = 1)
+  assertCharacter(level, length = 1)
+  assertLogical(keep, length = 1)
+  assertTibble(result, columns = c(name, level))
 
   newCols <- getColumns(result, name, TRUE)
   id <- which(name == colnames(result))
 
-  nameValues <- result[[name]] |> stringr::str_split(" and ")
-  levelValues <- result[[level]] |> stringr::str_split(" and ")
+  nameValues <- result[[name]] |> strsplit(" and ")
+  levelValues <- result[[level]] |> strsplit(" and ")
   if (!all(lengths(nameValues) == lengths(levelValues))) {
     cli::cli_abort("Column names and levels number does not match")
   }

@@ -6,7 +6,7 @@
 \usage{
 uniteNameLevel(
   x,
-  cols,
+  cols = character(0),
   name = "group_name",
   level = "group_level",
   keep = FALSE,

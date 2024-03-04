@@ -55,10 +55,9 @@ additionalColumns <- function(result, overall = FALSE) {
 
 getColumns <- function(result, col, overall) {
   # initial checks
-  checkmate::assertTibble(result)
-  checkmate::assertCharacter(col, any.missing = FALSE, len = 1)
-  checkmate::assertTRUE(col %in% colnames(result))
-  checkmate::assertLogical(overall, any.missing = FALSE, len = 1)
+  assertTibble(result, columns = col)
+  assertCharacter(col, length = 1)
+  assertLogical(overall, length = 1)
 
   # extract columns
   x <- result |>
