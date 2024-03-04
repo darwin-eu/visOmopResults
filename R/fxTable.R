@@ -62,7 +62,11 @@ fxTable <- function(
     colsToMergeRows = NULL
 ) {
 
-  # Checks
+  # Package checks
+  rlang::check_installed("flextable")
+  rlang::check_installed("officer")
+
+  # Input checks
   assertTibble(x)
   assertCharacter(delim, length = 1)
   assertCharacter(na, length = 1, null = TRUE)

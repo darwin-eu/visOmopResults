@@ -70,7 +70,10 @@ gtTable <- function(
     colsToMergeRows = NULL
     ) {
 
-  # Checks
+  # Package checks
+  rlang::check_installed("gt")
+
+  # Input checks
   assertTibble(x)
   assertCharacter(delim, length = 1)
   assertCharacter(na, length = 1, null = TRUE)

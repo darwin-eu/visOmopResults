@@ -18,14 +18,14 @@ BugReports: https://github.com/oxford-pharmacoepi/visOmopResults/issues
 Imports: 
     cli,
     dplyr,
-    flextable,
-    gt,
     lifecycle,
-    officer,
     omopgenerics (>= 0.0.3),
     rlang,
     tidyr
 Suggests: 
+    flextable,
+    gt,
+    officer
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
