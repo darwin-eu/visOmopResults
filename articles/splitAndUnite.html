@@ -101,7 +101,8 @@ summarised_result object to use in the following examples.</p>
 <span><span class="va">mock_sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mockSummarisedResult.html">mockSummarisedResult</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">mock_sr</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 126</span></span>
-<span><span class="co">#&gt; Columns: 15</span></span>
+<span><span class="co">#&gt; Columns: 16</span></span>
+<span><span class="co">#&gt; $ result_id        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
 <span><span class="co">#&gt; $ cdm_name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock", "mock", "mock", "mock", "mock", "mock", "mock…</span></span>
 <span><span class="co">#&gt; $ result_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock_summarised_result", "mock_summarised_result", "…</span></span>
 <span><span class="co">#&gt; $ package_name     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "visOmopResults", "visOmopResults", "visOmopResults",…</span></span>
@@ -114,7 +115,7 @@ summarised_result object to use in the following examples.</p>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1442846", "5214932", "9481564", "6150909", "6538799"…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4233003", "4539311", "6005340", "5660456", "9381998"…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 <p>A summarised_result contains 3 types of name-level paired columns
@@ -144,7 +145,8 @@ and <em>sex</em>.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mock_sr</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/splitStrata.html">splitStrata</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 126</span></span>
-<span><span class="co">#&gt; Columns: 15</span></span>
+<span><span class="co">#&gt; Columns: 16</span></span>
+<span><span class="co">#&gt; $ result_id        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
 <span><span class="co">#&gt; $ cdm_name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock", "mock", "mock", "mock", "mock", "mock", "mock…</span></span>
 <span><span class="co">#&gt; $ result_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock_summarised_result", "mock_summarised_result", "…</span></span>
 <span><span class="co">#&gt; $ package_name     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "visOmopResults", "visOmopResults", "visOmopResults",…</span></span>
@@ -157,25 +159,26 @@ and <em>sex</em>.</p>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1442846", "5214932", "9481564", "6150909", "6538799"…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4233003", "4539311", "6005340", "5660456", "9381998"…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 <p>Similar to <code>splitStrata</code>, the functions
 <code>splitGroup</code> will split <em>group_name</em> and
 <em>group_level</em> columns, while <code>splitAdditional</code> will
-split the additonal name-level pair. Finally, the function
+split the additional name-level pair. Finally, the function
 <code>splitAll</code> will split group, strata, and additonal at
 once.</p>
 <p>A part from the summarised_result object, another argument to these
 functions is <code>overall</code>. This argument is to specify whether
-to keep the <em>overall</em> column when splitting. It is setted to
-FALSE by default. Now, we repeat the previous example setting “overall”
-to TRUE. Notice how the output has one more column which refers to the
+to keep the <em>overall</em> column when splitting. It is set to FALSE
+by default. Now, we repeat the previous example setting “overall” to
+TRUE. Notice how the output has one more column which refers to the
 overall strata.</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">mock_sr</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/splitStrata.html">splitStrata</a></span><span class="op">(</span>overall <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 126</span></span>
-<span><span class="co">#&gt; Columns: 16</span></span>
+<span><span class="co">#&gt; Columns: 17</span></span>
+<span><span class="co">#&gt; $ result_id        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
 <span><span class="co">#&gt; $ cdm_name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock", "mock", "mock", "mock", "mock", "mock", "mock…</span></span>
 <span><span class="co">#&gt; $ result_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock_summarised_result", "mock_summarised_result", "…</span></span>
 <span><span class="co">#&gt; $ package_name     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "visOmopResults", "visOmopResults", "visOmopResults",…</span></span>
@@ -189,7 +192,7 @@ overall strata.</p>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1442846", "5214932", "9481564", "6150909", "6538799"…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4233003", "4539311", "6005340", "5660456", "9381998"…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 <div class="section level4">
@@ -233,7 +236,7 @@ arguments.</p>
 <span><span class="co">#&gt;   denominator        outcome wash_out previous_observation</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> general_population stroke  60       180</span></span></code></pre></div>
-<p>The function <code>splitNameLevel</code>, in additonally to the
+<p>The function <code>splitNameLevel</code>, in additionally to the
 argument <code>overall</code> previously seen, has the argument
 <code>keep</code> to set whether we want to keep the columns before the
 splitting.</p>
@@ -251,7 +254,7 @@ within a dataframe.</p>
 <p>To work with summarised_result objects, we have the
 <code>uniteGroup</code>, <code>uniteStrata</code>, and
 <code>uniteAdditional</code> functions which will generate the group,
-strata, and additional name-level columns respectivelly from a given set
+strata, and additional name-level columns respectively from a given set
 of columns. For instance, in the following example we want to create the
 <em>group_name</em> and <em>group_level</em> columns:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
@@ -322,7 +325,7 @@ rows where all values are NA it uses “overall”.</p>
 </h3>
 <p>Lastly, the function <code>uniteNameLevel</code>, idem to
 <code>splitNameLevel</code>, provides more flexibility on the name-level
-column naming, in additon of the <code>keep</code> argument (FALSE by
+column naming, in addition of the <code>keep</code> argument (FALSE by
 default) to choose whether to keep the targeted columns. For instance,
 if we repeat the previous example with <code>keep</code> set to TRUE we
 would obtain the following output:</p>
