@@ -12,33 +12,33 @@ Authors@R: c(
     )
     )
 Maintainer: Núria Mercadé-Besora <nuria.mercadebesora@ndorms.ox.ac.uk>
-Description: Provides methods to transform omop_result objects into formatted
-    tables and figures, facilitating the visualization of study results working 
-    with the Observational Medical Outcomes Partnership (OMOP) Common Data 
-    Model.
+Description: Provides methods to transform omop_result objects into
+    formatted tables and figures, facilitating the visualization of study
+    results working with the Observational Medical Outcomes Partnership
+    (OMOP) Common Data Model.
 License: Apache License (>= 2)
-Encoding: UTF-8
-Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+URL: https://oxford-pharmacoepi.github.io/visOmopResults/
+BugReports: https://github.com/oxford-pharmacoepi/visOmopResults/issues
+Imports: 
+    cli,
+    dplyr,
+    lifecycle,
+    omopgenerics (>= 0.0.3),
+    rlang,
+    tidyr
 Suggests: 
+    flextable,
+    gt,
+    officer,
     knitr,
     rmarkdown,
     testthat (>= 3.0.0)
+VignetteBuilder: 
+    knitr
+Remotes: 
+    darwin-eu-dev/omopgenerics
 Config/testthat/edition: 3
 Config/testthat/parallel: true
-Imports: 
-    checkmate,
-    cli,
-    dplyr,
-    flextable,
-    glue,
-    gt,
-    lifecycle,
-    officer,
-    omopgenerics (>= 0.0.2),
-    rlang,
-    stringr,
-    tidyr
-URL: https://oxford-pharmacoepi.github.io/visOmopResults/
-BugReports: https://github.com/oxford-pharmacoepi/visOmopResults/issues
-VignetteBuilder: knitr
+Encoding: UTF-8
+Roxygen: list(markdown = TRUE)
+RoxygenNote: 7.3.1

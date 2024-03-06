@@ -2,7 +2,7 @@
 % Please edit documentation in R/split.R
 \name{splitNameLevel}
 \alias{splitNameLevel}
-\title{Split name and level columns into the columns.}
+\title{Split name and level columns into the columns}
 \usage{
 splitNameLevel(
   result,
@@ -13,7 +13,7 @@ splitNameLevel(
 )
 }
 \arguments{
-\item{result}{Omop result object (summarised_result or compared_result).}
+\item{result}{A summarised_result object.}
 
 \item{name}{Column with the names.}
 
@@ -27,7 +27,7 @@ splitNameLevel(
 A dataframe with the specified name column values as columns.
 }
 \description{
-Pivots the input dataframe so the values of the name columns are tranformed
+Pivots the input dataframe so the values of the name columns are transformed
 into columns, which values come from the specified level column.
 }
 \examples{

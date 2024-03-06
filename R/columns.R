@@ -1,6 +1,6 @@
-#' Identify group columns in an omop result object.
+#' Identify group columns in an omop result object
 #'
-#' @param result An omop result object.
+#' @param result A summarised_result.
 #' @param overall Whether to keep overall column if present.
 #'
 #' @return Unique values of the group name column.
@@ -16,9 +16,9 @@ groupColumns <- function(result, overall = FALSE) {
   getColumns(result = result, col = "group_name", overall = overall)
 }
 
-#' Identify strata columns in an omop result object.
+#' Identify strata columns in an omop result object
 #'
-#' @param result An omop result object.
+#' @param result A summarised_result.
 #' @param overall Whether to keep overall column if present.
 #'
 #' @return Unique values of the strata name column.
@@ -34,9 +34,9 @@ strataColumns <- function(result, overall = FALSE) {
   getColumns(result = result, col = "strata_name", overall = overall)
 }
 
-#' Identify additional columns in an omop result object.
+#' Identify additional columns in an omop result object
 #'
-#' @param result An omop result object.
+#' @param result A summarised_result.
 #' @param overall Whether to keep overall column if present.
 #'
 #' @return Unique values of the additional name column.
@@ -55,10 +55,9 @@ additionalColumns <- function(result, overall = FALSE) {
 
 getColumns <- function(result, col, overall) {
   # initial checks
-  checkmate::assertTibble(result)
-  checkmate::assertCharacter(col, any.missing = FALSE, len = 1)
-  checkmate::assertTRUE(col %in% colnames(result))
-  checkmate::assertLogical(overall, any.missing = FALSE, len = 1)
+  assertTibble(result, columns = col)
+  assertCharacter(col, length = 1)
+  assertLogical(overall, length = 1)
 
   # extract columns
   x <- result |>

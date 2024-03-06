@@ -2,7 +2,7 @@
 % Please edit documentation in R/formatEstimateValue.R
 \name{formatEstimateValue}
 \alias{formatEstimateValue}
-\title{Format the estimate_value column}
+\title{Formats the estimate_value column}
 \usage{
 formatEstimateValue(
   result,
@@ -12,7 +12,7 @@ formatEstimateValue(
 )
 }
 \arguments{
-\item{result}{A summarised_result or compared_result.}
+\item{result}{A summarised_result.}
 
 \item{decimals}{Number of decimals per estimate type (integer, numeric,
 percentage, proportion), estimate name, or all estimate values (introduce the
@@ -23,15 +23,13 @@ number of decimals).}
 \item{bigMark}{Thousand and millions separator mark.}
 }
 \value{
-A summarised_result object with the estimate_value column formatted.
+A summarised_result.
 }
 \description{
-Format the estimate_value column of summarised_result and compared_result
-object by editing number of decimals, decimal and thousand/millions separator
-marks.
+Formats the estimate_value column of summarised_result object by editing
+number of decimals, decimal and thousand/millions separator marks.
 }
 \examples{
-\donttest{
 result <- mockSummarisedResult()
 
 result |> formatEstimateValue(decimals = 1)
@@ -40,6 +38,4 @@ result |> formatEstimateValue(decimals = c(integer = 0, numeric = 1))
 
 result |>
   formatEstimateValue(decimals = c(numeric = 1, count = 0))
-}
-
 }

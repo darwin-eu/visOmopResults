@@ -1,25 +1,22 @@
-#' Format estimate_name and estimate_value column
+#' Formats estimate_name and estimate_value column
 #'
-#' @param result A summarised_result or compared_result.
+#' @param result A summarised_result.
 #' @param estimateNameFormat Named list of estimate name's to join, sorted by
 #' computation order. Indicate estimate_name's between <...>.
 #' @param keepNotFormatted Whether to keep rows not formatted.
 #' @param useFormatOrder Whether to use the order in which estimate names
-#' appear in the estimateNameFormat argument (TRUE), or use the order in the
+#' appear in the estimateNameFormat (TRUE), or use the order in the
 #' input dataframe (FALSE).
 #'
 #' @description
-#' Format estimate_name and estimate_value column of summarised_result and
-#' compared_result object, by changing the name of the estimate name and/or joining
-#' diferent estimate names together in a row.
+#' Formats estimate_name and estimate_value columns by changing the name of the
+#' estimate name and/or joining different estimates together in a single row.
 #'
-#' @return A summarised_result object withspecified changes in estimate_name and
-#' estimate_value.
+#' @return A summarised_result object.
 #'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' result <- mockSummarisedResult()
 #' result |>
 #'   formatEstimateName(
@@ -28,18 +25,18 @@
 #'     ),
 #'     keepNotFormatted = FALSE
 #'   )
-#' }
 #'
 formatEstimateName <- function(result,
                                estimateNameFormat = NULL,
                                keepNotFormatted = TRUE,
                                useFormatOrder = TRUE) {
   # initial checks
-  result <- validateResult(result)
+  # result <- validateResult(result)
+  assertTibble(result, columns = c("estimate_name", "estimate_value"))
   estimateNameFormat <- validateEstimateNameFormat(estimateNameFormat)
-  checkmate::assertCharacter(estimateNameFormat, any.missing = FALSE, unique = TRUE, min.chars = 1, null.ok = TRUE)
-  checkmate::assertLogical(keepNotFormatted, len = 1, any.missing = FALSE)
-  checkmate::assertLogical(useFormatOrder, len = 1, any.missing = FALSE)
+  assertCharacter(estimateNameFormat, null = TRUE)
+  assertLogical(keepNotFormatted, length = 1)
+  assertLogical(useFormatOrder, length = 1)
 
   # format estimate
   if (!is.null(estimateNameFormat)) {
@@ -50,8 +47,6 @@ formatEstimateName <- function(result,
     # class
     if (inherits(result, "summarised_result")) {
       resultFormatted <- resultFormatted |> omopgenerics::newSummarisedResult()
-    } else {
-      resultFormatted <- resultFormatted |> omopgenerics::newComparedResult()
     }
   } else {
     resultFormatted <- result
@@ -90,7 +85,7 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
     nameK <- nms[k]
     formatK <- format[k] |> unname()
     keys <- result[["estimate_name"]] |> unique()
-    keysK <- stringr::str_match_all(formatK, "(?<=\\<).+?(?=\\>)") |> unlist()
+    keysK <- regmatches(formatK, gregexpr("(?<=\\<).+?(?=\\>)", formatK, perl = T))[[1]]
     format_boolean <- all(keysK %in% keys)
     len <- length(keysK)
     if (len > 0 & format_boolean) {
@@ -121,8 +116,8 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
         ) |>
         dplyr::union_all(resF)
     } else {
-      if (len > 0) {warning(glue::glue("{formatK} has not been formatted."), call. = FALSE)
-       } else {warning(glue::glue("{formatK} does not contain an estimate name indicated by <...>"), call. = FALSE)}
+      if (len > 0) {warning(paste0(formatK, " has not been formatted."), call. = FALSE)
+       } else {warning(paste0(formatK, " does not contain an estimate name indicated by <...>"), call. = FALSE)}
     }
   }
   #useFormatOrder

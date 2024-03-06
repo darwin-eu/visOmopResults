@@ -2,21 +2,22 @@
 % Please edit documentation in R/split.R
 \name{splitStrata}
 \alias{splitStrata}
-\title{Split strata_name and strata_level into columns.}
+\title{Split strata_name and strata_level columns}
 \usage{
 splitStrata(result, overall = FALSE)
 }
 \arguments{
-\item{result}{omop_result object.}
+\item{result}{A dataframe with at least the columns strata_name and
+strata_level.}
 
 \item{overall}{Whether to keep overall column if present.}
 }
 \value{
-A dataframe with strata_name as columns
+A dataframe.
 }
 \description{
 Pivots the input dataframe so the values of the column strata_name are
-tranformed into columns with values from the strata_level column.
+transformed into columns that contain values from the strata_level column.
 }
 \examples{
 mockSummarisedResult() |>

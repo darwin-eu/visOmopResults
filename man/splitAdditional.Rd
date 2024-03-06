@@ -2,21 +2,22 @@
 % Please edit documentation in R/split.R
 \name{splitAdditional}
 \alias{splitAdditional}
-\title{Split additional_name and additional_level into columns.}
+\title{Split additional_name and additional_level columns}
 \usage{
 splitAdditional(result, overall = FALSE)
 }
 \arguments{
-\item{result}{omop_result object.}
+\item{result}{A dataframe with at least the columns additional_name and
+additional_level.}
 
 \item{overall}{Whether to keep overall column if present.}
 }
 \value{
-A dataframe with additional_name as columns
+A dataframe.
 }
 \description{
 Pivots the input dataframe so the values of the column additional_name are
-tranformed into columns with values from the additional_level column.
+transformed into columns that contain values from the additional_level column.
 }
 \examples{
 mockSummarisedResult() |>

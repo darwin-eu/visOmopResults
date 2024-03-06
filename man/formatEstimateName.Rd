@@ -2,7 +2,7 @@
 % Please edit documentation in R/formatEstimateName.R
 \name{formatEstimateName}
 \alias{formatEstimateName}
-\title{Format estimate_name and estimate_value column}
+\title{Formats estimate_name and estimate_value column}
 \usage{
 formatEstimateName(
   result,
@@ -12,7 +12,7 @@ formatEstimateName(
 )
 }
 \arguments{
-\item{result}{A summarised_result or compared_result.}
+\item{result}{A summarised_result.}
 
 \item{estimateNameFormat}{Named list of estimate name's to join, sorted by
 computation order. Indicate estimate_name's between <...>.}
@@ -20,20 +20,17 @@ computation order. Indicate estimate_name's between <...>.}
 \item{keepNotFormatted}{Whether to keep rows not formatted.}
 
 \item{useFormatOrder}{Whether to use the order in which estimate names
-appear in the estimateNameFormat argument (TRUE), or use the order in the
+appear in the estimateNameFormat (TRUE), or use the order in the
 input dataframe (FALSE).}
 }
 \value{
-A summarised_result object withspecified changes in estimate_name and
-estimate_value.
+A summarised_result object.
 }
 \description{
-Format estimate_name and estimate_value column of summarised_result and
-compared_result object, by changing the name of the estimate name and/or joining
-diferent estimate names together in a row.
+Formats estimate_name and estimate_value columns by changing the name of the
+estimate name and/or joining different estimates together in a single row.
 }
 \examples{
-\donttest{
 result <- mockSummarisedResult()
 result |>
   formatEstimateName(
@@ -42,6 +39,5 @@ result |>
     ),
     keepNotFormatted = FALSE
   )
-}
 
 }

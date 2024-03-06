@@ -27,9 +27,8 @@ mock_sr <- mockSummarisedResult()
 mock_sr |> glimpse()
 ```
 
+
 A summarised_result contains 3 types of name-level paired columns which are targeted by the set of unite and split functions. These are the **group** columns which typically can contain information about cohorts, **strata** columns which have data on stratification for each group, and finally the **additional** columns which include further information not covered by group and strata.
-
-
 
 ## Split functions
 The idea of the split functions is to pivot the "name" (e.g. *group_name*) column to split each value of that column into a column in the dataframe, which values are taken by the "level" (e.g. *group_level*) column.
@@ -42,9 +41,9 @@ For instance, the `splitGroup` function will target the *group_name-group_level*
 mock_sr |> splitStrata() |> glimpse()
 ```
 
-Similar to `splitStrata`, the functions `splitGroup` will split *group_name* and *group_level* columns, while `splitAdditional` will split the additonal name-level pair. Finally, the function `splitAll` will split group, strata, and additonal at once.
+Similar to `splitStrata`, the functions `splitGroup` will split *group_name* and *group_level* columns, while `splitAdditional` will split the additional name-level pair. Finally, the function `splitAll` will split group, strata, and additonal at once.
 
-A part from the summarised_result object, another argument to these functions is `overall`. This argument is to specify whether to keep the *overall* column when splitting. It is setted to FALSE by default. Now, we repeat the previous example setting "overall" to TRUE. Notice how the output has one more column which refers to the overall strata.
+A part from the summarised_result object, another argument to these functions is `overall`. This argument is to specify whether to keep the *overall* column when splitting. It is set to FALSE by default. Now, we repeat the previous example setting "overall" to TRUE. Notice how the output has one more column which refers to the overall strata.
 
 ```{r}
 mock_sr |> splitStrata(overall = TRUE) |> glimpse()
@@ -76,7 +75,7 @@ data_to_split |>
   )
 ```
 
-The function `splitNameLevel`, in additonally to the argument `overall` previously seen, has the argument `keep` to set whether we want to keep the columns before the splitting.
+The function `splitNameLevel`, in additionally to the argument `overall` previously seen, has the argument `keep` to set whether we want to keep the columns before the splitting.
 
 
 
@@ -85,7 +84,7 @@ The function `splitNameLevel`, in additonally to the argument `overall` previous
 The unite functions are the complementary to the split ones. These are meant to generate name-level pair columns from targeted columns within a dataframe. 
 
 ### uniteGroup(), uniteStrata(), and uniteAdditional()
-To work with summarised_result objects, we have the `uniteGroup`, `uniteStrata`, and `uniteAdditional` functions which will generate the group, strata, and additional name-level columns respectivelly from a given set of columns. For instance, in the following example we want to create the *group_name* and *group_level* columns:
+To work with summarised_result objects, we have the `uniteGroup`, `uniteStrata`, and `uniteAdditional` functions which will generate the group, strata, and additional name-level columns respectively from a given set of columns. For instance, in the following example we want to create the *group_name* and *group_level* columns:
 
 ```{r}
 to_unite_group <- tibble(
@@ -119,7 +118,7 @@ to_unite_strata |>
 
 ### uniteNameLevel()
 
-Lastly, the function `uniteNameLevel`, idem to `splitNameLevel`, provides more flexibility on the name-level column naming, in additon of the `keep` argument (FALSE by default) to choose whether to keep the targeted columns. For instance, if we repeat the previous example with `keep` set to TRUE we would obtain the following output:
+Lastly, the function `uniteNameLevel`, idem to `splitNameLevel`, provides more flexibility on the name-level column naming, in addition of the `keep` argument (FALSE by default) to choose whether to keep the targeted columns. For instance, if we repeat the previous example with `keep` set to TRUE we would obtain the following output:
 
 ```{r}
 to_unite_strata |>

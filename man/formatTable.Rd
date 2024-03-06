@@ -2,7 +2,7 @@
 % Please edit documentation in R/formatTable.R
 \name{formatTable}
 \alias{formatTable}
-\title{Creats a tibble with specific rows pivotted into columns}
+\title{Creates a tibble with specific rows pivotted into columns}
 \usage{
 formatTable(
   result,
@@ -13,7 +13,7 @@ formatTable(
 )
 }
 \arguments{
-\item{result}{A summarised_result or compared_result.}
+\item{result}{A summarised_result.}
 
 \item{header}{Names of the columns to make headers. Names not corresponding
 to a column of the table result, will be used as headers at the defined
@@ -21,9 +21,9 @@ position.}
 
 \item{delim}{Delimiter to use to separate headers.}
 
-\item{includeHeaderName}{Wheather to include the column name as header.}
+\item{includeHeaderName}{Whether to include the column name as header.}
 
-\item{includeHeaderKey}{Wheather to include the header key (header,
+\item{includeHeaderKey}{Whether to include the header key (header,
 header_name, header_level) before each header type in the column names.}
 }
 \value{
@@ -39,7 +39,6 @@ the header input, with labels are separated using a delimiter.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \examples{
-\donttest{
 result <- mockSummarisedResult()
 
 result |>
@@ -50,5 +49,4 @@ result |>
     ),
     includeHeaderName = FALSE
   )
-}
 }

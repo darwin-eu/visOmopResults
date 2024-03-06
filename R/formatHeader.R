@@ -1,26 +1,26 @@
-#' Creats a tibble with specific rows pivotted into columns
+#' Creates a tibble with trageted rows pivotted into columns with header-ready
+#' names to get formatted tables (gt or flextable)
 #'
-#' @param result A summarised_result or compared_result.
-#' @param header Names of the columns to make headers. Names not corresponding
-#' to a column of the table result, will be used as headers at the defined
-#' position.
+#' @param result A summarised_result.
+#' @param header Names of the columns to make headers. Names that doesn't
+#' correspnd to a column of the table result, will be used as headers at the
+#' defined position.
 #' @param delim Delimiter to use to separate headers.
-#' @param includeHeaderName Wheather to include the column name as header.
-#' @param includeHeaderKey Wheather to include the header key (header,
+#' @param includeHeaderName Whether to include the column name as header.
+#' @param includeHeaderKey Whether to include the header key (header,
 #' header_name, header_level) before each header type in the column names.
 #'
-#' @return A tibble with rows pivotted into columns with column names for future
-#' spanner headers.
+#' @return A tibble with rows pivotted into columns with key names for
+#' subsequent header formatting.
 #'
 #' @description
-#' Pivots a summarised_result object based on the column names in header. The
-#' names of the new columns refer to the information on the column based on
-#' the header input, with labels are separated using a delimiter.
+#' Pivots a summarised_result object based on the column names in header,
+#' generating specific column names for subsequent header formatting in
+#' gtTable and fxTable functions.
 #'
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' result <- mockSummarisedResult()
 #'
 #' result |>
@@ -31,7 +31,6 @@
 #'     ),
 #'     includeHeaderName = FALSE
 #'   )
-#' }
 
 formatHeader <- function(result,
                          header,
@@ -39,10 +38,10 @@ formatHeader <- function(result,
                          includeHeaderName = TRUE,
                          includeHeaderKey = TRUE) {
   # initial checks
-  result <- validateResult(result)
-  checkmate::assertCharacter(x = header, any.missing = FALSE, null.ok = TRUE)
-  checkmate::assertCharacter(delim, min.chars = 1, len = 1, any.missing = FALSE, max.len = 1)
-  checkmate::assertLogical(includeHeaderName, any.missing = FALSE, len = 1)
+  assertTibble(result)
+  assertCharacter(header, null = TRUE)
+  assertCharacter(delim, length = 1)
+  assertLogical(includeHeaderName, length = 1)
   validateDelim(delim)
 
   if (!is.null(header)) {
