@@ -70,16 +70,20 @@ gtTable <- function(
     colsToMergeRows = NULL
     ) {
 
-  # Checks
-  checkmate::assertDataFrame(x)
-  checkmate::assertCharacter(delim, min.chars = 1, len = 1, any.missing = FALSE)
-  checkmate::assertCharacter(na, len = 1, null.ok = TRUE)
-  checkmate::assertCharacter(title, len = 1, null.ok = TRUE, any.missing = FALSE)
-  checkmate::assertCharacter(subtitle, len = 1, null.ok = TRUE, any.missing = FALSE)
-  checkmate::assertCharacter(caption, len = 1, null.ok = TRUE, any.missing = FALSE)
-  checkmate::assertCharacter(groupNameCol, null.ok = TRUE, any.missing = FALSE)
-  checkmate::assertLogical(groupNameAsColumn, len = 1, any.missing = FALSE)
-  checkmate::assertCharacter(groupOrder, null.ok = TRUE, any.missing = FALSE)
+  # Package checks
+  rlang::check_installed("gt")
+
+  # Input checks
+  assertTibble(x)
+  assertCharacter(delim, length = 1)
+  assertCharacter(na, length = 1, null = TRUE)
+  assertCharacter(title, length = 1, null = TRUE)
+  assertCharacter(subtitle, length = 1, null = TRUE)
+  assertCharacter(caption, length = 1, null= TRUE)
+  assertCharacter(groupNameCol, null = TRUE)
+  assertLogical(groupNameAsColumn, length = 1)
+  assertCharacter(groupOrder, null = TRUE)
+  assertCharacter(colsToMergeRows, null = TRUE)
   validateColsToMergeRows(x, colsToMergeRows, groupNameCol)
   style <- validateStyle(style, "gt")
   if (is.null(title) & !is.null(subtitle)) {
@@ -88,7 +92,11 @@ gtTable <- function(
 
   # na
   if (!is.null(na)){
-    x <- x |> dplyr::mutate(dplyr::across(colnames(x), ~ dplyr::if_else(is.na(.x), na, .x)))
+    x <- x |>
+      dplyr::mutate(
+        dplyr::across(dplyr::where(~is.numeric(.x)), ~as.character(.x)),
+        dplyr::across(colnames(x), ~ dplyr::if_else(is.na(.x), na, .x))
+      )
   }
 
   # Spanners
@@ -279,7 +287,7 @@ gtStyles <- function(styleName) {
     )
   )
   if (! styleName %in% names(styles)) {
-    warning(glue::glue("{styleName} does not correspon to any of our defined styles. Returning default."),
+    warning(paste0(styleName, "does not correspon to any of our defined styles. Returning default."),
             call. = FALSE)
     styleName <- "default"
   }

@@ -25,7 +25,7 @@
 #'
 #' result |>
 #'   formatEstimateValue(decimals = c(numeric = 1, count = 0))
-#'
+
 formatEstimateValue <- function(result,
                                 decimals = c(
                                   integer = 0, numeric = 2, percentage = 1,
@@ -34,13 +34,16 @@ formatEstimateValue <- function(result,
                                 decimalMark = ".",
                                 bigMark = ",") {
   # initial checks
-  result <- validateResult(result)
+  assertTibble(result, columns = c("estimate_name", "estimate_type", "estimate_value"))
   decimals <- validateDecimals(result, decimals)
-  checkmate::assertCharacter(decimalMark, len = 1, any.missing = FALSE)
-  checkmate::assertCharacter(bigMark, len = 1, any.missing = FALSE, null.ok = TRUE)
+  assertCharacter(decimalMark, length = 1)
+  assertCharacter(bigMark, length = 1, null = TRUE)
+
   if (is.null(bigMark)) {bigMark <- ""}
 
   result <- formatEstimateValueInternal(result, decimals, decimalMark, bigMark)
+
+
   return(result)
 }
 

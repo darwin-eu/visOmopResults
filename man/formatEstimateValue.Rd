@@ -38,5 +38,3 @@ result |> formatEstimateValue(decimals = c(integer = 0, numeric = 1))
 
 result |>
   formatEstimateValue(decimals = c(numeric = 1, count = 0))
-
-}

@@ -28,9 +28,8 @@ mock_sr <- mockSummarisedResult()
 mock_sr |> glimpse()
 ```
 
+
 A summarised_result contains 3 types of name-level paired columns which are targeted by the set of unite and split functions. These are the **group** columns which typically can contain information about cohorts, **strata** columns which have data on stratification for each group, and finally the **additional** columns which include further information not covered by group and strata.
-
-
 
 ## Split functions
 The idea of the split functions is to pivot the "name" (e.g. *group_name*) column to split each value of that column into a column in the dataframe, which values are taken by the "level" (e.g. *group_level*) column.

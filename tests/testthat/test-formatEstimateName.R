@@ -6,8 +6,7 @@ test_that("formatEstimateName", {
   result_output <-  formatEstimateName(result,
                                        estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                                   "N" = "<count>"),
-                                       keepNotFormatted = TRUE)|>
-    dplyr::mutate(id = dplyr::row_number())
+                                       keepNotFormatted = TRUE)
   # check count as "N"
   expect_identical(unique(result_output$estimate_name[result_output$variable_name == "number subjects"]),
                    "N")
@@ -95,8 +94,9 @@ test_that("formatEstimateName", {
   expect_identical(estimates_out$estimate_value[estimates_out$variable_name == "number subjects"],
                    paste0(estimates_in$estimate_value[estimates_in$variable_name == "number subjects"]))
 
+  expect_no_error(result |> dplyr::select(-"cdm_name") |> formatEstimateName())
   # Wrong input ----
-  expect_error(result |> dplyr::select(-"cdm_name") |> formatEstimateName())
+  expect_error(result |> dplyr::select(-"estimate_name") |> formatEstimateName())
   expect_error(formatEstimateName(result,
                                   estimateNameFormat = c("N" = "count",
                                                          "N (%)" = "count (percentage%)"),
@@ -220,6 +220,7 @@ test_that("formatEstimateName, useFormatOrder", {
         "additional_level" = "overall"
       )
     ) |>
+    dplyr::mutate(result_id = "1") |>
     omopgenerics::newSummarisedResult()
 
   # FALSE ----
