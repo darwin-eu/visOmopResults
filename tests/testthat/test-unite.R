@@ -19,7 +19,7 @@ test_that("uniteGroup", {
   expect_true(res0[1,1] == "overall")
   expect_true(res0[1,2] == "overall")
   expect_equal(res0$group_name[grepl("40", res0$group_level)] |> unique(),
-               c("age", "age and sex"))
+               c("age", "age &&& sex"))
   expect_equal(res0$group_name[grepl("region", res0$group_name)] |> unique(),
                "region")
 
@@ -34,6 +34,6 @@ test_that("uniteGroup", {
                                          c("age", "sex", "region"),
                                          keep = FALSE,
                                          removeNA = FALSE))
-  expect_true(res2$group_level[1] == "NA and NA and NA")
-  expect_true(res2$group_level[2] == ">40 and NA and NA")
+  expect_true(res2$group_level[1] == "NA &&& NA &&& NA")
+  expect_true(res2$group_level[2] == ">40 &&& NA &&& NA")
 })

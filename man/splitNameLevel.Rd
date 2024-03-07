@@ -2,7 +2,7 @@
 % Please edit documentation in R/split.R
 \name{splitNameLevel}
 \alias{splitNameLevel}
-\title{Split name and level columns into the columns.}
+\title{Split name and level columns into the columns}
 \usage{
 splitNameLevel(
   result,
@@ -13,7 +13,7 @@ splitNameLevel(
 )
 }
 \arguments{
-\item{result}{Omop result object (summarised_result or compared_result).}
+\item{result}{A summarised_result object.}
 
 \item{name}{Column with the names.}
 

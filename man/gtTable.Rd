@@ -26,7 +26,7 @@ gtTable(
 \item{style}{Named list that specifies how to style the different parts of
 the gt table. Accepted entries are: title, subtitle, header, header_name,
 header_level, column_name, group_label, and body. Alternatively, use
-"default" to get visOmopResult style, or NULL for gt style}
+"default" to get visOmopResults style, or NULL for gt style}
 
 \item{na}{How to display missing values.}
 
@@ -45,22 +45,21 @@ italics).}
 
 \item{groupOrder}{Order in which to display group labels.}
 
-\item{colsToMergeRows}{specify the names of the columns to vertically merge
-when consecutive cells have identical values. Alternatively, use
+\item{colsToMergeRows}{Names of the columns to merge vertically
+when consecutive row cells have identical values. Alternatively, use
 "all_columns" to apply this merging to all columns, or use NULL to indicate
-no merging should be applied.}
+no merging.}
 }
 \value{
-gt object
+gt object.
 
 A gt table.
 }
 \description{
-Creates a gt object from a dataframe using as delimiter (\code{delim}) to span
-the header, and the specified styles for different parts of the table.
+Creates a flextable object from a dataframe using a delimiter to span
+the header, and allows to easily customise table style.
 }
 \examples{
-\donttest{
 mockSummarisedResult() |>
   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
   formatHeader(header = c("Study strata", "strata_name", "strata_level"),
@@ -84,6 +83,5 @@ mockSummarisedResult() |>
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
   )
-}
 
 }

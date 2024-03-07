@@ -32,7 +32,7 @@ test_that("gtTable", {
   # Spanners
   expect_equal(
     gtResult$`_spanners`$spanner_label |> unlist(),
-    c("overall", "age_group and sex", "sex", "age_group", "overall", "age_group and sex",
+    c("overall", "age_group &&& sex", "sex", "age_group", "overall", "age_group &&& sex",
       "sex", "age_group", "Study strata", "cohort1", "cohort2", "Study cohorts")
   )
   expect_true(sum(gtResult$`_spanners`$spanner_level == 1) == 8)
@@ -88,7 +88,7 @@ test_that("gtTable", {
   # Spanners
   expect_equal(
     gtResult$`_spanners`$spanner_label |> unlist(),
-    c("strata_level", "overall", "age_group and sex", "sex", "age_group", "strata_name")
+    c("strata_level", "overall", "age_group &&& sex", "sex", "age_group", "strata_name")
   )
   expect_true(sum(gtResult$`_spanners`$spanner_level == 1) == 1)
   expect_true(sum(gtResult$`_spanners`$spanner_level == 2) == 4)
@@ -99,7 +99,7 @@ test_that("gtTable", {
                c("#000000", "#FFFFFF"))
   expect_true(is.null(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level == 2]] |>
                  unlist() |> unique()))
-  # title and subtitle
+  # title &&& subtitle
   expect_true(gtResult$`_heading`$title == "Title test 2")
   expect_true(gtResult$`_heading`$subtitle == "Subtitle for test 2")
   expect_true(is.null(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "title"] |> unlist()))

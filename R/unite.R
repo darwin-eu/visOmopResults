@@ -54,15 +54,15 @@ uniteNameLevel <- function(x,
     )
   }
 
-  containAnd <- cols[grepl(" and ", cols)]
+  containAnd <- cols[grepl(" &&& ", cols)]
   if (length(containAnd) > 0) {
-    cli::cli_abort("Column names must not contain ' and ' : `{paste0(containAnd, collapse = '`, `')}`")
+    cli::cli_abort("Column names must not contain ' &&& ' : `{paste0(containAnd, collapse = '`, `')}`")
   }
   containAnd <- cols[
-    lapply(cols, function(col){any(grepl(" and ", x[[col]]))}) |> unlist()
+    lapply(cols, function(col){any(grepl(" &&& ", x[[col]]))}) |> unlist()
   ]
   if (length(containAnd) > 0) {
-    cli::cli_abort("Column values must not contain ' and '. Present in: `{paste0(containAnd, collapse = '`, `')}`.")
+    cli::cli_abort("Column values must not contain ' &&& '. Present in: `{paste0(containAnd, collapse = '`, `')}`.")
   }
 
   if (removeNA) {
@@ -82,9 +82,9 @@ uniteNameLevel <- function(x,
     }
   } else {
     x <- x |>
-      dplyr::mutate(!!name := paste0(cols, collapse = " and ")) |>
+      dplyr::mutate(!!name := paste0(cols, collapse = " &&& ")) |>
       tidyr::unite(
-        col = !!level, dplyr::all_of(cols), sep = " and ", remove = !keep
+        col = !!level, dplyr::all_of(cols), sep = " &&& ", remove = !keep
       )
   }
 
@@ -202,9 +202,9 @@ uniteAdditional <- function(x, cols, removeNA = TRUE) {
 newName <- function(x) {
   ind <- which(!is.na(x))
   nms <- names(x)
-  return(paste0(nms[ind], collapse = " and "))
+  return(paste0(nms[ind], collapse = " &&& "))
 }
 newLevel <- function(x) {
   ind <- which(!is.na(x))
-  return(paste0(x[ind], collapse = " and "))
+  return(paste0(x[ind], collapse = " &&& "))
 }

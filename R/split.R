@@ -142,8 +142,8 @@ splitNameLevel <- function(result,
   newCols <- getColumns(result, name, TRUE)
   id <- which(name == colnames(result))
 
-  nameValues <- result[[name]] |> stringr::str_split(" and ")
-  levelValues <- result[[level]] |> stringr::str_split(" and ")
+  nameValues <- result[[name]] |> stringr::str_split(" &&& ")
+  levelValues <- result[[level]] |> stringr::str_split(" &&& ")
   if (!all(lengths(nameValues) == lengths(levelValues))) {
     cli::cli_abort("Column names and levels number does not match")
   }
