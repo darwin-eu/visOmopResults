@@ -57,16 +57,17 @@ uniteNameLevel <- function(x,
       )
     }
 
-  containAnd <- cols[grepl(" &&& ", cols)]
-  if (length(containAnd) > 0) {
-    cli::cli_abort("Column names must not contain ' &&& ' : `{paste0(containAnd, collapse = '`, `')}`")
-  }
-  containAnd <- cols[
-    lapply(cols, function(col){any(grepl(" &&& ", x[[col]]))}) |> unlist()
-  ]
-  if (length(containAnd) > 0) {
-    cli::cli_abort("Column values must not contain ' &&& '. Present in: `{paste0(containAnd, collapse = '`, `')}`.")
-  }
+    keyWord <- " &&& "
+    containKey <- cols[grepl(keyWord, cols)]
+    if (length(containKey) > 0) {
+      cli::cli_abort("Column names must not contain '{keyWord}' : `{paste0(containKey, collapse = '`, `')}`")
+    }
+    containKey <- cols[
+      lapply(cols, function(col){any(grepl(keyWord, x[[col]]))}) |> unlist()
+    ]
+    if (length(containKey) > 0) {
+      cli::cli_abort("Column values must not contain '{keyWord}'. Present in: `{paste0(containKey, collapse = '`, `')}`.")
+    }
 
     if (removeNA) {
       x <- x |>
@@ -85,9 +86,9 @@ uniteNameLevel <- function(x,
       }
     } else {
       x <- x |>
-        dplyr::mutate(!!name := paste0(cols, collapse = " and ")) |>
+        dplyr::mutate(!!name := paste0(cols, collapse = keyWord)) |>
         tidyr::unite(
-          col = !!level, dplyr::all_of(cols), sep = " and ", remove = !keep
+          col = !!level, dplyr::all_of(cols), sep = keyWord, remove = !keep
         )
     }
 
@@ -110,28 +111,7 @@ uniteNameLevel <- function(x,
     }
   } else {
     x <- x |>
-      dplyr::mutate(!!name := paste0(cols, collapse = " &&& ")) |>
-      tidyr::unite(
-        col = !!level, dplyr::all_of(cols), sep = " &&& ", remove = !keep
-      )
-  }
-
-  if (keep) {
-    colskeep <- cols
-  } else {
-    colskeep <- character()
-  }
-
-  # move cols
-  if (id == 1) {
-    x <- x |>
-      dplyr::relocate(dplyr::all_of(c(colskeep, name, level)))
-  } else {
-    id <- colnames(x)[id - 1]
-    x <- x |>
-      dplyr::relocate(
-        dplyr::all_of(c(colskeep, name, level)), .after = dplyr::all_of(id)
-      )
+      dplyr::mutate(!!name := "overall", !!level := "overall")
   }
 
   return(x)

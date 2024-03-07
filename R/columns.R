@@ -63,7 +63,7 @@ getColumns <- function(result, col, overall) {
   x <- result |>
       dplyr::pull(dplyr::all_of(col)) |>
       unique() |>
-      lapply(strsplit, split = " and ") |>
+      lapply(strsplit, split = " and | &&& ") |>
       unlist() |>
       unique()
 
