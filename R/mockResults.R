@@ -22,11 +22,11 @@ mockSummarisedResult <- function() {
     "group_name" = "cohort_name",
     "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
     "strata_name" = rep(c(
-      "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+      "overall", rep("age_group &&& sex", 4), rep("sex", 2), rep("age_group", 2)
     ), 2),
     "strata_level" = rep(c(
-      "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
-      ">=40 and Female", "Male", "Female", "<40", ">=40"
+      "overall", "<40 &&& Male", ">=40 &&& Male", "<40 &&& Female",
+      ">=40 &&& Female", "Male", "Female", "<40", ">=40"
     ), 2),
     "variable_name" = "number subjects",
     "variable_level" = NA_character_,
@@ -47,11 +47,11 @@ mockSummarisedResult <- function() {
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
-          "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+          "overall", rep("age_group &&& sex", 4), rep("sex", 2), rep("age_group", 2)
         ), 2),
         "strata_level" = rep(c(
-          "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
-          ">=40 and Female", "Male", "Female", "<40", ">=40"
+          "overall", "<40 &&& Male", ">=40 &&& Male", "<40 &&& Female",
+          ">=40 &&& Female", "Male", "Female", "<40", ">=40"
         ), 2),
         "variable_name" = "age",
         "variable_level" = NA_character_,
@@ -73,11 +73,11 @@ mockSummarisedResult <- function() {
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
-          "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+          "overall", rep("age_group &&& sex", 4), rep("sex", 2), rep("age_group", 2)
         ), 2),
         "strata_level" = rep(c(
-          "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
-          ">=40 and Female", "Male", "Female", "<40", ">=40"
+          "overall", "<40 &&& Male", ">=40 &&& Male", "<40 &&& Female",
+          ">=40 &&& Female", "Male", "Female", "<40", ">=40"
         ), 2),
         "variable_name" = "age",
         "variable_level" = NA_character_,
@@ -99,11 +99,11 @@ mockSummarisedResult <- function() {
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
-          "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+          "overall", rep("age_group &&& sex", 4), rep("sex", 2), rep("age_group", 2)
         ), 2),
         "strata_level" = rep(c(
-          "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
-          ">=40 and Female", "Male", "Female", "<40", ">=40"
+          "overall", "<40 &&& Male", ">=40 &&& Male", "<40 &&& Female",
+          ">=40 &&& Female", "Male", "Female", "<40", ">=40"
         ), 2),
         "variable_name" = "Medications",
         "variable_level" = "Amoxiciline",
@@ -125,11 +125,11 @@ mockSummarisedResult <- function() {
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
-          "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+          "overall", rep("age_group &&& sex", 4), rep("sex", 2), rep("age_group", 2)
         ), 2),
         "strata_level" = rep(c(
-          "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
-          ">=40 and Female", "Male", "Female", "<40", ">=40"
+          "overall", "<40 &&& Male", ">=40 &&& Male", "<40 &&& Female",
+          ">=40 &&& Female", "Male", "Female", "<40", ">=40"
         ), 2),
         "variable_name" = "Medications",
         "variable_level" = "Amoxiciline",
@@ -151,11 +151,11 @@ mockSummarisedResult <- function() {
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
-          "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+          "overall", rep("age_group &&& sex", 4), rep("sex", 2), rep("age_group", 2)
         ), 2),
         "strata_level" = rep(c(
-          "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
-          ">=40 and Female", "Male", "Female", "<40", ">=40"
+          "overall", "<40 &&& Male", ">=40 &&& Male", "<40 &&& Female",
+          ">=40 &&& Female", "Male", "Female", "<40", ">=40"
         ), 2),
         "variable_name" = "Medications",
         "variable_level" = "Ibuprofen",
@@ -177,11 +177,11 @@ mockSummarisedResult <- function() {
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
-          "overall", rep("age_group and sex", 4), rep("sex", 2), rep("age_group", 2)
+          "overall", rep("age_group &&& sex", 4), rep("sex", 2), rep("age_group", 2)
         ), 2),
         "strata_level" = rep(c(
-          "overall", "<40 and Male", ">=40 and Male", "<40 and Female",
-          ">=40 and Female", "Male", "Female", "<40", ">=40"
+          "overall", "<40 &&& Male", ">=40 &&& Male", "<40 &&& Female",
+          ">=40 &&& Female", "Male", "Female", "<40", ">=40"
         ), 2),
         "variable_name" = "Medications",
         "variable_level" = "Ibuprofen",

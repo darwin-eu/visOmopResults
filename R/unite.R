@@ -57,15 +57,16 @@ uniteNameLevel <- function(x,
       )
     }
 
-    containAnd <- cols[grepl(" and ", cols)]
-    if (length(containAnd) > 0) {
-      cli::cli_abort("Column names must not contain ' and ' : `{paste0(containAnd, collapse = '`, `')}`")
+    keyWord <- " &&& "
+    containKey <- cols[grepl(keyWord, cols)]
+    if (length(containKey) > 0) {
+      cli::cli_abort("Column names must not contain '{keyWord}' : `{paste0(containKey, collapse = '`, `')}`")
     }
-    containAnd <- cols[
-      lapply(cols, function(col){any(grepl(" and ", x[[col]]))}) |> unlist()
+    containKey <- cols[
+      lapply(cols, function(col){any(grepl(keyWord, x[[col]]))}) |> unlist()
     ]
-    if (length(containAnd) > 0) {
-      cli::cli_abort("Column values must not contain ' and '. Present in: `{paste0(containAnd, collapse = '`, `')}`.")
+    if (length(containKey) > 0) {
+      cli::cli_abort("Column values must not contain '{keyWord}'. Present in: `{paste0(containKey, collapse = '`, `')}`.")
     }
 
     if (removeNA) {
@@ -85,9 +86,9 @@ uniteNameLevel <- function(x,
       }
     } else {
       x <- x |>
-        dplyr::mutate(!!name := paste0(cols, collapse = " and ")) |>
+        dplyr::mutate(!!name := paste0(cols, collapse = keyWord)) |>
         tidyr::unite(
-          col = !!level, dplyr::all_of(cols), sep = " and ", remove = !keep
+          col = !!level, dplyr::all_of(cols), sep = keyWord, remove = !keep
         )
     }
 
@@ -209,9 +210,9 @@ uniteAdditional <- function(x, cols, removeNA = TRUE) {
 newName <- function(x) {
   ind <- which(!is.na(x))
   nms <- names(x)
-  return(paste0(nms[ind], collapse = " and "))
+  return(paste0(nms[ind], collapse = " &&& "))
 }
 newLevel <- function(x) {
   ind <- which(!is.na(x))
-  return(paste0(x[ind], collapse = " and "))
+  return(paste0(x[ind], collapse = " &&& "))
 }

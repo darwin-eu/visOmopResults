@@ -11,30 +11,32 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
-  warning = FALSE
+  warning = FALSE,
+  message = FALSE
 )
 ```
 
 The **format** set of functions can be combined to format a summarised_result object (see R package *omopgenerics*) into a nice dataframe, *flextable* or *gt* table to display. In what follows, we show the pipline for formatting summarised_results using these functions.
 
-First, we load the package and generate a mock summarised_result.
+First, we load the relevant libraries and generate a mock summarised_result.
 
 ```{r setup}
 library(visOmopResults)
+library(dplyr)
 mock_sr <- mockSummarisedResult()
-mock_sr |> dplyr::glimpse()
+mock_sr |> glimpse()
 ```
 
-## 1. formatEstimateValue
+## 1. formatEstimateValue()
 This function provides tools to format the estimate_value column. It allows to change the number of decimals to display by estimate_type or *estimate_name* (`decimals`), and to change the decimal and thousand/million separator mark (`decimalMark` and `bigMark` respectively). By default,
 decimals of integer values are set to 0, numeric to 2, percentage to 1, and proportion to 3. The defaulted decimal mark is "." while the thousand/million separator is ",".
 
 ```{r}
 mock_sr <- mock_sr |> formatEstimateValue()
-mock_sr |> dplyr::glimpse()
+mock_sr |> glimpse()
 ```
 
-## 2. formatEstimateName
+## 2. formatEstimateName()
 This functions helps to manipulate *estimate_name* and *estimate_value* columns. For instance, if we want that all the variables for which we have counts and percentage to be display in a single row showing both as "N (%)" we can do it with this function. 
 
 The `estimateNameFormat` is where all combinations or renaming of estimates can be specified. Values from *estime_name*'s column should be specified between <...>. The new *estimate_name* values to use will be the names of the vector, or the value itself when it is not named. 
@@ -50,14 +52,14 @@ mock_sr <- mock_sr |>
     keepNotFormatted = FALSE,
     useFormatOrder = FALSE
   )
-mock_sr |> dplyr::glimpse()
+mock_sr |> glimpse()
 ```
 
 Additional input arguments are `keepNotFormatted` to specify whether not formatted rows should be returned or dropped, and `useFormatOrder` to define if rows should be sorted as in `estimateNameFormat` or if the original order should be kept. In the latter scenario, when more than one estimate is pulled together, the new estimate position will be the first of the estimates being merged.
 
 
 
-## 3. formatHeader
+## 3. formatHeader()
 
 This function helps to create a nice header for a *flextable*, *gt* table and other table formatting packages.
 
@@ -81,7 +83,7 @@ mock_sr |>
     includeHeaderName = TRUE,
     includeHeaderKey = TRUE
   ) |>
-  dplyr::glimpse()
+  glimpse()
 ```
 
 The labels indicating which type of header refers to in the new column names can be removed with `includeHeaderKey`. However, having these keys in our header will allow to style separately the different header types in the next step (`fxTable` and `gtTable`).
@@ -90,6 +92,7 @@ Continuing with our example, we want to pivot by strata (name and level), but, w
 
 ```{r}
 mock_sr <- mock_sr |>
+  mutate(across(c("strata_name", "strata_level"), ~ gsub("&&&", "and", .x))) |>
   formatHeader(
     header = c("Stratifications", "strata_name", "strata_level"),
     delim = "\n",
@@ -97,23 +100,25 @@ mock_sr <- mock_sr |>
     includeHeaderKey = TRUE
   ) 
 
-mock_sr |> dplyr::glimpse()
+mock_sr |> glimpse()
 ```
+
+Notice, how we substitute the keyWord "&&&" to "and", to get a more readble and nice header.
 
  
 
-## 4. gt and fx table
+## 4. gtTable() and fxTable()
 
 Finally, we have the functions `gtTable` and `fxTable` which will transform our tibble into a *gt* or *flextable* object respectively. These functions provide several tools to personalise the formatted table. 
 
-### gtTable
+### gtTable()
 Let's start by manipulating the dataframe to have the columns that we want to display, and then use `gtTable` with default values:
 
 ```{r}
 # first we select the columns we want:
 mock_sr <- mock_sr |>
   splitGroup() |>
-  dplyr::select(!dplyr::all_of(c("cdm_name", "result_type", "package_name", 
+  select(!all_of(c("cdm_name", "result_type", "package_name", 
                                  "package_version", "estimate_type", "result_id",
                                  "additional_name", "additional_level"))) 
 mock_sr |>  gtTable()
@@ -156,8 +161,8 @@ mock_sr |>
 
 
 
-### fxTable
-To obtain a similar result but with a *flextable* object, we can use `fxTable` with the same arguments as before, however, `style` must be adapted to use the *officer* package since it is the accepted by *flextable.*
+### fxTable()
+To obtain a similar result but with a *flextable* object, we can use `fxTable` with the same arguments as before, however, `style` must be adapted to use the *officer* package since it is the accepted by *flextable*.
 
 ```{r}
 mock_sr |>  

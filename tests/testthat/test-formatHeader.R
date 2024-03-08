@@ -19,14 +19,14 @@ test_that("formatHeader", {
   # class
   expect_false("summarised_result" %in% class(result_output))
 
-  # column: group_name\ncohort_name\ngroup_level\ncohort1\nstrata\nstrata_name\nage_group and sex\nstrata_level\n>=40 and Female
+  # column: group_name\ncohort_name\ngroup_level\ncohort1\nstrata\nstrata_name\nage_group &&& sex\nstrata_level\n>=40 &&& Female
   values_in <- result |>
-    dplyr::filter(.data$group_level == "cohort1" & .data$strata_level == ">=40 and Female") |>
+    dplyr::filter(.data$group_level == "cohort1" & .data$strata_level == ">=40 &&& Female") |>
     dplyr::select(all_of(names(result)[! names(result) %in% c("group_name", "group_level", "strata", "strata_name", "strata_level")]))
 
   values_out <- result_output |>
     dplyr::select(all_of(c(names(result)[! names(result) %in% c("group_name", "group_level", "strata", "strata_name", "strata_level", "estimate_value")],
-                           "estimate_value" = "[header_name]group_name\n[header_level]cohort_name\n[header_name]group_level\n[header_level]cohort1\n[header]strata\n[header_name]strata_name\n[header_level]age_group and sex\n[header_name]strata_level\n[header_level]>=40 and Female")))
+                           "estimate_value" = "[header_name]group_name\n[header_level]cohort_name\n[header_name]group_level\n[header_level]cohort1\n[header]strata\n[header_name]strata_name\n[header_level]age_group &&& sex\n[header_name]strata_level\n[header_level]>=40 &&& Female")))
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # names in header ----
@@ -65,14 +65,14 @@ test_that("formatHeader", {
                                header = c("group_name", "Group level" = "group_level", "strata", "strata_name", "strata_level"),
                                includeHeaderName = FALSE)
 
-  # column: cohort_name\ncohort1\nstrata\nage_group and sex\n>=40 and Female
+  # column: cohort_name\ncohort1\nstrata\nage_group &&& sex\n>=40 &&& Female
   values_in <- result |>
-    dplyr::filter(.data$group_level == "cohort1" & .data$strata_level == ">=40 and Female") |>
+    dplyr::filter(.data$group_level == "cohort1" & .data$strata_level == ">=40 &&& Female") |>
     dplyr::select(all_of(names(result)[! names(result) %in% c("group_name", "group_level", "strata", "strata_name", "strata_level")]))
 
   values_out <- result_output |>
     dplyr::select(all_of(c(names(result)[! names(result) %in% c("group_name", "group_level", "strata", "strata_name", "strata_level", "estimate_value")],
-                           "estimate_value" = "[header_level]cohort_name\n[header_level]cohort1\n[header]strata\n[header_level]age_group and sex\n[header_level]>=40 and Female")))
+                           "estimate_value" = "[header_level]cohort_name\n[header_level]cohort1\n[header]strata\n[header_level]age_group &&& sex\n[header_level]>=40 &&& Female")))
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
   # Not include headers + only column names----
@@ -184,14 +184,14 @@ test_that("formatHeader. includeHeaderKey", {
   # class
   expect_false("summarised_result" %in% class(result_output))
 
-  # column: group_name\ncohort_name\ngroup_level\ncohort1\nstrata\nstrata_name\nage_group and sex\nstrata_level\n>=40 and Female
+  # column: group_name\ncohort_name\ngroup_level\ncohort1\nstrata\nstrata_name\nage_group &&& sex\nstrata_level\n>=40 &&& Female
   values_in <- result |>
-    dplyr::filter(.data$group_level == "cohort1" & .data$strata_level == ">=40 and Female") |>
+    dplyr::filter(.data$group_level == "cohort1" & .data$strata_level == ">=40 &&& Female") |>
     dplyr::select(all_of(names(result)[! names(result) %in% c("group_name", "group_level", "strata", "strata_name", "strata_level")]))
 
   values_out <- result_output |>
     dplyr::select(all_of(c(names(result)[! names(result) %in% c("group_name", "group_level", "strata", "strata_name", "strata_level", "estimate_value")],
-                           "estimate_value" = "group_name\ncohort_name\ngroup_level\ncohort1\nstrata_name\nage_group and sex\nstrata_level\n>=40 and Female")))
+                           "estimate_value" = "group_name\ncohort_name\ngroup_level\ncohort1\nstrata_name\nage_group &&& sex\nstrata_level\n>=40 &&& Female")))
   expect_true(values_in |> dplyr::anti_join(values_out, by = names(values_in)) |> nrow() == 0)
 
 
