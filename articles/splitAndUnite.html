@@ -90,14 +90,6 @@ summarised_result object to use in the following examples.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://oxford-pharmacoepi.github.io/visOmopResults/">visOmopResults</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt; Attaching package: 'dplyr'</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:stats':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     filter, lag</span></span>
-<span><span class="co">#&gt; The following objects are masked from 'package:base':</span></span>
-<span><span class="co">#&gt; </span></span>
-<span><span class="co">#&gt;     intersect, setdiff, setequal, union</span></span>
 <span><span class="va">mock_sr</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/mockSummarisedResult.html">mockSummarisedResult</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">mock_sr</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 126</span></span>
@@ -109,13 +101,13 @@ summarised_result object to use in the following examples.</p>
 <span><span class="co">#&gt; $ package_version  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.1.0", "0.1.0", "0.1.0", "0.1.0", "0.1.0", "0.1.0",…</span></span>
 <span><span class="co">#&gt; $ group_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cohort_name", "cohort_name", "cohort_name", "cohort_…</span></span>
 <span><span class="co">#&gt; $ group_level      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…</span></span>
-<span><span class="co">#&gt; $ strata_name      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "age_group and sex", "age_group and sex", …</span></span>
-<span><span class="co">#&gt; $ strata_level     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "&lt;40 and Male", "&gt;=40 and Male", "&lt;40 and …</span></span>
+<span><span class="co">#&gt; $ strata_name      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "age_group &amp;&amp;&amp; sex", "age_group &amp;&amp;&amp; sex", …</span></span>
+<span><span class="co">#&gt; $ strata_level     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "&lt;40 &amp;&amp;&amp; Male", "&gt;=40 &amp;&amp;&amp; Male", "&lt;40 &amp;&amp;&amp; …</span></span>
 <span><span class="co">#&gt; $ variable_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "number subjects", "number subjects", "number subject…</span></span>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4233003", "4539311", "6005340", "5660456", "9381998"…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1691345", "7599748", "4831317", "9337786", "7028452"…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 <p>A summarised_result contains 3 types of name-level paired columns
@@ -159,7 +151,7 @@ and <em>sex</em>.</p>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4233003", "4539311", "6005340", "5660456", "9381998"…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1691345", "7599748", "4831317", "9337786", "7028452"…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 <p>Similar to <code>splitStrata</code>, the functions
@@ -192,17 +184,18 @@ overall strata.</p>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4233003", "4539311", "6005340", "5660456", "9381998"…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1691345", "7599748", "4831317", "9337786", "7028452"…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 <div class="section level4">
-<h4 id="keyword-and">!! Keyword: and<a class="anchor" aria-label="anchor" href="#keyword-and"></a>
+<h4 id="keyword">!! Keyword: &amp;&amp;&amp;<a class="anchor" aria-label="anchor" href="#keyword"></a>
 </h4>
 <p>Looking at the results below, observe how the splitting was not only
-done by values in the “name” column, but also within values containing
-the key word “<strong>and</strong>”. That is, “sex and age_group” was
-splitted into <em>sex</em> and <em>age_group</em> columns, instead of
-generating a column called “<em>sex and age_group</em>”.</p>
+done by values in the “name” column, but also among values containing
+the key word “<strong>&amp;&amp;&amp;</strong>”. That is, “sex
+&amp;&amp;&amp; age_group” was splitted into <em>sex</em> and
+<em>age_group</em> columns, instead of generating a column called
+“<em>sex &amp;&amp;&amp; age_group</em>”.</p>
 </div>
 </div>
 <div class="section level3">
@@ -218,14 +211,14 @@ arguments.</p>
 <code class="sourceCode R"><span><span class="va">data_to_split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  denominator <span class="op">=</span> <span class="st">"general_population"</span>,</span>
 <span>  outcome <span class="op">=</span> <span class="st">"stroke"</span>,</span>
-<span>  input_arguments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wash_out and previous_observation"</span><span class="op">)</span>,</span>
-<span>  input_arguments_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"60 and 180"</span><span class="op">)</span></span>
+<span>  input_arguments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wash_out &amp;&amp;&amp; previous_observation"</span><span class="op">)</span>,</span>
+<span>  input_arguments_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"60 &amp;&amp;&amp; 180"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span>
 <span><span class="va">data_to_split</span> </span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
 <span><span class="co">#&gt;   denominator        outcome input_arguments              input_arguments_values</span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> general_population stroke  wash_out and previous_obser… 60 and 180</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> general_population stroke  wash_out &amp;&amp;&amp; previous_obser… 60 &amp;&amp;&amp; 180</span></span></code></pre></div>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data_to_split</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/splitNameLevel.html">splitNameLevel</a></span><span class="op">(</span></span>
@@ -268,9 +261,9 @@ of columns. For instance, in the following example we want to create the
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 3 × 2</span></span></span>
 <span><span class="co">#&gt;   group_name                                      group_level                  </span></span>
 <span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> denominator_cohort_name and outcome_cohort_name general_population and stroke</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> denominator_cohort_name and outcome_cohort_name older_than_60 and stroke     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> denominator_cohort_name and outcome_cohort_name younger_than_60 and stroke</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> denominator_cohort_name &amp;&amp;&amp; outcome_cohort_name general_population &amp;&amp;&amp; stroke</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">2</span> denominator_cohort_name &amp;&amp;&amp; outcome_cohort_name older_than_60 &amp;&amp;&amp; stroke     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">3</span> denominator_cohort_name &amp;&amp;&amp; outcome_cohort_name younger_than_60 &amp;&amp;&amp; stroke</span></span></code></pre></div>
 <p>A part from the columns to unite argument (<code>cols</code>), there
 is the argument <code>removeNA</code>, defaulted to TRUE. This means
 that, if a row of the targeted column contain only “NA” values, it will
@@ -285,21 +278,21 @@ it will join them as if NA was a value. In the next example we use
 <span>  <span class="op">)</span></span>
 <span></span>
 <span><span class="va">to_unite_strata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/uniteStrata.html">uniteStrata</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"sex"</span>, <span class="st">"region"</span><span class="op">)</span>, </span>
+<span>  <span class="fu"><a href="../reference/uniteStrata.html">uniteStrata</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"sex"</span>, <span class="st">"region"</span><span class="op">)</span>,</span>
 <span>              removeNA <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 2</span></span></span>
 <span><span class="co">#&gt;    strata_name            strata_level        </span></span>
 <span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> age and sex and region NA and NA and NA    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> age and sex and region &gt;40 and NA and NA   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> age and sex and region &lt;=40 and NA and NA  </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> age and sex and region NA and F and NA     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> age and sex and region NA and M and NA     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> age and sex and region NA and NA and North </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> age and sex and region NA and NA and South </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> age and sex and region NA and NA and Center</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> age and sex and region &gt;40 and F and NA    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> age and sex and region &lt;=40 and M and NA</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region NA &amp;&amp;&amp; NA &amp;&amp;&amp; NA    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region &gt;40 &amp;&amp;&amp; NA &amp;&amp;&amp; NA   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region &lt;=40 &amp;&amp;&amp; NA &amp;&amp;&amp; NA  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region NA &amp;&amp;&amp; F &amp;&amp;&amp; NA     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region NA &amp;&amp;&amp; M &amp;&amp;&amp; NA     </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region NA &amp;&amp;&amp; NA &amp;&amp;&amp; North </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region NA &amp;&amp;&amp; NA &amp;&amp;&amp; South </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region NA &amp;&amp;&amp; NA &amp;&amp;&amp; Center</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region &gt;40 &amp;&amp;&amp; F &amp;&amp;&amp; NA    </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region &lt;=40 &amp;&amp;&amp; M &amp;&amp;&amp; NA</span></span></code></pre></div>
 <p>Now, if we set <code>removeNA</code> to TRUE, we obtain an output
 where only names and levels of non-NA values are returned, and fro those
 rows where all values are NA it uses “overall”.</p>
@@ -317,8 +310,8 @@ rows where all values are NA it uses “overall”.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> region      North       </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> region      South       </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> region      Center      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> age and sex &gt;40 and F   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> age and sex &lt;=40 and M</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> age &amp;&amp;&amp; sex &gt;40 &amp;&amp;&amp; F   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> age &amp;&amp;&amp; sex &lt;=40 &amp;&amp;&amp; M</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="unitenamelevel">uniteNameLevel()<a class="anchor" aria-label="anchor" href="#unitenamelevel"></a>
@@ -346,8 +339,8 @@ would obtain the following output:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    North  region      North     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    South  region      South     </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    Center region      Center    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> &gt;40   F     <span style="color: #BB0000;">NA</span>     age and sex &gt;40 and F </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> &lt;=40  M     <span style="color: #BB0000;">NA</span>     age and sex &lt;=40 and M</span></span></code></pre></div>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> &gt;40   F     <span style="color: #BB0000;">NA</span>     age &amp;&amp;&amp; sex &gt;40 &amp;&amp;&amp; F </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> &lt;=40  M     <span style="color: #BB0000;">NA</span>     age &amp;&amp;&amp; sex &lt;=40 &amp;&amp;&amp; M</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc"><h2>On this page</h2>
