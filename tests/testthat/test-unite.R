@@ -5,12 +5,6 @@ test_that("uniteGroup", {
     region = c(NA, NA, NA, NA, NA, "North", "South", "Center", NA, NA)
   )
 
-  # expect_error(tib |> uniteGroup(NA_character_))
-  # expect_error(tib |> uniteNameLevel(name = "expo_group", level = "exposure_level"))
-  # expect_error(tib |> uniteNameLevel(level = NA_character_))
-  # expect_error(tib |> uniteNameLevel(level = "a"))
-
-
   expect_no_error(res0 <- uniteNameLevel(tib,
                                          c("age", "sex", "region"),
                                          keep = FALSE))
@@ -33,7 +27,7 @@ test_that("uniteGroup", {
   expect_no_error(res2 <- uniteNameLevel(tib,
                                          c("age", "sex", "region"),
                                          keep = FALSE,
-                                         removeNA = FALSE))
+                                         ignore = character()))
 
   expect_true(res2$group_level[1] == "NA &&& NA &&& NA")
   expect_true(res2$group_level[2] == ">40 &&& NA &&& NA")

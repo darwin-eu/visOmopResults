@@ -9,8 +9,7 @@ splitNameLevel(
   name = "group_name",
   level = "group_level",
   keep = FALSE,
-  overall = FALSE,
-  fill = NA_character_
+  fill = "overall"
 )
 }
 \arguments{
@@ -21,8 +20,6 @@ splitNameLevel(
 \item{level}{Column with the levels.}
 
 \item{keep}{Whether to keep the original group_name and group_level columns.}
-
-\item{overall}{Whether to keep overall column if present.}
 
 \item{fill}{Optionally, a character that specifies what value should be
 filled in with when missing.}

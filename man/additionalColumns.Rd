@@ -4,12 +4,10 @@
 \alias{additionalColumns}
 \title{Identify additional columns in an omop result object}
 \usage{
-additionalColumns(result, overall = FALSE)
+additionalColumns(result)
 }
 \arguments{
 \item{result}{A summarised_result.}
-
-\item{overall}{Whether to keep overall column if present.}
 }
 \value{
 Unique values of the additional name column.

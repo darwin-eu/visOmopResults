@@ -4,14 +4,16 @@
 \alias{uniteStrata}
 \title{Unite one or more columns in strata_name-strata_level format}
 \usage{
-uniteStrata(x, cols, removeNA = TRUE)
+uniteStrata(x, cols, keep = FALSE, ignore = c(NA, "overall"))
 }
 \arguments{
 \item{x}{Tibble or dataframe.}
 
 \item{cols}{Columns to aggregate.}
 
-\item{removeNA}{Whether to remove NA values from the united columns.}
+\item{keep}{Whether to keep the original columns.}
+
+\item{ignore}{Level values to ignore.}
 }
 \value{
 A tibble with the new columns.
