@@ -9,7 +9,8 @@ splitNameLevel(
   name = "group_name",
   level = "group_level",
   keep = FALSE,
-  overall = FALSE
+  overall = FALSE,
+  fill = NA_character_
 )
 }
 \arguments{
@@ -22,6 +23,9 @@ splitNameLevel(
 \item{keep}{Whether to keep the original group_name and group_level columns.}
 
 \item{overall}{Whether to keep overall column if present.}
+
+\item{fill}{Optionally, a character that specifies what value should be
+filled in with when missing.}
 }
 \value{
 A dataframe with the specified name column values as columns.
