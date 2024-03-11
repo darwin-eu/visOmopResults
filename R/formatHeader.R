@@ -72,19 +72,23 @@ formatHeader <- function(result,
           if (header[k] %in% cols) { # Header in dataframe
             spanners <- colDetails[[header[k]]] |> unique()
             for (span in spanners) { # loop through column values
-              colsSpanner <- colDetails[[header[k]]] == span
-              if (includeHeaderKey) {
-                if (includeHeaderName) {
-                  colDetails$new_name[colsSpanner] <- paste0(colDetails$new_name[colsSpanner], "[header_name]", nms[k], delim, "[header_level]", span, delim)
+              if (!is.na(span)) {
+                colsSpanner <- colDetails[[header[k]]] == span
+                if (includeHeaderKey) {
+                  if (includeHeaderName) {
+                    colDetails$new_name[colsSpanner] <- paste0(colDetails$new_name[colsSpanner], "[header_name]", nms[k], delim, "[header_level]", span, delim)
+                  } else {
+                    colDetails$new_name[colsSpanner] <- paste0(colDetails$new_name[colsSpanner], "[header_level]", span, delim)
+                  }
                 } else {
-                  colDetails$new_name[colsSpanner] <- paste0(colDetails$new_name[colsSpanner], "[header_level]", span, delim)
+                  if (includeHeaderName) {
+                    colDetails$new_name[colsSpanner] <- paste0(colDetails$new_name[colsSpanner], nms[k], delim, span, delim)
+                  } else {
+                    colDetails$new_name[colsSpanner] <- paste0(colDetails$new_name[colsSpanner], span, delim)
+                  }
                 }
               } else {
-                if (includeHeaderName) {
-                  colDetails$new_name[colsSpanner] <- paste0(colDetails$new_name[colsSpanner], nms[k], delim, span, delim)
-                } else {
-                  colDetails$new_name[colsSpanner] <- paste0(colDetails$new_name[colsSpanner], span, delim)
-                }
+                cli::cli_abort(paste0("There are missing levels in strata name '", header[k], "'."))
               }
             }
           } else {

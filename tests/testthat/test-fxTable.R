@@ -1,7 +1,7 @@
 test_that("fxTable", {
   table_to_format <- mockSummarisedResult() |>
     formatHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
-               includeHeaderName = FALSE) |>
+                 includeHeaderName = FALSE) |>
     dplyr::select(-result_id)
   # Input 1 ----
   # Title but no subtitle
@@ -30,7 +30,7 @@ test_that("fxTable", {
   # Spanners
   header_col_1 <- fxResult$header$dataset[, "Study cohorts\ncohort1\nStudy strata\noverall\noverall"] # cohort 1 - overall
   expect_equal(header_col_1, c("Test 1", "Study cohorts", "cohort1", "Study strata", "overall",
-                                  "Study cohorts\ncohort1\nStudy strata\noverall\noverall"))
+                               "Study cohorts\ncohort1\nStudy strata\noverall\noverall"))
 
   # Spanner styles
   header_col_style <- fxResult$header$styles$cells$background.color$data[, "Study cohorts\ncohort1\nStudy strata\noverall\noverall"]
@@ -65,7 +65,7 @@ test_that("fxTable", {
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                               "N" = "<count>")) |>
     formatHeader(header = c("strata_name", "strata_level"),
-               includeHeaderName = TRUE) |>
+                 includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
   fxResult <- fxTable(
     table_to_format,
@@ -88,7 +88,7 @@ test_that("fxTable", {
   # Spanners
   header_col_1 <- fxResult$header$dataset[, "strata_name\noverall\nstrata_level\noverall"] # overall
   expect_equal(header_col_1, c("Title test 2", "Subtitle for test 2", "strata_name", "overall",
-                                  "strata_level", "strata_name\noverall\nstrata_level\noverall"))
+                               "strata_level", "strata_name\noverall\nstrata_level\noverall"))
 
   # Spanner styles
   header_col_style <- fxResult$header$styles$cells$background.color$data[, "strata_name\noverall\nstrata_level\noverall"]
@@ -125,8 +125,8 @@ test_that("fxTable", {
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                               "N" = "<count>")) |>
     formatHeader(header = c("strata_name", "strata_level"),
-               delim = ":",
-               includeHeaderName = TRUE) |>
+                 delim = ":",
+                 includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
   fxResult <- fxTable(
     table_to_format,
@@ -170,7 +170,7 @@ test_that("fxTable", {
 test_that("fxTable, test default styles and NULL", {
   table_to_format <- mockSummarisedResult() |>
     formatHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
-                includeHeaderName = FALSE) |>
+                 includeHeaderName = FALSE) |>
     dplyr::select(-result_id)
   # Input 1: NULL ----
   fxResult <- fxTable(
@@ -207,7 +207,7 @@ test_that("fxTable, test default styles and NULL", {
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                               "N" = "<count>")) |>
     formatHeader(header = c("Strata", "strata_name", "strata_level"),
-                includeHeaderName = TRUE) |>
+                 includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
   fxResult <- fxTable(
     table_to_format,
@@ -259,7 +259,7 @@ test_that("fxTable, test default styles and NULL", {
 
 test_that("fxTable, test colsToMergeRows", {
   table_to_format<- mockSummarisedResult() |>
-  formatHeader(header = c("strata_name", "strata_level")) |>
+    formatHeader(header = c("strata_name", "strata_level")) |>
     dplyr::select(-result_id)
   # colsToMergeRows = "all"
   fxResult <- fxTable(
@@ -328,4 +328,3 @@ test_that("fxTable, test colsToMergeRows", {
     colsToMergeRows = c("cdm_name", "lala")
   ), "lala is not a column in the dataframe.")
 })
-
