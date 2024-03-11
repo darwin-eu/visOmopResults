@@ -183,11 +183,6 @@ splitNameLevel <- function(result,
     newCols <- newCols[!newCols %in% "overall"]
     result <- result |>
       dplyr::select(-"overall")
-    if (length(newCols) > 0) {
-      newCols <- newCols[newCols %in% colnames(result)]
-      result <- result |>
-        dplyr::filter_at(dplyr::vars(dplyr::all_of(newCols)), dplyr::all_vars(!is.na(.)))
-    }
   }
 
   # move cols
