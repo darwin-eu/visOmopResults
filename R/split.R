@@ -113,6 +113,8 @@ splitAll <- function(result) {
 #' @param level Column with the levels.
 #' @param keep Whether to keep the original group_name and group_level columns.
 #' @param overall Whether to keep overall column if present.
+#' @param fill Optionally, a character that specifies what value should be
+#' filled in with when missing.
 #'
 #' @return A dataframe with the specified name column values as columns.
 #' @description
@@ -131,11 +133,13 @@ splitNameLevel <- function(result,
                            name = "group_name",
                            level = "group_level",
                            keep = FALSE,
-                           overall = FALSE) {
+                           overall = FALSE,
+                           fill = NA_character_) {
   assertCharacter(name, length = 1)
   assertCharacter(level, length = 1)
   assertLogical(keep, length = 1)
   assertTibble(result, columns = c(name, level))
+  assertCharacter(fill, length = 1, na = TRUE)
 
   newCols <- getColumns(result, name, TRUE)
   id <- which(name == colnames(result))
@@ -195,6 +199,15 @@ splitNameLevel <- function(result,
       dplyr::relocate(
         dplyr::any_of(c(colskeep, newCols)), .after = dplyr::all_of(id)
       )
+  }
+
+  # use fill
+  if (!is.na(fill)) {
+    result <- result |>
+      dplyr::mutate(dplyr::across(
+        dplyr::any_of(newCols),
+        ~ dplyr::if_else(is.na(.x), .env$fill, .x)
+      ))
   }
 
   return(result)
