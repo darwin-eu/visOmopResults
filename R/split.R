@@ -163,16 +163,15 @@ splitNameLevel <- function(result,
     cli::cli_abort("Column names and levels number does not match")
   }
 
-  nameValue <- unique(unlist(nameValues))
-  present <- nameValue[nameValue %in% colnames(result)]
+  present <- newCols[newCols %in% colnames(result)]
   if (length(present) > 0) {
     cli::cli_warn(
       "The following columns will be overwritten:
       {paste0(present, collapse = ', ')}."
     )
   }
-  for (k in seq_along(nameValue)) {
-    col <- nameValue[k]
+  for (k in seq_along(newCols)) {
+    col <- newCols[k]
     dat <- lapply(seq_along(nameValues), function(y) {
       res <- levelValues[[y]][nameValues[[y]] == col]
       if (length(res) == 0) {
