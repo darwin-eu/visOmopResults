@@ -4,10 +4,15 @@
 \alias{splitAll}
 \title{Split group, strata and additional at once.}
 \usage{
-splitAll(result)
+splitAll(result, keep = FALSE, fill = "overall")
 }
 \arguments{
 \item{result}{A summarised_result object.}
+
+\item{keep}{Whether to keep the original group_name and group_level columns.}
+
+\item{fill}{Optionally, a character that specifies what value should be
+filled in with when missing.}
 }
 \value{
 A dataframe with group, strata and additional name as columns.

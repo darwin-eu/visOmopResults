@@ -4,12 +4,10 @@
 \alias{groupColumns}
 \title{Identify group columns in an omop result object}
 \usage{
-groupColumns(result, overall = FALSE)
+groupColumns(result)
 }
 \arguments{
 \item{result}{A summarised_result.}
-
-\item{overall}{Whether to keep overall column if present.}
 }
 \value{
 Unique values of the group name column.

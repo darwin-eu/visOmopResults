@@ -1,7 +1,6 @@
 #' Identify group columns in an omop result object
 #'
 #' @param result A summarised_result.
-#' @param overall Whether to keep overall column if present.
 #'
 #' @return Unique values of the group name column.
 #' @description Identifies and returns the unique values in group_name column.
@@ -12,14 +11,13 @@
 #' mockSummarisedResult() |>
 #'   groupColumns()
 #'
-groupColumns <- function(result, overall = FALSE) {
-  getColumns(result = result, col = "group_name", overall = overall)
+groupColumns <- function(result) {
+  getColumns(result = result, col = "group_name")
 }
 
 #' Identify strata columns in an omop result object
 #'
 #' @param result A summarised_result.
-#' @param overall Whether to keep overall column if present.
 #'
 #' @return Unique values of the strata name column.
 #' @description Identifies and returns the unique values in strata_name column.
@@ -30,14 +28,13 @@ groupColumns <- function(result, overall = FALSE) {
 #' mockSummarisedResult() |>
 #'   strataColumns()
 #'
-strataColumns <- function(result, overall = FALSE) {
-  getColumns(result = result, col = "strata_name", overall = overall)
+strataColumns <- function(result) {
+  getColumns(result = result, col = "strata_name")
 }
 
 #' Identify additional columns in an omop result object
 #'
 #' @param result A summarised_result.
-#' @param overall Whether to keep overall column if present.
 #'
 #' @return Unique values of the additional name column.
 #' @description Identifies and returns the unique values in additional_name
@@ -49,15 +46,14 @@ strataColumns <- function(result, overall = FALSE) {
 #' mockSummarisedResult() |>
 #'   additionalColumns()
 #'
-additionalColumns <- function(result, overall = FALSE) {
-  getColumns(result = result, col = "additional_name", overall = overall)
+additionalColumns <- function(result) {
+  getColumns(result = result, col = "additional_name")
 }
 
-getColumns <- function(result, col, overall) {
+getColumns <- function(result, col) {
   # initial checks
   assertTibble(result, columns = col)
   assertCharacter(col, length = 1)
-  assertLogical(overall, length = 1)
 
   # extract columns
   x <- result |>
@@ -68,9 +64,7 @@ getColumns <- function(result, col, overall) {
       unique()
 
   # eliminate overall
-  if (!overall) {
-    x <- x[x != "overall"]
-  }
+  x <- x[x != "overall"]
 
   return(x)
 }

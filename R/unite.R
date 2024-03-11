@@ -5,7 +5,7 @@
 #' @param name Column name of the `name` column.
 #' @param level Column name of the `level` column.
 #' @param keep Whether to keep the original columns.
-#' @param removeNA Whether to remove NA values from the united columns.
+#' @param ignore Level values to ignore.
 #'
 #' @return A tibble with the new columns.
 #' @description
@@ -34,14 +34,15 @@ uniteNameLevel <- function(x,
                            name = "group_name",
                            level = "group_level",
                            keep = FALSE,
-                           removeNA = TRUE) {
+                           ignore = c(NA, "overall")) {
   # initial checks
   assertCharacter(cols)
   assertCharacter(name, length = 1)
   assertCharacter(level, length = 1)
   assertLogical(keep, length = 1)
-  assertLogical(removeNA, length = 1)
+  assertCharacter(ignore, na = TRUE)
   assertTibble(x, columns = cols)
+
   if (name == level) {
     cli::cli_abort("Provide different names for the name and level columns.")
   }
@@ -69,33 +70,17 @@ uniteNameLevel <- function(x,
       cli::cli_abort("Column values must not contain '{keyWord}'. Present in: `{paste0(containKey, collapse = '`, `')}`.")
     }
 
-    if (removeNA) {
-      x <- x |>
-        dplyr::rowwise() |>
-        dplyr::mutate(
-          !!name := dplyr::if_else(
-            dplyr::if_all(dplyr::all_of(cols), is.na),
-            "overall", apply(dplyr::across(dplyr::all_of(cols)), 1, newName)),
-          !!level := dplyr::if_else(
-            dplyr::if_all(dplyr::all_of(cols), is.na),
-            "overall", apply(dplyr::across(dplyr::all_of(cols)), 1, newLevel))
-        ) |>
-        dplyr::ungroup()
-      if (!keep) {
-        x <- x |> dplyr::select(!dplyr::all_of(cols))
-      }
-    } else {
-      x <- x |>
-        dplyr::mutate(!!name := paste0(cols, collapse = keyWord)) |>
-        tidyr::unite(
-          col = !!level, dplyr::all_of(cols), sep = keyWord, remove = !keep
-        )
-    }
+    x <- x |>
+      newNameLevel(
+        cols = cols, name = name, level = level, ignore = ignore,
+        keyWord = keyWord
+      )
 
     if (keep) {
       colskeep <- cols
     } else {
       colskeep <- character()
+      x <- x |> dplyr::select(!dplyr::all_of(cols))
     }
 
     # move cols
@@ -121,7 +106,8 @@ uniteNameLevel <- function(x,
 #'
 #' @param x Tibble or dataframe.
 #' @param cols Columns to aggregate.
-#' @param removeNA Whether to remove NA values from the united columns.
+#' @param keep Whether to keep the original columns.
+#' @param ignore Level values to ignore.
 #'
 #' @return A tibble with the new columns.
 #' @description
@@ -140,9 +126,13 @@ uniteNameLevel <- function(x,
 #'
 #' @export
 #'
-uniteGroup <- function(x, cols, removeNA = TRUE) {
+uniteGroup <- function(x,
+                       cols,
+                       keep = FALSE,
+                       ignore = c(NA, "overall")) {
   uniteNameLevel(
-    x = x, cols = cols, name = "group_name", level = "group_level", keep = FALSE, removeNA = removeNA
+    x = x, cols = cols, name = "group_name", level = "group_level", keep = keep,
+    ignore = ignore
   )
 }
 
@@ -150,7 +140,8 @@ uniteGroup <- function(x, cols, removeNA = TRUE) {
 #'
 #' @param x Tibble or dataframe.
 #' @param cols Columns to aggregate.
-#' @param removeNA Whether to remove NA values from the united columns.
+#' @param keep Whether to keep the original columns.
+#' @param ignore Level values to ignore.
 #'
 #' @return A tibble with the new columns.
 #' @description
@@ -169,10 +160,13 @@ uniteGroup <- function(x, cols, removeNA = TRUE) {
 #'
 #' @export
 #'
-uniteStrata <- function(x, cols, removeNA = TRUE) {
+uniteStrata <- function(x,
+                        cols,
+                        keep = FALSE,
+                        ignore = c(NA, "overall")) {
   uniteNameLevel(
     x = x, cols = cols, name = "strata_name", level = "strata_level",
-    keep = FALSE, removeNA = removeNA
+    keep = keep, ignore = ignore
   )
 }
 
@@ -180,7 +174,8 @@ uniteStrata <- function(x, cols, removeNA = TRUE) {
 #'
 #' @param x Tibble or dataframe.
 #' @param cols Columns to aggregate.
-#' @param removeNA Whether to remove NA values from the united columns.
+#' @param keep Whether to keep the original columns.
+#' @param ignore Level values to ignore.
 #'
 #' @return A tibble with the new columns.
 #' @description
@@ -199,20 +194,39 @@ uniteStrata <- function(x, cols, removeNA = TRUE) {
 #'
 #' @export
 #'
-uniteAdditional <- function(x, cols, removeNA = TRUE) {
+uniteAdditional <- function(x,
+                            cols,
+                            keep = FALSE,
+                            ignore = c(NA, "overall")) {
   uniteNameLevel(
     x = x, cols = cols, name = "additional_name", level = "additional_level",
-    keep = FALSE, removeNA = removeNA
+    keep = keep, ignore = ignore
   )
 }
 
 ## Helpers ---
-newName <- function(x) {
-  ind <- which(!is.na(x))
-  nms <- names(x)
-  return(paste0(nms[ind], collapse = " &&& "))
-}
-newLevel <- function(x) {
-  ind <- which(!is.na(x))
-  return(paste0(x[ind], collapse = " &&& "))
+newNameLevel <- function(x, cols, name, level, ignore, keyWord) {
+  y <- x |>
+    dplyr::select(dplyr::all_of(cols))
+  nms <- character(nrow(y))
+  lvl <- character(nrow(y))
+  for (k in seq_len(nrow(y))) {
+    lev <- y[k, ] |> as.matrix() |> as.vector()
+    ind <- which(!lev %in% ignore)
+    if (length(ind) > 0) {
+      nms[k] <- paste0(cols[ind], collapse = keyWord)
+      lvl[k] <- paste0(lev[ind], collapse = keyWord)
+    } else {
+      nms[k] <- "overall"
+      lvl[k] <- "overall"
+    }
+  }
+  x <- x |>
+    dplyr::inner_join(
+      y |>
+        dplyr::mutate(!!name := .env$nms, !!level := .env$lvl),
+      na_matches = "na",
+      by = cols
+    )
+  return(x)
 }
