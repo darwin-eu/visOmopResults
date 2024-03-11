@@ -3,7 +3,6 @@
 #' @param result A dataframe with at least the columns group_name and
 #' group_level.
 #' @param keep Whether to keep the original group_name and group_level columns.
-#' @param overall Whether to keep overall column if present.
 #' @param fill Optionally, a character that specifies what value should be
 #' filled in with when missing.
 #'
@@ -21,14 +20,12 @@
 #'
 splitGroup <- function(result,
                        keep = FALSE,
-                       overall = FALSE,
-                       fill = NA_character_) {
+                       fill = "overall") {
   splitNameLevel(
     result = result,
     name = "group_name",
     level = "group_level",
     keep = keep,
-    overall = overall,
     fill = fill
   )
 }
@@ -38,7 +35,6 @@ splitGroup <- function(result,
 #' @param result A dataframe with at least the columns strata_name and
 #' strata_level.
 #' @param keep Whether to keep the original group_name and group_level columns.
-#' @param overall Whether to keep overall column if present.
 #' @param fill Optionally, a character that specifies what value should be
 #' filled in with when missing.
 #'
@@ -55,14 +51,12 @@ splitGroup <- function(result,
 #'
 splitStrata <- function(result,
                         keep = FALSE,
-                        overall = FALSE,
-                        fill = NA_character_) {
+                        fill = "overall") {
   splitNameLevel(
     result = result,
     name = "strata_name",
     level = "strata_level",
     keep = keep,
-    overall = overall,
     fill = fill
   )
 }
@@ -72,7 +66,6 @@ splitStrata <- function(result,
 #' @param result  A dataframe with at least the columns additional_name and
 #' additional_level.
 #' @param keep Whether to keep the original group_name and group_level columns.
-#' @param overall Whether to keep overall column if present.
 #' @param fill Optionally, a character that specifies what value should be
 #' filled in with when missing.
 #'
@@ -89,14 +82,12 @@ splitStrata <- function(result,
 #'
 splitAdditional <- function(result,
                             keep = FALSE,
-                            overall = FALSE,
-                            fill = NA_character_) {
+                            fill = "overall") {
   splitNameLevel(
     result = result,
     name = "additional_name",
     level = "additional_level",
     keep = keep,
-    overall = overall,
     fill = fill
   )
 }
@@ -105,7 +96,6 @@ splitAdditional <- function(result,
 #'
 #' @param result A summarised_result object.
 #' @param keep Whether to keep the original group_name and group_level columns.
-#' @param overall Whether to keep overall column if present.
 #' @param fill Optionally, a character that specifies what value should be
 #' filled in with when missing.
 #'
@@ -124,12 +114,11 @@ splitAdditional <- function(result,
 #'
 splitAll <- function(result,
                      keep = FALSE,
-                     overall = FALSE,
-                     fill = NA_character_) {
+                     fill = "overall") {
   result |>
-    splitGroup(keep = keep, overall = overall, fill = fill) |>
-    splitStrata(keep = keep, overall = overall, fill = fill) |>
-    splitAdditional(keep = keep, overall = overall, fill = fill)
+    splitGroup(keep = keep, fill = fill) |>
+    splitStrata(keep = keep, fill = fill) |>
+    splitAdditional(keep = keep, fill = fill)
 }
 
 #' Split name and level columns into the columns
@@ -138,7 +127,6 @@ splitAll <- function(result,
 #' @param name Column with the names.
 #' @param level Column with the levels.
 #' @param keep Whether to keep the original group_name and group_level columns.
-#' @param overall Whether to keep overall column if present.
 #' @param fill Optionally, a character that specifies what value should be
 #' filled in with when missing.
 #'
@@ -159,15 +147,14 @@ splitNameLevel <- function(result,
                            name = "group_name",
                            level = "group_level",
                            keep = FALSE,
-                           overall = FALSE,
-                           fill = NA_character_) {
+                           fill = "overall") {
   assertCharacter(name, length = 1)
   assertCharacter(level, length = 1)
   assertLogical(keep, length = 1)
   assertTibble(result, columns = c(name, level))
   assertCharacter(fill, length = 1, na = TRUE)
 
-  newCols <- getColumns(result, name, TRUE)
+  newCols <- getColumns(result = result, col = name)
   id <- which(name == colnames(result))
 
   nameValues <- result[[name]] |> strsplit(" and | &&& ")
@@ -205,7 +192,7 @@ splitNameLevel <- function(result,
     colskeep <- c(name, level)
   }
 
-  if ("overall" %in% newCols & !overall) {
+  if ("overall" %in% colnames(result)) {
     result <- result |> dplyr::select(-"overall")
   }
 

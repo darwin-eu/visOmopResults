@@ -4,15 +4,13 @@
 \alias{splitGroup}
 \title{Split group_name and group_level columns}
 \usage{
-splitGroup(result, keep = FALSE, overall = FALSE, fill = NA_character_)
+splitGroup(result, keep = FALSE, fill = "overall")
 }
 \arguments{
 \item{result}{A dataframe with at least the columns group_name and
 group_level.}
 
 \item{keep}{Whether to keep the original group_name and group_level columns.}
-
-\item{overall}{Whether to keep overall column if present.}
 
 \item{fill}{Optionally, a character that specifies what value should be
 filled in with when missing.}

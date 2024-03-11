@@ -4,12 +4,10 @@
 \alias{strataColumns}
 \title{Identify strata columns in an omop result object}
 \usage{
-strataColumns(result, overall = FALSE)
+strataColumns(result)
 }
 \arguments{
 \item{result}{A summarised_result.}
-
-\item{overall}{Whether to keep overall column if present.}
 }
 \value{
 Unique values of the strata name column.
