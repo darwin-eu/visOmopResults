@@ -10,7 +10,7 @@ uniteNameLevel(
   name = "group_name",
   level = "group_level",
   keep = FALSE,
-  removeNA = TRUE
+  ignore = c(NA, "overall")
 )
 }
 \arguments{
@@ -24,7 +24,7 @@ uniteNameLevel(
 
 \item{keep}{Whether to keep the original columns.}
 
-\item{removeNA}{Whether to remove NA values from the united columns.}
+\item{ignore}{Level values to ignore.}
 }
 \value{
 A tibble with the new columns.

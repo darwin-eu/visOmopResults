@@ -4,14 +4,16 @@
 \alias{uniteAdditional}
 \title{Unite one or more columns in additional_name-additional_level format}
 \usage{
-uniteAdditional(x, cols, removeNA = TRUE)
+uniteAdditional(x, cols, keep = FALSE, ignore = c(NA, "overall"))
 }
 \arguments{
 \item{x}{Tibble or dataframe.}
 
 \item{cols}{Columns to aggregate.}
 
-\item{removeNA}{Whether to remove NA values from the united columns.}
+\item{keep}{Whether to keep the original columns.}
+
+\item{ignore}{Level values to ignore.}
 }
 \value{
 A tibble with the new columns.
