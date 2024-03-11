@@ -6,7 +6,7 @@
 #' them form the results.
 #' @param pivotEstimatesBy Names from which pivot wider the estimate values. If
 #' NULL the table will not be pivotted.
-#' @param glueName Name style (glue package specifications) to customize names
+#' @param estimateLabels Name style (glue package specifications) to customize names
 #' when pivotting estimates.
 #'
 #' @return A tibble.
@@ -37,13 +37,16 @@ tidySummarisedResult <- function(result,
 
   # code
   result_out <- result |>
-    dplyr::filter(variable_name != "settings")
+    dplyr::filter(.data$variable_name != "settings")
 
   if (split) {
     result_out <- result_out |> splitAll()
   }
 
   if (length(pivotEstimatesBy) > 0) {
+    if (is.null(estimateLabels)) {
+      estimateLabels <- paste0("{", paste0(pivotEstimatesBy, collapse = "}_{"), "}")
+    }
     typeNameConvert <- result_out |>
       dplyr::distinct(dplyr::across(dplyr::all_of(c("estimate_type", pivotEstimatesBy)))) |>
       dplyr::mutate(estimate_type = dplyr::case_when(
@@ -53,7 +56,6 @@ tidySummarisedResult <- function(result,
       ),
       new_name = glue::glue(estimateLabels)
       )
-
     result_out <- result_out |>
       dplyr::select(-"estimate_type") |>
       tidyr::pivot_wider(

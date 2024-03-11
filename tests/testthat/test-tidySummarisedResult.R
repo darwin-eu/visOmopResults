@@ -44,8 +44,8 @@ test_that("tidySummarisedResult", {
                                                pivotSettings = FALSE,
                                                pivotEstimatesBy = c("variable_name", "estimate_name"),
                                                estimateLabels = "{estimate_name}__{variable_name}"))
-  expect_true(nrow(res2 |> dplyr::filter(.data$variable_name == "settings")) == 0)
   expect_false("mock_default" %in% colnames(res2))
+  expect_false("logic__settings" %in% colnames(res2))
   expect_true(all(c("count__number subjects", "mean__age", "sd__age",
                     "count__Medications", "percentage__Medications") %in% colnames(res2)))
   expect_true(class(res2$percentage__Medications) == "numeric")
