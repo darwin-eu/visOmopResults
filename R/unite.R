@@ -207,7 +207,8 @@ uniteAdditional <- function(x,
 ## Helpers ---
 newNameLevel <- function(x, cols, name, level, ignore, keyWord) {
   y <- x |>
-    dplyr::select(dplyr::all_of(cols))
+    dplyr::select(dplyr::all_of(cols)) |>
+    dplyr::distinct()
   nms <- character(nrow(y))
   lvl <- character(nrow(y))
   for (k in seq_len(nrow(y))) {
