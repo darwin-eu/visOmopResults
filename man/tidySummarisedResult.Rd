@@ -23,7 +23,7 @@ them form the results.}
 \item{pivotEstimatesBy}{Names from which pivot wider the estimate values. If
 NULL the table will not be pivotted.}
 
-\item{glueName}{Name style (glue package specifications) to customize names
+\item{estimateLabels}{Name style (glue package specifications) to customize names
 when pivotting estimates.}
 }
 \value{
