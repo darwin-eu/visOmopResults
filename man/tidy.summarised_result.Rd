@@ -7,9 +7,9 @@
 \method{tidy}{summarised_result}(
   x,
   splitGroup = TRUE,
-  splitStrata = FALSE,
+  splitStrata = TRUE,
   splitAdditional = TRUE,
-  pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name"),
+  pivotEstimatesBy = "estimate_name",
   nameStyle = NULL,
   ...
 )
