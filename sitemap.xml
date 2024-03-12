@@ -52,6 +52,9 @@
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/mockSummarisedResult.html</loc>
   </url>
   <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/reexports.html</loc>
+  </url>
+  <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/splitAdditional.html</loc>
   </url>
   <url>
@@ -70,7 +73,7 @@
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/strataColumns.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/tidySummarisedResult.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/tidy.summarised_result.html</loc>
   </url>
   <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/uniteAdditional.html</loc>
