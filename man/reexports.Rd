@@ -12,7 +12,7 @@ These objects are imported from other packages. Follow the links
 below to see their documentation.
 
 \describe{
-  \item{broom}{\code{\link[broom:reexports]{tidy}}}
+  \item{generics}{\code{\link[generics]{tidy}}}
 
   \item{omopgenerics}{\code{\link[omopgenerics]{settings}}}
 }}

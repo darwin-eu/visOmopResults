@@ -1,7 +1,7 @@
 
-#' @importFrom broom tidy
+#' @importFrom generics tidy
 #' @export
-broom::tidy
+generics::tidy
 
 #' @importFrom omopgenerics settings
 #' @export

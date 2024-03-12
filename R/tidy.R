@@ -13,7 +13,7 @@
 #' @return A tibble.
 #'
 #' @description
-#' \\ifelse{html}{\\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\\strong{[Experimental]}}
+#' `r lifecycle::badge("experimental")`
 #' Provides tools for obtaining for tidying a summarised_result object.
 #'
 #' @export
