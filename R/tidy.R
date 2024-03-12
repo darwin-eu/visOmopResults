@@ -1,20 +1,24 @@
 #' Get a tidy visualization of a summarised_result object
 #'
 #' @param x A summarised_result.
-#' @param split Whether to split all name/level column pairs or not.
-#' @param pivotSettings TRUE to pivot settings into columns, and FALSE to remove
-#' them form the results.
+#' @param splitGroup If TRUE it will split the group name-level column pair.
+#' @param splitStrata If TRUE it will split the group name-level column pair.
+#' @param splitAdditional If TRUE it will split the group name-level column pair.
 #' @param pivotEstimatesBy Names from which pivot wider the estimate values. If
 #' NULL the table will not be pivotted.
-#' @param estimateLabels Name style (glue package specifications) to customize names
-#' when pivotting estimates.
+#' @param nameStyle Name style (glue package specifications) to customize names
+#' when pivotting estimates. If NULL standard tidyr::pivot_wider formatting will
+#' be used.
 #' @param ... For compatibility (not used).
 #'
 #' @return A tibble.
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' Provides tools for obtaining for tidying a summarised_result object.
+#' Provides tools for obtaining a tidy version of a summarised_result object. It
+#' pivots into columns the settings (if any), gives the option to split
+#' group, strata, and additional columns, and whether and how to piviot
+#' estimates.
 #'
 #' @export
 #'
@@ -24,29 +28,37 @@
 #' result |> tidy()
 #'
 tidy.summarised_result <- function(x,
-                                   split = TRUE,
-                                   pivotSettings = TRUE,
-                                   pivotEstimatesBy = NULL,
-                                   estimateLabels = NULL,
+                                   splitGroup = TRUE,
+                                   splitStrata = FALSE,
+                                   splitAdditional = TRUE,
+                                   pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name"),
+                                   nameStyle = NULL,
                                    ...) {
   # initial checks
   assertTibble(x, columns = pivotEstimatesBy)
-  assertLogical(split, length = 1)
-  assertLogical(pivotSettings, length = 1)
+  assertLogical(splitGroup, length = 1)
+  assertLogical(splitStrata, length = 1)
+  assertLogical(splitAdditional, length = 1)
   assertCharacter(pivotEstimatesBy, null = TRUE)
-  assertCharacter(estimateLabels, null = TRUE)
+  assertCharacter(nameStyle, null = TRUE)
 
   # code
   result_out <- x |>
     dplyr::filter(.data$variable_name != "settings")
 
-  if (split) {
-    result_out <- result_out |> splitAll()
+  if (splitGroup) {
+    result_out <- result_out |> splitGroup()
+  }
+  if (splitStrata) {
+    result_out <- result_out |> splitStrata()
+  }
+  if (splitAdditional) {
+    result_out <- result_out |> splitAdditional()
   }
 
   if (length(pivotEstimatesBy) > 0) {
-    if (is.null(estimateLabels)) {
-      estimateLabels <- paste0("{", paste0(pivotEstimatesBy, collapse = "}_{"), "}")
+    if (is.null(nameStyle)) {
+      nameStyle <- paste0("{", paste0(pivotEstimatesBy, collapse = "}_{"), "}")
     }
     typeNameConvert <- result_out |>
       dplyr::distinct(dplyr::across(dplyr::all_of(c("estimate_type", pivotEstimatesBy)))) |>
@@ -55,26 +67,26 @@ tidy.summarised_result <- function(x,
         !grepl("numeric|percentage|proportion|integer|date|double|logical|character", .data$estimate_type) ~ "character",
         .default = .data$estimate_type
       ),
-      new_name = glue::glue(estimateLabels)
+      new_name = glue::glue(nameStyle)
       )
     result_out <- result_out |>
       dplyr::select(-"estimate_type") |>
       tidyr::pivot_wider(
         names_from = pivotEstimatesBy,
         values_from = "estimate_value",
-        names_glue = estimateLabels
+        names_glue = nameStyle
       ) |>
       dplyr::mutate(
         dplyr::across(dplyr::all_of(typeNameConvert$new_name),
-                      ~ asEstimateType(.x,
-                                       name = deparse(substitute(.)),
-                                       dict = typeNameConvert))
+                      ~ asEstimateType(.x, name = deparse(substitute(.)), dict = typeNameConvert)
+        )
       )
   }
 
-  if (pivotSettings) {
+  settings <- x |> omopgenerics::settings()
+  if (nrow(settings) > 0) {
     result_out <- result_out |>
-      dplyr::left_join(x |> omopgenerics::settings(),
+      dplyr::left_join(settings,
                        by = c("result_id", "cdm_name", "result_type"))
   }
 

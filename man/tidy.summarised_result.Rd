@@ -6,35 +6,37 @@
 \usage{
 \method{tidy}{summarised_result}(
   x,
-  split = TRUE,
-  pivotSettings = TRUE,
-  pivotEstimatesBy = NULL,
-  estimateLabels = NULL,
+  splitGroup = TRUE,
+  splitStrata = FALSE,
+  splitAdditional = TRUE,
+  pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name"),
+  nameStyle = NULL,
   ...
 )
 }
 \arguments{
 \item{x}{A summarised_result.}
 
-\item{split}{Whether to split all name/level column pairs or not.}
-
-\item{pivotSettings}{TRUE to pivot settings into columns, and FALSE to remove
-them form the results.}
-
 \item{pivotEstimatesBy}{Names from which pivot wider the estimate values. If
 NULL the table will not be pivotted.}
 
-\item{estimateLabels}{Name style (glue package specifications) to customize names
-when pivotting estimates.}
+\item{nameStyle}{Name style (glue package specifications) to customize names
+when pivotting estimates. If NULL standard tidyr::pivot_wider formatting will
+be used.}
 
 \item{...}{For compatibility (not used).}
+
+\item{split}{Whether to split all name/level column pairs or not.}
 }
 \value{
 A tibble.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-Provides tools for obtaining for tidying a summarised_result object.
+Provides tools for obtaining a tidy version of a summarised_result object. It
+pivots into columns the settings (if any), gives the option to split
+group, strata, and additional columns, and whether and how to piviot
+estimates.
 }
 \examples{
 result <- mockSummarisedResult()
