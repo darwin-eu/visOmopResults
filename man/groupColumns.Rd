@@ -4,10 +4,12 @@
 \alias{groupColumns}
 \title{Identify group columns in an omop result object}
 \usage{
-groupColumns(result)
+groupColumns(result, overall = lifecycle::deprecated())
 }
 \arguments{
 \item{result}{A summarised_result.}
+
+\item{overall}{deprecated.}
 }
 \value{
 Unique values of the group name column.

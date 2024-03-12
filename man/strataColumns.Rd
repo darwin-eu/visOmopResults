@@ -4,10 +4,12 @@
 \alias{strataColumns}
 \title{Identify strata columns in an omop result object}
 \usage{
-strataColumns(result)
+strataColumns(result, overall = lifecycle::deprecated())
 }
 \arguments{
 \item{result}{A summarised_result.}
+
+\item{overall}{deprecated.}
 }
 \value{
 Unique values of the strata name column.
