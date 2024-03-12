@@ -1,6 +1,6 @@
 #' Get a tidy visualization of a summarised_result object
 #'
-#' @param result A summarised_result.
+#' @param x A summarised_result.
 #' @param split Whether to split all name/level column pairs or not.
 #' @param pivotSettings TRUE to pivot settings into columns, and FALSE to remove
 #' them form the results.
@@ -8,6 +8,7 @@
 #' NULL the table will not be pivotted.
 #' @param estimateLabels Name style (glue package specifications) to customize names
 #' when pivotting estimates.
+#' @param ... For compatibility (not used).
 #'
 #' @return A tibble.
 #'
@@ -15,28 +16,28 @@
 #' \\ifelse{html}{\\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\\strong{[Experimental]}}
 #' Provides tools for obtaining for tidying a summarised_result object.
 #'
-#'
 #' @export
 #'
 #' @examples
 #' result <- mockSummarisedResult()
 #'
-#' result |> tidySummarisedResult()
-
-tidySummarisedResult <- function(result,
-                                 split = TRUE,
-                                 pivotSettings = TRUE,
-                                 pivotEstimatesBy = NULL,
-                                 estimateLabels = NULL) {
+#' result |> tidy()
+#'
+tidy.summarised_result <- function(x,
+                                   split = TRUE,
+                                   pivotSettings = TRUE,
+                                   pivotEstimatesBy = NULL,
+                                   estimateLabels = NULL,
+                                   ...) {
   # initial checks
-  assertTibble(result, columns = pivotEstimatesBy)
+  assertTibble(x, columns = pivotEstimatesBy)
   assertLogical(split, length = 1)
   assertLogical(pivotSettings, length = 1)
   assertCharacter(pivotEstimatesBy, null = TRUE)
   assertCharacter(estimateLabels, null = TRUE)
 
   # code
-  result_out <- result |>
+  result_out <- x |>
     dplyr::filter(.data$variable_name != "settings")
 
   if (split) {
@@ -73,7 +74,7 @@ tidySummarisedResult <- function(result,
 
   if (pivotSettings) {
     result_out <- result_out |>
-      dplyr::left_join(result |> omopgenerics::settings(),
+      dplyr::left_join(x |> omopgenerics::settings(),
                        by = c("result_id", "cdm_name", "result_type"))
   }
 
@@ -84,3 +85,4 @@ asEstimateType <- function(x, name, dict) {
   type <- dict$estimate_type[dict$new_name == name]
   return(eval(parse(text = paste0("as.", type, "(x)"))))
 }
+

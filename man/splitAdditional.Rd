@@ -4,7 +4,12 @@
 \alias{splitAdditional}
 \title{Split additional_name and additional_level columns}
 \usage{
-splitAdditional(result, keep = FALSE, fill = "overall")
+splitAdditional(
+  result,
+  keep = FALSE,
+  fill = "overall",
+  overall = lifecycle::deprecated()
+)
 }
 \arguments{
 \item{result}{A dataframe with at least the columns additional_name and
@@ -14,6 +19,8 @@ additional_level.}
 
 \item{fill}{Optionally, a character that specifies what value should be
 filled in with when missing.}
+
+\item{overall}{deprecated.}
 }
 \value{
 A dataframe.

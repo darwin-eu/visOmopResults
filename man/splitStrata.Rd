@@ -4,7 +4,12 @@
 \alias{splitStrata}
 \title{Split strata_name and strata_level columns}
 \usage{
-splitStrata(result, keep = FALSE, fill = "overall")
+splitStrata(
+  result,
+  keep = FALSE,
+  fill = "overall",
+  overall = lifecycle::deprecated()
+)
 }
 \arguments{
 \item{result}{A dataframe with at least the columns strata_name and
@@ -14,6 +19,8 @@ strata_level.}
 
 \item{fill}{Optionally, a character that specifies what value should be
 filled in with when missing.}
+
+\item{overall}{deprecated.}
 }
 \value{
 A dataframe.

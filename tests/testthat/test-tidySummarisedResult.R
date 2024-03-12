@@ -1,4 +1,4 @@
-test_that("tidySummarisedResult", {
+test_that("tidy", {
   mocksum <- mockSummarisedResult() |>
   # settings
   dplyr::union_all(
@@ -23,7 +23,7 @@ test_that("tidySummarisedResult", {
     )
   )
 
-  expect_no_error(res0 <- tidySummarisedResult(mocksum, pivotEstimatesBy = "estimate_name"))
+  expect_no_error(res0 <- tidy(mocksum, pivotEstimatesBy = "estimate_name"))
   expect_true(nrow(res0 |> dplyr::filter(.data$variable_name == "settings")) == 0)
   expect_true(all(c("cohort_name", "age_group", "sex", "mock_default", "count",
                     "mean", "sd", "percentage") %in% colnames(res0)))
@@ -31,7 +31,7 @@ test_that("tidySummarisedResult", {
   expect_true(class(res0$mean) == "numeric")
   expect_true(class(res0$count) == "integer")
 
-  expect_no_error(res1 <- tidySummarisedResult(mocksum,
+  expect_no_error(res1 <- tidy(mocksum,
                                                split = FALSE))
   expect_true(all(c("group_name", "group_level", "strata_name", "strata_level",
                     "additional_name", "additional_level", "mock_default") %in%
@@ -39,7 +39,7 @@ test_that("tidySummarisedResult", {
   expect_false(any(c("cohort_name", "age_group", "sex", "count",
                     "mean", "sd", "percentage") %in% colnames(res1)))
 
-  expect_no_error(res2 <- tidySummarisedResult(mocksum,
+  expect_no_error(res2 <- tidy(mocksum,
                                                split = FALSE,
                                                pivotSettings = FALSE,
                                                pivotEstimatesBy = c("variable_name", "estimate_name"),

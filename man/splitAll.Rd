@@ -4,7 +4,12 @@
 \alias{splitAll}
 \title{Split group, strata and additional at once.}
 \usage{
-splitAll(result, keep = FALSE, fill = "overall")
+splitAll(
+  result,
+  keep = FALSE,
+  fill = "overall",
+  overall = lifecycle::deprecated()
+)
 }
 \arguments{
 \item{result}{A summarised_result object.}
@@ -13,6 +18,8 @@ splitAll(result, keep = FALSE, fill = "overall")
 
 \item{fill}{Optionally, a character that specifies what value should be
 filled in with when missing.}
+
+\item{overall}{deprecated.}
 }
 \value{
 A dataframe with group, strata and additional name as columns.
