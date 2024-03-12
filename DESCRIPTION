@@ -25,7 +25,7 @@ Imports:
     dplyr,
     glue,
     lifecycle,
-    omopgenerics (>= 0.0.3),
+    omopgenerics (>= 0.1.0),
     rlang,
     tidyr
 Suggests: 
