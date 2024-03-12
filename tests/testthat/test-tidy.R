@@ -23,7 +23,7 @@ test_that("tidy", {
     )
   )
 
-  expect_no_error(res0 <- tidy(x = mocksum, pivotEstimatesBy = "estimate_name", splitStrata = TRUE))
+  expect_no_error(res0 <- tidy(x = mocksum, pivotEstimatesBy = "estimate_name"))
   expect_true(nrow(res0 |> dplyr::filter(.data$variable_name == "settings")) == 0)
   expect_true(all(c("cohort_name", "age_group", "sex", "mock_default", "count",
                     "mean", "sd", "percentage") %in% colnames(res0)))
@@ -31,7 +31,8 @@ test_that("tidy", {
   expect_true(class(res0$mean) == "numeric")
   expect_true(class(res0$count) == "integer")
 
-  expect_no_error(res1 <- tidy(mocksum, splitGroup = FALSE, splitAdditional = FALSE))
+  expect_no_error(res1 <- tidy(mocksum, splitGroup = FALSE, splitAdditional = FALSE,
+                               splitStrata = FALSE, pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name")))
   expect_true(all(c("group_name", "group_level", "strata_name", "strata_level",
                     "additional_name", "additional_level", "mock_default") %in%
                     colnames(res1)))
@@ -52,7 +53,7 @@ test_that("tidy", {
   expect_true(class(res2$mean__age) == "numeric")
   expect_true(class(res2$count__Medications) == "integer")
 
-  expect_no_error(res3 <- tidy(mocksum, splitGroup = FALSE, splitAdditional = FALSE,
+  expect_no_error(res3 <- tidy(mocksum, splitGroup = FALSE, splitAdditional = FALSE, splitStrata = FALSE,
                                 pivotEstimatesBy = NULL))
   expect_true(all(colnames(res3) %in% c(colnames(mocksum), "mock_default")))
 
