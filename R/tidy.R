@@ -15,10 +15,9 @@
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' Provides tools for obtaining a tidy version of a summarised_result object. It
-#' pivots into columns the settings (if any), gives the option to split
-#' group, strata, and additional columns, and whether and how to piviot
-#' estimates.
+#' Provides tools for obtaining a tidy version of a summarised_result object. If
+#' the summarised results object contains settings, these will be tranformed
+#' into columns.
 #'
 #' @export
 #'
