@@ -17,6 +17,12 @@
 \arguments{
 \item{x}{A summarised_result.}
 
+\item{splitGroup}{If TRUE it will split the group name-level column pair.}
+
+\item{splitStrata}{If TRUE it will split the group name-level column pair.}
+
+\item{splitAdditional}{If TRUE it will split the group name-level column pair.}
+
 \item{pivotEstimatesBy}{Names from which pivot wider the estimate values. If
 NULL the table will not be pivotted.}
 
@@ -25,8 +31,6 @@ when pivotting estimates. If NULL standard tidyr::pivot_wider formatting will
 be used.}
 
 \item{...}{For compatibility (not used).}
-
-\item{split}{Whether to split all name/level column pairs or not.}
 }
 \value{
 A tibble.
