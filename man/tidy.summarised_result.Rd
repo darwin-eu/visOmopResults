@@ -6,26 +6,29 @@
 \usage{
 \method{tidy}{summarised_result}(
   x,
-  split = TRUE,
-  pivotSettings = TRUE,
-  pivotEstimatesBy = NULL,
-  estimateLabels = NULL,
+  splitGroup = TRUE,
+  splitStrata = TRUE,
+  splitAdditional = TRUE,
+  pivotEstimatesBy = "estimate_name",
+  nameStyle = NULL,
   ...
 )
 }
 \arguments{
 \item{x}{A summarised_result.}
 
-\item{split}{Whether to split all name/level column pairs or not.}
+\item{splitGroup}{If TRUE it will split the group name-level column pair.}
 
-\item{pivotSettings}{TRUE to pivot settings into columns, and FALSE to remove
-them form the results.}
+\item{splitStrata}{If TRUE it will split the group name-level column pair.}
+
+\item{splitAdditional}{If TRUE it will split the group name-level column pair.}
 
 \item{pivotEstimatesBy}{Names from which pivot wider the estimate values. If
 NULL the table will not be pivotted.}
 
-\item{estimateLabels}{Name style (glue package specifications) to customize names
-when pivotting estimates.}
+\item{nameStyle}{Name style (glue package specifications) to customize names
+when pivotting estimates. If NULL standard tidyr::pivot_wider formatting will
+be used.}
 
 \item{...}{For compatibility (not used).}
 }
@@ -34,7 +37,9 @@ A tibble.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-Provides tools for obtaining for tidying a summarised_result object.
+Provides tools for obtaining a tidy version of a summarised_result object. If
+the summarised results object contains settings, these will be tranformed
+into columns.
 }
 \examples{
 result <- mockSummarisedResult()
