@@ -107,7 +107,7 @@ summarised_result object to use in the following examples.</p>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "5211262", "419416", "5814321", "4499479", "9425055",…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1534056", "8591609", "6057298", "8007120", "2383393"…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 <p>A summarised_result contains 3 types of name-level paired columns
@@ -146,14 +146,14 @@ into a column in the dataframe, which values are taken by the “level”
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "5211262", "419416", "5814321", "4499479", "9425055",…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1534056", "8591609", "6057298", "8007120", "2383393"…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 <p>Similar to <code>splitStrata</code>, the functions
 <code>splitGroup</code> will split <em>group_name</em> and
 <em>group_level</em> columns, while <code>splitAdditional</code> will
 split the additional name-level pair. Finally, the function
-<code>splitAll</code> will split group, strata, and additonal at once.
+<code>splitAll</code> will split group, strata, and additional at once.
 Note that after using <code>splitStrata</code> on our summarised_result
 object, we do no longer have a <em>strata_name-strata_level</em> pair,
 instead we have two new columns corresponding to the stratifications,
@@ -175,7 +175,7 @@ instead we have two new columns corresponding to the stratifications,
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "5211262", "419416", "5814321", "4499479", "9425055",…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1534056", "8591609", "6057298", "8007120", "2383393"…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="va">mock_sr</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/splitAdditional.html">splitAdditional</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -194,7 +194,7 @@ instead we have two new columns corresponding to the stratifications,
 <span><span class="co">#&gt; $ variable_level  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
 <span><span class="co">#&gt; $ estimate_name   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count", …</span></span>
 <span><span class="co">#&gt; $ estimate_type   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer",…</span></span>
-<span><span class="co">#&gt; $ estimate_value  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "5211262", "419416", "5814321", "4499479", "9425055", …</span></span>
+<span><span class="co">#&gt; $ estimate_value  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1534056", "8591609", "6057298", "8007120", "2383393",…</span></span>
 <span><span class="va">mock_sr</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/splitAll.html">splitAll</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 126</span></span>
 <span><span class="co">#&gt; Columns: 13</span></span>
@@ -210,7 +210,7 @@ instead we have two new columns corresponding to the stratifications,
 <span><span class="co">#&gt; $ variable_level  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
 <span><span class="co">#&gt; $ estimate_name   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count", …</span></span>
 <span><span class="co">#&gt; $ estimate_type   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer",…</span></span>
-<span><span class="co">#&gt; $ estimate_value  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "5211262", "419416", "5814321", "4499479", "9425055", …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ estimate_value  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1534056", "8591609", "6057298", "8007120", "2383393",…</span></span></code></pre></div>
 <div class="section level4">
 <h4 id="keyword">!! Keyword: &amp;&amp;&amp;<a class="anchor" aria-label="anchor" href="#keyword"></a>
 </h4>
@@ -316,8 +316,8 @@ them we will obtain the NA as output:</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region NA &amp;&amp;&amp; NA &amp;&amp;&amp; Center</span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region &gt;40 &amp;&amp;&amp; F &amp;&amp;&amp; NA    </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> age &amp;&amp;&amp; sex &amp;&amp;&amp; region &lt;=40 &amp;&amp;&amp; M &amp;&amp;&amp; NA</span></span></code></pre></div>
-<p>Wheras, by default (<code>ignore = c(NA, "overall")</code>) we obtain
-an output where only names and levels of non-NA values are returned, and
+<p>By default (<code>ignore = c(NA, "overall")</code>) we obtain an
+output where only names and levels of non-NA values are returned, and
 from those rows where all values are NA it uses “overall”.</p>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">to_unite_strata</span> <span class="op">|&gt;</span></span>
