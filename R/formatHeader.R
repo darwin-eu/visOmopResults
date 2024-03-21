@@ -88,7 +88,7 @@ formatHeader <- function(result,
                   }
                 }
               } else {
-                cli::cli_abort(paste0("There are missing levels in strata name '", header[k], "'."))
+                cli::cli_abort(paste0("There are missing levels in '", header[k], "'."))
               }
             }
           } else {
