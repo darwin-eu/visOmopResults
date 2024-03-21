@@ -37,7 +37,7 @@ in order. Allowed are: \code{cdm_name}, \code{group}, \code{strata}, \code{addit
 
 \item{minCellCount}{Counts below which results will be clouded.}
 
-\item{excludeColumns}{Columsn to drop from the output table.}
+\item{excludeColumns}{Columns to drop from the output table.}
 
 \item{.options}{Named list with additional formatting options.
 visOmopResults::optionsFormatTable() shows allowed arguments and

@@ -16,7 +16,7 @@
 #' @description
 #' `r lifecycle::badge("experimental")`
 #' Provides tools for obtaining a tidy version of a summarised_result object. If
-#' the summarised results object contains settings, these will be tranformed
+#' the summarised results object contains settings, these will be transformed
 #' into columns.
 #'
 #' @export

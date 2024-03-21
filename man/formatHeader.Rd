@@ -2,8 +2,7 @@
 % Please edit documentation in R/formatHeader.R
 \name{formatHeader}
 \alias{formatHeader}
-\title{Creates a tibble with trageted rows pivotted into columns with header-ready
-names to get formatted tables (gt or flextable)}
+\title{Creats a header for gt and flextable objects.}
 \usage{
 formatHeader(
   result,
@@ -17,7 +16,7 @@ formatHeader(
 \item{result}{A summarised_result.}
 
 \item{header}{Names of the columns to make headers. Names that doesn't
-correspnd to a column of the table result, will be used as headers at the
+correspond to a column of the table result, will be used as headers at the
 defined position.}
 
 \item{delim}{Delimiter to use to separate headers.}

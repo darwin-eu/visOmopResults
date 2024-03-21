@@ -1,9 +1,8 @@
-#' Creates a tibble with trageted rows pivotted into columns with header-ready
-#' names to get formatted tables (gt or flextable)
+#' Creats a header for gt and flextable objects.
 #'
 #' @param result A summarised_result.
 #' @param header Names of the columns to make headers. Names that doesn't
-#' correspnd to a column of the table result, will be used as headers at the
+#' correspond to a column of the table result, will be used as headers at the
 #' defined position.
 #' @param delim Delimiter to use to separate headers.
 #' @param includeHeaderName Whether to include the column name as header.
