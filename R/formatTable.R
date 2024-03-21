@@ -23,15 +23,19 @@
 #' @export
 #'
 #' @examples
-#' result <- mockSummarisedResult()
-#'
-#' result |> formatTable()
+#' mockSummarisedResult() |> formatTable(
+#'   formatEstimateName = c("N%" = "<count> (<percentage>)",
+#'                          "N" = "<count>",
+#'                          "Mean (SD)" = "<mean> (<sd>)"),
+#'   header = c("group"),
+#'   split = c("group","strata",  "additional")
+#' )
 #'
 formatTable <- function(result,
                         formatEstimateName,
                         header,
+                        split,
                         groupColumn = NULL,
-                        split = c("group", "strata", "additional"),
                         type = "gt",
                         minCellCount = 5,
                         excludeColumns = c("result_id", "result_type", "package_name", "package_version", "estimate_type"),

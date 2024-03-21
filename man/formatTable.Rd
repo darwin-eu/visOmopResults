@@ -8,8 +8,8 @@ formatTable(
   result,
   formatEstimateName,
   header,
+  split,
   groupColumn = NULL,
-  split = c("group", "strata", "additional"),
   type = "gt",
   minCellCount = 5,
   excludeColumns = c("result_id", "result_type", "package_name", "package_version",
@@ -27,10 +27,10 @@ computation order. Indicate estimate_name's between <...>.}
 in order. Allowed are: \code{cdm_name}, \code{group}, \code{strata}, \code{additional},
 \code{variable}, \code{estimate}, \code{settings}.}
 
-\item{groupColumn}{Column to use as group labels.}
-
 \item{split}{A vector containing the name-level groups to split ("group",
 "strata", "additional"), or an empty character vector to not split.}
+
+\item{groupColumn}{Column to use as group labels.}
 
 \item{type}{Type of desired formatted table, possibilities: "gt",
 "flextable", "tibble".}
@@ -50,8 +50,12 @@ A tibble, gt, or flextable object.
 Format a summarised_result object into a gt, flextable or tibble object
 }
 \examples{
-result <- mockSummarisedResult()
-
-result |> formatTable()
+mockSummarisedResult() |> formatTable(
+  formatEstimateName = c("N\%" = "<count> (<percentage>)",
+                         "N" = "<count>",
+                         "Mean (SD)" = "<mean> (<sd>)"),
+  header = c("group"),
+  split = c("group","strata",  "additional")
+)
 
 }
