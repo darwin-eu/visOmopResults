@@ -30,7 +30,7 @@ test_that("formatTable", {
       excludeColumns = c("result_id", "result_type", "package_name", "package_version", "estimate_type"),
       .options = list())
   )
-  expect_true("gt_tbl" %in% class(gt1))
+  expect_true("gt_tbl" %in% class(gt2))
   expect_true(all(c(
     "CDM name", "Cohort name",
     "Variable name", "Variable level",
@@ -38,7 +38,7 @@ test_that("formatTable", {
     "[header]Age group\n[header_level]<40\n[header]Sex\n[header_level]Male", "[header]Age group\n[header_level]>=40\n[header]Sex\n[header_level]Male",
     "[header]Age group\n[header_level]<40\n[header]Sex\n[header_level]Female", "[header]Age group\n[header_level]>=40\n[header]Sex\n[header_level]Female",
     "[header]Age group\n[header_level]Overall\n[header]Sex\n[header_level]Male", "[header]Age group\n[header_level]Overall\n[header]Sex\n[header_level]Female",
-    "[header]Age group\n[header_level]<40\n[header]Sex\n[header_level]Overall", "[header]Age group\n[header_level]>=40\n[header]Sex\n[header_level]Overall",
+    "[header]Age group\n[header_level]<40\n[header]Sex\n[header_level]Overall", "[header]Age group\n[header_level]>=40\n[header]Sex\n[header_level]Overall"
   ) %in% colnames(gt2$`_data`)))
   expect_true(nrow(gt2$`_data`) == 10)
 

@@ -217,6 +217,11 @@ formatTable <- function(result,
     .options$colsToMergeRows <- formatString(.options$colsToMergeRows)
   }
   if (!is.null(groupColumn)) {
+    if (groupColumn == "cdm_name") {
+      groupColumn <- "CDM name"
+    } else {
+      groupColumn <- formatString(groupColumn)
+    }
     if (!groupColumn %in% colnames(x)) {
       possibleGroups <- colnames(x)
       possibleGroups <- gsub(" ", "_", tolower(possibleGroups[!grepl("\\[header", possibleGroups)]))
@@ -226,12 +231,6 @@ formatTable <- function(result,
         paste0(possibleGroups, collapse = "', '"), "'"
       )))
     }
-    if (groupColumn == "cdm_name") {
-      groupColumn <- "CDM name"
-    } else {
-      groupColumn <- formatString(groupColumn)
-    }
-
   }
 
   if (type == "gt") {

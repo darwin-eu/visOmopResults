@@ -69,9 +69,9 @@ tidy.summarised_result <- function(x,
       new_name = glue::glue(nameStyle)
       )
     result_out <- result_out |>
-      dplyr::select(-"estimate_type") |>
+      dplyr::select(-estimate_type) |>
       tidyr::pivot_wider(
-        names_from = pivotEstimatesBy,
+        names_from = dplyr::all_of(pivotEstimatesBy),
         values_from = "estimate_value",
         names_glue = nameStyle
       ) |>
