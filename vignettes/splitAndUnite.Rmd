@@ -42,7 +42,7 @@ For instance, the `splitGroup` function will target the *group_name-group_level*
 mock_sr |> splitGroup() |> glimpse()
 ```
 
-Similar to `splitStrata`, the functions `splitGroup` will split *group_name* and *group_level* columns, while `splitAdditional` will split the additional name-level pair. Finally, the function `splitAll` will split group, strata, and additonal at once. Note that after using `splitStrata` on our summarised_result object, we do no longer have a *strata_name-strata_level* pair, instead we have two new columns corresponding to the stratifications, *age_group* and *sex*.
+Similar to `splitStrata`, the functions `splitGroup` will split *group_name* and *group_level* columns, while `splitAdditional` will split the additional name-level pair. Finally, the function `splitAll` will split group, strata, and additional at once. Note that after using `splitStrata` on our summarised_result object, we do no longer have a *strata_name-strata_level* pair, instead we have two new columns corresponding to the stratifications, *age_group* and *sex*.
 
 ```{r}
 mock_sr |> splitStrata() |> glimpse()
@@ -111,7 +111,7 @@ to_unite_strata |>
               ignore = character())
 ```
 
-Wheras, by default (`ignore = c(NA, "overall")`) we obtain an output where only names and levels of non-NA values are returned, and from those rows where all values are NA it uses "overall".
+By default (`ignore = c(NA, "overall")`) we obtain an output where only names and levels of non-NA values are returned, and from those rows where all values are NA it uses "overall".
 ```{r}
 to_unite_strata |>
   uniteStrata(cols = c("age", "sex", "region"))

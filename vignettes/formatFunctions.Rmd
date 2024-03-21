@@ -39,7 +39,7 @@ mock_sr |> glimpse()
 ## 2. formatEstimateName()
 This functions helps to manipulate *estimate_name* and *estimate_value* columns. For instance, if we want that all the variables for which we have counts and percentage to be display in a single row showing both as "N (%)" we can do it with this function. 
 
-The `estimateNameFormat` is where all combinations or renaming of estimates can be specified. Values from *estime_name*'s column should be specified between <...>. The new *estimate_name* values to use will be the names of the vector, or the value itself when it is not named. 
+The `estimateNameFormat` is where all combinations or renaming of estimates can be specified. Values from *estimate_name*'s column should be specified between <...>. The new *estimate_name* values to use will be the names of the vector, or the value itself when it is not named. 
 
 ```{r}
 mock_sr <- mock_sr |> 
@@ -103,7 +103,7 @@ mock_sr <- mock_sr |>
 mock_sr |> glimpse()
 ```
 
-Notice, how we substitute the keyWord "&&&" to "and", to get a more readble and nice header.
+Notice, how we substitute the keyWord "&&&" to "and", to get a nice header.
 
  
 

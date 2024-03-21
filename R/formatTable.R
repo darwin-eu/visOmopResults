@@ -12,7 +12,7 @@
 #' @param type Type of desired formatted table, possibilities: "gt",
 #' "flextable", "tibble".
 #' @param minCellCount Counts below which results will be clouded.
-#' @param excludeColumns Columsn to drop from the output table.
+#' @param excludeColumns Columns to drop from the output table.
 #' @param .options Named list with additional formatting options.
 #' visOmopResults::optionsFormatTable() shows allowed arguments and
 #' their default values.

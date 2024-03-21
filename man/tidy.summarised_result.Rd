@@ -38,7 +38,7 @@ A tibble.
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 Provides tools for obtaining a tidy version of a summarised_result object. If
-the summarised results object contains settings, these will be tranformed
+the summarised results object contains settings, these will be transformed
 into columns.
 }
 \examples{
