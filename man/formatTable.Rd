@@ -2,51 +2,60 @@
 % Please edit documentation in R/formatTable.R
 \name{formatTable}
 \alias{formatTable}
-\title{Creates a tibble with specific rows pivotted into columns}
+\title{Format a summarised_result object into a gt, flextable or tibble object}
 \usage{
 formatTable(
   result,
+  formatEstimateName,
   header,
-  delim = "\\n",
-  includeHeaderName = TRUE,
-  includeHeaderKey = TRUE
+  split,
+  groupColumn = NULL,
+  type = "gt",
+  minCellCount = 5,
+  excludeColumns = c("result_id", "result_type", "package_name", "package_version",
+    "estimate_type"),
+  .options = list()
 )
 }
 \arguments{
 \item{result}{A summarised_result.}
 
-\item{header}{Names of the columns to make headers. Names not corresponding
-to a column of the table result, will be used as headers at the defined
-position.}
+\item{formatEstimateName}{Named list of estimate name's to join, sorted by
+computation order. Indicate estimate_name's between <...>.}
 
-\item{delim}{Delimiter to use to separate headers.}
+\item{header}{A vector containing which elements should go into the header
+in order. Allowed are: \code{cdm_name}, \code{group}, \code{strata}, \code{additional},
+\code{variable}, \code{estimate}, \code{settings}.}
 
-\item{includeHeaderName}{Whether to include the column name as header.}
+\item{split}{A vector containing the name-level groups to split ("group",
+"strata", "additional"), or an empty character vector to not split.}
 
-\item{includeHeaderKey}{Whether to include the header key (header,
-header_name, header_level) before each header type in the column names.}
+\item{groupColumn}{Column to use as group labels.}
+
+\item{type}{Type of desired formatted table, possibilities: "gt",
+"flextable", "tibble".}
+
+\item{minCellCount}{Counts below which results will be clouded.}
+
+\item{excludeColumns}{Columsn to drop from the output table.}
+
+\item{.options}{Named list with additional formatting options.
+visOmopResults::optionsFormatTable() shows allowed arguments and
+their default values.}
 }
 \value{
-A tibble with rows pivotted into columns with column names for future
-spanner headers.
+A tibble, gt, or flextable object.
 }
 \description{
-Pivots a summarised_result object based on the column names in header. The
-names of the new columns refer to the information on the column based on
-the header input, with labels are separated using a delimiter.
-}
-\details{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
+Format a summarised_result object into a gt, flextable or tibble object
 }
 \examples{
-result <- mockSummarisedResult()
+mockSummarisedResult() |> formatTable(
+  formatEstimateName = c("N\%" = "<count> (<percentage>)",
+                         "N" = "<count>",
+                         "Mean (SD)" = "<mean> (<sd>)"),
+  header = c("group"),
+  split = c("group","strata",  "additional")
+)
 
-result |>
-  formatTable(
-    header = c(
-      "Study cohorts", "group_level", "Study strata", "strata_name",
-      "strata_level"
-    ),
-    includeHeaderName = FALSE
-  )
 }
