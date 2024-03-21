@@ -44,10 +44,6 @@ formatEstimateName <- function(result,
       result = result, format = estimateNameFormat,
       keepNotFormatted = keepNotFormatted, useFormatOrder = useFormatOrder
     )
-    # class
-    if (inherits(result, "summarised_result")) {
-      resultFormatted <- resultFormatted |> omopgenerics::newSummarisedResult()
-    }
   } else {
     resultFormatted <- result
   }

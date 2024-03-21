@@ -18,6 +18,8 @@ formatTable(
 )
 }
 \arguments{
+\item{result}{A summarised_result.}
+
 \item{formatEstimateName}{Named list of estimate name's to join, sorted by
 computation order. Indicate estimate_name's between <...>.}
 
@@ -40,8 +42,6 @@ in order. Allowed are: \code{cdm_name}, \code{group}, \code{strata}, \code{addit
 \item{.options}{Named list with additional formatting options.
 visOmopResults::optionsFormatTable() shows allowed arguments and
 their default values.}
-
-\item{x}{A summarised_result.}
 }
 \value{
 A tibble, gt, or flextable object.

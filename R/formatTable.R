@@ -1,6 +1,6 @@
 #' Format a summarised_result object into a gt, flextable or tibble object
 #'
-#' @param x A summarised_result.
+#' @param result A summarised_result.
 #' @param formatEstimateName Named list of estimate name's to join, sorted by
 #' computation order. Indicate estimate_name's between <...>.
 #' @param header A vector containing which elements should go into the header
@@ -38,14 +38,14 @@ formatTable <- function(result,
                         .options = list()) {
   # initial checks
   result <- omopgenerics::newSummarisedResult(result)
-  checkmate::assertChoice(type, c("gt", "flextable", "tibble"))
-  checkmate::assertCharacter(formatEstimateName)
-  checkmate::assertCharacter(header)
-  checkmate::assertCharacter(groupColumn, null.ok = TRUE, len = 1)
-  checkmate::assertCharacter(split)
-  checkmate::assertCharacter(excludeColumns, null.ok = TRUE)
-  checkmate::assertIntegerish(minCellCount, len = 1, null.ok = FALSE)
-  checkmate::assertList(.options)
+  assertChoice(type, c("gt", "flextable", "tibble"))
+  assertCharacter(formatEstimateName)
+  assertCharacter(header)
+  assertCharacter(groupColumn, null = TRUE, length = 1)
+  assertCharacter(split)
+  assertCharacter(excludeColumns, null = TRUE)
+  assertNumeric(minCellCount, length = 1, null = FALSE, integerish = TRUE)
+  assertList(.options)
   if (length(split) > 0) {
     if (!all(split %in% c("group", "strata", "additional"))) {
       cli::cli_abort("Accepted values for split are: `group`, `strata`, and/or `additional`. It also supports an empty character vector (`character()`).")

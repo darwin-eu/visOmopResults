@@ -27,6 +27,7 @@ Imports:
     lifecycle,
     omopgenerics (>= 0.1.0),
     rlang,
+    stringr,
     tidyr
 Suggests: 
     flextable (>= 0.9.5),
