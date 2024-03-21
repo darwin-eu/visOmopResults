@@ -1,6 +1,6 @@
 Package: visOmopResults
 Title: Graphs and Tables for OMOP Results
-Version: 0.1.2
+Version: 0.2.0
 Authors@R: c(
     person(
         "Marti", "Catala", , "marti.catalasabate@ndorms.ox.ac.uk", 
