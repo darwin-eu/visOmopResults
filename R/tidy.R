@@ -60,7 +60,9 @@ tidy.summarised_result <- function(x,
       nameStyle <- paste0("{", paste0(pivotEstimatesBy, collapse = "}_{"), "}")
     }
     typeNameConvert <- result_out |>
-      dplyr::distinct(dplyr::across(dplyr::all_of(c("estimate_type", pivotEstimatesBy)))) |>
+      dplyr::distinct(dplyr::across(dplyr::all_of(
+        c("result_id", "cdm_name", "result_type", "package_name", "package_version", "estimate_type", pivotEstimatesBy)))
+      ) |>
       dplyr::mutate(estimate_type = dplyr::case_when(
         grepl("percentage|proportion", .data$estimate_name) ~ "numeric",
         !grepl("numeric|percentage|proportion|integer|date|double|logical|character", .data$estimate_type) ~ "character",
