@@ -17,8 +17,7 @@ A tibble.
 Pivot settings rows into columns.
 }
 \examples{
-result <- mockSummarisedResult()
-
-result |> tidy()
+result <- mockSummarisedResult(settings = TRUE)
+result |> pivotSettings()
 
 }
