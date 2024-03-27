@@ -1,27 +1,51 @@
-appendSettings <- function(result, colsSettings) {
+#' Append settings as rows in a summarised result
+#'
+#' @param x A tibble with columns from summarised result and columns
+#' corresponding to settings.
+#' @param colsSettings Columns of x to append as settings rows.
+#'
+#' @return A tibble.
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#'
+#' @export
+#'
+#' @examples
+#' result <- mockSummarisedResult()[1,] |>
+#' dplyr::mutate(
+#'   mock_default = TRUE,
+#'   example_setting = 1
+#' )
+#' appendSettings(result, colsSettings = c("mock_default", "example_setting"))
+#'
+
+appendSettings <- function(x, colsSettings) {
   # initial checks
-  assertTibble(result, columns = colsSettings)
+  assertTibble(x, columns = colsSettings)
   assertCharacter(colsSettings, null = TRUE)
 
-  # check if there is already a result id
-  if("result_id" %in% colnames(result)) {
-    ids <- result |>
+  # check if there is already a x id
+  if("result_id" %in% colnames(x)) {
+    ids <- x |>
       dplyr::select(dplyr::all_of(c("result_id", colsSettings))) |>
       dplyr::distinct()
-    result <- result |>
+    x <- x |>
       dplyr::select(!dplyr::all_of(colsSettings))
     # check result_id linked to one set of settings:
     if (nrow(ids) != length(unique(ids$result_id))) {
       cli::cli_abort("Settings do not match result ids.")
     }
   } else {
-    ids <- result |>
+    ids <- x |>
       dplyr::select(dplyr::all_of(colsSettings)) |>
       dplyr::distinct() |>
       dplyr::mutate("result_id" = as.integer(dplyr::row_number()))
-    result <- result |>
+    x <- x |>
       dplyr::left_join(ids, by = colsSettings) |>
-      dplyr::select(!dplyr::all_of(colsSettings))
+      dplyr::select(!dplyr::all_of(colsSettings)) |>
+      dplyr::relocate("result_id")
   }
   # format settings to summarised
   settingsIds <- ids |>
@@ -51,17 +75,24 @@ appendSettings <- function(result, colsSettings) {
       "strata_level" = "overall",
       "additional_name" = "overall",
       "additional_level" = "overall",
-      "package_name" = result$package_name[1],
-      "package_version" = result$package_version[1],
-      "result_type" = result$result_type[1],
-      "cdm_name" = result$cdm_name[1]
+      "package_name" = x$package_name[1],
+      "package_version" = x$package_version[1],
+      "result_type" = x$result_type[1],
+      "cdm_name" = x$cdm_name[1]
     )
+  # check if there are non-summarised result columns
+  nonS <- !colnames(x) %in% c(omopgenerics::resultColumns(), colsSettings)
+  if(sum(nonS) > 0) {
+    toFillNa <- colnames(x)[nonS]
+    settingsIds[toFillNa] = NA_character_
+  }
+  settingsIds <- settingsIds |>
+    dplyr::select(dplyr::all_of(colnames(x)))
   # append settings
-  result <- settingsIds |>
-    dplyr::union_all(result) |>
-    dplyr::arrange(.data$result_id) |>
-    dplyr::select(dplyr::all_of(omopgenerics::resultColumns()))
-  return(result)
+  x <- settingsIds |>
+    dplyr::union_all(x) |>
+    dplyr::arrange(.data$result_id)
+  return(x)
 }
 
 

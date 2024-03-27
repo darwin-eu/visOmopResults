@@ -18,4 +18,11 @@ test_that("appendSettings", {
   expect_equal(res0, res1)
 
   expect_error(appendSettings(result |> dplyr::mutate("result_id" = as.integer(1)), colsSettings = c("mock_default", "isTest")))
+
+  res2 <- appendSettings(result |> dplyr::select(-"result_id", -"group_name"), colsSettings = c("mock_default", "isTest"))
+  expect_equal(res0 |> dplyr::select(-"group_name"), res2)
+
+  result <- result |> dplyr::mutate("hi" = "HI")
+  res3 <- appendSettings(result, colsSettings = c("mock_default", "isTest"))
+  expect_true(all(unique(res3$hi) %in% c(NA_character_, "HI")))
 })

@@ -11,9 +11,8 @@
 #' @export
 #'
 #' @examples
-#' result <- mockSummarisedResult()
-#'
-#' result |> tidy()
+#' result <- mockSummarisedResult(settings = TRUE)
+#' result |> pivotSettings()
 #'
 pivotSettings <- function(x) {
   assertTibble(x)
