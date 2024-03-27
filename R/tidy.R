@@ -82,6 +82,9 @@ tidy.summarised_result <- function(x,
       )
   }
 
+  if (!is.null(pivotEstimatesBy)) {
+    result_out
+  }
   settings <- x |> omopgenerics::settings()
   if (nrow(settings) > 0) {
     result_out <- result_out |>

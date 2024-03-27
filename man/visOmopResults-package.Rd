@@ -6,6 +6,8 @@
 \alias{visOmopResults-package}
 \title{visOmopResults: Graphs and Tables for OMOP Results}
 \description{
+\if{html}{\figure{logo.png}{options: style='float: right' alt='logo' width='120'}}
+
 Provides methods to transform omop_result objects into formatted tables and figures, facilitating the visualization of study results working with the Observational Medical Outcomes Partnership (OMOP) Common Data Model.
 }
 \seealso{
