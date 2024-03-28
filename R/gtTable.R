@@ -126,8 +126,8 @@ gtTable <- function(
   header_name_id <- grepl("\\[header_name\\]", style_ids)
   header_level_id <- grepl("\\[header_level\\]", style_ids)
 
-  # column names in spanner: header_level or header?
-  header_level <- all(grepl("header_level", lapply(strsplit(colnames(x)[grepl(delim, colnames(x))], delim), function(x) {x[length(x)]}) |> unlist()))
+  # column names in spanner
+  header_level <- all(grepl("header_level", lapply(strsplit(colnames(x)[grepl("header", colnames(x))], delim), function(x) {x[length(x)]}) |> unlist()))
 
   if (sum(header_id) > 0 & "header" %in% names(style)) {
     gtResult <- gtResult |>
@@ -150,12 +150,14 @@ gtTable <- function(
         locations = gt::cells_column_spanners(spanners = spanner_ids[header_name_id])
       )
   }
-  if (sum(header_level_id) > 0 & "header_level" %in% names(style)) {
-    gtResult <- gtResult |>
-      gt::tab_style(
-        style = style$header_level,
-        locations = gt::cells_column_spanners(spanners = spanner_ids[header_level_id])
-      )
+  if ("header_level" %in% names(style)) {
+    if (sum(header_level_id) > 0) {
+      gtResult <- gtResult |>
+        gt::tab_style(
+          style = style$header_level,
+          locations = gt::cells_column_spanners(spanners = spanner_ids[header_level_id])
+        )
+    }
     if (header_level) {
       gtResult <- gtResult |>
         gt::tab_style(
