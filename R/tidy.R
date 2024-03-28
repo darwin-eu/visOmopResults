@@ -65,5 +65,3 @@ tidy.summarised_result <- function(result,
   }
   return(result_out)
 }
-
-

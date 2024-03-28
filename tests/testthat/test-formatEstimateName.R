@@ -95,6 +95,17 @@ test_that("formatEstimateName", {
                    paste0(estimates_in$estimate_value[estimates_in$variable_name == "number subjects"]))
 
   expect_no_error(result |> dplyr::select(-"cdm_name") |> formatEstimateName())
+
+  # NA value ---
+  result <- mockSummarisedResult() |> dplyr::filter(grepl("mean|sd", estimate_name),  strata_level == "overall")
+  result$estimate_value[1] <- NA_character_
+  res <- formatEstimateName(
+    result,
+    estimateNameFormat = "<mean> (<sd>)",
+    keepNotFormatted = TRUE,
+    useFormatOrder = TRUE)
+  expect_true(is.na(res$estimate_value[1]))
+
   # Wrong input ----
   expect_error(result |> dplyr::select(-"estimate_name") |> formatEstimateName())
   expect_error(formatEstimateName(result,
@@ -270,3 +281,4 @@ test_that("empty format",{
   )
   expect_identical(res1, result)
 })
+

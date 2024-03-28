@@ -57,4 +57,8 @@ test_that("tidy", {
                                 pivotEstimatesBy = NULL))
   expect_true(all(colnames(res3) %in% c(colnames(mocksum), "mock_default")))
 
+  # 2 id's:
+  mocksum2 <- mocksum |>
+    dplyr::union_all(mocksum |> dplyr::mutate(result_id = as.integer(2)))
+  expect_no_error(res4 <- tidy(x = mocksum2))
 })
