@@ -23,7 +23,7 @@ test_that("tidy", {
     )
   )
 
-  expect_no_error(res0 <- tidy(x = mocksum, pivotEstimatesBy = "estimate_name"))
+  expect_no_error(res0 <- tidy(result = mocksum, pivotEstimatesBy = "estimate_name"))
   expect_true(nrow(res0 |> dplyr::filter(.data$variable_name == "settings")) == 0)
   expect_true(all(c("cohort_name", "age_group", "sex", "mock_default", "count",
                     "mean", "sd", "percentage") %in% colnames(res0)))

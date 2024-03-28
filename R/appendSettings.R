@@ -23,13 +23,13 @@
 
 appendSettings <- function(x, colsSettings) {
   # initial checks
-  assertTibble(x, columns = colsSettings)
   assertCharacter(colsSettings, null = TRUE)
+  assertTibble(x, columns = colsSettings)
 
   # check if there is already a x id
   if("result_id" %in% colnames(x)) {
     ids <- x |>
-      dplyr::select(dplyr::all_of(c("result_id", colsSettings))) |>
+      dplyr::select(dplyr::all_of(c("result_id", colsSettings))) |> # !!! canviar depnent result_id uniqueness
       dplyr::distinct()
     x <- x |>
       dplyr::select(!dplyr::all_of(colsSettings))
@@ -39,7 +39,7 @@ appendSettings <- function(x, colsSettings) {
     }
   } else {
     ids <- x |>
-      dplyr::select(dplyr::all_of(colsSettings)) |>
+      dplyr::select(dplyr::all_of(columnsToDistinct)) |> # !!! canviar depnent result_id uniqueness
       dplyr::distinct() |>
       dplyr::mutate("result_id" = as.integer(dplyr::row_number()))
     x <- x |>
@@ -74,11 +74,12 @@ appendSettings <- function(x, colsSettings) {
       "strata_name" = "overall",
       "strata_level" = "overall",
       "additional_name" = "overall",
-      "additional_level" = "overall",
-      "package_name" = x$package_name[1],
-      "package_version" = x$package_version[1],
-      "result_type" = x$result_type[1],
-      "cdm_name" = x$cdm_name[1]
+      "additional_level" = "overall"
+    ) |>
+    dplyr::left_join(
+      x |>
+        dplyr::distinct(dplyr::all_of(c("result_id", "cdm_name", "result_type", "package_name", "package_version"))),
+      by = "result_id"
     )
   # check if there are non-summarised result columns
   nonS <- !colnames(x) %in% c(omopgenerics::resultColumns(), colsSettings)
@@ -97,17 +98,18 @@ appendSettings <- function(x, colsSettings) {
 
 
 variableTypes <- function(table) {
+  assertTable(table)
   if (ncol(table) > 0) {
     x <- dplyr::tibble(
       "variable_name" = colnames(table),
       "variable_type" = lapply(colnames(table), function(x) {
-        table |>
-          dplyr::select(dplyr::all_of(x)) |>
-          utils::head(1) |>
-          dplyr::pull() |>
+        table %>%
+          dplyr::select(dplyr::all_of(x)) %>%
+          utils::head(1) %>%
+          dplyr::pull() %>%
           dplyr::type_sum() |>
           assertClassification()
-      }) |> unlist()
+      }) %>% unlist()
     )
   } else {
     x <- dplyr::tibble(
@@ -122,9 +124,9 @@ variableTypes <- function(table) {
 assertClassification <- function(x) {
   switch (
     x,
-    "chr" = "categorical",
-    "fct" = "categorical",
-    "ord" = "categorical",
+    "chr" = "character",
+    "fct" = "character",
+    "ord" = "character",
     "date" = "date",
     "dttm" = "date",
     "lgl" = "logical",

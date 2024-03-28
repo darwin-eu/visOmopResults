@@ -1,6 +1,6 @@
 #' Get a tidy visualization of a summarised_result object
 #'
-#' @param x A summarised_result.
+#' @param result A summarised_result.
 #' @param splitGroup If TRUE it will split the group name-level column pair.
 #' @param splitStrata If TRUE it will split the group name-level column pair.
 #' @param splitAdditional If TRUE it will split the group name-level column pair.
@@ -22,11 +22,11 @@
 #' @export
 #'
 #' @examples
-#' result <- mockSummarisedResult()
+#' result <- mockSummarisedresult()
 #'
 #' result |> tidy()
 #'
-tidy.summarised_result <- function(x,
+tidy.summarised_result <- function(result,
                                    splitGroup = TRUE,
                                    splitStrata = TRUE,
                                    splitAdditional = TRUE,
@@ -34,17 +34,18 @@ tidy.summarised_result <- function(x,
                                    nameStyle = NULL,
                                    ...) {
   # initial checks
-  assertTibble(x, columns = pivotEstimatesBy)
+  assertTibble(result, columns = pivotEstimatesBy)
   assertLogical(splitGroup, length = 1)
   assertLogical(splitStrata, length = 1)
   assertLogical(splitAdditional, length = 1)
   assertCharacter(pivotEstimatesBy, null = TRUE)
   assertCharacter(nameStyle, null = TRUE)
 
-  # code
-  result_out <- x |>
-    dplyr::filter(.data$variable_name != "settings")
-
+  # setting names
+  setNames <- result$estimate_name[result$variable_name == "settings"]
+  # pivot settings
+  result_out <- result |> pivotSettings()
+  # split
   if (splitGroup) {
     result_out <- result_out |> splitGroup()
   }
@@ -54,7 +55,7 @@ tidy.summarised_result <- function(x,
   if (splitAdditional) {
     result_out <- result_out |> splitAdditional()
   }
-
+  # pivot estimates
   if (length(pivotEstimatesBy) > 0) {
     if (is.null(nameStyle)) {
       nameStyle <- paste0("{", paste0(pivotEstimatesBy, collapse = "}_{"), "}")
@@ -81,17 +82,11 @@ tidy.summarised_result <- function(x,
         )
       )
   }
-
-  if (!is.null(pivotEstimatesBy)) {
-    result_out
-  }
-  settings <- x |> omopgenerics::settings()
-  if (nrow(settings) > 0) {
+  # move settings
+  if (length(setNames) > 0) {
     result_out <- result_out |>
-      dplyr::left_join(settings,
-                       by = c("result_id", "cdm_name", "result_type"))
+      dplyr::relocate(dplyr::all_of(setNames), .after = dplyr::last_col())
   }
-
   return(result_out)
 }
 
