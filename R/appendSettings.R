@@ -29,7 +29,7 @@ appendSettings <- function(x, colsSettings) {
   # check if there is already a x id
   if("result_id" %in% colnames(x)) {
     ids <- x |>
-      dplyr::select(dplyr::all_of(c("result_id", colsSettings))) |> # !!! canviar depnent result_id uniqueness
+      dplyr::select(dplyr::all_of(c("result_id", colsSettings))) |>
       dplyr::distinct()
     x <- x |>
       dplyr::select(!dplyr::all_of(colsSettings))
@@ -39,7 +39,7 @@ appendSettings <- function(x, colsSettings) {
     }
   } else {
     ids <- x |>
-      dplyr::select(dplyr::all_of(columnsToDistinct)) |> # !!! canviar depnent result_id uniqueness
+      dplyr::select(dplyr::all_of(colsSettings)) |>
       dplyr::distinct() |>
       dplyr::mutate("result_id" = as.integer(dplyr::row_number()))
     x <- x |>
@@ -47,6 +47,9 @@ appendSettings <- function(x, colsSettings) {
       dplyr::select(!dplyr::all_of(colsSettings)) |>
       dplyr::relocate("result_id")
   }
+  # columns to match settings - result
+  colsToMatch <- c("result_id", "cdm_name", "result_type", "package_name", "package_version")
+  colsToMatch <- colsToMatch[colsToMatch %in% colnames(x)]
   # format settings to summarised
   settingsIds <- ids |>
     tidyr::pivot_longer(
@@ -55,7 +58,6 @@ appendSettings <- function(x, colsSettings) {
       values_to = "estimate_value"
     ) |>
     dplyr::inner_join(
-      # change to PatientProfiles once released
       variableTypes(ids) |>
         dplyr::select(
           "estimate_name" = "variable_name", "estimate_type" = "variable_type"
@@ -77,8 +79,7 @@ appendSettings <- function(x, colsSettings) {
       "additional_level" = "overall"
     ) |>
     dplyr::left_join(
-      x |>
-        dplyr::distinct(dplyr::all_of(c("result_id", "cdm_name", "result_type", "package_name", "package_version"))),
+      x |> dplyr::distinct(dplyr::across(dplyr::all_of(colsToMatch))),
       by = "result_id"
     )
   # check if there are non-summarised result columns
@@ -98,7 +99,7 @@ appendSettings <- function(x, colsSettings) {
 
 
 variableTypes <- function(table) {
-  assertTable(table)
+  assertTibble(table)
   if (ncol(table) > 0) {
     x <- dplyr::tibble(
       "variable_name" = colnames(table),
