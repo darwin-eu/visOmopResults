@@ -29,6 +29,7 @@ pivotEstimates <- function(result,
   assertCharacter(nameStyle, null = TRUE)
 
   # pivot estimates
+  result_out <- result
   if (length(pivotEstimatesBy) > 0) {
     if (is.null(nameStyle)) {
       nameStyle <- paste0("{", paste0(pivotEstimatesBy, collapse = "}_{"), "}")

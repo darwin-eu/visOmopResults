@@ -60,5 +60,5 @@ test_that("tidy", {
   # 2 id's:
   mocksum2 <- mocksum |>
     dplyr::union_all(mocksum |> dplyr::mutate(result_id = as.integer(2)))
-  expect_no_error(res4 <- tidy(x = mocksum2))
+  expect_no_error(res4 <- tidy(result = mocksum2))
 })
