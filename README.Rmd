@@ -57,7 +57,7 @@ result <- mockSummarisedResult()
 
 We can use the function `formatTable()` to get a nice *gt* table:
 
-```{r}
+```{r, eval = FALSE}
 formatTable(
   result,
   formatEstimateName = c("N%" = "<count> (<percentage>)",
@@ -67,6 +67,8 @@ formatTable(
   split = c("group","additional")
 )
 ```
+
+![](./man/figures/formatTable.png)
 
 In the code snipped showed, we specified how to group and display the estimates with `formatEstimateName`. Also, we created a header based on the stratifications with `header`, and we split the name-level paired columns group and additional (refer to the "split and unite functions" vignette for more information on splitting). 
 
@@ -143,5 +145,6 @@ gtResult <- result |>
 gtResult 
 ```
 
-![](./man/figures/gt_table.png)
+![](./man/figures/gtTable.png)
 
+It is important to notice that `formatTable` has additional arguments to customise the output table in a similar manner as in the pipeline. See the vignette "format functions".
