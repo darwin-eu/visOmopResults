@@ -4,10 +4,10 @@
 \alias{pivotSettings}
 \title{Add settings as columns}
 \usage{
-pivotSettings(x)
+pivotSettings(result)
 }
 \arguments{
-\item{x}{A summarised_result.}
+\item{result}{A summarised_result.}
 }
 \value{
 A tibble.

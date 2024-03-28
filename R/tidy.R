@@ -56,32 +56,8 @@ tidy.summarised_result <- function(result,
     result_out <- result_out |> splitAdditional()
   }
   # pivot estimates
-  if (length(pivotEstimatesBy) > 0) {
-    if (is.null(nameStyle)) {
-      nameStyle <- paste0("{", paste0(pivotEstimatesBy, collapse = "}_{"), "}")
-    }
-    typeNameConvert <- result_out |>
-      dplyr::distinct(dplyr::across(dplyr::all_of(c("estimate_type", pivotEstimatesBy)))) |>
-      dplyr::mutate(estimate_type = dplyr::case_when(
-        grepl("percentage|proportion", .data$estimate_name) ~ "numeric",
-        !grepl("numeric|percentage|proportion|integer|date|double|logical|character", .data$estimate_type) ~ "character",
-        .default = .data$estimate_type
-      ),
-      new_name = glue::glue(nameStyle)
-      )
-    result_out <- result_out |>
-      dplyr::select(-"estimate_type") |>
-      tidyr::pivot_wider(
-        names_from = dplyr::all_of(pivotEstimatesBy),
-        values_from = "estimate_value",
-        names_glue = nameStyle
-      ) |>
-      dplyr::mutate(
-        dplyr::across(dplyr::all_of(typeNameConvert$new_name),
-                      ~ asEstimateType(.x, name = deparse(substitute(.)), dict = typeNameConvert)
-        )
-      )
-  }
+  result_out <- result_out |>
+    pivotEstimates(pivotEstimatesBy = pivotEstimatesBy, nameStyle = nameStyle)
   # move settings
   if (length(setNames) > 0) {
     result_out <- result_out |>
@@ -90,8 +66,4 @@ tidy.summarised_result <- function(result,
   return(result_out)
 }
 
-asEstimateType <- function(x, name, dict) {
-  type <- dict$estimate_type[dict$new_name == name]
-  return(eval(parse(text = paste0("as.", type, "(x)"))))
-}
 

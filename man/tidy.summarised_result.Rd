@@ -5,7 +5,7 @@
 \title{Get a tidy visualization of a summarised_result object}
 \usage{
 \method{tidy}{summarised_result}(
-  x,
+  result,
   splitGroup = TRUE,
   splitStrata = TRUE,
   splitAdditional = TRUE,
@@ -15,7 +15,7 @@
 )
 }
 \arguments{
-\item{x}{A summarised_result.}
+\item{result}{A summarised_result.}
 
 \item{splitGroup}{If TRUE it will split the group name-level column pair.}
 
@@ -42,7 +42,7 @@ the summarised results object contains settings, these will be transformed
 into columns.
 }
 \examples{
-result <- mockSummarisedResult()
+result <- mockSummarisedresult()
 
 result |> tidy()
 
