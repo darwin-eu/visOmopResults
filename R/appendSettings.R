@@ -23,8 +23,8 @@
 
 appendSettings <- function(x, colsSettings) {
   # initial checks
-  assertTibble(x, columns = colsSettings)
   assertCharacter(colsSettings, null = TRUE)
+  assertTibble(x, columns = colsSettings)
 
   # check if there is already a x id
   if("result_id" %in% colnames(x)) {
@@ -47,6 +47,9 @@ appendSettings <- function(x, colsSettings) {
       dplyr::select(!dplyr::all_of(colsSettings)) |>
       dplyr::relocate("result_id")
   }
+  # columns to match settings - result
+  colsToMatch <- c("result_id", "cdm_name", "result_type", "package_name", "package_version")
+  colsToMatch <- colsToMatch[colsToMatch %in% colnames(x)]
   # format settings to summarised
   settingsIds <- ids |>
     tidyr::pivot_longer(
@@ -55,7 +58,6 @@ appendSettings <- function(x, colsSettings) {
       values_to = "estimate_value"
     ) |>
     dplyr::inner_join(
-      # change to PatientProfiles once released
       variableTypes(ids) |>
         dplyr::select(
           "estimate_name" = "variable_name", "estimate_type" = "variable_type"
@@ -74,11 +76,11 @@ appendSettings <- function(x, colsSettings) {
       "strata_name" = "overall",
       "strata_level" = "overall",
       "additional_name" = "overall",
-      "additional_level" = "overall",
-      "package_name" = x$package_name[1],
-      "package_version" = x$package_version[1],
-      "result_type" = x$result_type[1],
-      "cdm_name" = x$cdm_name[1]
+      "additional_level" = "overall"
+    ) |>
+    dplyr::left_join(
+      x |> dplyr::distinct(dplyr::across(dplyr::all_of(colsToMatch))),
+      by = "result_id"
     )
   # check if there are non-summarised result columns
   nonS <- !colnames(x) %in% c(omopgenerics::resultColumns(), colsSettings)
@@ -97,6 +99,7 @@ appendSettings <- function(x, colsSettings) {
 
 
 variableTypes <- function(table) {
+  assertTibble(table)
   if (ncol(table) > 0) {
     x <- dplyr::tibble(
       "variable_name" = colnames(table),
@@ -122,9 +125,9 @@ variableTypes <- function(table) {
 assertClassification <- function(x) {
   switch (
     x,
-    "chr" = "categorical",
-    "fct" = "categorical",
-    "ord" = "categorical",
+    "chr" = "character",
+    "fct" = "character",
+    "ord" = "character",
     "date" = "date",
     "dttm" = "date",
     "lgl" = "logical",

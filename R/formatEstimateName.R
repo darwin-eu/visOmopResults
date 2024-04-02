@@ -167,6 +167,13 @@ evalName <- function(result, format, keys) {
   format <- paste0(format, collapse = ", ")
   format <- paste0("paste0(", format, ")")
   result <- result |>
-    dplyr::mutate("estimate_value" = eval(parse(text = format)))
+    dplyr::mutate(
+      "estimate_value" =
+        dplyr::if_else(
+          dplyr::if_any(dplyr::all_of(keys), ~ is.na(.x)),
+          NA_character_,
+          eval(parse(text = format))
+        )
+    )
   return(result)
 }

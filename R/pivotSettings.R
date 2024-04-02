@@ -1,6 +1,6 @@
 #' Add settings as columns
 #'
-#' @param x A summarised_result.
+#' @param result A summarised_result.
 #'
 #' @return A tibble.
 #'
@@ -14,16 +14,15 @@
 #' result <- mockSummarisedResult(settings = TRUE)
 #' result |> pivotSettings()
 #'
-pivotSettings <- function(x) {
-  assertTibble(x)
+pivotSettings <- function(result) {
+  assertTibble(result)
+  assertClass(result, "summarised_result")
 
-  settings <- x |> omopgenerics::settings()
-  if (nrow(settings) > 0) {
-    result_out <- x |>
-      dplyr::filter(.data$variable_name != "settings") |>
-      dplyr::left_join(settings,
-                       by = c("result_id", "cdm_name", "result_type"))
-  }
+  settings <- result |> omopgenerics::settings()
+  result_out <- result |>
+    dplyr::filter(.data$variable_name != "settings") |>
+    dplyr::left_join(settings,
+                     by = c("result_id", "cdm_name", "result_type"))
 
   return(result_out)
 }
