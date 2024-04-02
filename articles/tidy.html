@@ -33,7 +33,7 @@
     
     <a class="navbar-brand me-2" href="../index.html">visOmopResults</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.2.1</small>
 
     
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -112,7 +112,7 @@ result table.</p>
 <span><span class="co">#&gt; $ cdm_name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock", "mock", "mock", "mock", "mock", "mock", "mock…</span></span>
 <span><span class="co">#&gt; $ result_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock_summarised_result", "mock_summarised_result", "…</span></span>
 <span><span class="co">#&gt; $ package_name     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "visOmopResults", "visOmopResults", "visOmopResults",…</span></span>
-<span><span class="co">#&gt; $ package_version  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0",…</span></span>
+<span><span class="co">#&gt; $ package_version  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.2.1", "0.2.1", "0.2.1", "0.2.1", "0.2.1", "0.2.1",…</span></span>
 <span><span class="co">#&gt; $ group_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cohort_name", "cohort_name", "cohort_name", "cohort_…</span></span>
 <span><span class="co">#&gt; $ group_level      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…</span></span>
 <span><span class="co">#&gt; $ strata_name      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "age_group &amp;&amp;&amp; sex", "age_group &amp;&amp;&amp; sex", …</span></span>
@@ -121,7 +121,7 @@ result table.</p>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "5272313", "438009", "5998144", "4505694", "4069765",…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2773213", "4142064", "2270472", "8608738", "1404925"…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 <p>The function <code>pivotEstimates</code> adds columns containing the
@@ -139,20 +139,20 @@ use the columns <em>variable_name</em>, <em>variable_level</em>, and
 <span><span class="co">#&gt; $ cdm_name                           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock", "mock", "mock", "mock", "mo…</span></span>
 <span><span class="co">#&gt; $ result_type                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock_summarised_result", "mock_sum…</span></span>
 <span><span class="co">#&gt; $ package_name                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "visOmopResults", "visOmopResults",…</span></span>
-<span><span class="co">#&gt; $ package_version                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.2.0", "0.2.0", "0.2.0", "0.2.0",…</span></span>
+<span><span class="co">#&gt; $ package_version                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.2.1", "0.2.1", "0.2.1", "0.2.1",…</span></span>
 <span><span class="co">#&gt; $ group_name                         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cohort_name", "cohort_name", "coho…</span></span>
 <span><span class="co">#&gt; $ group_level                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cohort1", "cohort1", "cohort1", "c…</span></span>
 <span><span class="co">#&gt; $ strata_name                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "age_group &amp;&amp;&amp; sex", "ag…</span></span>
 <span><span class="co">#&gt; $ strata_level                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "&lt;40 &amp;&amp;&amp; Male", "&gt;=40 &amp;&amp;…</span></span>
 <span><span class="co">#&gt; $ additional_name                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "o…</span></span>
 <span><span class="co">#&gt; $ additional_level                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "o…</span></span>
-<span><span class="co">#&gt; $ `number subjects_NA_count`         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 5272313, 438009, 5998144, 4505694, …</span></span>
-<span><span class="co">#&gt; $ age_NA_mean                        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 5.501122, 69.174030, 14.286997, 77.…</span></span>
-<span><span class="co">#&gt; $ age_NA_sd                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 4.4067416, 5.3420739, 7.8528962, 9.…</span></span>
-<span><span class="co">#&gt; $ Medications_Amoxiciline_count      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 98989, 33773, 10554, 56476, 9266, 6…</span></span>
-<span><span class="co">#&gt; $ Medications_Amoxiciline_percentage <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 13.257776, 43.814554, 6.219142, 62.…</span></span>
-<span><span class="co">#&gt; $ Medications_Ibuprofen_count        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 78918, 57705, 63457, 36852, 7988, 1…</span></span>
-<span><span class="co">#&gt; $ Medications_Ibuprofen_percentage   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 54.4050459, 81.7266173, 0.4077549, …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ `number subjects_NA_count`         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2773213, 4142064, 2270472, 8608738,…</span></span>
+<span><span class="co">#&gt; $ age_NA_mean                        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 49.631284, 39.387596, 77.582752, 20…</span></span>
+<span><span class="co">#&gt; $ age_NA_sd                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.175291, 2.543398, 7.638239, 3.068…</span></span>
+<span><span class="co">#&gt; $ Medications_Amoxiciline_count      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 91069, 24508, 79479, 47381, 3342, 2…</span></span>
+<span><span class="co">#&gt; $ Medications_Amoxiciline_percentage <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 56.507113, 93.200002, 1.259741, 3.4…</span></span>
+<span><span class="co">#&gt; $ Medications_Ibuprofen_count        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 78414, 28453, 31608, 61121, 90594, …</span></span>
+<span><span class="co">#&gt; $ Medications_Ibuprofen_percentage   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 28.45604, 44.91100, 98.29045, 66.90…</span></span></code></pre></div>
 <p>The argument <code>nameStyle</code> is to customise the names of the
 new columns. It uses the glue package syntax. For instance:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -166,7 +166,7 @@ new columns. It uses the glue package syntax. For instance:</p>
 <span><span class="co">#&gt; $ cdm_name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock", "mock", "mock", "mock", "mock", "mock", "mock…</span></span>
 <span><span class="co">#&gt; $ result_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock_summarised_result", "mock_summarised_result", "…</span></span>
 <span><span class="co">#&gt; $ package_name     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "visOmopResults", "visOmopResults", "visOmopResults",…</span></span>
-<span><span class="co">#&gt; $ package_version  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0",…</span></span>
+<span><span class="co">#&gt; $ package_version  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.2.1", "0.2.1", "0.2.1", "0.2.1", "0.2.1", "0.2.1",…</span></span>
 <span><span class="co">#&gt; $ group_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cohort_name", "cohort_name", "cohort_name", "cohort_…</span></span>
 <span><span class="co">#&gt; $ group_level      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…</span></span>
 <span><span class="co">#&gt; $ strata_name      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "age_group &amp;&amp;&amp; sex", "age_group &amp;&amp;&amp; sex", …</span></span>
@@ -175,7 +175,7 @@ new columns. It uses the glue package syntax. For instance:</p>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
-<span><span class="co">#&gt; $ COUNT            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 5272313, 438009, 5998144, 4505694, 4069765, 4272979, …</span></span>
+<span><span class="co">#&gt; $ COUNT            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2773213, 4142064, 2270472, 8608738, 1404925, 674391, …</span></span>
 <span><span class="co">#&gt; $ MEAN             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ SD               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ PERCENTAGE       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span></code></pre></div>
@@ -195,7 +195,7 @@ the settings in the summarised result, if any:</p>
 <span><span class="co">#&gt; $ cdm_name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock", "mock", "mock", "mock", "mock", "mock", "mock…</span></span>
 <span><span class="co">#&gt; $ result_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock_summarised_result", "mock_summarised_result", "…</span></span>
 <span><span class="co">#&gt; $ package_name     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "visOmopResults", "visOmopResults", "visOmopResults",…</span></span>
-<span><span class="co">#&gt; $ package_version  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0",…</span></span>
+<span><span class="co">#&gt; $ package_version  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.2.1", "0.2.1", "0.2.1", "0.2.1", "0.2.1", "0.2.1",…</span></span>
 <span><span class="co">#&gt; $ group_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cohort_name", "cohort_name", "cohort_name", "cohort_…</span></span>
 <span><span class="co">#&gt; $ group_level      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…</span></span>
 <span><span class="co">#&gt; $ strata_name      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "age_group &amp;&amp;&amp; sex", "age_group &amp;&amp;&amp; sex", …</span></span>
@@ -204,7 +204,7 @@ the settings in the summarised result, if any:</p>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "5739403", "3865216", "5206229", "3496242", "6884809"…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4294832", "3479518", "7039463", "3700944", "997288",…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ mock_default     <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,…</span></span></code></pre></div>
@@ -224,7 +224,7 @@ the end summarised result:</p>
 <span><span class="co">#&gt; $ cdm_name         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock", "mock"</span></span>
 <span><span class="co">#&gt; $ result_type      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock_summarised_result", "mock_summarised_result"</span></span>
 <span><span class="co">#&gt; $ package_name     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "visOmopResults", "visOmopResults"</span></span>
-<span><span class="co">#&gt; $ package_version  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.2.0", "0.2.0"</span></span>
+<span><span class="co">#&gt; $ package_version  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.2.1", "0.2.1"</span></span>
 <span><span class="co">#&gt; $ group_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall"</span></span>
 <span><span class="co">#&gt; $ group_level      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall"</span></span>
 <span><span class="co">#&gt; $ strata_name      <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall"</span></span>
@@ -256,13 +256,13 @@ it splits group, strata and additional, pivots estimates by the columns
 <span><span class="co">#&gt; $ cdm_name        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock", "mock", "mock", "mock", "mock", "mock", "mock"…</span></span>
 <span><span class="co">#&gt; $ result_type     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "mock_summarised_result", "mock_summarised_result", "m…</span></span>
 <span><span class="co">#&gt; $ package_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "visOmopResults", "visOmopResults", "visOmopResults", …</span></span>
-<span><span class="co">#&gt; $ package_version <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0", …</span></span>
+<span><span class="co">#&gt; $ package_version <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "0.2.1", "0.2.1", "0.2.1", "0.2.1", "0.2.1", "0.2.1", …</span></span>
 <span><span class="co">#&gt; $ cohort_name     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "cohort1", "cohort1", "cohort1", "cohort1", "cohort1",…</span></span>
 <span><span class="co">#&gt; $ age_group       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "&lt;40", "&gt;=40", "&lt;40", "&gt;=40", "overall", "o…</span></span>
 <span><span class="co">#&gt; $ sex             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "Male", "Male", "Female", "Female", "Male",…</span></span>
 <span><span class="co">#&gt; $ variable_name   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "number subjects", "number subjects", "number subjects…</span></span>
 <span><span class="co">#&gt; $ variable_level  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co">#&gt; $ count           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 4553095, 9650514, 1624439, 5785577, 1006779, 9115603, …</span></span>
+<span><span class="co">#&gt; $ count           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 698050, 5750785, 6795021, 5638961, 8563094, 7977429, 4…</span></span>
 <span><span class="co">#&gt; $ mean            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
 <span><span class="co">#&gt; $ sd              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
 <span><span class="co">#&gt; $ percentage      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
