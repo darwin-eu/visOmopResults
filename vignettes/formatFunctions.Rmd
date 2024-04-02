@@ -63,12 +63,12 @@ mock_sr |> glimpse()
 ```
 
 Additional input arguments are `keepNotFormatted` to specify whether not formatted rows should be returned or dropped.
-If `useFormatOrder` is TRUE, estimates will be presented in the order given in `estimateNameFormat`, if FALSE, the original order will be kept (where there is more than one estimate, the new positin will be the first of the estimates being merged).
+If `useFormatOrder` is TRUE, estimates will be presented in the order given in `estimateNameFormat`, if FALSE, the original order will be kept (where there is more than one estimate, the new position will be the first of the estimates being merged).
 
 
 ### 3. formatHeader()
 
-This function helps to create a nice header for a *flextable* or *gt* table. For instance, inestead of having a column specifing the group name and level, we might one them in the header. 
+This function helps to create a nice header for a *flextable* or *gt* table. For instance, instead of having a column specifying the group name and level, we might one them in the header. 
 
 **Header keys**: there are 3 different types of headers, identified with the keys "header", "header_name", and "header_level".
 
@@ -90,7 +90,7 @@ mock_sr |>
 ```
 
 The label keys can be removed with `includeHeaderKey` set to FALSE. However, having these keys in our header will allow to style separately the different header types in the next step (`fxTable` and `gtTable`).
-If we wished to remove the header pointing to the column name (*group_level*), we could do se with `includeHeaderName` set to FALSE. 
+If we wish to remove the header pointing to the column name (*group_level*), we can set `includeHeaderName` to FALSE. 
 
 Continuing with our example, we want to pivot by strata (name and level), but, we do not want the column names (that is, *strata_name* and *strata_level*) to appear in the header:
 
@@ -227,7 +227,7 @@ mock_sr2 |> formatTable(
 )
 ```
 
-Further options can be specified throug the .options argument. These additional options are taken from the other format functions and gt/fx table functions. To see a list of allowed arguments and their default use `optionsFormatTable()`:
+Additional options can be specified in the `.options` argument. These options are taken from the other format functions and gt/fx table functions seen before. To see a list of allowed arguments and their default values use `optionsFormatTable()`:
 
 ``` {r}
 optionsFormatTable()
