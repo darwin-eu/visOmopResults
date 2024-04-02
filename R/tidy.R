@@ -6,14 +6,6 @@
 #' @param splitAdditional If TRUE it will split the group name-level column pair.
 #' @param pivotEstimatesBy Names from which pivot wider the estimate values. If
 #' NULL the table will not be pivotted.
-#' Get a tidy visualization of a summarised_result object
-#'
-#' @param x A summarised_result.
-#' @param splitGroup If TRUE it will split the group name-level column pair.
-#' @param splitStrata If TRUE it will split the group name-level column pair.
-#' @param splitAdditional If TRUE it will split the group name-level column pair.
-#' @param pivotEstimatesBy Names from which pivot wider the estimate values. If
-#' NULL the table will not be pivotted.
 #' @param nameStyle Name style (glue package specifications) to customize names
 #' when pivotting estimates. If NULL standard tidyr::pivot_wider formatting will
 #' be used.
