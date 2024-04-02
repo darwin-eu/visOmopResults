@@ -24,7 +24,7 @@ A tibble.
 Pivot the estimates as new columns in result table.
 }
 \examples{
-result <- mockSummarisedresult()
+result <- mockSummarisedResult()
 result |> pivotEstimates()
 
 }

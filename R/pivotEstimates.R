@@ -16,7 +16,7 @@
 #' @export
 #'
 #' @examples
-#' result <- mockSummarisedresult()
+#' result <- mockSummarisedResult()
 #' result |> pivotEstimates()
 #'
 pivotEstimates <- function(result,

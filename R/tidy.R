@@ -1,6 +1,6 @@
 #' Get a tidy visualization of a summarised_result object
 #'
-#' @param result A summarised_result.
+#' @param x A summarised_result.
 #' @param splitGroup If TRUE it will split the group name-level column pair.
 #' @param splitStrata If TRUE it will split the group name-level column pair.
 #' @param splitAdditional If TRUE it will split the group name-level column pair.
@@ -22,11 +22,11 @@
 #' @export
 #'
 #' @examples
-#' result <- mockSummarisedresult()
+#' result <- mockSummarisedResult()
 #'
 #' result |> tidy()
 #'
-tidy.summarised_result <- function(result,
+tidy.summarised_result <- function(x,
                                    splitGroup = TRUE,
                                    splitStrata = TRUE,
                                    splitAdditional = TRUE,
@@ -34,7 +34,7 @@ tidy.summarised_result <- function(result,
                                    nameStyle = NULL,
                                    ...) {
   # initial checks
-  assertTibble(result, columns = pivotEstimatesBy)
+  assertTibble(x, columns = pivotEstimatesBy)
   assertLogical(splitGroup, length = 1)
   assertLogical(splitStrata, length = 1)
   assertLogical(splitAdditional, length = 1)
@@ -42,26 +42,26 @@ tidy.summarised_result <- function(result,
   assertCharacter(nameStyle, null = TRUE)
 
   # setting names
-  setNames <- result$estimate_name[result$variable_name == "settings"]
+  setNames <- x$estimate_name[x$variable_name == "settings"]
   # pivot settings
-  result_out <- result |> pivotSettings()
+  x_out <- x |> pivotSettings()
   # split
   if (splitGroup) {
-    result_out <- result_out |> splitGroup()
+    x_out <- x_out |> splitGroup()
   }
   if (splitStrata) {
-    result_out <- result_out |> splitStrata()
+    x_out <- x_out |> splitStrata()
   }
   if (splitAdditional) {
-    result_out <- result_out |> splitAdditional()
+    x_out <- x_out |> splitAdditional()
   }
   # pivot estimates
-  result_out <- result_out |>
+  x_out <- x_out |>
     pivotEstimates(pivotEstimatesBy = pivotEstimatesBy, nameStyle = nameStyle)
   # move settings
   if (length(setNames) > 0) {
-    result_out <- result_out |>
+    x_out <- x_out |>
       dplyr::relocate(dplyr::all_of(setNames), .after = dplyr::last_col())
   }
-  return(result_out)
+  return(x_out)
 }

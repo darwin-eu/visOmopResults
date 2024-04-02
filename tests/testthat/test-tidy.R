@@ -23,7 +23,7 @@ test_that("tidy", {
     )
   )
 
-  expect_no_error(res0 <- tidy(result = mocksum, pivotEstimatesBy = "estimate_name"))
+  expect_no_error(res0 <- tidy(x = mocksum, pivotEstimatesBy = "estimate_name"))
   expect_true(nrow(res0 |> dplyr::filter(.data$variable_name == "settings")) == 0)
   expect_true(all(c("cohort_name", "age_group", "sex", "mock_default", "count",
                     "mean", "sd", "percentage") %in% colnames(res0)))
@@ -60,5 +60,5 @@ test_that("tidy", {
   # 2 id's:
   mocksum2 <- mocksum |>
     dplyr::union_all(mocksum |> dplyr::mutate(result_id = as.integer(2)))
-  expect_no_error(res4 <- tidy(result = mocksum2))
+  expect_no_error(res4 <- tidy(x = mocksum2))
 })
