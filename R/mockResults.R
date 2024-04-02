@@ -216,7 +216,8 @@ mockSummarisedResult <- function(settings = FALSE) {
     dplyr::mutate(result_id = as.integer(1)) |>
     omopgenerics::newSummarisedResult()
   if(!settings) {
-    result <- result |> dplyr::filter(.data$variable_name != "settings")
+    result <- result |> dplyr::filter(.data$variable_name != "settings") |>
+      omopgenerics::newSummarisedResult()
   }
   return(result)
 }
