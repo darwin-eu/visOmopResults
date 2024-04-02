@@ -47,6 +47,11 @@ uniteNameLevel <- function(x,
     cli::cli_abort("Provide different names for the name and level columns.")
   }
 
+  if("groups" %in% names(attributes(x))) {
+    cli::cli_warn("The table will be ungrouped.")
+    x <- x |> dplyr::ungroup()
+  }
+
   if (length(cols) > 0) {
     id <- min(which(colnames(x) %in% cols))
 
@@ -127,7 +132,7 @@ uniteNameLevel <- function(x,
 #' @export
 #'
 uniteGroup <- function(x,
-                       cols,
+                       cols = character(0),
                        keep = FALSE,
                        ignore = c(NA, "overall")) {
   uniteNameLevel(
@@ -161,7 +166,7 @@ uniteGroup <- function(x,
 #' @export
 #'
 uniteStrata <- function(x,
-                        cols,
+                        cols = character(0),
                         keep = FALSE,
                         ignore = c(NA, "overall")) {
   uniteNameLevel(
@@ -195,7 +200,7 @@ uniteStrata <- function(x,
 #' @export
 #'
 uniteAdditional <- function(x,
-                            cols,
+                            cols = character(0),
                             keep = FALSE,
                             ignore = c(NA, "overall")) {
   uniteNameLevel(

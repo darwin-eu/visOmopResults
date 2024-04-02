@@ -4,7 +4,12 @@
 \alias{uniteAdditional}
 \title{Unite one or more columns in additional_name-additional_level format}
 \usage{
-uniteAdditional(x, cols, keep = FALSE, ignore = c(NA, "overall"))
+uniteAdditional(
+  x,
+  cols = character(0),
+  keep = FALSE,
+  ignore = c(NA, "overall")
+)
 }
 \arguments{
 \item{x}{Tibble or dataframe.}
