@@ -121,7 +121,7 @@ result table.</p>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "2773213", "4142064", "2270472", "8608738", "1404925"…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "9645094", "1870920", "9321915", "286282", "6293162",…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 <p>The function <code>pivotEstimates</code> adds columns containing the
@@ -146,13 +146,13 @@ use the columns <em>variable_name</em>, <em>variable_level</em>, and
 <span><span class="co">#&gt; $ strata_level                       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "&lt;40 &amp;&amp;&amp; Male", "&gt;=40 &amp;&amp;…</span></span>
 <span><span class="co">#&gt; $ additional_name                    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "o…</span></span>
 <span><span class="co">#&gt; $ additional_level                   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "o…</span></span>
-<span><span class="co">#&gt; $ `number subjects_NA_count`         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2773213, 4142064, 2270472, 8608738,…</span></span>
-<span><span class="co">#&gt; $ age_NA_mean                        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 49.631284, 39.387596, 77.582752, 20…</span></span>
-<span><span class="co">#&gt; $ age_NA_sd                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.175291, 2.543398, 7.638239, 3.068…</span></span>
-<span><span class="co">#&gt; $ Medications_Amoxiciline_count      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 91069, 24508, 79479, 47381, 3342, 2…</span></span>
-<span><span class="co">#&gt; $ Medications_Amoxiciline_percentage <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 56.507113, 93.200002, 1.259741, 3.4…</span></span>
-<span><span class="co">#&gt; $ Medications_Ibuprofen_count        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 78414, 28453, 31608, 61121, 90594, …</span></span>
-<span><span class="co">#&gt; $ Medications_Ibuprofen_percentage   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 28.45604, 44.91100, 98.29045, 66.90…</span></span></code></pre></div>
+<span><span class="co">#&gt; $ `number subjects_NA_count`         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 9645094, 1870920, 9321915, 286282, …</span></span>
+<span><span class="co">#&gt; $ age_NA_mean                        <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 73.147641, 59.061113, 68.533704, 85…</span></span>
+<span><span class="co">#&gt; $ age_NA_sd                          <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 7.9732726, 4.0711775, 7.5782361, 2.…</span></span>
+<span><span class="co">#&gt; $ Medications_Amoxiciline_count      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 27223, 67103, 31502, 31216, 4085, 6…</span></span>
+<span><span class="co">#&gt; $ Medications_Amoxiciline_percentage <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 74.9296767, 94.0021693, 71.1141110,…</span></span>
+<span><span class="co">#&gt; $ Medications_Ibuprofen_count        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 77602, 44431, 7356, 40490, 76211, 3…</span></span>
+<span><span class="co">#&gt; $ Medications_Ibuprofen_percentage   <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> 65.470886, 39.182494, 85.342522, 64…</span></span></code></pre></div>
 <p>The argument <code>nameStyle</code> is to customise the names of the
 new columns. It uses the glue package syntax. For instance:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -175,7 +175,7 @@ new columns. It uses the glue package syntax. For instance:</p>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
-<span><span class="co">#&gt; $ COUNT            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2773213, 4142064, 2270472, 8608738, 1404925, 674391, …</span></span>
+<span><span class="co">#&gt; $ COUNT            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 9645094, 1870920, 9321915, 286282, 6293162, 1859886, …</span></span>
 <span><span class="co">#&gt; $ MEAN             <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ SD               <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ PERCENTAGE       <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span></code></pre></div>
@@ -204,7 +204,7 @@ the settings in the summarised result, if any:</p>
 <span><span class="co">#&gt; $ variable_level   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "4294832", "3479518", "7039463", "3700944", "997288",…</span></span>
+<span><span class="co">#&gt; $ estimate_value   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "8106636", "1323620", "4236367", "4706469", "9725766"…</span></span>
 <span><span class="co">#&gt; $ additional_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ mock_default     <span style="color: #949494; font-style: italic;">&lt;lgl&gt;</span> TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE, TRUE,…</span></span></code></pre></div>
@@ -262,7 +262,7 @@ it splits group, strata and additional, pivots estimates by the columns
 <span><span class="co">#&gt; $ sex             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "Male", "Male", "Female", "Female", "Male",…</span></span>
 <span><span class="co">#&gt; $ variable_name   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "number subjects", "number subjects", "number subjects…</span></span>
 <span><span class="co">#&gt; $ variable_level  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
-<span><span class="co">#&gt; $ count           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 698050, 5750785, 6795021, 5638961, 8563094, 7977429, 4…</span></span>
+<span><span class="co">#&gt; $ count           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 2739484, 9823511, 4476842, 2851196, 4968541, 9609072, …</span></span>
 <span><span class="co">#&gt; $ mean            <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
 <span><span class="co">#&gt; $ sd              <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
 <span><span class="co">#&gt; $ percentage      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA…</span></span>
