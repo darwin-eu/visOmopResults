@@ -66,6 +66,7 @@ tidy.summarised_result <- function(x,
       dplyr::mutate(estimate_type = dplyr::case_when(
         grepl("percentage|proportion", .data$estimate_name) ~ "numeric",
         !grepl("numeric|percentage|proportion|integer|date|double|logical|character", .data$estimate_type) ~ "character",
+        .data$estimate_type == "date" ~ "Date",
         .default = .data$estimate_type
       ),
       new_name = glue::glue(nameStyle)
