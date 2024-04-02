@@ -1,5 +1,5 @@
 #' A summarised_result object filled with mock data
-#'
+#' @param settings If TRUE settings will be appended.
 #' @return An object of the class summarised_result with mock data.
 #' @description Creates an object of the class summarised_result with mock data
 #' for illustration purposes.
@@ -10,10 +10,10 @@
 #' mockSummarisedResult()
 #'
 #'
-mockSummarisedResult <- function() {
+mockSummarisedResult <- function(settings = FALSE) {
   # TO modify when PatientProfiles works with omopgenerics
   # number subjects
-  dplyr::tibble(
+  result <- dplyr::tibble(
     "cdm_name" = "mock",
     "result_type" = "mock_summarised_result",
     "package_name" = "visOmopResults",
@@ -192,27 +192,31 @@ mockSummarisedResult <- function() {
         "additional_level" = "overall"
       )
     ) |>
-    # # settings
-    # dplyr::union_all(
-    #   dplyr::tibble(
-    #     "cdm_name" = "mock",
-    #     "result_type" = "mock_summarised_result",
-    #     "package_name" = "visOmopResults",
-    #     "package_version" = utils::packageVersion("visOmopResults") |>
-    #       as.character(),
-    #     "group_name" = "overall",
-    #     "group_level" = "overall",
-    #     "strata_name" = "overall",
-    #     "strata_level" = "overall",
-    #     "variable_name" = "settings",
-    #     "variable_level" = NA_character_,
-    #     "estimate_name" = "mock_default",
-    #     "estimate_type" = "logical",
-    #     "estimate_value" = "TRUE",
-    #     "additional_name" = "overall",
-    #     "additional_level" = "overall"
-    #   )
-    # ) |>
+    # settings
+    dplyr::union_all(
+      dplyr::tibble(
+        "cdm_name" = "mock",
+        "result_type" = "mock_summarised_result",
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
+          as.character(),
+        "group_name" = "overall",
+        "group_level" = "overall",
+        "strata_name" = "overall",
+        "strata_level" = "overall",
+        "variable_name" = "settings",
+        "variable_level" = NA_character_,
+        "estimate_name" = "mock_default",
+        "estimate_type" = "logical",
+        "estimate_value" = "TRUE",
+        "additional_name" = "overall",
+        "additional_level" = "overall"
+      )
+    ) |>
     dplyr::mutate(result_id = as.integer(1)) |>
     omopgenerics::newSummarisedResult()
+  if(!settings) {
+    result <- result |> dplyr::filter(.data$variable_name != "settings")
+  }
+  return(result)
 }

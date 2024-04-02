@@ -41,61 +41,27 @@ tidy.summarised_result <- function(x,
   assertCharacter(pivotEstimatesBy, null = TRUE)
   assertCharacter(nameStyle, null = TRUE)
 
-  # code
-  result_out <- x |>
-    dplyr::filter(.data$variable_name != "settings")
-
+  # setting names
+  setNames <- x$estimate_name[x$variable_name == "settings"]
+  # pivot settings
+  x_out <- x |> pivotSettings()
+  # split
   if (splitGroup) {
-    result_out <- result_out |> splitGroup()
+    x_out <- x_out |> splitGroup()
   }
   if (splitStrata) {
-    result_out <- result_out |> splitStrata()
+    x_out <- x_out |> splitStrata()
   }
   if (splitAdditional) {
-    result_out <- result_out |> splitAdditional()
+    x_out <- x_out |> splitAdditional()
   }
-
-  if (length(pivotEstimatesBy) > 0) {
-    if (is.null(nameStyle)) {
-      nameStyle <- paste0("{", paste0(pivotEstimatesBy, collapse = "}_{"), "}")
-    }
-    typeNameConvert <- result_out |>
-      dplyr::distinct(dplyr::across(dplyr::all_of(
-        c("result_id", "cdm_name", "result_type", "package_name", "package_version", "estimate_type", pivotEstimatesBy)))
-      ) |>
-      dplyr::mutate(estimate_type = dplyr::case_when(
-        grepl("percentage|proportion", .data$estimate_name) ~ "numeric",
-        !grepl("numeric|percentage|proportion|integer|date|double|logical|character", .data$estimate_type) ~ "character",
-        .default = .data$estimate_type
-      ),
-      new_name = glue::glue(nameStyle)
-      )
-    result_out <- result_out |>
-      dplyr::select(-"estimate_type") |>
-      tidyr::pivot_wider(
-        names_from = dplyr::all_of(pivotEstimatesBy),
-        values_from = "estimate_value",
-        names_glue = nameStyle
-      ) |>
-      dplyr::mutate(
-        dplyr::across(dplyr::all_of(typeNameConvert$new_name),
-                      ~ asEstimateType(.x, name = deparse(substitute(.)), dict = typeNameConvert)
-        )
-      )
+  # pivot estimates
+  x_out <- x_out |>
+    pivotEstimates(pivotEstimatesBy = pivotEstimatesBy, nameStyle = nameStyle)
+  # move settings
+  if (length(setNames) > 0) {
+    x_out <- x_out |>
+      dplyr::relocate(dplyr::all_of(setNames), .after = dplyr::last_col())
   }
-
-  settings <- x |> omopgenerics::settings()
-  if (nrow(settings) > 0) {
-    result_out <- result_out |>
-      dplyr::left_join(settings,
-                       by = c("result_id", "cdm_name", "result_type"))
-  }
-
-  return(result_out)
+  return(x_out)
 }
-
-asEstimateType <- function(x, name, dict) {
-  type <- dict$estimate_type[dict$new_name == name]
-  return(eval(parse(text = paste0("as.", type, "(x)"))))
-}
-
