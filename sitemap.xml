@@ -25,6 +25,9 @@
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/additionalColumns.html</loc>
   </url>
   <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/appendSettings.html</loc>
+  </url>
+  <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/formatEstimateName.html</loc>
   </url>
   <url>
@@ -53,6 +56,12 @@
   </url>
   <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/optionsFormatTable.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/pivotEstimates.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/pivotSettings.html</loc>
   </url>
   <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/reexports.html</loc>
