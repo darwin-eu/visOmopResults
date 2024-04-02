@@ -252,7 +252,7 @@ test_that("formatEstimateValue", {
                                      bigMark = "%"))
     expect_error(formatEstimateValue(result,
                                      decimals = c(count = 1, lala = 0)),
-                 "lala do not correspont to estimate_type or estimate_name values.")
+                 "lala do not correspond to estimate_type or estimate_name values.")
     expect_error(formatEstimateValue(result,
                                      decimals = 1,
                                      decimalMark = NULL,
