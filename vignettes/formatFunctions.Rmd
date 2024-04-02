@@ -16,9 +16,13 @@ knitr::opts_chunk$set(
 )
 ```
 
-The **format** set of functions can be combined to format a summarised_result object (see R package *omopgenerics*) into a nice dataframe, *flextable* or *gt* table to display. In what follows, we show the pipline for formatting summarised_results using these functions.
+The **format** set of functions can be combined to format a summarised_result object (see R package *omopgenerics*) into a nice *tibble*, *flextable* or *gt* table to display in reports and shiny apps. 
 
-First, we load the relevant libraries and generate a mock summarised_result.
+The functions `formatEstimateValue()`, `formatEstimateName()`, `formatHeader()`, and lastly `gtTable()` or `fxTable()` can be implemented in a pipeline to obtain the desired formatted table. Otherwise, these steps are implemented in the function `formatTable()`. 
+
+## Formatting functions in a pipeline
+
+First, we load the relevant libraries and generate a summarised_result with mock results.
 
 ```{r setup}
 library(visOmopResults)
@@ -27,19 +31,22 @@ mock_sr <- mockSummarisedResult()
 mock_sr |> glimpse()
 ```
 
-## 1. formatEstimateValue()
-This function provides tools to format the estimate_value column. It allows to change the number of decimals to display by estimate_type or *estimate_name* (`decimals`), and to change the decimal and thousand/million separator mark (`decimalMark` and `bigMark` respectively). By default,
-decimals of integer values are set to 0, numeric to 2, percentage to 1, and proportion to 3. The defaulted decimal mark is "." while the thousand/million separator is ",".
+### 1. formatEstimateValue()
+This function provides tools to format the estimate_value column: choose *number of decimals* to display for each estimate_type or estimate_name (`decimals`), and change  change the *decimal and thousand/million separator* mark (`decimalMark` and `bigMark` respectively)
+
+By default, decimals of integer values are set to 0, numeric to 2, percentage to 1, and proportion to 3. The defaulted decimal mark is "." while the thousand/million separator is ",".
 
 ```{r}
 mock_sr <- mock_sr |> formatEstimateValue()
 mock_sr |> glimpse()
 ```
 
-## 2. formatEstimateName()
-This functions helps to manipulate *estimate_name* and *estimate_value* columns. For instance, if we want that all the variables for which we have counts and percentage to be display in a single row showing both as "N (%)" we can do it with this function. 
+If we want the same number of decimals for all the estimates, instead of a named vector the `decimal` argument can be a numeric pointing the number of decimals.
 
-The `estimateNameFormat` is where all combinations or renaming of estimates can be specified. Values from *estimate_name*'s column should be specified between <...>. The new *estimate_name* values to use will be the names of the vector, or the value itself when it is not named. 
+### 2. formatEstimateName()
+We can *customise estimate display* by changing the estimate name and joining different estimates in the same row. For instance, we can display counts and percentages together as "N (%)".
+ 
+The `estimateNameFormat` is where combinations can be specified. Values from *estimate_name*'s column should be specified between <...>. The new *estimate_name* will be the names of this vector, or the value itself when it is not named. 
 
 ```{r}
 mock_sr <- mock_sr |> 
@@ -55,19 +62,15 @@ mock_sr <- mock_sr |>
 mock_sr |> glimpse()
 ```
 
-Additional input arguments are `keepNotFormatted` to specify whether not formatted rows should be returned or dropped, and `useFormatOrder` to define if rows should be sorted as in `estimateNameFormat` or if the original order should be kept. In the latter scenario, when more than one estimate is pulled together, the new estimate position will be the first of the estimates being merged.
+Additional input arguments are `keepNotFormatted` to specify whether not formatted rows should be returned or dropped.
+If `useFormatOrder` is TRUE, estimates will be presented in the order given in `estimateNameFormat`, if FALSE, the original order will be kept (where there is more than one estimate, the new position will be the first of the estimates being merged).
 
 
+### 3. formatHeader()
 
-## 3. formatHeader()
+This function helps to create a nice header for a *flextable* or *gt* table. For instance, instead of having a column specifying the group name and level, we might one them in the header. 
 
-This function helps to create a nice header for a *flextable*, *gt* table and other table formatting packages.
-
-To this aim, this function pivots the columns specified in `header` "widening" the table.  The name of the new columns can be formatted with the arguments `header`, `delim`, `inlcudeHeaderName`, and `includeHeaderKey` to later convert obtain a nice header of the formatted table (*flextable* or *gt* table).
-
-#### Header keys
-
-There are 3 different types of headers, identified with the keys "header", "header_name", and "header_level".
+**Header keys**: there are 3 different types of headers, identified with the keys "header", "header_name", and "header_level".
 
 - **header:** Header labels passed to `header` but which are not part of the input table (are not columns names or values).
 - **header_name:** Header labels that come from column names in the input table.
@@ -86,9 +89,10 @@ mock_sr |>
   glimpse()
 ```
 
-The labels indicating which type of header refers to in the new column names can be removed with `includeHeaderKey`. However, having these keys in our header will allow to style separately the different header types in the next step (`fxTable` and `gtTable`).
+The label keys can be removed with `includeHeaderKey` set to FALSE. However, having these keys in our header will allow to style separately the different header types in the next step (`fxTable` and `gtTable`).
+If we wish to remove the header pointing to the column name (*group_level*), we can set `includeHeaderName` to FALSE. 
 
-Continuing with our example, we want to pivot by strata (name and level), but, we do not want the column names to appear in the header:
+Continuing with our example, we want to pivot by strata (name and level), but, we do not want the column names (that is, *strata_name* and *strata_level*) to appear in the header:
 
 ```{r}
 mock_sr <- mock_sr |>
@@ -106,12 +110,11 @@ mock_sr |> glimpse()
 Notice, how we substitute the keyWord "&&&" to "and", to get a nice header.
 
  
-
-## 4. gtTable() and fxTable()
+### 4. gtTable() and fxTable()
 
 Finally, we have the functions `gtTable` and `fxTable` which will transform our tibble into a *gt* or *flextable* object respectively. These functions provide several tools to personalise the formatted table. 
 
-### gtTable()
+#### gtTable()
 Let's start by manipulating the dataframe to have the columns that we want to display, and then use `gtTable` with default values:
 
 ```{r}
@@ -160,8 +163,7 @@ mock_sr |>
 ```
 
 
-
-### fxTable()
+#### fxTable()
 To obtain a similar result but with a *flextable* object, we can use `fxTable` with the same arguments as before, however, `style` must be adapted to use the *officer* package since it is the accepted by *flextable*.
 
 ```{r}
@@ -185,4 +187,48 @@ mock_sr |>
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
   )
+```
+
+
+## formatTable(): all at once
+
+This function wraps the tools seen so far to format a summarised result at once. While it is convinent to have it all in one function, the level of table manipulation allowed is less than with the pipeline.
+
+First, we create a new mock summarised result:
+```{r }
+mock_sr2 <- mockSummarisedResult()
+```
+
+For instance, if we want to have a flextable with strata as header, we will write "strata" in `header` instead of *strata_name* and *strata_level*. Same as before, we can input header keys (e.g. "Stratifications" in the example below).
+
+The `split` argument points to which name-level columns to split (group, strata and/or additional). Refer to the vignette split and unite for further information on this functionality.
+
+```{r}
+mock_sr2 |> formatTable(
+  formatEstimateName = c("N%" = "<count> (<percentage>)",
+                         "N" = "<count>",
+                         "Mean (SD)" = "<mean> (<sd>)"),
+  header = c("Stratifications", "strata"),
+  split = c("group","additional")
+)
+```
+By default, it returns a gt table, but it can be changed to "flextable" and "tibble" in the `type` argument.
+
+The `groupColumn` can be used to create groups in the table body. For instance, looking at the previous table, we might want to group by cohort name:
+
+```{r}
+mock_sr2 |> formatTable(
+  formatEstimateName = c("N%" = "<count> (<percentage>)",
+                         "N" = "<count>",
+                         "Mean (SD)" = "<mean> (<sd>)"),
+  header = c("Stratifications", "strata"),
+  split = c("group","additional"),
+  groupColumn = "cohort_name"
+)
+```
+
+Additional options can be specified in the `.options` argument. These options are taken from the other format functions and gt/fx table functions seen before. To see a list of allowed arguments and their default values use `optionsFormatTable()`:
+
+``` {r}
+optionsFormatTable()
 ```

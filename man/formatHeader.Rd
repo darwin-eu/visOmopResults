@@ -2,7 +2,7 @@
 % Please edit documentation in R/formatHeader.R
 \name{formatHeader}
 \alias{formatHeader}
-\title{Creats a header for gt and flextable objects.}
+\title{Create a header for gt and flextable objects.}
 \usage{
 formatHeader(
   result,

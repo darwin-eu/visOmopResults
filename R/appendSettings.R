@@ -52,6 +52,7 @@ appendSettings <- function(x, colsSettings) {
   colsToMatch <- colsToMatch[colsToMatch %in% colnames(x)]
   # format settings to summarised
   settingsIds <- ids |>
+    dplyr::mutate(dplyr::across(dplyr::all_of(colsSettings), ~ as.character(.x))) |>
     tidyr::pivot_longer(
       cols = dplyr::all_of(colsSettings),
       names_to = "estimate_name",

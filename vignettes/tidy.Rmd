@@ -1,0 +1,82 @@
+---
+title: "tidy"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{tidy}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE
+)
+```
+
+
+The package provides functionalities to tidy a summarised result to obtain a dataframe with which is easier to do subsequent calculations. 
+
+In this line, the `split` functions, described in **split and unite functions** allow to interact with name-level columns. 
+
+For the estimates, we have the `pivotEstimates` function, and for the settings `pivotSettings`. Finally the `tidy` method accommodates the split and pivot functionalities in the same function.
+
+## Estimates
+First, let's load relevant libraries and create a mock summarised result table.
+```{r }
+library(visOmopResults)
+library(dplyr)
+result <- mockSummarisedResult()
+result |> glimpse()
+```
+
+The function `pivotEstimates` adds columns containing the estimates values for each combination of columns in `pivotEstimatesBy`. For instance, in the following example we use the columns *variable_name*, *variable_level*, and *estimate_name* to pivot the estimates.
+
+```{r }
+result |> 
+  pivotEstimates(pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name")) |>
+  glimpse()
+```
+
+The argument `nameStyle` is to customise the names of the new columns. It uses the glue package syntax. For instance:
+
+```{r }
+result |> 
+  pivotEstimates(pivotEstimatesBy = "estimate_name",
+                 nameStyle = "{toupper(estimate_name)}") |>
+  glimpse()
+```
+
+## Settings
+The function `pivotSettings` adds a new column for each of the settings in the summarised result, if any:
+```{r}
+mockSummarisedResult(settings = TRUE) |>
+  pivotSettings() |>
+  glimpse()
+```
+
+The function `appendSettings` is the inverse functionality to pivot. This function will append columns corresponding to settings to the end summarised result:
+
+```{r}
+table <- mockSummarisedResult() |>
+  mutate(mockSummarisedResult = TRUE, vignette = "tidy")
+
+result <- table |> appendSettings(colsSettings = c("mockSummarisedResult", "vignette"))
+
+result |> filter(variable_name == "settings") |> glimpse()
+```
+
+## Tidy
+Finally, the method `tidy` incorporates the splitting pf name-level columns and pivotting of estimates and settings. By default, it splits group, strata and additional, pivots estimates by the columns "estimate_name" and also pivots the settings. 
+
+```{r}
+result <- mockSummarisedResult(settings = TRUE)
+
+result |> 
+  tidy() |> 
+  glimpse()
+```
+
+Which column pairs to split can be customised with the *split* arguments, while `pivotEstimatesBy` and `nameStyle` are for pivotting estimates. If `pivotEstimatesBy` is `NULL` or `character()`, estimates will not be modified. Settings will always be pivotted if present. 

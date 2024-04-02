@@ -4,8 +4,8 @@
 #' @param formatEstimateName Named list of estimate name's to join, sorted by
 #' computation order. Indicate estimate_name's between <...>.
 #' @param header A vector containing which elements should go into the header
-#' in order. Allowed are: `cdm_name`, `group`, `strata`, `additional`,
-#' `variable`, `estimate`, `settings`.
+#' in order (`cdm_name`, `group`, `strata`, `additional`,
+#' `variable`, `estimate`, and `settings`).
 #' @param groupColumn Column to use as group labels.
 #' @param split A vector containing the name-level groups to split ("group",
 #' "strata", "additional"), or an empty character vector to not split.
@@ -57,9 +57,6 @@ formatTable <- function(result,
   }
   if ("cdm_name" %in% header & "cdm_name" %in% excludeColumns) {
     cli::cli_abort("`cdm_name` cannot be part of the header and also an excluded column.")
-  }
-  if(!all(header %in% c("cdm_name", "group", "strata", "additional", "estimate", "variable", "settings"))) {
-    cli::cli_abort("Allowed values in header vector are: `cdm_name`, `group`, `strata`, `additional`, `estimate`, `variable`, and `settings`.")
   }
 
   # settings
@@ -189,18 +186,23 @@ formatTable <- function(result,
   # Format header
   formatHeader <- character()
   for (k in seq(header)) {
-    formatHeader <- c(formatHeader,
-                      switch(
-                        header[k],
-                        "cdm_name" = c("CDM name", "cdm_name"),
-                        "group" = colsGroup,
-                        "strata" = colsStrata,
-                        "additional" = colsAdditional,
-                        "estimate" = colsEstimate,
-                        "variable" = colsVariable,
-                        "settings" = colsSettings,
-                      )
-    )
+    if (header[k] %in% c("cdm_name", "group", "strata", "additional", "estimate", "variable", "settings")) {
+      formatHeader <- c(formatHeader,
+                        switch(
+                          header[k],
+                          "cdm_name" = c("CDM name", "cdm_name"),
+                          "group" = colsGroup,
+                          "strata" = colsStrata,
+                          "additional" = colsAdditional,
+                          "estimate" = colsEstimate,
+                          "variable" = colsVariable,
+                          "settings" = colsSettings,
+                        )
+      )
+    } else {
+      formatHeader <- c(formatHeader, header[k])
+    }
+
   }
 
   if (length(formatHeader) > 0) {
