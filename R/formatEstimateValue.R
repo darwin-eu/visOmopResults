@@ -49,7 +49,7 @@ formatEstimateValue <- function(result,
 
 formatEstimateValueInternal <- function(result, decimals, decimalMark, bigMark) {
   nms_name <- unique(result[["estimate_name"]])
-  if (is.null(decimals)) { # default # decimal formatting
+  if (is.null(decimals)) { # default decimal formatting
     for (nm in nms_name) {
       result$estimate_value[result[["estimate_name"]] == nm] <- result$estimate_value[result[["estimate_name"]] == nm] |>
         as.numeric() |>
