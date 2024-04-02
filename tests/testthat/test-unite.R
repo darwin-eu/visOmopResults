@@ -39,4 +39,8 @@ test_that("uniteGroup", {
 
   res4 <- uniteGroup(tib, cols = c("age", "sex", "region"))
   expect_identical(res0, res4)
+
+  # grouped input table
+  expect_warning(res5 <- uniteGroup(tib |> dplyr::group_by(age), cols = c("region")))
+  expect_warning(res5 <- uniteGroup(tib |> dplyr::group_by(age), cols = c("age")))
 })

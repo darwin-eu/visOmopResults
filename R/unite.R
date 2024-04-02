@@ -47,6 +47,11 @@ uniteNameLevel <- function(x,
     cli::cli_abort("Provide different names for the name and level columns.")
   }
 
+  if("groups" %in% names(attributes(x))) {
+    cli::cli_warn("The table will be ungrouped.")
+    x <- x |> dplyr::ungroup()
+  }
+
   if (length(cols) > 0) {
     id <- min(which(colnames(x) %in% cols))
 
