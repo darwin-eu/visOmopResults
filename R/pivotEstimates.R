@@ -40,6 +40,7 @@ pivotEstimates <- function(result,
       dplyr::mutate(estimate_type = dplyr::case_when(
         grepl("percentage|proportion", .data$estimate_name) ~ "numeric",
         !grepl("numeric|percentage|proportion|integer|date|double|logical|character", .data$estimate_type) ~ "character",
+        "date" == .data$estimate_type ~ "Date",
         .default = .data$estimate_type
       ),
       new_name = glue::glue(nameStyle)
