@@ -4,7 +4,7 @@
 \alias{uniteStrata}
 \title{Unite one or more columns in strata_name-strata_level format}
 \usage{
-uniteStrata(x, cols, keep = FALSE, ignore = c(NA, "overall"))
+uniteStrata(x, cols = character(0), keep = FALSE, ignore = c(NA, "overall"))
 }
 \arguments{
 \item{x}{Tibble or dataframe.}

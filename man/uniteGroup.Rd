@@ -4,7 +4,7 @@
 \alias{uniteGroup}
 \title{Unite one or more columns in group_name-group_level format}
 \usage{
-uniteGroup(x, cols, keep = FALSE, ignore = c(NA, "overall"))
+uniteGroup(x, cols = character(0), keep = FALSE, ignore = c(NA, "overall"))
 }
 \arguments{
 \item{x}{Tibble or dataframe.}

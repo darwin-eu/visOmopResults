@@ -132,7 +132,7 @@ uniteNameLevel <- function(x,
 #' @export
 #'
 uniteGroup <- function(x,
-                       cols,
+                       cols = character(0),
                        keep = FALSE,
                        ignore = c(NA, "overall")) {
   uniteNameLevel(
@@ -166,7 +166,7 @@ uniteGroup <- function(x,
 #' @export
 #'
 uniteStrata <- function(x,
-                        cols,
+                        cols = character(0),
                         keep = FALSE,
                         ignore = c(NA, "overall")) {
   uniteNameLevel(
@@ -200,7 +200,7 @@ uniteStrata <- function(x,
 #' @export
 #'
 uniteAdditional <- function(x,
-                            cols,
+                            cols = character(0),
                             keep = FALSE,
                             ignore = c(NA, "overall")) {
   uniteNameLevel(
