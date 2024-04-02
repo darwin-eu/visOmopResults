@@ -315,4 +315,7 @@ test_that("formatEstimateValue, dates", {
     omopgenerics::newSummarisedResult()
   expect_no_error(result_out <- formatEstimateValue(result, decimals = 0))
   expect_true(class(as.Date(result_out |> dplyr::filter(estimate_type == "date") |> dplyr::pull(estimate_value))) == "Date")
+
+  expect_warning(result_out <- formatEstimateValue(result, decimals = c(date = 1)))
+  expect_true(class(as.Date(result_out |> dplyr::filter(estimate_type == "date") |> dplyr::pull(estimate_value))) == "Date")
 })

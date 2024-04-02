@@ -39,7 +39,9 @@ validateDecimals <- function(result, decimals) {
       conflict_nms <- conflict_nms[!conflict_nms %in% "logical"]
       decimals <- decimals[!names(decimals) %in% "logical"]
     }
-    cli::cli_abort(paste0(paste0(conflict_nms, collapse = ", "), " do not correspond to estimate_type or estimate_name values."))
+    if (length(conflict_nms) > 0) {
+      cli::cli_abort(paste0(paste0(conflict_nms, collapse = ", "), " do not correspond to estimate_type or estimate_name values."))
+    }
   } else if (length(decimals) == 1 & is.null(names(decimals))) { # same number to all
     decimals <- rep(decimals, length(nm_type))
     names(decimals) <- nm_type
