@@ -7,6 +7,7 @@
 #' Has to be a column in data.
 #' @param yAxis what to plot on y axis, default as estimate_value column.
 #' Has to be a column in data. One of the xAxis or yAxis has to be estimate_value.
+#' @param plotStyle one of barplot, boxplot, scatterplot or density
 #' @param facetVarX column in data to facet by on horizontal axis
 #' @param facetVarY column in data to facet by on vertical axis
 #' @param colorVars column in data to color by.
@@ -18,11 +19,10 @@
 #' library(visOmopResults)
 #' library(PatientProfiles)
 #' library(dplyr)
-#' result <- mockSummarisedResult() %>%
-#' dplyr::filter(variable_name == "Medications",
+#' result <- mockSummarisedResult() |>
+#' filter(variable_name == "Medications",
 #' strata_name == "overall")
 #' graphs <- plotfunction(result, plotStyle = "barplot")
-#' CDMConnector::cdmDisconnect(cdm = cdm)
 #' }
 plotfunction <- function(data,
                          xAxis = "variable_name",
@@ -64,7 +64,7 @@ plotfunction <- function(data,
       )
     }
   }
-  data <- data %>%
+  data <- data |>
     dplyr::mutate(color_combined = construct_color_variable(data, colorVars))
 
   if (is.null(facetVarX)) {
@@ -79,7 +79,7 @@ plotfunction <- function(data,
     facetVarY <- "overall"
   }
 
-  data <- data %>%
+  data <- data |>
     dplyr::mutate(
       facet_combined_x = construct_variable(data, facetVarX),
       facet_combined_y = construct_variable(data, facetVarY)
@@ -104,13 +104,13 @@ plotfunction <- function(data,
 
 
 
-  df_dates <- data %>% dplyr::filter(.data$estimate_type == "date")
+  df_dates <- data |> dplyr::filter(.data$estimate_type == "date")
   if (plotStyle != "density") {
-    df_non_dates <- data %>%
-      dplyr::filter(!(.data$estimate_type %in% c("date", "logical"))) %>%
+    df_non_dates <- data |>
+      dplyr::filter(!(.data$estimate_type %in% c("date", "logical"))) |>
       dplyr::mutate(estimate_value = round(as.numeric(.data$estimate_value), 2))
     if (nrow(df_non_dates) > 0) {
-      df_non_dates <- df_non_dates %>%
+      df_non_dates <- df_non_dates |>
         dplyr::mutate(
           estimate_value =
             dplyr::if_else(.data$estimate_name == "percentage",
@@ -120,7 +120,7 @@ plotfunction <- function(data,
         )
     }
   } else {
-    df_non_dates <- data %>%
+    df_non_dates <- data |>
       dplyr::filter(!(.data$estimate_type %in% c("date", "logical")))
   }
 
@@ -139,12 +139,12 @@ plotfunction <- function(data,
   # Start constructing the plot
   if (plotStyle == "scatterplot") {
     if (nrow(df_non_dates) > 0) {
-      df_percent <- df_non_dates %>% dplyr::filter(.data$estimate_name == "percentage")
-      df_non_percent <- df_non_dates %>% dplyr::filter(.data$estimate_name != "percentage")
+      df_percent <- df_non_dates |> dplyr::filter(.data$estimate_name == "percentage")
+      df_non_percent <- df_non_dates |> dplyr::filter(.data$estimate_name != "percentage")
 
       make_plot <- function(data, is_percent = FALSE) {
         if ("color_combined" %in% names(data)) {
-          plot <- data %>% ggplot2::ggplot() +
+          plot <- data |> ggplot2::ggplot() +
             ggplot2::geom_point(ggplot2::aes(
               x = !!rlang::sym(xAxis),
               y = !!rlang::sym(yAxis),
@@ -152,7 +152,7 @@ plotfunction <- function(data,
             ))
           plot <- plot + ggplot2::labs(color = "Color")
         } else {
-          plot <- data %>% ggplot2::ggplot() +
+          plot <- data |> ggplot2::ggplot() +
             ggplot2::geom_point(ggplot2::aes(
               x = !!rlang::sym(xAxis),
               y = !!rlang::sym(yAxis)
@@ -190,14 +190,14 @@ plotfunction <- function(data,
   } else if (plotStyle == "barplot" || plotStyle == "density") {
     if (nrow(df_non_dates) > 0) {
       # Separate data based on 'estimate_name'
-      df_percent <- df_non_dates %>% dplyr::filter(.data$estimate_name == "percentage")
-      df_non_percent <- df_non_dates %>% dplyr::filter(.data$estimate_name != "percentage")
+      df_percent <- df_non_dates |> dplyr::filter(.data$estimate_name == "percentage")
+      df_non_percent <- df_non_dates |> dplyr::filter(.data$estimate_name != "percentage")
 
       # Function to create bar plots
       create_bar_plot <- function(data, plotStyle, is_percent = FALSE) {
         if (plotStyle == "barplot") {
           if ("color_combined" %in% names(data)) {
-            plot <- data %>% ggplot2::ggplot(ggplot2::aes(
+            plot <- data |> ggplot2::ggplot(ggplot2::aes(
               x = !!rlang::sym(xAxis),
               y = !!rlang::sym(yAxis),
               fill = .data$color_combined
@@ -226,30 +226,30 @@ plotfunction <- function(data,
             }
           }
         } else if (plotStyle == "density") {
-          data <- data %>%
-            dplyr::filter(.data$variable_name == "density") %>%
+          data <- data |>
+            dplyr::filter(.data$variable_name == "density") |>
             dplyr::mutate(estimate_value = as.numeric(.data$estimate_value))
-          group_columns <- data %>%
+          group_columns <- data |>
             dplyr::select(-c(
               "estimate_value", "estimate_name", "variable_level",
               if ("facet_combined_x" %in% names(df_non_dates)) "facet_combined_x" else NULL,
               if ("facet_combined_y" %in% names(df_non_dates)) "facet_combined_y" else NULL,
               if ("color_combined" %in% names(df_non_dates)) "color_combined" else NULL
-            )) %>%
-            dplyr::summarise(dplyr::across(dplyr::everything(), ~ dplyr::n_distinct(.) > 1)) %>%
-            dplyr::select(dplyr::where(~.)) %>%
+            )) |>
+            dplyr::summarise(dplyr::across(dplyr::everything(), ~ dplyr::n_distinct(.) > 1)) |>
+            dplyr::select(dplyr::where(~.)) |>
             names()
 
-          data$group_identifier <- interaction(data %>%
+          data$group_identifier <- interaction(data |>
                                                  dplyr::select(dplyr::all_of(group_columns)))
 
-          density_data_wide <- data %>%
-            dplyr::mutate(estimate_value = as.list(.data$estimate_value)) %>%
-            tidyr::pivot_wider(names_from = "estimate_name", values_from = "estimate_value") %>%
+          density_data_wide <- data |>
+            dplyr::mutate(estimate_value = as.list(.data$estimate_value)) |>
+            tidyr::pivot_wider(names_from = "estimate_name", values_from = "estimate_value") |>
             tidyr::unnest(dplyr::everything())
 
           if ("color_combined" %in% names(density_data_wide)) {
-            plot <- density_data_wide %>%
+            plot <- density_data_wide |>
               ggplot2::ggplot() +
               ggplot2::geom_line( # or geom_area() for filled areas
                 ggplot2::aes(
@@ -262,7 +262,7 @@ plotfunction <- function(data,
               ) +
               ggplot2::labs(color = "Color")
           } else {
-            plot <- density_data_wide %>%
+            plot <- density_data_wide |>
               ggplot2::ggplot() +
               ggplot2::geom_line( # or geom_area() for filled areas
                 ggplot2::aes(
@@ -309,27 +309,27 @@ plotfunction <- function(data,
     }
   } else if (plotStyle == "boxplot") {
     if (nrow(df_non_dates) > 0) {
-      df_non_dates <- df_non_dates %>%
-        dplyr::filter(.data$estimate_name %in% c("q25", "median", "q75", "min", "max")) %>%
+      df_non_dates <- df_non_dates |>
+        dplyr::filter(.data$estimate_name %in% c("q25", "median", "q75", "min", "max")) |>
         dplyr::mutate(
           estimate_value = as.numeric(.data$estimate_value),
           estimate_type = "numeric"
         )
-      non_numeric_cols <- df_non_dates %>%
+      non_numeric_cols <- df_non_dates |>
         dplyr::select(-c(
           "estimate_value", "estimate_name",
           if ("facet_combined_x" %in% names(df_non_dates)) "facet_combined_x" else NULL,
           if ("facet_combined_y" %in% names(df_non_dates)) "facet_combined_y" else NULL,
           if ("color_combined" %in% names(df_non_dates)) "color_combined" else NULL
-        )) %>%
-        dplyr::summarise(dplyr::across(dplyr::everything(), ~ dplyr::n_distinct(.) > 1)) %>%
-        dplyr::select(dplyr::where(~.)) %>%
+        )) |>
+        dplyr::summarise(dplyr::across(dplyr::everything(), ~ dplyr::n_distinct(.) > 1)) |>
+        dplyr::select(dplyr::where(~.)) |>
         names()
 
-      df_non_dates_wide <- df_non_dates %>%
+      df_non_dates_wide <- df_non_dates |>
         tidyr::pivot_wider(
           id_cols = dplyr::all_of(colnames(
-            df_non_dates %>%
+            df_non_dates |>
               dplyr::select(-c("estimate_name", "estimate_value"))
           )),
           names_from = "estimate_name",
@@ -338,20 +338,20 @@ plotfunction <- function(data,
 
 
       if(length(non_numeric_cols) > 0){
-        df_non_dates_wide$group_identifier <- interaction(df_non_dates_wide %>%
+        df_non_dates_wide$group_identifier <- interaction(df_non_dates_wide |>
                                                             dplyr::select(dplyr::all_of(non_numeric_cols)))} else{
                                                               df_non_dates_wide$group_identifier <- "overall"
                                                             }
     }
 
     if (nrow(df_dates) > 0) {
-      df_dates <- df_dates %>%
-        dplyr::filter(.data$estimate_name %in% c("q25", "median", "q75", "min", "max")) %>%
+      df_dates <- df_dates |>
+        dplyr::filter(.data$estimate_name %in% c("q25", "median", "q75", "min", "max")) |>
         dplyr::mutate(estimate_value = as.Date(.data$estimate_value))
 
-      df_dates_wide <- df_dates %>%
+      df_dates_wide <- df_dates |>
         tidyr::pivot_wider(
-          id_cols = dplyr::all_of(colnames(df_dates %>%
+          id_cols = dplyr::all_of(colnames(df_dates |>
                                              dplyr::select(-c(
                                                "estimate_name",
                                                "estimate_value"
@@ -359,7 +359,7 @@ plotfunction <- function(data,
           names_from = "estimate_name", values_from = "estimate_value"
         )
       if(length(non_numeric_cols) > 0){
-        df_dates_wide$group_identifier <- interaction(df_dates_wide %>%
+        df_dates_wide$group_identifier <- interaction(df_dates_wide |>
                                                         dplyr::select(
                                                           dplyr::all_of(non_numeric_cols)
                                                         ))} else {
@@ -373,7 +373,7 @@ plotfunction <- function(data,
     # Check if the dataframe has rows to plot
     if (nrow(df_non_dates) > 0) {
       xcol <- ifelse(xAxis == "estimate_value", yAxis, xAxis)
-      p_non_dates <- df_non_dates_wide %>% ggplot2::ggplot(
+      p_non_dates <- df_non_dates_wide |> ggplot2::ggplot(
         ggplot2::aes(x = .data[[xcol]])) + ggplot2::labs(
           title = "Non-Date Data",
           x = "Variable and Group Level",
@@ -422,7 +422,7 @@ plotfunction <- function(data,
     if (nrow(df_dates) > 0) {
       xcol <- ifelse(xAxis == "estimate_value", yAxis, xAxis)
 
-      p_dates <- df_dates_wide %>% ggplot2::ggplot(
+      p_dates <- df_dates_wide |> ggplot2::ggplot(
         ggplot2::aes(x = .data[[xcol]])) +
         ggplot2::labs(
           title = "Date Data",
@@ -792,7 +792,7 @@ construct_variable <- function(data, facet_vars) {
     valid_vars <- facet_vars[unique_val_vars]
 
     if (length(valid_vars) > 1) {
-      return(as.factor(interaction(data %>% dplyr::select(dplyr::all_of(valid_vars)), sep = ".")))
+      return(as.factor(interaction(data |> dplyr::select(dplyr::all_of(valid_vars)), sep = ".")))
     } else if (length(valid_vars) == 1) {
       return(as.factor(data[[valid_vars]]))
     }

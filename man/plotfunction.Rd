@@ -24,6 +24,8 @@ Has to be a column in data.}
 \item{yAxis}{what to plot on y axis, default as estimate_value column.
 Has to be a column in data. One of the xAxis or yAxis has to be estimate_value.}
 
+\item{plotStyle}{one of barplot, boxplot, scatterplot or density}
+
 \item{facetVarX}{column in data to facet by on horizontal axis}
 
 \item{facetVarY}{column in data to facet by on vertical axis}
@@ -43,10 +45,9 @@ A ggplot.
 library(visOmopResults)
 library(PatientProfiles)
 library(dplyr)
-result <- mockSummarisedResult() \%>\%
-dplyr::filter(variable_name == "Medications",
+result <- mockSummarisedResult() |>
+filter(variable_name == "Medications",
 strata_name == "overall")
 graphs <- plotfunction(result, plotStyle = "barplot")
-CDMConnector::cdmDisconnect(cdm = cdm)
 }
 }

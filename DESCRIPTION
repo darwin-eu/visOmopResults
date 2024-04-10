@@ -20,13 +20,17 @@ License: Apache License (>= 2)
 URL: https://oxford-pharmacoepi.github.io/visOmopResults/
 BugReports: https://github.com/oxford-pharmacoepi/visOmopResults/issues
 Imports: 
+    checkmate,
     cli,
     dplyr,
     generics,
+    ggplot2,
+    ggpubr,
     glue,
     lifecycle,
     omopgenerics (>= 0.1.0),
     rlang,
+    scales,
     stringr,
     tidyr
 Suggests: 
