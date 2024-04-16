@@ -44,7 +44,7 @@ tidy.summarised_result <- function(x,
   # setting names
   setNames <- x$estimate_name[x$variable_name == "settings"]
   # pivot settings
-  x_out <- x |> pivotSettings()
+  x_out <- x |> addSettings()
   # split
   if (splitGroup) {
     x_out <- x_out |> splitGroup()

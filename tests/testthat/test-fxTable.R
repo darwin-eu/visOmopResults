@@ -41,9 +41,6 @@ test_that("fxTable", {
   expect_equal(fxResult$header$styles$text$bold$data[, "cdm_name"] |> unique(), TRUE)
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"][1], "blue")
 
-  # na
-  expect_equal(fxResult$body$dataset$result_type |> unique(), "mock_summarised_result")
-
   # default fxTable format
   expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
   expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
@@ -100,9 +97,6 @@ test_that("fxTable", {
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"], c("black", "blue", "black", "black", "black", "black"))
   expect_equal(fxResult$header$styles$text$color$data[, "strata_name\nage_group\nstrata_level\n>=40"],
                c("black", "blue", "white", "black", "white", "black"))
-
-  # na
-  expect_equal(fxResult$body$dataset$result_type |> unique(), c(NA, "mock_summarised_result"))
 
   # body
   expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(0,1))

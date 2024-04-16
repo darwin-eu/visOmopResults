@@ -21,7 +21,7 @@ The package provides functionalities to tidy a summarised result to obtain a dat
 
 In this line, the `split` functions, described in **split and unite functions** allow to interact with name-level columns. 
 
-For the estimates, we have the `pivotEstimates` function, and for the settings `pivotSettings`. Finally the `tidy` method accommodates the split and pivot functionalities in the same function.
+For the estimates, we have the `pivotEstimates` function, and for the settings `addSettings`. Finally the `tidy` method accommodates the split and pivot functionalities in the same function.
 
 ## Estimates
 First, let's load relevant libraries and create a mock summarised result table.
@@ -53,7 +53,7 @@ result |>
 The function `pivotSettings` adds a new column for each of the settings in the summarised result, if any:
 ```{r}
 mockSummarisedResult(settings = TRUE) |>
-  pivotSettings() |>
+  addSettings() |>
   glimpse()
 ```
 

@@ -10,7 +10,7 @@ test_that("formatTable", {
     split = c("group", "strata", "additional"),
     type = "gt",
     minCellCount = 5,
-    excludeColumns = c("result_id", "result_type", "package_name", "package_version", "estimate_type"),
+    excludeColumns = c("result_id", "estimate_type"),
     .options = list())
   )
 
@@ -27,7 +27,7 @@ test_that("formatTable", {
       split = c("group", "strata", "additional"),
       type = "gt",
       minCellCount = 5,
-      excludeColumns = c("result_id", "result_type", "package_name", "package_version", "estimate_type"),
+      excludeColumns = c("result_id", "estimate_type"),
       .options = list())
   )
   expect_true("gt_tbl" %in% class(gt2))
@@ -51,7 +51,7 @@ test_that("formatTable", {
       split = c("group", "strata", "additional"),
       type = "flextable",
       minCellCount = 5,
-      excludeColumns = c("result_id", "result_type", "package_name", "package_version", "estimate_type", "cdm_name"),
+      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
   expect_true("flextable" == class(fx1))
@@ -71,7 +71,7 @@ test_that("formatTable", {
       split = c("group", "strata", "additional"),
       type = "flextable",
       minCellCount = 5,
-      excludeColumns = c("result_id", "result_type", "package_name", "package_version", "estimate_type", "cdm_name"),
+      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
   expect_true("flextable" == class(fx2))
@@ -90,7 +90,7 @@ test_that("formatTable", {
       split = c("group", "additional"),
       type = "flextable",
       minCellCount = 5,
-      excludeColumns = c("result_id", "result_type", "package_name", "package_version", "estimate_type", "cdm_name"),
+      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
   expect_true("flextable" == class(fx3))
@@ -117,7 +117,7 @@ test_that("formatTable", {
         split = c("group", "additional"),
         type = "tibble",
         minCellCount = 5,
-        excludeColumns = c("result_id", "result_type", "package_name", "package_version", "estimate_type", "cdm_name"),
+        excludeColumns = c("result_id", "estimate_type", "cdm_name"),
         .options = list())
     ))
 
@@ -154,7 +154,7 @@ test_that("formatTable", {
       split = c("group", "additional"),
       type = "tibble",
       minCellCount = 5,
-      excludeColumns = c("result_id", "result_type", "package_name", "package_version", "estimate_type", "cdm_name"),
+      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
   expect_true(all(c("tbl_df", "tbl", "data.frame") %in% class(tib1)))
@@ -176,7 +176,7 @@ test_that("formatTable", {
       split = c("group", "additional"),
       type = "tibble",
       minCellCount = 5,
-      excludeColumns = c("result_id", "result_type", "package_name", "package_version", "estimate_type", "cdm_name"),
+      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
 })

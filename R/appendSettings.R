@@ -48,7 +48,7 @@ appendSettings <- function(x, colsSettings) {
       dplyr::relocate("result_id")
   }
   # columns to match settings - result
-  colsToMatch <- c("result_id", "cdm_name", "result_type", "package_name", "package_version")
+  colsToMatch <- c("result_id", "cdm_name")
   colsToMatch <- colsToMatch[colsToMatch %in% colnames(x)]
   # format settings to summarised
   settingsIds <- ids |>

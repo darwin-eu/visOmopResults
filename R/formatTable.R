@@ -38,7 +38,7 @@ formatTable <- function(result,
                         groupColumn = NULL,
                         type = "gt",
                         minCellCount = 5,
-                        excludeColumns = c("result_id", "result_type", "package_name", "package_version", "estimate_type"),
+                        excludeColumns = c("result_id", "estimate_type"),
                         .options = list()) {
   # initial checks
   result <- omopgenerics::newSummarisedResult(result)
@@ -152,19 +152,7 @@ formatTable <- function(result,
   }
   colsSettings <- character()
   if ("settings" %in% header) {
-    colsSettings <- colnames(settings)
-    colsSettings <- colsSettings[!colsSettings %in% c("result_id", "cdm_name", "result_type")]
-    if (length(colsSettings) > 0) {
-      x <- x |>
-        dplyr::left_join(
-          settings |>
-            tidyr::pivot_longer(cols = dplyr::all_of(colsSettings), names_to = "settings_name", values_to = "settings_level"),
-          by = c("result_id", "cdm_name", "result_type"))
-      colsSettings <- c("settings_name", "settings_level")
-    } else {
-      colsSettings <- character()
-      cli::cli_warn("There are no settings to add in the header.")
-    }
+    x <- x |> addSettings()
   }
 
   # Nice cases ----

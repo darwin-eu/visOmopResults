@@ -273,8 +273,6 @@ test_that("gtTable, test colsToMergeRows", {
   )
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$result_type,
-               c("mock_summarised_result", "", "", "", "", "", "", "mock_summarised_result", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "-", "", "Amoxiciline", "", "Ibuprofen", "", "-", "-", "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
@@ -296,8 +294,6 @@ test_that("gtTable, test colsToMergeRows", {
   )
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$result_type,
-               rep("mock_summarised_result", 14))
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "", "", "Amoxiciline", "", "Ibuprofen", "", "-", "", "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
@@ -319,8 +315,6 @@ test_that("gtTable, test colsToMergeRows", {
   )
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$result_type,
-               c("mock_summarised_result", "", "", "", "", "", "", "", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "-", "-", "-", "-", "-",
                  "Amoxiciline", "Amoxiciline", "Amoxiciline", "Amoxiciline", "Ibuprofen", "Ibuprofen",
