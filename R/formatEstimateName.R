@@ -44,9 +44,6 @@ formatEstimateName <- function(result,
       result = result, format = estimateNameFormat,
       keepNotFormatted = keepNotFormatted, useFormatOrder = useFormatOrder
     )
-    if (inherits(result, "summarised_result")) {
-      resultFormatted <- resultFormatted |> omopgenerics::newSummarisedResult()
-    }
   } else {
     resultFormatted <- result
   }
@@ -73,6 +70,10 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
   ]
 
   # start formatting
+  isSummarisedResult <- inherits(result, "summarised_result")
+  if (isSummarisedResult) {
+    settings <- omopgenerics::settings(result)
+  }
   result <- result |>
     dplyr::mutate("formatted" = FALSE, "id" = dplyr::row_number()) |>
     dplyr::group_by(dplyr::across(dplyr::all_of(cols))) |>
@@ -145,7 +146,13 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
     result <- result |> dplyr::filter(.data$formatted)
   }
   # result
-  result <- result |> dplyr::select(-"formatted")
+  result <- result |>
+    dplyr::select(-"formatted")
+  if (isSummarisedResult) {
+    result <- result |>
+      dplyr::left_join(settings, by = "result_id") |>
+      omopgenerics::newSummarisedResult()
+  }
   return(result)
 }
 getFormatNum <- function(format, keys) {

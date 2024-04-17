@@ -194,11 +194,11 @@ test_that("gtTable, test default styles and NULL", {
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
-    dplyr::select(-result_id) |>
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                               "N" = "<count>")) |>
     formatHeader(header = c("strata", "strata_name", "strata_level"),
-                includeHeaderName = TRUE)
+                includeHeaderName = TRUE) |>
+    dplyr::select(-result_id)
   gtResult <- gtTable(
     table_to_format,
     style = "default",

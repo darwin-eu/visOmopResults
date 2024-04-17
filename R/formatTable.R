@@ -59,22 +59,11 @@ formatTable <- function(result,
     cli::cli_abort("`cdm_name` cannot be part of the header and also an excluded column.")
   }
 
-  # settings
-  settings <- omopgenerics::settings(result)
-
   # .options
   .options <- defaultTableOptions(.options)
 
-  colsSettings <- character()
-  if ("settings" %in% header) {
-    colsSettings <- colnames(settings)
-    x <- result |> addSettings()
-  } else {
-    x <- result
-  }
-
   # Supress counts & format estimates ----
-  x <- x |>
+  x <- result |>
     # think how to better handle min cell count in this process (formatEstimateName --> nothing if any is NA)
     omopgenerics::suppress(minCellCount = minCellCount) |>
     dplyr::mutate(estimate_value = dplyr::if_else(
@@ -92,6 +81,15 @@ formatTable <- function(result,
     )
 
   # Split & prepare header ----
+  # Settings:
+  settings <- omopgenerics::settings(result)
+  colsSettings <- character()
+  if ("settings" %in% header) {
+    colsSettings <- colnames(settings)
+    x <- x |> addSettings()
+  } else {
+    x <- x
+  }
   # Group:
   splitGroup <- "group" %in% split
   headerGroup <- "group" %in% header

@@ -107,23 +107,20 @@ test_that("formatTable", {
   expect_true(nrow(fx3$body$dataset) == 10)
 
   # settings ----
-  #expect_warning(
-    expect_no_error(
-      formatTable(
-        result = result,
-        formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
-        header = c("group", "settings"),
-        groupColumn = NULL,
-        split = c("group", "additional"),
-        type = "tibble",
-        minCellCount = 5,
-        excludeColumns = c("result_id", "estimate_type", "cdm_name"),
-        .options = list())
-    )
-  #)
+  expect_no_error(
+    formatTable(
+      result = result,
+      formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
+      header = c("group", "settings"),
+      groupColumn = NULL,
+      split = c("group", "additional"),
+      type = "tibble",
+      minCellCount = 5,
+      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
+      .options = list())
+  )
 
-
-  result <- mockSummarisedResult(settings = TRUE)
+  result <- mockSummarisedResult()
   expect_no_error(
     tib1 <- formatTable(
       result = result,
@@ -137,13 +134,15 @@ test_that("formatTable", {
       .options = list())
   )
   expect_true(all(c("tbl_df", "tbl", "data.frame") %in% class(tib1)))
-  expect_true(all(c("Strata name",
-                    "Strata level",
-                    "Variable name",
-                    "Variable level",
-                    "Estimate name",
-                    "[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.2.1",
-                    "[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.2.1") %in% colnames(tib1)))
+  expect_true(all(c(
+    "Strata name",
+    "Strata level",
+    "Variable name",
+    "Variable level",
+    "Estimate name",
+    "[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]True\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.2.1",
+    "[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]True\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.2.1") %in%
+      colnames(tib1)))
 
   # woring group column
   expect_error(
