@@ -106,6 +106,16 @@ test_that("formatEstimateName", {
     useFormatOrder = TRUE)
   expect_true(is.na(res$estimate_value[1]))
 
+  # Class ----
+  expect_true(inherits(res, "summarised_result"))
+  class(result) <- c("tbl_df", "tbl", "data.frame")
+  res <- formatEstimateName(
+    result,
+    estimateNameFormat = "<mean> (<sd>)",
+    keepNotFormatted = TRUE,
+    useFormatOrder = TRUE)
+  expect_false(inherits(res, "summarised_result"))
+
   # Wrong input ----
   expect_error(result |> dplyr::select(-"estimate_name") |> formatEstimateName())
   expect_error(formatEstimateName(result,
