@@ -38,7 +38,7 @@ formatTable <- function(result,
                         groupColumn = NULL,
                         type = "gt",
                         minCellCount = 5,
-                        excludeColumns = c("result_id", "result_type", "package_name", "package_version", "estimate_type"),
+                        excludeColumns = c("result_id", "estimate_type"),
                         .options = list()) {
   # initial checks
   result <- omopgenerics::newSummarisedResult(result)
@@ -61,13 +61,20 @@ formatTable <- function(result,
 
   # settings
   settings <- omopgenerics::settings(result)
-  result <- result |> dplyr::filter(.data$variable_name != "settings")
 
   # .options
   .options <- defaultTableOptions(.options)
 
+  colsSettings <- character()
+  if ("settings" %in% header) {
+    colsSettings <- colnames(settings)
+    x <- result |> addSettings()
+  } else {
+    x <- result
+  }
+
   # Supress counts & format estimates ----
-  x <- result |>
+  x <- x |>
     # think how to better handle min cell count in this process (formatEstimateName --> nothing if any is NA)
     omopgenerics::suppress(minCellCount = minCellCount) |>
     dplyr::mutate(estimate_value = dplyr::if_else(
@@ -150,22 +157,6 @@ formatTable <- function(result,
   if ("estimate" %in% header) {
     colsEstimate = c("estimate_name")
   }
-  colsSettings <- character()
-  if ("settings" %in% header) {
-    colsSettings <- colnames(settings)
-    colsSettings <- colsSettings[!colsSettings %in% c("result_id", "cdm_name", "result_type")]
-    if (length(colsSettings) > 0) {
-      x <- x |>
-        dplyr::left_join(
-          settings |>
-            tidyr::pivot_longer(cols = dplyr::all_of(colsSettings), names_to = "settings_name", values_to = "settings_level"),
-          by = c("result_id", "cdm_name", "result_type"))
-      colsSettings <- c("settings_name", "settings_level")
-    } else {
-      colsSettings <- character()
-      cli::cli_warn("There are no settings to add in the header.")
-    }
-  }
 
   # Nice cases ----
   # Get relevant columns with nice cases (body and header)
@@ -202,7 +193,6 @@ formatTable <- function(result,
     } else {
       formatHeader <- c(formatHeader, header[k])
     }
-
   }
 
   if (length(formatHeader) > 0) {
