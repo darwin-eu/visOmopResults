@@ -115,8 +115,11 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
         ) |>
         dplyr::union_all(resF)
     } else {
-      if (len > 0) {warning(paste0(formatK, " has not been formatted."), call. = FALSE)
-       } else {warning(paste0(formatK, " does not contain an estimate name indicated by <...>"), call. = FALSE)}
+      if (len > 0) {
+        cli::cli_inform(c("i" = "{formatK} has not been formatted."))
+      } else {
+        cli::cli_inform(c("i" = "{formatK} does not contain an estimate name indicated by <...>."))
+      }
     }
   }
   #useFormatOrder

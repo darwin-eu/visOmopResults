@@ -69,13 +69,13 @@ test_that("formatEstimateName", {
                      estimates_in$estimate_value[estimates_in$variable_name == "Medications" &  estimates_in$estimate_name == "percentage"],
                      " %)"))
   # Input 3 ----
-  expect_warning(expect_warning(result_output <- formatEstimateName(
+  result_output <- formatEstimateName(
     result,
     estimateNameFormat = c("N (%)" = "<count> (<notAKey>%)",
                            "N" = "<count>",
                            "<alsoNotAkey>",
                            "%" = "<percentage>"),
-    keepNotFormatted = FALSE), "has not been formatted."), "has not been formatted.")
+    keepNotFormatted = FALSE)
   # check count as "N"
   expect_identical(unique(result_output$estimate_name[result_output$variable_name == "number subjects"]),
                    "N")
@@ -122,12 +122,12 @@ test_that("formatEstimateName", {
                                   estimateNameFormat = c("N" = "count",
                                                          "N (%)" = "count (percentage%)"),
                                   keepNotFormatted = FALSE))
-  expect_warning(formatEstimateName(result,
+  expect_message(formatEstimateName(result,
                                     estimateNameFormat = c("N" = "<count>",
                                                            "N (%)" = "count (<lala>%)"),
                                     keepNotFormatted = TRUE),
                  "has not been formatted.")
-  expect_warning(formatEstimateName(result,
+  expect_message(formatEstimateName(result,
                      estimateNameFormat = c("N" = "count",
                                             "N (%)" = "<count> (<percentage>%)"),
                      keepNotFormatted = FALSE),
@@ -291,4 +291,3 @@ test_that("empty format",{
   )
   expect_identical(res1, result)
 })
-
