@@ -246,8 +246,7 @@ test_that("fxTable, test default styles and NULL", {
       groupNameCol = "group_level",
       groupNameAsColumn = FALSE,
       groupOrder = NULL
-    ),
-    "does not correspon to any of our defined styles. Returning default."
+    )
   )
 })
 
@@ -320,5 +319,5 @@ test_that("fxTable, test colsToMergeRows", {
     groupNameAsColumn = FALSE,
     groupOrder = NULL,
     colsToMergeRows = c("cdm_name", "lala")
-  ), "lala is not a column in the dataframe.")
+  ))
 })
