@@ -26,12 +26,19 @@ knitr::opts_chunk$set(
 
 ## Package overview
 
-visOmopResults contains functions for formatting objects of the class *summarised_result* (see R package [omopgenerics](https://cran.r-project.org/package=omopgenerics)). This package simplifies the handling of these objects to obtain nice output tables in the format of *gt* or *flextable*' to report results via Shiny apps, RMarkdown, Quarto, and more.
+visOmopResults contains functions for formatting objects of the class *summarised_result* (see R package [omopgenerics](https://cran.r-project.org/package=omopgenerics)). 
+This package simplifies the handling of these objects to obtain nice output tables in the format of *gt* or *flextable*' to report results via Shiny apps, RMarkdown, Quarto, and more.
 
 
 ## Installation
 
-You can install the development version of visOmopResults from
+You can install the latest version of visOmopResults from CRAN:
+
+```{r, eval = FALSE}
+install.packages("visOmopResults")
+```
+
+Or you can install the development version from
 [GitHub](https://github.com/oxford-pharmacoepi/visOmopResults) with:
 
 ```{r, eval = FALSE}
@@ -39,18 +46,37 @@ You can install the development version of visOmopResults from
 devtools::install_github("oxford-pharmacoepi/visOmopResults")
 ```
 
-## Example
+## Example usage
 
-In this example we show how to use the package to format a mock summarised_result object into a nice gt object.
-
-First we load the package and create the mock summarised_result object.
+First, we load the package and create a summarised result object with mock results
 
 ```{r, message=F}
 library(visOmopResults)
 result <- mockSummarisedResult()
 ```
 
-### 1. formatEstimateValue
+We can use the function `formatTable()` to get a nice *gt* table:
+
+```{r, eval = FALSE}
+formatTable(
+  result,
+  formatEstimateName = c("N%" = "<count> (<percentage>)",
+                         "N" = "<count>",
+                         "Mean (SD)" = "<mean> (<sd>)"),
+  header = c("Stratifications", "strata"),
+  split = c("group","additional")
+)
+```
+
+![](./man/figures/formatTable.png)
+
+In the code snipped showed, we specified how to group and display the estimates with `formatEstimateName`. Also, we created a header based on the stratifications with `header`, and we split the name-level paired columns group and additional (refer to the "split and unite functions" vignette for more information on splitting). 
+
+
+## Custom formatting - Example usage
+The function `formatTable()` is wrapped around other functions of the package. These can be implemented in a pipeline for additional customisation of the summarised_result. 
+
+### 1. formatEstimateValue()
 We utilize this function to modify the *estimate_value* column. In this case, we will apply the default settings of the function, which include using 0 decimals for integer values, 2 decimals for numeric values, 1 decimal for percentages, and 3 decimals for proportions. Additionally, the function sets the decimal mark to '.', and the thousand/millions separator to ',' by default."
 
 ```{r}
@@ -66,7 +92,7 @@ result |> dplyr::glimpse()
 ```
 
 
-### 2. formatEstimateName
+### 2. formatEstimateName()
 With this function we can transform the *estimate_name* and *estimate_value* columns. For example, it allows to consolidate into one row counts and percentages related to the same variable within the same group and strata. It's worth noting that the *estimate_name* is enclosed within <...> in the `estimateNameFormat` argument.
 ```{r}
 result <- result |> formatEstimateName(
@@ -80,7 +106,7 @@ result <- result |> formatEstimateName(
 result |> dplyr::glimpse()
 ```
 
-### 3. formatHeader
+### 3. formatHeader()
 Next step is to format our table before transforming to gt object. We will pivot *strata_name* and *strata_level* columns to have the strata groups as columns under the header "Study strata".
 
 ```{r}
@@ -95,7 +121,7 @@ result <- result |>
 result |> dplyr::glimpse()
 ```
 
-### 4. gtTable
+### 4. gtTable()
 Finally, we convert the transformed *summarised_result* object in steps 1, 2, and 3, into a nice gt object. We use the default visOmopResults style. Additionally, we separate data into groups specified by *group_level* column to differentiate between cohort1 and cohort2.
 
 ```{r, eval = FALSE}
@@ -119,5 +145,6 @@ gtResult <- result |>
 gtResult 
 ```
 
-![](./man/figures/gt_table.png)
+![](./man/figures/gtTable.png)
 
+It is important to notice that `formatTable` has additional arguments to customise the output table in a similar manner as in the pipeline. See the vignette "format functions".

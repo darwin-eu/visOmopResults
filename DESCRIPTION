@@ -1,6 +1,6 @@
 Package: visOmopResults
 Title: Graphs and Tables for OMOP Results
-Version: 0.2.0
+Version: 0.2.1
 Authors@R: c(
     person(
         "Marti", "Catala", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -25,7 +25,7 @@ Imports:
     generics,
     glue,
     lifecycle,
-    omopgenerics (>= 0.1.0),
+    omopgenerics (>= 0.2.0),
     rlang,
     stringr,
     tidyr
@@ -35,7 +35,8 @@ Suggests:
     officer,
     knitr,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    tibble
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
@@ -43,3 +44,5 @@ Config/testthat/parallel: true
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.1
+Remotes:
+    darwin-eu-dev/omopgenerics

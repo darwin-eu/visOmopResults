@@ -1,4 +1,4 @@
-#' Creats a header for gt and flextable objects.
+#' Create a header for gt and flextable objects.
 #'
 #' @param result A summarised_result.
 #' @param header Names of the columns to make headers. Names that doesn't

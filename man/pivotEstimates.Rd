@@ -12,7 +12,7 @@ pivotEstimates(result, pivotEstimatesBy = "estimate_name", nameStyle = NULL)
 \item{pivotEstimatesBy}{Names from which pivot wider the estimate values. If
 NULL the table will not be pivotted.}
 
-\item{nameStyle}{Name style (glue package specifications) to customize names
+\item{nameStyle}{Name style (glue package specifications) to customise names
 when pivotting estimates. If NULL standard tidyr::pivot_wider formatting will
 be used.}
 }

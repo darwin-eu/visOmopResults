@@ -54,7 +54,7 @@ test_that("gtTable", {
                c("cell_text.color" = "#0000FF", "cell_text.weight" = "bold"))
   # column names
   expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[1:36] |> unique(), c("#E1E1E1", "bold"))
-  expect_true(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[37:47] |> unique() == "bold")
+  expect_true(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[37:44] |> unique() == "bold")
   expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
   # na
   expect_identical(gtResult$`_substitutions`, list())
@@ -108,7 +108,7 @@ test_that("gtTable", {
   expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "subtitle"] |> unlist(),
                c("cell_text.color" = "#0000FF", "cell_text.size" = "large", "cell_text.weight" = "lighter"))
   # column names
-  expect_true(length(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"] |> unlist()) == 11)
+  expect_true(length(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"] |> unlist()) == 8)
   expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header\\]|\\[header_name\\]", x)}) |> unlist() |> unique())
   # na
   expect_equal(unique(gtResult$`_data`$variable_level[1:3]), "-")
@@ -190,7 +190,7 @@ test_that("gtTable, test default styles and NULL", {
 
   # style
   expect_true(gtResult$`_styles`$styles[1][[1]]$cell_text$align == "right")
-  expect_true(gtResult$`_styles`$styles[203][[1]]$cell_text$align == "left")
+  expect_true(gtResult$`_styles`$styles[182][[1]]$cell_text$align == "left")
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
@@ -229,7 +229,7 @@ test_that("gtTable, test default styles and NULL", {
   # column names
   expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[1:27] |> unique(),
                c("#E1E1E1", "center", "bold"))
-  expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[28:49] |> unique(),
+  expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[28:43] |> unique(),
               c("center", "bold"))
   expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
 
@@ -254,6 +254,7 @@ test_that("gtTable, test default styles and NULL", {
     "does not correspon to any of our defined styles. Returning default."
   )
 })
+
 test_that("gtTable, test colsToMergeRows", {
   table_to_format<- mockSummarisedResult() |>
     formatHeader(header = c("strata_name", "strata_level")) |>
@@ -273,8 +274,6 @@ test_that("gtTable, test colsToMergeRows", {
   )
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$result_type,
-               c("mock_summarised_result", "", "", "", "", "", "", "mock_summarised_result", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "-", "", "Amoxiciline", "", "Ibuprofen", "", "-", "-", "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
@@ -296,8 +295,6 @@ test_that("gtTable, test colsToMergeRows", {
   )
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$result_type,
-               rep("mock_summarised_result", 14))
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "", "", "Amoxiciline", "", "Ibuprofen", "", "-", "", "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
@@ -319,13 +316,9 @@ test_that("gtTable, test colsToMergeRows", {
   )
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$result_type,
-               c("mock_summarised_result", "", "", "", "", "", "", "", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "-", "-", "-", "-", "-",
                  "Amoxiciline", "Amoxiciline", "Amoxiciline", "Amoxiciline", "Ibuprofen", "Ibuprofen",
                  "Ibuprofen","Ibuprofen"))
   expect_null(gtResult$`_data`$group_level|> levels())
 })
-
-

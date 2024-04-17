@@ -191,10 +191,11 @@ mockSummarisedResult <- function(settings = FALSE) {
         "additional_name" = "overall",
         "additional_level" = "overall"
       )
-    ) |>
-    # settings
-    dplyr::union_all(
-      dplyr::tibble(
+    )
+
+  if(!settings) {
+    result <- result |>
+      dplyr::union_all(dplyr::tibble(
         "cdm_name" = "mock",
         "result_type" = "mock_summarised_result",
         "package_name" = "visOmopResults",
@@ -211,12 +212,12 @@ mockSummarisedResult <- function(settings = FALSE) {
         "estimate_value" = "TRUE",
         "additional_name" = "overall",
         "additional_level" = "overall"
-      )
-    ) |>
+      ))
+  }
+
+  result <- result |>
     dplyr::mutate(result_id = as.integer(1)) |>
     omopgenerics::newSummarisedResult()
-  if(!settings) {
-    result <- result |> dplyr::filter(.data$variable_name != "settings")
-  }
+
   return(result)
 }

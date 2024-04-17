@@ -210,10 +210,6 @@ test_that("formatEstimateValue", {
       dplyr::union_all(dplyr::tibble(
         "result_id" = as.integer(1),
         "cdm_name" = "mock",
-        "result_type" = NA_character_,
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = "cohort3",
         "strata_name" = rep(c(

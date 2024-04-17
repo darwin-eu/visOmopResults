@@ -1,7 +1,7 @@
 
 <!-- README.md is generated from README.Rmd. Please edit that file -->
 
-# visOmopResults
+# visOmopResults <img src="man/figures/logo.png" align="right" height="200"/>
 
 <!-- badges: start -->
 
@@ -25,7 +25,13 @@ apps, RMarkdown, Quarto, and more.
 
 ## Installation
 
-You can install the development version of visOmopResults from
+You can install the latest version of visOmopResults from CRAN:
+
+``` r
+install.packages("visOmopResults")
+```
+
+Or you can install the development version from
 [GitHub](https://github.com/oxford-pharmacoepi/visOmopResults) with:
 
 ``` r
@@ -33,19 +39,44 @@ You can install the development version of visOmopResults from
 devtools::install_github("oxford-pharmacoepi/visOmopResults")
 ```
 
-## Example
+## Example usage
 
-In this example we show how to use the package to format a mock
-summarised_result object into a nice gt object.
-
-First we load the package and create the mock summarised_result object.
+First, we load the package and create a summarised result object with
+mock results
 
 ``` r
 library(visOmopResults)
 result <- mockSummarisedResult()
 ```
 
-### 1. formatEstimateValue
+We can use the function `formatTable()` to get a nice *gt* table:
+
+``` r
+formatTable(
+  result,
+  formatEstimateName = c("N%" = "<count> (<percentage>)",
+                         "N" = "<count>",
+                         "Mean (SD)" = "<mean> (<sd>)"),
+  header = c("Stratifications", "strata"),
+  split = c("group","additional")
+)
+```
+
+![](./man/figures/formatTable.png)
+
+In the code snipped showed, we specified how to group and display the
+estimates with `formatEstimateName`. Also, we created a header based on
+the stratifications with `header`, and we split the name-level paired
+columns group and additional (refer to the “split and unite functions”
+vignette for more information on splitting).
+
+## Custom formatting - Example usage
+
+The function `formatTable()` is wrapped around other functions of the
+package. These can be implemented in a pipeline for additional
+customisation of the summarised_result.
+
+### 1. formatEstimateValue()
 
 We utilize this function to modify the *estimate_value* column. In this
 case, we will apply the default settings of the function, which include
@@ -70,7 +101,7 @@ result |> dplyr::glimpse()
 #> $ cdm_name         <chr> "mock", "mock", "mock", "mock", "mock", "mock", "mock…
 #> $ result_type      <chr> "mock_summarised_result", "mock_summarised_result", "…
 #> $ package_name     <chr> "visOmopResults", "visOmopResults", "visOmopResults",…
-#> $ package_version  <chr> "0.1.2", "0.1.2", "0.1.2", "0.1.2", "0.1.2", "0.1.2",…
+#> $ package_version  <chr> "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0",…
 #> $ group_name       <chr> "cohort_name", "cohort_name", "cohort_name", "cohort_…
 #> $ group_level      <chr> "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…
 #> $ strata_name      <chr> "overall", "age_group &&& sex", "age_group &&& sex", …
@@ -79,12 +110,12 @@ result |> dplyr::glimpse()
 #> $ variable_level   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 #> $ estimate_name    <chr> "count", "count", "count", "count", "count", "count",…
 #> $ estimate_type    <chr> "integer", "integer", "integer", "integer", "integer"…
-#> $ estimate_value   <chr> "1,630,151", "3,009,031", "8,085,250", "9,197,741", "…
+#> $ estimate_value   <chr> "3,644,052", "5,067,956", "9,529,116", "3,510,896", "…
 #> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
 ```
 
-### 2. formatEstimateName
+### 2. formatEstimateName()
 
 With this function we can transform the *estimate_name* and
 *estimate_value* columns. For example, it allows to consolidate into one
@@ -108,7 +139,7 @@ result |> dplyr::glimpse()
 #> $ cdm_name         <chr> "mock", "mock", "mock", "mock", "mock", "mock", "mock…
 #> $ result_type      <chr> "mock_summarised_result", "mock_summarised_result", "…
 #> $ package_name     <chr> "visOmopResults", "visOmopResults", "visOmopResults",…
-#> $ package_version  <chr> "0.1.2", "0.1.2", "0.1.2", "0.1.2", "0.1.2", "0.1.2",…
+#> $ package_version  <chr> "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0",…
 #> $ group_name       <chr> "cohort_name", "cohort_name", "cohort_name", "cohort_…
 #> $ group_level      <chr> "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…
 #> $ strata_name      <chr> "overall", "age_group &&& sex", "age_group &&& sex", …
@@ -117,12 +148,12 @@ result |> dplyr::glimpse()
 #> $ variable_level   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 #> $ estimate_name    <chr> "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N"…
 #> $ estimate_type    <chr> "character", "character", "character", "character", "…
-#> $ estimate_value   <chr> "1,630,151", "3,009,031", "8,085,250", "9,197,741", "…
+#> $ estimate_value   <chr> "3,644,052", "5,067,956", "9,529,116", "3,510,896", "…
 #> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
 ```
 
-### 3. formatHeader
+### 3. formatHeader()
 
 Next step is to format our table before transforming to gt object. We
 will pivot *strata_name* and *strata_level* columns to have the strata
@@ -164,7 +195,7 @@ result |> dplyr::glimpse()
 #> $ `[header]Study strata\n[header_level]age_group\n[header_level]>=40`                    <chr> …
 ```
 
-### 4. gtTable
+### 4. gtTable()
 
 Finally, we convert the transformed *summarised_result* object in steps
 1, 2, and 3, into a nice gt object. We use the default visOmopResults
@@ -192,4 +223,8 @@ gtResult <- result |>
 gtResult 
 ```
 
-![](./man/figures/gt_table.png)
+![](./man/figures/gtTable.png)
+
+It is important to notice that `formatTable` has additional arguments to
+customise the output table in a similar manner as in the pipeline. See
+the vignette “format functions”.

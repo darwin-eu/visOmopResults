@@ -1,27 +1,5 @@
 test_that("tidy", {
-  mocksum <- mockSummarisedResult() |>
-  # settings
-  dplyr::union_all(
-    dplyr::tibble(
-      result_id = as.integer(1),
-      "cdm_name" = "mock",
-      "result_type" = "mock_summarised_result",
-      "package_name" = "visOmopResults",
-      "package_version" = utils::packageVersion("visOmopResults") |>
-        as.character(),
-      "group_name" = "overall",
-      "group_level" = "overall",
-      "strata_name" = "overall",
-      "strata_level" = "overall",
-      "variable_name" = "settings",
-      "variable_level" = NA_character_,
-      "estimate_name" = "mock_default",
-      "estimate_type" = "logical",
-      "estimate_value" = "TRUE",
-      "additional_name" = "overall",
-      "additional_level" = "overall"
-    )
-  )
+  mocksum <- mockSummarisedResult()
 
   expect_no_error(res0 <- tidy(x = mocksum, pivotEstimatesBy = "estimate_name"))
   expect_true(nrow(res0 |> dplyr::filter(.data$variable_name == "settings")) == 0)
@@ -40,9 +18,10 @@ test_that("tidy", {
                     "Medications_Amoxiciline_percentage", "Medications_Ibuprofen_count",
                     "Medications_Ibuprofen_percentage", "mock_default") %in% colnames(res1)))
 
-  expect_no_error(res2 <- tidy(mocksum |> dplyr::filter(variable_name != "settings"),
+  expect_no_error(res2 <- tidy(mocksum,
                                splitGroup = FALSE,
                                splitAdditional = FALSE,
+                               addSettings = FALSE,
                                pivotEstimatesBy = c("variable_name", "estimate_name"),
                                nameStyle = "{estimate_name}__{variable_name}"))
   expect_false("mock_default" %in% colnames(res2))
@@ -55,7 +34,9 @@ test_that("tidy", {
 
   expect_no_error(res3 <- tidy(mocksum, splitGroup = FALSE, splitAdditional = FALSE, splitStrata = FALSE,
                                 pivotEstimatesBy = NULL))
-  expect_true(all(colnames(res3) %in% c(colnames(mocksum), "mock_default")))
+  expect_true(all(colnames(res3) %in% c(
+    colnames(mocksum), "mock_default", "result_type", "package_name", "package_version"
+  )))
 
   # 2 id's:
   mocksum2 <- mocksum |>

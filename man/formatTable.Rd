@@ -12,8 +12,7 @@ formatTable(
   groupColumn = NULL,
   type = "gt",
   minCellCount = 5,
-  excludeColumns = c("result_id", "result_type", "package_name", "package_version",
-    "estimate_type"),
+  excludeColumns = c("result_id", "estimate_type"),
   .options = list()
 )
 }
@@ -24,8 +23,8 @@ formatTable(
 computation order. Indicate estimate_name's between <...>.}
 
 \item{header}{A vector containing which elements should go into the header
-in order. Allowed are: \code{cdm_name}, \code{group}, \code{strata}, \code{additional},
-\code{variable}, \code{estimate}, \code{settings}.}
+in order (\code{cdm_name}, \code{group}, \code{strata}, \code{additional},
+\code{variable}, \code{estimate}, and \code{settings}).}
 
 \item{split}{A vector containing the name-level groups to split ("group",
 "strata", "additional"), or an empty character vector to not split.}
