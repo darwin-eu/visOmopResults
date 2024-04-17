@@ -61,13 +61,20 @@ formatTable <- function(result,
 
   # settings
   settings <- omopgenerics::settings(result)
-  result <- result |> dplyr::filter(.data$variable_name != "settings")
 
   # .options
   .options <- defaultTableOptions(.options)
 
+  colsSettings <- character()
+  if ("settings" %in% header) {
+    colsSettings <- colnames(settings)
+    x <- result |> addSettings()
+  } else {
+    x <- result
+  }
+
   # Supress counts & format estimates ----
-  x <- result |>
+  x <- x |>
     # think how to better handle min cell count in this process (formatEstimateName --> nothing if any is NA)
     omopgenerics::suppress(minCellCount = minCellCount) |>
     dplyr::mutate(estimate_value = dplyr::if_else(
@@ -150,10 +157,6 @@ formatTable <- function(result,
   if ("estimate" %in% header) {
     colsEstimate = c("estimate_name")
   }
-  colsSettings <- character()
-  if ("settings" %in% header) {
-    x <- x |> addSettings()
-  }
 
   # Nice cases ----
   # Get relevant columns with nice cases (body and header)
@@ -190,7 +193,6 @@ formatTable <- function(result,
     } else {
       formatHeader <- c(formatHeader, header[k])
     }
-
   }
 
   if (length(formatHeader) > 0) {

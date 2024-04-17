@@ -3,7 +3,6 @@
 S3method(tidy,summarised_result)
 export(addSettings)
 export(additionalColumns)
-export(appendSettings)
 export(filterSettings)
 export(formatEstimateName)
 export(formatEstimateValue)

@@ -3,7 +3,7 @@ test_that("addSettings", {
     "result_id" = as.integer(c(1, 2)),
     "cdm_name" = c("cprd", "eunomia"),
     "result_type" = "summarised_characteristics",
-    "package_name" = "PatientProfiles",
+    "package_name" = c("omock", "visOmopResults"),
     "package_version" = "0.4.0",
     "group_name" = "sex",
     "group_level" = "male",
@@ -17,13 +17,14 @@ test_that("addSettings", {
     "additional_name" = "overall",
     "additional_level" = "overall"
   )
-  expect_no_error(res <- newSummarisedResult(x = x, settings = dplyr::tibble(
-    "result_id" = c(1, 2), "custom" = c("A", "B")
-  )))
+  expect_no_error(res <- omopgenerics::newSummarisedResult(
+    x = x,
+    settings = dplyr::tibble("result_id" = c(1, 2), "custom" = c("A", "B"))
+  ))
 
   expect_identical(
     sort(colnames(settings(res))),
-    c("cdm_name", "custom", "package_name", "package_version", "result_id",
+    c("custom", "package_name", "package_version", "result_id",
       "result_type")
   )
 
@@ -32,7 +33,7 @@ test_that("addSettings", {
   expect_identical(settings(ress), settings(res))
   expect_identical(ress, ress |> addSettings())
 
-  res1 <- res |> filterSettings(cdm_name == "cprd")
+  res1 <- res |> filterSettings(package_name == "omock")
   expect_true(nrow(res1) == 1)
   expect_true(res1$result_id == 1)
 

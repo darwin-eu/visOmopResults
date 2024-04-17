@@ -50,12 +50,12 @@ test_that("fxTable", {
   expect_null(fxResult$caption$value)
 
   # Alignment
-  expect_equal(fxResult$body$styles$pars$text.align$data[1,12:29] |> unique(), "right")
-  expect_equal(fxResult$body$styles$pars$text.align$data[3,12:29] |> unique(), "right")
-  expect_equal(fxResult$body$styles$pars$text.align$data[5,12:29] |> unique(), "right")
-  expect_equal(fxResult$body$styles$pars$text.align$data[1,1:11] |> unique(), "left")
-  expect_equal(fxResult$body$styles$pars$text.align$data[3,1:11] |> unique(), "left")
-  expect_equal(fxResult$body$styles$pars$text.align$data[5,1:11] |> unique(), "left")
+  expect_equal(fxResult$body$styles$pars$text.align$data[1,9:26] |> unique(), "right")
+  expect_equal(fxResult$body$styles$pars$text.align$data[3,9:26] |> unique(), "right")
+  expect_equal(fxResult$body$styles$pars$text.align$data[5,9:26] |> unique(), "right")
+  expect_equal(fxResult$body$styles$pars$text.align$data[1,1:8] |> unique(), "left")
+  expect_equal(fxResult$body$styles$pars$text.align$data[3,1:8] |> unique(), "left")
+  expect_equal(fxResult$body$styles$pars$text.align$data[5,1:8] |> unique(), "left")
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
@@ -110,9 +110,9 @@ test_that("fxTable", {
   expect_equal(fxResult$caption$value, "*This* is the caption")
 
   # group label
-  expect_equal(fxResult$body$spans$rows[1,], c(1, 20, rep(0, 19)))
-  expect_equal(fxResult$body$spans$rows[7,], c(1, 20, rep(0, 19)))
-  expect_equal(fxResult$body$spans$rows[3,], rep(1, 21))
+  expect_equal(fxResult$body$spans$rows[1,], c(1, 17, rep(0, 16)))
+  expect_equal(fxResult$body$spans$rows[7,], c(1, 17, rep(0, 16)))
+  expect_equal(fxResult$body$spans$rows[3,], rep(1, 18))
 
   # Input 3 ----
   table_to_format <- mockSummarisedResult() |>
@@ -143,7 +143,7 @@ test_that("fxTable", {
   # group label
   expect_equal(fxResult$body$spans$columns[,1], c(5, rep(0,4), 5, rep(0,4)))
   expect_equal(fxResult$body$dataset[,1] |>  levels(), c("cohort2", "cohort1"))
-  expect_equal(fxResult$body$spans$rows[3,], rep(1, 21))
+  expect_equal(fxResult$body$spans$rows[3,], rep(1, 18))
   expect_equal(fxResult$body$styles$cells$background.color$data[,1] |> unique(), "#e1e1e1")
   expect_equal(fxResult$body$styles$cells$background.color$data[,2] |> unique(), "transparent")
 
@@ -275,13 +275,13 @@ test_that("fxTable, test colsToMergeRows", {
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,2],
                c("gray", "gray", "black", "black", "black", "black", "black", "black",
                  "gray", "gray", "black", "black", "black", "black", "black", "black"))
-  expect_equal(fxResult$body$styles$cells$border.color.top$data[,7],
+  expect_equal(fxResult$body$styles$cells$border.color.top$data[,4],
                c("gray", "gray", "gray", "black", "gray", "black", "black", "black",
                  "gray", "gray", "gray", "black", "gray", "black", "black", "black"))
-  expect_equal(fxResult$body$styles$cells$border.color.top$data[,8],
+  expect_equal(fxResult$body$styles$cells$border.color.top$data[,5],
                c("gray", "gray", "gray", "black", "gray", "black", "gray", "black",
                  "gray", "gray", "gray", "black", "gray", "black", "gray", "black"))
-  expect_equal(fxResult$body$styles$cells$border.color.top$data[,19],
+  expect_equal(fxResult$body$styles$cells$border.color.top$data[,16],
                c("gray", "gray", "gray", "gray", "gray", "gray", "gray", "gray",
                  "gray", "gray", "gray", "gray", "gray", "gray", "gray", "gray"))
 
@@ -304,7 +304,7 @@ test_that("fxTable, test colsToMergeRows", {
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,2],
                c("gray", "gray", "black", "black", "black", "black", "black", "black",
                  "gray", "gray", "black", "black", "black", "black", "black", "black"))
-  expect_equal(fxResult$body$styles$cells$border.color.top$data[,7],
+  expect_equal(fxResult$body$styles$cells$border.color.top$data[,4],
                c("gray", "gray", "gray", "black", "gray", "black", "black", "black",
                  "gray", "gray", "gray", "black", "gray", "black", "black", "black"))
 

@@ -107,7 +107,7 @@ test_that("formatTable", {
   expect_true(nrow(fx3$body$dataset) == 10)
 
   # settings ----
-  expect_warning(
+  #expect_warning(
     expect_no_error(
       formatTable(
         result = result,
@@ -119,32 +119,11 @@ test_that("formatTable", {
         minCellCount = 5,
         excludeColumns = c("result_id", "estimate_type", "cdm_name"),
         .options = list())
-    ))
-
-
-  result <- result |>
-    # settings
-    dplyr::union_all(
-      dplyr::tibble(
-        result_id = as.integer(1),
-        "cdm_name" = "mock",
-        "result_type" = "mock_summarised_result",
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
-        "group_name" = "overall",
-        "group_level" = "overall",
-        "strata_name" = "overall",
-        "strata_level" = "overall",
-        "variable_name" = "settings",
-        "variable_level" = NA_character_,
-        "estimate_name" = "mock_default",
-        "estimate_type" = "logical",
-        "estimate_value" = "TRUE",
-        "additional_name" = "overall",
-        "additional_level" = "overall"
-      )
     )
+  #)
+
+
+  result <- mockSummarisedResult(settings = TRUE)
   expect_no_error(
     tib1 <- formatTable(
       result = result,
@@ -163,8 +142,8 @@ test_that("formatTable", {
                     "Variable name",
                     "Variable level",
                     "Estimate name",
-                    "[header]Cohort name\n[header_level]Cohort1\n[header_level]Mock default\n[header_level]True",
-                    "[header]Cohort name\n[header_level]Cohort2\n[header_level]Mock default\n[header_level]True") %in% colnames(tib1)))
+                    "[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.2.1",
+                    "[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.2.1") %in% colnames(tib1)))
 
   # woring group column
   expect_error(

@@ -50,22 +50,11 @@ result |>
 ```
 
 ## Settings
-The function `pivotSettings` adds a new column for each of the settings in the summarised result, if any:
+The function `addSettings` adds a new column for each of the settings in the summarised result, if any:
 ```{r}
 mockSummarisedResult(settings = TRUE) |>
   addSettings() |>
   glimpse()
-```
-
-The function `appendSettings` is the inverse functionality to pivot. This function will append columns corresponding to settings to the end summarised result:
-
-```{r}
-table <- mockSummarisedResult() |>
-  mutate(mockSummarisedResult = TRUE, vignette = "tidy")
-
-result <- table |> appendSettings(colsSettings = c("mockSummarisedResult", "vignette"))
-
-result |> filter(variable_name == "settings") |> glimpse()
 ```
 
 ## Tidy
