@@ -142,8 +142,8 @@ test_that("formatTable", {
                     "Variable name",
                     "Variable level",
                     "Estimate name",
-                    "[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.2.1",
-                    "[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.2.1") %in% colnames(tib1)))
+                    "[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.3.0",
+                    "[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.3.0") %in% colnames(tib1)))
 
   # woring group column
   expect_error(
