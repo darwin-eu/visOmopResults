@@ -21,7 +21,7 @@ addSettings <- function(result, columns = NULL) {
   }
   toJoin <- columns[columns %in% colnames(result)]
   resultOut <- result |>
-    dplyr::inner_join(
+    dplyr::left_join(
       set |> dplyr::select(dplyr::all_of(c("result_id", columns))),
       by = c("result_id", toJoin)
     )

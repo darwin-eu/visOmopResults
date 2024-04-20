@@ -163,14 +163,16 @@ mockSummarisedResult <- function() {
         "additional_level" = "overall"
       )
     ) |>
-    dplyr::mutate(
-      result_id = as.integer(1),
-      "result_type" = "mock_summarised_result",
-      "package_name" = "visOmopResults",
-      "package_version" = utils::packageVersion("visOmopResults") |>
-        as.character()
-    ) |>
-    omopgenerics::newSummarisedResult()
+    dplyr::mutate(result_id = as.integer(1)) |>
+    omopgenerics::newSummarisedResult(
+      settings = dplyr::tibble(
+        "result_id" = as.integer(1),
+        "result_type" = "mock_summarised_result",
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
+          as.character()
+      )
+    )
 
   return(result)
 }

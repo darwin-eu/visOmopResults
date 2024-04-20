@@ -150,8 +150,7 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
     dplyr::select(-"formatted")
   if (isSummarisedResult) {
     result <- result |>
-      dplyr::left_join(settings, by = "result_id") |>
-      omopgenerics::newSummarisedResult()
+      omopgenerics::newSummarisedResult(settings = settings)
   }
   return(result)
 }

@@ -47,10 +47,6 @@ test_that("tidy, dates", {
   result <- dplyr::tibble(
     "result_id" = integer(1),
     "cdm_name" = "mock",
-    "result_type" = "mock_summarised_result",
-    "package_name" = "visOmopResults",
-    "package_version" = utils::packageVersion("visOmopResults") |>
-      as.character(),
     "group_name" = "cohort_name",
     "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
     "strata_name" = rep(c(
@@ -72,10 +68,6 @@ test_that("tidy, dates", {
       dplyr::tibble(
         "result_id" = integer(1),
         "cdm_name" = "mock",
-        "result_type" = "mock_summarised_result",
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
@@ -94,7 +86,15 @@ test_that("tidy, dates", {
         "additional_level" = "overall"
       )
     ) |>
-    omopgenerics::newSummarisedResult()
+    omopgenerics::newSummarisedResult(
+      settings = dplyr::tibble(
+        "result_id" = integer(1),
+        "result_type" = "mock_summarised_result",
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
+          as.character()
+      )
+    )
   expect_no_error(result_out <- tidy(result))
   expect_true(class(as.Date(result_out |> dplyr::pull(date))) == "Date")
 })

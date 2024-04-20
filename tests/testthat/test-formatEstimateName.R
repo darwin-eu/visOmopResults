@@ -69,13 +69,15 @@ test_that("formatEstimateName", {
                      estimates_in$estimate_value[estimates_in$variable_name == "Medications" &  estimates_in$estimate_name == "percentage"],
                      " %)"))
   # Input 3 ----
-  result_output <- formatEstimateName(
-    result,
-    estimateNameFormat = c("N (%)" = "<count> (<notAKey>%)",
-                           "N" = "<count>",
-                           "<alsoNotAkey>",
-                           "%" = "<percentage>"),
-    keepNotFormatted = FALSE)
+  expect_message(expect_message(
+    result_output <- formatEstimateName(
+      result,
+      estimateNameFormat = c("N (%)" = "<count> (<notAKey>%)",
+                             "N" = "<count>",
+                             "<alsoNotAkey>",
+                             "%" = "<percentage>"),
+      keepNotFormatted = FALSE)
+  ))
   # check count as "N"
   expect_identical(unique(result_output$estimate_name[result_output$variable_name == "number subjects"]),
                    "N")
@@ -142,10 +144,6 @@ test_that("formatEstimateName, useFormatOrder", {
     # number subjects
     dplyr::tibble(
       "cdm_name" = "mock",
-      "result_type" = NA_character_,
-      "package_name" = "visOmopResults",
-      "package_version" = utils::packageVersion("visOmopResults") |>
-        as.character(),
       "group_name" = "cohort_name",
       "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
       "strata_name" = rep(c(
@@ -167,10 +165,6 @@ test_that("formatEstimateName, useFormatOrder", {
       # age - mean
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = NA_character_,
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
@@ -193,10 +187,6 @@ test_that("formatEstimateName, useFormatOrder", {
       # age - mean
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = NA_character_,
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
@@ -219,10 +209,6 @@ test_that("formatEstimateName, useFormatOrder", {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = NA_character_,
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
@@ -242,7 +228,15 @@ test_that("formatEstimateName, useFormatOrder", {
       )
     ) |>
     dplyr::mutate(result_id = "1") |>
-    omopgenerics::newSummarisedResult()
+    omopgenerics::newSummarisedResult(
+      settings = dplyr::tibble(
+        "result_id" = as.integer(1),
+        "result_type" = "mock_test",
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
+          as.character(),
+      )
+    )
 
   # FALSE ----
   result_output <-  formatEstimateName(result,
