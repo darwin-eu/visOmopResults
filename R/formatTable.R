@@ -11,6 +11,9 @@
 #' "strata", "additional"), or an empty character vector to not split.
 #' @param type Type of desired formatted table, possibilities: "gt",
 #' "flextable", "tibble".
+#' @renameColumns Named vector to customisa column names, for instance:
+#' c("Database name" = "cdm_name")). By default column names are transformed to
+#' sentence case.
 #' @param minCellCount Counts below which results will be clouded.
 #' @param excludeColumns Columns to drop from the output table.
 #' @param .options Named list with additional formatting options.
@@ -37,6 +40,7 @@ formatTable <- function(result,
                         split,
                         groupColumn = NULL,
                         type = "gt",
+                        renameColumns = NULL,
                         minCellCount = 5,
                         excludeColumns = c("result_id", "estimate_type"),
                         .options = list()) {
@@ -50,6 +54,7 @@ formatTable <- function(result,
   assertCharacter(excludeColumns, null = TRUE)
   assertNumeric(minCellCount, length = 1, null = FALSE, integerish = TRUE)
   assertList(.options)
+  assertCharacter(renameColumns, null = TRUE, named = TRUE)
   if (length(split) > 0) {
     if (!all(split %in% c("group", "strata", "additional"))) {
       cli::cli_abort("Accepted values for split are: `group`, `strata`, and/or `additional`. It also supports an empty character vector (`character()`).")
@@ -57,6 +62,9 @@ formatTable <- function(result,
   }
   if ("cdm_name" %in% header & "cdm_name" %in% excludeColumns) {
     cli::cli_abort("`cdm_name` cannot be part of the header and also an excluded column.")
+  }
+  if (!is.null(renameColumns)) {
+
   }
 
   # .options
@@ -159,6 +167,13 @@ formatTable <- function(result,
   # Nice cases ----
   # Get relevant columns with nice cases (body and header)
   notFormat <- c("estimate_value", "cdm_name", colsGroup, colsStrata, colsAdditional, colsVariable, colsEstimate, colsSettings)
+  if (!is.null(renameColumns)) {
+    ids = renameColumns %in% noFormat & renameColumns != "cdm_name"
+    if (sum(ids) > 0) {
+      renameColumns = renameColumns[!ids]
+    }
+    notFormat <- c(notFormat, renameColumns)
+  }
   notFormat <- notFormat[(notFormat %in% colnames(x)) & (!notFormat %in% excludeColumns)]
   x <- x |>
     dplyr::mutate(dplyr::across(.cols = !dplyr::all_of(c("cdm_name", "estimate_name")), .fn = ~ formatString(.x))) |>
@@ -170,6 +185,18 @@ formatTable <- function(result,
   if (!"cdm_name" %in% header & !"cdm_name" %in% excludeColumns) {
     x <- x |> dplyr::rename("CDM name" = "cdm_name")
   }
+  if (!is.null(renameColumns)) {
+    colsSorted <- colnames(x)[colnames(x) %in% renameColumns]
+    newNames <- names(renameColumns)
+    names(newNames) <- renameColumns
+    colnames(x)[colnames(x) %in% renameColumns] <- newNames[colsSorted]
+  }
+
+  if (!is.null(renameColumns) & "cdm_name" %in% renameColumns) {
+    cdmName <- newNames["cdm_name"]
+  } else {
+    cdmName <- "CDM name"
+  }
 
   # Header ----
   # Format header
@@ -179,7 +206,7 @@ formatTable <- function(result,
       formatHeader <- c(formatHeader,
                         switch(
                           header[k],
-                          "cdm_name" = c("CDM name", "cdm_name"),
+                          "cdm_name" = c(cdmName, "cdm_name"),
                           "group" = colsGroup,
                           "strata" = colsStrata,
                           "additional" = colsAdditional,
@@ -205,7 +232,6 @@ formatTable <- function(result,
     x <- x |> dplyr::rename("Estimate value" = "estimate_value")
   }
 
-
   # Format table ----
   if (all(.options$colsToMergeRows %in% colnames(x))) {
     .options$colsToMergeRows <- formatString(.options$colsToMergeRows)
@@ -222,8 +248,8 @@ formatTable <- function(result,
       cli::cli_abort(c(paste0(
         "'", groupColumn, "' is not a column in the formatted table created."),
         "i" = paste0("Possible group columns are: '",
-        paste0(possibleGroups, collapse = "', '"), "'"
-      )))
+                     paste0(possibleGroups, collapse = "', '"), "'"
+        )))
     }
   }
 
