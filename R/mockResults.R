@@ -163,9 +163,8 @@ mockSummarisedResult <- function() {
         "additional_level" = "overall"
       )
     ) |>
-    dplyr::mutate(result_id = as.integer(1)) |>
     dplyr::mutate(
-      "mock_default" = TRUE,
+      result_id = as.integer(1),
       "result_type" = "mock_summarised_result",
       "package_name" = "visOmopResults",
       "package_version" = utils::packageVersion("visOmopResults") |>

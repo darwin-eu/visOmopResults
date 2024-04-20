@@ -195,7 +195,9 @@ formatTable <- function(result,
       .cols = !dplyr::all_of(notFormat)
     )
   if (!"cdm_name" %in% header & !"cdm_name" %in% excludeColumns) {
-    x <- x |> dplyr::rename(!!cdmName := "cdm_name")
+    if ((!is.null(renameColumns) & !"cdm_name" %in% renameColumns) | length(renameColumns) == 0) {
+      x <- x |> dplyr::rename(!!cdmName := "cdm_name")
+    }
   }
   if (!is.null(renameColumns)) {
     colsSorted <- colnames(x)[colnames(x) %in% renameColumns]
