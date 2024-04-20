@@ -137,8 +137,8 @@ test_that("formatTable", {
 
   expect_true(all(c(
     "Strata name", "Strata level", "Variable name", "Variable level", "Estimate name",
-    paste0("[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]", utils::packageVersion("Visomopresults")),
-    paste0("[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]", utils::packageVersion("VisOmopresults"))) %in% colnames(tib1)))
+    paste0("[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]", utils::packageVersion("visOmopResults")),
+    paste0("[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]", utils::packageVersion("visOmopResults"))) %in% colnames(tib1)))
 
   # woring group column
   expect_error(
