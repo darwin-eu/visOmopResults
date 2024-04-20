@@ -11,6 +11,7 @@ formatTable(
   split,
   groupColumn = NULL,
   type = "gt",
+  renameColumns = NULL,
   minCellCount = 5,
   excludeColumns = c("result_id", "estimate_type"),
   .options = list()
@@ -33,6 +34,10 @@ in order (\code{cdm_name}, \code{group}, \code{strata}, \code{additional},
 
 \item{type}{Type of desired formatted table, possibilities: "gt",
 "flextable", "tibble".}
+
+\item{renameColumns}{Named vector to customisa column names, for instance:
+c("Database name" = "cdm_name")). By default column names are transformed to
+sentence case.}
 
 \item{minCellCount}{Counts below which results will be clouded.}
 

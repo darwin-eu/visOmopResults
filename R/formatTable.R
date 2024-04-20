@@ -11,7 +11,7 @@
 #' "strata", "additional"), or an empty character vector to not split.
 #' @param type Type of desired formatted table, possibilities: "gt",
 #' "flextable", "tibble".
-#' @renameColumns Named vector to customisa column names, for instance:
+#' @param renameColumns Named vector to customisa column names, for instance:
 #' c("Database name" = "cdm_name")). By default column names are transformed to
 #' sentence case.
 #' @param minCellCount Counts below which results will be clouded.
@@ -64,7 +64,17 @@ formatTable <- function(result,
     cli::cli_abort("`cdm_name` cannot be part of the header and also an excluded column.")
   }
   if (!is.null(renameColumns)) {
-
+    notCols <- !renameColumns %in% colnames(result)
+    if (sum(notCols) > 0) {
+      cli::cli_warn("The following values of `renameColumns` do not refer to column names and will be ignored: {renameColumns[notCols]}")
+      renameColumns <- renameColumns[!notCols]
+    }
+  }
+  if ("cdm_name" %in% header & "cdm_name" %in% renameColumns) {
+    cdmName <- names(renameColumns)[renameColumns == "cdm_name"]
+    renameColumns <- renameColumns[renameColumns != "cdm_name"]
+  } else {
+    cdmName <- "CDM name"
   }
 
   # .options
@@ -168,7 +178,7 @@ formatTable <- function(result,
   # Get relevant columns with nice cases (body and header)
   notFormat <- c("estimate_value", "cdm_name", colsGroup, colsStrata, colsAdditional, colsVariable, colsEstimate, colsSettings)
   if (!is.null(renameColumns)) {
-    ids = renameColumns %in% noFormat & renameColumns != "cdm_name"
+    ids = renameColumns %in% notFormat & renameColumns != "cdm_name"
     if (sum(ids) > 0) {
       renameColumns = renameColumns[!ids]
     }
@@ -176,14 +186,16 @@ formatTable <- function(result,
   }
   notFormat <- notFormat[(notFormat %in% colnames(x)) & (!notFormat %in% excludeColumns)]
   x <- x |>
-    dplyr::mutate(dplyr::across(.cols = !dplyr::all_of(c("cdm_name", "estimate_name")), .fn = ~ formatString(.x))) |>
+    dplyr::mutate(dplyr::across(
+      .cols = !dplyr::all_of(c("cdm_name", "estimate_name")), .fn = ~ formatString(.x)
+    )) |>
     dplyr::select(!dplyr::all_of(excludeColumns)) |>
     dplyr::rename_with(
       .fn =  ~ formatString(.x),
       .cols = !dplyr::all_of(notFormat)
     )
   if (!"cdm_name" %in% header & !"cdm_name" %in% excludeColumns) {
-    x <- x |> dplyr::rename("CDM name" = "cdm_name")
+    x <- x |> dplyr::rename(!!cdmName := "cdm_name")
   }
   if (!is.null(renameColumns)) {
     colsSorted <- colnames(x)[colnames(x) %in% renameColumns]
@@ -192,11 +204,6 @@ formatTable <- function(result,
     colnames(x)[colnames(x) %in% renameColumns] <- newNames[colsSorted]
   }
 
-  if (!is.null(renameColumns) & "cdm_name" %in% renameColumns) {
-    cdmName <- newNames["cdm_name"]
-  } else {
-    cdmName <- "CDM name"
-  }
 
   # Header ----
   # Format header

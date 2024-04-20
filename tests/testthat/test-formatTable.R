@@ -158,3 +158,55 @@ test_that("formatTable", {
       .options = list())
   )
 })
+
+test_that("renameColumn works", {
+  result <- mockSummarisedResult()
+  expect_no_error(
+    gt1 <- formatTable(
+      result = result,
+      formatEstimateName = character(),
+      header = character(),
+      groupColumn = NULL,
+      split = c("group", "strata", "additional"),
+      type = "gt",
+      renameColumns = c("Database name" = "cdm_name"),
+      minCellCount = 5,
+      excludeColumns = c("result_id", "estimate_type"),
+      .options = list())
+  )
+  expect_true(all(
+    colnames(gt1$`_data`) ==
+      c("Database name", "Cohort name", "Age group", "Sex", "Variable name",
+        "Variable level", "Estimate name", "Estimate value")
+  ))
+
+  expect_no_error(
+    gt2 <- formatTable(
+      result = result,
+      formatEstimateName = character(),
+      header = c("cdm_name", "strata"),
+      groupColumn = NULL,
+      split = c("group", "strata", "additional"),
+      type = "gt",
+      renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
+      minCellCount = 5,
+      excludeColumns = c("result_id", "estimate_type"),
+      .options = list())
+  )
+  expect_true(all(colnames(gt2$`_data`)[1:2] == c("Database name", "changeName")))
+  expect_true(all(colnames(gt2$`_data`)[5] == "[header]Database name\n[header_level]mock\n[header]Age group\n[header_level]Overall\n[header]Sex\n[header_level]Overall"))
+
+  expect_warning(
+    fx1 <- formatTable(
+      result = result,
+      formatEstimateName = character(),
+      header = c("cdm_name", "strata"),
+      groupColumn = NULL,
+      split = c("group", "strata", "additional"),
+      type = "flextable",
+      renameColumns = c("Database name" = "cdm_name", "changeName" = "name"),
+      minCellCount = 5,
+      excludeColumns = c("result_id", "estimate_type"),
+      .options = list())
+  )
+})
