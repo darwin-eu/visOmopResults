@@ -134,15 +134,11 @@ test_that("formatTable", {
       .options = list())
   )
   expect_true(all(c("tbl_df", "tbl", "data.frame") %in% class(tib1)))
+
   expect_true(all(c(
-    "Strata name",
-    "Strata level",
-    "Variable name",
-    "Variable level",
-    "Estimate name",
-    "[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]True\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.2.1",
-    "[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]True\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.2.1") %in%
-      colnames(tib1)))
+    "Strata name", "Strata level", "Variable name", "Variable level", "Estimate name",
+    paste0("[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]", utils::packageVersion("visOmopResults")),
+    paste0("[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]", utils::packageVersion("visOmopResults"))) %in% colnames(tib1)))
 
   # woring group column
   expect_error(

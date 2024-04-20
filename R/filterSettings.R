@@ -48,7 +48,7 @@ filterSettings <- function(result, ...) {
 
   # filter from settings
   resId <- settings(result) |> dplyr::pull("result_id")
-  result <- result |> dplyr::filter(.data$result_id == .env$resId)
+  result <- result |> dplyr::filter(.data$result_id %in% .env$resId)
 
   return(result)
 }
