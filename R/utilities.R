@@ -107,3 +107,13 @@ validateDelim <- function(delim) {
     cli::cli_abort("The value supplied for `delim` must be a single character.")
   }
 }
+
+checkGroupColumn <- function(groupColumn) {
+  if (inherits(groupColumn, "list")) {
+    assertList(groupColumn, length = 1, null = TRUE, named = TRUE)
+    assertCharacter(groupColumn[[1]], null = TRUE)
+  }
+  if (inherits(groupColumn, "character")) {
+    assertCharacter(groupColumn, null = TRUE)
+  }
+}

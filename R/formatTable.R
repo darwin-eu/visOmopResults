@@ -6,7 +6,10 @@
 #' @param header A vector containing which elements should go into the header
 #' in order (`cdm_name`, `group`, `strata`, `additional`,
 #' `variable`, `estimate`, and `settings`).
-#' @param groupColumn Column to use as group labels.
+#' @param groupColumn Columns to use as group labels. By default the name of the
+#' new group will be the column names separated by "_". To specify a new
+#' grouping name enter a named list such as:
+#' list(`newGroupName` = c("variable_name", "variable_level"))
 #' @param split A vector containing the name-level groups to split ("group",
 #' "strata", "additional"), or an empty character vector to not split.
 #' @param type Type of desired formatted table, possibilities: "gt",
@@ -49,12 +52,12 @@ formatTable <- function(result,
   assertChoice(type, c("gt", "flextable", "tibble"))
   assertCharacter(formatEstimateName)
   assertCharacter(header)
-  assertCharacter(groupColumn, null = TRUE, length = 1)
   assertCharacter(split)
   assertCharacter(excludeColumns, null = TRUE)
   assertNumeric(minCellCount, length = 1, null = FALSE, integerish = TRUE)
   assertList(.options)
   assertCharacter(renameColumns, null = TRUE, named = TRUE)
+  checkGroupColumn(groupColumn)
   if (length(split) > 0) {
     if (!all(split %in% c("group", "strata", "additional"))) {
       cli::cli_abort("Accepted values for split are: `group`, `strata`, and/or `additional`. It also supports an empty character vector (`character()`).")
@@ -70,11 +73,20 @@ formatTable <- function(result,
       renameColumns <- renameColumns[!notCols]
     }
   }
-  if ("cdm_name" %in% header & "cdm_name" %in% renameColumns) {
-    cdmName <- names(renameColumns)[renameColumns == "cdm_name"]
-    renameColumns <- renameColumns[renameColumns != "cdm_name"]
-  } else {
-    cdmName <- "CDM name"
+  if ("group" %in% split & any(grepl("group", excludeColumns))) {
+    cli::cli_abort("`group` columns cannot be splitted and excluded at the same time. ")
+  }
+  if ("strata" %in% split & any(grepl("strata", excludeColumns))) {
+    cli::cli_abort("`strata` columns cannot be splitted and excluded at the same time. ")
+  }
+  if ("additional" %in% split & any(grepl("additional", excludeColumns))) {
+    cli::cli_abort("`additional` columns cannot be splitted and excluded at the same time. ")
+  }
+  if (inherits(groupColumn, "list")) {
+    nameGroup <- names(groupColumn)
+    groupColumn <- groupColumn[[1]]
+  } else if (length(groupColumn) > 1) {
+    nameGroup <- paste0(groupColumn, collapse = "_")
   }
 
   # .options
@@ -175,16 +187,23 @@ formatTable <- function(result,
   }
 
   # Nice cases ----
-  # Get relevant columns with nice cases (body and header)
-  notFormat <- c("estimate_value", "cdm_name", colsGroup, colsStrata, colsAdditional, colsVariable, colsEstimate, colsSettings)
-  if (!is.null(renameColumns)) {
-    ids = renameColumns %in% notFormat & renameColumns != "cdm_name"
-    if (sum(ids) > 0) {
-      renameColumns = renameColumns[!ids]
-    }
-    notFormat <- c(notFormat, renameColumns)
+  # renames
+  if (! "cdm_name" %in% renameColumns) {
+    renameColumns <- c(renameColumns, "CDM name" = "cdm_name")
   }
+  cdmName <- names(renameColumns)[renameColumns == "cdm_name"]
+  # columns not to format
+  notFormat <- c("estimate_value", colsGroup, colsStrata, colsAdditional,
+                 colsVariable, colsEstimate, colsSettings) |> unique()
+
+  # dont rename columns in notFormat
+  ids = renameColumns %in% notFormat
+  if (sum(ids) > 0) {
+    renameColumns = renameColumns[!ids]
+  }
+  notFormat <- c(notFormat, renameColumns)
   notFormat <- notFormat[(notFormat %in% colnames(x)) & (!notFormat %in% excludeColumns)]
+
   x <- x |>
     dplyr::mutate(dplyr::across(
       .cols = !dplyr::all_of(c("cdm_name", "estimate_name")), .fn = ~ formatString(.x)
@@ -194,18 +213,17 @@ formatTable <- function(result,
       .fn =  ~ formatString(.x),
       .cols = !dplyr::all_of(notFormat)
     )
-  if (!"cdm_name" %in% header & !"cdm_name" %in% excludeColumns) {
-    if ((!is.null(renameColumns) & !"cdm_name" %in% renameColumns) | length(renameColumns) == 0) {
-      x <- x |> dplyr::rename(!!cdmName := "cdm_name")
-    }
+
+  # rename columns manually
+  if ("cdm_name" %in% header) {
+    renameColumns <- renameColumns[!renameColumns %in% "cdm_name"]
   }
-  if (!is.null(renameColumns)) {
+  if (length(renameColumns) > 0) {
     colsSorted <- colnames(x)[colnames(x) %in% renameColumns]
     newNames <- names(renameColumns)
     names(newNames) <- renameColumns
     colnames(x)[colnames(x) %in% renameColumns] <- newNames[colsSorted]
   }
-
 
   # Header ----
   # Format header
@@ -243,23 +261,51 @@ formatTable <- function(result,
 
   # Format table ----
   if (all(.options$colsToMergeRows %in% colnames(x))) {
-    .options$colsToMergeRows <- formatString(.options$colsToMergeRows)
-  }
-  if (!is.null(groupColumn)) {
-    if (groupColumn == "cdm_name") {
-      groupColumn <- "CDM name"
-    } else {
-      groupColumn <- formatString(groupColumn)
+    ids <- .options$colsToMergeRows %in% renameColumns
+    if (any(ids)) {
+      colsSorted <- .options$colsToMergeRows[.options$colsToMergeRows %in% renameColumns]
+      newNames <- names(renameColumns)
+      names(newNames) <- renameColumns
+      .options$colsToMergeRows[ids] <- newNames[colsSorted]
     }
-    if (!groupColumn %in% colnames(x)) {
-      possibleGroups <- colnames(x)
-      possibleGroups <- gsub(" ", "_", tolower(possibleGroups[!grepl("\\[header", possibleGroups)]))
+    .options$colsToMergeRows[!ids] <- formatString(.options$colsToMergeRows[!ids])
+  }
+
+  if (!is.null(groupColumn)) {
+    # rename
+    ids <- groupColumn %in% renameColumns
+    newGroupcolumn <- groupColumn
+    if (any(ids)) {
+      colsSorted <- newGroupcolumn[newGroupcolumn %in% renameColumns]
+      newNames <- names(renameColumns)
+      names(newNames) <- renameColumns
+      newGroupcolumn[ids] <- newNames[colsSorted]
+    }
+    newGroupcolumn[!ids] <- formatString(newGroupcolumn[!ids])
+    # check compatibility
+    idsGroup <- !newGroupcolumn %in% colnames(x)
+    if (any(idsGroup)) {
+      possibleGroups <- colnames(x)[!grepl("\\[header", colnames(x))]
+      for (k in 1:length(possibleGroups)) {
+        if (possibleGroups[k] %in% names(renameColumns)) {
+          possibleGroups[k] <- renameColumns[possibleGroups[k]]
+        } else {
+          possibleGroups[k] <- gsub(" ", "_", tolower(possibleGroups[k]))
+        }
+      }
       cli::cli_abort(c(paste0(
-        "'", groupColumn, "' is not a column in the formatted table created."),
-        "i" = paste0("Possible group columns are: '",
-                     paste0(possibleGroups, collapse = "', '"), "'"
+        "{groupColumn[idsGroup]} is not a column in the formatted table created."),
+        "i" = paste0("Possible group columns are: '", paste0(possibleGroups, collapse = "', '"), "'"
         )))
     }
+    # > 1 group
+    if (length(newGroupcolumn) > 1) {
+      x <- x |>
+        tidyr::unite(!!nameGroup, newGroupcolumn, sep = "; ")
+      newGroupcolumn <- nameGroup
+    }
+  } else {
+    newGroupcolumn <- NULL
   }
 
   if (type == "gt") {
@@ -271,7 +317,7 @@ formatTable <- function(result,
         title = .options$title,
         subtitle = .options$subtitle,
         caption = .options$caption,
-        groupNameCol = groupColumn,
+        groupNameCol = newGroupcolumn,
         groupNameAsColumn = .options$groupNameAsColumn,
         groupOrder = .options$groupOrder,
         colsToMergeRows = .options$colsToMergeRows
@@ -285,7 +331,7 @@ formatTable <- function(result,
         title = .options$title,
         subtitle = .options$subtitle,
         caption = .options$caption,
-        groupNameCol = groupColumn,
+        groupNameCol = newGroupcolumn,
         groupNameAsColumn = .options$groupNameAsColumn,
         groupOrder = .options$groupOrder,
         colsToMergeRows = .options$colsToMergeRows
