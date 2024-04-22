@@ -4,10 +4,7 @@
 \alias{mockSummarisedResult}
 \title{A summarised_result object filled with mock data}
 \usage{
-mockSummarisedResult(settings = FALSE)
-}
-\arguments{
-\item{settings}{If TRUE settings will be appended.}
+mockSummarisedResult()
 }
 \value{
 An object of the class summarised_result with mock data.

@@ -52,7 +52,7 @@ result |>
 ## Settings
 The function `addSettings` adds a new column for each of the settings in the summarised result, if any:
 ```{r}
-mockSummarisedResult(settings = TRUE) |>
+mockSummarisedResult() |>
   addSettings() |>
   glimpse()
 ```
@@ -61,7 +61,7 @@ mockSummarisedResult(settings = TRUE) |>
 Finally, the method `tidy` incorporates the splitting pf name-level columns and pivotting of estimates and settings. By default, it splits group, strata and additional, pivots estimates by the columns "estimate_name" and also pivots the settings. 
 
 ```{r}
-result <- mockSummarisedResult(settings = TRUE)
+result <- mockSummarisedResult()
 
 result |> 
   tidy() |> 

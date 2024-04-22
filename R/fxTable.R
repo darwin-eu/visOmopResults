@@ -273,8 +273,7 @@ fxStyles <- function(styleName) {
     )
   )
   if (! styleName %in% names(styles)) {
-    warning(paste0(styleName, " does not correspon to any of our defined styles. Returning default."),
-            call. = FALSE)
+    cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
     styleName <- "default"
   }
   return(styles[[styleName]])

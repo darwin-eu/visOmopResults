@@ -89,9 +89,9 @@ validateColsToMergeRows <- function(x, colsToMergeRows, groupNameCol) {
     }
     ind <- ! colsToMergeRows %in% c(colnames(x), "all_columns")
     if (sum(ind) == 1) {
-      warning(paste0(colsToMergeRows[ind], " is not a column in the dataframe."))
+      cli::cli_inform(c("!" = "{colsToMergeRows[ind]} is not a column in the dataframe."))
     } else if (sum(ind) > 1) {
-      warning(paste0(colsToMergeRows[ind], " are not columns in the dataframe."))
+      cli::cli_inform(c("!" = "{colsToMergeRows[ind]} are not columns in the dataframe."))
     }
   }
 }

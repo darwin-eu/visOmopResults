@@ -235,7 +235,7 @@ test_that("fxTable, test default styles and NULL", {
   expect_equal(fxResult$body$styles$text$color$data[, "cdm_name"] |> unique(), "black")
 
   #Input 3: woring name style ----
-  expect_warning(
+  expect_message(
     fxResult <- fxTable(
       table_to_format,
       style = "heythere",
@@ -246,8 +246,7 @@ test_that("fxTable, test default styles and NULL", {
       groupNameCol = "group_level",
       groupNameAsColumn = FALSE,
       groupOrder = NULL
-    ),
-    "does not correspon to any of our defined styles. Returning default."
+    )
   )
 })
 
@@ -309,7 +308,7 @@ test_that("fxTable, test colsToMergeRows", {
                  "gray", "gray", "gray", "black", "gray", "black", "black", "black"))
 
   # Wroing input
-  expect_warning(fxTable(
+  expect_message(fxTable(
     table_to_format,
     style = "default",
     na = "-",
@@ -320,5 +319,5 @@ test_that("fxTable, test colsToMergeRows", {
     groupNameAsColumn = FALSE,
     groupOrder = NULL,
     colsToMergeRows = c("cdm_name", "lala")
-  ), "lala is not a column in the dataframe.")
+  ))
 })

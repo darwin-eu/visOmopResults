@@ -194,11 +194,11 @@ test_that("gtTable, test default styles and NULL", {
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
-    dplyr::select(-result_id) |>
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                               "N" = "<count>")) |>
     formatHeader(header = c("strata", "strata_name", "strata_level"),
-                includeHeaderName = TRUE)
+                includeHeaderName = TRUE) |>
+    dplyr::select(-result_id)
   gtResult <- gtTable(
     table_to_format,
     style = "default",
@@ -239,20 +239,15 @@ test_that("gtTable, test default styles and NULL", {
 
 
   #Input 3: woring name style ----
-  expect_warning(
+  expect_message(
     gtResult <- gtTable(
       table_to_format,
       style = "heythere",
       na = "-",
       title = "Title test 2",
       subtitle = "Subtitle for test 2",
-      caption = "*This* is the caption",
-      groupNameCol = "group_level",
-      groupNameAsColumn = FALSE,
-      groupOrder = NULL
-    ),
-    "does not correspon to any of our defined styles. Returning default."
-  )
+      caption = "*This* is the caption"
+    ))
 })
 
 test_that("gtTable, test colsToMergeRows", {

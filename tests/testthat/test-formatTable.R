@@ -107,23 +107,20 @@ test_that("formatTable", {
   expect_true(nrow(fx3$body$dataset) == 10)
 
   # settings ----
-  #expect_warning(
-    expect_no_error(
-      formatTable(
-        result = result,
-        formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
-        header = c("group", "settings"),
-        groupColumn = NULL,
-        split = c("group", "additional"),
-        type = "tibble",
-        minCellCount = 5,
-        excludeColumns = c("result_id", "estimate_type", "cdm_name"),
-        .options = list())
-    )
-  #)
+  expect_no_error(
+    formatTable(
+      result = result,
+      formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
+      header = c("group", "settings"),
+      groupColumn = NULL,
+      split = c("group", "additional"),
+      type = "tibble",
+      minCellCount = 5,
+      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
+      .options = list())
+  )
 
-
-  result <- mockSummarisedResult(settings = TRUE)
+  result <- mockSummarisedResult()
   expect_no_error(
     tib1 <- formatTable(
       result = result,
@@ -137,13 +134,11 @@ test_that("formatTable", {
       .options = list())
   )
   expect_true(all(c("tbl_df", "tbl", "data.frame") %in% class(tib1)))
-  expect_true(all(c("Strata name",
-                    "Strata level",
-                    "Variable name",
-                    "Variable level",
-                    "Estimate name",
-                    "[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.3.0",
-                    "[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]0.3.0") %in% colnames(tib1)))
+
+  expect_true(all(c(
+    "Strata name", "Strata level", "Variable name", "Variable level", "Estimate name",
+    paste0("[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]", utils::packageVersion("visOmopResults")),
+    paste0("[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]", utils::packageVersion("visOmopResults"))) %in% colnames(tib1)))
 
   # woring group column
   expect_error(
@@ -156,6 +151,58 @@ test_that("formatTable", {
       type = "tibble",
       minCellCount = 5,
       excludeColumns = c("result_id", "estimate_type", "cdm_name"),
+      .options = list())
+  )
+})
+
+test_that("renameColumn works", {
+  result <- mockSummarisedResult()
+  expect_no_error(
+    gt1 <- formatTable(
+      result = result,
+      formatEstimateName = character(),
+      header = character(),
+      groupColumn = NULL,
+      split = c("group", "strata", "additional"),
+      type = "gt",
+      renameColumns = c("Database name" = "cdm_name"),
+      minCellCount = 5,
+      excludeColumns = c("result_id", "estimate_type"),
+      .options = list())
+  )
+  expect_true(all(
+    colnames(gt1$`_data`) ==
+      c("Database name", "Cohort name", "Age group", "Sex", "Variable name",
+        "Variable level", "Estimate name", "Estimate value")
+  ))
+
+  expect_no_error(
+    gt2 <- formatTable(
+      result = result,
+      formatEstimateName = character(),
+      header = c("cdm_name", "strata"),
+      groupColumn = NULL,
+      split = c("group", "strata", "additional"),
+      type = "gt",
+      renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
+      minCellCount = 5,
+      excludeColumns = c("result_id", "estimate_type"),
+      .options = list())
+  )
+  expect_true(all(colnames(gt2$`_data`)[1:2] == c("Cohort name", "changeName")))
+  expect_true(all(colnames(gt2$`_data`)[5] == "[header]Database name\n[header_level]mock\n[header]Age group\n[header_level]Overall\n[header]Sex\n[header_level]Overall"))
+
+  expect_warning(
+    fx1 <- formatTable(
+      result = result,
+      formatEstimateName = character(),
+      header = c("cdm_name", "strata"),
+      groupColumn = NULL,
+      split = c("group", "strata", "additional"),
+      type = "flextable",
+      renameColumns = c("Database name" = "cdm_name", "changeName" = "name"),
+      minCellCount = 5,
+      excludeColumns = c("result_id", "estimate_type"),
       .options = list())
   )
 })
