@@ -93,7 +93,10 @@ in order (<code>cdm_name</code>, <code>group</code>, <code>strata</code>, <code>
 
 
 <dt>groupColumn</dt>
-<dd><p>Column to use as group labels.</p></dd>
+<dd><p>Columns to use as group labels. By default the name of the
+new group will be the column names separated by "_". To specify a new
+grouping name enter a named list such as:
+list(<code>newGroupName</code> = c("variable_name", "variable_level"))</p></dd>
 
 
 <dt>type</dt>
