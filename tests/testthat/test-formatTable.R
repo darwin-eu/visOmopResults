@@ -205,4 +205,32 @@ test_that("renameColumn works", {
       excludeColumns = c("result_id", "estimate_type"),
       .options = list())
   )
+
+  # more than 1 group column
+  fx2 <- formatTable(
+    result = result,
+    formatEstimateName = character(),
+    header = c("strata"),
+    split = c("group", "strata", "additional"),
+    type = "flextable",
+    groupColumn = c("cdm_name", "cohort_name"),
+    renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
+    minCellCount = 5,
+    excludeColumns = c("result_id", "estimate_type"),
+    .options = list())
+  expect_true(colnames(fx2$body$dataset)[1] == "cdm_name_cohort_name")
+
+  # more than 1 group column
+  fx3 <- formatTable(
+    result = result,
+    formatEstimateName = character(),
+    header = c("strata"),
+    split = c("group", "strata", "additional"),
+    type = "flextable",
+    groupColumn = list("group" = c("cdm_name", "cohort_name")),
+    renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
+    minCellCount = 5,
+    excludeColumns = c("result_id", "estimate_type"),
+    .options = list())
+  expect_true(colnames(fx3$body$dataset)[1] == "group")
 })

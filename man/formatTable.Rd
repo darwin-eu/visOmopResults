@@ -30,7 +30,10 @@ in order (\code{cdm_name}, \code{group}, \code{strata}, \code{additional},
 \item{split}{A vector containing the name-level groups to split ("group",
 "strata", "additional"), or an empty character vector to not split.}
 
-\item{groupColumn}{Column to use as group labels.}
+\item{groupColumn}{Columns to use as group labels. By default the name of the
+new group will be the column names separated by "_". To specify a new
+grouping name enter a named list such as:
+list(\code{newGroupName} = c("variable_name", "variable_level"))}
 
 \item{type}{Type of desired formatted table, possibilities: "gt",
 "flextable", "tibble".}
