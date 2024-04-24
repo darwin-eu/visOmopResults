@@ -3,15 +3,15 @@ test_that("visOmopTable", {
 
   expect_no_error(
     gt1 <- visOmopTable(
-    result = result,
-    formatEstimateName = character(),
-    header = character(),
-    groupColumn = NULL,
-    split = c("group", "strata", "additional"),
-    type = "gt",
-    minCellCount = 5,
-    excludeColumns = c("result_id", "estimate_type"),
-    .options = list())
+      result = result,
+      formatEstimateName = character(),
+      header = character(),
+      groupColumn = NULL,
+      split = c("group", "strata", "additional"),
+      type = "gt",
+      minCellCount = 5,
+      excludeColumns = c("result_id", "estimate_type"),
+      .options = list())
   )
 
   expect_true("gt_tbl" %in% class(gt1))

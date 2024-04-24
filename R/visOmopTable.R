@@ -301,7 +301,7 @@ visOmopTable <- function(result,
     # > 1 group
     if (length(newGroupcolumn) > 1) {
       x <- x |>
-        tidyr::unite(!!nameGroup, newGroupcolumn, sep = "; ")
+        tidyr::unite(!!nameGroup, dplyr::all_of(newGroupcolumn), sep = "; ")
       newGroupcolumn <- nameGroup
     }
   } else {
@@ -394,6 +394,7 @@ optionsVisOmopTable <- function() {
   return(defaultTableOptions(NULL))
 }
 
+
 #' Format a summarised_result object into a gt, flextable or tibble object
 #'
 #' `r lifecycle::badge("deprecated")`
@@ -427,7 +428,7 @@ optionsVisOmopTable <- function() {
 #' @export
 #'
 #' @examples
-#' mockSummarisedResult() |> visOmopTable(
+#' mockSummarisedResult() |> formatTable(
 #'   formatEstimateName = c("N%" = "<count> (<percentage>)",
 #'                          "N" = "<count>",
 #'                          "Mean (SD)" = "<mean> (<sd>)"),
@@ -445,6 +446,7 @@ formatTable <- function(result,
                          minCellCount = 5,
                          excludeColumns = c("result_id", "estimate_type"),
                          .options = list()) {
+
   lifecycle::deprecate_soft(
     when = "0.3.0",
     what = "formatTable()",

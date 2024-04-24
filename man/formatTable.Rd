@@ -57,7 +57,7 @@ A tibble, gt, or flextable object.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \examples{
-mockSummarisedResult() |> visOmopTable(
+mockSummarisedResult() |> formatTable(
   formatEstimateName = c("N\%" = "<count> (<percentage>)",
                          "N" = "<count>",
                          "Mean (SD)" = "<mean> (<sd>)"),
