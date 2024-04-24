@@ -61,7 +61,7 @@
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/mockSummarisedResult.html</loc>
   </url>
   <url>
-    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/optionsFormatTable.html</loc>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/optionsVisOmopTable.html</loc>
   </url>
   <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/pivotEstimates.html</loc>
@@ -104,5 +104,8 @@
   </url>
   <url>
     <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/visOmopResults-package.html</loc>
+  </url>
+  <url>
+    <loc>https://oxford-pharmacoepi.github.io/visOmopResults/reference/visOmopTable.html</loc>
   </url>
 </urlset>

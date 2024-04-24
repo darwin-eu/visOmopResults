@@ -95,7 +95,7 @@ display in reports and shiny apps.</p>
 lastly <code><a href="../reference/gtTable.html">gtTable()</a></code> or <code><a href="../reference/fxTable.html">fxTable()</a></code> can be
 implemented in a pipeline to obtain the desired formatted table.
 Otherwise, these steps are implemented in the function
-<code><a href="../reference/formatTable.html">formatTable()</a></code>.</p>
+<code><a href="../reference/visOmopTable.html">visOmopTable()</a></code>.</p>
 <div class="section level2">
 <h2 id="formatting-functions-in-a-pipeline">Formatting functions in a pipeline<a class="anchor" aria-label="anchor" href="#formatting-functions-in-a-pipeline"></a>
 </h2>
@@ -2613,162 +2613,162 @@ since it is the accepted by <em>flextable</em>.</p>
 <span>    colsToMergeRows <span class="op">=</span> <span class="st">"all_columns"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-15de8ce8{}.cl-15d75248{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-15d75252{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-15d7525c{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-15da1cf8{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-15da1d02{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-15da1d0c{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-15da354e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.2pt solid rgba(190, 190, 190, 1.00);border-top: 1.2pt solid rgba(190, 190, 190, 1.00);border-left: 1.2pt solid rgba(190, 190, 190, 1.00);border-right: 1.2pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15da354f{width:0.75in;background-color:rgba(255, 165, 0, 1.00);vertical-align: middle;border-bottom: 1.2pt solid rgba(190, 190, 190, 1.00);border-top: 1.2pt solid rgba(190, 190, 190, 1.00);border-left: 1.2pt solid rgba(190, 190, 190, 1.00);border-right: 1.2pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15da3558{width:0.75in;background-color:rgba(255, 255, 0, 1.00);vertical-align: middle;border-bottom: 1.2pt solid rgba(190, 190, 190, 1.00);border-top: 1.2pt solid rgba(190, 190, 190, 1.00);border-left: 1.2pt solid rgba(190, 190, 190, 1.00);border-right: 1.2pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15da3559{width:0.75in;background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15da355a{width:0.75in;background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15da3562{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15da3563{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15da356c{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15da356d{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15da356e{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15da3576{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15da3577{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-15da3578{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-15de8ce8">
+<style>.cl-ec6a8ade{}.cl-ec632708{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-ec632712{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-ec63271c{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-ec65f834{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ec65f848{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ec65f849{margin:0;text-align:right;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:5pt;padding-top:5pt;padding-left:5pt;padding-right:5pt;line-height: 1;background-color:transparent;}.cl-ec661094{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1.2pt solid rgba(190, 190, 190, 1.00);border-top: 1.2pt solid rgba(190, 190, 190, 1.00);border-left: 1.2pt solid rgba(190, 190, 190, 1.00);border-right: 1.2pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec66109e{width:0.75in;background-color:rgba(255, 165, 0, 1.00);vertical-align: middle;border-bottom: 1.2pt solid rgba(190, 190, 190, 1.00);border-top: 1.2pt solid rgba(190, 190, 190, 1.00);border-left: 1.2pt solid rgba(190, 190, 190, 1.00);border-right: 1.2pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec66109f{width:0.75in;background-color:rgba(255, 255, 0, 1.00);vertical-align: middle;border-bottom: 1.2pt solid rgba(190, 190, 190, 1.00);border-top: 1.2pt solid rgba(190, 190, 190, 1.00);border-left: 1.2pt solid rgba(190, 190, 190, 1.00);border-right: 1.2pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec6610a0{width:0.75in;background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec6610a8{width:0.75in;background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec6610a9{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec6610aa{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec6610b2{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec6610b3{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec6610b4{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(190, 190, 190, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec6610bc{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec6610bd{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-ec6610c6{width:0.75in;background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(190, 190, 190, 1.00);border-top: 1pt solid rgba(190, 190, 190, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(190, 190, 190, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-ec6a8ade">
 <thead>
 <tr style="overflow-wrap:break-word;">
-<th rowspan="3" class="cl-15da354e"><p class="cl-15da1cf8"><span class="cl-15d75248">cohort_name</span></p></th>
-<th rowspan="3" class="cl-15da354e"><p class="cl-15da1cf8"><span class="cl-15d75248">variable_name</span></p></th>
-<th rowspan="3" class="cl-15da354e"><p class="cl-15da1cf8"><span class="cl-15d75248">variable_level</span></p></th>
-<th rowspan="3" class="cl-15da354e"><p class="cl-15da1cf8"><span class="cl-15d75248">estimate_name</span></p></th>
-<th colspan="9" class="cl-15da354f"><p class="cl-15da1cf8"><span class="cl-15d75248">Stratifications</span></p></th>
+<th rowspan="3" class="cl-ec661094"><p class="cl-ec65f834"><span class="cl-ec632708">cohort_name</span></p></th>
+<th rowspan="3" class="cl-ec661094"><p class="cl-ec65f834"><span class="cl-ec632708">variable_name</span></p></th>
+<th rowspan="3" class="cl-ec661094"><p class="cl-ec65f834"><span class="cl-ec632708">variable_level</span></p></th>
+<th rowspan="3" class="cl-ec661094"><p class="cl-ec65f834"><span class="cl-ec632708">estimate_name</span></p></th>
+<th colspan="9" class="cl-ec66109e"><p class="cl-ec65f834"><span class="cl-ec632708">Stratifications</span></p></th>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">overall</span></p></th>
-<th colspan="4" class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">age_group and sex</span></p></th>
-<th colspan="2" class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">sex</span></p></th>
-<th colspan="2" class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">age_group</span></p></th>
+<th class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">overall</span></p></th>
+<th colspan="4" class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">age_group and sex</span></p></th>
+<th colspan="2" class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">sex</span></p></th>
+<th colspan="2" class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">age_group</span></p></th>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">overall</span></p></th>
-<th class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">&lt;40 and Male</span></p></th>
-<th class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">&gt;=40 and Male</span></p></th>
-<th class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">&lt;40 and Female</span></p></th>
-<th class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">&gt;=40 and Female</span></p></th>
-<th class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">Male</span></p></th>
-<th class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">Female</span></p></th>
-<th class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">&lt;40</span></p></th>
-<th class="cl-15da3558"><p class="cl-15da1cf8"><span class="cl-15d75248">&gt;=40</span></p></th>
+<th class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">overall</span></p></th>
+<th class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">&lt;40 and Male</span></p></th>
+<th class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">&gt;=40 and Male</span></p></th>
+<th class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">&lt;40 and Female</span></p></th>
+<th class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">&gt;=40 and Female</span></p></th>
+<th class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">Male</span></p></th>
+<th class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">Female</span></p></th>
+<th class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">&lt;40</span></p></th>
+<th class="cl-ec66109f"><p class="cl-ec65f834"><span class="cl-ec632708">&gt;=40</span></p></th>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-15da3559"><p class="cl-15da1d02"><span class="cl-15d75252">cohort1</span></p></td>
-<td colspan="12" class="cl-15da3559"><p class="cl-15da1d02"><span class="cl-15d75252"></span></p></td>
+<td class="cl-ec6610a0"><p class="cl-ec65f848"><span class="cl-ec632712">cohort1</span></p></td>
+<td colspan="12" class="cl-ec6610a0"><p class="cl-ec65f848"><span class="cl-ec632712"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-15da3562"><p class="cl-15da1d02"><span class="cl-15d7525c"></span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">number subjects</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">-</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">N</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">807,501</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">8,343,330</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">6,007,609</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">1,572,084</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">73,994</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">4,663,935</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">4,977,774</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">2,897,672</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">7,328,820</span></p></td>
+<td class="cl-ec6610a9"><p class="cl-ec65f848"><span class="cl-ec63271c"></span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">number subjects</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">-</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">N</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">807,501</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">8,343,330</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">6,007,609</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">1,572,084</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">73,994</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">4,663,935</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">4,977,774</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">2,897,672</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">7,328,820</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-15da3562"><p class="cl-15da1d02"><span class="cl-15d7525c"></span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">age</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">-</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">Mean (SD)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">38.87 (7.06)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">97.55 (9.49)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">28.99 (1.80)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">67.84 (2.17)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">73.53 (6.80)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">19.60 (4.99)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">98.05 (6.42)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">74.15 (6.60)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">5.14 (0.96)</span></p></td>
+<td class="cl-ec6610a9"><p class="cl-ec65f848"><span class="cl-ec63271c"></span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">age</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">-</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">Mean (SD)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">38.87 (7.06)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">97.55 (9.49)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">28.99 (1.80)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">67.84 (2.17)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">73.53 (6.80)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">19.60 (4.99)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">98.05 (6.42)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">74.15 (6.60)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">5.14 (0.96)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-15da3562"><p class="cl-15da1d02"><span class="cl-15d7525c"></span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">Medications</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">Amoxiciline</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">N (%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">49,364 (2.8%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">77,931 (46.6%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">20,418 (39.0%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">71,340 (2.0%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">6,522 (37.7%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">35,421 (56.0%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">82,520 (85.7%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">27,382 (38.5%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">57,004 (52.8%)</span></p></td>
+<td class="cl-ec6610a9"><p class="cl-ec65f848"><span class="cl-ec63271c"></span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">Medications</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">Amoxiciline</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">N (%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">49,364 (2.8%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">77,931 (46.6%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">20,418 (39.0%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">71,340 (2.0%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">6,522 (37.7%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">35,421 (56.0%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">82,520 (85.7%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">27,382 (38.5%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">57,004 (52.8%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-15da3562"><p class="cl-15da1d02"><span class="cl-15d7525c"></span></p></td>
-<td class="cl-15da356d"><p class="cl-15da1d02"><span class="cl-15d7525c"></span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">Ibuprofen</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">N (%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">99,707 (51.2%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">14,904 (83.6%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">51,856 (70.9%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">84,612 (87.4%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">71,827 (1.1%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">24,131 (88.8%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">54,704 (99.6%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">83,480 (50.0%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">2,796 (35.9%)</span></p></td>
+<td class="cl-ec6610a9"><p class="cl-ec65f848"><span class="cl-ec63271c"></span></p></td>
+<td class="cl-ec6610b3"><p class="cl-ec65f848"><span class="cl-ec63271c"></span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">Ibuprofen</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">N (%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">99,707 (51.2%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">14,904 (83.6%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">51,856 (70.9%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">84,612 (87.4%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">71,827 (1.1%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">24,131 (88.8%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">54,704 (99.6%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">83,480 (50.0%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">2,796 (35.9%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-15da3559"><p class="cl-15da1d02"><span class="cl-15d75252">cohort2</span></p></td>
-<td colspan="12" class="cl-15da3559"><p class="cl-15da1d02"><span class="cl-15d75252"></span></p></td>
+<td class="cl-ec6610a0"><p class="cl-ec65f848"><span class="cl-ec632712">cohort2</span></p></td>
+<td colspan="12" class="cl-ec6610a0"><p class="cl-ec65f848"><span class="cl-ec632712"></span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-15da3562"><p class="cl-15da1d02"><span class="cl-15d7525c"></span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">number subjects</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">-</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">N</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">7,725,215</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">8,746,007</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">1,749,406</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">342,413</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">3,203,857</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">4,023,282</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">1,956,698</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">4,035,381</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">636,615</span></p></td>
+<td class="cl-ec6610a9"><p class="cl-ec65f848"><span class="cl-ec63271c"></span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">number subjects</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">-</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">N</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">7,725,215</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">8,746,007</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">1,749,406</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">342,413</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">3,203,857</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">4,023,282</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">1,956,698</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">4,035,381</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">636,615</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-15da3562"><p class="cl-15da1d02"><span class="cl-15d7525c"></span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">age</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">-</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">Mean (SD)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">53.02 (7.66)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">69.58 (7.70)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">68.86 (9.91)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">3.12 (9.71)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">22.56 (3.89)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">30.08 (4.61)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">63.65 (3.15)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">47.90 (1.75)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">43.22 (5.32)</span></p></td>
+<td class="cl-ec6610a9"><p class="cl-ec65f848"><span class="cl-ec63271c"></span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">age</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">-</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">Mean (SD)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">53.02 (7.66)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">69.58 (7.70)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">68.86 (9.91)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">3.12 (9.71)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">22.56 (3.89)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">30.08 (4.61)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">63.65 (3.15)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">47.90 (1.75)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">43.22 (5.32)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-15da3562"><p class="cl-15da1d02"><span class="cl-15d7525c"></span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">Medications</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">Amoxiciline</span></p></td>
-<td class="cl-15da3563"><p class="cl-15da1d02"><span class="cl-15d7525c">N (%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">33,572 (60.1%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">59,626 (26.1%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">19,152 (29.0%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">94,776 (48.0%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">54,248 (92.0%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">54,460 (40.1%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">27,860 (21.3%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">44,670 (67.2%)</span></p></td>
-<td class="cl-15da356c"><p class="cl-15da1d0c"><span class="cl-15d7525c">37,151 (5.9%)</span></p></td>
+<td class="cl-ec6610a9"><p class="cl-ec65f848"><span class="cl-ec63271c"></span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">Medications</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">Amoxiciline</span></p></td>
+<td class="cl-ec6610aa"><p class="cl-ec65f848"><span class="cl-ec63271c">N (%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">33,572 (60.1%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">59,626 (26.1%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">19,152 (29.0%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">94,776 (48.0%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">54,248 (92.0%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">54,460 (40.1%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">27,860 (21.3%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">44,670 (67.2%)</span></p></td>
+<td class="cl-ec6610b2"><p class="cl-ec65f849"><span class="cl-ec63271c">37,151 (5.9%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-15da356e"><p class="cl-15da1d02"><span class="cl-15d7525c"></span></p></td>
-<td class="cl-15da3576"><p class="cl-15da1d02"><span class="cl-15d7525c"></span></p></td>
-<td class="cl-15da3577"><p class="cl-15da1d02"><span class="cl-15d7525c">Ibuprofen</span></p></td>
-<td class="cl-15da3577"><p class="cl-15da1d02"><span class="cl-15d7525c">N (%)</span></p></td>
-<td class="cl-15da3578"><p class="cl-15da1d0c"><span class="cl-15d7525c">46,938 (77.5%)</span></p></td>
-<td class="cl-15da3578"><p class="cl-15da1d0c"><span class="cl-15d7525c">80,568 (58.4%)</span></p></td>
-<td class="cl-15da3578"><p class="cl-15da1d0c"><span class="cl-15d7525c">81,405 (63.4%)</span></p></td>
-<td class="cl-15da3578"><p class="cl-15da1d0c"><span class="cl-15d7525c">40,391 (85.9%)</span></p></td>
-<td class="cl-15da3578"><p class="cl-15da1d0c"><span class="cl-15d7525c">21,843 (56.7%)</span></p></td>
-<td class="cl-15da3578"><p class="cl-15da1d0c"><span class="cl-15d7525c">41,836 (25.3%)</span></p></td>
-<td class="cl-15da3578"><p class="cl-15da1d0c"><span class="cl-15d7525c">66,887 (91.9%)</span></p></td>
-<td class="cl-15da3578"><p class="cl-15da1d0c"><span class="cl-15d7525c">50,765 (86.7%)</span></p></td>
-<td class="cl-15da3578"><p class="cl-15da1d0c"><span class="cl-15d7525c">66,036 (24.9%)</span></p></td>
+<td class="cl-ec6610b4"><p class="cl-ec65f848"><span class="cl-ec63271c"></span></p></td>
+<td class="cl-ec6610bc"><p class="cl-ec65f848"><span class="cl-ec63271c"></span></p></td>
+<td class="cl-ec6610bd"><p class="cl-ec65f848"><span class="cl-ec63271c">Ibuprofen</span></p></td>
+<td class="cl-ec6610bd"><p class="cl-ec65f848"><span class="cl-ec63271c">N (%)</span></p></td>
+<td class="cl-ec6610c6"><p class="cl-ec65f849"><span class="cl-ec63271c">46,938 (77.5%)</span></p></td>
+<td class="cl-ec6610c6"><p class="cl-ec65f849"><span class="cl-ec63271c">80,568 (58.4%)</span></p></td>
+<td class="cl-ec6610c6"><p class="cl-ec65f849"><span class="cl-ec63271c">81,405 (63.4%)</span></p></td>
+<td class="cl-ec6610c6"><p class="cl-ec65f849"><span class="cl-ec63271c">40,391 (85.9%)</span></p></td>
+<td class="cl-ec6610c6"><p class="cl-ec65f849"><span class="cl-ec63271c">21,843 (56.7%)</span></p></td>
+<td class="cl-ec6610c6"><p class="cl-ec65f849"><span class="cl-ec63271c">41,836 (25.3%)</span></p></td>
+<td class="cl-ec6610c6"><p class="cl-ec65f849"><span class="cl-ec63271c">66,887 (91.9%)</span></p></td>
+<td class="cl-ec6610c6"><p class="cl-ec65f849"><span class="cl-ec63271c">50,765 (86.7%)</span></p></td>
+<td class="cl-ec6610c6"><p class="cl-ec65f849"><span class="cl-ec63271c">66,036 (24.9%)</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -2777,7 +2777,7 @@ since it is the accepted by <em>flextable</em>.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="formattable-all-at-once">formatTable(): all at once<a class="anchor" aria-label="anchor" href="#formattable-all-at-once"></a>
+<h2 id="visomoptable-all-at-once">visOmopTable(): all at once<a class="anchor" aria-label="anchor" href="#visomoptable-all-at-once"></a>
 </h2>
 <p>This function wraps the tools seen so far to format a summarised
 result at once. While it is convinent to have it all in one function,
@@ -2794,7 +2794,7 @@ input header keys (e.g. “Stratifications” in the example below).</p>
 split (group, strata and/or additional). Refer to the vignette split and
 unite for further information on this functionality.</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mock_sr2</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/formatTable.html">formatTable</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">mock_sr2</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/visOmopTable.html">visOmopTable</a></span><span class="op">(</span></span>
 <span>  formatEstimateName <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N%"</span> <span class="op">=</span> <span class="st">"&lt;count&gt; (&lt;percentage&gt;)"</span>,</span>
 <span>                         <span class="st">"N"</span> <span class="op">=</span> <span class="st">"&lt;count&gt;"</span>,</span>
 <span>                         <span class="st">"Mean (SD)"</span> <span class="op">=</span> <span class="st">"&lt;mean&gt; (&lt;sd&gt;)"</span><span class="op">)</span>,</span>
@@ -3562,7 +3562,7 @@ unite for further information on this functionality.</p>
 table body. For instance, looking at the previous table, we might want
 to group by cohort name:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">mock_sr2</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/formatTable.html">formatTable</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="va">mock_sr2</span> <span class="op">|&gt;</span> <span class="fu"><a href="../reference/visOmopTable.html">visOmopTable</a></span><span class="op">(</span></span>
 <span>  formatEstimateName <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N%"</span> <span class="op">=</span> <span class="st">"&lt;count&gt; (&lt;percentage&gt;)"</span>,</span>
 <span>                         <span class="st">"N"</span> <span class="op">=</span> <span class="st">"&lt;count&gt;"</span>,</span>
 <span>                         <span class="st">"Mean (SD)"</span> <span class="op">=</span> <span class="st">"&lt;mean&gt; (&lt;sd&gt;)"</span><span class="op">)</span>,</span>
@@ -4325,9 +4325,9 @@ to group by cohort name:</p>
 <p>Additional options can be specified in the <code>.options</code>
 argument. These options are taken from the other format functions and
 gt/fx table functions seen before. To see a list of allowed arguments
-and their default values use <code><a href="../reference/optionsFormatTable.html">optionsFormatTable()</a></code>:</p>
+and their default values use <code><a href="../reference/optionsVisOmopTable.html">optionsVisOmopTable()</a></code>:</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/optionsFormatTable.html">optionsFormatTable</a></span><span class="op">(</span><span class="op">)</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/optionsVisOmopTable.html">optionsVisOmopTable</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; $decimals</span></span>
 <span><span class="co">#&gt;    integer percentage    numeric proportion </span></span>
 <span><span class="co">#&gt;          0          2          2          2 </span></span>

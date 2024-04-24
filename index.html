@@ -102,9 +102,9 @@
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://oxford-pharmacoepi.github.io/visOmopResults/">visOmopResults</a></span><span class="op">)</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mockSummarisedResult.html">mockSummarisedResult</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>We can use the function <code><a href="reference/formatTable.html">formatTable()</a></code> to get a nice <em>gt</em> table:</p>
+<p>We can use the function <code><a href="reference/visOmopTable.html">visOmopTable()</a></code> to get a nice <em>gt</em> table:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/formatTable.html">formatTable</a></span><span class="op">(</span></span>
+<code class="sourceCode R"><span><span class="fu"><a href="reference/visOmopTable.html">visOmopTable</a></span><span class="op">(</span></span>
 <span>  <span class="va">result</span>,</span>
 <span>  formatEstimateName <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N%"</span> <span class="op">=</span> <span class="st">"&lt;count&gt; (&lt;percentage&gt;)"</span>,</span>
 <span>                         <span class="st">"N"</span> <span class="op">=</span> <span class="st">"&lt;count&gt;"</span>,</span>
@@ -112,13 +112,13 @@
 <span>  header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Stratifications"</span>, <span class="st">"strata"</span><span class="op">)</span>,</span>
 <span>  split <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>,<span class="st">"additional"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="./reference/figures/formatTable.png"></p>
+<p><img src="./reference/figures/visOmopTable.png"></p>
 <p>In the code snipped showed, we specified how to group and display the estimates with <code>formatEstimateName</code>. Also, we created a header based on the stratifications with <code>header</code>, and we split the name-level paired columns group and additional (refer to the “split and unite functions” vignette for more information on splitting).</p>
 </div>
 <div class="section level2">
 <h2 id="custom-formatting---example-usage">Custom formatting - Example usage<a class="anchor" aria-label="anchor" href="#custom-formatting---example-usage"></a>
 </h2>
-<p>The function <code><a href="reference/formatTable.html">formatTable()</a></code> is wrapped around other functions of the package. These can be implemented in a pipeline for additional customisation of the summarised_result.</p>
+<p>The function <code><a href="reference/visOmopTable.html">visOmopTable()</a></code> is wrapped around other functions of the package. These can be implemented in a pipeline for additional customisation of the summarised_result.</p>
 <div class="section level3">
 <h3 id="id_1-formatestimatevalue">1. formatEstimateValue()<a class="anchor" aria-label="anchor" href="#id_1-formatestimatevalue"></a>
 </h3>
@@ -132,12 +132,9 @@
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 126</span></span>
-<span><span class="co">#&gt; Columns: 16</span></span>
+<span><span class="co">#&gt; Columns: 13</span></span>
 <span><span class="co">#&gt; $ result_id        &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
 <span><span class="co">#&gt; $ cdm_name         &lt;chr&gt; "mock", "mock", "mock", "mock", "mock", "mock", "mock…</span></span>
-<span><span class="co">#&gt; $ result_type      &lt;chr&gt; "mock_summarised_result", "mock_summarised_result", "…</span></span>
-<span><span class="co">#&gt; $ package_name     &lt;chr&gt; "visOmopResults", "visOmopResults", "visOmopResults",…</span></span>
-<span><span class="co">#&gt; $ package_version  &lt;chr&gt; "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0",…</span></span>
 <span><span class="co">#&gt; $ group_name       &lt;chr&gt; "cohort_name", "cohort_name", "cohort_name", "cohort_…</span></span>
 <span><span class="co">#&gt; $ group_level      &lt;chr&gt; "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…</span></span>
 <span><span class="co">#&gt; $ strata_name      &lt;chr&gt; "overall", "age_group &amp;&amp;&amp; sex", "age_group &amp;&amp;&amp; sex", …</span></span>
@@ -146,7 +143,7 @@
 <span><span class="co">#&gt; $ variable_level   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    &lt;chr&gt; "count", "count", "count", "count", "count", "count",…</span></span>
 <span><span class="co">#&gt; $ estimate_type    &lt;chr&gt; "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   &lt;chr&gt; "3,644,052", "5,067,956", "9,529,116", "3,510,896", "…</span></span>
+<span><span class="co">#&gt; $ estimate_value   &lt;chr&gt; "7,265,174", "3,330,419", "3,924,049", "7,783,868", "…</span></span>
 <span><span class="co">#&gt; $ additional_name  &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 </div>
@@ -163,12 +160,9 @@
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 72</span></span>
-<span><span class="co">#&gt; Columns: 16</span></span>
+<span><span class="co">#&gt; Columns: 13</span></span>
 <span><span class="co">#&gt; $ result_id        &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
 <span><span class="co">#&gt; $ cdm_name         &lt;chr&gt; "mock", "mock", "mock", "mock", "mock", "mock", "mock…</span></span>
-<span><span class="co">#&gt; $ result_type      &lt;chr&gt; "mock_summarised_result", "mock_summarised_result", "…</span></span>
-<span><span class="co">#&gt; $ package_name     &lt;chr&gt; "visOmopResults", "visOmopResults", "visOmopResults",…</span></span>
-<span><span class="co">#&gt; $ package_version  &lt;chr&gt; "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0",…</span></span>
 <span><span class="co">#&gt; $ group_name       &lt;chr&gt; "cohort_name", "cohort_name", "cohort_name", "cohort_…</span></span>
 <span><span class="co">#&gt; $ group_level      &lt;chr&gt; "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…</span></span>
 <span><span class="co">#&gt; $ strata_name      &lt;chr&gt; "overall", "age_group &amp;&amp;&amp; sex", "age_group &amp;&amp;&amp; sex", …</span></span>
@@ -177,7 +171,7 @@
 <span><span class="co">#&gt; $ variable_level   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
 <span><span class="co">#&gt; $ estimate_name    &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N"…</span></span>
 <span><span class="co">#&gt; $ estimate_type    &lt;chr&gt; "character", "character", "character", "character", "…</span></span>
-<span><span class="co">#&gt; $ estimate_value   &lt;chr&gt; "3,644,052", "5,067,956", "9,529,116", "3,510,896", "…</span></span>
+<span><span class="co">#&gt; $ estimate_value   &lt;chr&gt; "7,265,174", "3,330,419", "3,924,049", "7,783,868", "…</span></span>
 <span><span class="co">#&gt; $ additional_name  &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span>
 <span><span class="co">#&gt; $ additional_level &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
 </div>
@@ -194,12 +188,9 @@
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 8</span></span>
-<span><span class="co">#&gt; Columns: 22</span></span>
+<span><span class="co">#&gt; Columns: 19</span></span>
 <span><span class="co">#&gt; $ result_id                                                                              &lt;int&gt; …</span></span>
 <span><span class="co">#&gt; $ cdm_name                                                                               &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ result_type                                                                            &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ package_name                                                                           &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ package_version                                                                        &lt;chr&gt; …</span></span>
 <span><span class="co">#&gt; $ group_name                                                                             &lt;chr&gt; …</span></span>
 <span><span class="co">#&gt; $ group_level                                                                            &lt;chr&gt; …</span></span>
 <span><span class="co">#&gt; $ variable_name                                                                          &lt;chr&gt; …</span></span>
@@ -240,7 +231,7 @@
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">gtResult</span> </span></code></pre></div>
 <p><img src="./reference/figures/gtTable.png"></p>
-<p>It is important to notice that <code>formatTable</code> has additional arguments to customise the output table in a similar manner as in the pipeline. See the vignette “format functions”.</p>
+<p>It is important to notice that <code>visOmopTable</code> has additional arguments to customise the output table in a similar manner as in the pipeline. See the vignette “format functions”.</p>
 </div>
 </div>
 </div>
