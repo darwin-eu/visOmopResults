@@ -1,17 +1,17 @@
-test_that("formatTable", {
+test_that("visOmopTable", {
   result <- mockSummarisedResult()
 
   expect_no_error(
-    gt1 <- formatTable(
-    result = result,
-    formatEstimateName = character(),
-    header = character(),
-    groupColumn = NULL,
-    split = c("group", "strata", "additional"),
-    type = "gt",
-    minCellCount = 5,
-    excludeColumns = c("result_id", "estimate_type"),
-    .options = list())
+    gt1 <- visOmopTable(
+      result = result,
+      formatEstimateName = character(),
+      header = character(),
+      groupColumn = NULL,
+      split = c("group", "strata", "additional"),
+      type = "gt",
+      minCellCount = 5,
+      excludeColumns = c("result_id", "estimate_type"),
+      .options = list())
   )
 
   expect_true("gt_tbl" %in% class(gt1))
@@ -19,7 +19,7 @@ test_that("formatTable", {
                     colnames(gt1$`_data`)))
 
   expect_no_error(
-    gt2 <- formatTable(
+    gt2 <- visOmopTable(
       result = result,
       formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>"),
       header = c("strata"),
@@ -43,7 +43,7 @@ test_that("formatTable", {
   expect_true(nrow(gt2$`_data`) == 10)
 
   expect_no_error(
-    fx1 <- formatTable(
+    fx1 <- visOmopTable(
       result = result,
       formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
       header = c("group", "estimate"),
@@ -63,7 +63,7 @@ test_that("formatTable", {
 
 
   expect_no_error(
-    fx2 <- formatTable(
+    fx2 <- visOmopTable(
       result = result,
       formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
       header = c("variable", "estimate"),
@@ -82,7 +82,7 @@ test_that("formatTable", {
   expect_true(nrow(fx2$body$dataset) == 18)
 
   expect_no_error(
-    fx3 <- formatTable(
+    fx3 <- visOmopTable(
       result = result,
       formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
       header = c("strata", "estimate"),
@@ -108,7 +108,7 @@ test_that("formatTable", {
 
   # settings ----
   expect_no_error(
-    formatTable(
+    visOmopTable(
       result = result,
       formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
       header = c("group", "settings"),
@@ -122,7 +122,7 @@ test_that("formatTable", {
 
   result <- mockSummarisedResult()
   expect_no_error(
-    tib1 <- formatTable(
+    tib1 <- visOmopTable(
       result = result,
       formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
       header = c("group", "settings"),
@@ -142,7 +142,7 @@ test_that("formatTable", {
 
   # woring group column
   expect_error(
-    formatTable(
+    visOmopTable(
       result = result,
       formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
       header = c("group", "settings"),
@@ -158,7 +158,7 @@ test_that("formatTable", {
 test_that("renameColumn works", {
   result <- mockSummarisedResult()
   expect_no_error(
-    gt1 <- formatTable(
+    gt1 <- visOmopTable(
       result = result,
       formatEstimateName = character(),
       header = character(),
@@ -177,7 +177,7 @@ test_that("renameColumn works", {
   ))
 
   expect_no_error(
-    gt2 <- formatTable(
+    gt2 <- visOmopTable(
       result = result,
       formatEstimateName = character(),
       header = c("cdm_name", "strata"),
@@ -193,7 +193,7 @@ test_that("renameColumn works", {
   expect_true(all(colnames(gt2$`_data`)[5] == "[header]Database name\n[header_level]mock\n[header]Age group\n[header_level]Overall\n[header]Sex\n[header_level]Overall"))
 
   expect_warning(
-    fx1 <- formatTable(
+    fx1 <- visOmopTable(
       result = result,
       formatEstimateName = character(),
       header = c("cdm_name", "strata"),
@@ -207,7 +207,7 @@ test_that("renameColumn works", {
   )
 
   # more than 1 group column
-  fx2 <- formatTable(
+  fx2 <- visOmopTable(
     result = result,
     formatEstimateName = character(),
     header = c("strata"),
@@ -221,7 +221,7 @@ test_that("renameColumn works", {
   expect_true(colnames(fx2$body$dataset)[1] == "cdm_name_cohort_name")
 
   # more than 1 group column
-  fx3 <- formatTable(
+  fx3 <- visOmopTable(
     result = result,
     formatEstimateName = character(),
     header = c("strata"),

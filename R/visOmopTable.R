@@ -20,7 +20,7 @@
 #' @param minCellCount Counts below which results will be clouded.
 #' @param excludeColumns Columns to drop from the output table.
 #' @param .options Named list with additional formatting options.
-#' visOmopResults::optionsFormatTable() shows allowed arguments and
+#' visOmopResults::optionsVisOmopTable() shows allowed arguments and
 #' their default values.
 #'
 #' @return A tibble, gt, or flextable object.
@@ -29,7 +29,7 @@
 #' @export
 #'
 #' @examples
-#' mockSummarisedResult() |> formatTable(
+#' mockSummarisedResult() |> visOmopTable(
 #'   formatEstimateName = c("N%" = "<count> (<percentage>)",
 #'                          "N" = "<count>",
 #'                          "Mean (SD)" = "<mean> (<sd>)"),
@@ -37,7 +37,7 @@
 #'   split = c("group","strata",  "additional")
 #' )
 #'
-formatTable <- function(result,
+visOmopTable <- function(result,
                         formatEstimateName,
                         header,
                         split,
@@ -301,7 +301,7 @@ formatTable <- function(result,
     # > 1 group
     if (length(newGroupcolumn) > 1) {
       x <- x |>
-        tidyr::unite(!!nameGroup, newGroupcolumn, sep = "; ")
+        tidyr::unite(!!nameGroup, dplyr::all_of(newGroupcolumn), sep = "; ")
       newGroupcolumn <- nameGroup
     }
   } else {
@@ -373,11 +373,11 @@ defaultTableOptions <- function(userOptions) {
   return(defaultOpts)
 }
 
-#' Additional arguments for the function formatTable
+#' Additional arguments for the function visOmopTable
 #'
 #' @description
 #' It provides a list of allowed inputs for .option argument in
-#' formatTable and their given default value.
+#' visOmopTable and their given default value.
 #'
 #'
 #' @return The default .options named list.
@@ -386,10 +386,82 @@ defaultTableOptions <- function(userOptions) {
 #'
 #' @examples
 #' {
-#' optionsFormatTable()
+#' optionsVisOmopTable()
 #' }
 #'
 #'
-optionsFormatTable <- function() {
+optionsVisOmopTable <- function() {
   return(defaultTableOptions(NULL))
+}
+
+
+#' Format a summarised_result object into a gt, flextable or tibble object
+#'
+#' `r lifecycle::badge("deprecated")`
+#'
+#' @param result A summarised_result.
+#' @param formatEstimateName Named list of estimate name's to join, sorted by
+#' computation order. Indicate estimate_name's between <...>.
+#' @param header A vector containing which elements should go into the header
+#' in order (`cdm_name`, `group`, `strata`, `additional`,
+#' `variable`, `estimate`, and `settings`).
+#' @param groupColumn Columns to use as group labels. By default the name of the
+#' new group will be the column names separated by "_". To specify a new
+#' grouping name enter a named list such as:
+#' list(`newGroupName` = c("variable_name", "variable_level"))
+#' @param split A vector containing the name-level groups to split ("group",
+#' "strata", "additional"), or an empty character vector to not split.
+#' @param type Type of desired formatted table, possibilities: "gt",
+#' "flextable", "tibble".
+#' @param renameColumns Named vector to customisa column names, for instance:
+#' c("Database name" = "cdm_name")). By default column names are transformed to
+#' sentence case.
+#' @param minCellCount Counts below which results will be clouded.
+#' @param excludeColumns Columns to drop from the output table.
+#' @param .options Named list with additional formatting options.
+#' visOmopResults::optionsVisOmopTable() shows allowed arguments and
+#' their default values.
+#'
+#' @return A tibble, gt, or flextable object.
+#'
+#'
+#' @export
+#'
+#' @examples
+#' mockSummarisedResult() |> formatTable(
+#'   formatEstimateName = c("N%" = "<count> (<percentage>)",
+#'                          "N" = "<count>",
+#'                          "Mean (SD)" = "<mean> (<sd>)"),
+#'   header = c("group"),
+#'   split = c("group","strata",  "additional")
+#' )
+#'
+formatTable <- function(result,
+                         formatEstimateName,
+                         header,
+                         split,
+                         groupColumn = NULL,
+                         type = "gt",
+                         renameColumns = NULL,
+                         minCellCount = 5,
+                         excludeColumns = c("result_id", "estimate_type"),
+                         .options = list()) {
+
+  lifecycle::deprecate_soft(
+    when = "0.3.0",
+    what = "formatTable()",
+    with = "visOmopTable()"
+  )
+
+  visOmopTable(result = result,
+               formatEstimateName = formatEstimateName,
+               header = header,
+               split = split,
+               groupColumn = groupColumn,
+               type = type,
+               renameColumns = renameColumns,
+               minCellCount = minCellCount,
+               excludeColumns = excludeColumns,
+               .options = .options
+  )
 }
