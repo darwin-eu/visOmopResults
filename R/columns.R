@@ -57,11 +57,11 @@ getColumns <- function(result, col) {
 
   # extract columns
   x <- result |>
-      dplyr::pull(dplyr::all_of(col)) |>
-      unique() |>
-      lapply(strsplit, split = " &&& ") |>
-      unlist() |>
-      unique()
+    dplyr::pull(dplyr::all_of(col)) |>
+    unique() |>
+    lapply(strsplit, split = " &&& ") |>
+    unlist() |>
+    unique()
 
   # eliminate overall
   x <- x[x != "overall"]

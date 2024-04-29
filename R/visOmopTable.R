@@ -178,6 +178,10 @@ visOmopTable <- function(result,
   colsVariable <- character()
   if ("variable" %in% header) {
     colsVariable = c("variable_name", "variable_level")
+    if (all(is.na(x$variable_level))) {
+      colsVariable <- c("variable_name")
+      excludeColumns <- c(excludeColumns, "variable_level")
+    }
     x <- x |>
       dplyr::mutate(dplyr::across(dplyr::starts_with("variable"), ~ dplyr::if_else(is.na(.x), .options$na, .x)))
   }
