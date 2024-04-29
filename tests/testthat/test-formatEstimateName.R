@@ -5,7 +5,7 @@ test_that("formatEstimateName", {
   # input 1 ----
   result_output <-  formatEstimateName(result,
                                        estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
-                                                  "N" = "<count>"),
+                                                              "N" = "<count>"),
                                        keepNotFormatted = TRUE)
   # check count as "N"
   expect_identical(unique(result_output$estimate_name[result_output$variable_name == "number subjects"]),
@@ -34,11 +34,14 @@ test_that("formatEstimateName", {
                      " (",
                      estimates_in$estimate_value[estimates_in$variable_name == "Medications" &  estimates_in$estimate_name == "percentage"],
                      "%)"))
+  # attributes mantained:
+  expect_true(nrow(omopgenerics::settings(result_output)) == 1)
+  expect_true(inherits(result_output, "summarised_result"))
 
   # input 2 ----
   result_output <-  formatEstimateName(result,
                                        estimateNameFormat = c("<mean> (<sd>)",
-                                                  "N%" = "<count> (<percentage> %)"),
+                                                              "N%" = "<count> (<percentage> %)"),
                                        keepNotFormatted = FALSE)
   # Check not keep formatted
   expect_true(result_output |>
@@ -130,9 +133,9 @@ test_that("formatEstimateName", {
                                     keepNotFormatted = TRUE),
                  "has not been formatted.")
   expect_message(formatEstimateName(result,
-                     estimateNameFormat = c("N" = "count",
-                                            "N (%)" = "<count> (<percentage>%)"),
-                     keepNotFormatted = FALSE),
+                                    estimateNameFormat = c("N" = "count",
+                                                           "N (%)" = "<count> (<percentage>%)"),
+                                    keepNotFormatted = FALSE),
                  "does not contain an estimate name indicated by <...>")
   expect_error(formatEstimateName(result,
                                   estimateNameFormat = NA,
@@ -260,11 +263,11 @@ test_that("formatEstimateName, useFormatOrder", {
                                        useFormatOrder = TRUE)
 
   expect_false(any(which(result_output$estimate_name %in% "range") <
-                    which(result_output$estimate_name %in% "mean")))
+                     which(result_output$estimate_name %in% "mean")))
   expect_false(any(which(result_output$estimate_name %in% "number subjets") <
-                    which(result_output$estimate_name %in% "mean")))
+                     which(result_output$estimate_name %in% "mean")))
   expect_false(any(which(result_output$estimate_name %in% "number subjets") <
-                    which(result_output$estimate_name %in% "range")))
+                     which(result_output$estimate_name %in% "range")))
 
 })
 
@@ -284,4 +287,20 @@ test_that("empty format",{
     useFormatOrder = TRUE)
   )
   expect_identical(res1, result)
+})
+
+
+test_that("not a summarised result",{
+  result <- dplyr::tibble(
+    variable = "variable",
+    estimate_type = c("integer", "numeric"),
+    estimate_name = c("count", "percentage"),
+    estimate_value = c("100", "50.1")
+  )
+  res0 <- formatEstimateName(
+    result,
+    estimateNameFormat = c("N (%)" = "<count> (<percentage>%)")
+  )
+  expect_true(nrow(res0) == 1)
+  expect_equal(class(result), class(res0))
 })

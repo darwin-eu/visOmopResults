@@ -70,15 +70,12 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
   ]
 
   # start formatting
-  isSummarisedResult <- inherits(result, "summarised_result")
-  if (isSummarisedResult) {
-    settings <- omopgenerics::settings(result)
-  }
+  settings <- attr(result, "settings")
+  classes <- class(result)
+
   result <- result |>
     dplyr::mutate("formatted" = FALSE, "id" = dplyr::row_number()) |>
-    dplyr::group_by(dplyr::across(dplyr::all_of(cols))) |>
-    dplyr::mutate(group_id = min(.data$id)) |>
-    dplyr::ungroup()
+    dplyr::mutate(group_id = min(.data$id), .by = dplyr::all_of(cols))
 
   resultF <- NULL
   for (k in seq_along(format)) {
@@ -93,11 +90,9 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
       res <- result |>
         dplyr::filter(!.data$formatted) |>
         dplyr::filter(.data$estimate_name %in% .env$keysK) |>
-        dplyr::group_by(dplyr::across(dplyr::all_of(cols))) |>
-        dplyr::filter(dplyr::n() == .env$len) |>
-          dplyr::mutate("id" = min(.data$id))
+        dplyr::filter(dplyr::n() == .env$len, .by = dplyr::all_of(cols)) |>
+        dplyr::mutate("id" = min(.data$id), .by = dplyr::all_of(cols))
       resF <- res |>
-        dplyr::ungroup() |>
         dplyr::select(-"estimate_type") |>
         tidyr::pivot_wider(
           names_from = "estimate_name", values_from = "estimate_value"
@@ -126,14 +121,15 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
   #useFormatOrder
   if (useFormatOrder) {
     new_order <- dplyr::tibble(estimate_name = nms, format_id = 1:length(nms)) |>
-      dplyr::union_all(result |>
-                         dplyr::select("estimate_name") |>
-                         dplyr::distinct() |>
-                         dplyr::filter(!.data$estimate_name %in% nms) |>
-                         dplyr::mutate(format_id = length(format) + dplyr::row_number()))
+      dplyr::union_all(
+        result |>
+          dplyr::select("estimate_name") |>
+          dplyr::distinct() |>
+          dplyr::filter(!.data$estimate_name %in% nms) |>
+          dplyr::mutate(format_id = length(format) + dplyr::row_number())
+      )
     result <- result |>
-      dplyr::left_join(new_order,
-                       by = "estimate_name")
+      dplyr::left_join(new_order, by = "estimate_name")
     result <- result[order(result$group_id, result$format_id, decreasing = FALSE),] |>
       dplyr::select(-c("id", "group_id", "format_id"))
   } else {
@@ -145,13 +141,9 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
   if (!keepNotFormatted) {
     result <- result |> dplyr::filter(.data$formatted)
   }
-  # result
-  result <- result |>
-    dplyr::select(-"formatted")
-  if (isSummarisedResult) {
-    result <- result |>
-      omopgenerics::newSummarisedResult(settings = settings)
-  }
+
+  result <- result |> dplyr::select(-"formatted")
+
   return(result)
 }
 getFormatNum <- function(format, keys) {
