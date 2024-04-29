@@ -5,13 +5,13 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/oxford-pharmacoepi/visOmopResults/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/oxford-pharmacoepi/visOmopResults/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/darwin-eu/visOmopResults/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/darwin-eu/visOmopResults/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/visOmopResults)](https://CRAN.R-project.org/package=visOmopResults)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Codecov test
-coverage](https://codecov.io/gh/oxford-pharmacoepi/visOmopResults/branch/main/graph/badge.svg)](https://app.codecov.io/gh/oxford-pharmacoepi/visOmopResults?branch=main)
+coverage](https://codecov.io/gh/darwin-eu/visOmopResults/branch/main/graph/badge.svg)](https://app.codecov.io/gh/darwin-eu/visOmopResults?branch=main)
 <!-- badges: end -->
 
 ## Package overview
@@ -32,11 +32,11 @@ install.packages("visOmopResults")
 ```
 
 Or you can install the development version from
-[GitHub](https://github.com/oxford-pharmacoepi/visOmopResults) with:
+[GitHub](https://github.com/darwin-eu/visOmopResults) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("oxford-pharmacoepi/visOmopResults")
+devtools::install_github("darwin-eu/visOmopResults")
 ```
 
 ## Example usage
@@ -107,7 +107,7 @@ result |> dplyr::glimpse()
 #> $ variable_level   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 #> $ estimate_name    <chr> "count", "count", "count", "count", "count", "count",…
 #> $ estimate_type    <chr> "integer", "integer", "integer", "integer", "integer"…
-#> $ estimate_value   <chr> "7,265,174", "3,330,419", "3,924,049", "7,783,868", "…
+#> $ estimate_value   <chr> "3,323,787", "724,289", "4,448,757", "1,275,339", "2,…
 #> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
 ```
@@ -142,7 +142,7 @@ result |> dplyr::glimpse()
 #> $ variable_level   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 #> $ estimate_name    <chr> "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N"…
 #> $ estimate_type    <chr> "character", "character", "character", "character", "…
-#> $ estimate_value   <chr> "7,265,174", "3,330,419", "3,924,049", "7,783,868", "…
+#> $ estimate_value   <chr> "3,323,787", "724,289", "4,448,757", "1,275,339", "2,…
 #> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
 ```
