@@ -12,8 +12,10 @@ gtTable(
   title = NULL,
   subtitle = NULL,
   caption = NULL,
-  groupNameCol = NULL,
-  groupNameAsColumn = FALSE,
+  groupColumn = NULL,
+  groupNameCol = lifecycle::deprecated(),
+  groupAsColumn = FALSE,
+  groupNameAsColumn = lifecycle::deprecated(),
   groupOrder = NULL,
   colsToMergeRows = NULL
 )
@@ -38,10 +40,16 @@ header_level, column_name, group_label, and body. Alternatively, use
 markdown formatting style (e.g. \verb{*Your caption here*} for caption in
 italics).}
 
-\item{groupNameCol}{Column to use as group labels.}
+\item{groupColumn}{Column to use as group labels.}
 
-\item{groupNameAsColumn}{Whether to display the group labels as a column
+\item{groupNameCol}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This argument was
+renamed to "groupColumn" for consistency throughout the package functions.}
+
+\item{groupAsColumn}{Whether to display the group labels as a column
 (TRUE) or rows (FALSE).}
+
+\item{groupNameAsColumn}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This argument was
+renamed to "groupAsColumn" for consistency with the argument "groupColumn".}
 
 \item{groupOrder}{Order in which to display group labels.}
 
@@ -78,8 +86,8 @@ mockSummarisedResult() |>
     title = "gtTable example",
     subtitle = NULL,
     caption = NULL,
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
   )

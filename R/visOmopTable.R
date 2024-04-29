@@ -17,7 +17,12 @@
 #' @param renameColumns Named vector to customisa column names, for instance:
 #' c("Database name" = "cdm_name")). By default column names are transformed to
 #' sentence case.
-#' @param minCellCount Counts below which results will be clouded.
+#' @param showMinCellCount If TRUE, suppressed estimates will be indicated with
+#' "<{minCellCount}", otherwise the default na defined in `.options` will
+#' be used.
+#' @param minCellCount `r lifecycle::badge("deprecated")` Suppression of
+#' estimates when counts < minCellCount should be done before with
+#' `ompogenerics::suppress()`.
 #' @param excludeColumns Columns to drop from the output table.
 #' @param .options Named list with additional formatting options.
 #' visOmopResults::optionsVisOmopTable() shows allowed arguments and
@@ -29,7 +34,8 @@
 #' @export
 #'
 #' @examples
-#' mockSummarisedResult() |> visOmopTable(
+#' mockSummarisedResult() |>
+#' visOmopTable(
 #'   formatEstimateName = c("N%" = "<count> (<percentage>)",
 #'                          "N" = "<count>",
 #'                          "Mean (SD)" = "<mean> (<sd>)"),
@@ -38,15 +44,21 @@
 #' )
 #'
 visOmopTable <- function(result,
-                        formatEstimateName,
-                        header,
-                        split,
-                        groupColumn = NULL,
-                        type = "gt",
-                        renameColumns = NULL,
-                        minCellCount = 5,
-                        excludeColumns = c("result_id", "estimate_type"),
-                        .options = list()) {
+                         formatEstimateName,
+                         header,
+                         split,
+                         groupColumn = NULL,
+                         type = "gt",
+                         renameColumns = NULL,
+                         showMinCellCount = TRUE,
+                         minCellCount = lifecycle::deprecated(),
+                         excludeColumns = c("result_id", "estimate_type"),
+                         .options = list()) {
+
+  if (lifecycle::is_present(minCellCount)) {
+    lifecycle::deprecate_warn("0.3.0", "visOmopTable(minCellCount)")
+  }
+
   # initial checks
   result <- omopgenerics::newSummarisedResult(result)
   assertChoice(type, c("gt", "flextable", "tibble"))
@@ -54,8 +66,8 @@ visOmopTable <- function(result,
   assertCharacter(header)
   assertCharacter(split)
   assertCharacter(excludeColumns, null = TRUE)
-  assertNumeric(minCellCount, length = 1, null = FALSE, integerish = TRUE)
   assertList(.options)
+  assertLogical(showMinCellCount, length = 1)
   assertCharacter(renameColumns, null = TRUE, named = TRUE)
   checkGroupColumn(groupColumn)
   if (length(split) > 0) {
@@ -92,13 +104,25 @@ visOmopTable <- function(result,
   # .options
   .options <- defaultTableOptions(.options)
 
-  # Supress counts & format estimates ----
+  # Format estimates ----
+  settings <- omopgenerics::settings(result)
+  if (!"min_cell_count" %in% colnames(settings)) {
+    cli::cli_inform(c("!" = "Results have not been suppressed."))
+    showMinCellCount <- FALSE
+  }
+  if (showMinCellCount) {
+    result <- result |>
+      dplyr::left_join(
+        settings |> dplyr::select("result_id", "min_cell_count"),
+        by = "result_id"
+      ) |>
+      dplyr::mutate(estimate_value = dplyr::if_else(
+        is.na(.data$estimate_value), paste0("<", base::format(.data$min_cell_count, big.mark = ",")), .data$estimate_value
+      )) |>
+      dplyr::select(!"min_cell_count")
+  }
+
   x <- result |>
-    # think how to better handle min cell count in this process (formatEstimateName --> nothing if any is NA)
-    omopgenerics::suppress(minCellCount = minCellCount) |>
-    dplyr::mutate(estimate_value = dplyr::if_else(
-      is.na(.data$estimate_value), paste0("<", .env$minCellCount), .data$estimate_value
-    )) |>
     visOmopResults::formatEstimateValue(
       decimals = .options$decimals,
       decimalMark = .options$decimalMark,
@@ -112,7 +136,6 @@ visOmopTable <- function(result,
 
   # Split & prepare header ----
   # Settings:
-  settings <- omopgenerics::settings(result)
   colsSettings <- character()
   if ("settings" %in% header) {
     colsSettings <- colnames(settings)
@@ -178,6 +201,10 @@ visOmopTable <- function(result,
   colsVariable <- character()
   if ("variable" %in% header) {
     colsVariable = c("variable_name", "variable_level")
+    if (all(is.na(x$variable_level))) {
+      colsVariable <- c("variable_name")
+      excludeColumns <- c(excludeColumns, "variable_level")
+    }
     x <- x |>
       dplyr::mutate(dplyr::across(dplyr::starts_with("variable"), ~ dplyr::if_else(is.na(.x), .options$na, .x)))
   }
@@ -317,8 +344,8 @@ visOmopTable <- function(result,
         title = .options$title,
         subtitle = .options$subtitle,
         caption = .options$caption,
-        groupNameCol = newGroupcolumn,
-        groupNameAsColumn = .options$groupNameAsColumn,
+        groupColumn = newGroupcolumn,
+        groupAsColumn = .options$groupAsColumn,
         groupOrder = .options$groupOrder,
         colsToMergeRows = .options$colsToMergeRows
       )
@@ -331,8 +358,8 @@ visOmopTable <- function(result,
         title = .options$title,
         subtitle = .options$subtitle,
         caption = .options$caption,
-        groupNameCol = newGroupcolumn,
-        groupNameAsColumn = .options$groupNameAsColumn,
+        groupColumn = newGroupcolumn,
+        groupAsColumn = .options$groupAsColumn,
         groupOrder = .options$groupOrder,
         colsToMergeRows = .options$colsToMergeRows
       )
@@ -361,7 +388,7 @@ defaultTableOptions <- function(userOptions) {
     title = NULL,
     subtitle = NULL,
     caption = NULL,
-    groupNameAsColumn = FALSE,
+    groupAsColumn = FALSE,
     groupOrder = NULL,
     colsToMergeRows = "all_columns"
   )
@@ -416,7 +443,9 @@ optionsVisOmopTable <- function() {
 #' @param renameColumns Named vector to customisa column names, for instance:
 #' c("Database name" = "cdm_name")). By default column names are transformed to
 #' sentence case.
-#' @param minCellCount Counts below which results will be clouded.
+#' @param minCellCount `r lifecycle::badge("deprecated")` Suppression of
+#' estimates when counts < minCellCount should be done before with
+#' `ompogenerics::suppress()`.
 #' @param excludeColumns Columns to drop from the output table.
 #' @param .options Named list with additional formatting options.
 #' visOmopResults::optionsVisOmopTable() shows allowed arguments and
@@ -424,6 +453,10 @@ optionsVisOmopTable <- function() {
 #'
 #' @return A tibble, gt, or flextable object.
 #'
+#' @description
+#' `formatTable()` was renamed to `visOmopTable()`
+#'
+#' @keywords internal
 #'
 #' @export
 #'
@@ -437,15 +470,15 @@ optionsVisOmopTable <- function() {
 #' )
 #'
 formatTable <- function(result,
-                         formatEstimateName,
-                         header,
-                         split,
-                         groupColumn = NULL,
-                         type = "gt",
-                         renameColumns = NULL,
-                         minCellCount = 5,
-                         excludeColumns = c("result_id", "estimate_type"),
-                         .options = list()) {
+                        formatEstimateName,
+                        header,
+                        split,
+                        groupColumn = NULL,
+                        type = "gt",
+                        renameColumns = NULL,
+                        minCellCount = lifecycle::deprecated(),
+                        excludeColumns = c("result_id", "estimate_type"),
+                        .options = list()) {
 
   lifecycle::deprecate_soft(
     when = "0.3.0",
@@ -460,7 +493,6 @@ formatTable <- function(result,
                groupColumn = groupColumn,
                type = type,
                renameColumns = renameColumns,
-               minCellCount = minCellCount,
                excludeColumns = excludeColumns,
                .options = .options
   )

@@ -4,12 +4,10 @@
 \alias{additionalColumns}
 \title{Identify additional columns in an omop result object}
 \usage{
-additionalColumns(result, overall = lifecycle::deprecated())
+additionalColumns(result)
 }
 \arguments{
 \item{result}{A summarised_result.}
-
-\item{overall}{deprecated.}
 }
 \value{
 Unique values of the additional name column.

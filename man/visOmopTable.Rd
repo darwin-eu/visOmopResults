@@ -12,7 +12,8 @@ visOmopTable(
   groupColumn = NULL,
   type = "gt",
   renameColumns = NULL,
-  minCellCount = 5,
+  showMinCellCount = TRUE,
+  minCellCount = lifecycle::deprecated(),
   excludeColumns = c("result_id", "estimate_type"),
   .options = list()
 )
@@ -42,7 +43,13 @@ list(\code{newGroupName} = c("variable_name", "variable_level"))}
 c("Database name" = "cdm_name")). By default column names are transformed to
 sentence case.}
 
-\item{minCellCount}{Counts below which results will be clouded.}
+\item{showMinCellCount}{If TRUE, suppressed estimates will be indicated with
+"<{minCellCount}", otherwise the default na defined in \code{.options} will
+be used.}
+
+\item{minCellCount}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Suppression of
+estimates when counts < minCellCount should be done before with
+\code{ompogenerics::suppress()}.}
 
 \item{excludeColumns}{Columns to drop from the output table.}
 
@@ -57,7 +64,8 @@ A tibble, gt, or flextable object.
 Format a summarised_result object into a gt, flextable or tibble object
 }
 \examples{
-mockSummarisedResult() |> visOmopTable(
+mockSummarisedResult() |>
+visOmopTable(
   formatEstimateName = c("N\%" = "<count> (<percentage>)",
                          "N" = "<count>",
                          "Mean (SD)" = "<mean> (<sd>)"),

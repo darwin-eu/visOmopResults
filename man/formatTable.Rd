@@ -12,7 +12,7 @@ formatTable(
   groupColumn = NULL,
   type = "gt",
   renameColumns = NULL,
-  minCellCount = 5,
+  minCellCount = lifecycle::deprecated(),
   excludeColumns = c("result_id", "estimate_type"),
   .options = list()
 )
@@ -42,7 +42,9 @@ list(\code{newGroupName} = c("variable_name", "variable_level"))}
 c("Database name" = "cdm_name")). By default column names are transformed to
 sentence case.}
 
-\item{minCellCount}{Counts below which results will be clouded.}
+\item{minCellCount}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Suppression of
+estimates when counts < minCellCount should be done before with
+\code{ompogenerics::suppress()}.}
 
 \item{excludeColumns}{Columns to drop from the output table.}
 
@@ -54,6 +56,9 @@ their default values.}
 A tibble, gt, or flextable object.
 }
 \description{
+\code{formatTable()} was renamed to \code{visOmopTable()}
+}
+\details{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }
 \examples{
@@ -66,3 +71,4 @@ mockSummarisedResult() |> formatTable(
 )
 
 }
+\keyword{internal}

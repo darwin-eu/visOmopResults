@@ -12,4 +12,8 @@ test_that("pivotEstimates", {
   expect_true(class(res1$hola_mean) == "numeric")
   res2 <- pivotEstimates(result, pivotEstimatesBy = c("group_name", "estimate_name"))
   expect_true(all(c("cohort_name_count", "cohort_name_mean", "cohort_name_sd", "cohort_name_percentage") %in% colnames(res2)))
+  expect_no_error(pivotEstimates(result, pivotEstimatesBy = "variable_name"))
+
+  # expected errors
+  expect_error(pivotEstimates(result, pivotEstimatesBy = "estimate_type"))
 })

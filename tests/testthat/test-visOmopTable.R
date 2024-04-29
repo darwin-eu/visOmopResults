@@ -1,23 +1,23 @@
 test_that("visOmopTable", {
   result <- mockSummarisedResult()
-
-  expect_no_error(
-    gt1 <- visOmopTable(
-      result = result,
-      formatEstimateName = character(),
-      header = character(),
-      groupColumn = NULL,
-      split = c("group", "strata", "additional"),
-      type = "gt",
-      minCellCount = 5,
-      excludeColumns = c("result_id", "estimate_type"),
-      .options = list())
+  expect_message(
+    expect_no_error(
+      gt1 <- visOmopTable(
+        result = result,
+        formatEstimateName = character(),
+        header = character(),
+        groupColumn = NULL,
+        split = c("group", "strata", "additional"),
+        type = "gt",
+        excludeColumns = c("result_id", "estimate_type"),
+        .options = list())
+    )
   )
-
   expect_true("gt_tbl" %in% class(gt1))
   expect_true(all(c("CDM name", "Cohort name", "Age group", "Sex", "Variable name", "Variable level", "Estimate name", "Estimate value") %in%
                     colnames(gt1$`_data`)))
 
+  expect_message(
   expect_no_error(
     gt2 <- visOmopTable(
       result = result,
@@ -26,9 +26,9 @@ test_that("visOmopTable", {
       groupColumn = NULL,
       split = c("group", "strata", "additional"),
       type = "gt",
-      minCellCount = 5,
       excludeColumns = c("result_id", "estimate_type"),
       .options = list())
+  )
   )
   expect_true("gt_tbl" %in% class(gt2))
   expect_true(all(c(
@@ -42,6 +42,7 @@ test_that("visOmopTable", {
   ) %in% colnames(gt2$`_data`)))
   expect_true(nrow(gt2$`_data`) == 10)
 
+  expect_message(
   expect_no_error(
     fx1 <- visOmopTable(
       result = result,
@@ -50,9 +51,9 @@ test_that("visOmopTable", {
       groupColumn = NULL,
       split = c("group", "strata", "additional"),
       type = "flextable",
-      minCellCount = 5,
       excludeColumns = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
+  )
   )
   expect_true("flextable" == class(fx1))
   expect_true(all(c(
@@ -61,7 +62,7 @@ test_that("visOmopTable", {
   ) %in% colnames(fx1$body$dataset)))
   expect_true(nrow(fx1$body$dataset) == 36)
 
-
+  expect_message(
   expect_no_error(
     fx2 <- visOmopTable(
       result = result,
@@ -70,9 +71,9 @@ test_that("visOmopTable", {
       groupColumn = NULL,
       split = c("group", "strata", "additional"),
       type = "flextable",
-      minCellCount = 5,
       excludeColumns = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
+  )
   )
   expect_true("flextable" == class(fx2))
   expect_true(all(c(
@@ -81,6 +82,7 @@ test_that("visOmopTable", {
   ) %in% colnames(fx2$body$dataset)))
   expect_true(nrow(fx2$body$dataset) == 18)
 
+  expect_message(
   expect_no_error(
     fx3 <- visOmopTable(
       result = result,
@@ -89,9 +91,9 @@ test_that("visOmopTable", {
       groupColumn = "cohort_name",
       split = c("group", "additional"),
       type = "flextable",
-      minCellCount = 5,
       excludeColumns = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
+  )
   )
   expect_true("flextable" == class(fx3))
   expect_true(all(c(
@@ -107,6 +109,7 @@ test_that("visOmopTable", {
   expect_true(nrow(fx3$body$dataset) == 10)
 
   # settings ----
+  expect_message(
   expect_no_error(
     visOmopTable(
       result = result,
@@ -115,12 +118,13 @@ test_that("visOmopTable", {
       groupColumn = NULL,
       split = c("group", "additional"),
       type = "tibble",
-      minCellCount = 5,
       excludeColumns = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
+  )
 
-  result <- mockSummarisedResult()
+  result <- mockSummarisedResult() |>
+    omopgenerics::suppress(1000000)
   expect_no_error(
     tib1 <- visOmopTable(
       result = result,
@@ -129,16 +133,15 @@ test_that("visOmopTable", {
       groupColumn = NULL,
       split = c("group", "additional"),
       type = "tibble",
-      minCellCount = 5,
       excludeColumns = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
   expect_true(all(c("tbl_df", "tbl", "data.frame") %in% class(tib1)))
-
   expect_true(all(c(
     "Strata name", "Strata level", "Variable name", "Variable level", "Estimate name",
-    paste0("[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]", utils::packageVersion("visOmopResults")),
-    paste0("[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]", utils::packageVersion("visOmopResults"))) %in% colnames(tib1)))
+    paste0("[header]Cohort name\n[header_level]Cohort1\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]", utils::packageVersion("visOmopResults"), "\n[header_level]1000000"),
+    paste0("[header]Cohort name\n[header_level]Cohort2\n[header]result_id\n[header_level]Mock summarised result\n[header_level]Visomopresults\n[header_level]", utils::packageVersion("visOmopResults"), "\n[header_level]1000000")) %in% colnames(tib1)))
+  expect_true(tib1[19:36, 6] |> dplyr::pull() |> unique() == "<1,000,000 (<1,000,000)")
 
   # woring group column
   expect_error(
@@ -149,7 +152,6 @@ test_that("visOmopTable", {
       groupColumn = "hola",
       split = c("group", "additional"),
       type = "tibble",
-      minCellCount = 5,
       excludeColumns = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
@@ -157,18 +159,19 @@ test_that("visOmopTable", {
 
 test_that("renameColumn works", {
   result <- mockSummarisedResult()
-  expect_no_error(
-    gt1 <- visOmopTable(
-      result = result,
-      formatEstimateName = character(),
-      header = character(),
-      groupColumn = NULL,
-      split = c("group", "strata", "additional"),
-      type = "gt",
-      renameColumns = c("Database name" = "cdm_name"),
-      minCellCount = 5,
-      excludeColumns = c("result_id", "estimate_type"),
-      .options = list())
+  expect_message(
+    expect_no_error(
+      gt1 <- visOmopTable(
+        result = result,
+        formatEstimateName = character(),
+        header = character(),
+        groupColumn = NULL,
+        split = c("group", "strata", "additional"),
+        type = "gt",
+        renameColumns = c("Database name" = "cdm_name"),
+        excludeColumns = c("result_id", "estimate_type"),
+        .options = list())
+    )
   )
   expect_true(all(
     colnames(gt1$`_data`) ==
@@ -185,14 +188,14 @@ test_that("renameColumn works", {
       split = c("group", "strata", "additional"),
       type = "gt",
       renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
-      minCellCount = 5,
       excludeColumns = c("result_id", "estimate_type"),
       .options = list())
   )
   expect_true(all(colnames(gt2$`_data`)[1:2] == c("Cohort name", "changeName")))
   expect_true(all(colnames(gt2$`_data`)[5] == "[header]Database name\n[header_level]mock\n[header]Age group\n[header_level]Overall\n[header]Sex\n[header_level]Overall"))
 
-  expect_warning(
+  expect_message(
+    expect_warning(
     fx1 <- visOmopTable(
       result = result,
       formatEstimateName = character(),
@@ -201,9 +204,9 @@ test_that("renameColumn works", {
       split = c("group", "strata", "additional"),
       type = "flextable",
       renameColumns = c("Database name" = "cdm_name", "changeName" = "name"),
-      minCellCount = 5,
       excludeColumns = c("result_id", "estimate_type"),
       .options = list())
+    )
   )
 
   # more than 1 group column
@@ -215,7 +218,6 @@ test_that("renameColumn works", {
     type = "flextable",
     groupColumn = c("cdm_name", "cohort_name"),
     renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
-    minCellCount = 5,
     excludeColumns = c("result_id", "estimate_type"),
     .options = list())
   expect_true(colnames(fx2$body$dataset)[1] == "cdm_name_cohort_name")
@@ -229,7 +231,6 @@ test_that("renameColumn works", {
     type = "flextable",
     groupColumn = list("group" = c("cdm_name", "cohort_name")),
     renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
-    minCellCount = 5,
     excludeColumns = c("result_id", "estimate_type"),
     .options = list())
   expect_true(colnames(fx3$body$dataset)[1] == "group")
