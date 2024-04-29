@@ -22,8 +22,8 @@ test_that("fxTable", {
     title = "Test 1",
     subtitle = NULL,
     caption = NULL,
-    groupNameCol = NULL,
-    groupNameAsColumn = FALSE,
+    groupColumn = NULL,
+    groupAsColumn = FALSE,
     groupOrder = NULL
   )
 
@@ -77,8 +77,8 @@ test_that("fxTable", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = NULL
   )
 
@@ -135,8 +135,8 @@ test_that("fxTable", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = TRUE,
+    groupColumn = "group_level",
+    groupAsColumn = TRUE,
     groupOrder = c("cohort2", "cohort1")
   )
 
@@ -155,8 +155,8 @@ test_that("fxTable", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = TRUE,
+    groupColumn = "group_level",
+    groupAsColumn = TRUE,
     groupOrder = c("cohort2", "cohort1")
   ))
 })
@@ -174,8 +174,8 @@ test_that("fxTable, test default styles and NULL", {
     title = "Test 1",
     subtitle = NULL,
     caption = NULL,
-    groupNameCol = NULL,
-    groupNameAsColumn = FALSE,
+    groupColumn = NULL,
+    groupAsColumn = FALSE,
     groupOrder = NULL
   )
 
@@ -210,8 +210,8 @@ test_that("fxTable, test default styles and NULL", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = NULL
   )
 
@@ -243,8 +243,8 @@ test_that("fxTable, test default styles and NULL", {
       title = "Title test 2",
       subtitle = "Subtitle for test 2",
       caption = "*This* is the caption",
-      groupNameCol = "group_level",
-      groupNameAsColumn = FALSE,
+      groupColumn = "group_level",
+      groupAsColumn = FALSE,
       groupOrder = NULL
     )
   )
@@ -262,8 +262,8 @@ test_that("fxTable, test colsToMergeRows", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = NULL,
     colsToMergeRows = "all_columns"
   )
@@ -292,8 +292,8 @@ test_that("fxTable, test colsToMergeRows", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = NULL,
     colsToMergeRows = c("cdm_name", "variable_name")
   )
@@ -315,8 +315,8 @@ test_that("fxTable, test colsToMergeRows", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = NULL,
     colsToMergeRows = c("cdm_name", "lala")
   ))

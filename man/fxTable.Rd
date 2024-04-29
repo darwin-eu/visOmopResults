@@ -12,8 +12,10 @@ fxTable(
   title = NULL,
   subtitle = NULL,
   caption = NULL,
-  groupNameCol = NULL,
-  groupNameAsColumn = FALSE,
+  groupColumn = NULL,
+  groupNameCol = lifecycle::deprecated(),
+  groupAsColumn = FALSE,
+  groupNameAsColumn = lifecycle::deprecated(),
   groupOrder = NULL,
   colsToMergeRows = NULL
 )
@@ -38,10 +40,14 @@ header_level, column_name, group_label, and body. Alternatively, use
 markdown formatting style (e.g. \verb{*Your caption here*} for caption in
 italics).}
 
-\item{groupNameCol}{Column to use as group labels.}
+\item{groupColumn}{Column to use as group labels.}
 
-\item{groupNameAsColumn}{Whether to display the group labels as a column
+\item{groupNameCol}{Deprecated.}
+
+\item{groupAsColumn}{Whether to display the group labels as a column
 (TRUE) or rows (FALSE).}
+
+\item{groupNameAsColumn}{Deprecated.}
 
 \item{groupOrder}{Order in which to display group labels.}
 
@@ -70,8 +76,8 @@ mockSummarisedResult() |>
     title = "fxTable example",
     subtitle = NULL,
     caption = NULL,
-    groupNameCol = "group_level",
-    groupNameAsColumn = TRUE,
+    groupColumn = "group_level",
+    groupAsColumn = TRUE,
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
  )

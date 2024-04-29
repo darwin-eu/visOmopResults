@@ -25,8 +25,8 @@ test_that("gtTable", {
     title = "Test 1",
     subtitle = NULL,
     caption = NULL,
-    groupNameCol = NULL,
-    groupNameAsColumn = FALSE,
+    groupColumn = NULL,
+    groupAsColumn = FALSE,
     groupOrder = NULL
   )
 
@@ -82,8 +82,8 @@ test_that("gtTable", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = NULL
   )
 
@@ -147,11 +147,11 @@ test_that("gtTable", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = TRUE,
+    groupColumn = "group_level",
+    groupAsColumn = TRUE,
     groupOrder = c("cohort2", "cohort1")
   )
-  # groupNameAsColumn
+  # groupAsColumn
   expect_true(gtResult$`_options`$value[gtResult$`_options`$parameter == "row_group_as_column"] |> unlist())
   # groupOrder
   expect_identical(gtResult$`_row_groups`, c( "cohort2", "cohort1"))
@@ -164,8 +164,8 @@ test_that("gtTable", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = TRUE,
+    groupColumn = "group_level",
+    groupAsColumn = TRUE,
     groupOrder = c("cohort2", "cohort1")
   ))
 })
@@ -183,8 +183,8 @@ test_that("gtTable, test default styles and NULL", {
     title = "Test 1",
     subtitle = NULL,
     caption = NULL,
-    groupNameCol = NULL,
-    groupNameAsColumn = FALSE,
+    groupColumn = NULL,
+    groupAsColumn = FALSE,
     groupOrder = NULL
   )
 
@@ -206,8 +206,8 @@ test_that("gtTable, test default styles and NULL", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = NULL
   )
 
@@ -262,8 +262,8 @@ test_that("gtTable, test colsToMergeRows", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = NULL,
     colsToMergeRows = "all_columns"
   )
@@ -283,8 +283,8 @@ test_that("gtTable, test colsToMergeRows", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = TRUE,
+    groupColumn = "group_level",
+    groupAsColumn = TRUE,
     groupOrder = NULL,
     colsToMergeRows = c("cdm_name", "variable_level")
   )
@@ -296,7 +296,7 @@ test_that("gtTable, test colsToMergeRows", {
   expect_equal(gtResult$`_data`$group_level|> levels(),
                c("cohort1", "cohort2"))
 
-  # no groupNameCol
+  # no groupColumn
   gtResult <- gtTable(
     table_to_format,
     style = "default",
@@ -304,8 +304,8 @@ test_that("gtTable, test colsToMergeRows", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = NULL,
-    groupNameAsColumn = FALSE,
+    groupColumn = NULL,
+    groupAsColumn = FALSE,
     groupOrder = NULL,
     colsToMergeRows = "all_columns"
   )

@@ -317,8 +317,8 @@ visOmopTable <- function(result,
         title = .options$title,
         subtitle = .options$subtitle,
         caption = .options$caption,
-        groupNameCol = newGroupcolumn,
-        groupNameAsColumn = .options$groupNameAsColumn,
+        groupColumn = newGroupcolumn,
+        groupAsColumn = .options$groupAsColumn,
         groupOrder = .options$groupOrder,
         colsToMergeRows = .options$colsToMergeRows
       )
@@ -331,8 +331,8 @@ visOmopTable <- function(result,
         title = .options$title,
         subtitle = .options$subtitle,
         caption = .options$caption,
-        groupNameCol = newGroupcolumn,
-        groupNameAsColumn = .options$groupNameAsColumn,
+        groupColumn = newGroupcolumn,
+        groupAsColumn = .options$groupAsColumn,
         groupOrder = .options$groupOrder,
         colsToMergeRows = .options$colsToMergeRows
       )
@@ -361,7 +361,7 @@ defaultTableOptions <- function(userOptions) {
     title = NULL,
     subtitle = NULL,
     caption = NULL,
-    groupNameAsColumn = FALSE,
+    groupAsColumn = FALSE,
     groupOrder = NULL,
     colsToMergeRows = "all_columns"
   )
