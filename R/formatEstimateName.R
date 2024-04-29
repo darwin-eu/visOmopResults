@@ -69,10 +69,6 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
     !ocols %in% c("estimate_name", "estimate_type", "estimate_value")
   ]
 
-  # start formatting
-  settings <- attr(result, "settings")
-  classes <- class(result)
-
   result <- result |>
     dplyr::mutate("formatted" = FALSE, "id" = dplyr::row_number()) |>
     dplyr::mutate(group_id = min(.data$id), .by = dplyr::all_of(cols))
