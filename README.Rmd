@@ -134,8 +134,8 @@ gtResult <- result |>
     style = "default",
     na = "-",
     title = "My first gt table with visOmopResults!",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
     )
