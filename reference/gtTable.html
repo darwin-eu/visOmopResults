@@ -67,8 +67,10 @@ the header, and allows to easily customise table style.</p>
 <span>  title <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  subtitle <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  caption <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  groupNameCol <span class="op">=</span> <span class="cn">NULL</span>,</span>
-<span>  groupNameAsColumn <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  groupColumn <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  groupNameCol <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  groupAsColumn <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>  groupNameAsColumn <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  groupOrder <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  colsToMergeRows <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -109,13 +111,23 @@ markdown formatting style (e.g. <code>*Your caption here*</code> for caption in
 italics).</p></dd>
 
 
-<dt>groupNameCol</dt>
+<dt>groupColumn</dt>
 <dd><p>Column to use as group labels.</p></dd>
 
 
-<dt>groupNameAsColumn</dt>
+<dt>groupNameCol</dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> This argument was
+renamed to "groupColumn" for consistency throughout the package functions.</p></dd>
+
+
+<dt>groupAsColumn</dt>
 <dd><p>Whether to display the group labels as a column
 (TRUE) or rows (FALSE).</p></dd>
+
+
+<dt>groupNameAsColumn</dt>
+<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a> This argument was
+renamed to "groupAsColumn" for consistency with the argument "groupColumn".</p></dd>
 
 
 <dt>groupOrder</dt>
@@ -159,8 +171,8 @@ no merging.</p></dd>
 <span class="r-in"><span>    title <span class="op">=</span> <span class="st">"gtTable example"</span>,</span></span>
 <span class="r-in"><span>    subtitle <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
 <span class="r-in"><span>    caption <span class="op">=</span> <span class="cn">NULL</span>,</span></span>
-<span class="r-in"><span>    groupNameCol <span class="op">=</span> <span class="st">"group_level"</span>,</span></span>
-<span class="r-in"><span>    groupNameAsColumn <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
+<span class="r-in"><span>    groupColumn <span class="op">=</span> <span class="st">"group_level"</span>,</span></span>
+<span class="r-in"><span>    groupAsColumn <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>    groupOrder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cohort1"</span>, <span class="st">"cohort2"</span><span class="op">)</span>,</span></span>
 <span class="r-in"><span>    colsToMergeRows <span class="op">=</span> <span class="st">"all_columns"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
