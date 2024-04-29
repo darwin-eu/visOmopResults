@@ -13,8 +13,8 @@ Provides methods to transform omop_result objects into formatted tables and figu
 \seealso{
 Useful links:
 \itemize{
-  \item \url{https://oxford-pharmacoepi.github.io/visOmopResults/}
-  \item Report bugs at \url{https://github.com/oxford-pharmacoepi/visOmopResults/issues}
+  \item \url{https://darwin-eu.github.io/visOmopResults/}
+  \item Report bugs at \url{https://github.com/darwin-eu/visOmopResults/issues}
 }
 
 }
