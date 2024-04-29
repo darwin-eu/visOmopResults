@@ -13,10 +13,12 @@
 #' markdown formatting style (e.g. `*Your caption here*` for caption in
 #' italics).
 #' @param groupColumn Column to use as group labels.
-#' @param groupNameCol Deprecated.
+#' @param groupNameCol `r lifecycle::badge("deprecated")` This argument was
+#' renamed to "groupColumn" for consistency throughout the package functions.
 #' @param groupAsColumn Whether to display the group labels as a column
 #' (TRUE) or rows (FALSE).
-#' @param groupNameAsColumn Deprecated.
+#' @param groupNameAsColumn `r lifecycle::badge("deprecated")` This argument was
+#' renamed to "groupAsColumn" for consistency with the argument "groupColumn".
 #' @param groupOrder Order in which to display group labels.
 #' @param colsToMergeRows Names of the columns to merge vertically
 #' when consecutive row cells have identical values. Alternatively, use
@@ -77,7 +79,7 @@ gtTable <- function(
   if (lifecycle::is_present(groupNameCol)) {
     lifecycle::deprecate_warn("0.3.0", "gtTable(groupNameCol)", "gtTable(groupColumn)")
   }
-  if (lifecycle::is_present(groupNameCol)) {
+  if (lifecycle::is_present(groupNameAsColumn)) {
     lifecycle::deprecate_warn("0.3.0", "gtTable(groupNameAsColumn)", "gtTable(groupAsColumn)")
   }
 

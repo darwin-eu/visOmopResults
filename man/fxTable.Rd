@@ -42,12 +42,14 @@ italics).}
 
 \item{groupColumn}{Column to use as group labels.}
 
-\item{groupNameCol}{Deprecated.}
+\item{groupNameCol}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This argument was
+renamed to "groupColumn" for consistency throughout the package functions.}
 
 \item{groupAsColumn}{Whether to display the group labels as a column
 (TRUE) or rows (FALSE).}
 
-\item{groupNameAsColumn}{Deprecated.}
+\item{groupNameAsColumn}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This argument was
+renamed to "groupAsColumn" for consistency with the argument "groupColumn".}
 
 \item{groupOrder}{Order in which to display group labels.}
 
