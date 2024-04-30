@@ -18,7 +18,7 @@
 #' c("Database name" = "cdm_name")). By default column names are transformed to
 #' sentence case.
 #' @param showMinCellCount If TRUE, suppressed estimates will be indicated with
-#' "<{minCellCount}", otherwise the default na defined in `.options` will
+#' "<\{minCellCount\}", otherwise the default na defined in `.options` will
 #' be used.
 #' @param minCellCount `r lifecycle::badge("deprecated")` Suppression of
 #' estimates when counts < minCellCount should be done before with

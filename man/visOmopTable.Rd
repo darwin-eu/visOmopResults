@@ -44,7 +44,7 @@ c("Database name" = "cdm_name")). By default column names are transformed to
 sentence case.}
 
 \item{showMinCellCount}{If TRUE, suppressed estimates will be indicated with
-"<{minCellCount}", otherwise the default na defined in \code{.options} will
+"<\{minCellCount\}", otherwise the default na defined in \code{.options} will
 be used.}
 
 \item{minCellCount}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Suppression of
