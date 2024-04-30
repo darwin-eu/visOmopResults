@@ -20,13 +20,17 @@ License: Apache License (>= 2)
 URL: https://darwin-eu.github.io/visOmopResults/
 BugReports: https://github.com/darwin-eu/visOmopResults/issues
 Imports: 
+    checkmate,
     cli,
     dplyr,
     generics,
+    ggplot2,
+    ggpubr,
     glue,
     lifecycle,
     omopgenerics (>= 0.2.0),
     rlang,
+    scales,
     stringr,
     tidyr
 Suggests: 
