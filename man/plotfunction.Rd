@@ -43,7 +43,6 @@ A ggplot.
 \examples{
 \donttest{
 library(visOmopResults)
-library(PatientProfiles)
 library(dplyr)
 result <- mockSummarisedResult() |>
 filter(variable_name == "Medications",

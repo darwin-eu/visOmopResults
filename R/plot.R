@@ -17,7 +17,6 @@
 #' @examples
 #' \donttest{
 #' library(visOmopResults)
-#' library(PatientProfiles)
 #' library(dplyr)
 #' result <- mockSummarisedResult() |>
 #' filter(variable_name == "Medications",
@@ -463,17 +462,6 @@ plotfunction <- function(data,
     }
   }
 
-  #
-  #   if (!is.null(custom_colors) & plotStyle == "scatterplot") {
-  #     p <- p + ggplot2::scale_color_manual(values = custom_colors)
-  #   }
-  #
-  #   # Apply custom or default colors
-  #   if (!is.null(custom_colors) & plotStyle == "barplot") {
-  #     p <- p + ggplot2::scale_color_manual(scale_fill_manual = custom_colors)
-  #   }
-  #
-
 
 
   if (suppressWarnings(!is.null(data$facet_combined_x) || !is.null(data$facet_combined_y))) {
@@ -664,13 +652,12 @@ plotfunction <- function(data,
         ggplot2::ggplot() +
           ggplot2::theme_void() +
           ggplot2::labs(
-            title = "No Numeric Data Provided",
-            subtitle = "Barplot only supported numeric values"
+            title = "No Numeric Data Provided"
           )
       }
     }
   } else {
-    if (plotStyle == "barplot" || plotStyle == "density") {
+    if (plotStyle == "barplot" || plotStyle == "density" || plotStyle == "scatterplot") {
       p <- if (!is.null(p_percent) && !is.null(p_non_percent)) {
         if (vertical_x) {
           p_percent <- p_percent +
@@ -711,8 +698,7 @@ plotfunction <- function(data,
         ggplot2::ggplot() +
           ggplot2::theme_void() +
           ggplot2::labs(
-            title = "No Numeric Data Provided",
-            subtitle = "Barplot only supported numeric values"
+            title = "No Numeric Data Provided"
           )
       }
     } else if (plotStyle == "boxplot") {
@@ -754,21 +740,6 @@ plotfunction <- function(data,
           }
           p <- ggpubr::ggarrange(p_dates, p_non_dates, nrow = 2)
         }
-      }
-    } else if (plotStyle == "scatterplot") {
-      p <- if (!is.null(p_percent) && !is.null(p_non_percent)) {
-        ggpubr::ggarrange(p_percent, p_non_percent, nrow = 2)
-      } else if (!is.null(p_percent)) {
-        p_percent
-      } else if (!is.null(p_non_percent)) {
-        p_non_percent
-      } else {
-        ggplot2::ggplot() +
-          ggplot2::theme_void() +
-          ggplot2::labs(
-            title = "No Numeric Data Provided",
-            subtitle = "Scatterplot only supported numeric values"
-          )
       }
     }
   }
