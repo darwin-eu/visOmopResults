@@ -27,18 +27,20 @@ pivotEstimates <- function(result,
   assertClass(result, "summarised_result")
   assertCharacter(pivotEstimatesBy, null = TRUE)
   assertCharacter(nameStyle, null = TRUE)
+  if ("estimate_type" %in% pivotEstimatesBy) {
+    cli::cli_abort("estimates cannot be pivotted by `estimate_type`.")
+  }
 
   # pivot estimates
   result_out <- result
   if (length(pivotEstimatesBy) > 0) {
     if (is.null(nameStyle)) {
       nameStyle <- paste0("{", paste0(pivotEstimatesBy, collapse = "}_{"), "}")
-      forNaming <- character()
     }
     typeNameConvert <- result |>
       dplyr::distinct(dplyr::across(dplyr::all_of(c("estimate_type", pivotEstimatesBy)))) |>
       dplyr::mutate(estimate_type = dplyr::case_when(
-        grepl("percentage|proportion", .data$estimate_name) ~ "numeric",
+        grepl("percentage|proportion", .data$estimate_type) ~ "numeric",
         "date" == .data$estimate_type ~ "Date",
         .default = .data$estimate_type
       ),

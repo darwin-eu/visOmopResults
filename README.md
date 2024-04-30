@@ -5,13 +5,13 @@
 
 <!-- badges: start -->
 
-[![R-CMD-check](https://github.com/oxford-pharmacoepi/visOmopResults/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/oxford-pharmacoepi/visOmopResults/actions/workflows/R-CMD-check.yaml)
+[![R-CMD-check](https://github.com/darwin-eu/visOmopResults/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/darwin-eu/visOmopResults/actions/workflows/R-CMD-check.yaml)
 [![CRAN
 status](https://www.r-pkg.org/badges/version/visOmopResults)](https://CRAN.R-project.org/package=visOmopResults)
 [![Lifecycle:
 experimental](https://img.shields.io/badge/lifecycle-experimental-orange.svg)](https://lifecycle.r-lib.org/articles/stages.html#experimental)
 [![Codecov test
-coverage](https://codecov.io/gh/oxford-pharmacoepi/visOmopResults/branch/main/graph/badge.svg)](https://app.codecov.io/gh/oxford-pharmacoepi/visOmopResults?branch=main)
+coverage](https://codecov.io/gh/darwin-eu/visOmopResults/branch/main/graph/badge.svg)](https://app.codecov.io/gh/darwin-eu/visOmopResults?branch=main)
 <!-- badges: end -->
 
 ## Package overview
@@ -32,11 +32,11 @@ install.packages("visOmopResults")
 ```
 
 Or you can install the development version from
-[GitHub](https://github.com/oxford-pharmacoepi/visOmopResults) with:
+[GitHub](https://github.com/darwin-eu/visOmopResults) with:
 
 ``` r
 # install.packages("devtools")
-devtools::install_github("oxford-pharmacoepi/visOmopResults")
+devtools::install_github("darwin-eu/visOmopResults")
 ```
 
 ## Example usage
@@ -49,10 +49,10 @@ library(visOmopResults)
 result <- mockSummarisedResult()
 ```
 
-We can use the function `formatTable()` to get a nice *gt* table:
+We can use the function `visOmopTable()` to get a nice *gt* table:
 
 ``` r
-formatTable(
+visOmopTable(
   result,
   formatEstimateName = c("N%" = "<count> (<percentage>)",
                          "N" = "<count>",
@@ -62,7 +62,7 @@ formatTable(
 )
 ```
 
-![](./man/figures/formatTable.png)
+![](./man/figures/visOmopTable.png)
 
 In the code snipped showed, we specified how to group and display the
 estimates with `formatEstimateName`. Also, we created a header based on
@@ -72,7 +72,7 @@ vignette for more information on splitting).
 
 ## Custom formatting - Example usage
 
-The function `formatTable()` is wrapped around other functions of the
+The function `visOmopTable()` is wrapped around other functions of the
 package. These can be implemented in a pipeline for additional
 customisation of the summarised_result.
 
@@ -96,12 +96,9 @@ result <- result |>
 ``` r
 result |> dplyr::glimpse()
 #> Rows: 126
-#> Columns: 16
+#> Columns: 13
 #> $ result_id        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
 #> $ cdm_name         <chr> "mock", "mock", "mock", "mock", "mock", "mock", "mock…
-#> $ result_type      <chr> "mock_summarised_result", "mock_summarised_result", "…
-#> $ package_name     <chr> "visOmopResults", "visOmopResults", "visOmopResults",…
-#> $ package_version  <chr> "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0",…
 #> $ group_name       <chr> "cohort_name", "cohort_name", "cohort_name", "cohort_…
 #> $ group_level      <chr> "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…
 #> $ strata_name      <chr> "overall", "age_group &&& sex", "age_group &&& sex", …
@@ -110,7 +107,7 @@ result |> dplyr::glimpse()
 #> $ variable_level   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 #> $ estimate_name    <chr> "count", "count", "count", "count", "count", "count",…
 #> $ estimate_type    <chr> "integer", "integer", "integer", "integer", "integer"…
-#> $ estimate_value   <chr> "3,644,052", "5,067,956", "9,529,116", "3,510,896", "…
+#> $ estimate_value   <chr> "4,392,319", "7,536,112", "537,318", "3,563,375", "4,…
 #> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
 ```
@@ -134,12 +131,9 @@ result <- result |> formatEstimateName(
 ``` r
 result |> dplyr::glimpse()
 #> Rows: 72
-#> Columns: 16
+#> Columns: 13
 #> $ result_id        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
 #> $ cdm_name         <chr> "mock", "mock", "mock", "mock", "mock", "mock", "mock…
-#> $ result_type      <chr> "mock_summarised_result", "mock_summarised_result", "…
-#> $ package_name     <chr> "visOmopResults", "visOmopResults", "visOmopResults",…
-#> $ package_version  <chr> "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0", "0.2.0",…
 #> $ group_name       <chr> "cohort_name", "cohort_name", "cohort_name", "cohort_…
 #> $ group_level      <chr> "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…
 #> $ strata_name      <chr> "overall", "age_group &&& sex", "age_group &&& sex", …
@@ -148,7 +142,7 @@ result |> dplyr::glimpse()
 #> $ variable_level   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
 #> $ estimate_name    <chr> "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N"…
 #> $ estimate_type    <chr> "character", "character", "character", "character", "…
-#> $ estimate_value   <chr> "3,644,052", "5,067,956", "9,529,116", "3,510,896", "…
+#> $ estimate_value   <chr> "4,392,319", "7,536,112", "537,318", "3,563,375", "4,…
 #> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
 #> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
 ```
@@ -170,12 +164,9 @@ result <- result |>
 ``` r
 result |> dplyr::glimpse()
 #> Rows: 8
-#> Columns: 22
+#> Columns: 19
 #> $ result_id                                                                              <int> …
 #> $ cdm_name                                                                               <chr> …
-#> $ result_type                                                                            <chr> …
-#> $ package_name                                                                           <chr> …
-#> $ package_version                                                                        <chr> …
 #> $ group_name                                                                             <chr> …
 #> $ group_level                                                                            <chr> …
 #> $ variable_name                                                                          <chr> …
@@ -212,8 +203,8 @@ gtResult <- result |>
     style = "default",
     na = "-",
     title = "My first gt table with visOmopResults!",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
     )
@@ -225,6 +216,6 @@ gtResult
 
 ![](./man/figures/gtTable.png)
 
-It is important to notice that `formatTable` has additional arguments to
-customise the output table in a similar manner as in the pipeline. See
-the vignette “format functions”.
+It is important to notice that `visOmopTable` has additional arguments
+to customise the output table in a similar manner as in the pipeline.
+See the vignette “format functions”.

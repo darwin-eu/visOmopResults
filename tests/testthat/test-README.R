@@ -19,8 +19,8 @@ test_that("README works", {
         style = "default",
         na = "-",
         title = "My first gt table with VisOmopResults!",
-        groupNameCol = "group_level",
-        groupNameAsColumn = FALSE,
+        groupColumn = "group_level",
+        groupAsColumn = FALSE,
         groupOrder = c("cohort1", "cohort2")
       )
   )

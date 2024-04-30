@@ -1,5 +1,4 @@
 test_that("formatEstimateValue", {
-
   result <- mockSummarisedResult()
   # default decimal input ----
   result_output <- formatEstimateValue(result,
@@ -9,7 +8,6 @@ test_that("formatEstimateValue", {
                                        ),
                                        decimalMark = "@",
                                        bigMark = "=")
-
   ## Test big Mark ----
   counts_in  <- result$estimate_value[result_output$estimate_type == "integer"]
   counts_out <- result_output$estimate_value[result_output$estimate_type == "integer"]
@@ -210,10 +208,6 @@ test_that("formatEstimateValue", {
       dplyr::union_all(dplyr::tibble(
         "result_id" = as.integer(1),
         "cdm_name" = "mock",
-        "result_type" = NA_character_,
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = "cohort3",
         "strata_name" = rep(c(
@@ -263,12 +257,8 @@ test_that("formatEstimateValue", {
 
 test_that("formatEstimateValue, dates", {
   result <- dplyr::tibble(
-    "result_id" = integer(1),
+    "result_id" = as.integer(1),
     "cdm_name" = "mock",
-    "result_type" = "mock_summarised_result",
-    "package_name" = "visOmopResults",
-    "package_version" = utils::packageVersion("visOmopResults") |>
-      as.character(),
     "group_name" = "cohort_name",
     "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
     "strata_name" = rep(c(
@@ -288,12 +278,8 @@ test_that("formatEstimateValue, dates", {
   ) |>
     dplyr::union_all(
       dplyr::tibble(
-        "result_id" = integer(1),
+        "result_id" = as.integer(1),
         "cdm_name" = "mock",
-        "result_type" = "mock_summarised_result",
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
@@ -312,7 +298,15 @@ test_that("formatEstimateValue, dates", {
         "additional_level" = "overall"
       )
     ) |>
-    omopgenerics::newSummarisedResult()
+    omopgenerics::newSummarisedResult(
+      settings = dplyr::tibble(
+        "result_id" = as.integer(1),
+        "result_type" = "mock_summarised_result",
+        "package_name" = "visOmopResults",
+        "package_version" = utils::packageVersion("visOmopResults") |>
+          as.character()
+      )
+    )
   expect_no_error(result_out <- formatEstimateValue(result, decimals = 0))
   expect_true(class(as.Date(result_out |> dplyr::filter(estimate_type == "date") |> dplyr::pull(estimate_value))) == "Date")
 

@@ -12,9 +12,13 @@
 #' @param caption Caption for the table, or NULL for no caption. Text in
 #' markdown formatting style (e.g. `*Your caption here*` for caption in
 #' italics).
-#' @param groupNameCol Column to use as group labels.
-#' @param groupNameAsColumn Whether to display the group labels as a column
+#' @param groupColumn Column to use as group labels.
+#' @param groupNameCol `r lifecycle::badge("deprecated")` This argument was
+#' renamed to "groupColumn" for consistency throughout the package functions.
+#' @param groupAsColumn Whether to display the group labels as a column
 #' (TRUE) or rows (FALSE).
+#' @param groupNameAsColumn `r lifecycle::badge("deprecated")` This argument was
+#' renamed to "groupAsColumn" for consistency with the argument "groupColumn".
 #' @param groupOrder Order in which to display group labels.
 #' @param colsToMergeRows Names of the columns to merge vertically
 #' when consecutive row cells have identical values. Alternatively, use
@@ -46,8 +50,8 @@
 #'     title = "gtTable example",
 #'     subtitle = NULL,
 #'     caption = NULL,
-#'     groupNameCol = "group_level",
-#'     groupNameAsColumn = FALSE,
+#'     groupColumn = "group_level",
+#'     groupAsColumn = FALSE,
 #'     groupOrder = c("cohort1", "cohort2"),
 #'     colsToMergeRows = "all_columns"
 #'   )
@@ -64,11 +68,20 @@ gtTable <- function(
     title = NULL,
     subtitle = NULL,
     caption = NULL,
-    groupNameCol = NULL,
-    groupNameAsColumn = FALSE,
+    groupColumn = NULL,
+    groupNameCol = lifecycle::deprecated(),
+    groupAsColumn = FALSE,
+    groupNameAsColumn = lifecycle::deprecated(),
     groupOrder = NULL,
     colsToMergeRows = NULL
     ) {
+
+  if (lifecycle::is_present(groupNameCol)) {
+    lifecycle::deprecate_warn("0.3.0", "gtTable(groupNameCol)", "gtTable(groupColumn)")
+  }
+  if (lifecycle::is_present(groupNameAsColumn)) {
+    lifecycle::deprecate_warn("0.3.0", "gtTable(groupNameAsColumn)", "gtTable(groupAsColumn)")
+  }
 
   # Package checks
   rlang::check_installed("gt")
@@ -80,11 +93,11 @@ gtTable <- function(
   assertCharacter(title, length = 1, null = TRUE)
   assertCharacter(subtitle, length = 1, null = TRUE)
   assertCharacter(caption, length = 1, null= TRUE)
-  assertCharacter(groupNameCol, null = TRUE)
-  assertLogical(groupNameAsColumn, length = 1)
+  assertCharacter(groupColumn, null = TRUE)
+  assertLogical(groupAsColumn, length = 1)
   assertCharacter(groupOrder, null = TRUE)
   assertCharacter(colsToMergeRows, null = TRUE)
-  validateColsToMergeRows(x, colsToMergeRows, groupNameCol)
+  validateColsToMergeRows(x, colsToMergeRows, groupColumn)
   style <- validateStyle(style, "gt")
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
@@ -100,20 +113,20 @@ gtTable <- function(
   }
 
   # Spanners
-  if (!is.null(groupNameCol)) {
+  if (!is.null(groupColumn)) {
     if (is.null(groupOrder)) {
       x <- x |>
-        dplyr::mutate(!!groupNameCol := factor(.data[[groupNameCol]])) |>
-        dplyr::arrange_at(groupNameCol, .by_group = TRUE)
+        dplyr::mutate(!!groupColumn := factor(.data[[groupColumn]])) |>
+        dplyr::arrange_at(groupColumn, .by_group = TRUE)
     } else {
       x <- x |>
-        dplyr::mutate(!!groupNameCol := factor(.data[[groupNameCol]], levels = groupOrder)) |>
-        dplyr::arrange_at(groupNameCol, .by_group = TRUE)
+        dplyr::mutate(!!groupColumn := factor(.data[[groupColumn]], levels = groupOrder)) |>
+        dplyr::arrange_at(groupColumn, .by_group = TRUE)
     }
     gtResult <- x |>
-      gt::gt(groupname_col = groupNameCol, row_group_as_column = groupNameAsColumn) |>
+      gt::gt(groupname_col = groupColumn, row_group_as_column = groupAsColumn) |>
       gt::tab_spanner_delim(delim = delim) |>
-        gt::row_group_order(groups = x[[groupNameCol]] |> levels())
+        gt::row_group_order(groups = x[[groupColumn]] |> levels())
   } else {
     gtResult <- x |> gt::gt() |> gt::tab_spanner_delim(delim = delim)
   }
@@ -200,7 +213,7 @@ gtTable <- function(
 
   # Merge rows
   if (!is.null(colsToMergeRows)) {
-    gtResult <- gtMergeRows(gtResult, colsToMergeRows, groupNameCol, groupOrder)
+    gtResult <- gtMergeRows(gtResult, colsToMergeRows, groupColumn, groupOrder)
   }
 
    # Other options:
@@ -289,21 +302,20 @@ gtStyles <- function(styleName) {
     )
   )
   if (! styleName %in% names(styles)) {
-    warning(paste0(styleName, "does not correspon to any of our defined styles. Returning default."),
-            call. = FALSE)
+    cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
     styleName <- "default"
   }
   return(styles[[styleName]])
 }
 
-gtMergeRows <- function(gt_x, colsToMergeRows, groupNameCol, groupOrder) {
+gtMergeRows <- function(gt_x, colsToMergeRows, groupColumn, groupOrder) {
 
   colNms <- colnames(gt_x$`_data`)
   if (colsToMergeRows[1] == "all_columns") {
-    if (is.null(groupNameCol)) {
+    if (is.null(groupColumn)) {
       colsToMergeRows <- colNms
     } else {
-      colsToMergeRows <- colNms[!colNms %in% groupNameCol]
+      colsToMergeRows <- colNms[!colNms %in% groupColumn]
     }
   }
 
@@ -325,10 +337,10 @@ gtMergeRows <- function(gt_x, colsToMergeRows, groupNameCol, groupOrder) {
     mergeCol <- gt_x$`_data`[[col]]
     mergeCol[is.na(mergeCol)] <- "-"
 
-    if (is.null(groupNameCol)) {
+    if (is.null(groupColumn)) {
       id <- which(mergeCol == dplyr::lag(mergeCol) & prevId)
     } else {
-      groupCol <- gt_x$`_data`[[groupNameCol]]
+      groupCol <- gt_x$`_data`[[groupColumn]]
       id <- which(groupCol == dplyr::lag(groupCol) & mergeCol == dplyr::lag(mergeCol) & prevId)
     }
 

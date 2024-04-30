@@ -1,5 +1,4 @@
 #' A summarised_result object filled with mock data
-#' @param settings If TRUE settings will be appended.
 #' @return An object of the class summarised_result with mock data.
 #' @description Creates an object of the class summarised_result with mock data
 #' for illustration purposes.
@@ -10,15 +9,11 @@
 #' mockSummarisedResult()
 #'
 #'
-mockSummarisedResult <- function(settings = FALSE) {
+mockSummarisedResult <- function() {
   # TO modify when PatientProfiles works with omopgenerics
   # number subjects
   result <- dplyr::tibble(
     "cdm_name" = "mock",
-    "result_type" = "mock_summarised_result",
-    "package_name" = "visOmopResults",
-    "package_version" = utils::packageVersion("visOmopResults") |>
-      as.character(),
     "group_name" = "cohort_name",
     "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
     "strata_name" = rep(c(
@@ -40,10 +35,6 @@ mockSummarisedResult <- function(settings = FALSE) {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = "mock_summarised_result",
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
@@ -66,10 +57,6 @@ mockSummarisedResult <- function(settings = FALSE) {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = "mock_summarised_result",
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
@@ -92,10 +79,6 @@ mockSummarisedResult <- function(settings = FALSE) {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = "mock_summarised_result",
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
@@ -118,10 +101,6 @@ mockSummarisedResult <- function(settings = FALSE) {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = "mock_summarised_result",
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
@@ -144,10 +123,6 @@ mockSummarisedResult <- function(settings = FALSE) {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = "mock_summarised_result",
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
@@ -170,10 +145,6 @@ mockSummarisedResult <- function(settings = FALSE) {
     dplyr::union_all(
       dplyr::tibble(
         "cdm_name" = "mock",
-        "result_type" = "mock_summarised_result",
-        "package_name" = "visOmopResults",
-        "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
         "group_name" = "cohort_name",
         "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
         "strata_name" = rep(c(
@@ -192,32 +163,16 @@ mockSummarisedResult <- function(settings = FALSE) {
         "additional_level" = "overall"
       )
     ) |>
-    # settings
-    dplyr::union_all(
-      dplyr::tibble(
-        "cdm_name" = "mock",
+    dplyr::mutate(result_id = as.integer(1)) |>
+    omopgenerics::newSummarisedResult(
+      settings = dplyr::tibble(
+        "result_id" = as.integer(1),
         "result_type" = "mock_summarised_result",
         "package_name" = "visOmopResults",
         "package_version" = utils::packageVersion("visOmopResults") |>
-          as.character(),
-        "group_name" = "overall",
-        "group_level" = "overall",
-        "strata_name" = "overall",
-        "strata_level" = "overall",
-        "variable_name" = "settings",
-        "variable_level" = NA_character_,
-        "estimate_name" = "mock_default",
-        "estimate_type" = "logical",
-        "estimate_value" = "TRUE",
-        "additional_name" = "overall",
-        "additional_level" = "overall"
+          as.character()
       )
-    ) |>
-    dplyr::mutate(result_id = as.integer(1)) |>
-    omopgenerics::newSummarisedResult()
-  if(!settings) {
-    result <- result |> dplyr::filter(.data$variable_name != "settings") |>
-      omopgenerics::newSummarisedResult()
-  }
+    )
+
   return(result)
 }

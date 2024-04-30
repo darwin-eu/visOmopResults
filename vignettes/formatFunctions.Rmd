@@ -18,7 +18,7 @@ knitr::opts_chunk$set(
 
 The **format** set of functions can be combined to format a summarised_result object (see R package *omopgenerics*) into a nice *tibble*, *flextable* or *gt* table to display in reports and shiny apps. 
 
-The functions `formatEstimateValue()`, `formatEstimateName()`, `formatHeader()`, and lastly `gtTable()` or `fxTable()` can be implemented in a pipeline to obtain the desired formatted table. Otherwise, these steps are implemented in the function `formatTable()`. 
+The functions `formatEstimateValue()`, `formatEstimateName()`, `formatHeader()`, and lastly `gtTable()` or `fxTable()` can be implemented in a pipeline to obtain the desired formatted table. Otherwise, these steps are implemented in the function `visOmopTable()`. 
 
 ## Formatting functions in a pipeline
 
@@ -121,9 +121,10 @@ Let's start by manipulating the dataframe to have the columns that we want to di
 # first we select the columns we want:
 mock_sr <- mock_sr |>
   splitGroup() |>
-  select(!all_of(c("cdm_name", "result_type", "package_name", 
-                                 "package_version", "estimate_type", "result_id",
-                                 "additional_name", "additional_level"))) 
+  select(!all_of(c(
+    "cdm_name", "estimate_type", "result_id","additional_name", 
+    "additional_level"
+  ))) 
 mock_sr |>  gtTable()
 ```
 
@@ -190,7 +191,7 @@ mock_sr |>
 ```
 
 
-## formatTable(): all at once
+## visOmopTable(): all at once
 
 This function wraps the tools seen so far to format a summarised result at once. While it is convinent to have it all in one function, the level of table manipulation allowed is less than with the pipeline.
 
@@ -204,7 +205,7 @@ For instance, if we want to have a flextable with strata as header, we will writ
 The `split` argument points to which name-level columns to split (group, strata and/or additional). Refer to the vignette split and unite for further information on this functionality.
 
 ```{r}
-mock_sr2 |> formatTable(
+mock_sr2 |> visOmopTable(
   formatEstimateName = c("N%" = "<count> (<percentage>)",
                          "N" = "<count>",
                          "Mean (SD)" = "<mean> (<sd>)"),
@@ -217,7 +218,7 @@ By default, it returns a gt table, but it can be changed to "flextable" and "tib
 The `groupColumn` can be used to create groups in the table body. For instance, looking at the previous table, we might want to group by cohort name:
 
 ```{r}
-mock_sr2 |> formatTable(
+mock_sr2 |> visOmopTable(
   formatEstimateName = c("N%" = "<count> (<percentage>)",
                          "N" = "<count>",
                          "Mean (SD)" = "<mean> (<sd>)"),
@@ -227,8 +228,8 @@ mock_sr2 |> formatTable(
 )
 ```
 
-Additional options can be specified in the `.options` argument. These options are taken from the other format functions and gt/fx table functions seen before. To see a list of allowed arguments and their default values use `optionsFormatTable()`:
+Additional options can be specified in the `.options` argument. These options are taken from the other format functions and gt/fx table functions seen before. To see a list of allowed arguments and their default values use `optionsVisOmopTable()`:
 
 ``` {r}
-optionsFormatTable()
+optionsVisOmopTable()
 ```

@@ -89,9 +89,9 @@ validateColsToMergeRows <- function(x, colsToMergeRows, groupNameCol) {
     }
     ind <- ! colsToMergeRows %in% c(colnames(x), "all_columns")
     if (sum(ind) == 1) {
-      warning(paste0(colsToMergeRows[ind], " is not a column in the dataframe."))
+      cli::cli_inform(c("!" = "{colsToMergeRows[ind]} is not a column in the dataframe."))
     } else if (sum(ind) > 1) {
-      warning(paste0(colsToMergeRows[ind], " are not columns in the dataframe."))
+      cli::cli_inform(c("!" = "{colsToMergeRows[ind]} are not columns in the dataframe."))
     }
   }
 }
@@ -105,5 +105,15 @@ validateDelim <- function(delim) {
   }
   if (nchar(delim) != 1) {
     cli::cli_abort("The value supplied for `delim` must be a single character.")
+  }
+}
+
+checkGroupColumn <- function(groupColumn) {
+  if (inherits(groupColumn, "list")) {
+    assertList(groupColumn, length = 1, null = TRUE, named = TRUE)
+    assertCharacter(groupColumn[[1]], null = TRUE)
+  }
+  if (inherits(groupColumn, "character")) {
+    assertCharacter(groupColumn, null = TRUE)
   }
 }

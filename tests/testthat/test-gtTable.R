@@ -25,8 +25,8 @@ test_that("gtTable", {
     title = "Test 1",
     subtitle = NULL,
     caption = NULL,
-    groupNameCol = NULL,
-    groupNameAsColumn = FALSE,
+    groupColumn = NULL,
+    groupAsColumn = FALSE,
     groupOrder = NULL
   )
 
@@ -54,7 +54,7 @@ test_that("gtTable", {
                c("cell_text.color" = "#0000FF", "cell_text.weight" = "bold"))
   # column names
   expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[1:36] |> unique(), c("#E1E1E1", "bold"))
-  expect_true(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[37:47] |> unique() == "bold")
+  expect_true(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[37:44] |> unique() == "bold")
   expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
   # na
   expect_identical(gtResult$`_substitutions`, list())
@@ -82,8 +82,8 @@ test_that("gtTable", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = NULL
   )
 
@@ -108,7 +108,7 @@ test_that("gtTable", {
   expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "subtitle"] |> unlist(),
                c("cell_text.color" = "#0000FF", "cell_text.size" = "large", "cell_text.weight" = "lighter"))
   # column names
-  expect_true(length(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"] |> unlist()) == 11)
+  expect_true(length(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"] |> unlist()) == 8)
   expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header\\]|\\[header_name\\]", x)}) |> unlist() |> unique())
   # na
   expect_equal(unique(gtResult$`_data`$variable_level[1:3]), "-")
@@ -147,11 +147,11 @@ test_that("gtTable", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = TRUE,
+    groupColumn = "group_level",
+    groupAsColumn = TRUE,
     groupOrder = c("cohort2", "cohort1")
   )
-  # groupNameAsColumn
+  # groupAsColumn
   expect_true(gtResult$`_options`$value[gtResult$`_options`$parameter == "row_group_as_column"] |> unlist())
   # groupOrder
   expect_identical(gtResult$`_row_groups`, c( "cohort2", "cohort1"))
@@ -164,8 +164,8 @@ test_that("gtTable", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = TRUE,
+    groupColumn = "group_level",
+    groupAsColumn = TRUE,
     groupOrder = c("cohort2", "cohort1")
   ))
 })
@@ -183,22 +183,22 @@ test_that("gtTable, test default styles and NULL", {
     title = "Test 1",
     subtitle = NULL,
     caption = NULL,
-    groupNameCol = NULL,
-    groupNameAsColumn = FALSE,
+    groupColumn = NULL,
+    groupAsColumn = FALSE,
     groupOrder = NULL
   )
 
   # style
   expect_true(gtResult$`_styles`$styles[1][[1]]$cell_text$align == "right")
-  expect_true(gtResult$`_styles`$styles[203][[1]]$cell_text$align == "left")
+  expect_true(gtResult$`_styles`$styles[182][[1]]$cell_text$align == "left")
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
-    dplyr::select(-result_id) |>
     formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
                                               "N" = "<count>")) |>
     formatHeader(header = c("strata", "strata_name", "strata_level"),
-                includeHeaderName = TRUE)
+                includeHeaderName = TRUE) |>
+    dplyr::select(-result_id)
   gtResult <- gtTable(
     table_to_format,
     style = "default",
@@ -206,8 +206,8 @@ test_that("gtTable, test default styles and NULL", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = NULL
   )
 
@@ -229,7 +229,7 @@ test_that("gtTable, test default styles and NULL", {
   # column names
   expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[1:27] |> unique(),
                c("#E1E1E1", "center", "bold"))
-  expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[28:49] |> unique(),
+  expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[28:43] |> unique(),
               c("center", "bold"))
   expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
 
@@ -239,21 +239,17 @@ test_that("gtTable, test default styles and NULL", {
 
 
   #Input 3: woring name style ----
-  expect_warning(
+  expect_message(
     gtResult <- gtTable(
       table_to_format,
       style = "heythere",
       na = "-",
       title = "Title test 2",
       subtitle = "Subtitle for test 2",
-      caption = "*This* is the caption",
-      groupNameCol = "group_level",
-      groupNameAsColumn = FALSE,
-      groupOrder = NULL
-    ),
-    "does not correspon to any of our defined styles. Returning default."
-  )
+      caption = "*This* is the caption"
+    ))
 })
+
 test_that("gtTable, test colsToMergeRows", {
   table_to_format<- mockSummarisedResult() |>
     formatHeader(header = c("strata_name", "strata_level")) |>
@@ -266,15 +262,13 @@ test_that("gtTable, test colsToMergeRows", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = FALSE,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
     groupOrder = NULL,
     colsToMergeRows = "all_columns"
   )
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$result_type,
-               c("mock_summarised_result", "", "", "", "", "", "", "mock_summarised_result", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "-", "", "Amoxiciline", "", "Ibuprofen", "", "-", "-", "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
@@ -289,22 +283,20 @@ test_that("gtTable, test colsToMergeRows", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = "group_level",
-    groupNameAsColumn = TRUE,
+    groupColumn = "group_level",
+    groupAsColumn = TRUE,
     groupOrder = NULL,
     colsToMergeRows = c("cdm_name", "variable_level")
   )
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$result_type,
-               rep("mock_summarised_result", 14))
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "", "", "Amoxiciline", "", "Ibuprofen", "", "-", "", "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
   expect_equal(gtResult$`_data`$group_level|> levels(),
                c("cohort1", "cohort2"))
 
-  # no groupNameCol
+  # no groupColumn
   gtResult <- gtTable(
     table_to_format,
     style = "default",
@@ -312,20 +304,16 @@ test_that("gtTable, test colsToMergeRows", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupNameCol = NULL,
-    groupNameAsColumn = FALSE,
+    groupColumn = NULL,
+    groupAsColumn = FALSE,
     groupOrder = NULL,
     colsToMergeRows = "all_columns"
   )
   expect_equal(gtResult$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$result_type,
-               c("mock_summarised_result", "", "", "", "", "", "", "", "", "", "", "", "", ""))
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "-", "-", "-", "-", "-",
                  "Amoxiciline", "Amoxiciline", "Amoxiciline", "Amoxiciline", "Ibuprofen", "Ibuprofen",
                  "Ibuprofen","Ibuprofen"))
   expect_null(gtResult$`_data`$group_level|> levels())
 })
-
-

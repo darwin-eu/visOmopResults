@@ -4,6 +4,7 @@
 #' @param splitGroup If TRUE it will split the group name-level column pair.
 #' @param splitStrata If TRUE it will split the group name-level column pair.
 #' @param splitAdditional If TRUE it will split the group name-level column pair.
+#' @param addSettings Whether to add settings as columns or not.
 #' @param pivotEstimatesBy Names from which pivot wider the estimate values. If
 #' NULL the table will not be pivotted.
 #' @param nameStyle Name style (glue package specifications) to customise names
@@ -30,6 +31,7 @@ tidy.summarised_result <- function(x,
                                    splitGroup = TRUE,
                                    splitStrata = TRUE,
                                    splitAdditional = TRUE,
+                                   addSettings = TRUE,
                                    pivotEstimatesBy = "estimate_name",
                                    nameStyle = NULL,
                                    ...) {
@@ -41,27 +43,27 @@ tidy.summarised_result <- function(x,
   assertCharacter(pivotEstimatesBy, null = TRUE)
   assertCharacter(nameStyle, null = TRUE)
 
-  # setting names
-  setNames <- x$estimate_name[x$variable_name == "settings"]
-  # pivot settings
-  x_out <- x |> pivotSettings()
+  # settings
+  if (isTRUE(addSettings)) {
+    setNames <- colnames(settings(x))
+    setNames <- setNames[setNames != "result_id"]
+    x <- x |> addSettings()
+  }
+
   # split
-  if (splitGroup) {
-    x_out <- x_out |> splitGroup()
-  }
-  if (splitStrata) {
-    x_out <- x_out |> splitStrata()
-  }
-  if (splitAdditional) {
-    x_out <- x_out |> splitAdditional()
-  }
+  if (isTRUE(splitGroup)) x <- x |> splitGroup()
+  if (isTRUE(splitStrata)) x <- x |> splitStrata()
+  if (isTRUE(splitAdditional)) x <- x |> splitAdditional()
+
   # pivot estimates
-  x_out <- x_out |>
+  x <- x |>
     pivotEstimates(pivotEstimatesBy = pivotEstimatesBy, nameStyle = nameStyle)
+
   # move settings
-  if (length(setNames) > 0) {
-    x_out <- x_out |>
+  if (isTRUE(addSettings)) {
+    x <- x |>
       dplyr::relocate(dplyr::all_of(setNames), .after = dplyr::last_col())
   }
-  return(x_out)
+
+  return(x)
 }

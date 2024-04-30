@@ -9,6 +9,7 @@
   splitGroup = TRUE,
   splitStrata = TRUE,
   splitAdditional = TRUE,
+  addSettings = TRUE,
   pivotEstimatesBy = "estimate_name",
   nameStyle = NULL,
   ...
@@ -22,6 +23,8 @@
 \item{splitStrata}{If TRUE it will split the group name-level column pair.}
 
 \item{splitAdditional}{If TRUE it will split the group name-level column pair.}
+
+\item{addSettings}{Whether to add settings as columns or not.}
 
 \item{pivotEstimatesBy}{Names from which pivot wider the estimate values. If
 NULL the table will not be pivotted.}

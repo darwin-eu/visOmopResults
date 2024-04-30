@@ -1,7 +1,6 @@
 #' Identify group columns in an omop result object
 #'
 #' @param result A summarised_result.
-#' @param overall deprecated.
 #'
 #' @return Unique values of the group name column.
 #' @description Identifies and returns the unique values in group_name column.
@@ -12,17 +11,13 @@
 #' mockSummarisedResult() |>
 #'   groupColumns()
 #'
-groupColumns <- function(result, overall = lifecycle::deprecated()) {
-  if (lifecycle::is_present(overall)) {
-    lifecycle::deprecate_warn("0.1.1", "groupColumns(overall)")
-  }
+groupColumns <- function(result) {
   getColumns(result = result, col = "group_name")
 }
 
 #' Identify strata columns in an omop result object
 #'
 #' @param result A summarised_result.
-#' @param overall deprecated.
 #'
 #' @return Unique values of the strata name column.
 #' @description Identifies and returns the unique values in strata_name column.
@@ -33,17 +28,13 @@ groupColumns <- function(result, overall = lifecycle::deprecated()) {
 #' mockSummarisedResult() |>
 #'   strataColumns()
 #'
-strataColumns <- function(result, overall = lifecycle::deprecated()) {
-  if (lifecycle::is_present(overall)) {
-    lifecycle::deprecate_warn("0.1.1", "strataColumns(overall)")
-  }
+strataColumns <- function(result) {
   getColumns(result = result, col = "strata_name")
 }
 
 #' Identify additional columns in an omop result object
 #'
 #' @param result A summarised_result.
-#' @param overall deprecated.
 #'
 #' @return Unique values of the additional name column.
 #' @description Identifies and returns the unique values in additional_name
@@ -55,10 +46,7 @@ strataColumns <- function(result, overall = lifecycle::deprecated()) {
 #' mockSummarisedResult() |>
 #'   additionalColumns()
 #'
-additionalColumns <- function(result, overall = lifecycle::deprecated()) {
-  if (lifecycle::is_present(overall)) {
-    lifecycle::deprecate_warn("0.1.1", "additionalColumns(overall)")
-  }
+additionalColumns <- function(result) {
   getColumns(result = result, col = "additional_name")
 }
 
@@ -69,11 +57,11 @@ getColumns <- function(result, col) {
 
   # extract columns
   x <- result |>
-      dplyr::pull(dplyr::all_of(col)) |>
-      unique() |>
-      lapply(strsplit, split = " and | &&& ") |>
-      unlist() |>
-      unique()
+    dplyr::pull(dplyr::all_of(col)) |>
+    unique() |>
+    lapply(strsplit, split = " &&& ") |>
+    unlist() |>
+    unique()
 
   # eliminate overall
   x <- x[x != "overall"]

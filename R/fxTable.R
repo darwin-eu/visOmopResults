@@ -12,9 +12,13 @@
 #' @param caption Caption for the table, or NULL for no caption. Text in
 #' markdown formatting style (e.g. `*Your caption here*` for caption in
 #' italics).
-#' @param groupNameCol Column to use as group labels.
-#' @param groupNameAsColumn Whether to display the group labels as a column
+#' @param groupColumn Column to use as group labels.
+#' @param groupNameCol `r lifecycle::badge("deprecated")` This argument was
+#' renamed to "groupColumn" for consistency throughout the package functions.
+#' @param groupAsColumn Whether to display the group labels as a column
 #' (TRUE) or rows (FALSE).
+#' @param groupNameAsColumn `r lifecycle::badge("deprecated")` This argument was
+#' renamed to "groupAsColumn" for consistency with the argument "groupColumn".
 #' @param groupOrder Order in which to display group labels.
 #' @param colsToMergeRows Names of the columns to merge vertically
 #' when consecutive row cells have identical values. Alternatively, use
@@ -38,8 +42,8 @@
 #'     title = "fxTable example",
 #'     subtitle = NULL,
 #'     caption = NULL,
-#'     groupNameCol = "group_level",
-#'     groupNameAsColumn = TRUE,
+#'     groupColumn = "group_level",
+#'     groupAsColumn = TRUE,
 #'     groupOrder = c("cohort1", "cohort2"),
 #'     colsToMergeRows = "all_columns"
 #'  )
@@ -56,11 +60,20 @@ fxTable <- function(
     title = NULL,
     subtitle = NULL,
     caption = NULL,
-    groupNameCol = NULL,
-    groupNameAsColumn = FALSE,
+    groupColumn = NULL,
+    groupNameCol = lifecycle::deprecated(),
+    groupAsColumn = FALSE,
+    groupNameAsColumn = lifecycle::deprecated(),
     groupOrder = NULL,
     colsToMergeRows = NULL
 ) {
+
+  if (lifecycle::is_present(groupNameCol)) {
+    lifecycle::deprecate_warn("0.3.0", "fxTable(groupNameCol)", "fxTable(groupColumn)")
+  }
+  if (lifecycle::is_present(groupNameAsColumn)) {
+    lifecycle::deprecate_warn("0.3.0", "fxTable(groupNameAsColumn)", "fxTable(groupAsColumn)")
+  }
 
   # Package checks
   rlang::check_installed("flextable")
@@ -73,11 +86,11 @@ fxTable <- function(
   assertCharacter(title, length = 1, null = TRUE)
   assertCharacter(subtitle, length = 1, null = TRUE)
   assertCharacter(caption, length = 1, null= TRUE)
-  assertCharacter(groupNameCol, null = TRUE)
-  assertLogical(groupNameAsColumn, length = 1)
+  assertCharacter(groupColumn, null = TRUE)
+  assertLogical(groupAsColumn, length = 1)
   assertCharacter(groupOrder, null = TRUE)
   assertCharacter(colsToMergeRows, null = TRUE)
-  validateColsToMergeRows(x, colsToMergeRows, groupNameCol)
+  validateColsToMergeRows(x, colsToMergeRows, groupColumn)
   style <- validateStyle(style, "fx")
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
@@ -104,25 +117,25 @@ fxTable <- function(
   }
 
   # Flextable
-  if (is.null(groupNameCol)) {
+  if (is.null(groupColumn)) {
     flex_x <- x |> flextable::flextable() |> flextable::separate_header(split = delim)
   } else {
     if (!is.null(groupOrder)) {
-      x <-x |> dplyr::mutate(!!groupNameCol := factor(.data[[groupNameCol]], levels = groupOrder)) |>
-        dplyr::relocate(!!groupNameCol) |>
-        dplyr::arrange(.data[[groupNameCol]])
+      x <-x |> dplyr::mutate(!!groupColumn := factor(.data[[groupColumn]], levels = groupOrder)) |>
+        dplyr::relocate(!!groupColumn) |>
+        dplyr::arrange(.data[[groupColumn]])
     } else {
-      x <- x |>  dplyr::mutate(!!groupNameCol := factor(.data[[groupNameCol]])) |>
-        dplyr::relocate(!!groupNameCol) |>
-        dplyr::arrange(.data[[groupNameCol]])
+      x <- x |>  dplyr::mutate(!!groupColumn := factor(.data[[groupColumn]])) |>
+        dplyr::relocate(!!groupColumn) |>
+        dplyr::arrange(.data[[groupColumn]])
     }
-    if (groupNameAsColumn) {
-      flex_x <- x |> flextable::flextable() |> flextable::merge_v(j = groupNameCol) |> flextable::separate_header(split = delim)
+    if (groupAsColumn) {
+      flex_x <- x |> flextable::flextable() |> flextable::merge_v(j = groupColumn) |> flextable::separate_header(split = delim)
     } else {
-      flex_x <- x |> flextable::as_grouped_data(groups = groupNameCol) |> flextable::flextable() |>
+      flex_x <- x |> flextable::as_grouped_data(groups = groupColumn) |> flextable::flextable() |>
         flextable::separate_header(split = delim)
       flex_x <- flex_x |>
-        flextable::merge_h(i = which(!is.na(flex_x$body$dataset[[groupNameCol]])), part = "body")
+        flextable::merge_h(i = which(!is.na(flex_x$body$dataset[[groupColumn]])), part = "body")
     }
   }
 
@@ -150,10 +163,10 @@ fxTable <- function(
 
   # Basic default + merge columns
   if (!is.null(colsToMergeRows)) { # style while merging rows
-    flex_x <- fxMergeRows(flex_x, colsToMergeRows, groupNameCol)
+    flex_x <- fxMergeRows(flex_x, colsToMergeRows, groupColumn)
   } else {
-    if (!is.null(groupNameCol)) { # style group different
-      indRowGroup <- which(!is.na(flex_x$body$dataset[[groupNameCol]]))
+    if (!is.null(groupColumn)) { # style group different
+      indRowGroup <- which(!is.na(flex_x$body$dataset[[groupColumn]]))
       flex_x <- flex_x |>
         flextable::border(
           j = 1,
@@ -172,7 +185,7 @@ fxTable <- function(
           border.bottom = officer::fp_border(color = "gray"),
           part = "body") |>
         flextable::border( # correct group level right border
-          i = which(!is.na(flex_x$body$dataset[[groupNameCol]])),
+          i = which(!is.na(flex_x$body$dataset[[groupColumn]])),
           j = 1,
           border.right = officer::fp_border(color = "transparent"),
           part = "body")
@@ -231,14 +244,14 @@ fxTable <- function(
     flextable::style(part = "body", pr_t = style$body$text,
                      pr_p = style$body$paragraph, pr_c = style$body$cell)
   # group label
-  if (!is.null(groupNameCol)) {
-    if (!groupNameAsColumn) {
+  if (!is.null(groupColumn)) {
+    if (!groupAsColumn) {
       flex_x <- flex_x |>
-        flextable::style(part = "body", i = which(!is.na(flex_x$body$dataset[[groupNameCol]])),
+        flextable::style(part = "body", i = which(!is.na(flex_x$body$dataset[[groupColumn]])),
                          pr_t = style$group_label$text, pr_p = style$group_label$paragraph, pr_c = style$group_label$cell)
     } else {
       flex_x <- flex_x |>
-        flextable::style(part = "body", j = which(flex_x$body$dataset |> colnames() == groupNameCol),
+        flextable::style(part = "body", j = which(flex_x$body$dataset |> colnames() == groupColumn),
                          pr_t = style$group_label$text, pr_p = style$group_label$paragraph, pr_c = style$group_label$cell)
     }
 
@@ -273,20 +286,19 @@ fxStyles <- function(styleName) {
     )
   )
   if (! styleName %in% names(styles)) {
-    warning(paste0(styleName, " does not correspon to any of our defined styles. Returning default."),
-            call. = FALSE)
+    cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
     styleName <- "default"
   }
   return(styles[[styleName]])
 }
 
-fxMergeRows <- function(fx_x, colsToMergeRows, groupNameCol) {
+fxMergeRows <- function(fx_x, colsToMergeRows, groupColumn) {
   colNms <- colnames(fx_x$body$dataset)
   if (colsToMergeRows[1] == "all_columns") {
-    if (is.null(groupNameCol)) {
+    if (is.null(groupColumn)) {
       colsToMergeRows <- colNms
     } else {
-      colsToMergeRows <- colNms[!colNms %in% groupNameCol]
+      colsToMergeRows <- colNms[!colNms %in% groupColumn]
     }
   }
 
@@ -297,15 +309,15 @@ fxMergeRows <- function(fx_x, colsToMergeRows, groupNameCol) {
 
   # fill groupCol
   indColGroup <- NULL
-  if ( !is.null(groupNameCol)) {
-    groupCol <- as.character(fx_x$body$dataset[[groupNameCol]])
+  if ( !is.null(groupColumn)) {
+    groupCol <- as.character(fx_x$body$dataset[[groupColumn]])
     for (k in 2:length(groupCol)){
       if (is.na(groupCol[k])) {
         groupCol[k] <- groupCol[k-1]
       }
     }
-    indColGroup <- which(groupNameCol %in% colNms)
-    indRowGroup <- which(!is.na(fx_x$body$dataset[[groupNameCol]]))
+    indColGroup <- which(groupColumn %in% colNms)
+    indRowGroup <- which(!is.na(fx_x$body$dataset[[groupColumn]]))
   }
 
 
@@ -322,7 +334,7 @@ fxMergeRows <- function(fx_x, colsToMergeRows, groupNameCol) {
     mergeCol <- fx_x$body$dataset[[col]]
     mergeCol[is.na(mergeCol)] <- "this is NA"
 
-    if (is.null(groupNameCol)) {
+    if (is.null(groupColumn)) {
       id <- which(mergeCol == dplyr::lag(mergeCol) & prevId)
     } else {
       id <- which(groupCol == dplyr::lag(groupCol) & mergeCol == dplyr::lag(mergeCol) & prevId)
@@ -355,7 +367,7 @@ fxMergeRows <- function(fx_x, colsToMergeRows, groupNameCol) {
       i = nrow(fx_x$body$dataset),
       border.bottom = officer::fp_border(color = "gray"),
       part = "body")
-  if (!is.null(groupNameCol)) {
+  if (!is.null(groupColumn)) {
     fx_x <- fx_x |>
       flextable::border(
         j = indColGroup,
@@ -363,7 +375,7 @@ fxMergeRows <- function(fx_x, colsToMergeRows, groupNameCol) {
         border = officer::fp_border(color = "gray"),
         part = "body") |>
       flextable::border(
-        i = which(!is.na(fx_x$body$dataset[[groupNameCol]])),
+        i = which(!is.na(fx_x$body$dataset[[groupColumn]])),
         j = 1,
         border.right = officer::fp_border(color = "transparent"),
         part = "body")
