@@ -78,7 +78,8 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
     nameK <- nms[k]
     formatK <- format[k] |> unname()
     keys <- result[["estimate_name"]] |> unique()
-    keysK <- regmatches(formatK, gregexpr("(?<=\\<).+?(?=\\>)", formatK, perl = T))[[1]]
+    keysK <- regmatches(formatK, gregexpr("(?<=\\<).+?(?=\\>)", formatK, perl = T))[[1]] |>
+      sort(decreasing = TRUE)
     format_boolean <- all(keysK %in% keys)
     len <- length(keysK)
     if (len > 0 & format_boolean) {
