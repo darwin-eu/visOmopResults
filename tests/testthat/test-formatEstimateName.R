@@ -349,4 +349,48 @@ test_that("common key word",{
     )
   res <- formatEstimateName(result, estimateNameFormat = "<count> <count_95CI_lower>")
   expect_true(unique(res$estimate_name) == "count count_95CI_lower")
+
+  result <- dplyr::tibble(
+    "cdm_name" = "mock",
+    "group_name" = "cohort_name",
+    "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
+    "strata_name" = rep(c(
+      "overall", rep("age_group &&& sex", 4), rep("sex", 2), rep("age_group", 2)
+    ), 2),
+    "strata_level" = rep(c(
+      "overall", "<40 &&& Male", ">=40 &&& Male", "<40 &&& Female",
+      ">=40 &&& Female", "Male", "Female", "<40", ">=40"
+    ), 2),
+    "variable_name" = "number subjects",
+    "variable_level" = NA_character_,
+    "estimate_name" = "count",
+    "estimate_type" = "integer",
+    "estimate_value" = round(10000000*stats::runif(18)) |> as.character(),
+    "additional_name" = "overall",
+    "additional_level" = "overall"
+  ) |>
+    # age - mean
+    dplyr::union_all(
+      dplyr::tibble(
+        "cdm_name" = "mock",
+        "group_name" = "cohort_name",
+        "group_level" = c(rep("cohort1", 9), rep("cohort2", 9)),
+        "strata_name" = rep(c(
+          "overall", rep("age_group &&& sex", 4), rep("sex", 2), rep("age_group", 2)
+        ), 2),
+        "strata_level" = rep(c(
+          "overall", "<40 &&& Male", ">=40 &&& Male", "<40 &&& Female",
+          ">=40 &&& Female", "Male", "Female", "<40", ">=40"
+        ), 2),
+        "variable_name" = "number subjects",
+        "variable_level" = NA_character_,
+        "estimate_name" = "95CI_lower_count",
+        "estimate_type" = "integer",
+        "estimate_value" = round(10000000*stats::runif(18)) |> as.character(),
+        "additional_name" = "overall",
+        "additional_level" = "overall"
+      )
+    )
+  res <- formatEstimateName(result, estimateNameFormat = "<count> <95CI_lower_count>")
+  expect_true(unique(res$estimate_name) == "count 95CI_lower_count")
 })
