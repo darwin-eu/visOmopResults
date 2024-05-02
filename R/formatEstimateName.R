@@ -146,7 +146,7 @@ getFormatNum <- function(format, keys) {
   ik <- 1
   for (k in seq_along(keys)) {
     format <- gsub(
-      pattern = keys[k], replacement = paste0("#", ik, "#"), x = format
+      pattern = paste0("<", keys[k], ">"), replacement = paste0("#", ik, "#"), x = format
     )
     ik <- ik + 1
   }
@@ -155,7 +155,7 @@ getFormatNum <- function(format, keys) {
 evalName <- function(result, format, keys) {
   for (k in seq_along(keys)) {
     format <- gsub(
-      pattern = paste0("<#", k, "#>"),
+      pattern = paste0("#", k, "#"),
       replacement = paste0("#x#.data[[\"", keys[k], "\"]]#x#"),
       x = format
     )
