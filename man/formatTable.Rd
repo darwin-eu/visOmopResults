@@ -38,7 +38,7 @@ list(\code{newGroupName} = c("variable_name", "variable_level"))}
 \item{type}{Type of desired formatted table, possibilities: "gt",
 "flextable", "tibble".}
 
-\item{renameColumns}{Named vector to customisa column names, for instance:
+\item{renameColumns}{Named vector to customise column names, for instance:
 c("Database name" = "cdm_name")). By default column names are transformed to
 sentence case.}
 
