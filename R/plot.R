@@ -1,36 +1,5 @@
-#' create a ggplot from the output of summarise result.
-#'
-#' `r lifecycle::badge("deprecated")`
-#'
-#' @param data output of summariseLargeScaleCharacteristics.
-#' @param xAxis what to plot on x axis, default as variable_name column.
-#' Has to be a column in data.
-#' @param yAxis what to plot on y axis, default as estimate_value column.
-#' Has to be a column in data. One of the xAxis or yAxis has to be estimate_value.
-#' @param plotStyle one of barplot, boxplot, scatterplot or density
-#' @param facetVarX column in data to facet by on horizontal axis
-#' @param facetVarY column in data to facet by on vertical axis
-#' @param colorVars column in data to color by.
-#' @param vertical_x whether to display x axis string vertically.
-#' @return A ggplot.
-#' @export
-#' @examples
-#' \donttest{
-#' library(visOmopResults)
-#' library(dplyr)
-#' result <- mockSummarisedResult() |>
-#' filter(variable_name == "Medications",
-#' strata_name == "overall")
-#' graphs <- plotfunction(result, plotStyle = "barplot")
-#' }
-plotfunction <- function(data,
-                         xAxis = "variable_name",
-                         yAxis = "estimate_value",
-                         plotStyle = "scatterplot",
-                         facetVarX = "variable_name",
-                         facetVarY = c("group_level", "strata_level"),
-                         colorVars = "variable_level",
-                         vertical_x = FALSE) {
+
+plotInternal <- function() {
   errorMessage <- checkmate::makeAssertCollection()
   checkmate::assertTRUE(inherits(data, "summarised_result"))
   all_vars <- c(xAxis, yAxis, facetVarX, facetVarY, colorVars)
@@ -774,7 +743,6 @@ construct_variable <- function(data, facet_vars) {
   }
   return(NULL)
 }
-
 construct_color_variable <- function(data, color_vars) {
   if (!is.null(color_vars) && length(color_vars) >= 1) {
     combined_factor <- interaction(dplyr::select(
@@ -784,4 +752,297 @@ construct_color_variable <- function(data, color_vars) {
     return(as.factor(combined_factor))
   }
   return(NULL)
+}
+
+#' Create a plot visualisation from a summarised result object.
+#'
+#' @param result A summarised result object.
+#' @param x Column or estimate name that is used as x variable.
+#' @param y Column or estimate name that is used as y variable
+#' @param line Whether to plot a line using `geom_line`.
+#' @param points Whether to plot points using `geom_point`.
+#' @param ymin Lower limit of error bars, if provided is plot using
+#' `geom_errorbar`.
+#' @param ymax Upper limit of error bars, if provided is plot using
+#' `geom_errorbar`.
+#' @param facet Variables to facet by, a formula can be provided to specify
+#' which variables should be used as rows and which ones as columns.
+#' @param colour Columns to use to determine the colors.
+#' @param splitStrata Whether to split strata within columns.
+#' @param splitGroup Whether to split group within columns.
+#' @param splitAdditional Whether to split additional within columns.
+#'
+#' @return A plot object.
+#'
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' result <- mockSummarisedResult() |>
+#'   dplyr::filter(variable_name == "age")
+#'
+#' plotScatter(
+#'   result = result,
+#'   x = "group",
+#'   y = "mean",
+#'   facet = "strata")
+#' }
+#'
+plotScatter <- function(result,
+                        x,
+                        y,
+                        line = TRUE,
+                        points = TRUE,
+                        ymin = NULL,
+                        ymax = NULL,
+                        facet = NULL,
+                        colour = NULL,
+                        splitStrata = TRUE,
+                        splitGroup = TRUE,
+                        splitAdditional = TRUE) {
+  # check and prepare input
+  omopgenerics::assertLogical(line, length = 1, call = call)
+  omopgenerics::assertLogical(points, length = 1, call = call)
+  res <- prepareInput(
+    result = result, x = x, y = y, facet = facet, colour = colour,
+    splitStrata = splitStrata, splitGroup = splitGroup,
+    splitAdditional = splitAdditional, ymin = ymin, ymax = ymax)
+
+  result <- res$result
+  facet <- res$facet
+  rm(res)
+
+  aes <- "ggplot2::aes(x = .data$x, y = .data$y, colour = .data$xxx_colour, group = .data$xxx_group"
+  if (!is.null(ymin)) aes <- paste0(aes, ", ymin = .data$ymin")
+  if (!is.null(ymax)) aes <- paste0(aes, ", ymax = .data$ymax")
+  aes <- paste0(aes, ")") |>
+    glue::glue() |>
+    rlang::parse_expr() |>
+    eval()
+
+  p <- ggplot2::ggplot(data = result, mapping = aes)
+  if (line) p <- p + ggplot2::geom_line()
+  if (!is.null(ymin) & !is.null(ymax)) p <- p + ggplot2::geom_errorbar()
+  if (points) p <- p + ggplot2::geom_point()
+
+  p <- plotFacet(p, facet)
+
+  return(p)
+}
+
+plotBoxplot <- function(result,
+                        lower,
+                        middle,
+                        upper,
+                        ymin = NULL,
+                        ymax = NULL,
+                        facet = NULL,
+                        color = NULL,
+                        splitStrata = TRUE,
+                        splitGroup = TRUE,
+                        splitAdditional = TRUE) {
+
+}
+
+plotBarplot <- function(result,
+                        x,
+                        y,
+                        ymax = NULL,
+                        ymin = NULL,
+                        facet = NULL,
+                        color = NULL,
+                        splitStrata = TRUE,
+                        splitGroup = TRUE,
+                        splitAdditional = TRUE) {
+
+}
+
+prepareInput <- function(result,
+                         x,
+                         facet,
+                         colour,
+                         splitStrata,
+                         splitGroup,
+                         splitAdditional,
+                         ...,
+                         call = parent.frame()) {
+  # result <- omopgenerics::validateResult(result, call = call)
+  result <- result |>
+    omopgenerics::newSummarisedResult() |>
+    pivotEstimates()
+
+  omopgenerics::assertLogical(splitStrata, length = 1, call = call)
+  omopgenerics::assertLogical(splitGroup, length = 1, call = call)
+  omopgenerics::assertLogical(splitAdditional, length = 1, call = call)
+
+  # strata
+  if (splitStrata) {
+    strataCols <- strataColumns(result)
+    result <- result |>
+      splitStrata()
+  } else {
+    result <- result |>
+      tidyr::unite(col = "strata", c("strata_name", "strata_level"))
+    strataCols <- "strata"
+  }
+
+  # group
+  if (splitGroup) {
+    groupCols <- groupColumns(result)
+    result <- result |>
+      splitGroup()
+  } else {
+    result <- result |>
+      tidyr::unite(col = "group", c("group_name", "group_level"))
+    groupCols <- "group"
+  }
+
+  # additional
+  if (splitAdditional) {
+    additionalCols <- additionalColumns(result)
+    result <- result |>
+      splitAdditional()
+  } else {
+    result <- result |>
+      tidyr::unite(col = "additional", c("additional_name", "additional_level"))
+    additionalCols <- "additional"
+  }
+
+  optionsCols <- c(
+    "cdm_name", "variable_name", "variable_level", strataCols, groupCols,
+    additionalCols)
+
+  facet <- validateFacetColour(
+    x = facet, name = "facet", opts = optionsCols, strataCols = strataCols,
+    groupCols = groupCols, additionalCals = additionalCals, call = call)
+  facetCols <- getFacetCols(facet)
+
+  colour <- validateFacetColour(
+    x = colour, name = "colour", opts = optionsCols, strataCols = strataCols,
+    groupCols = groupCols, additionalCals = additionalCals, call = call)
+  if (length(colour) > 0) {
+    result <- result |>
+      tidyr::unite(col = "xxx_colour", dplyr::all_of(colour), remove = FALSE)
+  } else {
+    result <- result |>
+      dplyr::mutate(xxx_colour = "all")
+  }
+
+  # variables
+  variables <- list(...)
+  for (k in seq_along(variables)) {
+    nm <- names(variables)[k]
+    val <- variables[[k]]
+    msg <- "{nm} must be a character that points to a column in result." |>
+      glue::glue()
+    omopgenerics::assertCharacter(val, length = 1, call = call, msg = msg, null = TRUE)
+    if (isFALSE(val %in% colnames(result))) {
+      cli::cli_inform("column {val} with NA as it is not present in data.")
+      result <- result |>
+        dplyr::mutate(!!val := NA_real_)
+    }
+  }
+
+  x <- validateFacetColour(
+    x = x, name = "x", opts = optionsCols, strataCols = strataCols,
+    groupCols = groupCols, additionalCals = additionalCals, call = call)
+
+  group <- c(facetCols, colour, x)
+  group <- optionsCols[!optionsCols %in% group]
+  if (length(group) > 0) {
+    result <- result |>
+      tidyr::unite(col = "xxx_group", dplyr::all_of(group), remove = FALSE)
+  } else {
+    result <- result |>
+      dplyr::mutate(xxx_group = "all")
+  }
+
+  if (length(x) > 1) {
+    result <- result |>
+      tidyr::unite(col = "x", dplyr::all_of(x), remove = FALSE)
+  } else {
+    result <- result |>
+      dplyr::rename("x" = dplyr::all_of(x))
+  }
+
+  result <- result |>
+    dplyr::select(dplyr::all_of(c(
+      "x", facetCols, "xxx_group", "xxx_colour", unlist(variables)
+    )))
+
+  return(list(result = result, facet = facet))
+}
+validateFacetColour <- function(x, name, opts, strataCols, groupCols, additionalCals, call) {
+  if (is.null(x)) return(NULL)
+  mes <- "{name} must be character vector or a formula that can contain the following elements: {opts}."
+  if (rlang::is_bare_formula(x)) {
+    x <- x |> as.character()
+    if (length(x) != 3) cli::cli_abort("{name} formula not recognised", call = call)
+    element1 <- x[2] |> validateElement(opts, strataCols, groupCols, additionalCols)
+    if (is.null(element1)) cli::cli_abort(message = mes, call = call)
+    element2 <- x[3] |> validateElement(opts, strataCols, groupCols, additionalCols)
+    if (is.null(element2)) cli::cli_abort(message = mes, call = call)
+    x <- paste0(
+      paste0(element1, collapse = " + "),
+      " ~ ",
+      paste0(element2, collapse = " + ")
+    ) |>
+      as.formula()
+  } else if (is.character(x)) {
+    x <- x |> validateElement(opts, strataCols, groupCols, additionalCols)
+    if (is.null(x)) cli::cli_abort(message = mes, call = call)
+  } else {
+    cli::cli_abort(message = mes, call = call)
+  }
+  return(x)
+}
+validateElement <- function(element, opts, strataCols, groupCols, additionalCols) {
+  if (element == ".") return(element)
+  element <- element |> strsplit(split = "+", fixed = TRUE)
+  element <- gsub(" ", "", element)
+  element <- substituteValue(element, "strata", strataCols)
+  element <- substituteValue(element, "group", groupCols)
+  element <- substituteValue(element, "additional", additionalCols)
+  if (!(length(element) == length(unique(element)) & all(element %in% opts))) {
+    element <- NULL
+  }
+  return(element)
+}
+substituteValue <- function(x, value, newValue) {
+  id <- which(x == value)
+  lx <- length(x)
+  if (length(id) > 1) return(NULL)
+  if (length(id) == 1) {
+    if (id == 1) {
+      if (lx == 1) {
+        x <- newValue
+      } else {
+        x <- c(newValue, x[-1])
+      }
+    } else if (id == lx) {
+      x <- c(x[-id], newValue)
+    } else {
+      x <- c(x[1:(id-1)], newValue, x[(id+1):lx])
+    }
+  }
+  return(x)
+}
+plotFacet <- function(p, facet) {
+  if (!is.null(facet)) {
+    if (is.character(facet)) {
+      p <- p + ggplot2::facet_wrap(facets = facet)
+    } else {
+      p <- p + ggplot2::facet_grid(facet)
+    }
+  }
+  return(p)
+}
+getFacetCols <- function(facet) {
+  if (is.null(facet)) {
+    facet <- character()
+  } else if (rlang::is_bare_formula(facet)) {
+    facet <- as.character(facet) |> strsplit(split = "+")
+    facet <- facet[[-1]] |> unlist() |> unique()
+  }
+  return(facet)
 }
