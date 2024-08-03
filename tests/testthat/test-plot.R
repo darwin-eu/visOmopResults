@@ -1,5 +1,4 @@
 test_that("Function returns a ggplot object", {
-
   result <- mockSummarisedResult() |>
     dplyr::filter(variable_name == "age")
 
@@ -32,5 +31,16 @@ test_that("Function returns a ggplot object", {
       ymax = "max",
       facet = age_group ~ sex,
       colour = "cohort_name")
+  )
+
+  result <- mockSummarisedResult() |>
+    dplyr::filter(variable_name == "age")
+
+  expect_no_error(
+    plotBarplot(
+      result = result,
+      x = "cohort_name",
+      y = "mean",
+      facet = c("age_group", "sex"))
   )
 })

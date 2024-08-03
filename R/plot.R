@@ -55,8 +55,6 @@ plotScatter <- function(result,
   groupColumn <- idCols["group"] |> unname()
   xColumn <- idCols["x"] |> unname()
 
-  #checkNonUnique(result, colourColumn, facetColumn, xColumn)
-
   aes <- "ggplot2::aes(x = .data${xColumn}, y = .data[['{y}']], colour = .data${colourColumn}, group = .data${groupColumn}"
   if (!is.null(ymin)) aes <- paste0(aes, ", ymin = .data[['{ymin}']]")
   if (!is.null(ymax)) aes <- paste0(aes, ", ymax = .data[['{ymax}']]")
@@ -137,18 +135,64 @@ plotBoxplot <- function(result,
   return(p)
 }
 
+#' Create a plot visualisation from a summarised result object.
+#'
+#' @param result A summarised result object.
+#' @param x Column or estimate name that is used as x variable.
+#' @param y Column or estimate name that is used as y variable
+#' @param ymin Lower limit of error bars, if provided is plot using
+#' `geom_errorbar`.
+#' @param ymax Upper limit of error bars, if provided is plot using
+#' `geom_errorbar`.
+#' @param facet Variables to facet by, a formula can be provided to specify
+#' which variables should be used as rows and which ones as columns.
+#' @param colour Columns to use to determine the colors.
+#'
+#' @return A plot object.
+#' @export
+#'
+#' @examples
+#' \donttest{
+#' result <- mockSummarisedResult() |> dplyr::filter(variable_name == "age")
+#'
+#' plotBarplot(
+#'   result = result,
+#'   x = "cohort_name",
+#'   y = "mean",
+#'   facet = c("age_group", "sex"))
+#' }
+#'
 plotBarplot <- function(result,
                         x,
                         y,
                         ymax = NULL,
                         ymin = NULL,
                         facet = NULL,
-                        color = NULL,
-                        splitStrata = TRUE,
-                        splitGroup = TRUE,
-                        splitAdditional = TRUE) {
+                        colour = NULL) {
   rlang::check_required("ggplot2")
+  result <- prepareInput(
+    result = result, x = x, y = y, facet = facet, colour = colour, ymin = ymin,
+    ymax = ymax)
 
+  idCols <- attr(result, "ids_cols")
+  colourColumn <- idCols["colour"] |> unname()
+  facetColumn <- idCols["facet"] |> unname()
+  xColumn <- idCols["x"] |> unname()
+
+  aes <- "ggplot2::aes(x = .data${xColumn}, y = .data[['{y}']], colour = .data${colourColumn}, fill = .data${colourColumn}"
+  if (!is.null(ymin)) aes <- paste0(aes, ", ymin = .data[['{ymin}']]")
+  if (!is.null(ymax)) aes <- paste0(aes, ", ymax = .data[['{ymax}']]")
+  aes <- paste0(aes, ")") |>
+    glue::glue() |>
+    rlang::parse_expr() |>
+    eval()
+
+  p <- ggplot2::ggplot(data = result, mapping = aes) +
+    ggplot2::geom_col()
+  if (!is.null(ymin) & !is.null(ymax)) p <- p + ggplot2::geom_errorbar()
+  p <- plotFacet(p, facet)
+
+  return(p)
 }
 
 prepareInput <- function(result,
