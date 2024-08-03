@@ -14,11 +14,11 @@
 #' "strata", "additional"), or an empty character vector to not split.
 #' @param type Type of desired formatted table, possibilities: "gt",
 #' "flextable", "tibble".
-#' @param renameColumns Named vector to customisa column names, for instance:
+#' @param renameColumns Named vector to customise column names, for instance:
 #' c("Database name" = "cdm_name")). By default column names are transformed to
 #' sentence case.
 #' @param showMinCellCount If TRUE, suppressed estimates will be indicated with
-#' "<{minCellCount}", otherwise the default na defined in `.options` will
+#' "<\{minCellCount\}", otherwise the default na defined in `.options` will
 #' be used.
 #' @param minCellCount `r lifecycle::badge("deprecated")` Suppression of
 #' estimates when counts < minCellCount should be done before with
@@ -440,7 +440,7 @@ optionsVisOmopTable <- function() {
 #' "strata", "additional"), or an empty character vector to not split.
 #' @param type Type of desired formatted table, possibilities: "gt",
 #' "flextable", "tibble".
-#' @param renameColumns Named vector to customisa column names, for instance:
+#' @param renameColumns Named vector to customise column names, for instance:
 #' c("Database name" = "cdm_name")). By default column names are transformed to
 #' sentence case.
 #' @param minCellCount `r lifecycle::badge("deprecated")` Suppression of

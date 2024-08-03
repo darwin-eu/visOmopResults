@@ -193,7 +193,7 @@ mock_sr |>
 
 ## visOmopTable(): all at once
 
-This function wraps the tools seen so far to format a summarised result at once. While it is convinent to have it all in one function, the level of table manipulation allowed is less than with the pipeline.
+This function wraps the tools seen so far to format a summarised result at once. While it is convenient to have it all in one function, the level of table manipulation allowed is less than with the pipeline.
 
 First, we create a new mock summarised result:
 ```{r }

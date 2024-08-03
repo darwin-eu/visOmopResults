@@ -39,12 +39,12 @@ list(\code{newGroupName} = c("variable_name", "variable_level"))}
 \item{type}{Type of desired formatted table, possibilities: "gt",
 "flextable", "tibble".}
 
-\item{renameColumns}{Named vector to customisa column names, for instance:
+\item{renameColumns}{Named vector to customise column names, for instance:
 c("Database name" = "cdm_name")). By default column names are transformed to
 sentence case.}
 
 \item{showMinCellCount}{If TRUE, suppressed estimates will be indicated with
-"<{minCellCount}", otherwise the default na defined in \code{.options} will
+"<\{minCellCount\}", otherwise the default na defined in \code{.options} will
 be used.}
 
 \item{minCellCount}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Suppression of
