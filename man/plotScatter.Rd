@@ -14,9 +14,7 @@ plotScatter(
   ymax = NULL,
   facet = NULL,
   colour = NULL,
-  splitStrata = TRUE,
-  splitGroup = TRUE,
-  splitAdditional = TRUE
+  group = colour
 )
 }
 \arguments{
@@ -41,11 +39,7 @@ which variables should be used as rows and which ones as columns.}
 
 \item{colour}{Columns to use to determine the colors.}
 
-\item{splitStrata}{Whether to split strata within columns.}
-
-\item{splitGroup}{Whether to split group within columns.}
-
-\item{splitAdditional}{Whether to split additional within columns.}
+\item{group}{Columns to use to determine the group.}
 }
 \value{
 A plot object.
@@ -60,9 +54,9 @@ result <- mockSummarisedResult() |>
 
 plotScatter(
   result = result,
-  x = "group",
+  x = "cohort_name",
   y = "mean",
-  facet = "strata")
+  facet = age_group ~ sex)
 }
 
 }
