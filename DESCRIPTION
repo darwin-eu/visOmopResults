@@ -1,6 +1,6 @@
 Package: visOmopResults
 Title: Graphs and Tables for OMOP Results
-Version: 0.3.0
+Version: 0.3.0.900
 Authors@R: c(
     person(
         "Marti", "Catala", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -30,18 +30,20 @@ Imports:
     stringr,
     tidyr
 Suggests: 
+    covr,
     flextable (>= 0.9.5),
+    ggplot2,
     gt,
-    officer,
     knitr,
+    officer,
     rmarkdown,
-    testthat (>= 3.0.0),
-    tibble,
-    covr
+    testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.2
+Remotes:
+    darwin-eu-dev/omopgenerics

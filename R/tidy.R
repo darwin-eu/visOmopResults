@@ -25,7 +25,8 @@
 #' @examples
 #' result <- mockSummarisedResult()
 #'
-#' result |> tidy()
+#' result |>
+#'   tidy()
 #'
 tidy.summarised_result <- function(x,
                                    splitGroup = TRUE,

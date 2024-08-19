@@ -1,0 +1,87 @@
+test_that("Function returns a ggplot object", {
+  result <- mockSummarisedResult() |>
+    dplyr::filter(variable_name == "age")
+
+  expect_no_error(
+    plotScatter(
+      result = result,
+      x = "cohort_name",
+      y = "mean",
+      facet = c("age_group", "sex"))
+  )
+
+  result <- mockSummarisedResult() |>
+    dplyr::filter(variable_name == "age") |>
+    pivotEstimates() |>
+    dplyr::mutate(q25 = mean - sd, q75 = mean + sd, min = mean - 2*sd, max = mean + 2*sd) |>
+    tidyr::pivot_longer(
+      c("mean", "sd", "q25", "q75", "min", "max"),
+      names_to = "estimate_name",
+      values_to = "estimate_value") |>
+    dplyr::mutate(estimate_type = "numeric") |>
+    omopgenerics::newSummarisedResult()
+
+  expect_no_error(
+    plotBoxplot(
+      result,
+      lower = "q25",
+      middle = "mean",
+      upper = "q75",
+      ymin = "min",
+      ymax = "max",
+      facet = age_group ~ sex,
+      colour = "cohort_name")
+  )
+
+  expect_no_error(
+    plotScatter(
+      result,
+      x = "sex",
+      y =  "mean",
+      ymin = "q25",
+      ymax = "q75",
+      facet = "age_group",
+      colour = "cohort_name")
+  )
+
+  result <- mockSummarisedResult() |>
+    dplyr::filter(variable_name == "age")
+
+  expect_no_error(
+    plotBarplot(
+      result = result,
+      x = "cohort_name",
+      y = "mean",
+      facet = c("age_group", "sex"))
+  )
+
+  expect_snapshot(
+    result |>
+      dplyr::union_all(
+        result |>
+          dplyr::mutate('variable_name' = 'age2')
+      ) |>
+      plotBarplot(
+        x = "cohort_name",
+        y = "mean",
+        facet = c("age_group", "sex")),
+    error = TRUE
+  )
+
+  expect_message(
+    plotScatter(
+      result,
+      x = "sex",
+      y =  "mean",
+      facet = "age_group")
+  )
+
+  expect_error(
+    plotScatter(
+      result,
+      x = "sex",
+      y =  "xxx",
+      facet = "age_group")
+  )
+
+})

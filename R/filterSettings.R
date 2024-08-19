@@ -12,7 +12,7 @@
 #' the required specified settings.
 #'
 #' @examples
-#' library(tibble)
+#' library(dplyr)
 #' library(omopgenerics)
 #'
 #' x <- tibble(

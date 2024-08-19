@@ -22,7 +22,7 @@ the required specified settings.
 Filter a summarised_result
 }
 \examples{
-library(tibble)
+library(dplyr)
 library(omopgenerics)
 
 x <- tibble(
