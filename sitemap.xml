@@ -1,111 +1,42 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/404.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/LICENSE.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/articles/formatFunctions.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/articles/index.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/articles/splitAndUnite.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/articles/tidy.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/authors.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/index.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/addSettings.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/additionalColumns.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/filterSettings.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/formatEstimateName.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/formatEstimateValue.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/formatHeader.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/formatTable.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/fxTable.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/groupColumns.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/gtTable.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/index.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/mockSummarisedResult.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/optionsVisOmopTable.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/pivotEstimates.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/reexports.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/splitAdditional.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/splitAll.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/splitGroup.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/splitNameLevel.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/splitStrata.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/strataColumns.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/tidy.summarised_result.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/uniteAdditional.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/uniteGroup.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/uniteNameLevel.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/uniteStrata.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/visOmopResults-package.html</loc>
-  </url>
-  <url>
-    <loc>https://darwin-eu.github.io/visOmopResults/reference/visOmopTable.html</loc>
-  </url>
+<urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
+<url><loc>https://darwin-eu.github.io/visOmopResults/404.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/LICENSE.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/articles/formatFunctions.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/articles/index.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/articles/splitAndUnite.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/articles/tidy.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/authors.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/index.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/addSettings.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/additionalColumns.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/filterSettings.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/formatEstimateName.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/formatEstimateValue.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/formatHeader.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/formatTable.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/fxTable.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/groupColumns.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/gtTable.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/index.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/mockSummarisedResult.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/optionsVisOmopTable.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/pivotEstimates.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/plotBarplot.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/plotBoxplot.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/plotScatter.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/reexports.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/splitAdditional.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/splitAll.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/splitGroup.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/splitNameLevel.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/splitStrata.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/strataColumns.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/tidy.summarised_result.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/uniteAdditional.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/uniteGroup.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/uniteNameLevel.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/uniteStrata.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/visOmopResults-package.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/visOmopTable.html</loc></url>
 </urlset>
+
