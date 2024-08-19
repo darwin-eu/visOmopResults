@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{plotScatter}
 \alias{plotScatter}
-\title{Create a plot visualisation from a summarised result object.}
+\title{Create a scatter plot visualisation from a summarised result object.}
 \usage{
 plotScatter(
   result,
@@ -45,7 +45,7 @@ which variables should be used as rows and which ones as columns.}
 A plot object.
 }
 \description{
-Create a plot visualisation from a summarised result object.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
 \donttest{

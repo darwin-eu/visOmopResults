@@ -47,6 +47,7 @@ into columns.
 \examples{
 result <- mockSummarisedResult()
 
-result |> tidy()
+result |>
+  tidy()
 
 }

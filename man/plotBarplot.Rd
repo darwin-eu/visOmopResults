@@ -2,17 +2,9 @@
 % Please edit documentation in R/plot.R
 \name{plotBarplot}
 \alias{plotBarplot}
-\title{Create a plot visualisation from a summarised result object.}
+\title{Create a bar plot visualisation from a summarised result object.}
 \usage{
-plotBarplot(
-  result,
-  x,
-  y,
-  ymax = NULL,
-  ymin = NULL,
-  facet = NULL,
-  colour = NULL
-)
+plotBarplot(result, x, y, facet = NULL, colour = NULL)
 }
 \arguments{
 \item{result}{A summarised result object.}
@@ -20,12 +12,6 @@ plotBarplot(
 \item{x}{Column or estimate name that is used as x variable.}
 
 \item{y}{Column or estimate name that is used as y variable}
-
-\item{ymax}{Upper limit of error bars, if provided is plot using
-\code{geom_errorbar}.}
-
-\item{ymin}{Lower limit of error bars, if provided is plot using
-\code{geom_errorbar}.}
 
 \item{facet}{Variables to facet by, a formula can be provided to specify
 which variables should be used as rows and which ones as columns.}
@@ -36,7 +22,7 @@ which variables should be used as rows and which ones as columns.}
 A plot object.
 }
 \description{
-Create a plot visualisation from a summarised result object.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
 \donttest{

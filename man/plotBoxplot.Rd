@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{plotBoxplot}
 \alias{plotBoxplot}
-\title{Create a ggplot2 box plot from a summarised_result object.}
+\title{Create a box plot visualisation from a summarised_result object.}
 \usage{
 plotBoxplot(
   result,
@@ -37,5 +37,5 @@ which variables should be used as rows and which ones as columns.}
 A ggplot2 object.
 }
 \description{
-Create a ggplot2 box plot from a summarised_result object.
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }

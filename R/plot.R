@@ -1,5 +1,7 @@
 
-#' Create a plot visualisation from a summarised result object.
+#' Create a scatter plot visualisation from a summarised result object.
+#'
+#' `r lifecycle::badge("experimental")`
 #'
 #' @param result A summarised result object.
 #' @param x Column or estimate name that is used as x variable.
@@ -68,12 +70,15 @@ plotScatter <- function(result,
   if (!is.null(ymin) & !is.null(ymax)) p <- p + ggplot2::geom_errorbar()
   if (points) p <- p + ggplot2::geom_point()
 
-  p <- plotFacet(p, facet)
+  p <- plotFacet(p, facet) +
+    ggplot2::labs(x = styleLabel(x), color = styleLabel(colour))
 
   return(p)
 }
 
-#' Create a ggplot2 box plot from a summarised_result object.
+#' Create a box plot visualisation from a summarised_result object.
+#'
+#' `r lifecycle::badge("experimental")`
 #'
 #' @param result A summarised result object.
 #' @param lower Estimate name for the lower quantile of the box.
@@ -115,17 +120,9 @@ plotBoxplot <- function(result,
     rlang::parse_expr() |>
     eval()
 
-  ylab <- result$variable_name |>
-    unique() |>
-    stringr::str_to_sentence()
-  clab <- colour |>
-    stringr::str_replace_all(pattern = "_", replacement = " ") |>
-    stringr::str_to_sentence() |>
-    paste0(collapse = " - ")
-  xlab <- x |>
-    stringr::str_replace_all(pattern = "_", replacement = " ") |>
-    stringr::str_to_sentence() |>
-    paste0(collapse = " - ")
+  ylab <- styleLabel(unique(result$variable_name))
+  clab <- styleLabel(colour)
+  xlab <- styleLabel(x)
 
   p <- ggplot2::ggplot(data = result, mapping = aes) +
     ggplot2::geom_boxplot(stat = "identity")
@@ -135,15 +132,13 @@ plotBoxplot <- function(result,
   return(p)
 }
 
-#' Create a plot visualisation from a summarised result object.
+#' Create a bar plot visualisation from a summarised result object.
+#'
+#' `r lifecycle::badge("experimental")`
 #'
 #' @param result A summarised result object.
 #' @param x Column or estimate name that is used as x variable.
 #' @param y Column or estimate name that is used as y variable
-#' @param ymin Lower limit of error bars, if provided is plot using
-#' `geom_errorbar`.
-#' @param ymax Upper limit of error bars, if provided is plot using
-#' `geom_errorbar`.
 #' @param facet Variables to facet by, a formula can be provided to specify
 #' which variables should be used as rows and which ones as columns.
 #' @param colour Columns to use to determine the colors.
@@ -165,14 +160,11 @@ plotBoxplot <- function(result,
 plotBarplot <- function(result,
                         x,
                         y,
-                        ymax = NULL,
-                        ymin = NULL,
                         facet = NULL,
                         colour = NULL) {
   rlang::check_required("ggplot2")
   result <- prepareInput(
-    result = result, x = x, y = y, facet = facet, colour = colour, ymin = ymin,
-    ymax = ymax)
+    result = result, x = x, y = y, facet = facet, colour = colour)
 
   idCols <- attr(result, "ids_cols")
   colourColumn <- idCols["colour"] |> unname()
@@ -180,8 +172,6 @@ plotBarplot <- function(result,
   xColumn <- idCols["x"] |> unname()
 
   aes <- "ggplot2::aes(x = .data${xColumn}, y = .data[['{y}']], colour = .data${colourColumn}, fill = .data${colourColumn}"
-  if (!is.null(ymin)) aes <- paste0(aes, ", ymin = .data[['{ymin}']]")
-  if (!is.null(ymax)) aes <- paste0(aes, ", ymax = .data[['{ymax}']]")
   aes <- paste0(aes, ")") |>
     glue::glue() |>
     rlang::parse_expr() |>
@@ -189,8 +179,11 @@ plotBarplot <- function(result,
 
   p <- ggplot2::ggplot(data = result, mapping = aes) +
     ggplot2::geom_col()
-  if (!is.null(ymin) & !is.null(ymax)) p <- p + ggplot2::geom_errorbar()
-  p <- plotFacet(p, facet)
+
+  colour <- styleLabel(colour)
+
+  p <- plotFacet(p, facet) +
+    ggplot2::labs(x = styleLabel(x), fill = colour, colour = colour)
 
   return(p)
 }
@@ -207,6 +200,17 @@ prepareInput <- function(result,
   cols <- colnames(settings(result))
   cols <- cols[!cols %in% c(
     "result_id", "result_type", "package_name", "package_version")]
+  result <- result |>
+    omopgenerics::newSummarisedResult()
+  vars <- result |>
+    dplyr::pull("variable_name") |>
+    unique()
+  if (length(vars) > 1) {
+    cli::cli_abort(
+      "The summarised_result contains data for more than one variable,
+      please filter the result to the variable of interest",
+      call = call)
+  }
   result <- result |>
     omopgenerics::newSummarisedResult() |>
     splitAll() |>
@@ -243,8 +247,8 @@ prepareInput <- function(result,
   if (length(diffCols) > 0) {
     cli::cli_inform(c(
       "i" = "There are duplicated points, suggested to include:
-      {.pkg {diffCols}} in: either {.arg facet}, {.arg colour}, {.arg group} or
-      {.arg x}."))
+      {.pkg {diffCols}} in: either {.var facet}, {.var colour}, {.var group} or
+      {.var x}."))
   }
 
   # variables
@@ -256,9 +260,7 @@ prepareInput <- function(result,
       glue::glue()
     omopgenerics::assertCharacter(val, length = 1, call = call, msg = msg, null = TRUE)
     if (isFALSE(val %in% colnames(result))) {
-      cli::cli_inform("created column {val} as NA because it is not present in data.")
-      result <- result |>
-        dplyr::mutate(!!val := NA_real_)
+      cli::cli_abort("{val} is not present in data.", call = call)
     }
   }
   attr(result, "x") <- x
@@ -269,18 +271,13 @@ validateGroup <- function(res, x, opts, call) {
   idsCols <- attr(res, "ids_cols")
   nm <- substitute(x) |> as.character()
   id <- omopgenerics::uniqueId(exclude = colnames(res), prefix = "col_")
-  if (is.null(x)) {
-    res <- res |>
-      dplyr::mutate(!!id := NA_character_)
-  } else if (length(x) == 0) {
+  if (length(x) == 0) {
     res <- res |>
       dplyr::mutate(!!id := "")
   } else {
     mes <- "{nm} must be a subset of: {opts}."
-    if (!is.character(x)) cli::cli_abort(mes, call = call)
-    if (length(x) != length(unique(x))) cli::cli_abort(mes, call = call)
-    notPresent <- x[!x %in% opts]
-    if (length(notPresent) > 0) cli::cli_abort(mes, call = call)
+    omopgenerics::assertChoice(
+      x, choices = opts, unique = TRUE, call = call, msg = mes)
     res <- res |>
       tidyr::unite(
         col = !!id, dplyr::all_of(x), remove = FALSE, sep = " - ")
@@ -298,12 +295,9 @@ plotFacet <- function(p, facet) {
   }
   return(p)
 }
-getFacetCols <- function(facet) {
-  if (is.null(facet)) {
-    facet <- character()
-  } else if (rlang::is_bare_formula(facet)) {
-    facet <- as.character(facet) |> strsplit(split = "+")
-    facet <- facet[[-1]] |> unlist() |> unique()
-  }
-  return(facet)
+styleLabel <- function(x) {
+  x |>
+    stringr::str_replace_all(pattern = "_", replacement = " ") |>
+    stringr::str_to_sentence() |>
+    stringr::str_flatten(collapse = ", ", last = " and ")
 }

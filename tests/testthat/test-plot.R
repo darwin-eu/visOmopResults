@@ -33,6 +33,17 @@ test_that("Function returns a ggplot object", {
       colour = "cohort_name")
   )
 
+  expect_no_error(
+    plotScatter(
+      result,
+      x = "sex",
+      y =  "mean",
+      ymin = "q25",
+      ymax = "q75",
+      facet = "age_group",
+      colour = "cohort_name")
+  )
+
   result <- mockSummarisedResult() |>
     dplyr::filter(variable_name == "age")
 
@@ -43,4 +54,34 @@ test_that("Function returns a ggplot object", {
       y = "mean",
       facet = c("age_group", "sex"))
   )
+
+  expect_snapshot(
+    result |>
+      dplyr::union_all(
+        result |>
+          dplyr::mutate('variable_name' = 'age2')
+      ) |>
+      plotBarplot(
+        x = "cohort_name",
+        y = "mean",
+        facet = c("age_group", "sex")),
+    error = TRUE
+  )
+
+  expect_message(
+    plotScatter(
+      result,
+      x = "sex",
+      y =  "mean",
+      facet = "age_group")
+  )
+
+  expect_error(
+    plotScatter(
+      result,
+      x = "sex",
+      y =  "xxx",
+      facet = "age_group")
+  )
+
 })
