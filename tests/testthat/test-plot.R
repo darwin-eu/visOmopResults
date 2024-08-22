@@ -7,6 +7,9 @@ test_that("Function returns a ggplot object", {
       result = result,
       x = "cohort_name",
       y = "mean",
+      line = TRUE,
+      point = TRUE,
+      ribbon = FALSE,
       facet = c("age_group", "sex"))
   )
 
@@ -37,6 +40,9 @@ test_that("Function returns a ggplot object", {
     plotScatter(
       result,
       x = "sex",
+      line = TRUE,
+      point = TRUE,
+      ribbon = TRUE,
       y =  "mean",
       ymin = "q25",
       ymax = "q75",
@@ -72,6 +78,9 @@ test_that("Function returns a ggplot object", {
     plotScatter(
       result,
       x = "sex",
+      line = TRUE,
+      point = TRUE,
+      ribbon = FALSE,
       y =  "mean",
       facet = "age_group")
   )
@@ -81,6 +90,9 @@ test_that("Function returns a ggplot object", {
       result,
       x = "sex",
       y =  "xxx",
+      line = TRUE,
+      point = TRUE,
+      ribbon = FALSE,
       facet = "age_group")
   )
 
