@@ -8,8 +8,9 @@ plotScatter(
   result,
   x,
   y,
-  line = TRUE,
-  points = TRUE,
+  line,
+  points,
+  ribbon,
   ymin = NULL,
   ymax = NULL,
   facet = NULL,
@@ -27,6 +28,8 @@ plotScatter(
 \item{line}{Whether to plot a line using \code{geom_line}.}
 
 \item{points}{Whether to plot points using \code{geom_point}.}
+
+\item{ribbon}{Whether to plot a ribbon using \code{geom_ribbon}.}
 
 \item{ymin}{Lower limit of error bars, if provided is plot using
 \code{geom_errorbar}.}
@@ -56,6 +59,9 @@ plotScatter(
   result = result,
   x = "cohort_name",
   y = "mean",
+  line = TRUE,
+  points = TRUE,
+  ribbon = FALSE,
   facet = age_group ~ sex)
 }
 

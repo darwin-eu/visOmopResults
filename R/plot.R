@@ -8,6 +8,7 @@
 #' @param y Column or estimate name that is used as y variable
 #' @param line Whether to plot a line using `geom_line`.
 #' @param points Whether to plot points using `geom_point`.
+#' @param ribbon Whether to plot a ribbon using `geom_ribbon`.
 #' @param ymin Lower limit of error bars, if provided is plot using
 #' `geom_errorbar`.
 #' @param ymax Upper limit of error bars, if provided is plot using
@@ -30,14 +31,18 @@
 #'   result = result,
 #'   x = "cohort_name",
 #'   y = "mean",
+#'   line = TRUE,
+#'   points = TRUE,
+#'   ribbon = FALSE,
 #'   facet = age_group ~ sex)
 #' }
 #'
 plotScatter <- function(result,
                         x,
                         y,
-                        line = TRUE,
-                        points = TRUE,
+                        line,
+                        points,
+                        ribbon,
                         ymin = NULL,
                         ymax = NULL,
                         facet = NULL,
@@ -47,6 +52,7 @@ plotScatter <- function(result,
   # check and prepare input
   omopgenerics::assertLogical(line, length = 1, call = call)
   omopgenerics::assertLogical(points, length = 1, call = call)
+  omopgenerics::assertLogical(ribbon, length = 1, call = call)
   result <- prepareInput(
     result = result, x = x, y = y, facet = facet, colour = colour, ymin = ymin,
     ymax = ymax, group = group)
@@ -57,9 +63,13 @@ plotScatter <- function(result,
   groupColumn <- idCols["group"] |> unname()
   xColumn <- idCols["x"] |> unname()
 
-  aes <- "ggplot2::aes(x = .data${xColumn}, y = .data[['{y}']], colour = .data${colourColumn}, group = .data${groupColumn}"
-  if (!is.null(ymin)) aes <- paste0(aes, ", ymin = .data[['{ymin}']]")
-  if (!is.null(ymax)) aes <- paste0(aes, ", ymax = .data[['{ymax}']]")
+  aes <- "ggplot2::aes(x = .data${xColumn}, y = .data[['{y}']],
+  colour = .data${colourColumn}, group = .data${groupColumn},
+  fill = .data${colourColumn}"
+  yminymax <- !is.null(ymin) & !is.null(ymax)
+  if (yminymax) {
+    aes <- paste0(aes, ", ymin = .data[['{ymin}']], ymax = .data[['{ymax}']]")
+  }
   aes <- paste0(aes, ")") |>
     glue::glue() |>
     rlang::parse_expr() |>
@@ -67,11 +77,15 @@ plotScatter <- function(result,
 
   p <- ggplot2::ggplot(data = result, mapping = aes)
   if (line) p <- p + ggplot2::geom_line()
-  if (!is.null(ymin) & !is.null(ymax)) p <- p + ggplot2::geom_errorbar()
+  if (yminymax) p <- p + ggplot2::geom_errorbar()
   if (points) p <- p + ggplot2::geom_point()
+  if (ribbon & yminymax) {
+    p <- p + ggplot2::geom_ribbon(alpha = .3, color = NA, show.legend = FALSE)
+  }
 
   p <- plotFacet(p, facet) +
-    ggplot2::labs(x = styleLabel(x), color = styleLabel(colour))
+    ggplot2::labs(
+      x = styleLabel(x), fill = styleLabel(colour), colour = styleLabel(colour))
 
   return(p)
 }
