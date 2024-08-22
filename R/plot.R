@@ -7,7 +7,7 @@
 #' @param x Column or estimate name that is used as x variable.
 #' @param y Column or estimate name that is used as y variable
 #' @param line Whether to plot a line using `geom_line`.
-#' @param points Whether to plot points using `geom_point`.
+#' @param point Whether to plot points using `geom_point`.
 #' @param ribbon Whether to plot a ribbon using `geom_ribbon`.
 #' @param ymin Lower limit of error bars, if provided is plot using
 #' `geom_errorbar`.
@@ -32,7 +32,7 @@
 #'   x = "cohort_name",
 #'   y = "mean",
 #'   line = TRUE,
-#'   points = TRUE,
+#'   point = TRUE,
 #'   ribbon = FALSE,
 #'   facet = age_group ~ sex)
 #' }
@@ -41,7 +41,7 @@ plotScatter <- function(result,
                         x,
                         y,
                         line,
-                        points,
+                        point,
                         ribbon,
                         ymin = NULL,
                         ymax = NULL,
@@ -51,7 +51,7 @@ plotScatter <- function(result,
   rlang::check_required("ggplot2")
   # check and prepare input
   omopgenerics::assertLogical(line, length = 1, call = call)
-  omopgenerics::assertLogical(points, length = 1, call = call)
+  omopgenerics::assertLogical(point, length = 1, call = call)
   omopgenerics::assertLogical(ribbon, length = 1, call = call)
   result <- prepareInput(
     result = result, x = x, y = y, facet = facet, colour = colour, ymin = ymin,
@@ -78,7 +78,7 @@ plotScatter <- function(result,
   p <- ggplot2::ggplot(data = result, mapping = aes)
   if (line) p <- p + ggplot2::geom_line()
   if (yminymax) p <- p + ggplot2::geom_errorbar()
-  if (points) p <- p + ggplot2::geom_point()
+  if (point) p <- p + ggplot2::geom_point()
   if (ribbon & yminymax) {
     p <- p + ggplot2::geom_ribbon(alpha = .3, color = NA, show.legend = FALSE)
   }

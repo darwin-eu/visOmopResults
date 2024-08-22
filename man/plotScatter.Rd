@@ -9,7 +9,7 @@ plotScatter(
   x,
   y,
   line,
-  points,
+  point,
   ribbon,
   ymin = NULL,
   ymax = NULL,
@@ -27,7 +27,7 @@ plotScatter(
 
 \item{line}{Whether to plot a line using \code{geom_line}.}
 
-\item{points}{Whether to plot points using \code{geom_point}.}
+\item{point}{Whether to plot points using \code{geom_point}.}
 
 \item{ribbon}{Whether to plot a ribbon using \code{geom_ribbon}.}
 
@@ -60,7 +60,7 @@ plotScatter(
   x = "cohort_name",
   y = "mean",
   line = TRUE,
-  points = TRUE,
+  point = TRUE,
   ribbon = FALSE,
   facet = age_group ~ sex)
 }

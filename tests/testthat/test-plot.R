@@ -8,7 +8,7 @@ test_that("Function returns a ggplot object", {
       x = "cohort_name",
       y = "mean",
       line = TRUE,
-      points = TRUE,
+      point = TRUE,
       ribbon = FALSE,
       facet = c("age_group", "sex"))
   )
@@ -41,7 +41,7 @@ test_that("Function returns a ggplot object", {
       result,
       x = "sex",
       line = TRUE,
-      points = TRUE,
+      point = TRUE,
       ribbon = TRUE,
       y =  "mean",
       ymin = "q25",
@@ -79,7 +79,7 @@ test_that("Function returns a ggplot object", {
       result,
       x = "sex",
       line = TRUE,
-      points = TRUE,
+      point = TRUE,
       ribbon = FALSE,
       y =  "mean",
       facet = "age_group")
@@ -91,7 +91,7 @@ test_that("Function returns a ggplot object", {
       x = "sex",
       y =  "xxx",
       line = TRUE,
-      points = TRUE,
+      point = TRUE,
       ribbon = FALSE,
       facet = "age_group")
   )
