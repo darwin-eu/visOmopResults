@@ -47,8 +47,9 @@
 <span>  <span class="va">result</span>,</span>
 <span>  <span class="va">x</span>,</span>
 <span>  <span class="va">y</span>,</span>
-<span>  line <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  points <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>  <span class="va">line</span>,</span>
+<span>  <span class="va">point</span>,</span>
+<span>  <span class="va">ribbon</span>,</span>
 <span>  ymin <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  ymax <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  facet <span class="op">=</span> <span class="cn">NULL</span>,</span>
@@ -77,8 +78,12 @@
 <dd><p>Whether to plot a line using <code>geom_line</code>.</p></dd>
 
 
-<dt id="arg-points">points<a class="anchor" aria-label="anchor" href="#arg-points"></a></dt>
+<dt id="arg-point">point<a class="anchor" aria-label="anchor" href="#arg-point"></a></dt>
 <dd><p>Whether to plot points using <code>geom_point</code>.</p></dd>
+
+
+<dt id="arg-ribbon">ribbon<a class="anchor" aria-label="anchor" href="#arg-ribbon"></a></dt>
+<dd><p>Whether to plot a ribbon using <code>geom_ribbon</code>.</p></dd>
 
 
 <dt id="arg-ymin">ymin<a class="anchor" aria-label="anchor" href="#arg-ymin"></a></dt>
@@ -119,6 +124,9 @@ which variables should be used as rows and which ones as columns.</p></dd>
 <span class="r-in"><span>  result <span class="op">=</span> <span class="va">result</span>,</span></span>
 <span class="r-in"><span>  x <span class="op">=</span> <span class="st">"cohort_name"</span>,</span></span>
 <span class="r-in"><span>  y <span class="op">=</span> <span class="st">"mean"</span>,</span></span>
+<span class="r-in"><span>  line <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  point <span class="op">=</span> <span class="cn">TRUE</span>,</span></span>
+<span class="r-in"><span>  ribbon <span class="op">=</span> <span class="cn">FALSE</span>,</span></span>
 <span class="r-in"><span>  facet <span class="op">=</span> <span class="va">age_group</span> <span class="op">~</span> <span class="va">sex</span><span class="op">)</span></span></span>
 <span class="r-plt img"><img src="plotScatter-1.png" alt="" width="700" height="433"></span>
 <span class="r-in"><span><span class="co"># }</span></span></span>
