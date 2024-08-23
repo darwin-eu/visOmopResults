@@ -48,7 +48,7 @@ plotScatter <- function(result,
                         facet = NULL,
                         colour = NULL,
                         group = colour) {
-  rlang::check_required("ggplot2")
+  rlang::check_installed("ggplot2")
   # check and prepare input
   omopgenerics::assertLogical(line, length = 1, call = call)
   omopgenerics::assertLogical(point, length = 1, call = call)
@@ -115,7 +115,7 @@ plotBoxplot <- function(result,
                         ymax = "max",
                         facet = NULL,
                         colour = NULL) {
-  rlang::check_required("ggplot2")
+  rlang::check_installed("ggplot2")
   # check and prepare input
   result <- prepareInput(
     result = result, x = NULL, facet = facet, colour = colour, lower = lower,
@@ -176,7 +176,7 @@ plotBarplot <- function(result,
                         y,
                         facet = NULL,
                         colour = NULL) {
-  rlang::check_required("ggplot2")
+  rlang::check_installed("ggplot2")
   result <- prepareInput(
     result = result, x = x, y = y, facet = facet, colour = colour)
 
