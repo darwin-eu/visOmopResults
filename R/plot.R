@@ -295,8 +295,6 @@ validateGroup <- function(res, x, opts, call) {
     res <- res |>
       dplyr::mutate(!!id := "")
   } else if (length(x) == 1) {
-    print(x)
-    print(colnames(res))
     res <- res |>
       dplyr::mutate(!!id := .data[[x]])
   } else {
