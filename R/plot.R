@@ -55,7 +55,7 @@ plotScatter <- function(result,
   omopgenerics::assertLogical(ribbon, length = 1, call = call)
   result <- prepareInput(
     result = result, x = x, y = y, facet = facet, colour = colour, ymin = ymin,
-    ymax = ymax, group = group)
+    ymax = ymax, group = group, allowEstimatesX = TRUE)
 
   idCols <- attr(result, "ids_cols")
   colourColumn <- idCols["colour"] |> unname()
@@ -206,6 +206,7 @@ prepareInput <- function(result,
                          x,
                          facet,
                          colour,
+                         allowEstimatesX = FALSE,
                          group = NULL,
                          ...,
                          call = parent.frame()) {
@@ -232,6 +233,11 @@ prepareInput <- function(result,
   optionCols <- colnames(result)
   optionCols <- optionCols[!optionCols %in% c(
     "result_id", "estimate_name", "estimate_type", "estimate_value")]
+  if (allowEstimatesX) {
+    optionX <- c(optionCols, unique(result$estimate_name)) |> unique()
+  } else {
+    optionX <- optionCols
+  }
 
   if (rlang::is_bare_formula(facet)) {
     facet <- as.character(facet) |>
@@ -256,7 +262,7 @@ prepareInput <- function(result,
     x <- diffCols
   }
   result <- result |>
-    validateGroup(x = x, opts = optionCols, call = call)
+    validateGroup(x = x, opts = optionX, call = call)
   diffCols <- diffCols[!diffCols %in% x]
   if (length(diffCols) > 0) {
     cli::cli_inform(c(
@@ -288,9 +294,15 @@ validateGroup <- function(res, x, opts, call) {
   if (length(x) == 0) {
     res <- res |>
       dplyr::mutate(!!id := "")
+  } else if (length(x) == 1) {
+    print(x)
+    print(colnames(res))
+    res <- res |>
+      dplyr::mutate(!!id := .data[[x]])
   } else {
     mes <- "{nm} must be a subset of: {opts}." |>
-      glue::glue()
+      cli::cli_text() |>
+      cli::cli_fmt()
     omopgenerics::assertChoice(
       x, choices = opts, unique = TRUE, call = call, msg = mes)
     res <- res |>
