@@ -289,7 +289,8 @@ validateGroup <- function(res, x, opts, call) {
     res <- res |>
       dplyr::mutate(!!id := "")
   } else {
-    mes <- "{nm} must be a subset of: {opts}."
+    mes <- "{nm} must be a subset of: {opts}." |>
+      glue::glue()
     omopgenerics::assertChoice(
       x, choices = opts, unique = TRUE, call = call, msg = mes)
     res <- res |>
