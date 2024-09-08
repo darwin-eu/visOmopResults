@@ -185,8 +185,7 @@ plotBarplot <- function(result,
   facetColumn <- idCols["facet"] |> unname()
   xColumn <- idCols["x"] |> unname()
 
-  aes <- "ggplot2::aes(x = .data${xColumn}, y = .data[['{y}']], colour = .data${colourColumn}, fill = .data${colourColumn}"
-  aes <- paste0(aes, ")") |>
+  aes <- "ggplot2::aes(x = .data${xColumn}, y = .data[['{y}']], colour = .data${colourColumn}, fill = .data${colourColumn})" |>
     glue::glue() |>
     rlang::parse_expr() |>
     eval()
@@ -294,18 +293,20 @@ validateGroup <- function(res, x, opts, call) {
   if (length(x) == 0) {
     res <- res |>
       dplyr::mutate(!!id := "")
-  } else if (length(x) == 1) {
-    res <- res |>
-      dplyr::mutate(!!id := .data[[x]])
   } else {
     mes <- "{nm} must be a subset of: {opts}." |>
       cli::cli_text() |>
       cli::cli_fmt()
     omopgenerics::assertChoice(
       x, choices = opts, unique = TRUE, call = call, msg = mes)
-    res <- res |>
-      tidyr::unite(
-        col = !!id, dplyr::all_of(x), remove = FALSE, sep = " - ")
+    if (length(x) == 1) {
+      res <- res |>
+        dplyr::mutate(!!id := .data[[x]])
+    } else {
+      res <- res |>
+        tidyr::unite(
+          col = !!id, dplyr::all_of(x), remove = FALSE, sep = " - ")
+    }
   }
   attr(res, "ids_cols") <- c(idsCols, id |> rlang::set_names(nm))
   return(res)
