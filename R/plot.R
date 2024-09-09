@@ -85,7 +85,13 @@ plotScatter <- function(result,
 
   p <- plotFacet(p, facet) +
     ggplot2::labs(
-      x = styleLabel(x), fill = styleLabel(colour), colour = styleLabel(colour))
+      x = styleLabel(x),
+      fill = if (!is.null(colour) && colour != "") styleLabel(colour) else NULL,
+      colour = if (!is.null(colour) && colour != "") styleLabel(colour) else NULL
+    ) +
+    ggplot2::theme(
+      legend.position = if (!is.null(colour) && colour != "") "right" else "none"
+    )
 
   return(p)
 }
@@ -135,13 +141,16 @@ plotBoxplot <- function(result,
     eval()
 
   ylab <- styleLabel(unique(result$variable_name))
-  clab <- styleLabel(colour)
+  clab <- if (!is.null(colour) && colour != "") styleLabel(colour) else NULL
   xlab <- styleLabel(x)
 
   p <- ggplot2::ggplot(data = result, mapping = aes) +
     ggplot2::geom_boxplot(stat = "identity")
   p <- plotFacet(p, facet) +
-    ggplot2::labs(y = ylab, colour = clab, x = xlab)
+    ggplot2::labs(y = ylab, colour = clab, x = xlab) +
+    ggplot2::theme(
+      legend.position = if (!is.null(colour) && colour != "") "right" else "none"
+    )
 
   return(p)
 }
@@ -193,10 +202,16 @@ plotBarplot <- function(result,
   p <- ggplot2::ggplot(data = result, mapping = aes) +
     ggplot2::geom_col()
 
+
   colour <- styleLabel(colour)
 
   p <- plotFacet(p, facet) +
-    ggplot2::labs(x = styleLabel(x), fill = colour, colour = colour)
+    ggplot2::labs(x = styleLabel(x),
+                  fill =  if (!is.null(colour) && colour != "") colour else NULL,
+                  colour =  if (!is.null(colour) && colour != "") colour else NULL) +
+    ggplot2::theme(
+      legend.position = if (!is.null(colour) && colour != "") "right" else "none"
+    )
 
   return(p)
 }
