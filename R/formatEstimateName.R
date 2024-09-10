@@ -70,12 +70,13 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
   ]
 
   if (nrow(result) == 0) {
-    warning("Empty summarized results provided.")
+    cli::cli_warn(c("!" = "Empty summarized results provided."))
     return(result)
   } else {
-  result <- result |>
-    dplyr::mutate("formatted" = FALSE, "id" = dplyr::row_number()) |>
-    dplyr::mutate(group_id = min(.data$id), .by = dplyr::all_of(cols))}
+    result <- result |>
+      dplyr::mutate("formatted" = FALSE, "id" = dplyr::row_number()) |>
+      dplyr::mutate(group_id = min(.data$id), .by = dplyr::all_of(cols))
+  }
 
   resultF <- NULL
   for (k in seq_along(format)) {
