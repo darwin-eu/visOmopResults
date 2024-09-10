@@ -23,7 +23,7 @@
 #' @param minCellCount `r lifecycle::badge("deprecated")` Suppression of
 #' estimates when counts < minCellCount should be done before with
 #' `ompogenerics::suppress()`.
-#' @param excludeColumns Columns to drop from the output table.
+#' @param hide Columns to drop from the output table.
 #' @param .options Named list with additional formatting options.
 #' visOmopResults::optionsVisOmopTable() shows allowed arguments and
 #' their default values.
@@ -52,7 +52,7 @@ visOmopTable <- function(result,
                          renameColumns = NULL,
                          showMinCellCount = TRUE,
                          minCellCount = lifecycle::deprecated(),
-                         excludeColumns = c("result_id", "estimate_type"),
+                         hide = c("result_id", "estimate_type"),
                          .options = list()) {
 
   if (lifecycle::is_present(minCellCount)) {
@@ -65,7 +65,7 @@ visOmopTable <- function(result,
   assertCharacter(formatEstimateName)
   assertCharacter(header)
   assertCharacter(split)
-  assertCharacter(excludeColumns, null = TRUE)
+  assertCharacter(hide, null = TRUE)
   assertList(.options)
   assertLogical(showMinCellCount, length = 1)
   assertCharacter(renameColumns, null = TRUE, named = TRUE)
@@ -75,7 +75,7 @@ visOmopTable <- function(result,
       cli::cli_abort("Accepted values for split are: `group`, `strata`, and/or `additional`. It also supports an empty character vector (`character()`).")
     }
   }
-  if ("cdm_name" %in% header & "cdm_name" %in% excludeColumns) {
+  if ("cdm_name" %in% header & "cdm_name" %in% hide) {
     cli::cli_abort("`cdm_name` cannot be part of the header and also an excluded column.")
   }
   if (!is.null(renameColumns)) {
@@ -85,13 +85,13 @@ visOmopTable <- function(result,
       renameColumns <- renameColumns[!notCols]
     }
   }
-  if ("group" %in% split & any(grepl("group", excludeColumns))) {
+  if ("group" %in% split & any(grepl("group", hide))) {
     cli::cli_abort("`group` columns cannot be splitted and excluded at the same time. ")
   }
-  if ("strata" %in% split & any(grepl("strata", excludeColumns))) {
+  if ("strata" %in% split & any(grepl("strata", hide))) {
     cli::cli_abort("`strata` columns cannot be splitted and excluded at the same time. ")
   }
-  if ("additional" %in% split & any(grepl("additional", excludeColumns))) {
+  if ("additional" %in% split & any(grepl("additional", hide))) {
     cli::cli_abort("`additional` columns cannot be splitted and excluded at the same time. ")
   }
   if (inherits(groupColumn, "list")) {
@@ -203,7 +203,7 @@ visOmopTable <- function(result,
     colsVariable = c("variable_name", "variable_level")
     if (all(is.na(x$variable_level))) {
       colsVariable <- c("variable_name")
-      excludeColumns <- c(excludeColumns, "variable_level")
+      hide <- c(hide, "variable_level")
     }
     x <- x |>
       dplyr::mutate(dplyr::across(dplyr::starts_with("variable"), ~ dplyr::if_else(is.na(.x), .options$na, .x)))
@@ -229,13 +229,13 @@ visOmopTable <- function(result,
     renameColumns = renameColumns[!ids]
   }
   notFormat <- c(notFormat, renameColumns)
-  notFormat <- notFormat[(notFormat %in% colnames(x)) & (!notFormat %in% excludeColumns)]
+  notFormat <- notFormat[(notFormat %in% colnames(x)) & (!notFormat %in% hide)]
 
   x <- x |>
     dplyr::mutate(dplyr::across(
       .cols = !dplyr::all_of(c("cdm_name", "estimate_name")), .fn = ~ formatString(.x)
     )) |>
-    dplyr::select(!dplyr::all_of(excludeColumns)) |>
+    dplyr::select(!dplyr::all_of(hide)) |>
     dplyr::rename_with(
       .fn =  ~ formatString(.x),
       .cols = !dplyr::all_of(notFormat)
@@ -446,7 +446,7 @@ optionsVisOmopTable <- function() {
 #' @param minCellCount `r lifecycle::badge("deprecated")` Suppression of
 #' estimates when counts < minCellCount should be done before with
 #' `ompogenerics::suppress()`.
-#' @param excludeColumns Columns to drop from the output table.
+#' @param hide Columns to drop from the output table.
 #' @param .options Named list with additional formatting options.
 #' visOmopResults::optionsVisOmopTable() shows allowed arguments and
 #' their default values.
@@ -477,7 +477,7 @@ formatTable <- function(result,
                         type = "gt",
                         renameColumns = NULL,
                         minCellCount = lifecycle::deprecated(),
-                        excludeColumns = c("result_id", "estimate_type"),
+                        hide = c("result_id", "estimate_type"),
                         .options = list()) {
 
   lifecycle::deprecate_soft(
@@ -493,7 +493,7 @@ formatTable <- function(result,
                groupColumn = groupColumn,
                type = type,
                renameColumns = renameColumns,
-               excludeColumns = excludeColumns,
+               hide = hide,
                .options = .options
   )
 }
