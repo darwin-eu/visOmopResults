@@ -38,7 +38,7 @@ pivotEstimates <- function(result,
       nameStyle <- paste0("{", paste0(pivotEstimatesBy, collapse = "}_{"), "}")
     }
     if(grepl("__", nameStyle)){
-      warning("Double underscores found in 'nameStyle'. Converting to a single underscore.")
+      cli::cli_warn(c("!" = "Double underscores found in 'nameStyle'. Converting to a single underscore."))
     }
     typeNameConvert <- result |>
       dplyr::distinct(dplyr::across(dplyr::all_of(c("estimate_type", pivotEstimatesBy)))) |>
