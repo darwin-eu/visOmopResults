@@ -86,11 +86,11 @@ plotScatter <- function(result,
   p <- plotFacet(p, facet) +
     ggplot2::labs(
       x = styleLabel(x),
-      fill = if (!is.null(colour) && colour != "") styleLabel(colour) else NULL,
-      colour = if (!is.null(colour) && colour != "") styleLabel(colour) else NULL
+      fill = styleLabel(colour),
+      colour = styleLabel(colour)
     ) +
     ggplot2::theme(
-      legend.position = if (!is.null(colour) && colour != "") "right" else "none"
+      legend.position = hideLegend(colour)
     )
 
   return(p)
@@ -141,7 +141,7 @@ plotBoxplot <- function(result,
     eval()
 
   ylab <- styleLabel(unique(result$variable_name))
-  clab <- if (!is.null(colour) && colour != "") styleLabel(colour) else NULL
+  clab <- styleLabel(colour)
   xlab <- styleLabel(x)
 
   p <- ggplot2::ggplot(data = result, mapping = aes) +
@@ -149,7 +149,7 @@ plotBoxplot <- function(result,
   p <- plotFacet(p, facet) +
     ggplot2::labs(y = ylab, colour = clab, x = xlab) +
     ggplot2::theme(
-      legend.position = if (!is.null(colour) && colour != "") "right" else "none"
+      legend.position =  hideLegend(colour)
     )
 
   return(p)
@@ -207,10 +207,10 @@ plotBarplot <- function(result,
 
   p <- plotFacet(p, facet) +
     ggplot2::labs(x = styleLabel(x),
-                  fill =  if (!is.null(colour) && colour != "") colour else NULL,
-                  colour =  if (!is.null(colour) && colour != "") colour else NULL) +
+                  fill = colour,
+                  colour = colour) +
     ggplot2::theme(
-      legend.position = if (!is.null(colour) && colour != "") "right" else "none"
+      legend.position =  hideLegend(colour)
     )
 
   return(p)
@@ -337,8 +337,13 @@ plotFacet <- function(p, facet) {
   return(p)
 }
 styleLabel <- function(x) {
+  if (!is.null(x) && x != "" && length(x) > 0){ #length(x) > 0 remove the character(0)
   x |>
     stringr::str_replace_all(pattern = "_", replacement = " ") |>
     stringr::str_to_sentence() |>
-    stringr::str_flatten(collapse = ", ", last = " and ")
+    stringr::str_flatten(collapse = ", ", last = " and ")} else {NULL}
+}
+
+hideLegend <- function(x){
+  if (!is.null(x) && x != ""&& length(x) > 0) "right" else "none"
 }
