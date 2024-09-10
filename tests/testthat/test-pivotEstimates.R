@@ -21,6 +21,7 @@ test_that("pivotEstimates", {
 test_that("remove if variable_name is NA", {
   result <- mockSummarisedResult()
   res0 <- pivotEstimates(result, pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name"))
-  expect_true(all(!c("age_NA_mean", "number subjects_NA_count", "age_NA_sd", "cohort_name_percentage") %in% colnames(res0)))
+  expect_true(all(!c("age_NA_mean", "number subjects_NA_count", "age_NA_sd") %in% colnames(res0)))
+  expect_true(all(c("age_mean", "number subjects_count", "age_sd") %in% colnames(res0)))
 
 })
