@@ -235,3 +235,40 @@ test_that("renameColumn works", {
     .options = list())
   expect_true(colnames(fx3$body$dataset)[1] == "group")
 })
+
+
+test_that("empty result",{
+
+  result = omopgenerics::emptySummarisedResult()
+  type = "gt"
+  formatEstimateName = c(
+    "N (%)" = "<count> (<percentage>%)",
+    "N" = "<count>",
+    "Median [Q25 - Q75]" = "<median> [<q25> - <q75>]",
+    "Mean (SD)" = "<mean> (<sd>)",
+    "Range" = "<min> to <max>"
+  )
+  header = c("group")
+  split = c("group", "strata")
+  groupColumn = NULL
+  excludeColumns = c(
+    "result_id", "estimate_type",
+    "additional_name", "additional_level"
+  )
+  .options = list()
+
+  expect_warning({
+    res0 <-  visOmopResults::visOmopTable(
+      result = result,
+      formatEstimateName = formatEstimateName,
+      header = header,
+      groupColumn = groupColumn,
+      split = split,
+      type = type,
+      excludeColumns = excludeColumns,
+      .options = .options
+    )
+
+  }, "Empty summarized results provided.")
+
+})
