@@ -337,13 +337,17 @@ plotFacet <- function(p, facet) {
   return(p)
 }
 styleLabel <- function(x) {
-  if (!is.null(x) && x != "" && length(x) > 0){ #length(x) > 0 remove the character(0)
-  x |>
-    stringr::str_replace_all(pattern = "_", replacement = " ") |>
-    stringr::str_to_sentence() |>
-    stringr::str_flatten(collapse = ", ", last = " and ")} else {NULL}
+  #length(x) > 0 remove the character(0)
+  if (!is.null(x) && x != "" && length(x) > 0) {
+    x |>
+      stringr::str_replace_all(pattern = "_", replacement = " ") |>
+      stringr::str_to_sentence() |>
+      stringr::str_flatten(collapse = ", ", last = " and ")
+  } else {
+    NULL
+  }
 }
 
-hideLegend <- function(x){
-  if (!is.null(x) && x != ""&& length(x) > 0) "right" else "none"
+hideLegend <- function(x) {
+  if (length(x) > 0 && !identical(x, "")) "right" else "none"
 }
