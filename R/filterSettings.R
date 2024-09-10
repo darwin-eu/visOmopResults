@@ -41,14 +41,17 @@
 filterSettings <- function(result, ...) {
   # initial check
   assertClass(result, "summarised_result")
-
+  if(result |> dplyr::count() |> dplyr::pull("n") > 0){
   # filter settings
   attr(result, "settings") <- settings(result) |>
     dplyr::filter(...)
 
-  # filter from settings
+
+    # filter from settings
   resId <- settings(result) |> dplyr::pull("result_id")
-  result <- result |> dplyr::filter(.data$result_id %in% .env$resId)
+  result <- result |> dplyr::filter(.data$result_id %in% .env$resId)} else {
+    warning("empty result, no filter applied")
+  }
 
   return(result)
 }
