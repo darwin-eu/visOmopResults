@@ -85,7 +85,13 @@ plotScatter <- function(result,
 
   p <- plotFacet(p, facet) +
     ggplot2::labs(
-      x = styleLabel(x), fill = styleLabel(colour), colour = styleLabel(colour))
+      x = styleLabel(x),
+      fill = styleLabel(colour),
+      colour = styleLabel(colour)
+    ) +
+    ggplot2::theme(
+      legend.position = hideLegend(colour)
+    )
 
   return(p)
 }
@@ -141,7 +147,10 @@ plotBoxplot <- function(result,
   p <- ggplot2::ggplot(data = result, mapping = aes) +
     ggplot2::geom_boxplot(stat = "identity")
   p <- plotFacet(p, facet) +
-    ggplot2::labs(y = ylab, colour = clab, x = xlab)
+    ggplot2::labs(y = ylab, colour = clab, x = xlab) +
+    ggplot2::theme(
+      legend.position =  hideLegend(colour)
+    )
 
   return(p)
 }
@@ -193,10 +202,16 @@ plotBarplot <- function(result,
   p <- ggplot2::ggplot(data = result, mapping = aes) +
     ggplot2::geom_col()
 
+
   colour <- styleLabel(colour)
 
   p <- plotFacet(p, facet) +
-    ggplot2::labs(x = styleLabel(x), fill = colour, colour = colour)
+    ggplot2::labs(x = styleLabel(x),
+                  fill = colour,
+                  colour = colour) +
+    ggplot2::theme(
+      legend.position =  hideLegend(colour)
+    )
 
   return(p)
 }
@@ -322,8 +337,17 @@ plotFacet <- function(p, facet) {
   return(p)
 }
 styleLabel <- function(x) {
-  x |>
-    stringr::str_replace_all(pattern = "_", replacement = " ") |>
-    stringr::str_to_sentence() |>
-    stringr::str_flatten(collapse = ", ", last = " and ")
+  #length(x) > 0 remove the character(0)
+  if (!is.null(x) && x != "" && length(x) > 0) {
+    x |>
+      stringr::str_replace_all(pattern = "_", replacement = " ") |>
+      stringr::str_to_sentence() |>
+      stringr::str_flatten(collapse = ", ", last = " and ")
+  } else {
+    NULL
+  }
+}
+
+hideLegend <- function(x) {
+  if (length(x) > 0 && !identical(x, "")) "right" else "none"
 }

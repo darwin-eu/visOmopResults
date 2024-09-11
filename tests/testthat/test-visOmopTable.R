@@ -9,7 +9,7 @@ test_that("visOmopTable", {
         groupColumn = NULL,
         split = c("group", "strata", "additional"),
         type = "gt",
-        excludeColumns = c("result_id", "estimate_type"),
+        hide = c("result_id", "estimate_type"),
         .options = list())
     )
   )
@@ -26,7 +26,7 @@ test_that("visOmopTable", {
       groupColumn = NULL,
       split = c("group", "strata", "additional"),
       type = "gt",
-      excludeColumns = c("result_id", "estimate_type"),
+      hide = c("result_id", "estimate_type"),
       .options = list())
   )
   )
@@ -51,7 +51,7 @@ test_that("visOmopTable", {
       groupColumn = NULL,
       split = c("group", "strata", "additional"),
       type = "flextable",
-      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
+      hide = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
   )
@@ -71,7 +71,7 @@ test_that("visOmopTable", {
       groupColumn = NULL,
       split = c("group", "strata", "additional"),
       type = "flextable",
-      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
+      hide = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
   )
@@ -91,7 +91,7 @@ test_that("visOmopTable", {
       groupColumn = "cohort_name",
       split = c("group", "additional"),
       type = "flextable",
-      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
+      hide = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
   )
@@ -118,7 +118,7 @@ test_that("visOmopTable", {
       groupColumn = NULL,
       split = c("group", "additional"),
       type = "tibble",
-      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
+      hide = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
   )
@@ -133,7 +133,7 @@ test_that("visOmopTable", {
       groupColumn = NULL,
       split = c("group", "additional"),
       type = "tibble",
-      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
+      hide = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
   expect_true(all(c("tbl_df", "tbl", "data.frame") %in% class(tib1)))
@@ -152,7 +152,7 @@ test_that("visOmopTable", {
       groupColumn = "hola",
       split = c("group", "additional"),
       type = "tibble",
-      excludeColumns = c("result_id", "estimate_type", "cdm_name"),
+      hide = c("result_id", "estimate_type", "cdm_name"),
       .options = list())
   )
 })
@@ -169,7 +169,7 @@ test_that("renameColumn works", {
         split = c("group", "strata", "additional"),
         type = "gt",
         renameColumns = c("Database name" = "cdm_name"),
-        excludeColumns = c("result_id", "estimate_type"),
+        hide = c("result_id", "estimate_type"),
         .options = list())
     )
   )
@@ -188,7 +188,7 @@ test_that("renameColumn works", {
       split = c("group", "strata", "additional"),
       type = "gt",
       renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
-      excludeColumns = c("result_id", "estimate_type"),
+      hide = c("result_id", "estimate_type"),
       .options = list())
   )
   expect_true(all(colnames(gt2$`_data`)[1:2] == c("Cohort name", "changeName")))
@@ -204,7 +204,7 @@ test_that("renameColumn works", {
       split = c("group", "strata", "additional"),
       type = "flextable",
       renameColumns = c("Database name" = "cdm_name", "changeName" = "name"),
-      excludeColumns = c("result_id", "estimate_type"),
+      hide = c("result_id", "estimate_type"),
       .options = list())
     )
   )
@@ -218,7 +218,7 @@ test_that("renameColumn works", {
     type = "flextable",
     groupColumn = c("cdm_name", "cohort_name"),
     renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
-    excludeColumns = c("result_id", "estimate_type"),
+    hide = c("result_id", "estimate_type"),
     .options = list())
   expect_true(colnames(fx2$body$dataset)[1] == "cdm_name_cohort_name")
 
@@ -231,7 +231,44 @@ test_that("renameColumn works", {
     type = "flextable",
     groupColumn = list("group" = c("cdm_name", "cohort_name")),
     renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
-    excludeColumns = c("result_id", "estimate_type"),
+    hide = c("result_id", "estimate_type"),
     .options = list())
   expect_true(colnames(fx3$body$dataset)[1] == "group")
+})
+
+
+test_that("empty result",{
+
+  result = omopgenerics::emptySummarisedResult()
+  type = "gt"
+  formatEstimateName = c(
+    "N (%)" = "<count> (<percentage>%)",
+    "N" = "<count>",
+    "Median [Q25 - Q75]" = "<median> [<q25> - <q75>]",
+    "Mean (SD)" = "<mean> (<sd>)",
+    "Range" = "<min> to <max>"
+  )
+  header = c("group")
+  split = c("group", "strata")
+  groupColumn = NULL
+  excludeColumns = c(
+    "result_id", "estimate_type",
+    "additional_name", "additional_level"
+  )
+  .options = list()
+
+  expect_warning({
+    res0 <-  visOmopResults::visOmopTable(
+      result = result,
+      formatEstimateName = formatEstimateName,
+      header = header,
+      groupColumn = groupColumn,
+      split = split,
+      type = type,
+      excludeColumns = excludeColumns,
+      .options = .options
+    )
+
+  }, "Empty summarized results provided.")
+
 })
