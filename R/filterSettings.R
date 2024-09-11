@@ -53,7 +53,9 @@ filterSettings <- function(result, ...) {
       result |> dplyr::filter(.data$result_id %in% .env$resId)
     },
     error = function(e) {
-      warning("Variable filtering does not exist, returning empty result: ", e$message)
+      cli::cli_warn(c(
+        "!" = "Variable filtering does not exist, returning empty result: ",
+        e$message))
       omopgenerics::emptySummarisedResult()  # return empty result here
     }
   )
