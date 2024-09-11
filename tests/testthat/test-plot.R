@@ -1,17 +1,25 @@
 test_that("Function returns a ggplot object", {
+
+  has_no_legend_labels <- function(plot) {
+    labels <- plot$labels
+    is.null(labels$fill) && is.null(labels$colour)
+  }
+
+
   result <- mockSummarisedResult() |>
     dplyr::filter(variable_name == "age")
+  p <- plotScatter(
+    result = result,
+    x = "cohort_name",
+    y = "mean",
+    line = TRUE,
+    point = TRUE,
+    ribbon = FALSE,
+    facet = c("age_group", "sex"))
 
-  expect_no_error(
-    plotScatter(
-      result = result,
-      x = "cohort_name",
-      y = "mean",
-      line = TRUE,
-      point = TRUE,
-      ribbon = FALSE,
-      facet = c("age_group", "sex"))
-  )
+  expect_no_error(p)
+
+  expect_true(has_no_legend_labels(p))
 
   result <- mockSummarisedResult() |>
     dplyr::filter(variable_name == "age") |>
@@ -24,17 +32,22 @@ test_that("Function returns a ggplot object", {
     dplyr::mutate(estimate_type = "numeric") |>
     omopgenerics::newSummarisedResult()
 
+
+  p_box <- plotBoxplot(
+    result,
+    lower = "q25",
+    middle = "mean",
+    upper = "q75",
+    ymin = "min",
+    ymax = "max",
+    facet = age_group ~ sex,
+    colour = "cohort_name")
+
   expect_no_error(
-    plotBoxplot(
-      result,
-      lower = "q25",
-      middle = "mean",
-      upper = "q75",
-      ymin = "min",
-      ymax = "max",
-      facet = age_group ~ sex,
-      colour = "cohort_name")
+    p_box
   )
+
+  expect_false(has_no_legend_labels(p_box))
 
   expect_no_error(
     plotScatter(
@@ -53,13 +66,17 @@ test_that("Function returns a ggplot object", {
   result <- mockSummarisedResult() |>
     dplyr::filter(variable_name == "age")
 
+  p_bar <- plotBarplot(
+    result = result,
+    x = "cohort_name",
+    y = "mean",
+    facet = c("age_group", "sex"))
+
   expect_no_error(
-    plotBarplot(
-      result = result,
-      x = "cohort_name",
-      y = "mean",
-      facet = c("age_group", "sex"))
+    p_bar
   )
+
+  expect_true(has_no_legend_labels(p_bar))
 
   expect_snapshot(
     result |>
