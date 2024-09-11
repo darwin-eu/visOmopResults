@@ -251,7 +251,7 @@ test_that("empty result",{
   header = c("group")
   split = c("group", "strata")
   groupColumn = NULL
-  excludeColumns = c(
+  hide = c(
     "result_id", "estimate_type",
     "additional_name", "additional_level"
   )
@@ -265,7 +265,7 @@ test_that("empty result",{
       groupColumn = groupColumn,
       split = split,
       type = type,
-      excludeColumns = excludeColumns,
+      hide = hide,
       .options = .options
     )
 
