@@ -14,7 +14,7 @@ test_that("tidy", {
   expect_true(all(c("group_name", "group_level", "strata_name", "strata_level",
                     "additional_name", "additional_level") %in%
                     colnames(res1)))
-  expect_true(all(c("number subjects_NA_count", "age_NA_mean", "age_NA_sd", "Medications_Amoxiciline_count",
+  expect_true(all(c("number subjects_count", "age_mean", "age_sd", "Medications_Amoxiciline_count",
                     "Medications_Amoxiciline_percentage", "Medications_Ibuprofen_count",
                     "Medications_Ibuprofen_percentage") %in% colnames(res1)))
 
@@ -23,13 +23,13 @@ test_that("tidy", {
                                splitAdditional = FALSE,
                                addSettings = FALSE,
                                pivotEstimatesBy = c("variable_name", "estimate_name"),
-                               nameStyle = "{estimate_name}__{variable_name}"))
-  expect_false("logic__settings" %in% colnames(res2))
-  expect_true(all(c("count__number subjects", "mean__age", "sd__age",
-                    "count__Medications", "percentage__Medications") %in% colnames(res2)))
-  expect_true(class(res2$percentage__Medications) == "numeric")
-  expect_true(class(res2$mean__age) == "numeric")
-  expect_true(class(res2$count__Medications) == "integer")
+                               nameStyle = "{estimate_name}_{variable_name}"))
+  expect_false("logic_settings" %in% colnames(res2))
+  expect_true(all(c("count_number subjects", "mean_age", "sd_age",
+                    "count_Medications", "percentage_Medications") %in% colnames(res2)))
+  expect_true(class(res2$percentage_Medications) == "numeric")
+  expect_true(class(res2$mean_age) == "numeric")
+  expect_true(class(res2$count_Medications) == "integer")
 
   expect_no_error(res3 <- tidy(mocksum, splitGroup = FALSE, splitAdditional = FALSE, splitStrata = FALSE,
                                 pivotEstimatesBy = NULL))
