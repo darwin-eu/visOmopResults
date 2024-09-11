@@ -14,7 +14,7 @@ visOmopTable(
   renameColumns = NULL,
   showMinCellCount = TRUE,
   minCellCount = lifecycle::deprecated(),
-  excludeColumns = c("result_id", "estimate_type"),
+  hide = c("result_id", "estimate_type"),
   .options = list()
 )
 }
@@ -51,7 +51,7 @@ be used.}
 estimates when counts < minCellCount should be done before with
 \code{ompogenerics::suppress()}.}
 
-\item{excludeColumns}{Columns to drop from the output table.}
+\item{hide}{Columns to drop from the output table.}
 
 \item{.options}{Named list with additional formatting options.
 visOmopResults::optionsVisOmopTable() shows allowed arguments and
