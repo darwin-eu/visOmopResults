@@ -2,32 +2,34 @@
 % Please edit documentation in R/split.R
 \name{splitAll}
 \alias{splitAll}
-\title{Split group, strata and additional at once.}
+\title{Split all pairs name-level into columns.}
 \usage{
 splitAll(
   result,
   keep = FALSE,
   fill = "overall",
+  exclude = "variable",
   overall = lifecycle::deprecated()
 )
 }
 \arguments{
-\item{result}{A summarised_result object.}
+\item{result}{A data.frame.}
 
-\item{keep}{Whether to keep the original group_name and group_level columns.}
+\item{keep}{Whether to keep the original name-level columns.}
 
-\item{fill}{Optionally, a character that specifies what value should be
-filled in with when missing.}
+\item{fill}{A character that specifies what value should be filled in when
+missing.}
+
+\item{exclude}{Name of a column pair to exclude.}
 
 \item{overall}{deprecated.}
 }
 \value{
-A dataframe with group, strata and additional name as columns.
+A dataframe with group, strata and additional as columns.
 }
 \description{
-Pivots the input dataframe so group, strata and additional name columns are
-transformed into columns that contain values from the corresponding level
-columns (group, strata, and additional).
+Pivots the input dataframe so any pair name-level columns are transformed
+into columns (name) that contain values from the corresponding level.
 }
 \examples{
 mockSummarisedResult() |>

@@ -107,20 +107,20 @@ splitAdditional <- function(result,
   )
 }
 
-#' Split group, strata and additional at once.
+#' Split all pairs name-level into columns.
 #'
-#' @param result A summarised_result object.
-#' @param keep Whether to keep the original group_name and group_level columns.
-#' @param fill Optionally, a character that specifies what value should be
-#' filled in with when missing.
+#' @param result A data.frame.
+#' @param keep Whether to keep the original name-level columns.
+#' @param fill A character that specifies what value should be filled in when
+#' missing.
+#' @param exclude Name of a column pair to exclude.
 #' @param overall deprecated.
 #'
-#' @return A dataframe with group, strata and additional name as columns.
+#' @return A dataframe with group, strata and additional as columns.
 #'
 #' @description
-#' Pivots the input dataframe so group, strata and additional name columns are
-#' transformed into columns that contain values from the corresponding level
-#'  columns (group, strata, and additional).
+#' Pivots the input dataframe so any pair name-level columns are transformed
+#' into columns (name) that contain values from the corresponding level.
 #'
 #' @export
 #'
@@ -131,14 +131,46 @@ splitAdditional <- function(result,
 splitAll <- function(result,
                      keep = FALSE,
                      fill = "overall",
+                     exclude = "variable",
                      overall = lifecycle::deprecated()) {
   if (lifecycle::is_present(overall)) {
     lifecycle::deprecate_warn("0.1.0", "splitAll(overall)")
   }
-  result |>
-    splitGroup(keep = keep, fill = fill) |>
-    splitStrata(keep = keep, fill = fill) |>
-    splitAdditional(keep = keep, fill = fill)
+  omopgenerics::assertTable(result, class = "data.frame")
+  omopgenerics::assertLogical(keep, length = 1)
+  omopgenerics::assertCharacter(fill, length = 1)
+  omopgenerics::assertCharacter(exclude, null = TRUE)
+
+  cols <- colnames(result)
+  cols <- intersect(
+    cols[stringr::str_ends(cols, "_name")] |>
+      stringr::str_replace("_name$", ""),
+    cols[stringr::str_ends(cols, "_level")] |>
+      stringr::str_replace("_level$", "")
+  )
+  cols <- cols[!cols %in% exclude]
+
+  for (col in cols) {
+    result <- tryCatch(
+      expr = {
+        result |>
+          splitNameLevel(
+            name = paste0(col, "_name"),
+            level = paste0(col, "_level"),
+            keep = keep,
+            fill = fill
+          )
+      },
+      error = function(e) {
+        cli::cli_warn(c(
+          "!" = "Couldn't split pair: {.var {col}_name}-{.var {col}_level}: {e$message}"
+        ))
+        return(result)
+      }
+    )
+  }
+
+  return(result)
 }
 
 #' Split name and level columns into the columns
