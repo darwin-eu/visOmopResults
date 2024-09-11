@@ -1,7 +1,7 @@
 test_that("filterSettings", {
   result <- omopgenerics::emptySummarisedResult()
 
-  expect_no_error(result1 <- result |>
+  expect_warning(result1 <- result |>
                     filterSettings(result_type == "omock")
   )
 
