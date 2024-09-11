@@ -41,8 +41,8 @@ x <- tibble(
   "additional_level" = "overall"
 ) |>
   newSummarisedResult(settings = tibble(
-  "result_id" = c(1, 2), "custom" = c("A", "B")
-))
+    "result_id" = c(1, 2), "custom" = c("A", "B")
+  ))
 
 x
 

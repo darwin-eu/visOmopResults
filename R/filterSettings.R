@@ -31,8 +31,8 @@
 #'   "additional_level" = "overall"
 #' ) |>
 #'   newSummarisedResult(settings = tibble(
-#'   "result_id" = c(1, 2), "custom" = c("A", "B")
-#' ))
+#'     "result_id" = c(1, 2), "custom" = c("A", "B")
+#'   ))
 #'
 #' x
 #'
@@ -42,13 +42,23 @@ filterSettings <- function(result, ...) {
   # initial check
   assertClass(result, "summarised_result")
 
-  # filter settings
-  attr(result, "settings") <- settings(result) |>
-    dplyr::filter(...)
+  # filter settings (try if error)
+  result <- tryCatch(
+    {
+      attr(result, "settings") <- settings(result) |>
+        dplyr::filter(...)
 
-  # filter from settings
-  resId <- settings(result) |> dplyr::pull("result_id")
-  result <- result |> dplyr::filter(.data$result_id %in% .env$resId)
+      # filter id from settings
+      resId <- settings(result) |> dplyr::pull("result_id")
+      result |> dplyr::filter(.data$result_id %in% .env$resId)
+    },
+    error = function(e) {
+      cli::cli_warn(c(
+        "!" = "Variable filtering does not exist, returning empty result: ",
+        e$message))
+      omopgenerics::emptySummarisedResult()  # return empty result here
+    }
+  )
 
   return(result)
 }
