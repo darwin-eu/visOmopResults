@@ -43,4 +43,22 @@ test_that("splitGroup", {
   )
   expect_false("overall" %in% colnames(splitGroup(tib)))
   expect_true(all(groupColumns(tib) == c("cohort_name", "age", "sex")))
+
+  result <- mockSummarisedResult()
+  expect_identical(
+    result |> splitAll(),
+    result |> splitGroup() |> splitStrata() |> splitAdditional()
+  )
+
+  res <- result |>
+    splitAll(exclude = c("group", "variable"))
+  expect_true(all(c("group_name", "group_level") %in% colnames(res)))
+  expect_false(all(c("strata_name", "strata_level") %in% colnames(res)))
+  expect_false(all(c("additional_name", "additional_level") %in% colnames(res)))
+
+  result$group_name[1] <- "cohort_name &&& not_present"
+  expect_warning(res <- result |> splitAll())
+  expect_true(all(c("group_name", "group_level") %in% colnames(res)))
+  expect_false(all(c("strata_name", "strata_level") %in% colnames(res)))
+  expect_false(all(c("additional_name", "additional_level") %in% colnames(res)))
 })
