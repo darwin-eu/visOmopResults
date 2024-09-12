@@ -2,36 +2,12 @@
 % Please edit documentation in R/tidy.R
 \name{tidy.summarised_result}
 \alias{tidy.summarised_result}
-\title{Get a tidy visualization of a summarised_result object}
+\title{Turn a summarised_result object into a tidy tibble}
 \usage{
-\method{tidy}{summarised_result}(
-  x,
-  splitGroup = TRUE,
-  splitStrata = TRUE,
-  splitAdditional = TRUE,
-  addSettings = TRUE,
-  pivotEstimatesBy = "estimate_name",
-  nameStyle = NULL,
-  ...
-)
+\method{tidy}{summarised_result}(x, ...)
 }
 \arguments{
 \item{x}{A summarised_result.}
-
-\item{splitGroup}{If TRUE it will split the group name-level column pair.}
-
-\item{splitStrata}{If TRUE it will split the group name-level column pair.}
-
-\item{splitAdditional}{If TRUE it will split the group name-level column pair.}
-
-\item{addSettings}{Whether to add settings as columns or not.}
-
-\item{pivotEstimatesBy}{Names from which pivot wider the estimate values. If
-NULL the table will not be pivotted.}
-
-\item{nameStyle}{Name style (glue package specifications) to customise names
-when pivotting estimates. If NULL standard tidyr::pivot_wider formatting will
-be used.}
 
 \item{...}{For compatibility (not used).}
 }
@@ -40,14 +16,15 @@ A tibble.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-Provides tools for obtaining a tidy version of a summarised_result object. If
-the summarised results object contains settings, these will be transformed
-into columns.
+Provides tools for obtaining a tidy version of a summarised_result object.
+This tidy version will include the settings as columns, \code{estimate_value} will
+be pivotted into columns using \code{estimate_name} as names, and group, strata,
+and additional will be splitted.
+If you want to customise these tidy operations, please use
+\code{tidySummarisedResult()}.
 }
 \examples{
 result <- mockSummarisedResult()
-
-result |>
-  tidy()
+result |> tidy()
 
 }
