@@ -123,7 +123,10 @@ checkGroupColumn <- function(groupColumn) {
 #### not in omopgenerics (ones above will be deleted in due time)
 validatePivotEstimatesBy <- function(pivotEstimatesBy, call = parent.frame()) {
   omopgenerics::assertCharacter(x = pivotEstimatesBy, null = TRUE, call = call)
-  notValid <- any(c(!pivotEstimatesBy %in% omopgenerics::resultColumns(), c("estimate_type", "estimate_value") %in% pivotEstimatesBy))
+  notValid <- any(c(
+    !pivotEstimatesBy %in% omopgenerics::resultColumns(),
+    c("estimate_type", "estimate_value") %in% pivotEstimatesBy
+  ))
   if (isTRUE(notValid)) {
     cli::cli_abort(
       c("x" = "`pivotEstimatesBy` must refer to summarised_result columns.
@@ -140,4 +143,19 @@ validateSettingsColumns <- function(settingsColumns, result, call = parent.frame
   }
   settingsColumns <- settingsColumns[settingsColumns != "result_id"]
   return(invisible(settingsColumns))
+}
+
+validateRenameColumns <- function(renameColumns, call = parent.frame()) {
+  omopgenerics::assertCharacter(renameColumns, null = TRUE, named = TRUE, call = call)
+  if (!is.null(renameColumns)) {
+    notCols <- !renameColumns %in% colnames(result)
+    if (sum(notCols) > 0) {
+      cli::cli_warn(
+        "The following values of `renameColumns` do not refer to column names
+        and will be ignored: {renameColumns[notCols]}", call = call
+      )
+      renameColumns <- renameColumns[!notCols]
+    }
+  }
+  return(invisible(renameColumns))
 }

@@ -25,7 +25,7 @@
 #' `ompogenerics::suppress()`.
 #' @param hide Columns to drop from the output table.
 #' @param .options Named list with additional formatting options.
-#' visOmopResults::optionsVisOmopTable() shows allowed arguments and
+#' visOmopResults::optionsTable() shows allowed arguments and
 #' their default values.
 #'
 #' @return A tibble, gt, or flextable object.
@@ -93,12 +93,6 @@ visOmopTable <- function(result,
   }
   if ("additional" %in% split & any(grepl("additional", hide))) {
     cli::cli_abort("`additional` columns cannot be splitted and excluded at the same time. ")
-  }
-  if (inherits(groupColumn, "list")) {
-    nameGroup <- names(groupColumn)
-    groupColumn <- groupColumn[[1]]
-  } else if (length(groupColumn) > 1) {
-    nameGroup <- paste0(groupColumn, collapse = "_")
   }
 
   # .options
@@ -413,87 +407,10 @@ defaultTableOptions <- function(userOptions) {
 #'
 #' @examples
 #' {
-#' optionsVisOmopTable()
+#' optionsTable()
 #' }
 #'
 #'
-optionsVisOmopTable <- function() {
+optionsTable <- function() {
   return(defaultTableOptions(NULL))
-}
-
-
-#' Format a summarised_result object into a gt, flextable or tibble object
-#'
-#' `r lifecycle::badge("deprecated")`
-#'
-#' @param result A summarised_result.
-#' @param formatEstimateName Named list of estimate name's to join, sorted by
-#' computation order. Indicate estimate_name's between <...>.
-#' @param header A vector containing which elements should go into the header
-#' in order (`cdm_name`, `group`, `strata`, `additional`,
-#' `variable`, `estimate`, and `settings`).
-#' @param groupColumn Columns to use as group labels. By default the name of the
-#' new group will be the column names separated by "_". To specify a new
-#' grouping name enter a named list such as:
-#' list(`newGroupName` = c("variable_name", "variable_level"))
-#' @param split A vector containing the name-level groups to split ("group",
-#' "strata", "additional"), or an empty character vector to not split.
-#' @param type Type of desired formatted table, possibilities: "gt",
-#' "flextable", "tibble".
-#' @param renameColumns Named vector to customise column names, for instance:
-#' c("Database name" = "cdm_name")). By default column names are transformed to
-#' sentence case.
-#' @param minCellCount `r lifecycle::badge("deprecated")` Suppression of
-#' estimates when counts < minCellCount should be done before with
-#' `ompogenerics::suppress()`.
-#' @param hide Columns to drop from the output table.
-#' @param .options Named list with additional formatting options.
-#' visOmopResults::optionsVisOmopTable() shows allowed arguments and
-#' their default values.
-#'
-#' @return A tibble, gt, or flextable object.
-#'
-#' @description
-#' `formatTable()` was renamed to `visOmopTable()`
-#'
-#' @keywords internal
-#'
-#' @export
-#'
-#' @examples
-#' mockSummarisedResult() |> formatTable(
-#'   formatEstimateName = c("N%" = "<count> (<percentage>)",
-#'                          "N" = "<count>",
-#'                          "Mean (SD)" = "<mean> (<sd>)"),
-#'   header = c("group"),
-#'   split = c("group","strata",  "additional")
-#' )
-#'
-formatTable <- function(result,
-                        formatEstimateName,
-                        header,
-                        split,
-                        groupColumn = NULL,
-                        type = "gt",
-                        renameColumns = NULL,
-                        minCellCount = lifecycle::deprecated(),
-                        hide = c("result_id", "estimate_type"),
-                        .options = list()) {
-
-  lifecycle::deprecate_soft(
-    when = "0.3.0",
-    what = "formatTable()",
-    with = "visOmopTable()"
-  )
-
-  visOmopTable(result = result,
-               formatEstimateName = formatEstimateName,
-               header = header,
-               split = split,
-               groupColumn = groupColumn,
-               type = type,
-               renameColumns = renameColumns,
-               hide = hide,
-               .options = .options
-  )
 }
