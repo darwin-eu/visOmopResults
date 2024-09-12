@@ -53,6 +53,9 @@ plotScatter <- function(result,
   omopgenerics::assertLogical(line, length = 1, call = call)
   omopgenerics::assertLogical(point, length = 1, call = call)
   omopgenerics::assertLogical(ribbon, length = 1, call = call)
+  omopgenerics::assertTable(result, class = "data.frame")
+  result <- tidyResult(result)
+
   result <- prepareInput(
     result = result, x = x, y = y, facet = facet, colour = colour, ymin = ymin,
     ymax = ymax, group = group, allowEstimatesX = TRUE)
@@ -216,6 +219,42 @@ plotBarplot <- function(result,
   return(p)
 }
 
+
+tidyResult <- function(result) {
+  if (inherits(result, "summarised_result")) {
+    result <- tidy(result) |>
+      dplyr::select(!dplyr::any_of("result_id"))
+  }
+  return(result)
+}
+prepareColumn <- function(result,
+                          cols,
+                          name,
+                          call = parent.frame()) {
+  if (is.null(cols))
+  nm <- capture.output(substitute(cols))
+  if (!is.character(cols) || !all(cols %in% colnames(result))) {
+    cli::cli_abort(c("x" = "{nm} is not a column in result."), call = call)
+  }
+  if (length(x) == 0) {
+    res <- res |>
+      dplyr::mutate(!!id := "")
+  } else {
+    mes <- "{nm} must be a subset of: {opts}." |>
+      cli::cli_text() |>
+      cli::cli_fmt()
+    omopgenerics::assertChoice(
+      x, choices = opts, unique = TRUE, call = call, msg = mes)
+    if (length(x) == 1) {
+      res <- res |>
+        dplyr::mutate(!!id := .data[[x]])
+    } else {
+      res <- res |>
+        tidyr::unite(
+          col = !!id, dplyr::all_of(x), remove = FALSE, sep = " - ")
+    }
+  }
+}
 prepareInput <- function(result,
                          x,
                          facet,
