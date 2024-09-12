@@ -105,7 +105,7 @@ visOmopTable <- function(result,
   .options <- defaultTableOptions(.options)
 
   # Format estimates ----
-  settings <- omopgenerics::settings(result)
+  settings <- settings(result)
   if (!"min_cell_count" %in% colnames(settings)) {
     cli::cli_inform(c("!" = "Results have not been suppressed."))
     showMinCellCount <- FALSE

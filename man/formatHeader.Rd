@@ -15,9 +15,7 @@ formatHeader(
 \arguments{
 \item{result}{A summarised_result.}
 
-\item{header}{Names of the columns to make headers. Names that doesn't
-correspond to a column of the table result, will be used as headers at the
-defined position.}
+\item{header}{Names of the variables to make headers.}
 
 \item{delim}{Delimiter to use to separate headers.}
 

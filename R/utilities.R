@@ -108,6 +108,8 @@ validateDelim <- function(delim) {
   }
 }
 
+
+
 checkGroupColumn <- function(groupColumn) {
   if (inherits(groupColumn, "list")) {
     assertList(groupColumn, length = 1, null = TRUE, named = TRUE)
@@ -116,4 +118,26 @@ checkGroupColumn <- function(groupColumn) {
   if (inherits(groupColumn, "character")) {
     assertCharacter(groupColumn, null = TRUE)
   }
+}
+
+#### not in omopgenerics (ones above will be deleted in due time)
+validatePivotEstimatesBy <- function(pivotEstimatesBy, call = parent.frame()) {
+  omopgenerics::assertCharacter(x = pivotEstimatesBy, null = TRUE, call = call)
+  notValid <- any(c(!pivotEstimatesBy %in% omopgenerics::resultColumns(), c("estimate_type", "estimate_value") %in% pivotEstimatesBy))
+  if (isTRUE(notValid)) {
+    cli::cli_abort(
+      c("x" = "`pivotEstimatesBy` must refer to summarised_result columns.
+        It cannot include `estimate_value` and `estimate_type`."),
+      call = call)
+  }
+  return(invisible(pivotEstimatesBy))
+}
+
+validateSettingsColumns <- function(settingsColumns, result, call = parent.frame()) {
+  omopgenerics::assertCharacter(x = settingsColumns, null = TRUE, call = call)
+  if (!is.null(settingsColumns)) {
+    omopgenerics::assertTable(settings(result), columns = settingsColumns)
+  }
+  settingsColumns <- settingsColumns[settingsColumns != "result_id"]
+  return(invisible(settingsColumns))
 }

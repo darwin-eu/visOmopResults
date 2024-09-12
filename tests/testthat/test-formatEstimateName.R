@@ -35,7 +35,7 @@ test_that("formatEstimateName", {
                      estimates_in$estimate_value[estimates_in$variable_name == "Medications" &  estimates_in$estimate_name == "percentage"],
                      "%)"))
   # attributes mantained:
-  expect_true(nrow(omopgenerics::settings(result_output)) == 1)
+  expect_true(nrow(settings(result_output)) == 1)
   expect_true(inherits(result_output, "summarised_result"))
 
   # input 2 ----
