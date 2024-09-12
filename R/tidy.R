@@ -4,7 +4,10 @@
 #' @param splitGroup If TRUE it will split the group name-level column pair.
 #' @param splitStrata If TRUE it will split the group name-level column pair.
 #' @param splitAdditional If TRUE it will split the group name-level column pair.
-#' @param addSettings Whether to add settings as columns or not.
+#' @param settingsColumns Settings to be added as columns, by default all
+#' settings will be added. If NULL or empty character vector, no settings will
+#' be added.
+#' @param addSettings `r lifecycle::badge("deprecated")`
 #' @param pivotEstimatesBy Names from which pivot wider the estimate values. If
 #' NULL the table will not be pivotted.
 #' @param nameStyle Name style (glue package specifications) to customise names
@@ -23,56 +26,52 @@
 #' result <- mockSummarisedResult()
 #'
 #' result |> tidySummarisedResult()
-#' #'
-#' result |> tidySummarisedResult(
-#'   addSettings = FALSE,
-#'   pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name")
-#' )
 #'
-#' result |> tidySummarisedResult(
-#'   addSettings = FALSE,
-#'   pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name"),
-#'   nameStyle = "{estimate_name}_{variable_name}_{variable_level}"
-#' )
+#' result |>
+#'   tidySummarisedResult(
+#'     settings = character(),
+#'     pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name")
+#'   )
+#'
+#' result |>
+#'   tidySummarisedResult(
+#'     settings = character(),
+#'     pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name"),
+#'     nameStyle = "{estimate_name}_{variable_name}_{variable_level}"
+#'   )
 #'}
 
 tidySummarisedResult <- function(result,
                                  splitGroup = TRUE,
                                  splitStrata = TRUE,
                                  splitAdditional = TRUE,
-                                 addSettings = TRUE,
+                                 settingsColumns = colnames(settings(result)),
+                                 addSettings = lifecycle::deprecated(),
                                  pivotEstimatesBy = "estimate_name",
                                  nameStyle = NULL) {
+  if (lifecycle::is_present(addSettings)) {
+    lifecycle::deprecate_warn("0.4.0", "visOmopTable(addSettings)", "visOmopTable(settingsColumns)")
+  }
+
   # initial checks
   result <- omopgenerics::validateResultArguemnt(result = result)
-  pivotEstimatesBy <- validatePivotEstimatesBy(pivotEstimatesBy)
-  omopgenerics::assertLogical(
-    x = c(splitGroup, splitStrata, splitAdditional, addSettings),
-    length = 4
-  )
+  pivotEstimatesBy <- validatePivotEstimatesBy(pivotEstimatesBy = pivotEstimatesBy)
+  settingsColumns <- validateSettingsColumns(settingsColumns = settingsColumns, result = result)
   omopgenerics::assertCharacter(x = nameStyle, null = TRUE)
-
-  # settings
-  if (isTRUE(addSettings)) {
-    setNames <- colnames(settings(result))
-    setNames <- setNames[setNames != "result_id"]
-    result <- result |> addSettings()
-  }
+  omopgenerics::assertLogical(
+    x = c(splitGroup, splitStrata, splitAdditional), length = 3
+  )
 
   # split
   if (isTRUE(splitGroup)) result <- result |> splitGroup()
   if (isTRUE(splitStrata)) result <- result |> splitStrata()
   if (isTRUE(splitAdditional)) result <- result |> splitAdditional()
 
-  # pivot estimates
+  # pivot estimates and add settings
   result <- result |>
-    pivotEstimates(pivotEstimatesBy = pivotEstimatesBy, nameStyle = nameStyle)
-
-  # move settings
-  if (isTRUE(addSettings)) {
-    result <- result |>
-      dplyr::relocate(dplyr::all_of(setNames), .after = dplyr::last_col())
-  }
+    visOmopResults::addSettings(columns = settingsColumns) |>
+    pivotEstimates(pivotEstimatesBy = pivotEstimatesBy, nameStyle = nameStyle) |>
+    dplyr::relocate(dplyr::any_of(settingsColumns), .after = dplyr::last_col())
 
   return(result)
 }
@@ -98,7 +97,7 @@ tidySummarisedResult <- function(result,
 #' @examples
 #' result <- mockSummarisedResult()
 #' result |> tidy()
-#'
+
 tidy.summarised_result <- function(x, ...) {
   # checks
   if (length(list(...)) > 0) {
@@ -114,9 +113,10 @@ tidy.summarised_result <- function(x, ...) {
 
   x <- x |>
     addSettings() |>
-    splitAll() |>
     pivotEstimates() |>
-    dplyr::relocate(dplyr::all_of(setNames), .after = dplyr::last_col())
+    splitAll() |>
+    dplyr::relocate(dplyr::all_of(setNames), .after = dplyr::last_col()) |>
+    dplyr::select(!"result_id")
 
   return(x)
 }

@@ -26,5 +26,4 @@ If you want to customise these tidy operations, please use
 \examples{
 result <- mockSummarisedResult()
 result |> tidy()
-
 }

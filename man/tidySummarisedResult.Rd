@@ -9,7 +9,8 @@ tidySummarisedResult(
   splitGroup = TRUE,
   splitStrata = TRUE,
   splitAdditional = TRUE,
-  addSettings = TRUE,
+  settingsColumns = colnames(settings(result)),
+  addSettings = lifecycle::deprecated(),
   pivotEstimatesBy = "estimate_name",
   nameStyle = NULL
 )
@@ -23,7 +24,11 @@ tidySummarisedResult(
 
 \item{splitAdditional}{If TRUE it will split the group name-level column pair.}
 
-\item{addSettings}{Whether to add settings as columns or not.}
+\item{settingsColumns}{Settings to be added as columns, by default all
+settings will be added. If NULL or empty character vector, no settings will
+be added.}
+
+\item{addSettings}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 
 \item{pivotEstimatesBy}{Names from which pivot wider the estimate values. If
 NULL the table will not be pivotted.}
@@ -44,16 +49,18 @@ Provides tools for obtaining a tidy version of a summarised_result object.
 result <- mockSummarisedResult()
 
 result |> tidySummarisedResult()
-#'
-result |> tidySummarisedResult(
-  addSettings = FALSE,
-  pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name")
-)
 
-result |> tidySummarisedResult(
-  addSettings = FALSE,
-  pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name"),
-  nameStyle = "{estimate_name}_{variable_name}_{variable_level}"
-)
+result |>
+  tidySummarisedResult(
+    settings = character(),
+    pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name")
+  )
+
+result |>
+  tidySummarisedResult(
+    settings = character(),
+    pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name"),
+    nameStyle = "{estimate_name}_{variable_name}_{variable_level}"
+  )
 }
 }

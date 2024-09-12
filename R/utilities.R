@@ -132,3 +132,12 @@ validatePivotEstimatesBy <- function(pivotEstimatesBy, call = parent.frame()) {
   }
   return(invisible(pivotEstimatesBy))
 }
+
+validateSettingsColumns <- function(settingsColumns, result, call = parent.frame()) {
+  omopgenerics::assertCharacter(x = settingsColumns, null = TRUE, call = call)
+  if (!is.null(settingsColumns)) {
+    omopgenerics::assertTable(settings(result), columns = settingsColumns)
+  }
+  settingsColumns <- settingsColumns[settingsColumns != "result_id"]
+  return(invisible(settingsColumns))
+}

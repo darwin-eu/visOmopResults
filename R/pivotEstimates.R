@@ -23,13 +23,9 @@ pivotEstimates <- function(result,
                            pivotEstimatesBy = "estimate_name",
                            nameStyle = NULL) {
   # initial checks
-  assertTibble(result, columns = pivotEstimatesBy)
-  assertClass(result, "summarised_result")
-  assertCharacter(pivotEstimatesBy, null = TRUE)
-  assertCharacter(nameStyle, null = TRUE)
-  if ("estimate_type" %in% pivotEstimatesBy) {
-    cli::cli_abort("estimates cannot be pivotted by `estimate_type`.")
-  }
+  pivotEstimatesBy <- validatePivotEstimatesBy(pivotEstimatesBy = pivotEstimatesBy)
+  omopgenerics::assertCharacter(nameStyle, null = TRUE, length = 1)
+  omopgenerics::assertTable(result, columns = pivotEstimatesBy, class = "summarised_result")
 
   # pivot estimates
   result_out <- result
