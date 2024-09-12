@@ -173,11 +173,10 @@ gtTable <- function(
       gtResult <- x |>
         dplyr::mutate(group_label = apply(dplyr::across(dplyr::all_of(groupColumn)), 1, paste, collapse = delim)) |>
         gt::gt(groupname_col = "group_label", row_group_as_column = groupAsColumn) |>
-        gt::tab_spanner_delim(delim = delim)
+        gt::tab_spanner_delim(delim = delim) |>
+        gt::cols_hide(columns = dplyr::all_of(groupColumn))
 
-      # Remove the group_label column
-      gtResult <- gtResult |>
-        dplyr::select(-group_label)
+
     }
     gtResult <- gtResult |>
       gt::row_group_order(groups = as.character(unique(gtResult$group_label)))

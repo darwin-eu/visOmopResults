@@ -40,7 +40,10 @@ header_level, column_name, group_label, and body. Alternatively, use
 markdown formatting style (e.g. \verb{*Your caption here*} for caption in
 italics).}
 
-\item{groupColumn}{Column to use as group labels.}
+\item{groupColumn}{Specifies the columns to use for group labels.
+By default, the new group name will be a combination of the column names,
+joined by "_". To assign a custom group name, provide a named list such as:
+list(\code{newGroupName} = c("variable_name", "variable_level"))}
 
 \item{groupNameCol}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This argument was
 renamed to "groupColumn" for consistency throughout the package functions.}
