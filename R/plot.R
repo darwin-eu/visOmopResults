@@ -49,43 +49,33 @@ plotScatter <- function(result,
                         colour = NULL,
                         group = colour) {
   rlang::check_installed("ggplot2")
+
   # check and prepare input
   omopgenerics::assertLogical(line, length = 1, call = call)
   omopgenerics::assertLogical(point, length = 1, call = call)
   omopgenerics::assertLogical(ribbon, length = 1, call = call)
   omopgenerics::assertTable(result, class = "data.frame")
+
+  # prepare result
   result <- tidyResult(result)
+  cols = list(
+    x = x, y = y, ymin = ymin, ymax = ymax, facet = facet, colour = colour,
+    group = group)
+  result <- prepareColumns(result = result, cols = cols)
 
-  result <- prepareInput(
-    result = result, x = x, y = y, facet = facet, colour = colour, ymin = ymin,
-    ymax = ymax, group = group, allowEstimatesX = TRUE)
-
-  idCols <- attr(result, "ids_cols")
-  colourColumn <- idCols["colour"] |> unname()
-  facetColumn <- idCols["facet"] |> unname()
-  groupColumn <- idCols["group"] |> unname()
-  xColumn <- idCols["x"] |> unname()
-
-  aes <- "ggplot2::aes(x = .data${xColumn}, y = .data[['{y}']],
-  colour = .data${colourColumn}, group = .data${groupColumn},
-  fill = .data${colourColumn}"
+  # get aes
+  aes <- getAes(cols)
   yminymax <- !is.null(ymin) & !is.null(ymax)
-  if (yminymax) {
-    aes <- paste0(aes, ", ymin = .data[['{ymin}']], ymax = .data[['{ymax}']]")
-  }
-  aes <- paste0(aes, ")") |>
-    glue::glue() |>
-    rlang::parse_expr() |>
-    eval()
 
+  # make plot
   p <- ggplot2::ggplot(data = result, mapping = aes)
   if (line) p <- p + ggplot2::geom_line()
   if (yminymax) p <- p + ggplot2::geom_errorbar()
   if (point) p <- p + ggplot2::geom_point()
   if (ribbon & yminymax) {
-    p <- p + ggplot2::geom_ribbon(alpha = .3, color = NA, show.legend = FALSE)
+    p <- p +
+      ggplot2::geom_ribbon(alpha = .3, color = NA, show.legend = FALSE)
   }
-
   p <- plotFacet(p, facet) +
     ggplot2::labs(
       x = styleLabel(x),
@@ -219,7 +209,6 @@ plotBarplot <- function(result,
   return(p)
 }
 
-
 tidyResult <- function(result) {
   if (inherits(result, "summarised_result")) {
     result <- tidy(result) |>
@@ -227,143 +216,71 @@ tidyResult <- function(result) {
   }
   return(result)
 }
-prepareColumn <- function(result,
-                          cols,
-                          name,
-                          call = parent.frame()) {
-  if (is.null(cols))
-  nm <- capture.output(substitute(cols))
-  if (!is.character(cols) || !all(cols %in% colnames(result))) {
-    cli::cli_abort(c("x" = "{nm} is not a column in result."), call = call)
+prepareColumns <- function(result,
+                           cols,
+                           call = parent.frame()) {
+  opts <- colnames(result)
+  if ("facet" %in% names(cols)) {
+    cols$facet <- NULL
   }
-  if (length(x) == 0) {
-    res <- res |>
-      dplyr::mutate(!!id := "")
-  } else {
-    mes <- "{nm} must be a subset of: {opts}." |>
-      cli::cli_text() |>
-      cli::cli_fmt()
-    omopgenerics::assertChoice(
-      x, choices = opts, unique = TRUE, call = call, msg = mes)
-    if (length(x) == 1) {
-      res <- res |>
-        dplyr::mutate(!!id := .data[[x]])
-    } else {
-      res <- res |>
-        tidyr::unite(
-          col = !!id, dplyr::all_of(x), remove = FALSE, sep = " - ")
-    }
+  varNames <- names(cols)
+  newNames <- omopgenerics::uniqueId(n = length(cols), exclude = opts)
+  for (k in seq_along(cols)) {
+    result <- prepareColumn(
+      result = result, newName = newNames[k], cols = cols[k],
+      varName = varNames[k], opts = opts, call = call
+    )
   }
-}
-prepareInput <- function(result,
-                         x,
-                         facet,
-                         colour,
-                         allowEstimatesX = FALSE,
-                         group = NULL,
-                         ...,
-                         call = parent.frame()) {
-  # result <- omopgenerics::validateResult(result, call = call)
-  omopgenerics::assertClass(result, class = "summarised_result", call = call)
-  cols <- colnames(settings(result))
-  cols <- cols[!cols %in% c(
-    "result_id", "result_type", "package_name", "package_version")]
-  result <- result |>
-    omopgenerics::newSummarisedResult()
-  vars <- result |>
-    dplyr::pull("variable_name") |>
-    unique()
-  if (length(vars) > 1) {
-    cli::cli_abort(
-      "The summarised_result contains data for more than one variable,
-      please filter the result to the variable of interest",
-      call = call)
-  }
-  result <- result |>
-    omopgenerics::newSummarisedResult() |>
-    splitAll() |>
-    addSettings(columns = cols)
-  optionCols <- colnames(result)
-  optionCols <- optionCols[!optionCols %in% c(
-    "result_id", "estimate_name", "estimate_type", "estimate_value")]
-  if (allowEstimatesX) {
-    optionX <- c(optionCols, unique(result$estimate_name)) |> unique()
-  } else {
-    optionX <- optionCols
-  }
-
-  if (rlang::is_bare_formula(facet)) {
-    facet <- as.character(facet) |>
-      strsplit(split = " + ", fixed = TRUE) |>
-      unlist()
-    facet <- facet[!facet %in% c(".", "~")]
-  }
-
-  result <- result |>
-    pivotEstimates() |>
-    validateGroup(x = facet, opts = optionCols, call = call) |>
-    validateGroup(x = colour, opts = optionCols, call = call) |>
-    validateGroup(x = group, opts = optionCols, call = call)
-  diffCols <- optionCols[!optionCols %in% c(facet, colour, group)]
-  names(diffCols) <- diffCols
-  diffCols <- lapply(diffCols, function(var) {
-      result[[var]] |> unique() |> length()
-    }) |>
-    unlist()
-  diffCols <- names(diffCols[diffCols>1])
-  if (is.null(x)) {
-    x <- diffCols
-  }
-  result <- result |>
-    validateGroup(x = x, opts = optionX, call = call)
-  diffCols <- diffCols[!diffCols %in% x]
-  if (length(diffCols) > 0) {
-    cli::cli_inform(c(
-      "i" = "There are duplicated points, suggested to include:
-      {.pkg {diffCols}} in: either {.var facet}, {.var colour}, {.var group} or
-      {.var x}."))
-  }
-
-  # variables
-  variables <- list(...)
-  for (k in seq_along(variables)) {
-    nm <- names(variables)[k]
-    val <- variables[[k]]
-    msg <- "{nm} must be a character that points to a column in result." |>
-      glue::glue()
-    omopgenerics::assertCharacter(val, length = 1, call = call, msg = msg, null = TRUE)
-    if (isFALSE(val %in% colnames(result))) {
-      cli::cli_abort("{val} is not present in data.", call = call)
-    }
-  }
-  attr(result, "x") <- x
 
   return(result)
 }
-validateGroup <- function(res, x, opts, call) {
-  idsCols <- attr(res, "ids_cols")
-  nm <- substitute(x) |> as.character()
-  id <- omopgenerics::uniqueId(exclude = colnames(res), prefix = "col_")
-  if (length(x) == 0) {
-    res <- res |>
-      dplyr::mutate(!!id := "")
-  } else {
-    mes <- "{nm} must be a subset of: {opts}." |>
-      cli::cli_text() |>
-      cli::cli_fmt()
-    omopgenerics::assertChoice(
-      x, choices = opts, unique = TRUE, call = call, msg = mes)
-    if (length(x) == 1) {
-      res <- res |>
-        dplyr::mutate(!!id := .data[[x]])
-    } else {
-      res <- res |>
-        tidyr::unite(
-          col = !!id, dplyr::all_of(x), remove = FALSE, sep = " - ")
-    }
+prepareColumn <- function(result,
+                          newName,
+                          cols,
+                          varName,
+                          opts,
+                          call) {
+  if (is.null(cols)) {
+    return(
+      result |>
+        dplyr::mutate(!!newName := NA_real_)
+    )
   }
-  attr(res, "ids_cols") <- c(idsCols, id |> rlang::set_names(nm))
-  return(res)
+  if (!is.character(cols) || !all(cols %in% opts)) {
+    cli::cli_abort(c("x" = "{varName} is not a column in result."), call = call)
+  }
+  if (length(cols) == 1) {
+    result <- result |>
+      dplyr::mutate(!!newName := .data[[cols]])
+  } else {
+    result <- result |>
+      tidyr::unite(
+        col = !!newName, dplyr::all_of(cols), remove = FALSE, sep = " - ")
+  }
+  return(result)
+}
+getAes <- function(cols) {
+  vars <- names(cols)
+  paste0(
+    "ggplot2::aes(",
+    glue::glue("{vars} = .data${vars}") |>
+      stringr::str_c(collapse = ", "),
+    ")"
+  ) |>
+    rlang::parse_expr() |>
+    rlang::eval_tidy()
+}
+warnMultipleColumns <- function(result) {
+  cols <- colnames(result) |>
+    rlang::set_names() |>
+    purrr::map_lgl(\(x) length(unique(result[[x]])) > 1)
+  cols <- names(cols[cols])
+  if (length(cols) > 0) {
+    cli::cli_inform(c(
+      "i" = "There are duplicated points, suggested to include {.pkg {cols}} in:
+      either {.var facet}, {.var colour}, {.var group} or {.var x}."))
+  }
+  invisible(NULL)
 }
 plotFacet <- function(p, facet) {
   if (!is.null(facet)) {
@@ -386,7 +303,6 @@ styleLabel <- function(x) {
     NULL
   }
 }
-
 hideLegend <- function(x) {
   if (length(x) > 0 && !identical(x, "")) "right" else "none"
 }
