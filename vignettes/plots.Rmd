@@ -1,0 +1,95 @@
+---
+title: "Plotting tools"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Plotting tools}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+**visOmopResults** offer some plotting tools that can be very useful. These 
+tools are useful to plot either `<summarised_result>` dataset or a usual
+`<data.frame>`.
+
+```{r setup}
+library(visOmopResults)
+```
+
+## Plotting with a <summarised_result>
+
+For the purpose of this vignette we will turn summarise the dataset penguins 
+from the palmerpenguins package using `PatientProfiles::summariseResult()`
+
+```{r}
+library(PatientProfiles)
+library(palmerpenguins)
+library(dplyr)
+
+summariseIsland <- function(island) {
+  penguins |>
+    filter(island == island) |>
+    summariseResult(
+      group = "species",
+      includeOverallGroup = TRUE,
+      strata = list("year", "sex", c("year", "sex")),
+      variables = c(
+        "bill_length_mm", "bill_depth_mm", "flipper_length_mm", "body_mass_g", 
+        "sex"),
+      estimates = c(
+        "median", "q25", "q75", "min", "max", "count_missing", "count", 
+        "percentage", "density")
+    ) |>
+    suppressMessages() |>
+    mutate(cdm_name = island)
+}
+
+penguinsSummary <- bind(
+  summariseIsland("Torgersen"), 
+  summariseIsland("Biscoe"), 
+  summariseIsland("Dream")
+)
+
+```
+
+### Tidy format
+
+### Scatter plot
+
+### Bar plot
+
+### Box plot
+
+## Plotting with a <data.frame>
+
+## `ggplot2` tools
+
+The plotting functions are a wrapper around the ggplot2 package, outputs of 
+the plotting functions can be later customised with ggplot2 and similar tools.
+
+Let's see this simple example where we use `ggplot2::labs()` to change the 
+labels and `ggplot2::theme()` to move the location of the legend.
+
+```{r}
+```
+
+You can also use `ggplot2::ggsave()` to later save one of this plots into '.png'
+file.
+
+```{r}
+```
+
+## `plotly` tools
+
+Although the package currently does not provide any plotly functionality
+ggplots can be easily converted to `<plotly>` ones using the function
+`plotly::ggplotly()`. This can make the interactivity of some plots better:
+
+```{r}
+```

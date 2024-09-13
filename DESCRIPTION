@@ -37,6 +37,9 @@ Suggests:
     gt,
     knitr,
     officer,
+    palmerpenguins,
+    PatientProfiles,
+    plotly,
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: 
