@@ -58,7 +58,19 @@ penguinsSummary <- bind(
 
 ```
 
-### Tidy format
+### Plotting principles
+
+Although the input of a visOmopResult plot function can be a <summarised_result>
+when referring to inputs, we will use the columns shown in its tidy format:
+
+```{r}
+tidy(penguinsSummary) |>
+  glimpse()
+```
+
+We should always subset the <summarised_result> to the variable_name of interest
+before calling the plotting funtions. It is not advised to combine results of
+different variables 
 
 ### Scatter plot
 
