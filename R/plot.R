@@ -65,6 +65,8 @@ plotScatter <- function(result,
   omopgenerics::assertCharacter(group, null = TRUE)
 
   # get estimates
+  result <- cleanEstimates(result, c(
+    x, y, ymin, ymax, asCharacterFacet(facet), colour, group))
   est <- suppressWarnings(unique(result$estimate_name))
 
   # tidy result
@@ -149,18 +151,34 @@ plotBoxplot <- function(result,
   validateFacet(facet)
   omopgenerics::assertCharacter(colour, null = TRUE)
 
-  # prepare result
+  # get estimates
+  result <- cleanEstimates(result, c(
+    x, lower, middle, upper, ymin, ymax, asCharacterFacet(facet), colour))
+  est <- suppressWarnings(unique(result$estimate_name))
+  ylab <- styleLabel(unique(suppressWarnings(result$variable_name)))
+
+  # tidy result
   result <- tidyResult(result)
+
+  # warn multiple values
+  result |>
+    dplyr::select(!dplyr::any_of(c(est))) |>
+    warnMultipleValues(cols = list(
+      x = x, facet = asCharacterFacet(facet), colour = colour))
+
+  # prepare result
+  col <- omopgenerics::uniqueId(exclude = colnames(result))
+  result <- result |>
+    dplyr::mutate(!!col := dplyr::row_number())
   cols = list(
     x = x, lower = lower, middle = middle, upper = upper, ymin = ymin,
-    ymax = ymax, colour = colour, fill = colour)
+    ymax = ymax, colour = colour, group = col)
   result <- prepareColumns(result = result, cols = cols, facet = facet)
 
   # get aes
   aes <- getAes(cols)
   yminymax <- !is.null(ymin) & !is.null(ymax)
 
-  ylab <- styleLabel(unique(suppressWarnings(result$variable_name)))
   clab <- styleLabel(colour)
   xlab <- styleLabel(x)
 
@@ -217,6 +235,7 @@ plotBarplot <- function(result,
   omopgenerics::assertCharacter(colour, null = TRUE)
 
   # get estimates
+  result <- cleanEstimates(result, c(x, y, asCharacterFacet(facet), colour))
   est <- suppressWarnings(unique(result$estimate_name))
 
   # tidy result
@@ -383,4 +402,12 @@ asCharacterFacet <- function(facet) {
       unlist()
   }
   return(facet)
+}
+cleanEstimates <- function(result, est) {
+  if ("estimate_name" %in% colnames(result)) {
+    est <- unique(est)
+    result <- result |>
+      dplyr::filter(.data$estimate_name %in% .env$est)
+  }
+  return(result)
 }

@@ -10,7 +10,9 @@ vignette: >
 ```{r, include = FALSE}
 knitr::opts_chunk$set(
   collapse = TRUE,
-  comment = "#>"
+  comment = "#>",
+  fig.width=7, 
+  fig.height=5
 )
 ```
 
@@ -30,7 +32,7 @@ from the palmerpenguins package using `PatientProfiles::summariseResult()`
 ```{r}
 library(PatientProfiles)
 library(palmerpenguins)
-library(dplyr)
+library(dplyr, warn.conflicts = FALSE)
 
 summariseIsland <- function(island) {
   penguins |>
@@ -55,7 +57,6 @@ penguinsSummary <- bind(
   summariseIsland("Biscoe"), 
   summariseIsland("Dream")
 )
-
 ```
 
 ### Plotting principles
@@ -69,35 +70,126 @@ tidy(penguinsSummary) |>
 ```
 
 We should always subset the <summarised_result> to the variable_name of interest
-before calling the plotting funtions. It is not advised to combine results of
-different variables 
+before calling the plotting functions. It is not advised to combine results of
+different variables if they don't share common estimates that we want to plot as
+in the tidy form NAs will be created.
 
 ### Scatter plot
 
+```{r}
+
+```
+
+
 ### Bar plot
+
+```{r}
+
+```
+
 
 ### Box plot
 
-## Plotting with a <data.frame>
-
-## `ggplot2` tools
-
-The plotting functions are a wrapper around the ggplot2 package, outputs of 
-the plotting functions can be later customised with ggplot2 and similar tools.
-
-Let's see this simple example where we use `ggplot2::labs()` to change the 
-labels and `ggplot2::theme()` to move the location of the legend.
+Let's create some box plots of their body mass:
 
 ```{r}
+penguinsSummary |>
+  filter(variable_name == "body_mass_g") |>
+  plotBoxplot(x = "year", facet = c("cdm_name", "species"), colour = "sex")
+```
+
+We can specify how we want to facet using a formula:
+```{r}
+penguinsSummary |>
+  filter(variable_name == "body_mass_g") |>
+  plotBoxplot(x = "year", facet = cdm_name ~ species, colour = "sex")
+```
+
+Arguments before `~` specify the rows, and arguments after the columns, see 
+another example faceting also by sex in the columns. And in this case colouring 
+by year:
+```{r}
+penguinsSummary |>
+  filter(
+    group_level != "overall",
+    strata_name == "year &&& sex",
+    !grepl("NA", strata_level),
+    variable_name == "body_mass_g") |>
+  plotBoxplot(facet = cdm_name ~ species + sex, colour = "year")
+```
+
+Note that as we didnt specify x there is no levels in the x axis, but box plots
+are produced anyway.
+
+## Plotting with a <data.frame>
+
+Plotting functions can also be used with a normal <data.frame>. In this case we 
+will use the tidy format of `penguinsSummary`.
+
+```{r}
+penguinsTidy <- penguinsSummary |>
+  filter(!estimate_name %in% c("density_x", "density_y")) |> # remove density for simplicity
+  tidy()
+penguinsTidy |> glimpse()
+```
+
+That as it can be seen is a normal data.frame:
+```{r}
+penguinsTidy |> class()
+```
+
+In fact, the tidy format makes it easy to filter the group, strata and 
+additional columns as they are not combined in the name-level format. But it is
+also quite useful to filter to the variables of interest, before applying the
+tidy format.
+```{r}
+
+```
+
+## Custom plotting
+
+The tidy format is very useful to apply any other custom ggplot2 function that 
+we may be interested on:
+```{r}
+library(ggplot2)
+penguinsSummary |>
+  filter(variable_name == "number records") |>
+  tidy() |>
+  ggplot(aes(x = year, y = sex, count = count)) +
+  geom_bin_2d() +
+  facet_grid(cdm_name ~ species)
+```
+
+## Combine with `ggplot2`
+
+The plotting functions are a wrapper around the ggplot2 package, outputs of 
+the plotting functions can be later customised with ggplot2 and similar tools. 
+For example we can use `ggplot2::labs()` to change the labels and 
+`ggplot2::theme()` to move the location of the legend.
+
+```{r}
+penguinsSummary |>
+  filter(
+    group_level != "overall",
+    strata_name == "year &&& sex",
+    !grepl("NA", strata_level),
+    variable_name == "body_mass_g") |>
+  plotBoxplot(facet = cdm_name ~ species + sex, colour = "year") +
+  ylim(c(0, 6000)) +
+  labs(x = "My custom x label") +
+  theme(legend.position = "top")
 ```
 
 You can also use `ggplot2::ggsave()` to later save one of this plots into '.png'
 file.
 
-```{r}
+```{r, eval=FALSE}
+ggsave(
+  "figure8.png", plot = last_plot(), device = "png", width = 15, height = 12, 
+  units = "cm", dpi = 300)
 ```
 
-## `plotly` tools
+## Combine with `plotly`
 
 Although the package currently does not provide any plotly functionality
 ggplots can be easily converted to `<plotly>` ones using the function
