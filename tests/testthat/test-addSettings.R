@@ -41,4 +41,13 @@ test_that("addSettings", {
   expect_true(nrow(res2) == 1)
   expect_true(res2$result_id == 2)
 
+  expect_equal(res, addSettings(res, NULL))
+
+  expect_equal(
+    addSettings(result = res, settingsColumns = "result_type") |> colnames(),
+    c('result_id', 'cdm_name', 'group_name', 'group_level', 'strata_name',
+      'strata_level', 'variable_name', 'variable_level', 'estimate_name',
+      'estimate_type', 'estimate_value', 'additional_name', 'additional_level',
+      'result_type')
+  )
 })

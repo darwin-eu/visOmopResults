@@ -1,16 +1,17 @@
-test_that("tidy", {
+test_that("tidySummarisedResult", {
   mocksum <- mockSummarisedResult()
 
-  expect_no_error(res0 <- tidy(x = mocksum, pivotEstimatesBy = "estimate_name"))
+  expect_no_error(res0 <- tidySummarisedResult(result = mocksum, pivotEstimatesBy = "estimate_name"))
   expect_true(nrow(res0 |> dplyr::filter(.data$variable_name == "settings")) == 0)
   expect_true(all(c("cohort_name", "age_group", "sex", "count",
                     "mean", "sd", "percentage") %in% colnames(res0)))
   expect_true(class(res0$percentage) == "numeric")
   expect_true(class(res0$mean) == "numeric")
   expect_true(class(res0$count) == "integer")
+  expect_equal(tidy(mocksum), res0 |> dplyr::select(!"result_id"))
 
-  expect_no_error(res1 <- tidy(mocksum, splitGroup = FALSE, splitAdditional = FALSE,
-                               splitStrata = FALSE, pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name")))
+  expect_no_error(res1 <- tidySummarisedResult(mocksum, splitGroup = FALSE, splitAdditional = FALSE,
+                                               splitStrata = FALSE, pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name")))
   expect_true(all(c("group_name", "group_level", "strata_name", "strata_level",
                     "additional_name", "additional_level") %in%
                     colnames(res1)))
@@ -18,12 +19,12 @@ test_that("tidy", {
                     "Medications_Amoxiciline_percentage", "Medications_Ibuprofen_count",
                     "Medications_Ibuprofen_percentage") %in% colnames(res1)))
 
-  expect_no_error(res2 <- tidy(mocksum,
-                               splitGroup = FALSE,
-                               splitAdditional = FALSE,
-                               addSettings = FALSE,
-                               pivotEstimatesBy = c("variable_name", "estimate_name"),
-                               nameStyle = "{estimate_name}_{variable_name}"))
+  expect_no_error(res2 <- tidySummarisedResult(mocksum,
+                                               splitGroup = FALSE,
+                                               splitAdditional = FALSE,
+                                               settings = character(),
+                                               pivotEstimatesBy = c("variable_name", "estimate_name"),
+                                               nameStyle = "{estimate_name}_{variable_name}"))
   expect_false("logic_settings" %in% colnames(res2))
   expect_true(all(c("count_number subjects", "mean_age", "sd_age",
                     "count_Medications", "percentage_Medications") %in% colnames(res2)))
@@ -31,19 +32,19 @@ test_that("tidy", {
   expect_true(class(res2$mean_age) == "numeric")
   expect_true(class(res2$count_Medications) == "integer")
 
-  expect_no_error(res3 <- tidy(mocksum, splitGroup = FALSE, splitAdditional = FALSE, splitStrata = FALSE,
-                                pivotEstimatesBy = NULL))
+  expect_no_error(res3 <- tidySummarisedResult(mocksum, splitGroup = FALSE, splitAdditional = FALSE, splitStrata = FALSE,
+                                               pivotEstimatesBy = NULL))
   expect_true(all(colnames(res3) %in% c(
     colnames(mocksum), "result_type", "package_name", "package_version"
   )))
 
   # 2 id's:
-  mocksum2 <- mocksum |>
-    dplyr::union_all(mocksum |> dplyr::mutate(result_id = as.integer(2)))
-  expect_no_error(res4 <- tidy(x = mocksum2))
+  mocksum2 <- mocksum |> omopgenerics::bind(mocksum)
+  expect_no_error(res4 <- tidySummarisedResult(result = mocksum2))
+  expect_equal(tidy(mocksum2), res4 |> dplyr::select(!"result_id"))
 })
 
-test_that("tidy, dates", {
+test_that("tidySummarisedResult, dates", {
   result <- dplyr::tibble(
     "result_id" = integer(1),
     "cdm_name" = "mock",
@@ -95,6 +96,10 @@ test_that("tidy, dates", {
           as.character()
       )
     )
-  expect_no_error(result_out <- tidy(result))
+  expect_no_error(result_out <- tidySummarisedResult(result))
   expect_true(class(as.Date(result_out |> dplyr::pull(date))) == "Date")
+  expect_equal(tidy(result), result_out |> dplyr::select(!"result_id"))
+
+  # check no more aguments in tidy method
+  expect_warning(tidy(result, split = 1))
 })
