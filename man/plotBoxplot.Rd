@@ -6,6 +6,7 @@
 \usage{
 plotBoxplot(
   result,
+  x = NULL,
   lower = "q25",
   middle = "median",
   upper = "q75",
@@ -17,6 +18,8 @@ plotBoxplot(
 }
 \arguments{
 \item{result}{A summarised result object.}
+
+\item{x}{Columns to use as x axes.}
 
 \item{lower}{Estimate name for the lower quantile of the box.}
 

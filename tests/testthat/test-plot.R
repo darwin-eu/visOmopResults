@@ -5,7 +5,6 @@ test_that("Function returns a ggplot object", {
     is.null(labels$fill) && is.null(labels$colour)
   }
 
-
   result <- mockSummarisedResult() |>
     dplyr::filter(variable_name == "age")
   p <- plotScatter(
@@ -29,7 +28,9 @@ test_that("Function returns a ggplot object", {
       c("mean", "sd", "q25", "q75", "min", "max"),
       names_to = "estimate_name",
       values_to = "estimate_value") |>
-    dplyr::mutate(estimate_type = "numeric") |>
+    dplyr::mutate(
+      estimate_type = "numeric",
+      estimate_value = as.character(.data$estimate_value)) |>
     omopgenerics::newSummarisedResult()
 
 
@@ -43,9 +44,7 @@ test_that("Function returns a ggplot object", {
     facet = age_group ~ sex,
     colour = "cohort_name")
 
-  expect_no_error(
-    p_box
-  )
+  expect_no_error(p_box)
 
   expect_false(has_no_legend_labels(p_box))
 
@@ -72,13 +71,11 @@ test_that("Function returns a ggplot object", {
     y = "mean",
     facet = c("age_group", "sex"))
 
-  expect_no_error(
-    p_bar
-  )
+  expect_no_error(p_bar)
 
   expect_true(has_no_legend_labels(p_bar))
 
-  expect_snapshot(
+  expect_message(
     result |>
       dplyr::union_all(
         result |>
@@ -87,8 +84,7 @@ test_that("Function returns a ggplot object", {
       plotBarplot(
         x = "cohort_name",
         y = "mean",
-        facet = c("age_group", "sex")),
-    error = TRUE
+        facet = c("age_group", "sex"))
   )
 
   expect_message(
@@ -102,7 +98,7 @@ test_that("Function returns a ggplot object", {
       facet = "age_group")
   )
 
-  expect_error(
+  expect_message(expect_error(
     plotScatter(
       result,
       x = "sex",
@@ -111,6 +107,6 @@ test_that("Function returns a ggplot object", {
       point = TRUE,
       ribbon = FALSE,
       facet = "age_group")
-  )
+  ))
 
 })
