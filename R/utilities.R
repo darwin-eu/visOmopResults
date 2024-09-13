@@ -115,12 +115,14 @@ validateSettingsColumns <- function(settingsColumns, result, call = parent.frame
   omopgenerics::assertCharacter(x = settingsColumns, null = TRUE, call = call)
   if (!is.null(settingsColumns)) {
     omopgenerics::assertTable(settings(result), columns = settingsColumns)
+    settingsColumns <- settingsColumns[settingsColumns != "result_id"]
+  } else {
+    settingsColumns <- character()
   }
-  settingsColumns <- settingsColumns[settingsColumns != "result_id"]
   return(invisible(settingsColumns))
 }
 
-validateRenameColumns <- function(renameColumns, call = parent.frame()) {
+validateRenameColumns <- function(renameColumns, result, call = parent.frame()) {
   omopgenerics::assertCharacter(renameColumns, null = TRUE, named = TRUE, call = call)
   if (!is.null(renameColumns)) {
     notCols <- !renameColumns %in% colnames(result)
@@ -131,11 +133,13 @@ validateRenameColumns <- function(renameColumns, call = parent.frame()) {
       )
       renameColumns <- renameColumns[!notCols]
     }
+  } else {
+    renameColumns <- character()
   }
   return(invisible(renameColumns))
 }
 
-validateGroupColumn <- function(groupColumn, call = parent.frame()) {
+validateGroupColumn <- function(groupColumn, resultIn, sr = FALSE, formatName = FALSE, call = parent.frame()) {
   if (!is.null(groupColumn)) {
     if (!is.list(groupColumn)) {
       groupColumn <- list(groupColumn)
@@ -144,7 +148,18 @@ validateGroupColumn <- function(groupColumn, call = parent.frame()) {
       cli::cli_abort("`groupColumn` must be a character vector, or a list with just one element (a character vector).", call = call)
     }
     omopgenerics::assertCharacter(groupColumn[[1]], null = TRUE, call = call)
-    if (is.null(names(groupColumn))) names(groupColumn) <- paste0(groupColumn[[1]], collapse = "_")
+    if (any(!groupColumn[[1]] %in% colnames(resultIn))) {
+      set <- character()
+      if (sr) set <- "or in the settings stated in `settingsColumns`"
+      cli::cli_abort("`groupColumn` must refer to columns in the result table {set}", call = call)
+    }
+    if (is.null(names(groupColumn))) {
+      if (formatName) {
+        names(groupColumn) <- paste0(formatToSentence(groupColumn[[1]]), collapse = "; ")
+      } else {
+        names(groupColumn) <- paste0(groupColumn[[1]], collapse = "; ")
+      }
+    }
   }
   return(invisible(groupColumn))
 }
@@ -171,6 +186,15 @@ validateDelim <- function(delim, call = parent.frame()) {
     cli::cli_abort("The value supplied for `delim` must be a single character.", call = call)
   }
   return(invisible(delim))
+}
+
+validateShowMinCellCount <- function(showMinCellCount, set) {
+  omopgenerics::assertLogical(showMinCellCount, length = 1)
+  if ((!"min_cell_count" %in% colnames(set)) & isTRUE(showMinCellCount)) {
+    cli::cli_inform(c("!" = "Results have not been suppressed."))
+    showMinCellCount <- FALSE
+  }
+  return(invisible(showMinCellCount))
 }
 
 checkFormatTableInputs <- function(header, groupColumn, hide, call = parent.frame()) {

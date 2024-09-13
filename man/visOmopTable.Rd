@@ -6,16 +6,17 @@
 \usage{
 visOmopTable(
   result,
-  formatEstimateName,
-  header,
-  split,
-  groupColumn = NULL,
+  formatEstimateName = character(),
+  header = character(),
+  groupColumn = character(),
   type = "gt",
-  renameColumns = NULL,
+  renameColumns = character(),
+  settingsColumns = character(),
   showMinCellCount = TRUE,
-  minCellCount = lifecycle::deprecated(),
-  hide = c("result_id", "estimate_type"),
-  .options = list()
+  hide = character(),
+  .options = list(),
+  split = lifecycle::deprecated(),
+  minCellCount = lifecycle::deprecated()
 )
 }
 \arguments{
@@ -27,9 +28,6 @@ computation order. Indicate estimate_name's between <...>.}
 \item{header}{A vector containing which elements should go into the header
 in order (\code{cdm_name}, \code{group}, \code{strata}, \code{additional},
 \code{variable}, \code{estimate}, and \code{settings}).}
-
-\item{split}{A vector containing the name-level groups to split ("group",
-"strata", "additional"), or an empty character vector to not split.}
 
 \item{groupColumn}{Columns to use as group labels. By default the name of the
 new group will be the column names separated by "_". To specify a new
@@ -47,15 +45,18 @@ sentence case.}
 "<\{minCellCount\}", otherwise the default na defined in \code{.options} will
 be used.}
 
-\item{minCellCount}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Suppression of
-estimates when counts < minCellCount should be done before with
-\code{ompogenerics::suppress()}.}
-
 \item{hide}{Columns to drop from the output table.}
 
 \item{.options}{Named list with additional formatting options.
 visOmopResults::optionsTable() shows allowed arguments and
 their default values.}
+
+\item{split}{A vector containing the name-level groups to split ("group",
+"strata", "additional"), or an empty character vector to not split.}
+
+\item{minCellCount}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} Suppression of
+estimates when counts < minCellCount should be done before with
+\code{ompogenerics::suppress()}.}
 }
 \value{
 A tibble, gt, or flextable object.

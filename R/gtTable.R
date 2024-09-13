@@ -98,7 +98,7 @@ gtTable <- function(
   omopgenerics::assertLogical(groupAsColumn, length = 1)
   omopgenerics::assertCharacter(groupOrder, null = TRUE)
   delim <- validateDelim(delim)
-  groupColumn <- validateGroupColumn(groupColumn)
+  groupColumn <- validateGroupColumn(groupColumn, x)
   colsToMergeRows <- validateColsToMergeRows(x, colsToMergeRows, groupColumn[[1]])
   style <- validateStyle(style, "gt")
   if (is.null(title) & !is.null(subtitle)) {
@@ -115,7 +115,7 @@ gtTable <- function(
   }
 
   # Spanners
-  if (!is.null(groupColumn)) {
+  if (!length(groupColumn) == 0) {
     nameGroup <- names(groupColumn)
     x <- x |>
       tidyr::unite(
@@ -329,7 +329,7 @@ gtMergeRows <- function(gt_x, colsToMergeRows, groupColumn, groupOrder) {
   colsToExclude <- c("group_label", paste(groupColumn, collapse = "_"))
 
   if (colsToMergeRows[1] == "all_columns") {
-    if (is.null(groupColumn)) {
+    if (length(groupColumn) == 0) {
       colsToMergeRows <- colNms[!colNms %in% colsToExclude]
     } else {
       colsToMergeRows <- colNms[!colNms %in% c(groupColumn, colsToExclude)]
@@ -354,7 +354,7 @@ gtMergeRows <- function(gt_x, colsToMergeRows, groupColumn, groupOrder) {
     mergeCol <- as.character(gt_x$`_data`[[col]])
     mergeCol[is.na(mergeCol)] <- "-"
 
-    if (is.null(groupColumn)) {
+    if (length(groupColumn) == 0) {
       id <- which(mergeCol == dplyr::lag(mergeCol) & prevId)
     } else {
       groupCol <- apply(gt_x$`_data`[, groupColumn, drop = FALSE], 1, paste, collapse = "_")

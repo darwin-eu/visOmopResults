@@ -91,7 +91,7 @@ fxTable <- function(
   omopgenerics::assertLogical(groupAsColumn, length = 1)
   omopgenerics::assertCharacter(groupOrder, null = TRUE)
   delim <- validateDelim(delim)
-  groupColumn <- validateGroupColumn(groupColumn)
+  groupColumn <- validateGroupColumn(groupColumn, x)
   colsToMergeRows <- validateColsToMergeRows(x, colsToMergeRows, groupColumn[[1]])
   style <- validateStyle(style, "fx")
   if (is.null(title) & !is.null(subtitle)) {
@@ -108,7 +108,7 @@ fxTable <- function(
   }
 
   # Flextable
-  if (is.null(groupColumn)) {
+  if (length(groupColumn) == 0) {
     # Header id's
     spanCols_ids <- which(grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x)))
     spanners <- strsplit(colnames(x)[spanCols_ids[1]], delim) |> unlist()
@@ -206,7 +206,7 @@ fxTable <- function(
   if (!is.null(colsToMergeRows)) { # style while merging rows
     flex_x <- fxMergeRows(flex_x, colsToMergeRows, nameGroup)
   } else {
-    if (!is.null(groupColumn)) { # style group different
+    if (!length(groupColumn) == 0) { # style group different
       indRowGroup <- getNonNaIndices(flex_x$body$dataset, nameGroup)
       flex_x <- flex_x |>
         flextable::border(
@@ -309,7 +309,7 @@ fxTable <- function(
       pr_p = style$body$paragraph, pr_c = style$body$cell
     )
   # group label
-  if (!is.null(groupColumn)) {
+  if (!length(groupColumn) == 0) {
     if (!groupAsColumn) {
       nonNaIndices <- getNonNaIndices(flex_x$body$dataset, nameGroup)
       flex_x <- flex_x |>
@@ -376,7 +376,7 @@ fxStyles <- function(styleName) {
 fxMergeRows <- function(fx_x, colsToMergeRows, groupColumn) {
   colNms <- colnames(fx_x$body$dataset)
   if (colsToMergeRows[1] == "all_columns") {
-    if (is.null(groupColumn)) {
+    if (length(groupColumn) == 0) {
       colsToMergeRows <- colNms
     } else {
       colsToMergeRows <- colNms[!colNms %in% groupColumn]
@@ -392,7 +392,7 @@ fxMergeRows <- function(fx_x, colsToMergeRows, groupColumn) {
   indColGroup <- NULL
   indRowGroup <- NULL
 
-  if (!is.null(groupColumn)) {
+  if (!length(groupColumn) == 0) {
     groupCol <- fx_x$body$dataset |>
       dplyr::select(dplyr::all_of(groupColumn)) |>
       dplyr::mutate(dplyr::across(dplyr::everything(), as.character))
@@ -430,7 +430,7 @@ fxMergeRows <- function(fx_x, colsToMergeRows, groupColumn) {
     mergeCol <- fx_x$body$dataset[[col]]
     mergeCol[is.na(mergeCol)] <- "this is NA"
 
-    if (is.null(groupColumn)) {
+    if (length(groupColumn) == 0) {
       id <- which(mergeCol == dplyr::lag(mergeCol) & prevId)
     } else {
       id <- which(groupCol == dplyr::lag(groupCol) & mergeCol == dplyr::lag(mergeCol) & prevId)
@@ -474,7 +474,7 @@ fxMergeRows <- function(fx_x, colsToMergeRows, groupColumn) {
       part = "body"
     )
 
-  if (!is.null(groupColumn)) {
+  if (!length(groupColumn) == 0) {
     fx_x <- fx_x |>
       flextable::border(
         j = indColGroup,

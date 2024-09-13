@@ -44,8 +44,9 @@ formatTable <- function(result,
   omopgenerics::assertTable(result)
   omopgenerics::assertChoice(type, choices = c("gt", "flextable", "tibble"), length = 1)
   omopgenerics::assertCharacter(hide, null = TRUE)
-  renameColumns <- validateRenameColumns(renameColumns)
-  groupColumn <- validateGroupColumn(groupColumn)
+  omopgenerics::assertCharacter(header, null = TRUE)
+  renameColumns <- validateRenameColumns(renameColumns, result)
+  groupColumn <- validateGroupColumn(groupColumn, result, formatName = TRUE)
   # .options
   .options <- defaultTableOptions(.options)
   # default hide columns
@@ -65,26 +66,20 @@ formatTable <- function(result,
       useFormatOrder = .options$useFormatOrder
     )
 
-  # rename columns
-  dontRename <- c("estimate_value", hide)
+  # rename and hide columns
+  dontRename <- c("estimate_value")
+  dontRename <- dontRename[dontRename %in% colnames(result)]
   estimateValue <- renameColumnsInternal("estimate_value", renameColumns)
   renameColumns <- renameColumns[!renameColumns %in% dontRename]
   result <- result |>
+    dplyr::select(!dplyr::any_of(hide)) |>
     dplyr::rename_with(
-      .fn = ~ renameColumnsInternal(.x, rename = renameColumns)
-    ) |>
-    dplyr::rename_with(
-      .fn = ~ formatToSentence(.x),
-      .cols = !dplyr::all_of(dontRename)
+      .fn = ~ renameColumnsInternal(.x, rename = renameColumns),
+      .cols = !dplyr::all_of(c(dontRename))
     )
-  if (length(renameColumns) > 0) {
-    # rename headers
-    header <- purrr::map(header, renameColumnsInternal, rename = renameColumns, toSentence = TRUE) |> unlist()
-    groupColumn[[1]] <- purrr::map(groupColumn[[1]], renameColumnsInternal, rename = renameColumns, toSentence = TRUE) |> unlist()
-  }
-
-  # hide columns
-  result <- result |> dplyr::select(!dplyr::any_of(hide))
+  # rename headers
+  header <- purrr::map(header, renameColumnsInternal, rename = renameColumns) |> unlist()
+  groupColumn[[1]] <- purrr::map(groupColumn[[1]], renameColumnsInternal, rename = renameColumns) |> unlist()
 
   # format header
   if (length(header) > 0) {
@@ -95,8 +90,7 @@ formatTable <- function(result,
         includeHeaderName = .options$includeHeaderName,
         includeHeaderKey = .options$includeHeaderKey
       )
-  } else {
-    if (estimateValue == "estimate_value") {estimateValue <- "Estimate value"}
+  } else if ("estimate_value" %in% colnames(result)) {
     result <- result |> dplyr::rename(!!estimateValue := "estimate_value")
   }
 
@@ -135,7 +129,7 @@ formatTable <- function(result,
   return(result)
 }
 
-renameColumnsInternal <- function(x, rename, toSentence = FALSE) {
+renameColumnsInternal <- function(x, rename, toSentence = TRUE) {
   newNames <- character()
   for (xx in x) {
     if (isTRUE(xx %in% rename)) {

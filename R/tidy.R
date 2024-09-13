@@ -69,7 +69,7 @@ tidySummarisedResult <- function(result,
 
   # pivot estimates and add settings
   result <- result |>
-    visOmopResults::addSettings(columns = settingsColumns) |>
+    visOmopResults::addSettings(settingsColumns = settingsColumns) |>
     pivotEstimates(pivotEstimatesBy = pivotEstimatesBy, nameStyle = nameStyle) |>
     dplyr::relocate(dplyr::any_of(settingsColumns), .after = dplyr::last_col())
 

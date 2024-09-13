@@ -44,324 +44,85 @@
 #' )
 #'
 visOmopTable <- function(result,
-                         formatEstimateName,
-                         header,
-                         split,
-                         groupColumn = NULL,
+                         formatEstimateName = character(),
+                         header = character(),
+                         groupColumn = character(),
                          type = "gt",
-                         renameColumns = NULL,
+                         renameColumns = character(),
+                         settingsColumns = character(),
                          showMinCellCount = TRUE,
-                         minCellCount = lifecycle::deprecated(),
-                         hide = c("result_id", "estimate_type"),
-                         .options = list()) {
+                         hide = character(),
+                         .options = list(),
+                         split = lifecycle::deprecated(),
+                         minCellCount = lifecycle::deprecated()) {
 
   if (lifecycle::is_present(minCellCount)) {
-    lifecycle::deprecate_warn("0.3.0", "visOmopTable(minCellCount)")
+    lifecycle::deprecate_stop("0.3.0", "visOmopTable(minCellCount)")
+  }
+  if (lifecycle::is_present(split)) {
+    lifecycle::deprecate_warn("0.4.0", "visOmopTable(split)")
   }
 
-  # initial checks
-  result <- omopgenerics::newSummarisedResult(result)
-  assertChoice(type, c("gt", "flextable", "tibble"))
-  assertCharacter(formatEstimateName)
-  assertCharacter(header)
-  assertCharacter(split)
-  assertCharacter(hide, null = TRUE)
-  assertList(.options)
-  assertLogical(showMinCellCount, length = 1)
-  assertCharacter(renameColumns, null = TRUE, named = TRUE)
-  checkGroupColumn(groupColumn)
-  if (length(split) > 0) {
-    if (!all(split %in% c("group", "strata", "additional"))) {
-      cli::cli_abort("Accepted values for split are: `group`, `strata`, and/or `additional`. It also supports an empty character vector (`character()`).")
-    }
-  }
-  if ("cdm_name" %in% header & "cdm_name" %in% hide) {
-    cli::cli_abort("`cdm_name` cannot be part of the header and also an excluded column.")
-  }
-  if (!is.null(renameColumns)) {
-    notCols <- !renameColumns %in% colnames(result)
-    if (sum(notCols) > 0) {
-      cli::cli_warn("The following values of `renameColumns` do not refer to column names and will be ignored: {renameColumns[notCols]}")
-      renameColumns <- renameColumns[!notCols]
-    }
-  }
-  if ("group" %in% split & any(grepl("group", hide))) {
-    cli::cli_abort("`group` columns cannot be splitted and excluded at the same time. ")
-  }
-  if ("strata" %in% split & any(grepl("strata", hide))) {
-    cli::cli_abort("`strata` columns cannot be splitted and excluded at the same time. ")
-  }
-  if ("additional" %in% split & any(grepl("additional", hide))) {
-    cli::cli_abort("`additional` columns cannot be splitted and excluded at the same time. ")
-  }
+  # Tidy results
+  result <- omopgenerics::validateResultArguemnt(result)
+  resultTidy <- tidySummarisedResult(result, settingsColumns = settingsColumns, pivotEstimatesBy = NULL)
 
   # .options
   .options <- defaultTableOptions(.options)
 
-  # Format estimates ----
-  settings <- settings(result)
-  if (!"min_cell_count" %in% colnames(settings)) {
-    cli::cli_inform(c("!" = "Results have not been suppressed."))
-    showMinCellCount <- FALSE
-  }
-  if (showMinCellCount) {
-    result <- result |>
-      dplyr::left_join(
-        settings |> dplyr::select("result_id", "min_cell_count"),
-        by = "result_id"
-      ) |>
-      dplyr::mutate(estimate_value = dplyr::if_else(
-        is.na(.data$estimate_value), paste0("<", base::format(.data$min_cell_count, big.mark = ",")), .data$estimate_value
-      )) |>
-      dplyr::select(!"min_cell_count")
-  }
-
-  x <- result |>
-    visOmopResults::formatEstimateValue(
-      decimals = .options$decimals,
-      decimalMark = .options$decimalMark,
-      bigMark = .options$bigMark
-    ) |>
-    visOmopResults::formatEstimateName(
-      estimateNameFormat = formatEstimateName,
-      keepNotFormatted = .options$keepNotFormatted,
-      useFormatOrder = .options$useFormatOrder
-    )
-
-  # Split & prepare header ----
-  # Settings:
-  colsSettings <- character()
-  if ("settings" %in% header) {
-    colsSettings <- colnames(settings)
-    x <- x |> addSettings()
-  } else {
-    x <- x
-  }
-  # Group:
-  splitGroup <- "group" %in% split
-  headerGroup <- "group" %in% header
-  colsGroup <- character()
-  if (headerGroup & splitGroup) {
-    colsGroup <- visOmopResults::groupColumns(result)
-    colsGroup <- lapply(as.list(colsGroup), function(element) {c(formatToSentence(element), element)}) |> unlist()
-    x <- x |> visOmopResults::splitGroup()
-  } else if (headerGroup & !splitGroup) {
-    if (length(visOmopResults::groupColumns(result)) > 0) {
-      colsGroup <- c("group_name", "group_level")
-    } else {
-      x <- x |> visOmopResults::splitGroup()
-    }
-  } else if (!headerGroup & splitGroup) {
-    x <- x |> visOmopResults::splitGroup()
-  }
-
-  # Strata:
-  splitStrata <- "strata" %in% split
-  headerStrata <- "strata" %in% header
-  colsStrata <- character()
-  if (headerStrata & splitStrata) {
-    colsStrata <- visOmopResults::strataColumns(result)
-    colsStrata <- lapply(as.list(colsStrata), function(element) {c(formatToSentence(element), element)}) |> unlist()
-    x <- x |> visOmopResults::splitStrata()
-  } else if (headerStrata & !splitStrata) {
-    if (length(visOmopResults::strataColumns(result)) > 0) {
-      colsStrata <- c("strata_name", "strata_level")
-    } else {
-      x <- x |> visOmopResults::splitStrata()
-    }
-  } else if (!headerStrata & splitStrata) {
-    x <- x |> visOmopResults::splitStrata()
-  }
-
-  # Additional:
-  splitAdditional <- "additional" %in% split
-  headerAdditional <- "additional" %in% header
-  colsAdditional <- character()
-  if (headerAdditional & splitAdditional) {
-    colsAdditional <- visOmopResults::additionalColumns(result)
-    colsAdditional <- lapply(as.list(colsAdditional), function(element) {c(formatToSentence(element), element)}) |> unlist()
-    x <- x |> visOmopResults::splitAdditional()
-  } else if (headerAdditional & !splitAdditional) {
-    if (length(visOmopResults::additionalColumns(result)) > 0) {
-      colsAdditional <- c("additional_name", "additional_level")
-    } else {
-      x <- x |> visOmopResults::splitAdditional()
-    }
-  } else if (!headerAdditional & splitAdditional) {
-    x <- x |> visOmopResults::splitAdditional()
-  }
-
-  # Others:
-  colsVariable <- character()
-  if ("variable" %in% header) {
-    colsVariable = c("variable_name", "variable_level")
-    if (all(is.na(x$variable_level))) {
-      colsVariable <- c("variable_name")
-      hide <- c(hide, "variable_level")
-    }
-    x <- x |>
+  # Backward compatibility ---> to be deleted in the future
+  omopgenerics::assertCharacter(header, null = TRUE)
+  omopgenerics::assertCharacter(hide, null = TRUE)
+  settingsColumns <- validateSettingsColumns(settingsColumns, result) # to remove > 0.4.0
+  bc <- backwardCompatibility(header, hide, result, settingsColumns) # to remove > 0.4.0
+  header <- bc$header # to remove > 0.4.0
+  hide <- bc$hide # to remove > 0.4.0
+  if ("variable_level" %in% header) {
+    resultTidy <- resultTidy |>
       dplyr::mutate(dplyr::across(dplyr::starts_with("variable"), ~ dplyr::if_else(is.na(.x), .options$na, .x)))
   }
-  colsEstimate <- character()
-  if ("estimate" %in% header) {
-    colsEstimate = c("estimate_name")
-  }
 
-  # Nice cases ----
-  # renames
-  if (! "cdm_name" %in% renameColumns) {
-    renameColumns <- c(renameColumns, "CDM name" = "cdm_name")
-  }
-  cdmName <- names(renameColumns)[renameColumns == "cdm_name"]
-  # columns not to format
-  notFormat <- c("estimate_value", colsGroup, colsStrata, colsAdditional,
-                 colsVariable, colsEstimate, colsSettings) |> unique()
+  # initial checks and preparation
+  renameColumns <- validateRenameColumns(renameColumns, result)
+  if (!"cdm_name" %in% renameColumns) renameColumns <- c(renameColumns, "CDM name" = "cdm_name")
+  groupColumn <- validateGroupColumn(groupColumn, resultTidy, sr = TRUE, formatName = TRUE)
+  showMinCellCount <- validateShowMinCellCount(showMinCellCount, settings(result))
+  # default SR hide columns
+  hide <- c(hide, "result_id", "estimate_type") |> unique()
+  checkFormatTableInputs(header, groupColumn, hide)
 
-  # dont rename columns in notFormat
-  ids = renameColumns %in% notFormat
-  if (sum(ids) > 0) {
-    renameColumns = renameColumns[!ids]
-  }
-  notFormat <- c(notFormat, renameColumns)
-  notFormat <- notFormat[(notFormat %in% colnames(x)) & (!notFormat %in% hide)]
-
-  x <- x |>
-    dplyr::mutate(dplyr::across(
-      .cols = !dplyr::all_of(c("cdm_name", "estimate_name")), .fn = ~ formatToSentence(.x)
-    )) |>
-    dplyr::select(!dplyr::all_of(hide)) |>
-    dplyr::rename_with(
-      .fn =  ~ formatToSentence(.x),
-      .cols = !dplyr::all_of(notFormat)
-    )
-
-  # rename columns manually
-  if ("cdm_name" %in% header) {
-    renameColumns <- renameColumns[!renameColumns %in% "cdm_name"]
-  }
-  if (length(renameColumns) > 0) {
-    colsSorted <- colnames(x)[colnames(x) %in% renameColumns]
-    newNames <- names(renameColumns)
-    names(newNames) <- renameColumns
-    colnames(x)[colnames(x) %in% renameColumns] <- newNames[colsSorted]
-  }
-
-  # Header ----
-  # Format header
-  formatHeader <- character()
-  for (k in seq(header)) {
-    if (header[k] %in% c("cdm_name", "group", "strata", "additional", "estimate", "variable", "settings")) {
-      formatHeader <- c(formatHeader,
-                        switch(
-                          header[k],
-                          "cdm_name" = c(cdmName, "cdm_name"),
-                          "group" = colsGroup,
-                          "strata" = colsStrata,
-                          "additional" = colsAdditional,
-                          "estimate" = colsEstimate,
-                          "variable" = colsVariable,
-                          "settings" = colsSettings,
-                        )
-      )
+  # showMinCellCount
+  if (showMinCellCount) {
+    if ("min_cell_count" %in% settingsColumns) {
+      resultTidy <- resultTidy |>
+        dplyr::mutate(estimate_value = dplyr::if_else(
+          is.na(.data$estimate_value), paste0("<", base::format(.data$min_cell_count, big.mark = ",")), .data$estimate_value
+        ))
     } else {
-      formatHeader <- c(formatHeader, header[k])
+      resultTidy <- resultTidy |>
+        dplyr::left_join(
+          settings(result) |> dplyr::select("result_id", "min_cell_count"),
+          by = "result_id"
+        ) |>
+        dplyr::mutate(estimate_value = dplyr::if_else(
+          is.na(.data$estimate_value), paste0("<", base::format(.data$min_cell_count, big.mark = ",")), .data$estimate_value
+        )) |>
+        dplyr::select(!"min_cell_count")
     }
   }
 
-  if (length(formatHeader) > 0) {
-    x <- x |>
-      visOmopResults::formatHeader(
-        header = formatHeader,
-        delim = .options$delim,
-        includeHeaderName = FALSE,
-        includeHeaderKey = .options$includeHeaderKey
-      )
-  } else {
-    x <- x |> dplyr::rename("Estimate value" = "estimate_value")
-  }
+  tableOut <- formatTable(
+    result = resultTidy,
+    formatEstimateName = formatEstimateName,
+    header = header,
+    groupColumn = groupColumn,
+    type = type,
+    renameColumns = renameColumns,
+    hide = hide,
+    .options = .options
+  )
 
-  # Format table ----
-  if (all(.options$colsToMergeRows %in% colnames(x))) {
-    ids <- .options$colsToMergeRows %in% renameColumns
-    if (any(ids)) {
-      colsSorted <- .options$colsToMergeRows[.options$colsToMergeRows %in% renameColumns]
-      newNames <- names(renameColumns)
-      names(newNames) <- renameColumns
-      .options$colsToMergeRows[ids] <- newNames[colsSorted]
-    }
-    .options$colsToMergeRows[!ids] <- formatToSentence(.options$colsToMergeRows[!ids])
-  }
-
-  if (!is.null(groupColumn)) {
-    # rename
-    ids <- groupColumn %in% renameColumns
-    newGroupcolumn <- groupColumn
-    if (any(ids)) {
-      colsSorted <- newGroupcolumn[newGroupcolumn %in% renameColumns]
-      newNames <- names(renameColumns)
-      names(newNames) <- renameColumns
-      newGroupcolumn[ids] <- newNames[colsSorted]
-    }
-    newGroupcolumn[!ids] <- formatToSentence(newGroupcolumn[!ids])
-    # check compatibility
-    idsGroup <- !newGroupcolumn %in% colnames(x)
-    if (any(idsGroup)) {
-      possibleGroups <- colnames(x)[!grepl("\\[header", colnames(x))]
-      for (k in 1:length(possibleGroups)) {
-        if (possibleGroups[k] %in% names(renameColumns)) {
-          possibleGroups[k] <- renameColumns[possibleGroups[k]]
-        } else {
-          possibleGroups[k] <- gsub(" ", "_", tolower(possibleGroups[k]))
-        }
-      }
-      cli::cli_abort(c(paste0(
-        "{groupColumn[idsGroup]} is not a column in the formatted table created."),
-        "i" = paste0("Possible group columns are: '", paste0(possibleGroups, collapse = "', '"), "'"
-        )))
-    }
-    # > 1 group
-    if (length(newGroupcolumn) > 1) {
-      x <- x |>
-        tidyr::unite(!!nameGroup, dplyr::all_of(newGroupcolumn), sep = "; ")
-      newGroupcolumn <- nameGroup
-    }
-  } else {
-    newGroupcolumn <- NULL
-  }
-
-  if (type == "gt") {
-    x <- x |>
-      visOmopResults::gtTable(
-        delim = .options$delim,
-        style = .options$style,
-        na = .options$na,
-        title = .options$title,
-        subtitle = .options$subtitle,
-        caption = .options$caption,
-        groupColumn = newGroupcolumn,
-        groupAsColumn = .options$groupAsColumn,
-        groupOrder = .options$groupOrder,
-        colsToMergeRows = .options$colsToMergeRows
-      )
-  } else if (type == "flextable") {
-    x <- x |>
-      visOmopResults::fxTable(
-        delim = .options$delim,
-        style = .options$style,
-        na = .options$na,
-        title = .options$title,
-        subtitle = .options$subtitle,
-        caption = .options$caption,
-        groupColumn = newGroupcolumn,
-        groupAsColumn = .options$groupAsColumn,
-        groupOrder = .options$groupOrder,
-        colsToMergeRows = .options$colsToMergeRows
-      )
-  } else if (type == "tibble") {
-    class(x) <- class(x)[!class(x) %in% c("summarised_result", "omop_result")]
-  }
-
-  return(x)
+  return(tableOut)
 }
 
 formatToSentence <- function(x) {
@@ -376,7 +137,7 @@ defaultTableOptions <- function(userOptions) {
     keepNotFormatted = TRUE,
     useFormatOrder = TRUE,
     delim = "\n",
-    includeHeaderName = FALSE,
+    includeHeaderName = TRUE,
     includeHeaderKey = TRUE,
     style = "default",
     na = "-",
@@ -414,4 +175,27 @@ defaultTableOptions <- function(userOptions) {
 #'
 optionsTable <- function() {
   return(defaultTableOptions(NULL))
+}
+
+backwardCompatibility <- function(header, hide, result, settingsColumns) {
+
+  if (all(is.na(result$variable_level)) & "variable" %in% header) {
+    colsVariable <- c("variable_name")
+    hide <- c(hide, "variable_level")
+  } else {
+    colsVariable <- c("variable_name", "variable_level")
+  }
+
+  header <- purrr::map(header, function(x) {
+    switch(x,
+           cdm_name = "cdm_name",
+           group = groupColumns(result),
+           strata = strataColumns(result),
+           additional = additionalColumns(result),
+           variable = colsVariable,
+           estimate = c("estimate_name"),
+           settings = settingsColumns)
+  }) |> unlist()
+
+  return(list(hide = hide, header = header))
 }

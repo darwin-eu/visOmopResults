@@ -41,7 +41,7 @@ test_that("formatTable with SR", {
   expect_equal(
     colnames(gt2$`_data`),
     c(
-      'cdm_name_group_level', 'Variable name', 'Variable level', 'Estimate name',
+      'Cdm name; Group level', 'Variable name', 'Variable level', 'Estimate name',
       'Estimate type', 'Additional name', 'Additional level',
       '[header_name]Strata\n[header_level]overall\n[header_name]Strata level\n[header_level]overall',
       '[header_name]Strata\n[header_level]age_group &&& sex\n[header_name]Strata level\n[header_level]<40 &&& Male',
@@ -68,7 +68,7 @@ test_that("formatTable with SR", {
   expect_equal(
     colnames(fx2$body$dataset),
     c(
-      'cdm_name_group_level', 'Variable name', 'Variable level', 'Estimate name',
+      'Cdm name; Group level', 'Variable name', 'Variable level', 'Estimate name',
       'Estimate type', 'Additional name', 'Additional level', 'Strata\noverall\nStrata level\noverall',
       'Strata\nage_group &&& sex\nStrata level\n<40 &&& Male', 'Strata\nage_group &&& sex\nStrata level\n>=40 &&& Male',
       'Strata\nage_group &&& sex\nStrata level\n<40 &&& Female', 'Strata\nage_group &&& sex\nStrata level\n>=40 &&& Female',
@@ -115,7 +115,7 @@ test_that("formatTable with SR", {
   )
   expect_true(all(c("tbl_df", "tbl", "data.frame") == class(tib2)))
   expect_equal(
-    colnames(tib1),
+    colnames(tib2),
     c(
       'Database name', 'Cohort name', 'Strata name', 'Strata level', 'Variable name',
       'Variable level', 'Estimate name', 'Estimate', 'Additional name', 'Additional level')

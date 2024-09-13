@@ -134,7 +134,7 @@ Now, we want to group results by "cohort_name". More specifically we want to hav
 mock_sr |>  
   gtTable(
     groupNameCol = "cohort_name",
-    groupNameAsColumn = FALSE,
+    groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
   )
@@ -157,7 +157,7 @@ mock_sr |>
       "body" = gt::cell_text(color = "red")
     ),
     groupNameCol = "cohort_name",
-    groupNameAsColumn = FALSE,
+    groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
   )
@@ -184,7 +184,7 @@ mock_sr |>
       "body" = list("text" = officer::fp_text(color = "red"))
     ),
     groupNameCol = "cohort_name",
-    groupNameAsColumn = FALSE,
+    groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
   )
