@@ -39,7 +39,6 @@ formatHeader <- function(result,
   omopgenerics::assertCharacter(header, null = TRUE)
   omopgenerics::assertCharacter(delim, length = 1)
   omopgenerics::assertLogical(includeHeaderName, length = 1)
-  omopgenerics::assertCharacter(delim, length = 1)
 
   if (length(header) > 0) {
     # correct names

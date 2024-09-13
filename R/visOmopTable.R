@@ -143,7 +143,7 @@ visOmopTable <- function(result,
   colsGroup <- character()
   if (headerGroup & splitGroup) {
     colsGroup <- visOmopResults::groupColumns(result)
-    colsGroup <- lapply(as.list(colsGroup), function(element) {c(formatString(element), element)}) |> unlist()
+    colsGroup <- lapply(as.list(colsGroup), function(element) {c(formatToSentence(element), element)}) |> unlist()
     x <- x |> visOmopResults::splitGroup()
   } else if (headerGroup & !splitGroup) {
     if (length(visOmopResults::groupColumns(result)) > 0) {
@@ -161,7 +161,7 @@ visOmopTable <- function(result,
   colsStrata <- character()
   if (headerStrata & splitStrata) {
     colsStrata <- visOmopResults::strataColumns(result)
-    colsStrata <- lapply(as.list(colsStrata), function(element) {c(formatString(element), element)}) |> unlist()
+    colsStrata <- lapply(as.list(colsStrata), function(element) {c(formatToSentence(element), element)}) |> unlist()
     x <- x |> visOmopResults::splitStrata()
   } else if (headerStrata & !splitStrata) {
     if (length(visOmopResults::strataColumns(result)) > 0) {
@@ -179,7 +179,7 @@ visOmopTable <- function(result,
   colsAdditional <- character()
   if (headerAdditional & splitAdditional) {
     colsAdditional <- visOmopResults::additionalColumns(result)
-    colsAdditional <- lapply(as.list(colsAdditional), function(element) {c(formatString(element), element)}) |> unlist()
+    colsAdditional <- lapply(as.list(colsAdditional), function(element) {c(formatToSentence(element), element)}) |> unlist()
     x <- x |> visOmopResults::splitAdditional()
   } else if (headerAdditional & !splitAdditional) {
     if (length(visOmopResults::additionalColumns(result)) > 0) {
@@ -227,11 +227,11 @@ visOmopTable <- function(result,
 
   x <- x |>
     dplyr::mutate(dplyr::across(
-      .cols = !dplyr::all_of(c("cdm_name", "estimate_name")), .fn = ~ formatString(.x)
+      .cols = !dplyr::all_of(c("cdm_name", "estimate_name")), .fn = ~ formatToSentence(.x)
     )) |>
     dplyr::select(!dplyr::all_of(hide)) |>
     dplyr::rename_with(
-      .fn =  ~ formatString(.x),
+      .fn =  ~ formatToSentence(.x),
       .cols = !dplyr::all_of(notFormat)
     )
 
@@ -289,7 +289,7 @@ visOmopTable <- function(result,
       names(newNames) <- renameColumns
       .options$colsToMergeRows[ids] <- newNames[colsSorted]
     }
-    .options$colsToMergeRows[!ids] <- formatString(.options$colsToMergeRows[!ids])
+    .options$colsToMergeRows[!ids] <- formatToSentence(.options$colsToMergeRows[!ids])
   }
 
   if (!is.null(groupColumn)) {
@@ -302,7 +302,7 @@ visOmopTable <- function(result,
       names(newNames) <- renameColumns
       newGroupcolumn[ids] <- newNames[colsSorted]
     }
-    newGroupcolumn[!ids] <- formatString(newGroupcolumn[!ids])
+    newGroupcolumn[!ids] <- formatToSentence(newGroupcolumn[!ids])
     # check compatibility
     idsGroup <- !newGroupcolumn %in% colnames(x)
     if (any(idsGroup)) {
@@ -364,7 +364,7 @@ visOmopTable <- function(result,
   return(x)
 }
 
-formatString <- function(x) {
+formatToSentence <- function(x) {
   stringr::str_to_sentence(gsub("_", " ", gsub("&&&", "and", x)))
 }
 
@@ -376,6 +376,7 @@ defaultTableOptions <- function(userOptions) {
     keepNotFormatted = TRUE,
     useFormatOrder = TRUE,
     delim = "\n",
+    includeHeaderName = FALSE,
     includeHeaderKey = TRUE,
     style = "default",
     na = "-",

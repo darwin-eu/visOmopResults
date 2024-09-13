@@ -77,55 +77,29 @@ gtTable <- function(
     groupNameAsColumn = lifecycle::deprecated(),
     groupOrder = NULL,
     colsToMergeRows = NULL
-    ) {
+) {
 
   if (lifecycle::is_present(groupNameCol)) {
-    lifecycle::deprecate_warn("0.3.0", "gtTable(groupNameCol)", "gtTable(groupColumn)")
+    lifecycle::deprecate_stop("0.3.0", "gtTable(groupNameCol)", "gtTable(groupColumn)")
   }
   if (lifecycle::is_present(groupNameAsColumn)) {
-    lifecycle::deprecate_warn("0.3.0", "gtTable(groupNameAsColumn)", "gtTable(groupAsColumn)")
+    lifecycle::deprecate_stop("0.3.0", "gtTable(groupNameAsColumn)", "gtTable(groupAsColumn)")
   }
 
   # Package checks
   rlang::check_installed("gt")
 
   # Input checks
-  assertTibble(x)
-  assertCharacter(delim, length = 1)
-  assertCharacter(na, length = 1, null = TRUE)
-  assertCharacter(title, length = 1, null = TRUE)
-  assertCharacter(subtitle, length = 1, null = TRUE)
-  assertCharacter(caption, length = 1, null= TRUE)
-  assertCharacter(groupColumn, null = TRUE)
-  assertLogical(groupAsColumn, length = 1)
-  assertCharacter(groupOrder, null = TRUE)
-  assertCharacter(colsToMergeRows, null = TRUE)
-
-  validateColsToMergeRows(x, colsToMergeRows, groupColumn)
-
-  if (inherits(groupColumn, "list")) {
-    nameGroup <- names(groupColumn)
-    groupColumn <- groupColumn[[1]]
-  } else if (length(groupColumn) > 1) {
-    nameGroup <- paste0(groupColumn, collapse = "_")
-  } else {
-    nameGroup <- groupColumn
-  }
-
-  if(!is.null(groupColumn) && !is.null(groupOrder)){
-    generated_groups <- x |>
-      dplyr::mutate(group = do.call(
-        paste,
-        c(dplyr::across(dplyr::all_of(groupColumn)),
-          sep = "_"
-        )
-      )) |>
-      dplyr::pull(.data$group) |>
-      unique()
-
-    assertChoice(groupOrder, choices = generated_groups)
-  }
-
+  omopgenerics::assertTable(x)
+  omopgenerics::assertCharacter(na, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(title, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(subtitle, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(caption, length = 1, null= TRUE)
+  omopgenerics::assertLogical(groupAsColumn, length = 1)
+  omopgenerics::assertCharacter(groupOrder, null = TRUE)
+  delim <- validateDelim(delim)
+  groupColumn <- validateGroupColumn(groupColumn)
+  colsToMergeRows <- validateColsToMergeRows(x, colsToMergeRows, groupColumn[[1]])
   style <- validateStyle(style, "gt")
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
@@ -142,44 +116,32 @@ gtTable <- function(
 
   # Spanners
   if (!is.null(groupColumn)) {
-    if (is.null(groupOrder)) {
-      x <- x |>
-        dplyr::mutate(!!nameGroup :=
-                        factor(
-                          do.call(paste, c(dplyr::across(dplyr::all_of(groupColumn)), sep = "_"))
-                        )) |>
-        dplyr::relocate(!!groupColumn) |>
-        dplyr::arrange(dplyr::across(dplyr::all_of(groupColumn)))
-    } else {
-      x <- x |>
-        dplyr::mutate(!!nameGroup := factor(
-          do.call(paste, c(dplyr::across(dplyr::all_of(groupColumn)), sep = "_")),
-          levels = groupOrder
-        )) |>
-        dplyr::relocate(!!nameGroup) |>
-        dplyr::arrange(dplyr::across(dplyr::all_of(nameGroup)))
-
-      x <- x |>
-        dplyr::mutate(!!groupColumn := factor(.data[[groupColumn]], levels = groupOrder)) |>
-        dplyr::arrange_at(groupColumn, .by_group = TRUE)
+    nameGroup <- names(groupColumn)
+    x <- x |>
+      tidyr::unite(
+        !!nameGroup, groupColumn[[1]], sep = "; ", remove = TRUE, na.rm = TRUE
+      )
+    groupLevel <- unique(x[[nameGroup]])
+    if (!is.null(groupOrder)) {
+      if (any(!groupLevel %in% groupOrder)) {
+        cli::cli_abort(c(
+          "x" = "`groupOrder` supplied does not macth the group variable created based on `groupName`.",
+          "i" = "Group variables to use in `groupOrder` are the following: {groupLevel}"
+        ))
+      } else {
+        groupLevel <- groupOrder
+      }
     }
-    if (length(groupColumn) == 1) {
-      # Single string
-      gtResult <- x |>
-        gt::gt(groupname_col = groupColumn, row_group_as_column = groupAsColumn) |>
-        gt::tab_spanner_delim(delim = delim)
-    } else {
-      # Vector
-      gtResult <- x |>
-        dplyr::mutate(group_label = apply(dplyr::across(dplyr::all_of(groupColumn)), 1, paste, collapse = delim)) |>
-        gt::gt(groupname_col = "group_label", row_group_as_column = groupAsColumn) |>
-        gt::tab_spanner_delim(delim = delim) |>
-        gt::cols_hide(columns = dplyr::all_of(groupColumn))
+    x <- x |>
+      dplyr::mutate(!!nameGroup := factor(.data[[nameGroup]], levels = groupLevel)) |>
+      dplyr::arrange_at(nameGroup) |>
+      dplyr::relocate(dplyr::all_of(nameGroup))
 
+    gtResult <- x |>
+      gt::gt(groupname_col = nameGroup, row_group_as_column = groupAsColumn) |>
+      gt::tab_spanner_delim(delim = delim) |>
+      gt::row_group_order(groups = groupLevel)
 
-    }
-    gtResult <- gtResult |>
-      gt::row_group_order(groups = as.character(unique(gtResult$group_label)))
   } else {
     gtResult <- x |> gt::gt() |> gt::tab_spanner_delim(delim = delim)
   }
@@ -241,13 +203,13 @@ gtTable <- function(
       )
   }
 
- # Eliminate prefixes
+  # Eliminate prefixes
   gtResult$`_spanners`$spanner_label <- lapply(gtResult$`_spanners`$spanner_label,
                                                function(label){
                                                  gsub("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", "", label)
-                                                 })
+                                               })
   gtResult <- gtResult |> gt::cols_label_with(columns = tidyr::contains("header"),
-                                  fn = ~ gsub("\\[header\\]|\\[header_level\\]", "", .))
+                                              fn = ~ gsub("\\[header\\]|\\[header_level\\]", "", .))
 
   # Our default:
   gtResult <- gtResult |>
@@ -266,10 +228,10 @@ gtTable <- function(
 
   # Merge rows
   if (!is.null(colsToMergeRows)) {
-    gtResult <- gtMergeRows(gtResult, colsToMergeRows, groupColumn, groupOrder)
+    gtResult <- gtMergeRows(gtResult, colsToMergeRows, names(groupColumn), groupOrder)
   }
 
-   # Other options:
+  # Other options:
   ## na
   # if (!is.null(na)){
   #   # gtResult <- gtResult |> gt::sub_missing(missing_text = na)

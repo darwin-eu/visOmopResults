@@ -82,31 +82,6 @@ validateStyle <- function(style, tableFormatType) {
   return(style)
 }
 
-validateColsToMergeRows <- function(x, colsToMergeRows, groupNameCol) {
-  if (!is.null(colsToMergeRows)) {
-    if (any(colsToMergeRows %in% groupNameCol)) {
-      cli::cli_abort("groupNameCol and colsToMergeRows must have different column names.")
-    }
-    ind <- ! colsToMergeRows %in% c(colnames(x), "all_columns")
-    if (sum(ind) == 1) {
-      cli::cli_inform(c("!" = "{colsToMergeRows[ind]} is not a column in the dataframe."))
-    } else if (sum(ind) > 1) {
-      cli::cli_inform(c("!" = "{colsToMergeRows[ind]} are not columns in the dataframe."))
-    }
-  }
-}
-
-validateDelim <- function(delim) {
-  if (!rlang::is_character(delim)) {
-    cli::cli_abort("The value supplied for `delim` must be of type `character`.")
-  }
-  if (length(delim) != 1) {
-    cli::cli_abort("`delim` must be a single value.")
-  }
-  if (nchar(delim) != 1) {
-    cli::cli_abort("The value supplied for `delim` must be a single character.")
-  }
-}
 
 
 
@@ -158,4 +133,51 @@ validateRenameColumns <- function(renameColumns, call = parent.frame()) {
     }
   }
   return(invisible(renameColumns))
+}
+
+validateGroupColumn <- function(groupColumn, call = parent.frame()) {
+  if (!is.null(groupColumn)) {
+    if (!is.list(groupColumn)) {
+      groupColumn <- list(groupColumn)
+    }
+    if (length(groupColumn) > 1) {
+      cli::cli_abort("`groupColumn` must be a character vector, or a list with just one element (a character vector).", call = call)
+    }
+    omopgenerics::assertCharacter(groupColumn[[1]], null = TRUE, call = call)
+    if (is.null(names(groupColumn))) names(groupColumn) <- paste0(groupColumn[[1]], collapse = "_")
+  }
+  return(invisible(groupColumn))
+}
+
+validateColsToMergeRows <- function(x, colsToMergeRows, groupColumn, call = parent.frame()) {
+  if (!is.null(colsToMergeRows)) {
+    if (any(colsToMergeRows %in% groupColumn)) {
+      cli::cli_abort("groupColumn and colsToMergeRows must have different column names.", call = call)
+    }
+    ind <- ! colsToMergeRows %in% c(colnames(x), "all_columns")
+    if (sum(ind) == 1) {
+      cli::cli_inform(c("!" = "{colsToMergeRows[ind]} is not a column in the dataframe.", call = call))
+    } else if (sum(ind) > 1) {
+      cli::cli_inform(c("!" = "{colsToMergeRows[ind]} are not columns in the dataframe.", call = call))
+    }
+    omopgenerics::assertCharacter(colsToMergeRows)
+  }
+  return(invisible(colsToMergeRows))
+}
+
+validateDelim <- function(delim, call = parent.frame()) {
+  omopgenerics::assertCharacter(delim, length = 1)
+  if (nchar(delim) != 1) {
+    cli::cli_abort("The value supplied for `delim` must be a single character.", call = call)
+  }
+  return(invisible(delim))
+}
+
+checkFormatTableInputs <- function(header, groupColumn, hide, call = parent.frame()) {
+  int1 <- dplyr::intersect(header, groupColumn[[1]])
+  int2 <- dplyr::intersect(header, hide)
+  int3 <- dplyr::intersect(hide, groupColumn[[1]])
+  if (length(c(int1, int2, int3)) > 0) {
+    cli::cli_abort("Columns passed to {.strong `header`}, {.strong `groupColumn`}, and {.strong `hide`} must be different.", call = call)
+  }
 }

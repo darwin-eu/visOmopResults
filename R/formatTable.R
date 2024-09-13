@@ -42,17 +42,15 @@ formatTable <- function(result,
                         .options = list()) {
   # initial checks
   omopgenerics::assertTable(result)
-  omopgenerics::assertChoice(x = type, choices = c("gt", "flextable", "tibble"), length = 1)
-  omopgenerics::assertCharacter(hide)
-  validateRenameColumns(renameColumns)
+  omopgenerics::assertChoice(type, choices = c("gt", "flextable", "tibble"), length = 1)
+  omopgenerics::assertCharacter(hide, null = TRUE)
+  renameColumns <- validateRenameColumns(renameColumns)
+  groupColumn <- validateGroupColumn(groupColumn)
   # .options
   .options <- defaultTableOptions(.options)
   # default hide columns
-  hide <- c(hide, "result_id", "estimate_type")
-  # group column
-  if (!inherits(groupColumn, "list")) groupColumn <- list(groupColumn)
-  if (is.null(names(groupColumn))) names(groupColumn) <- paste0(groupColumn[[1]], collapse = "_")
-  # TODO: check compatibility between header, groupColumn, and hide
+  # hide <- c(hide, "result_id", "estimate_type")
+  checkFormatTableInputs(header, groupColumn, hide)
 
   # format estimate values and names
   result <- result |>
@@ -73,17 +71,16 @@ formatTable <- function(result,
   renameColumns <- renameColumns[!renameColumns %in% dontRename]
   result <- result |>
     dplyr::rename_with(
-      .fn = ~ renameColumnsInternal(.x, rename = renameColumns),
-      .cols = renameColumns
+      .fn = ~ renameColumnsInternal(.x, rename = renameColumns)
     ) |>
     dplyr::rename_with(
-      .fn = ~ formatString(.x),
+      .fn = ~ formatToSentence(.x),
       .cols = !dplyr::all_of(dontRename)
     )
   if (length(renameColumns) > 0) {
     # rename headers
-    header <- purrr::map(header, renameColumnsInternal, rename = renameColumns)
-    groupColumn[[1]] <- purrr::map(groupColumn[[1]], renameColumnsInternal, rename = renameColumns)
+    header <- purrr::map(header, renameColumnsInternal, rename = renameColumns, toSentence = TRUE) |> unlist()
+    groupColumn[[1]] <- purrr::map(groupColumn[[1]], renameColumnsInternal, rename = renameColumns, toSentence = TRUE) |> unlist()
   }
 
   # hide columns
@@ -95,15 +92,14 @@ formatTable <- function(result,
       visOmopResults::formatHeader(
         header = header,
         delim = .options$delim,
-        includeHeaderName = FALSE,
+        includeHeaderName = .options$includeHeaderName,
         includeHeaderKey = .options$includeHeaderKey
       )
   } else {
-    if (estimateValue == "estimate_value") estimateValue <- "Estimate value"
-    result <- result |> dplyr::rename(!!estimateValue = "estimate_value")
+    if (estimateValue == "estimate_value") {estimateValue <- "Estimate value"}
+    result <- result |> dplyr::rename(!!estimateValue := "estimate_value")
   }
 
-  #### !! wait for gt and fx to allow groupColumns as group
   if (type == "gt") {
     result <- result |>
       visOmopResults::gtTable(
@@ -136,14 +132,19 @@ formatTable <- function(result,
     class(result) <- class(result)[!class(result) %in% c("summarised_result", "omop_result")]
   }
 
-  return(x)
+  return(result)
 }
 
-renameColumnsInternal <- function(x, rename) {
-  if (isTRUE(x %in% rename)) {
-    newName <- names(rename[renameColumns == x])
-  } else {
-    newName <- x
+renameColumnsInternal <- function(x, rename, toSentence = FALSE) {
+  newNames <- character()
+  for (xx in x) {
+    if (isTRUE(xx %in% rename)) {
+      newNames <- c(newNames, names(rename[rename == xx]))
+    } else if (toSentence) {
+      newNames <- c(newNames, formatToSentence(xx))
+    } else {
+      newNames <- c(newNames, xx)
+    }
   }
-  return(newName)
+  return(newNames)
 }

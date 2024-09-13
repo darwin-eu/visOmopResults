@@ -54,7 +54,7 @@ estimates when counts < minCellCount should be done before with
 \item{hide}{Columns to drop from the output table.}
 
 \item{.options}{Named list with additional formatting options.
-visOmopResults::optionsVisOmopTable() shows allowed arguments and
+visOmopResults::optionsTable() shows allowed arguments and
 their default values.}
 }
 \value{

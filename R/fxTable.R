@@ -72,10 +72,10 @@ fxTable <- function(
     groupOrder = NULL,
     colsToMergeRows = NULL) {
   if (lifecycle::is_present(groupNameCol)) {
-    lifecycle::deprecate_warn("0.3.0", "fxTable(groupNameCol)", "fxTable(groupColumn)")
+    lifecycle::deprecate_stop("0.3.0", "fxTable(groupNameCol)", "fxTable(groupColumn)")
   }
   if (lifecycle::is_present(groupNameAsColumn)) {
-    lifecycle::deprecate_warn("0.3.0", "fxTable(groupNameAsColumn)", "fxTable(groupAsColumn)")
+    lifecycle::deprecate_stop("0.3.0", "fxTable(groupNameAsColumn)", "fxTable(groupAsColumn)")
   }
 
   # Package checks
@@ -83,57 +83,20 @@ fxTable <- function(
   rlang::check_installed("officer")
 
   # Input checks
-  assertTibble(x)
-  assertCharacter(delim, length = 1)
-  assertCharacter(na, length = 1, null = TRUE)
-  assertCharacter(title, length = 1, null = TRUE)
-  assertCharacter(subtitle, length = 1, null = TRUE)
-  assertCharacter(caption, length = 1, null = TRUE)
-  checkGroupColumn(groupColumn)
-  assertLogical(groupAsColumn, length = 1)
-  assertCharacter(groupOrder, null = TRUE)
-  assertCharacter(colsToMergeRows, null = TRUE)
-
-  if (inherits(groupColumn, "list")) {
-    nameGroup <- names(groupColumn)
-    groupColumn <- groupColumn[[1]]
-  } else if (length(groupColumn) > 1) {
-    nameGroup <- paste0(groupColumn, collapse = "_")
-  } else {
-    nameGroup <- groupColumn
-  }
-
-  validateColsToMergeRows(x, colsToMergeRows, groupColumn)
-
-  if(!is.null(groupColumn) && !is.null(groupOrder)){
-  generated_groups <- x |>
-    dplyr::mutate(group = do.call(
-      paste,
-      c(dplyr::across(dplyr::all_of(groupColumn)),
-        sep = "_"
-      )
-    )) |>
-    dplyr::pull(.data$group) |>
-    unique()
-
-  assertChoice(groupOrder, choices = generated_groups)
-  }
-
+  omopgenerics::assertTable(x)
+  omopgenerics::assertCharacter(na, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(title, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(subtitle, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(caption, length = 1, null= TRUE)
+  omopgenerics::assertLogical(groupAsColumn, length = 1)
+  omopgenerics::assertCharacter(groupOrder, null = TRUE)
+  delim <- validateDelim(delim)
+  groupColumn <- validateGroupColumn(groupColumn)
+  colsToMergeRows <- validateColsToMergeRows(x, colsToMergeRows, groupColumn[[1]])
   style <- validateStyle(style, "fx")
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
   }
-
-
-  # Header id's
-  spanCols_ids <- which(grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x)))
-  spanners <- strsplit(colnames(x)[spanCols_ids[1]], delim) |> unlist()
-  header_rows <- which(grepl("\\[header\\]", spanners))
-  header_name_rows <- which(grepl("\\[header_name\\]", spanners))
-  header_level_rows <- which(grepl("\\[header_level\\]", spanners))
-
-  # Eliminate prefixes
-  colnames(x) <- gsub("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", "", colnames(x))
 
   # na
   if (!is.null(na)) {
@@ -146,44 +109,66 @@ fxTable <- function(
 
   # Flextable
   if (is.null(groupColumn)) {
+    # Header id's
+    spanCols_ids <- which(grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x)))
+    spanners <- strsplit(colnames(x)[spanCols_ids[1]], delim) |> unlist()
+    header_rows <- which(grepl("\\[header\\]", spanners))
+    header_name_rows <- which(grepl("\\[header_name\\]", spanners))
+    header_level_rows <- which(grepl("\\[header_level\\]", spanners))
+
+    # Eliminate prefixes
+    colnames(x) <- gsub("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", "", colnames(x))
+
+    # flextable
     flex_x <- x |>
       flextable::flextable() |>
       flextable::separate_header(split = delim)
+
+    nameGroup <- NULL
   } else {
+    nameGroup <- names(groupColumn)
+    x <- x |>
+      tidyr::unite(
+        !!nameGroup, groupColumn[[1]], sep = "; ", remove = TRUE, na.rm = TRUE
+      )
+    groupLevel <- unique(x[[nameGroup]])
     if (!is.null(groupOrder)) {
-      x <- x |>
-        dplyr::mutate(!!nameGroup := factor(
-          do.call(paste, c(dplyr::across(dplyr::all_of(groupColumn)), sep = "_")),
-          levels = groupOrder
-        )) |>
-        dplyr::relocate(!!nameGroup) |>
-        dplyr::arrange(dplyr::across(dplyr::all_of(nameGroup)))
-    } else {
-      x <- x |>
-        dplyr::mutate(!!nameGroup :=
-          factor(
-            do.call(paste, c(dplyr::across(dplyr::all_of(groupColumn)), sep = "_"))
-          )) |>
-        dplyr::relocate(!!groupColumn) |>
-        dplyr::arrange(dplyr::across(dplyr::all_of(groupColumn)))
+      if (any(!groupLevel %in% groupOrder)) {
+        cli::cli_abort(c(
+          "x" = "`groupOrder` supplied does not macth the group variable created based on `groupName`.",
+          "i" = "Group variables to use in `groupOrder` are the following: {groupLevel}"
+        ))
+      } else {
+        groupLevel <- groupOrder
+      }
     }
+    x <- x |>
+      dplyr::mutate(!!nameGroup := factor(.data[[nameGroup]], levels = groupLevel)) |>
+      dplyr::arrange_at(nameGroup) |>
+      dplyr::relocate(dplyr::all_of(nameGroup))
+
+    # Header id's
+    spanCols_ids <- which(grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x)))
+    spanners <- strsplit(colnames(x)[spanCols_ids[1]], delim) |> unlist()
+    header_rows <- which(grepl("\\[header\\]", spanners))
+    header_name_rows <- which(grepl("\\[header_name\\]", spanners))
+    header_level_rows <- which(grepl("\\[header_level\\]", spanners))
+
+    # Eliminate prefixes
+    colnames(x) <- gsub("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", "", colnames(x))
 
     if (groupAsColumn) {
       flex_x <- x |>
         flextable::flextable() |>
-        flextable::merge_v(j = groupColumn) |>
+        flextable::merge_v(j = nameGroup) |>
         flextable::separate_header(split = delim)
     } else {
       flex_x <- x |>
-        flextable::as_grouped_data(groups = groupColumn) |>
+        flextable::as_grouped_data(groups = nameGroup) |>
         flextable::flextable() |>
         flextable::separate_header(split = delim)
-
-      nonNaIndices <- getNonNaIndices(flex_x$body$dataset, groupColumn)
-
-      flex_x <- flextable::merge_h(flex_x,
-                                   i = nonNaIndices,
-                                   part = "body")
+      nonNaIndices <- getNonNaIndices(flex_x$body$dataset, nameGroup)
+      flex_x <- flex_x |> flextable::merge_h(i = nonNaIndices, part = "body")
     }
   }
 
@@ -219,11 +204,10 @@ fxTable <- function(
 
   # Basic default + merge columns
   if (!is.null(colsToMergeRows)) { # style while merging rows
-    flex_x <- fxMergeRows(flex_x, colsToMergeRows, groupColumn)
+    flex_x <- fxMergeRows(flex_x, colsToMergeRows, nameGroup)
   } else {
     if (!is.null(groupColumn)) { # style group different
-      indRowGroup <- getNonNaIndices(flex_x$body$dataset, groupColumn)
-
+      indRowGroup <- getNonNaIndices(flex_x$body$dataset, nameGroup)
       flex_x <- flex_x |>
         flextable::border(
           j = 1,
@@ -247,10 +231,7 @@ fxTable <- function(
           part = "body"
         ) |>
         flextable::border( # correct group level right border
-          i = flex_x$body$dataset |>
-            dplyr::select(dplyr::all_of(groupColumn)) |>
-            apply(1, function(row) any(!is.na(row))) |>
-            which(),
+          i = which(!is.na(flex_x$body$dataset[[nameGroup]])),
           j = 1,
           border.right = officer::fp_border(color = "transparent"),
           part = "body"
@@ -330,7 +311,7 @@ fxTable <- function(
   # group label
   if (!is.null(groupColumn)) {
     if (!groupAsColumn) {
-      nonNaIndices <- getNonNaIndices(flex_x$body$dataset, groupColumn)
+      nonNaIndices <- getNonNaIndices(flex_x$body$dataset, nameGroup)
       flex_x <- flex_x |>
         flextable::style(
           part = "body",
@@ -340,7 +321,7 @@ fxTable <- function(
     } else {
       flex_x <- flex_x |>
         flextable::style(
-          part = "body", j = which(colnames(flex_x$body$dataset) %in% groupColumn),
+          part = "body", j = which(colnames(flex_x$body$dataset) %in% nameGroup),
           pr_t = style$group_label$text, pr_p = style$group_label$paragraph, pr_c = style$group_label$cell
         )
     }
@@ -348,14 +329,9 @@ fxTable <- function(
   return(flex_x)
 }
 
-
-getNonNaIndices <- function(x, groupColumn) {
-
-  apply(x |> dplyr::select(dplyr::all_of(groupColumn)),
-        1, function(row) any(!is.na(row))) |> which()
-
+getNonNaIndices <- function(x, nameGroup) {
+  which(!is.na(x[[nameGroup]]))
 }
-
 
 fxStyles <- function(styleName) {
   styles <- list(
