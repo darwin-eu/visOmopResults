@@ -12,7 +12,10 @@
 #' @param caption Caption for the table, or NULL for no caption. Text in
 #' markdown formatting style (e.g. `*Your caption here*` for caption in
 #' italics).
-#' @param groupColumn Column to use as group labels.
+#' @param groupColumn Specifies the columns to use for group labels.
+#' By default, the new group name will be a combination of the column names,
+#' joined by "_". To assign a custom group name, provide a named list such as:
+#' list(`newGroupName` = c("variable_name", "variable_level"))
 #' @param groupNameCol `r lifecycle::badge("deprecated")` This argument was
 #' renamed to "groupColumn" for consistency throughout the package functions.
 #' @param groupAsColumn Whether to display the group labels as a column
@@ -97,7 +100,32 @@ gtTable <- function(
   assertLogical(groupAsColumn, length = 1)
   assertCharacter(groupOrder, null = TRUE)
   assertCharacter(colsToMergeRows, null = TRUE)
+
   validateColsToMergeRows(x, colsToMergeRows, groupColumn)
+
+  if (inherits(groupColumn, "list")) {
+    nameGroup <- names(groupColumn)
+    groupColumn <- groupColumn[[1]]
+  } else if (length(groupColumn) > 1) {
+    nameGroup <- paste0(groupColumn, collapse = "_")
+  } else {
+    nameGroup <- groupColumn
+  }
+
+  if(!is.null(groupColumn) && !is.null(groupOrder)){
+    generated_groups <- x |>
+      dplyr::mutate(group = do.call(
+        paste,
+        c(dplyr::across(dplyr::all_of(groupColumn)),
+          sep = "_"
+        )
+      )) |>
+      dplyr::pull(.data$group) |>
+      unique()
+
+    assertChoice(groupOrder, choices = generated_groups)
+  }
+
   style <- validateStyle(style, "gt")
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
@@ -116,17 +144,42 @@ gtTable <- function(
   if (!is.null(groupColumn)) {
     if (is.null(groupOrder)) {
       x <- x |>
-        dplyr::mutate(!!groupColumn := factor(.data[[groupColumn]])) |>
-        dplyr::arrange_at(groupColumn, .by_group = TRUE)
+        dplyr::mutate(!!nameGroup :=
+                        factor(
+                          do.call(paste, c(dplyr::across(dplyr::all_of(groupColumn)), sep = "_"))
+                        )) |>
+        dplyr::relocate(!!groupColumn) |>
+        dplyr::arrange(dplyr::across(dplyr::all_of(groupColumn)))
     } else {
+      x <- x |>
+        dplyr::mutate(!!nameGroup := factor(
+          do.call(paste, c(dplyr::across(dplyr::all_of(groupColumn)), sep = "_")),
+          levels = groupOrder
+        )) |>
+        dplyr::relocate(!!nameGroup) |>
+        dplyr::arrange(dplyr::across(dplyr::all_of(nameGroup)))
+
       x <- x |>
         dplyr::mutate(!!groupColumn := factor(.data[[groupColumn]], levels = groupOrder)) |>
         dplyr::arrange_at(groupColumn, .by_group = TRUE)
     }
-    gtResult <- x |>
-      gt::gt(groupname_col = groupColumn, row_group_as_column = groupAsColumn) |>
-      gt::tab_spanner_delim(delim = delim) |>
-        gt::row_group_order(groups = x[[groupColumn]] |> levels())
+    if (length(groupColumn) == 1) {
+      # Single string
+      gtResult <- x |>
+        gt::gt(groupname_col = groupColumn, row_group_as_column = groupAsColumn) |>
+        gt::tab_spanner_delim(delim = delim)
+    } else {
+      # Vector
+      gtResult <- x |>
+        dplyr::mutate(group_label = apply(dplyr::across(dplyr::all_of(groupColumn)), 1, paste, collapse = delim)) |>
+        gt::gt(groupname_col = "group_label", row_group_as_column = groupAsColumn) |>
+        gt::tab_spanner_delim(delim = delim) |>
+        gt::cols_hide(columns = dplyr::all_of(groupColumn))
+
+
+    }
+    gtResult <- gtResult |>
+      gt::row_group_order(groups = as.character(unique(gtResult$group_label)))
   } else {
     gtResult <- x |> gt::gt() |> gt::tab_spanner_delim(delim = delim)
   }
@@ -311,11 +364,13 @@ gtStyles <- function(styleName) {
 gtMergeRows <- function(gt_x, colsToMergeRows, groupColumn, groupOrder) {
 
   colNms <- colnames(gt_x$`_data`)
+  colsToExclude <- c("group_label", paste(groupColumn, collapse = "_"))
+
   if (colsToMergeRows[1] == "all_columns") {
     if (is.null(groupColumn)) {
-      colsToMergeRows <- colNms
+      colsToMergeRows <- colNms[!colNms %in% colsToExclude]
     } else {
-      colsToMergeRows <- colNms[!colNms %in% groupColumn]
+      colsToMergeRows <- colNms[!colNms %in% c(groupColumn, colsToExclude)]
     }
   }
 
@@ -334,14 +389,15 @@ gtMergeRows <- function(gt_x, colsToMergeRows, groupColumn, groupOrder) {
     }
 
     col <- colsToMergeRows[k]
-    mergeCol <- gt_x$`_data`[[col]]
+    mergeCol <- as.character(gt_x$`_data`[[col]])
     mergeCol[is.na(mergeCol)] <- "-"
 
     if (is.null(groupColumn)) {
       id <- which(mergeCol == dplyr::lag(mergeCol) & prevId)
     } else {
-      groupCol <- gt_x$`_data`[[groupColumn]]
-      id <- which(groupCol == dplyr::lag(groupCol) & mergeCol == dplyr::lag(mergeCol) & prevId)
+      groupCol <- apply(gt_x$`_data`[, groupColumn, drop = FALSE], 1, paste, collapse = "_")
+      lagGroupCol <- dplyr::lag(groupCol)
+      id <- which(groupCol == lagGroupCol & mergeCol == dplyr::lag(mergeCol) & prevId)
     }
 
     gt_x$`_data`[[col]][id] <- ""
