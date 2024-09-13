@@ -321,3 +321,67 @@ test_that("fxTable, test colsToMergeRows", {
     colsToMergeRows = c("cdm_name", "lala")
   ))
 })
+
+
+
+
+test_that("multiple groupColumn", {
+  table_to_format <- mockSummarisedResult() |>
+    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
+                                              "N" = "<count>")) |>
+    formatHeader(header = c("strata_name", "strata_level"),
+                 delim = ":",
+                 includeHeaderName = TRUE) |>
+    dplyr::select(-result_id)
+
+  fxResult <- fxTable(
+    table_to_format,
+    delim = ":",
+    style = list(
+      "subtitle" = list("text" = officer::fp_text(bold = TRUE, font.size = 12, color = "blue")),
+      "body" = list("text" = officer::fp_text(color = "red"), "cell" = officer::fp_cell(border = officer::fp_border())),
+      "group_label" = list("cell" = officer::fp_cell(background.color = "#e1e1e1")),
+      "header_name" = list("cell" = officer::fp_cell(background.color = "black"), "text" = officer::fp_text(color = "white"))
+    ),
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupColumn = c("group_name", "group_level"),
+    groupAsColumn = TRUE
+  )
+
+
+
+
+  # Spanners
+  header_col_1 <- fxResult$header$dataset[, "strata_name:overall:strata_level:overall"] # overall
+  expect_equal(header_col_1, c("Title test 2", "Subtitle for test 2", "strata_name", "overall",
+                               "strata_level", "strata_name:overall:strata_level:overall"))
+
+  # Spanner styles
+  header_col_style <- fxResult$header$styles$cells$background.color$data[, "strata_name:overall:strata_level:overall"]
+  expect_equal(header_col_style, c("black", "black", "black", "transparent", "black", "transparent"))
+  expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1.2)
+  expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
+  expect_equal(all(fxResult$header$styles$text$bold$data[, "cdm_name"] == c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE)), TRUE)
+  expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"], c("black", "blue", "black", "black", "black", "black"))
+  expect_equal(fxResult$header$styles$text$color$data[, "strata_name:age_group:strata_level:>=40"],
+               c("black", "blue", "white", "black", "white", "black"))
+
+  # body
+  expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
+  expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
+  expect_equal(fxResult$body$styles$cells$background.color$data[, "group_level"] |> unique(), "#e1e1e1")
+  expect_equal(fxResult$body$styles$text$color$data[, "cdm_name"] |> unique(), "red")
+
+  # caption
+  expect_equal(fxResult$caption$value, "*This* is the caption")
+
+  # group label
+  expect_equal(fxResult$body$spans$rows[1,], rep(1, 19))
+
+
+
+})

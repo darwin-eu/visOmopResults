@@ -317,3 +317,29 @@ test_that("gtTable, test colsToMergeRows", {
                  "Ibuprofen","Ibuprofen"))
   expect_null(gtResult$`_data`$group_level|> levels())
 })
+
+test_that("",{
+  table_to_format<- mockSummarisedResult() |>
+    formatHeader(header = c("strata_name", "strata_level")) |>
+    dplyr::select(-result_id)
+
+  gtResult <- gtTable(
+    table_to_format,
+    style = "default",
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupColumn = c("group_name", "group_level"),
+    groupAsColumn = TRUE,
+    groupOrder = NULL,
+    colsToMergeRows = "all_columns"
+  )
+
+  expect_equal(gtResult$`_data`$cdm_name,
+               c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
+  expect_equal(gtResult$`_data`$variable_level,
+               c("-", "-", "", "Amoxiciline", "", "Ibuprofen", "", "-", "-", "", "Amoxiciline",
+                 "","Ibuprofen",  ""  ))
+
+})
