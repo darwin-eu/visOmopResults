@@ -36,7 +36,7 @@ library(dplyr, warn.conflicts = FALSE)
 
 summariseIsland <- function(island) {
   penguins |>
-    filter(island == island) |>
+    filter(.data$island == .env$island) |>
     summariseResult(
       group = "species",
       includeOverallGroup = TRUE,
@@ -66,8 +66,16 @@ when referring to inputs, we will use the columns shown in its tidy format:
 
 ```{r}
 tidy(penguinsSummary) |>
-  glimpse()
+  colnames()
 ```
+
+And not the column names seen in the <summarised_result> format:
+```{r}
+colnames(penguinsSummary)
+```
+
+That's the most important thing to be aware of, otherwise populating arguments
+becomes a bit tricky.
 
 We should always subset the <summarised_result> to the variable_name of interest
 before calling the plotting functions. It is not advised to combine results of
@@ -76,10 +84,71 @@ in the tidy form NAs will be created.
 
 ### Scatter plot
 
+We can create simple scatter plots using the `plotScatter()` let's see some 
+examples:
 ```{r}
-
+penguinsSummary |>
+  filter(
+    variable_name == "bill_depth_mm", 
+    strata_name == "year", 
+    strata_level != "overall"
+  ) |>
+  plotScatter(
+    x = "year", 
+    y = "median",
+    line = TRUE, 
+    point = TRUE,
+    ribbon = FALSE,
+    facet = "cdm_name",
+    colour = "species"
+  )
 ```
 
+```{r}
+penguinsSummary |>
+  filter(
+    variable_name %in% c("bill_length_mm", "bill_depth_mm"), 
+    strata_name == "overall", 
+    strata_level == "overall",
+    group_name != "overall"
+  ) |>
+  plotScatter(
+    x = "density_x", 
+    y = "density_y",
+    line = TRUE, 
+    point = FALSE,
+    ribbon = FALSE,
+    facet = cdm_name ~ variable_name,
+    colour = "species"
+  ) +
+  ggplot2::facet_grid(cdm_name ~ variable_name, scales = "free_x")
+```
+
+```{r}
+penguinsSummary |>
+  filter(
+    variable_name == "flipper_length_mm", 
+    strata_name == "year &&& sex",
+    !grepl("NA", strata_level)
+  ) |>
+  plotScatter(
+    x = c("year", "sex"), 
+    y = "median",
+    ymin = "q25",
+    ymax = "q75",
+    line = FALSE, 
+    point = TRUE,
+    ribbon = FALSE,
+    facet = cdm_name ~ species,
+    colour = "sex",
+    group = c("year", "sex")
+  ) +
+  ggplot2::coord_flip() +
+  ggplot2::labs(y = "Flipper length (mm)")
+```
+hazard ratios
+
+ribbon (no line)
 
 ### Bar plot
 
@@ -155,8 +224,10 @@ library(ggplot2)
 penguinsSummary |>
   filter(variable_name == "number records") |>
   tidy() |>
-  ggplot(aes(x = year, y = sex, count = count)) +
-  geom_bin_2d() +
+  ggplot(aes(x = year, y = sex, fill = count, label = count)) +
+  geom_tile() +
+  scale_fill_viridis_c(trans = "log") + 
+  geom_text() +
   facet_grid(cdm_name ~ species)
 ```
 
@@ -175,7 +246,7 @@ penguinsSummary |>
     !grepl("NA", strata_level),
     variable_name == "body_mass_g") |>
   plotBoxplot(facet = cdm_name ~ species + sex, colour = "year") +
-  ylim(c(0, 6000)) +
+  ylim(c(0, 6500)) +
   labs(x = "My custom x label") +
   theme(legend.position = "top")
 ```

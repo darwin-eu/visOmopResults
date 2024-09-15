@@ -98,7 +98,7 @@ test_that("Function returns a ggplot object", {
       facet = "age_group")
   )
 
-  expect_message(expect_error(
+  expect_error(
     plotScatter(
       result,
       x = "sex",
@@ -107,6 +107,6 @@ test_that("Function returns a ggplot object", {
       point = TRUE,
       ribbon = FALSE,
       facet = "age_group")
-  ))
+  )
 
 })

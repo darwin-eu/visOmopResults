@@ -64,17 +64,21 @@ plotScatter <- function(result,
   omopgenerics::assertCharacter(colour, null = TRUE)
   omopgenerics::assertCharacter(group, null = TRUE)
 
+  # empty
+  if (nrow(result) == 0) {
+    cli::cli_warn(c("!" = "result object is empty, returning empty plot."))
+    return(ggplot2::ggplot())
+  }
+
   # get estimates
   result <- cleanEstimates(result, c(
     x, y, ymin, ymax, asCharacterFacet(facet), colour, group))
-  est <- suppressWarnings(unique(result$estimate_name))
 
   # tidy result
   result <- tidyResult(result)
 
   # warn multiple values
   result |>
-    dplyr::select(!dplyr::any_of(c(est))) |>
     warnMultipleValues(cols = list(
       x = x, facet = asCharacterFacet(facet), colour = colour, group = group))
 
@@ -101,7 +105,8 @@ plotScatter <- function(result,
     ggplot2::labs(
       x = styleLabel(x),
       fill = styleLabel(colour),
-      colour = styleLabel(colour)
+      colour = styleLabel(colour),
+      y = styleLabel(y)
     ) +
     ggplot2::theme(
       legend.position = hideLegend(colour)
@@ -151,10 +156,15 @@ plotBoxplot <- function(result,
   validateFacet(facet)
   omopgenerics::assertCharacter(colour, null = TRUE)
 
-  # get estimates
+  # empty
+  if (nrow(result) == 0) {
+    cli::cli_warn(c("!" = "result object is empty, returning empty plot."))
+    return(ggplot2::ggplot())
+  }
+
+  # subset to estimates of use
   result <- cleanEstimates(result, c(
     x, lower, middle, upper, ymin, ymax, asCharacterFacet(facet), colour))
-  est <- suppressWarnings(unique(result$estimate_name))
   ylab <- styleLabel(unique(suppressWarnings(result$variable_name)))
 
   # tidy result
@@ -162,7 +172,6 @@ plotBoxplot <- function(result,
 
   # warn multiple values
   result |>
-    dplyr::select(!dplyr::any_of(c(est))) |>
     warnMultipleValues(cols = list(
       x = x, facet = asCharacterFacet(facet), colour = colour))
 
@@ -234,16 +243,20 @@ plotBarplot <- function(result,
   validateFacet(facet)
   omopgenerics::assertCharacter(colour, null = TRUE)
 
-  # get estimates
+  # empty
+  if (nrow(result) == 0) {
+    cli::cli_warn(c("!" = "result object is empty, returning empty plot."))
+    return(ggplot2::ggplot())
+  }
+
+  # subset to estimates of use
   result <- cleanEstimates(result, c(x, y, asCharacterFacet(facet), colour))
-  est <- suppressWarnings(unique(result$estimate_name))
 
   # tidy result
   result <- tidyResult(result)
 
   # warn multiple values
   result |>
-    dplyr::select(!dplyr::any_of(c(est))) |>
     warnMultipleValues(cols = list(
       x = x, facet = asCharacterFacet(facet), colour = colour))
 
@@ -262,7 +275,8 @@ plotBarplot <- function(result,
     ggplot2::labs(
       x = styleLabel(x),
       fill = styleLabel(colour),
-      colour = styleLabel(colour)
+      colour = styleLabel(colour),
+      y = styleLabel(y)
     ) +
     ggplot2::theme(
       legend.position =  hideLegend(colour)
@@ -354,7 +368,7 @@ plotFacet <- function(p, facet) {
 }
 styleLabel <- function(x) {
   #length(x) > 0 remove the character(0)
-  if (!is.null(x) && x != "" && length(x) > 0) {
+  if (!is.null(x) && all(x != "") && length(x) > 0) {
     x |>
       stringr::str_replace_all(pattern = "_", replacement = " ") |>
       stringr::str_to_sentence() |>
