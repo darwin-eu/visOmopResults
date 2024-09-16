@@ -27,7 +27,7 @@
 #' result <- mockSummarisedResult() |>
 #'   dplyr::filter(variable_name == "age")
 #'
-#' plotScatter(
+#' visScatterplot(
 #'   result = result,
 #'   x = "cohort_name",
 #'   y = "mean",
@@ -37,17 +37,17 @@
 #'   facet = age_group ~ sex)
 #' }
 #'
-plotScatter <- function(result,
-                        x,
-                        y,
-                        line,
-                        point,
-                        ribbon,
-                        ymin = NULL,
-                        ymax = NULL,
-                        facet = NULL,
-                        colour = NULL,
-                        group = colour) {
+visScatterplot <- function(result,
+                           x,
+                           y,
+                           line,
+                           point,
+                           ribbon,
+                           ymin = NULL,
+                           ymax = NULL,
+                           facet = NULL,
+                           colour = NULL,
+                           group = colour) {
 
   rlang::check_installed("ggplot2")
 
@@ -133,15 +133,15 @@ plotScatter <- function(result,
 #' @return A ggplot2 object.
 #' @export
 #'
-plotBoxplot <- function(result,
-                        x = NULL,
-                        lower = "q25",
-                        middle = "median",
-                        upper = "q75",
-                        ymin = "min",
-                        ymax = "max",
-                        facet = NULL,
-                        colour = NULL) {
+visBoxplot <- function(result,
+                       x = NULL,
+                       lower = "q25",
+                       middle = "median",
+                       upper = "q75",
+                       ymin = "min",
+                       ymax = "max",
+                       facet = NULL,
+                       colour = NULL) {
 
   rlang::check_installed("ggplot2")
 
@@ -220,7 +220,7 @@ plotBoxplot <- function(result,
 #' \donttest{
 #' result <- mockSummarisedResult() |> dplyr::filter(variable_name == "age")
 #'
-#' plotBarplot(
+#' visBarplot(
 #'   result = result,
 #'   x = "cohort_name",
 #'   y = "mean",
@@ -228,11 +228,11 @@ plotBoxplot <- function(result,
 #'   colour = "sex")
 #' }
 #'
-plotBarplot <- function(result,
-                        x,
-                        y,
-                        facet = NULL,
-                        colour = NULL) {
+visBarplot <- function(result,
+                       x,
+                       y,
+                       facet = NULL,
+                       colour = NULL) {
 
   rlang::check_installed("ggplot2")
 

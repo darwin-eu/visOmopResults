@@ -89,7 +89,7 @@ examples:
 penguinsSummary |>
   filter(variable_name == "bill_depth_mm") |>
   filterStrata(year != "overall", sex == "overall") |>
-  plotScatter(
+  visScatterplot(
     x = "year", 
     y = "median",
     line = TRUE, 
@@ -105,7 +105,7 @@ penguinsSummary |>
   filter(variable_name %in% c("bill_length_mm", "bill_depth_mm"))|>
   filterStrata(year == "overall", sex == "overall") |>
   filterGroup(species != "overall") |>
-  plotScatter(
+  visScatterplot(
     x = "density_x", 
     y = "density_y",
     line = TRUE, 
@@ -121,7 +121,7 @@ penguinsSummary |>
 penguinsSummary |>
   filter(variable_name == "flipper_length_mm") |>
   filterStrata(year != "overall", sex %in% c("female", "male")) |>
-  plotScatter(
+  visScatterplot(
     x = c("year", "sex"), 
     y = "median",
     ymin = "q25",
@@ -142,7 +142,7 @@ penguinsSummary |>
   filter(variable_name %in% c(
     "flipper_length_mm", "bill_length_mm", "bill_depth_mm")) |>
   filterStrata(sex == "overall") |>
-  plotScatter(
+  visScatterplot(
     x = "year", 
     y = "median",
     ymin = "min",
@@ -165,7 +165,7 @@ penguinsSummary |>
   filter(variable_name == "number records") |>
   filterGroup(species != "overall") |>
   filterStrata(sex != "overall", year != "overall") |>
-  plotBarplot(
+  visBarplot(
     x = "year",
     y = "count",
     colour = "sex",
@@ -180,14 +180,14 @@ Let's create some box plots of their body mass:
 ```{r}
 penguinsSummary |>
   filter(variable_name == "body_mass_g") |>
-  plotBoxplot(x = "year", facet = c("cdm_name", "species"), colour = "sex")
+  visBoxplot(x = "year", facet = c("cdm_name", "species"), colour = "sex")
 ```
 
 We can specify how we want to facet using a formula:
 ```{r}
 penguinsSummary |>
   filter(variable_name == "body_mass_g") |>
-  plotBoxplot(x = "year", facet = cdm_name ~ species, colour = "sex")
+  visBoxplot(x = "year", facet = cdm_name ~ species, colour = "sex")
 ```
 
 Arguments before `~` specify the rows, and arguments after the columns, see 
@@ -198,7 +198,7 @@ penguinsSummary |>
   filter(variable_name == "body_mass_g") |>
   filterGroup(species != "overall") |>
   filterStrata(sex %in% c("female", "male"), year != "overall") |>
-  plotBoxplot(facet = cdm_name ~ species + sex, colour = "year")
+  visBoxplot(facet = cdm_name ~ species + sex, colour = "year")
 ```
 
 Note that as we didnt specify x there is no levels in the x axis, but box plots
@@ -231,7 +231,7 @@ penguinsTidy |>
     sex %in% c("female", "male"),
     year != "overall"
   ) |>
-  plotBoxplot(facet = cdm_name ~ species + sex, colour = "year")
+  visBoxplot(facet = cdm_name ~ species + sex, colour = "year")
 ```
 
 ## Custom plotting
@@ -264,7 +264,7 @@ penguinsSummary |>
     strata_name == "year &&& sex",
     !grepl("NA", strata_level),
     variable_name == "body_mass_g") |>
-  plotBoxplot(facet = cdm_name ~ species + sex, colour = "year") +
+  visBoxplot(facet = cdm_name ~ species + sex, colour = "year") +
   ylim(c(0, 6500)) +
   labs(x = "My custom x label") +
   theme(legend.position = "top")

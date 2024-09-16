@@ -25,3 +25,9 @@ A summarised_result object with the added setting columns.
 \description{
 Add settings columns to a summaries_result object.
 }
+\examples{
+library(visOmopResults)
+mockSummarisedResult() |>
+  addSettings(settingsColumns = c("result_type"))
+
+}
