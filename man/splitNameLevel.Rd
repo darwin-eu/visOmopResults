@@ -9,8 +9,7 @@ splitNameLevel(
   name = "group_name",
   level = "group_level",
   keep = FALSE,
-  fill = "overall",
-  overall = lifecycle::deprecated()
+  fill = "overall"
 )
 }
 \arguments{
@@ -24,8 +23,6 @@ splitNameLevel(
 
 \item{fill}{Optionally, a character that specifies what value should be
 filled in with when missing.}
-
-\item{overall}{deprecated.}
 }
 \value{
 A dataframe with the specified name column values as columns.
