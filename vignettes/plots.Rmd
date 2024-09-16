@@ -146,14 +146,34 @@ penguinsSummary |>
   ggplot2::coord_flip() +
   ggplot2::labs(y = "Flipper length (mm)")
 ```
-hazard ratios
 
-ribbon (no line)
+```{r}
+penguinsSummary |>
+  filter(
+    variable_name %in% c("flipper_length_mm", "bill_length_mm", "bill_depth_mm"), 
+    strata_name == "year"
+  ) |>
+  plotScatter(
+    x = "year", 
+    y = "median",
+    ymin = "min",
+    ymax = "max",
+    line = FALSE, 
+    point = TRUE,
+    ribbon = TRUE,
+    facet = cdm_name ~ species,
+    colour = "variable_name",
+    group = c("variable_name")
+  )
+```
 
 ### Bar plot
 
-```{r}
+Let's create some simple bar plots:
 
+```{r}
+penguinsSummary |>
+  plotBarplot()
 ```
 
 
