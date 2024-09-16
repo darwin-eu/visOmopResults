@@ -45,14 +45,12 @@ By default, the new group name will be a combination of the column names,
 joined by "_". To assign a custom group name, provide a named list such as:
 list(\code{newGroupName} = c("variable_name", "variable_level"))}
 
-\item{groupNameCol}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This argument was
-renamed to "groupColumn" for consistency throughout the package functions.}
+\item{groupNameCol}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 
 \item{groupAsColumn}{Whether to display the group labels as a column
 (TRUE) or rows (FALSE).}
 
-\item{groupNameAsColumn}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}} This argument was
-renamed to "groupAsColumn" for consistency with the argument "groupColumn".}
+\item{groupNameAsColumn}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 
 \item{groupOrder}{Order in which to display group labels.}
 

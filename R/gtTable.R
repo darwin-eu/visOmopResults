@@ -16,12 +16,10 @@
 #' By default, the new group name will be a combination of the column names,
 #' joined by "_". To assign a custom group name, provide a named list such as:
 #' list(`newGroupName` = c("variable_name", "variable_level"))
-#' @param groupNameCol `r lifecycle::badge("deprecated")` This argument was
-#' renamed to "groupColumn" for consistency throughout the package functions.
+#' @param groupNameCol `r lifecycle::badge("deprecated")`
 #' @param groupAsColumn Whether to display the group labels as a column
 #' (TRUE) or rows (FALSE).
-#' @param groupNameAsColumn `r lifecycle::badge("deprecated")` This argument was
-#' renamed to "groupAsColumn" for consistency with the argument "groupColumn".
+#' @param groupNameAsColumn `r lifecycle::badge("deprecated")`
 #' @param groupOrder Order in which to display group labels.
 #' @param colsToMergeRows Names of the columns to merge vertically
 #' when consecutive row cells have identical values. Alternatively, use
@@ -103,6 +101,10 @@ gtTable <- function(
   style <- validateStyle(style, "gt")
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
+  }
+  if (dplyr::is.grouped_df(x)) {
+    x <- x |> dplyr::ungroup()
+    cli::cli_inform("`x` will be ungrouped.")
   }
 
   # na
