@@ -65,8 +65,7 @@ Although the input of a visOmopResult plot function can be a <summarised_result>
 when referring to inputs, we will use the columns shown in its tidy format:
 
 ```{r}
-tidy(penguinsSummary) |>
-  colnames()
+tidyColumns(penguinsSummary)
 ```
 
 And not the column names seen in the <summarised_result> format:
@@ -88,11 +87,8 @@ We can create simple scatter plots using the `plotScatter()` let's see some
 examples:
 ```{r}
 penguinsSummary |>
-  filter(
-    variable_name == "bill_depth_mm", 
-    strata_name == "year", 
-    strata_level != "overall"
-  ) |>
+  filter(variable_name == "bill_depth_mm") |>
+  filterStrata(year != "overall", sex == "overall") |>
   plotScatter(
     x = "year", 
     y = "median",
@@ -106,12 +102,9 @@ penguinsSummary |>
 
 ```{r}
 penguinsSummary |>
-  filter(
-    variable_name %in% c("bill_length_mm", "bill_depth_mm"), 
-    strata_name == "overall", 
-    strata_level == "overall",
-    group_name != "overall"
-  ) |>
+  filter(variable_name %in% c("bill_length_mm", "bill_depth_mm"))|>
+  filterStrata(year == "overall", sex == "overall") |>
+  filterGroup(species != "overall") |>
   plotScatter(
     x = "density_x", 
     y = "density_y",
@@ -126,11 +119,8 @@ penguinsSummary |>
 
 ```{r}
 penguinsSummary |>
-  filter(
-    variable_name == "flipper_length_mm", 
-    strata_name == "year &&& sex",
-    !grepl("NA", strata_level)
-  ) |>
+  filter(variable_name == "flipper_length_mm") |>
+  filterStrata(year != "overall", sex %in% c("female", "male")) |>
   plotScatter(
     x = c("year", "sex"), 
     y = "median",
@@ -149,10 +139,9 @@ penguinsSummary |>
 
 ```{r}
 penguinsSummary |>
-  filter(
-    variable_name %in% c("flipper_length_mm", "bill_length_mm", "bill_depth_mm"), 
-    strata_name == "year"
-  ) |>
+  filter(variable_name %in% c(
+    "flipper_length_mm", "bill_length_mm", "bill_depth_mm")) |>
+  filterStrata(sex == "overall") |>
   plotScatter(
     x = "year", 
     y = "median",
@@ -173,9 +162,16 @@ Let's create some simple bar plots:
 
 ```{r}
 penguinsSummary |>
-  plotBarplot()
+  filter(variable_name == "number records") |>
+  filterGroup(species != "overall") |>
+  filterStrata(sex != "overall", year != "overall") |>
+  plotBarplot(
+    x = "year",
+    y = "count",
+    colour = "sex",
+    facet = cdm_name ~ species
+  )
 ```
-
 
 ### Box plot
 
@@ -199,11 +195,9 @@ another example faceting also by sex in the columns. And in this case colouring
 by year:
 ```{r}
 penguinsSummary |>
-  filter(
-    group_level != "overall",
-    strata_name == "year &&& sex",
-    !grepl("NA", strata_level),
-    variable_name == "body_mass_g") |>
+  filter(variable_name == "body_mass_g") |>
+  filterGroup(species != "overall") |>
+  filterStrata(sex %in% c("female", "male"), year != "overall") |>
   plotBoxplot(facet = cdm_name ~ species + sex, colour = "year")
 ```
 
@@ -227,12 +221,17 @@ That as it can be seen is a normal data.frame:
 penguinsTidy |> class()
 ```
 
-In fact, the tidy format makes it easy to filter the group, strata and 
-additional columns as they are not combined in the name-level format. But it is
-also quite useful to filter to the variables of interest, before applying the
-tidy format.
+We can then do some custom plotting, for example replicating the last plot but
+from the tidy format:
 ```{r}
-
+penguinsTidy |>
+  filter(
+    variable_name == "body_mass_g",
+    species != "overall",
+    sex %in% c("female", "male"),
+    year != "overall"
+  ) |>
+  plotBoxplot(facet = cdm_name ~ species + sex, colour = "year")
 ```
 
 ## Custom plotting
@@ -284,7 +283,4 @@ ggsave(
 
 Although the package currently does not provide any plotly functionality
 ggplots can be easily converted to `<plotly>` ones using the function
-`plotly::ggplotly()`. This can make the interactivity of some plots better:
-
-```{r}
-```
+`plotly::ggplotly()`. This can make the interactivity of some plots better.
