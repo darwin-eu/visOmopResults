@@ -2,12 +2,12 @@
 % Please edit documentation in R/columns.R
 \name{groupColumns}
 \alias{groupColumns}
-\title{Identify group columns in an omop result object}
+\title{Identify variables in group_name column}
 \usage{
 groupColumns(result)
 }
 \arguments{
-\item{result}{A summarised_result.}
+\item{result}{A tibble.}
 }
 \value{
 Unique values of the group name column.

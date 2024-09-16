@@ -81,11 +81,11 @@ tidyColumns <- function(result) {
 #'
 #' @examples
 #' mockSummarisedResult() |>
-#'   tidyColumns()
+#'   settingsColumns()
 #'
-tidyColumns <- function(result) {
+settingsColumns <- function(result) {
   omopgenerics::validateResultArguemnt(result)
-  colnames(tidy(result))
+  colnames(settings(result))
 }
 
 getColumns <- function(result, col) {
