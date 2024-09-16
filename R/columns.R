@@ -66,7 +66,10 @@ additionalColumns <- function(result) {
 #'
 settingsColumns <- function(result) {
   omopgenerics::validateResultArguemnt(result)
-  colnames(settings(result))
+  colsSet <- colnames(settings(result))
+  c("cdm_name", groupColumns(result), strataColumns(result), "variable_name",
+    "variable_level", unique(result$estimate_name), additionalColumns(result),
+    colsSet[colsSet != "result_id"])
 }
 
 #' Identify tidy columns of a summarised_result
@@ -95,8 +98,9 @@ getColumns <- function(result, col) {
 
   # extract columns
   x <- result |>
-    dplyr::pull(dplyr::all_of(col)) |>
-    unique() |>
+    dplyr::select(dplyr::all_of(col)) |>
+    dplyr::distinct() |>
+    dplyr::pull() |>
     lapply(strsplit, split = " &&& ") |>
     unlist() |>
     unique()
