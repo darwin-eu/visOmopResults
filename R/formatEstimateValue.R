@@ -53,7 +53,8 @@ formatEstimateValueInternal <- function(result, decimals, decimalMark, bigMark) 
     for (nm in nms_name) {
       result$estimate_value[result[["estimate_name"]] == nm] <- result$estimate_value[result[["estimate_name"]] == nm] |>
         as.numeric() |>
-        base::format(big.mark = bigMark, decimal.mark = decimalMark, trim = TRUE, justify = "none")
+        base::format(big.mark = bigMark, decimal.mark = decimalMark,
+                     trim = TRUE, justify = "none", scientific = FALSE)
     }
   } else {
     formatted <- rep(FALSE, nrow(result))
@@ -67,7 +68,8 @@ formatEstimateValueInternal <- function(result, decimals, decimalMark, bigMark) 
       result$estimate_value[id] <- result$estimate_value[id] |>
         as.numeric() |>
         round(digits = n) |>
-        base::format(nsmall = n, big.mark = bigMark, decimal.mark = decimalMark, trim = TRUE, justify = "none")
+        base::format(nsmall = n, big.mark = bigMark, decimal.mark = decimalMark,
+                     trim = TRUE, justify = "none", scientific = FALSE)
       formatted[id] <- TRUE
     }
   }

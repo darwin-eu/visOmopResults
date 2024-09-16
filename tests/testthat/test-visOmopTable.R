@@ -256,3 +256,30 @@ test_that("empty result",{
   }, "Empty summarized results provided.")
 
 })
+
+
+test_that("don't want scientific",{
+  res <- visOmopResults::visOmopTable(
+    result = dplyr::tibble(
+      result_id = 1L,
+      cdm_name = "test",
+      group_name =
+        "overall",
+      group_level = "overall",
+      strata_name = "overall",
+      strata_level = "overall",
+      variable_name = "Number subjects",
+      variable_level = NA_character_,
+      estimate_name = "count",
+      estimate_type = "integer",
+      estimate_value = "100000",
+      additional_name = "overall",
+      additional_level = "overall"
+    ),
+    formatEstimateName = c(N = "<count>"),
+    header = "cdm_name",
+    split = c("group", "strata", "additional")
+  )
+  expect_true(res$`_data`$`[header]CDM name
+[header_level]test` == "100,000")
+})
