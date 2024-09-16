@@ -37,8 +37,8 @@
     </div>
 
     <div class="section level2">
-      <h2 id="all-functions">All functions<a class="anchor" aria-label="anchor" href="#all-functions"></a></h2>
 
+      <h3 id="functions-to-tidy-summarise-result-">Functions to tidy <code>summarise_result</code><a class="anchor" aria-label="anchor" href="#functions-to-tidy-summarise-result-"></a></h3>
 
 
 
@@ -55,100 +55,10 @@
         <dd>Add settings columns to a summaries_result object.</dd>
       </dl><dl><dt>
 
-          <code><a href="additionalColumns.html">additionalColumns()</a></code>
-
-        </dt>
-        <dd>Identify variables in additional_name column</dd>
-      </dl><dl><dt>
-
-          <code><a href="filterAdditional.html">filterAdditional()</a></code>
-
-        </dt>
-        <dd>Filter the additional_name-additional_level pair in a summarised_result</dd>
-      </dl><dl><dt>
-
-          <code><a href="filterGroup.html">filterGroup()</a></code>
-
-        </dt>
-        <dd>Filter the group_name-group_level pair in a summarised_result</dd>
-      </dl><dl><dt>
-
-          <code><a href="filterSettings.html">filterSettings()</a></code>
-
-        </dt>
-        <dd>Filter a summarised_result using the settings.</dd>
-      </dl><dl><dt>
-
-          <code><a href="filterStrata.html">filterStrata()</a></code>
-
-        </dt>
-        <dd>Filter the strata_name-strata_level pair in a summarised_result</dd>
-      </dl><dl><dt>
-
-          <code><a href="formatEstimateName.html">formatEstimateName()</a></code>
-
-        </dt>
-        <dd>Formats estimate_name and estimate_value column</dd>
-      </dl><dl><dt>
-
-          <code><a href="formatEstimateValue.html">formatEstimateValue()</a></code>
-
-        </dt>
-        <dd>Formats the estimate_value column</dd>
-      </dl><dl><dt>
-
-          <code><a href="formatHeader.html">formatHeader()</a></code>
-
-        </dt>
-        <dd>Create a header for gt and flextable objects.</dd>
-      </dl><dl><dt>
-
-          <code><a href="formatTable.html">formatTable()</a></code>
-
-        </dt>
-        <dd>Generate a formatted table from a data.table</dd>
-      </dl><dl><dt>
-
-          <code><a href="fxTable.html">fxTable()</a></code>
-
-        </dt>
-        <dd>Creates a flextable object from a dataframe</dd>
-      </dl><dl><dt>
-
-          <code><a href="groupColumns.html">groupColumns()</a></code>
-
-        </dt>
-        <dd>Identify variables in group_name column</dd>
-      </dl><dl><dt>
-
-          <code><a href="gtTable.html">gtTable()</a></code>
-
-        </dt>
-        <dd>Creates a gt object from a dataframe</dd>
-      </dl><dl><dt>
-
-          <code><a href="mockSummarisedResult.html">mockSummarisedResult()</a></code>
-
-        </dt>
-        <dd>A summarised_result object filled with mock data</dd>
-      </dl><dl><dt>
-
-          <code><a href="optionsTable.html">optionsTable()</a></code>
-
-        </dt>
-        <dd>Additional arguments for the function visOmopTable</dd>
-      </dl><dl><dt>
-
           <code><a href="pivotEstimates.html">pivotEstimates()</a></code>
           <span class="badge lifecycle lifecycle-experimental">experimental</span>
         </dt>
         <dd>Set estimates as columns</dd>
-      </dl><dl><dt>
-
-          <code><a href="settingsColumns.html">settingsColumns()</a></code>
-
-        </dt>
-        <dd>Identify settings columns of a summarised_result</dd>
       </dl><dl><dt>
 
           <code><a href="splitAdditional.html">splitAdditional()</a></code>
@@ -181,12 +91,6 @@
         <dd>Split strata_name and strata_level columns</dd>
       </dl><dl><dt>
 
-          <code><a href="strataColumns.html">strataColumns()</a></code>
-
-        </dt>
-        <dd>Identify variables in strata_name column</dd>
-      </dl><dl><dt>
-
           <code><a href="tidy.summarised_result.html">tidy(<i>&lt;summarised_result&gt;</i>)</a></code>
           <span class="badge lifecycle lifecycle-experimental">experimental</span>
         </dt>
@@ -203,7 +107,182 @@
           <span class="badge lifecycle lifecycle-experimental">experimental</span>
         </dt>
         <dd>Get a custom tidy visualization of a summarised_result object</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="table-functions">Table functions<a class="anchor" aria-label="anchor" href="#table-functions"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="formatEstimateName.html">formatEstimateName()</a></code>
+
+        </dt>
+        <dd>Formats estimate_name and estimate_value column</dd>
       </dl><dl><dt>
+
+          <code><a href="formatEstimateValue.html">formatEstimateValue()</a></code>
+
+        </dt>
+        <dd>Formats the estimate_value column</dd>
+      </dl><dl><dt>
+
+          <code><a href="formatHeader.html">formatHeader()</a></code>
+
+        </dt>
+        <dd>Create a header for gt and flextable objects.</dd>
+      </dl><dl><dt>
+
+          <code><a href="formatTable.html">formatTable()</a></code>
+
+        </dt>
+        <dd>Generate a formatted table from a data.table</dd>
+      </dl><dl><dt>
+
+          <code><a href="fxTable.html">fxTable()</a></code>
+
+        </dt>
+        <dd>Creates a flextable object from a dataframe</dd>
+      </dl><dl><dt>
+
+          <code><a href="gtTable.html">gtTable()</a></code>
+
+        </dt>
+        <dd>Creates a gt object from a dataframe</dd>
+      </dl><dl><dt>
+
+          <code><a href="optionsTable.html">optionsTable()</a></code>
+
+        </dt>
+        <dd>Additional arguments for the function visOmopTable</dd>
+      </dl><dl><dt>
+
+          <code><a href="visOmopTable.html">visOmopTable()</a></code>
+
+        </dt>
+        <dd>Format a summarised_result object into a gt, flextable, or tibble object.</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="plot-functions">Plot functions<a class="anchor" aria-label="anchor" href="#plot-functions"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="visBarplot.html">visBarplot()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Create a bar plot visualisation from a summarised result object.</dd>
+      </dl><dl><dt>
+
+          <code><a href="visBoxplot.html">visBoxplot()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Create a box plot visualisation from a summarised_result object.</dd>
+      </dl><dl><dt>
+
+          <code><a href="visScatterplot.html">visScatterplot()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Create a scatter plot visualisation from a summarised result object.</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="filter-functions">Filter functions<a class="anchor" aria-label="anchor" href="#filter-functions"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="filterAdditional.html">filterAdditional()</a></code>
+
+        </dt>
+        <dd>Filter the additional_name-additional_level pair in a summarised_result</dd>
+      </dl><dl><dt>
+
+          <code><a href="filterGroup.html">filterGroup()</a></code>
+
+        </dt>
+        <dd>Filter the group_name-group_level pair in a summarised_result</dd>
+      </dl><dl><dt>
+
+          <code><a href="filterSettings.html">filterSettings()</a></code>
+
+        </dt>
+        <dd>Filter a summarised_result using the settings.</dd>
+      </dl><dl><dt>
+
+          <code><a href="filterStrata.html">filterStrata()</a></code>
+
+        </dt>
+        <dd>Filter the strata_name-strata_level pair in a summarised_result</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="columns-retrieval-functions">Columns retrieval functions<a class="anchor" aria-label="anchor" href="#columns-retrieval-functions"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="additionalColumns.html">additionalColumns()</a></code>
+
+        </dt>
+        <dd>Identify variables in additional_name column</dd>
+      </dl><dl><dt>
+
+          <code><a href="groupColumns.html">groupColumns()</a></code>
+
+        </dt>
+        <dd>Identify variables in group_name column</dd>
+      </dl><dl><dt>
+
+          <code><a href="settingsColumns.html">settingsColumns()</a></code>
+
+        </dt>
+        <dd>Identify settings columns of a summarised_result</dd>
+      </dl><dl><dt>
+
+          <code><a href="strataColumns.html">strataColumns()</a></code>
+
+        </dt>
+        <dd>Identify variables in strata_name column</dd>
+      </dl><dl><dt>
+
+          <code><a href="tidyColumns.html">tidyColumns()</a></code>
+
+        </dt>
+        <dd>Identify tidy columns of a summarised_result</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="unite-functions">Unite functions<a class="anchor" aria-label="anchor" href="#unite-functions"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
 
           <code><a href="uniteAdditional.html">uniteAdditional()</a></code>
 
@@ -227,32 +306,26 @@
 
         </dt>
         <dd>Unite one or more columns in strata_name-strata_level format</dd>
-      </dl><dl><dt>
+      </dl></div><div class="section level2">
 
-          <code><a href="visBarplot.html">visBarplot()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+      <h3 id="mock-summarised-result-">Mock <code>summarised_result</code><a class="anchor" aria-label="anchor" href="#mock-summarised-result-"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="mockSummarisedResult.html">mockSummarisedResult()</a></code>
+
         </dt>
-        <dd>Create a bar plot visualisation from a summarised result object.</dd>
-      </dl><dl><dt>
-
-          <code><a href="visBoxplot.html">visBoxplot()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
-        </dt>
-        <dd>Create a box plot visualisation from a summarised_result object.</dd>
-      </dl><dl><dt>
-
-          <code><a href="visOmopTable.html">visOmopTable()</a></code>
-
-        </dt>
-        <dd>Format a summarised_result object into a gt, flextable, or tibble object.</dd>
-      </dl><dl><dt>
-
-          <code><a href="visScatterplot.html">visScatterplot()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
-        </dt>
-        <dd>Create a scatter plot visualisation from a summarised result object.</dd>
+        <dd>A summarised_result object filled with mock data</dd>
       </dl></div>
-  </main></div>
+  </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
+    </nav></aside></div>
 
 
     <footer><div class="pkgdown-footer-left">
