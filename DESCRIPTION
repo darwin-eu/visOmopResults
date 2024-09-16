@@ -3,7 +3,7 @@ Title: Graphs and Tables for OMOP Results
 Version: 0.3.0.900
 Authors@R: c(
     person(
-        "Marti", "Catala", , "marti.catalasabate@ndorms.ox.ac.uk", 
+        "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
         role = c("aut"), comment = c(ORCID = "0000-0003-3308-9905")
     ),
     person(
@@ -37,6 +37,9 @@ Suggests:
     gt,
     knitr,
     officer,
+    palmerpenguins,
+    PatientProfiles,
+    plotly,
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: 

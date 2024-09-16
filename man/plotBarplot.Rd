@@ -32,7 +32,8 @@ plotBarplot(
   result = result,
   x = "cohort_name",
   y = "mean",
-  facet = c("age_group", "sex"))
+  facet = c("age_group", "sex"),
+  colour = "sex")
 }
 
 }
