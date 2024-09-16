@@ -40,7 +40,13 @@
 #'
 filterSettings <- function(result, ...) {
   # initial check
-  result <- omopgenerics::validateResultArguemnt(result)
+  set <- attr(result, "settings")
+  if (is.null(set)) {
+    cli::cli_abort("result` does not have attribute settings")
+  }
+  if (!"result_id" %in% set | !"result_id" %in% colnames(result)) {
+    cli::cli_abort("'result_id' must be part of both `result` and its settings attribute.")
+  }
 
   # filter settings (try if error)
   result <- tryCatch(
