@@ -243,7 +243,7 @@ prepareInput <- function(result,
   result <- result |>
     omopgenerics::newSummarisedResult() |>
     splitAll() |>
-    addSettings(columns = cols)
+    addSettings(settingsColumns = cols)
   optionCols <- colnames(result)
   optionCols <- optionCols[!optionCols %in% c(
     "result_id", "estimate_name", "estimate_type", "estimate_value")]

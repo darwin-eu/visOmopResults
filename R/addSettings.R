@@ -19,21 +19,20 @@ addSettings <- function(result,
   }
 
   # checks
-  set <- settings(result)
-  settingsColumns <- settingsColumns[settingsColumns != "result_id"]
-  if (is.null(settingsColumns)) {
-    return(result)
-  }
-  notPresent <- settingsColumns[!settingsColumns %in% colnames(set)]
+  settingsColumns <- validateSettingsColumns(settingsColumns, result)
+  # if (length(settingsColumns) == 0) {
+  #   return(result)
+  # }
+  notPresent <- settingsColumns[!settingsColumns %in% colnames(settings(result))]
   if (length(notPresent)) {
     cli::cli_abort("The following columns are not present in settings: {notPresent}.")
   }
   # add settings
   toJoin <- settingsColumns[settingsColumns %in% colnames(result)]
-  resultOut <- result |>
+  result <- result |>
     dplyr::left_join(
-      set |> dplyr::select(dplyr::all_of(c("result_id", settingsColumns))),
+      settings(result) |> dplyr::select(dplyr::any_of(c("result_id", settingsColumns))),
       by = c("result_id", toJoin)
     )
-  return(resultOut)
+  return(result)
 }

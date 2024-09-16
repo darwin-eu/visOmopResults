@@ -133,8 +133,8 @@ Now, we want to group results by "cohort_name". More specifically we want to hav
 ```{r}
 mock_sr |>  
   gtTable(
-    groupNameCol = "cohort_name",
-    groupNameAsColumn = FALSE,
+    groupColumn = "cohort_name",
+    groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
   )
@@ -156,8 +156,8 @@ mock_sr |>
                            gt::cell_text(color = "white", weight = "bold")),
       "body" = gt::cell_text(color = "red")
     ),
-    groupNameCol = "cohort_name",
-    groupNameAsColumn = FALSE,
+    groupColumn = "cohort_name",
+    groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
   )
@@ -183,8 +183,8 @@ mock_sr |>
         "text" = officer::fp_text(bold = TRUE, color = "white")),
       "body" = list("text" = officer::fp_text(color = "red"))
     ),
-    groupNameCol = "cohort_name",
-    groupNameAsColumn = FALSE,
+    groupColumn = "cohort_name",
+    groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
     colsToMergeRows = "all_columns"
   )
@@ -209,8 +209,7 @@ mock_sr2 |> visOmopTable(
   formatEstimateName = c("N%" = "<count> (<percentage>)",
                          "N" = "<count>",
                          "Mean (SD)" = "<mean> (<sd>)"),
-  header = c("Stratifications", "strata"),
-  split = c("group","additional")
+  header = c("Stratifications", "strata")
 )
 ```
 By default, it returns a gt table, but it can be changed to "flextable" and "tibble" in the `type` argument.
@@ -228,8 +227,8 @@ mock_sr2 |> visOmopTable(
 )
 ```
 
-Additional options can be specified in the `.options` argument. These options are taken from the other format functions and gt/fx table functions seen before. To see a list of allowed arguments and their default values use `optionsVisOmopTable()`:
+Additional options can be specified in the `.options` argument. These options are taken from the other format functions and gt/fx table functions seen before. To see a list of allowed arguments and their default values use `optionsTable()`:
 
 ``` {r}
-optionsVisOmopTable()
+optionsTable()
 ```

@@ -340,7 +340,7 @@ test_that("multiple groupColumn", {
     style = list(
       "subtitle" = list("text" = officer::fp_text(bold = TRUE, font.size = 12, color = "blue")),
       "body" = list("text" = officer::fp_text(color = "red"), "cell" = officer::fp_cell(border = officer::fp_border())),
-      "group_label" = list("cell" = officer::fp_cell(background.color = "#e1e1e1")),
+      "group_label" = list("cell" = officer::fp_cell(background.color = "#e1e1e1"), "text" = officer::fp_text(color = "blue")),
       "header_name" = list("cell" = officer::fp_cell(background.color = "black"), "text" = officer::fp_text(color = "white"))
     ),
     na = "-",
@@ -350,9 +350,6 @@ test_that("multiple groupColumn", {
     groupColumn = c("group_name", "group_level"),
     groupAsColumn = TRUE
   )
-
-
-
 
   # Spanners
   header_col_1 <- fxResult$header$dataset[, "strata_name:overall:strata_level:overall"] # overall
@@ -373,15 +370,14 @@ test_that("multiple groupColumn", {
   # body
   expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
   expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
-  expect_equal(fxResult$body$styles$cells$background.color$data[, "group_level"] |> unique(), "#e1e1e1")
   expect_equal(fxResult$body$styles$text$color$data[, "cdm_name"] |> unique(), "red")
+  expect_equal(fxResult$body$styles$cells$border.width.top$data[, "group_name_group_level"] |> unique(), 0)
+  expect_equal(fxResult$body$styles$cells$border.color.left$data[, "group_name_group_level"] |> unique(), "black")
+  expect_equal(fxResult$body$styles$text$color$data[, "group_name_group_level"] |> unique(), "blue")
 
   # caption
   expect_equal(fxResult$caption$value, "*This* is the caption")
 
   # group label
-  expect_equal(fxResult$body$spans$rows[1,], rep(1, 19))
-
-
-
+  expect_equal(fxResult$body$spans$rows[1,], rep(1, 17))
 })
