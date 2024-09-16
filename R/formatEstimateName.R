@@ -31,12 +31,10 @@ formatEstimateName <- function(result,
                                keepNotFormatted = TRUE,
                                useFormatOrder = TRUE) {
   # initial checks
-  # result <- validateResult(result)
-  assertTibble(result, columns = c("estimate_name", "estimate_value"))
+  omopgenerics::assertTable(result, columns = c("estimate_name", "estimate_value"))
   estimateNameFormat <- validateEstimateNameFormat(estimateNameFormat)
-  assertCharacter(estimateNameFormat, null = TRUE)
-  assertLogical(keepNotFormatted, length = 1)
-  assertLogical(useFormatOrder, length = 1)
+  omopgenerics::assertLogical(keepNotFormatted, length = 1)
+  omopgenerics::assertLogical(useFormatOrder, length = 1)
 
   # format estimate
   if (!is.null(estimateNameFormat)) {

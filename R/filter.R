@@ -40,7 +40,7 @@
 #'
 filterSettings <- function(result, ...) {
   # initial check
-  assertClass(result, "summarised_result")
+  result <- omopgenerics::validateResultArguemnt(result)
 
   # filter settings (try if error)
   result <- tryCatch(

@@ -5,7 +5,6 @@
 #' @param keep Whether to keep the original group_name and group_level columns.
 #' @param fill Optionally, a character that specifies what value should be
 #' filled in with when missing.
-#' @param overall deprecated.
 #'
 #' @return A dataframe.
 #' @description
@@ -21,11 +20,7 @@
 #'
 splitGroup <- function(result,
                        keep = FALSE,
-                       fill = "overall",
-                       overall = lifecycle::deprecated()) {
-  if (lifecycle::is_present(overall)) {
-    lifecycle::deprecate_warn("0.1.0", "splitGroup(overall)")
-  }
+                       fill = "overall") {
   splitNameLevel(
     result = result,
     name = "group_name",
@@ -42,7 +37,6 @@ splitGroup <- function(result,
 #' @param keep Whether to keep the original group_name and group_level columns.
 #' @param fill Optionally, a character that specifies what value should be
 #' filled in with when missing.
-#' @param overall deprecated.
 #'
 #' @return A dataframe.
 #' @description
@@ -57,11 +51,7 @@ splitGroup <- function(result,
 #'
 splitStrata <- function(result,
                         keep = FALSE,
-                        fill = "overall",
-                        overall = lifecycle::deprecated()) {
-  if (lifecycle::is_present(overall)) {
-    lifecycle::deprecate_warn("0.1.0", "splitStrata(overall)")
-  }
+                        fill = "overall") {
   splitNameLevel(
     result = result,
     name = "strata_name",
@@ -78,7 +68,6 @@ splitStrata <- function(result,
 #' @param keep Whether to keep the original group_name and group_level columns.
 #' @param fill Optionally, a character that specifies what value should be
 #' filled in with when missing.
-#' @param overall deprecated.
 #'
 #' @return A dataframe.
 #' @description
@@ -93,11 +82,7 @@ splitStrata <- function(result,
 #'
 splitAdditional <- function(result,
                             keep = FALSE,
-                            fill = "overall",
-                            overall = lifecycle::deprecated()) {
-  if (lifecycle::is_present(overall)) {
-    lifecycle::deprecate_warn("0.1.0", "splitAdditional(overall)")
-  }
+                            fill = "overall") {
   splitNameLevel(
     result = result,
     name = "additional_name",
@@ -114,7 +99,6 @@ splitAdditional <- function(result,
 #' @param fill A character that specifies what value should be filled in when
 #' missing.
 #' @param exclude Name of a column pair to exclude.
-#' @param overall deprecated.
 #'
 #' @return A dataframe with group, strata and additional as columns.
 #'
@@ -131,11 +115,7 @@ splitAdditional <- function(result,
 splitAll <- function(result,
                      keep = FALSE,
                      fill = "overall",
-                     exclude = "variable",
-                     overall = lifecycle::deprecated()) {
-  if (lifecycle::is_present(overall)) {
-    lifecycle::deprecate_warn("0.1.0", "splitAll(overall)")
-  }
+                     exclude = "variable") {
   omopgenerics::assertTable(result, class = "data.frame")
   omopgenerics::assertLogical(keep, length = 1)
   omopgenerics::assertCharacter(fill, length = 1)
@@ -181,7 +161,6 @@ splitAll <- function(result,
 #' @param keep Whether to keep the original group_name and group_level columns.
 #' @param fill Optionally, a character that specifies what value should be
 #' filled in with when missing.
-#' @param overall deprecated.
 #'
 #' @return A dataframe with the specified name column values as columns.
 #' @description
@@ -200,16 +179,12 @@ splitNameLevel <- function(result,
                            name = "group_name",
                            level = "group_level",
                            keep = FALSE,
-                           fill = "overall",
-                           overall = lifecycle::deprecated()) {
-  if (lifecycle::is_present(overall)) {
-    lifecycle::deprecate_warn("0.1.0", "splitNameLevel(overall)")
-  }
-  assertCharacter(name, length = 1)
-  assertCharacter(level, length = 1)
-  assertLogical(keep, length = 1)
-  assertTibble(result, columns = c(name, level))
-  assertCharacter(fill, length = 1, na = TRUE)
+                           fill = "overall") {
+  omopgenerics::assertCharacter(name, length = 1)
+  omopgenerics::assertCharacter(level, length = 1)
+  omopgenerics::assertLogical(keep, length = 1)
+  omopgenerics::assertTable(result, columns = c(name, level))
+  omopgenerics:: assertCharacter(fill, length = 1, na = TRUE)
 
   newCols <- getColumns(result = result, col = name)
   id <- which(name == colnames(result))

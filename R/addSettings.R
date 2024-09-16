@@ -10,6 +10,11 @@
 #'
 #' @return A summarised_result object with the added setting columns.
 #'
+#' @examples
+#' library(visOmopResults)
+#' mockSummarisedResult() |>
+#'   addSettings(settingsColumns = c("result_type"))
+#'
 addSettings <- function(result,
                         settingsColumns = colnames(settings(result)),
                         columns = lifecycle::deprecated()) {
@@ -19,11 +24,15 @@ addSettings <- function(result,
   }
 
   # checks
-  settingsColumns <- validateSettingsColumns(settingsColumns, result)
-  # if (length(settingsColumns) == 0) {
-  #   return(result)
-  # }
-  notPresent <- settingsColumns[!settingsColumns %in% colnames(settings(result))]
+  set <- attr(result, "settings")
+  if (is.null(set)) {
+    cli::cli_abort("`result` does not have 'settings' attribute")
+  }
+  settingsColumns <- settingsColumns[settingsColumns != "result_id"]
+  if (is.null(settingsColumns)) {
+    return(result)
+  }
+  notPresent <- settingsColumns[!settingsColumns %in% colnames(set)]
   if (length(notPresent)) {
     cli::cli_abort("The following columns are not present in settings: {notPresent}.")
   }
@@ -31,7 +40,7 @@ addSettings <- function(result,
   toJoin <- settingsColumns[settingsColumns %in% colnames(result)]
   result <- result |>
     dplyr::left_join(
-      settings(result) |> dplyr::select(dplyr::any_of(c("result_id", settingsColumns))),
+      set |> dplyr::select(dplyr::any_of(c("result_id", settingsColumns))),
       by = c("result_id", toJoin)
     )
   return(result)

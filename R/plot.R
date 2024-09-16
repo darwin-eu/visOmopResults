@@ -48,46 +48,65 @@ plotScatter <- function(result,
                         facet = NULL,
                         colour = NULL,
                         group = colour) {
+
   rlang::check_installed("ggplot2")
+
   # check and prepare input
+  omopgenerics::assertTable(result)
   omopgenerics::assertLogical(line, length = 1, call = call)
   omopgenerics::assertLogical(point, length = 1, call = call)
   omopgenerics::assertLogical(ribbon, length = 1, call = call)
-  result <- prepareInput(
-    result = result, x = x, y = y, facet = facet, colour = colour, ymin = ymin,
-    ymax = ymax, group = group, allowEstimatesX = TRUE)
+  omopgenerics::assertCharacter(x)
+  omopgenerics::assertCharacter(y, length = 1)
+  omopgenerics::assertCharacter(ymin, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(ymax, length = 1, null = TRUE)
+  validateFacet(facet)
+  omopgenerics::assertCharacter(colour, null = TRUE)
+  omopgenerics::assertCharacter(group, null = TRUE)
 
-  idCols <- attr(result, "ids_cols")
-  colourColumn <- idCols["colour"] |> unname()
-  facetColumn <- idCols["facet"] |> unname()
-  groupColumn <- idCols["group"] |> unname()
-  xColumn <- idCols["x"] |> unname()
-
-  aes <- "ggplot2::aes(x = .data${xColumn}, y = .data[['{y}']],
-  colour = .data${colourColumn}, group = .data${groupColumn},
-  fill = .data${colourColumn}"
-  yminymax <- !is.null(ymin) & !is.null(ymax)
-  if (yminymax) {
-    aes <- paste0(aes, ", ymin = .data[['{ymin}']], ymax = .data[['{ymax}']]")
+  # empty
+  if (nrow(result) == 0) {
+    cli::cli_warn(c("!" = "result object is empty, returning empty plot."))
+    return(ggplot2::ggplot())
   }
-  aes <- paste0(aes, ")") |>
-    glue::glue() |>
-    rlang::parse_expr() |>
-    eval()
 
+  # get estimates
+  result <- cleanEstimates(result, c(
+    x, y, ymin, ymax, asCharacterFacet(facet), colour, group))
+
+  # tidy result
+  result <- tidyResult(result)
+
+  # warn multiple values
+  result |>
+    warnMultipleValues(cols = list(
+      x = x, facet = asCharacterFacet(facet), colour = colour, group = group))
+
+  # prepare result
+  cols = list(
+    x = x, y = y, ymin = ymin, ymax = ymax, colour = colour, group = group,
+    fill = colour)
+  result <- prepareColumns(result = result, cols = cols, facet = facet)
+
+  # get aes
+  aes <- getAes(cols)
+  yminymax <- !is.null(ymin) & !is.null(ymax)
+
+  # make plot
   p <- ggplot2::ggplot(data = result, mapping = aes)
   if (line) p <- p + ggplot2::geom_line()
   if (yminymax) p <- p + ggplot2::geom_errorbar()
   if (point) p <- p + ggplot2::geom_point()
   if (ribbon & yminymax) {
-    p <- p + ggplot2::geom_ribbon(alpha = .3, color = NA, show.legend = FALSE)
+    p <- p +
+      ggplot2::geom_ribbon(alpha = .3, color = NA, show.legend = FALSE)
   }
-
   p <- plotFacet(p, facet) +
     ggplot2::labs(
       x = styleLabel(x),
       fill = styleLabel(colour),
-      colour = styleLabel(colour)
+      colour = styleLabel(colour),
+      y = styleLabel(y)
     ) +
     ggplot2::theme(
       legend.position = hideLegend(colour)
@@ -101,6 +120,7 @@ plotScatter <- function(result,
 #' `r lifecycle::badge("experimental")`
 #'
 #' @param result A summarised result object.
+#' @param x Columns to use as x axes.
 #' @param lower Estimate name for the lower quantile of the box.
 #' @param middle Estimate name for the middle line of the box.
 #' @param upper Estimate name for the upper quantile of the box.
@@ -114,6 +134,7 @@ plotScatter <- function(result,
 #' @export
 #'
 plotBoxplot <- function(result,
+                        x = NULL,
                         lower = "q25",
                         middle = "median",
                         upper = "q75",
@@ -121,26 +142,52 @@ plotBoxplot <- function(result,
                         ymax = "max",
                         facet = NULL,
                         colour = NULL) {
+
   rlang::check_installed("ggplot2")
-  # check and prepare input
-  result <- prepareInput(
-    result = result, x = NULL, facet = facet, colour = colour, lower = lower,
-    middle = middle, upper = upper, ymin = ymin, ymax = ymax)
 
-  idCols <- attr(result, "ids_cols")
-  colourColumn <- idCols["colour"] |> unname()
-  xColumn <- idCols["x"] |> unname()
-  x <- attr(result, "x")
+  # initial checks
+  omopgenerics::assertTable(result)
+  omopgenerics::assertCharacter(x, null = TRUE)
+  omopgenerics::assertCharacter(lower, length = 1)
+  omopgenerics::assertCharacter(middle, length = 1)
+  omopgenerics::assertCharacter(upper, length = 1)
+  omopgenerics::assertCharacter(ymin, length = 1)
+  omopgenerics::assertCharacter(ymax, length = 1)
+  validateFacet(facet)
+  omopgenerics::assertCharacter(colour, null = TRUE)
 
-  aes <- "ggplot2::aes(x = .data${xColumn}, middle = .data[['{middle}']],
-    lower = .data[['{lower}']], upper = .data[['{upper}']],
-    colour = .data${colourColumn}, ymin = .data[['{ymin}']],
-    ymax = .data[['{ymax}']])" |>
-    glue::glue() |>
-    rlang::parse_expr() |>
-    eval()
+  # empty
+  if (nrow(result) == 0) {
+    cli::cli_warn(c("!" = "result object is empty, returning empty plot."))
+    return(ggplot2::ggplot())
+  }
 
-  ylab <- styleLabel(unique(result$variable_name))
+  # subset to estimates of use
+  result <- cleanEstimates(result, c(
+    x, lower, middle, upper, ymin, ymax, asCharacterFacet(facet), colour))
+  ylab <- styleLabel(unique(suppressWarnings(result$variable_name)))
+
+  # tidy result
+  result <- tidyResult(result)
+
+  # warn multiple values
+  result |>
+    warnMultipleValues(cols = list(
+      x = x, facet = asCharacterFacet(facet), colour = colour))
+
+  # prepare result
+  col <- omopgenerics::uniqueId(exclude = colnames(result))
+  result <- result |>
+    dplyr::mutate(!!col := dplyr::row_number())
+  cols = list(
+    x = x, lower = lower, middle = middle, upper = upper, ymin = ymin,
+    ymax = ymax, colour = colour, group = col)
+  result <- prepareColumns(result = result, cols = cols, facet = facet)
+
+  # get aes
+  aes <- getAes(cols)
+  yminymax <- !is.null(ymin) & !is.null(ymax)
+
   clab <- styleLabel(colour)
   xlab <- styleLabel(x)
 
@@ -177,7 +224,8 @@ plotBoxplot <- function(result,
 #'   result = result,
 #'   x = "cohort_name",
 #'   y = "mean",
-#'   facet = c("age_group", "sex"))
+#'   facet = c("age_group", "sex"),
+#'   colour = "sex")
 #' }
 #'
 plotBarplot <- function(result,
@@ -185,30 +233,51 @@ plotBarplot <- function(result,
                         y,
                         facet = NULL,
                         colour = NULL) {
+
   rlang::check_installed("ggplot2")
-  result <- prepareInput(
-    result = result, x = x, y = y, facet = facet, colour = colour)
 
-  idCols <- attr(result, "ids_cols")
-  colourColumn <- idCols["colour"] |> unname()
-  facetColumn <- idCols["facet"] |> unname()
-  xColumn <- idCols["x"] |> unname()
+  # initial checks
+  omopgenerics::assertTable(result)
+  omopgenerics::assertCharacter(x)
+  omopgenerics::assertCharacter(y, length = 1)
+  validateFacet(facet)
+  omopgenerics::assertCharacter(colour, null = TRUE)
 
-  aes <- "ggplot2::aes(x = .data${xColumn}, y = .data[['{y}']], colour = .data${colourColumn}, fill = .data${colourColumn})" |>
-    glue::glue() |>
-    rlang::parse_expr() |>
-    eval()
+  # empty
+  if (nrow(result) == 0) {
+    cli::cli_warn(c("!" = "result object is empty, returning empty plot."))
+    return(ggplot2::ggplot())
+  }
 
+  # subset to estimates of use
+  result <- cleanEstimates(result, c(x, y, asCharacterFacet(facet), colour))
+
+  # tidy result
+  result <- tidyResult(result)
+
+  # warn multiple values
+  result |>
+    warnMultipleValues(cols = list(
+      x = x, facet = asCharacterFacet(facet), colour = colour))
+
+  # prepare result
+  cols = list(x = x, y = y, colour = colour, fill = colour)
+  result <- prepareColumns(result = result, cols = cols, facet = facet)
+
+  # get aes
+  aes <- getAes(cols)
+
+  # create plot
   p <- ggplot2::ggplot(data = result, mapping = aes) +
     ggplot2::geom_col()
 
-
-  colour <- styleLabel(colour)
-
   p <- plotFacet(p, facet) +
-    ggplot2::labs(x = styleLabel(x),
-                  fill = colour,
-                  colour = colour) +
+    ggplot2::labs(
+      x = styleLabel(x),
+      fill = styleLabel(colour),
+      colour = styleLabel(colour),
+      y = styleLabel(y)
+    ) +
     ggplot2::theme(
       legend.position =  hideLegend(colour)
     )
@@ -216,115 +285,76 @@ plotBarplot <- function(result,
   return(p)
 }
 
-prepareInput <- function(result,
-                         x,
-                         facet,
-                         colour,
-                         allowEstimatesX = FALSE,
-                         group = NULL,
-                         ...,
-                         call = parent.frame()) {
-  # result <- omopgenerics::validateResult(result, call = call)
-  omopgenerics::assertClass(result, class = "summarised_result", call = call)
-  cols <- colnames(settings(result))
-  cols <- cols[!cols %in% c(
-    "result_id", "result_type", "package_name", "package_version")]
-  result <- result |>
-    omopgenerics::newSummarisedResult()
-  vars <- result |>
-    dplyr::pull("variable_name") |>
-    unique()
-  if (length(vars) > 1) {
-    cli::cli_abort(
-      "The summarised_result contains data for more than one variable,
-      please filter the result to the variable of interest",
-      call = call)
+tidyResult <- function(result) {
+  if (inherits(result, "summarised_result")) {
+    result <- tidy(result) |>
+      dplyr::select(!dplyr::any_of("result_id"))
   }
-  result <- result |>
-    omopgenerics::newSummarisedResult() |>
-    splitAll() |>
-    addSettings(settingsColumns = cols)
-  optionCols <- colnames(result)
-  optionCols <- optionCols[!optionCols %in% c(
-    "result_id", "estimate_name", "estimate_type", "estimate_value")]
-  if (allowEstimatesX) {
-    optionX <- c(optionCols, unique(result$estimate_name)) |> unique()
-  } else {
-    optionX <- optionCols
+  return(result)
+}
+prepareColumns <- function(result,
+                           cols,
+                           facet,
+                           call = parent.frame()) {
+  opts <- colnames(result)
+
+  # prepare columns
+  varNames <- names(cols)
+  newNames <- omopgenerics::uniqueId(n = length(cols), exclude = opts)
+  for (k in seq_along(cols)) {
+    result <- prepareColumn(
+      result = result, newName = newNames[k], cols = cols[[k]],
+      varName = varNames[k], opts = opts, call = call
+    )
   }
 
-  if (rlang::is_bare_formula(facet)) {
-    facet <- as.character(facet) |>
-      strsplit(split = " + ", fixed = TRUE) |>
-      unlist()
-    facet <- facet[!facet %in% c(".", "~")]
-  }
+  # variables to keep
+  toSelect <- c(rlang::set_names(newNames, varNames), asCharacterFacet(facet))
 
+  # select variables of interest
   result <- result |>
-    pivotEstimates() |>
-    validateGroup(x = facet, opts = optionCols, call = call) |>
-    validateGroup(x = colour, opts = optionCols, call = call) |>
-    validateGroup(x = group, opts = optionCols, call = call)
-  diffCols <- optionCols[!optionCols %in% c(facet, colour, group)]
-  names(diffCols) <- diffCols
-  diffCols <- lapply(diffCols, function(var) {
-      result[[var]] |> unique() |> length()
-    }) |>
-    unlist()
-  diffCols <- names(diffCols[diffCols>1])
-  if (is.null(x)) {
-    x <- diffCols
-  }
-  result <- result |>
-    validateGroup(x = x, opts = optionX, call = call)
-  diffCols <- diffCols[!diffCols %in% x]
-  if (length(diffCols) > 0) {
-    cli::cli_inform(c(
-      "i" = "There are duplicated points, suggested to include:
-      {.pkg {diffCols}} in: either {.var facet}, {.var colour}, {.var group} or
-      {.var x}."))
-  }
-
-  # variables
-  variables <- list(...)
-  for (k in seq_along(variables)) {
-    nm <- names(variables)[k]
-    val <- variables[[k]]
-    msg <- "{nm} must be a character that points to a column in result." |>
-      glue::glue()
-    omopgenerics::assertCharacter(val, length = 1, call = call, msg = msg, null = TRUE)
-    if (isFALSE(val %in% colnames(result))) {
-      cli::cli_abort("{val} is not present in data.", call = call)
-    }
-  }
-  attr(result, "x") <- x
+    dplyr::select(dplyr::all_of(toSelect))
 
   return(result)
 }
-validateGroup <- function(res, x, opts, call) {
-  idsCols <- attr(res, "ids_cols")
-  nm <- substitute(x) |> as.character()
-  id <- omopgenerics::uniqueId(exclude = colnames(res), prefix = "col_")
-  if (length(x) == 0) {
-    res <- res |>
-      dplyr::mutate(!!id := "")
-  } else {
-    mes <- "{nm} must be a subset of: {opts}." |>
-      cli::cli_text() |>
-      cli::cli_fmt()
-    omopgenerics::assertChoice(
-      x, choices = opts, unique = TRUE, call = call, msg = mes)
-    if (length(x) == 1) {
-      res <- res |>
-        dplyr::mutate(!!id := .data[[x]])
-    } else {
-      res <- res |>
-        tidyr::unite(
-          col = !!id, dplyr::all_of(x), remove = FALSE, sep = " - ")
-    }
+prepareColumn <- function(result,
+                          newName,
+                          cols,
+                          varName,
+                          opts,
+                          call) {
+  if (is.null(cols)) {
+    return(
+      result |>
+        dplyr::mutate(!!newName := "")
+    )
   }
-  attr(res, "ids_cols") <- c(idsCols, id |> rlang::set_names(nm))
-  return(res)
+  if (!is.character(cols) || !all(cols %in% opts)) {
+    c("x" = "{varName} ({.var {cols}}) is not a column in result.") |>
+      cli::cli_abort(call = call)
+  }
+  if (length(cols) == 1) {
+    result <- result |>
+      dplyr::mutate(!!newName := .data[[cols]])
+  } else {
+    result <- result |>
+      tidyr::unite(
+        col = !!newName, dplyr::all_of(cols), remove = FALSE, sep = " - ")
+  }
+  return(result)
+}
+getAes <- function(cols) {
+  if (is.null(cols$ymin)) cols$ymin <- NULL
+  if (is.null(cols$ymax)) cols$ymax <- NULL
+  vars <- names(cols)
+  paste0(
+    "ggplot2::aes(",
+    glue::glue("{vars} = .data${vars}") |>
+      stringr::str_c(collapse = ", "),
+    ")"
+  ) |>
+    rlang::parse_expr() |>
+    rlang::eval_tidy()
 }
 plotFacet <- function(p, facet) {
   if (!is.null(facet)) {
@@ -338,7 +368,7 @@ plotFacet <- function(p, facet) {
 }
 styleLabel <- function(x) {
   #length(x) > 0 remove the character(0)
-  if (!is.null(x) && x != "" && length(x) > 0) {
+  if (!is.null(x) && all(x != "") && length(x) > 0) {
     x |>
       stringr::str_replace_all(pattern = "_", replacement = " ") |>
       stringr::str_to_sentence() |>
@@ -347,7 +377,51 @@ styleLabel <- function(x) {
     NULL
   }
 }
-
 hideLegend <- function(x) {
   if (length(x) > 0 && !identical(x, "")) "right" else "none"
+}
+validateFacet <- function(x, call = parent.frame()) {
+  if (rlang::is_formula(x)) return(invisible(NULL))
+  omopgenerics::assertCharacter(x, null = TRUE)
+  return(invisible(NULL))
+}
+warnMultipleValues <- function(result, cols) {
+  nms <- names(cols)
+  cols <- unique(unlist(cols))
+  vars <- result |>
+    dplyr::group_by(dplyr::across(dplyr::all_of(cols))) |>
+    dplyr::group_split() |>
+    as.list()
+  vars <- vars[purrr::map_int(vars, nrow) > 1] |>
+    purrr::map(\(x) {
+      x <- purrr::map(x, unique)
+      names(x)[lengths(x) > 1]
+    }) |>
+    unlist() |>
+    unique()
+  if (length(vars) > 0) {
+    cli::cli_inform(c(
+      "!" = "Multiple values of {.var {vars}} detected, consider including them
+      in either: {.var {nms}}."
+    ))
+  }
+  return(invisible(NULL))
+}
+asCharacterFacet <- function(facet) {
+  if (rlang::is_formula(facet)) {
+    facet <- as.character(facet)
+    facet <- facet[-1]
+    facet <- facet |>
+      stringr::str_split(pattern = stringr::fixed(" + ")) |>
+      unlist()
+  }
+  return(facet)
+}
+cleanEstimates <- function(result, est) {
+  if ("estimate_name" %in% colnames(result)) {
+    est <- unique(est)
+    result <- result |>
+      dplyr::filter(.data$estimate_name %in% .env$est)
+  }
+  return(result)
 }

@@ -2,12 +2,12 @@
 % Please edit documentation in R/columns.R
 \name{additionalColumns}
 \alias{additionalColumns}
-\title{Identify additional columns in an omop result object}
+\title{Identify variables in additional_name column}
 \usage{
 additionalColumns(result)
 }
 \arguments{
-\item{result}{A summarised_result.}
+\item{result}{A tibble.}
 }
 \value{
 Unique values of the additional name column.
