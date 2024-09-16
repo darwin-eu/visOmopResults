@@ -48,7 +48,10 @@ strataColumns <- function(result) {
 #'
 tidyColumns <- function(result) {
   omopgenerics::validateResultArguemnt(result)
-  colnames(tidy(result))
+  colsSet <- colnames(settings(result))
+  c("cdm_name", groupColumns(result), strataColumns(result), "variable_name",
+    "variable_level", unique(result$estimate_name), additionalColumns(result),
+    colsSet[colsSet != "result_id"])
 }
 
 #' Identify additional columns in an omop result object
@@ -72,12 +75,12 @@ additionalColumns <- function(result) {
 getColumns <- function(result, col) {
   # initial checks
   assertTibble(result, columns = col)
-  assertCharacter(col, length = 1)
 
   # extract columns
   x <- result |>
-    dplyr::pull(dplyr::all_of(col)) |>
-    unique() |>
+    dplyr::select(dplyr::all_of(col)) |>
+    dplyr::distinct() |>
+    dplyr::pull() |>
     lapply(strsplit, split = " &&& ") |>
     unlist() |>
     unique()

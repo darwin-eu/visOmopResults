@@ -16,4 +16,15 @@ test_that("test columns in mock", {
     mockSummarisedResult() |> additionalColumns(),
     character()
   )
+
+  # tidyColumns
+  expect_identical(
+    colnames(tidy(mockSummarisedResult())),
+    tidyColumns(mockSummarisedResult())
+  )
+  expect_identical(
+    colnames(tidy(omopgenerics::emptySummarisedResult())),
+    tidyColumns(omopgenerics::emptySummarisedResult())
+  )
+
 })
