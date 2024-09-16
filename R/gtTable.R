@@ -115,7 +115,7 @@ gtTable <- function(
   }
 
   # Spanners
-  if (!length(groupColumn) == 0) {
+  if (length(groupColumn[[1]]) != 0) {
     nameGroup <- names(groupColumn)
     x <- x |>
       tidyr::unite(
@@ -153,6 +153,14 @@ gtTable <- function(
   header_id <- grepl("\\[header\\]", style_ids)
   header_name_id <- grepl("\\[header_name\\]", style_ids)
   header_level_id <- grepl("\\[header_level\\]", style_ids)
+
+  if (length(c(header_id, header_name_id, header_level_id)) == 0) {
+    columnHeader <- TRUE
+    colum_header_id <-  which(grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]", colnames(x)))
+  } else {
+    columnHeader <- FALSE
+    colum_header_id <-  numeric()
+  }
 
   # column names in spanner
   header_level <- all(grepl("header_level", lapply(strsplit(colnames(x)[grepl("header", colnames(x))], delim), function(x) {x[length(x)]}) |> unlist()))
@@ -201,6 +209,13 @@ gtTable <- function(
         style = style$column_name,
         locations = gt::cells_column_labels(columns = col_name_ids)
       )
+    if (columnHeader & length(colum_header_id) > 0) {
+      gtResult <- gtResult |>
+        gt::tab_style(
+          style = style$column_name,
+          locations = gt::cells_column_labels(columns = colum_header_id)
+        )
+    }
   }
 
   # Eliminate prefixes

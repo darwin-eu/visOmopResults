@@ -153,7 +153,7 @@ validateGroupColumn <- function(groupColumn, resultIn, sr = FALSE, formatName = 
       if (sr) set <- "or in the settings stated in `settingsColumns`"
       cli::cli_abort("`groupColumn` must refer to columns in the result table {set}", call = call)
     }
-    if (is.null(names(groupColumn))) {
+    if (is.null(names(groupColumn)) & length(groupColumn[[1]]) > 0) {
       if (formatName) {
         names(groupColumn) <- paste0(formatToSentence(groupColumn[[1]]), collapse = "; ")
       } else {

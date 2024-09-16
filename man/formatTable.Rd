@@ -63,8 +63,9 @@ result |>
     formatEstimateName = c("N\%" = "<count> (<percentage>)",
                            "N" = "<count>",
                            "Mean (SD)" = "<mean> (<sd>)"),
-    header = c("group"),
+    header = c("Estimate"),
     renameColumns = c("Database name" = "cdm_name"),
-    groupColumn = strataColumns(result)
+    groupColumn = c("strata_name", "strata_level"),
+    hide = c("additional_name", "additional_level", "estimate_type", "result_type")
   )
 }

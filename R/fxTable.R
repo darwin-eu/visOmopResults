@@ -108,7 +108,7 @@ fxTable <- function(
   }
 
   # Flextable
-  if (length(groupColumn) == 0) {
+  if (length(groupColumn[[1]]) == 0) {
     # Header id's
     spanCols_ids <- which(grepl("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", colnames(x)))
     spanners <- strsplit(colnames(x)[spanCols_ids[1]], delim) |> unlist()
@@ -309,7 +309,7 @@ fxTable <- function(
       pr_p = style$body$paragraph, pr_c = style$body$cell
     )
   # group label
-  if (!length(groupColumn) == 0) {
+  if (length(groupColumn[[1]]) != 0) {
     if (!groupAsColumn) {
       nonNaIndices <- getNonNaIndices(flex_x$body$dataset, nameGroup)
       flex_x <- flex_x |>

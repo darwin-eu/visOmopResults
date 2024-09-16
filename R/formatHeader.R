@@ -40,6 +40,8 @@ formatHeader <- function(result,
   omopgenerics::assertCharacter(delim, length = 1)
   omopgenerics::assertLogical(includeHeaderName, length = 1)
 
+  originalCols <- colnames(result)
+
   if (length(header) > 0) {
     # correct names
     nms <- names(header)
@@ -108,5 +110,11 @@ formatHeader <- function(result,
       class(result) <- c("tbl_df", "tbl", "data.frame")
     }
   }
+
+  newCols <- colnames(result)[!colnames(result) %in% originalCols]
+  # send new cols to end
+  result <- result |>
+    dplyr::relocate(dplyr::any_of(newCols), .after = dplyr::last_col())
+
   return(result)
 }

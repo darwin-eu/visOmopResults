@@ -42,9 +42,10 @@
 #'     formatEstimateName = c("N%" = "<count> (<percentage>)",
 #'                            "N" = "<count>",
 #'                            "Mean (SD)" = "<mean> (<sd>)"),
-#'     header = c("group"),
+#'     header = c("Estimate"),
 #'     renameColumns = c("Database name" = "cdm_name"),
-#'     groupColumn = strataColumns(result)
+#'     groupColumn = c("strata_name", "strata_level"),
+#'     hide = c("additional_name", "additional_level", "estimate_type", "result_type")
 #'   )
 
 formatTable <- function(result,
@@ -53,7 +54,7 @@ formatTable <- function(result,
                         groupColumn = character(),
                         renameColumns = character(),
                         type = "gt",
-                        hide = character(), # result_id and estimate_type sempre eliminats (si hi son)
+                        hide = character(),
                         .options = list()) {
   # initial checks
   omopgenerics::assertTable(result)
@@ -94,7 +95,9 @@ formatTable <- function(result,
     )
   # rename headers
   header <- purrr::map(header, renameColumnsInternal, rename = renameColumns) |> unlist()
-  groupColumn[[1]] <- purrr::map(groupColumn[[1]], renameColumnsInternal, rename = renameColumns) |> unlist()
+  if (length(groupColumn[[1]]) > 0) {
+    groupColumn[[1]] <- purrr::map(groupColumn[[1]], renameColumnsInternal, rename = renameColumns) |> unlist()
+  }
 
   # format header
   if (length(header) > 0) {
