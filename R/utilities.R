@@ -54,6 +54,7 @@ validateDecimals <- function(result, decimals) {
 }
 
 validateEstimateNameFormat <- function(format, call = parent.frame()) {
+  omopgenerics::assertCharacter(format, null = TRUE)
   if (!is.null(format)) {
     if (length(format) > 0){
       if (length(regmatches(format, gregexpr("(?<=\\<).+?(?=\\>)", format, perl = T)) |> unlist()) == 0) {
@@ -63,7 +64,7 @@ validateEstimateNameFormat <- function(format, call = parent.frame()) {
       format <- NULL
     }
   }
-  return(format)
+  return(invisible(format))
 }
 
 validateStyle <- function(style, tableFormatType) {

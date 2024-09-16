@@ -10,6 +10,11 @@
 #'
 #' @return A summarised_result object with the added setting columns.
 #'
+#' @example
+#' library(visOmopResults)
+#' mockSummarisedResult() |>
+#'   addSettings(settingsColumns = c("result_type"))
+#'
 addSettings <- function(result,
                         settingsColumns = colnames(settings(result)),
                         columns = lifecycle::deprecated()) {
@@ -19,6 +24,7 @@ addSettings <- function(result,
   }
 
   # checks
+  result <- omopgenerics:::validateResultArguemnt(result)
   set <- settings(result)
   settingsColumns <- settingsColumns[settingsColumns != "result_id"]
   if (is.null(settingsColumns)) {

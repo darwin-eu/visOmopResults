@@ -34,10 +34,10 @@ formatEstimateValue <- function(result,
                                 decimalMark = ".",
                                 bigMark = ",") {
   # initial checks
-  assertTibble(result, columns = c("estimate_name", "estimate_type", "estimate_value"))
+  omopgenerics::assertTable(result, columns = c("estimate_name", "estimate_type", "estimate_value"))
   decimals <- validateDecimals(result, decimals)
-  assertCharacter(decimalMark, length = 1)
-  assertCharacter(bigMark, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(decimalMark, length = 1)
+  omopgenerics::assertCharacter(bigMark, length = 1, null = TRUE)
 
   if (is.null(bigMark)) {bigMark <- ""}
 

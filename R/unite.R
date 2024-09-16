@@ -36,12 +36,12 @@ uniteNameLevel <- function(x,
                            keep = FALSE,
                            ignore = c(NA, "overall")) {
   # initial checks
-  assertCharacter(cols)
-  assertCharacter(name, length = 1)
-  assertCharacter(level, length = 1)
-  assertLogical(keep, length = 1)
-  assertCharacter(ignore, na = TRUE)
-  assertTibble(x, columns = cols)
+  omopgenerics::assertCharacter(cols)
+  omopgenerics::assertCharacter(name, length = 1)
+  omopgenerics::assertCharacter(level, length = 1)
+  omopgenerics::assertLogical(keep, length = 1)
+  omopgenerics::assertCharacter(ignore, na = TRUE)
+  omopgenerics::assertTable(x, columns = cols)
 
   if (name == level) {
     cli::cli_abort("Provide different names for the name and level columns.")
