@@ -123,11 +123,12 @@ test_that("formatHeader", {
                               header = c("test_spanHeader", "end_spanner"),
                               delim = ":",
                               includeHeaderName = TRUE)
-  expect_true(
-    result_output |>
-      dplyr::anti_join(result |> dplyr::rename("[header]test_spanHeader:[header]end_spanner" = "estimate_value"),
-                       by = colnames(result_output)) |>
-      nrow() == 0
+  class(result_output) <- class(result)
+  expect_equal(
+    result_output,
+    result |>
+      dplyr::relocate("estimate_value", .after = dplyr::last_col()) |>
+      dplyr::rename("[header]test_spanHeader:[header]end_spanner" = "estimate_value")
   )
 
   # not column name + named header ----
