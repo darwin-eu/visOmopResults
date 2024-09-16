@@ -318,7 +318,7 @@ test_that("gtTable, test colsToMergeRows", {
   expect_null(gtResult$`_data`$group_level|> levels())
 })
 
-test_that("",{
+test_that("groupColumn",{
   table_to_format<- mockSummarisedResult() |>
     formatHeader(header = c("strata_name", "strata_level")) |>
     dplyr::select(-result_id)
@@ -341,5 +341,22 @@ test_that("",{
   expect_equal(gtResult$`_data`$variable_level,
                c("-", "-", "", "Amoxiciline", "", "Ibuprofen", "", "-", "-", "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
+  expect_equal(gtResult$`_data`$group_name_group_level |> levels(),
+               c('cohort_name; cohort1', 'cohort_name; cohort2'))
+
+  gtResult <- gtTable(
+    table_to_format,
+    style = "default",
+    na = "-",
+    title = "Title test 2",
+    subtitle = "Subtitle for test 2",
+    caption = "*This* is the caption",
+    groupColumn = list("hi_there" = c("group_name", "group_level")),
+    groupAsColumn = TRUE,
+    groupOrder = NULL,
+    colsToMergeRows = "all_columns"
+  )
+  expect_equal(gtResult$`_data`$hi_there |> levels(),
+               c('cohort_name; cohort1', 'cohort_name; cohort2'))
 
 })

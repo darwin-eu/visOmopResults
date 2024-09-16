@@ -36,10 +36,10 @@ addSettings <- function(result,
   }
   # add settings
   toJoin <- settingsColumns[settingsColumns %in% colnames(result)]
-  resultOut <- result |>
+  result <- result |>
     dplyr::left_join(
-      set |> dplyr::select(dplyr::all_of(c("result_id", settingsColumns))),
+      set |> dplyr::select(dplyr::any_of(c("result_id", settingsColumns))),
       by = c("result_id", toJoin)
     )
-  return(resultOut)
+  return(result)
 }
