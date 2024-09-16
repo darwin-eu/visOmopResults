@@ -25,9 +25,6 @@
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/mockSummarisedResult.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/optionsTable.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/pivotEstimates.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/reference/plotBarplot.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/reference/plotBoxplot.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/reference/plotScatter.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/reexports.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/settingsColumns.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/splitAdditional.html</loc></url>
@@ -43,7 +40,10 @@
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/uniteGroup.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/uniteNameLevel.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/uniteStrata.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/visBarplot.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/visBoxplot.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/visOmopResults-package.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/visOmopTable.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/visScatterplot.html</loc></url>
 </urlset>
 
