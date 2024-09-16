@@ -50,6 +50,25 @@ additionalColumns <- function(result) {
   getColumns(result = result, col = "additional_name")
 }
 
+#' Identify settings columns of a summarised_result
+#'
+#' @param result A summarised_result.
+#'
+#' @return Vector with names of the settings columns
+#' @description Identifies and returns the columns of the settings table
+#' obtained by using `settings()` in a summarised_result object.
+#'
+#' @export
+#'
+#' @examples
+#' mockSummarisedResult() |>
+#'   settingsColumns()
+#'
+settingsColumns <- function(result) {
+  omopgenerics::validateResultArguemnt(result)
+  colnames(settings(result))
+}
+
 #' Identify tidy columns of a summarised_result
 #'
 #' @param result A summarised_result.
