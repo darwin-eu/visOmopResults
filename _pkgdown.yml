@@ -2,3 +2,28 @@ url: https://darwin-eu.github.io/visOmopResults/
 template:
   bootstrap: 5
 
+reference:
+- subtitle: Functions to tidy `summarise_result`
+- contents:
+  - matches("tidy()|tidySummariseResult()|addSettings|pivot|split")
+- subtitle: Table functions
+- contents:
+  - matches("format|Table")
+- subtitle: Plot functions
+- contents:
+  - matches("plot")
+- subtitle: Filter functions
+- contents:
+  - matches("filter")
+- subtitle: Columns retrieval functions
+- contents:
+  - matches("Columns")
+- subtitle: Unite functions
+- contents:
+  - matches("unite")
+- subtitle: Mock `summarised_result`
+- contents:
+  - matches("mock")
+
+
+
