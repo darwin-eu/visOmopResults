@@ -277,11 +277,9 @@ test_that("don't want scientific",{
       estimate_value = "100000",
       additional_name = "overall",
       additional_level = "overall"
-    ),
+    ) |> omopgenerics::newSummarisedResult(),
     formatEstimateName = c(N = "<count>"),
-    header = "cdm_name",
-    split = c("group", "strata", "additional")
+    header = "cdm_name"
   )
-  expect_true(res$`_data`$`[header]CDM name
-[header_level]test` == "100,000")
+  expect_true(res$`_data`$`[header_name]CDM name\n[header_level]test` == "100,000")
 })
