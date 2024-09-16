@@ -1,6 +1,6 @@
-#' Identify group columns in an omop result object
+#' Identify variables in group_name column
 #'
-#' @param result A summarised_result.
+#' @param result A tibble.
 #'
 #' @return Unique values of the group name column.
 #' @description Identifies and returns the unique values in group_name column.
@@ -15,9 +15,9 @@ groupColumns <- function(result) {
   getColumns(result = result, col = "group_name")
 }
 
-#' Identify strata columns in an omop result object
+#' Identify variables in strata_name column
 #'
-#' @param result A summarised_result.
+#' @param result A tibble.
 #'
 #' @return Unique values of the strata name column.
 #' @description Identifies and returns the unique values in strata_name column.
@@ -30,6 +30,24 @@ groupColumns <- function(result) {
 #'
 strataColumns <- function(result) {
   getColumns(result = result, col = "strata_name")
+}
+
+#' Identify variables in additional_name column
+#'
+#' @param result A tibble.
+#'
+#' @return Unique values of the additional name column.
+#' @description Identifies and returns the unique values in additional_name
+#' column.
+#'
+#' @export
+#'
+#' @examples
+#' mockSummarisedResult() |>
+#'   additionalColumns()
+#'
+additionalColumns <- function(result) {
+  getColumns(result = result, col = "additional_name")
 }
 
 #' Identify tidy columns of a summarised_result
@@ -51,28 +69,29 @@ tidyColumns <- function(result) {
   colnames(tidy(result))
 }
 
-#' Identify additional columns in an omop result object
+#' Identify settings columns of a summarised_result
 #'
 #' @param result A summarised_result.
 #'
-#' @return Unique values of the additional name column.
-#' @description Identifies and returns the unique values in additional_name
-#' column.
+#' @return Vector with names of the settings columns
+#' @description Identifies and returns the columns of the settings table
+#' obtained by using `settings()` in a summarised_result object.
 #'
 #' @export
 #'
 #' @examples
 #' mockSummarisedResult() |>
-#'   additionalColumns()
+#'   tidyColumns()
 #'
-additionalColumns <- function(result) {
-  getColumns(result = result, col = "additional_name")
+tidyColumns <- function(result) {
+  omopgenerics::validateResultArguemnt(result)
+  colnames(tidy(result))
 }
 
 getColumns <- function(result, col) {
   # initial checks
-  assertTibble(result, columns = col)
-  assertCharacter(col, length = 1)
+  omopgenerics::assertTable(result, columns = col)
+  omopgenerics::assertCharacter(col, length = 1)
 
   # extract columns
   x <- result |>
