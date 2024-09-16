@@ -190,7 +190,6 @@ test_that("renameColumn works", {
         formatEstimateName = character(),
         header = c("cdm_name", "strata"),
         groupColumn = NULL,
-        split = c("group", "strata", "additional"),
         type = "flextable",
         renameColumns = c("Database name" = "cdm_name", "changeName" = "name"),
         hide = c("result_id", "estimate_type"),
@@ -215,7 +214,6 @@ test_that("renameColumn works", {
     result = result,
     formatEstimateName = character(),
     header = c("strata"),
-    split = c("group", "strata", "additional"),
     type = "flextable",
     groupColumn = list("group" = c("cdm_name", "cohort_name")),
     renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
@@ -237,7 +235,6 @@ test_that("empty result",{
     "Range" = "<min> to <max>"
   )
   header = c("group")
-  split = c("group", "strata")
   groupColumn = NULL
   hide = c(
     "result_id", "estimate_type",
@@ -251,7 +248,6 @@ test_that("empty result",{
       formatEstimateName = formatEstimateName,
       header = header,
       groupColumn = groupColumn,
-      split = split,
       type = type,
       hide = hide,
       .options = .options

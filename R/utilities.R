@@ -157,7 +157,7 @@ validateGroupColumn <- function(groupColumn, resultIn, sr = FALSE, formatName = 
       if (formatName) {
         names(groupColumn) <- paste0(formatToSentence(groupColumn[[1]]), collapse = "; ")
       } else {
-        names(groupColumn) <- paste0(groupColumn[[1]], collapse = "; ")
+        names(groupColumn) <- paste0(groupColumn[[1]], collapse = "_")
       }
     }
   }

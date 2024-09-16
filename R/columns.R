@@ -32,6 +32,25 @@ strataColumns <- function(result) {
   getColumns(result = result, col = "strata_name")
 }
 
+#' Identify tidy columns of a summarised_result
+#'
+#' @param result A summarised_result.
+#'
+#' @return Table columns after applying `tidy()` function to a summarisd result.
+#' @description Identifies and returns the columns that the tidy version of the
+#' summarised_result will have.
+#'
+#' @export
+#'
+#' @examples
+#' mockSummarisedResult() |>
+#'   tidyColumns()
+#'
+tidyColumns <- function(result) {
+  omopgenerics::validateResultArguemnt(result)
+  colnames(tidy(result))
+}
+
 #' Identify additional columns in an omop result object
 #'
 #' @param result A summarised_result.

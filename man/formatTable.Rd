@@ -2,42 +2,50 @@
 % Please edit documentation in R/formatTable.R
 \name{formatTable}
 \alias{formatTable}
-\title{Format a table into a gt, flextable or tibble object.}
+\title{Generate a formatted table from a data.table}
 \usage{
 formatTable(
   result,
   formatEstimateName = character(),
   header = character(),
   groupColumn = character(),
-  type = "gt",
   renameColumns = character(),
+  type = "gt",
   hide = character(),
   .options = list()
 )
 }
 \arguments{
-\item{result}{A summarised_result.}
+\item{result}{A table to format.}
 
-\item{formatEstimateName}{Named list of estimate name's to join, sorted by
-computation order. Indicate estimate_name's between <...>.}
+\item{formatEstimateName}{A named list of estimate names to join, sorted by
+computation order. Use \verb{<...>} to indicate estimate names. This argument
+requires that the table has \code{estimate_name} and \code{estimate_value} columns.}
 
-\item{groupColumn}{Columns to use as group labels. By default the name of the
-new group will be the column names separated by "_". To specify a new
-grouping name enter a named list such as:
-list(newGroupName = c("variable_name", "variable_level"))}
+\item{header}{A vector specifying the elements to include in the header.
+The order of elements matters, with the first being the topmost header.
+The vector elements can be column names or labels for overall headers.
+The table must contain an \code{estimate_value} column to pivot the headers.}
 
-\item{type}{Type of desired formatted table, possibilities: "gt",
-"flextable", "tibble".}
+\item{groupColumn}{Columns to use as group labels. By default, the name of the
+new group will be the tidy* column names separated by ";". To specify a custom
+group name, use a named list such as:
+list("newGroupName" = c("variable_name", "variable_level")).
 
-\item{renameColumns}{Named vector to customise column names, for instance:
-c("Database name" = "cdm_name")). By default, "_" are removed from column
-names and converted to sentence case.}
+*tidy: The tidy format applied to column names replaces "_" with a space and
+converts them to sentence case. Use \code{renameColumns} to customize specific column names.}
+
+\item{renameColumns}{A named vector to customize column names, e.g.,
+c("Database name" = "cdm_name"). The function will rename all column names
+not specified here into a tidy* format.}
+
+\item{type}{The desired format of the output table. Options are: "gt",
+"flextable", or "tibble".}
 
 \item{hide}{Columns to drop from the output table.}
 
-\item{.options}{Named list with additional formatting options.
-visOmopResults::optionsTable() shows allowed arguments and
-their default values.}
+\item{.options}{A named list with additional formatting options.
+\code{visOmopResults::optionsTable()} shows allowed arguments and their default values.}
 }
 \value{
 A tibble, gt, or flextable object.
@@ -45,8 +53,18 @@ A tibble, gt, or flextable object.
 \description{
 This function combines the functionalities of \code{formatEstimateValue()},
 \code{formatEstimateName()}, \code{formatHeader()}, \code{gtTable()}, and \code{fxTable()}
-into a single function.
+into a single function. While it does not require the input table to be
+a \code{summarised_result}, it does expect specific fields to apply formatting.
 }
-\details{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+\examples{
+result <- mockSummarisedResult()
+result |>
+  formatTable(
+    formatEstimateName = c("N\%" = "<count> (<percentage>)",
+                           "N" = "<count>",
+                           "Mean (SD)" = "<mean> (<sd>)"),
+    header = c("group"),
+    renameColumns = c("Database name" = "cdm_name"),
+    groupColumn = strataColumns(result)
+  )
 }

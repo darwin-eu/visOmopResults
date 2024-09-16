@@ -1,43 +1,58 @@
-#' Format a table into a gt, flextable or tibble object.
+#' Generate a formatted table from a data.table
 #'
-#' `r lifecycle::badge("experimental")`
+#' @param result A table to format.
+#' @param formatEstimateName A named list of estimate names to join, sorted by
+#' computation order. Use `<...>` to indicate estimate names. This argument
+#' requires that the table has `estimate_name` and `estimate_value` columns.
+#' @param header A vector specifying the elements to include in the header.
+#' The order of elements matters, with the first being the topmost header.
+#' The vector elements can be column names or labels for overall headers.
+#' The table must contain an `estimate_value` column to pivot the headers.
+#' @param groupColumn Columns to use as group labels. By default, the name of the
+#' new group will be the tidy* column names separated by ";". To specify a custom
+#' group name, use a named list such as:
+#' list("newGroupName" = c("variable_name", "variable_level")).
 #'
-#' @param result A summarised_result.
-#' @param formatEstimateName Named list of estimate name's to join, sorted by
-#' computation order. Indicate estimate_name's between <...>.
-#' @param header
-#' @param groupColumn Columns to use as group labels. By default the name of the
-#' new group will be the column names separated by "_". To specify a new
-#' grouping name enter a named list such as:
-#' list(newGroupName = c("variable_name", "variable_level"))
-#' @param type Type of desired formatted table, possibilities: "gt",
-#' "flextable", "tibble".
-#' @param renameColumns Named vector to customise column names, for instance:
-#' c("Database name" = "cdm_name")). By default, "_" are removed from column
-#' names and converted to sentence case.
+#' *tidy: The tidy format applied to column names replaces "_" with a space and
+#' converts them to sentence case. Use `renameColumns` to customize specific column names.
+#'
+#' @param renameColumns A named vector to customize column names, e.g.,
+#' c("Database name" = "cdm_name"). The function will rename all column names
+#' not specified here into a tidy* format.
+#' @param type The desired format of the output table. Options are: "gt",
+#' "flextable", or "tibble".
 #' @param hide Columns to drop from the output table.
-#' @param .options Named list with additional formatting options.
-#' visOmopResults::optionsTable() shows allowed arguments and
-#' their default values.
+#' @param .options A named list with additional formatting options.
+#' `visOmopResults::optionsTable()` shows allowed arguments and their default values.
 #'
 #' @return A tibble, gt, or flextable object.
 #'
 #' @description
 #' This function combines the functionalities of `formatEstimateValue()`,
 #' `formatEstimateName()`, `formatHeader()`, `gtTable()`, and `fxTable()`
-#' into a single function.
+#' into a single function. While it does not require the input table to be
+#' a `summarised_result`, it does expect specific fields to apply formatting.
 #'
 #' @export
 #'
 #' @examples
-#'
+#' result <- mockSummarisedResult()
+#' result |>
+#'   formatTable(
+#'     formatEstimateName = c("N%" = "<count> (<percentage>)",
+#'                            "N" = "<count>",
+#'                            "Mean (SD)" = "<mean> (<sd>)"),
+#'     header = c("group"),
+#'     renameColumns = c("Database name" = "cdm_name"),
+#'     groupColumn = strataColumns(result)
+#'   )
 
 formatTable <- function(result,
                         formatEstimateName = character(),
                         header = character(),
                         groupColumn = character(),
-                        type = "gt",
                         renameColumns = character(),
+                        type = "gt",
                         hide = character(), # result_id and estimate_type sempre eliminats (si hi son)
                         .options = list()) {
   # initial checks
