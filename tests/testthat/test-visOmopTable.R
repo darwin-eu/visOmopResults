@@ -226,6 +226,8 @@ test_that("renameColumn works", {
 test_that("empty result",{
 
   result = omopgenerics::emptySummarisedResult()
+
+  result = omopgenerics::emptySummarisedResult()
   type = "gt"
   formatEstimateName = c(
     "N (%)" = "<count> (<percentage>%)",
