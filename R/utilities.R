@@ -1,17 +1,4 @@
-
-validateResult <- function(x, call = parent.frame()) {
-  xn <- tryCatch(
-    omopgenerics::newSummarisedResult(x),
-    error = function(e){NULL}
-  )
-  if (!is.null(xn)) {
-    return(xn)
-  }
-  if (!is.null(xn)) {
-    return(xn)
-  }
-  cli::cli_abort("Please provide a valid result object.", call = call)
-}
+# Validate functions specific of `visOmopResults` package
 
 validateDecimals <- function(result, decimals) {
   nm_type <- omopgenerics::estimateTypeChoices()
@@ -69,9 +56,9 @@ validateEstimateNameFormat <- function(format, call = parent.frame()) {
 
 validateStyle <- function(style, tableFormatType) {
   if (is.list(style) | is.null(style)) {
-    assertList(style, null = TRUE, named = TRUE)
+    omopgenerics::assertList(style, null = TRUE, named = TRUE)
   } else if (is.character(style)) {
-    assertCharacter(style, null = TRUE)
+    omopgenerics::assertCharacter(style, null = TRUE)
     eval(parse(text = paste0("style <- ", tableFormatType, "Styles(styleName = style)")))
   } else {
     if (tableFormatType == "fx") {
@@ -83,20 +70,6 @@ validateStyle <- function(style, tableFormatType) {
   return(style)
 }
 
-
-
-
-checkGroupColumn <- function(groupColumn) {
-  if (inherits(groupColumn, "list")) {
-    assertList(groupColumn, length = 1, null = TRUE, named = TRUE)
-    assertCharacter(groupColumn[[1]], null = TRUE)
-  }
-  if (inherits(groupColumn, "character")) {
-    assertCharacter(groupColumn, null = TRUE)
-  }
-}
-
-#### not in omopgenerics (ones above will be deleted in due time)
 validatePivotEstimatesBy <- function(pivotEstimatesBy, call = parent.frame()) {
   omopgenerics::assertCharacter(x = pivotEstimatesBy, null = TRUE, call = call)
   notValid <- any(c(

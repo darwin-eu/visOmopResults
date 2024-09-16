@@ -4,13 +4,7 @@
 \alias{splitAll}
 \title{Split all pairs name-level into columns.}
 \usage{
-splitAll(
-  result,
-  keep = FALSE,
-  fill = "overall",
-  exclude = "variable",
-  overall = lifecycle::deprecated()
-)
+splitAll(result, keep = FALSE, fill = "overall", exclude = "variable")
 }
 \arguments{
 \item{result}{A data.frame.}
@@ -21,8 +15,6 @@ splitAll(
 missing.}
 
 \item{exclude}{Name of a column pair to exclude.}
-
-\item{overall}{deprecated.}
 }
 \value{
 A dataframe with group, strata and additional as columns.
