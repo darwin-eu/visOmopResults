@@ -11,6 +11,7 @@ vignette: >
 knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
+  warning = FALSE,
   fig.width=7, 
   fig.height=5
 )
@@ -32,7 +33,7 @@ from the palmerpenguins package using `PatientProfiles::summariseResult()`
 ```{r}
 library(PatientProfiles)
 library(palmerpenguins)
-library(dplyr, warn.conflicts = FALSE)
+library(dplyr)
 
 summariseIsland <- function(island) {
   penguins |>
