@@ -10,6 +10,8 @@
 <url><loc>https://darwin-eu.github.io/visOmopResults/index.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/addSettings.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/additionalColumns.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/barPlot.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/boxPlot.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/filterAdditional.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/filterGroup.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/filterSettings.html</loc></url>
@@ -26,6 +28,7 @@
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/optionsTable.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/pivotEstimates.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/reexports.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/scatterPlot.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/settingsColumns.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/splitAdditional.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/splitAll.html</loc></url>
@@ -40,10 +43,7 @@
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/uniteGroup.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/uniteNameLevel.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/uniteStrata.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/reference/visBarplot.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/reference/visBoxplot.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/visOmopResults-package.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/visOmopTable.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/reference/visScatterplot.html</loc></url>
 </urlset>
 
