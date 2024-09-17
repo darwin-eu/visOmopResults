@@ -5,7 +5,7 @@ test_that("uniteGroup", {
     region = c(NA, NA, NA, NA, NA, "North", "South", "Center", NA, NA)
   )
 
-  expect_no_error(res0 <- uniteNameLevel(tib,
+  expect_no_error(res0 <- uniteNameLevelInternal(tib,
                                          c("age", "sex", "region"),
                                          keep = FALSE))
   expect_equal(colnames(res0),
@@ -17,14 +17,14 @@ test_that("uniteGroup", {
   expect_equal(res0$group_name[grepl("region", res0$group_name)] |> unique(),
                "region")
 
-  expect_no_error(res1 <- uniteNameLevel(tib,
+  expect_no_error(res1 <- uniteNameLevelInternal(tib,
                                          c("age", "sex", "region"),
                                          keep = TRUE))
   expect_equal(colnames(res1),
                c("age", "sex", "region", "group_name", "group_level"))
   expect_true(all(is.na(res1[1,1:3])))
 
-  expect_no_error(res2 <- uniteNameLevel(tib,
+  expect_no_error(res2 <- uniteNameLevelInternal(tib,
                                          c("age", "sex", "region"),
                                          keep = FALSE,
                                          ignore = character()))

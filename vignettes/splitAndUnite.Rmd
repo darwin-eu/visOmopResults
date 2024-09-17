@@ -53,32 +53,6 @@ mock_sr |> splitAll() |> glimpse()
 #### !! Keyword: &&&
 Looking at the results below, observe how the splitting was not only done by values in the "name" column, but also among values containing the key word "**&&&**". That is, "sex &&& age_group" was splitted into *sex* and *age_group* columns, instead of generating a column called "*sex &&& age_group*".
 
-### splitNameLevel()
-The function `splitNameLevel` provides a more tailored splitting of the dataframe. This function can take any dataframe with no restrictions to the naming of the name-level pair columns, since these can be specified in the `name` and `level` arguments. 
-
-For instance let's use it in the following table:
-```{r}
-data_to_split <- tibble(
-  denominator = "general_population",
-  outcome = "stroke",
-  input_arguments = c("wash_out &&& previous_observation"),
-  input_arguments_values = c("60 &&& 180")
-)
-data_to_split 
-```
-
-
-```{r}
-data_to_split |>
-  splitNameLevel(
-    name = "input_arguments",
-    level = "input_arguments_values"
-  )
-```
-
-The function `splitNameLevel`, in additionally to the argument `overall` previously seen, has the argument `keep` to set whether we want to keep the columns before the splitting.
-
-
 
 ## Unite functions
 
@@ -115,16 +89,4 @@ By default (`ignore = c(NA, "overall")`) we obtain an output where only names an
 ```{r}
 to_unite_strata |>
   uniteStrata(cols = c("age", "sex", "region"))
-```
-
-### uniteNameLevel()
-
-Lastly, the function `uniteNameLevel`, idem to `splitNameLevel`, provides more flexibility on the name-level column naming, in addition of the `keep` argument (FALSE by default) to choose whether to keep the targeted columns. For instance, if we repeat the previous example with `keep` set to TRUE we would obtain the following output:
-
-```{r}
-to_unite_strata |>
-  uniteNameLevel(cols = c("age", "sex", "region"),
-                 name = "name",
-                 level = "level",
-                 keep = TRUE)
 ```

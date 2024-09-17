@@ -10,7 +10,6 @@
 #' @return A tibble.
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
 #' Pivot the estimates as new columns in result table.
 #'
 #' @export
