@@ -201,42 +201,6 @@ the key word “<strong>&amp;&amp;&amp;</strong>”. That is, “sex
 “<em>sex &amp;&amp;&amp; age_group</em>”.</p>
 </div>
 </div>
-<div class="section level3">
-<h3 id="splitnamelevel">splitNameLevel()<a class="anchor" aria-label="anchor" href="#splitnamelevel"></a>
-</h3>
-<p>The function <code>splitNameLevel</code> provides a more tailored
-splitting of the dataframe. This function can take any dataframe with no
-restrictions to the naming of the name-level pair columns, since these
-can be specified in the <code>name</code> and <code>level</code>
-arguments.</p>
-<p>For instance let’s use it in the following table:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_to_split</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
-<span>  denominator <span class="op">=</span> <span class="st">"general_population"</span>,</span>
-<span>  outcome <span class="op">=</span> <span class="st">"stroke"</span>,</span>
-<span>  input_arguments <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"wash_out &amp;&amp;&amp; previous_observation"</span><span class="op">)</span>,</span>
-<span>  input_arguments_values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"60 &amp;&amp;&amp; 180"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span>
-<span><span class="va">data_to_split</span> </span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
-<span><span class="co">#&gt;   denominator        outcome input_arguments              input_arguments_values</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                 </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> general_population stroke  wash_out &amp;&amp;&amp; previous_obser… 60 &amp;&amp;&amp; 180</span></span></code></pre></div>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">data_to_split</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/splitNameLevel.html">splitNameLevel</a></span><span class="op">(</span></span>
-<span>    name <span class="op">=</span> <span class="st">"input_arguments"</span>,</span>
-<span>    level <span class="op">=</span> <span class="st">"input_arguments_values"</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 1 × 4</span></span></span>
-<span><span class="co">#&gt;   denominator        outcome wash_out previous_observation</span></span>
-<span><span class="co">#&gt;   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>              <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>               </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">1</span> general_population stroke  60       180</span></span></code></pre></div>
-<p>The function <code>splitNameLevel</code>, in additionally to the
-argument <code>overall</code> previously seen, has the argument
-<code>keep</code> to set whether we want to keep the columns before the
-splitting.</p>
-</div>
 </div>
 <div class="section level2">
 <h2 id="unite-functions">Unite functions<a class="anchor" aria-label="anchor" href="#unite-functions"></a>
@@ -253,7 +217,7 @@ within a dataframe.</p>
 strata, and additional name-level columns respectively from a given set
 of columns. For instance, in the following example we want to create the
 <em>group_name</em> and <em>group_level</em> columns:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">to_unite_group</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>  denominator_cohort_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"general_population"</span>, <span class="st">"older_than_60"</span>, <span class="st">"younger_than_60"</span><span class="op">)</span>,</span>
 <span>  outcome_cohort_name <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"stroke"</span>, <span class="st">"stroke"</span>, <span class="st">"stroke"</span><span class="op">)</span></span>
@@ -272,7 +236,7 @@ is the argument <code>ignore</code>, by default:
 <code>ignore = c(NA, "overall")</code>. This means that, levels within
 ignore will be ignored. For example if in this case we do not ignore
 them we will obtain the NA as output:</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">to_unite_strata</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span>
 <span>    age <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="st">"&gt;40"</span>, <span class="st">"&lt;=40"</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="st">"&gt;40"</span>, <span class="st">"&lt;=40"</span><span class="op">)</span>,</span>
 <span>    sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="st">"F"</span>, <span class="st">"M"</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="cn">NA</span>, <span class="st">"F"</span>, <span class="st">"M"</span><span class="op">)</span>,</span>
@@ -298,7 +262,7 @@ them we will obtain the NA as output:</p>
 <p>By default (<code>ignore = c(NA, "overall")</code>) we obtain an
 output where only names and levels of non-NA values are returned, and
 from those rows where all values are NA it uses “overall”.</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">to_unite_strata</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/uniteStrata.html">uniteStrata</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"sex"</span>, <span class="st">"region"</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 2</span></span></span>
@@ -314,35 +278,6 @@ from those rows where all values are NA it uses “overall”.</p>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> region      Center      </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> age &amp;&amp;&amp; sex &gt;40 &amp;&amp;&amp; F   </span></span>
 <span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> age &amp;&amp;&amp; sex &lt;=40 &amp;&amp;&amp; M</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="unitenamelevel">uniteNameLevel()<a class="anchor" aria-label="anchor" href="#unitenamelevel"></a>
-</h3>
-<p>Lastly, the function <code>uniteNameLevel</code>, idem to
-<code>splitNameLevel</code>, provides more flexibility on the name-level
-column naming, in addition of the <code>keep</code> argument (FALSE by
-default) to choose whether to keep the targeted columns. For instance,
-if we repeat the previous example with <code>keep</code> set to TRUE we
-would obtain the following output:</p>
-<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">to_unite_strata</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/uniteNameLevel.html">uniteNameLevel</a></span><span class="op">(</span>cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"age"</span>, <span class="st">"sex"</span>, <span class="st">"region"</span><span class="op">)</span>,</span>
-<span>                 name <span class="op">=</span> <span class="st">"name"</span>,</span>
-<span>                 level <span class="op">=</span> <span class="st">"level"</span>,</span>
-<span>                 keep <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 10 × 5</span></span></span>
-<span><span class="co">#&gt;    age   sex   region name        level     </span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>     overall     overall   </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> &gt;40   <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>     age         &gt;40       </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> &lt;=40  <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>     age         &lt;=40      </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> <span style="color: #BB0000;">NA</span>    F     <span style="color: #BB0000;">NA</span>     sex         F         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> <span style="color: #BB0000;">NA</span>    M     <span style="color: #BB0000;">NA</span>     sex         M         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    North  region      North     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    South  region      South     </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> <span style="color: #BB0000;">NA</span>    <span style="color: #BB0000;">NA</span>    Center region      Center    </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> &gt;40   F     <span style="color: #BB0000;">NA</span>     age &amp;&amp;&amp; sex &gt;40 &amp;&amp;&amp; F </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> &lt;=40  M     <span style="color: #BB0000;">NA</span>     age &amp;&amp;&amp; sex &lt;=40 &amp;&amp;&amp; M</span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>

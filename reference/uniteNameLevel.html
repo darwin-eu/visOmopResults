@@ -87,31 +87,6 @@
     <p>A tibble with the new columns.</p>
     </div>
 
-    <div class="section level2">
-    <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
-    <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">x</span> <span class="op">&lt;-</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://tibble.tidyverse.org/reference/tibble.html" class="external-link">tibble</a></span><span class="op">(</span></span></span>
-<span class="r-in"><span>  variable <span class="op">=</span> <span class="st">"number subjects"</span>,</span></span>
-<span class="r-in"><span>  value <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">10</span>, <span class="fl">15</span>, <span class="fl">40</span>, <span class="fl">78</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  sex <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Male"</span>, <span class="st">"Female"</span>, <span class="st">"Male"</span>, <span class="st">"Female"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>  age_group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"&lt;40"</span>, <span class="st">"&gt;40"</span>, <span class="st">"&gt;40"</span>, <span class="st">"&lt;40"</span><span class="op">)</span></span></span>
-<span class="r-in"><span><span class="op">)</span></span></span>
-<span class="r-in"><span></span></span>
-<span class="r-in"><span><span class="va">x</span> <span class="op">|&gt;</span></span></span>
-<span class="r-in"><span>  <span class="fu">uniteNameLevel</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    cols <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sex"</span>, <span class="st">"age_group"</span><span class="op">)</span>,</span></span>
-<span class="r-in"><span>    name <span class="op">=</span> <span class="st">"new_column_name"</span>,</span></span>
-<span class="r-in"><span>    level <span class="op">=</span> <span class="st">"new_column_level"</span></span></span>
-<span class="r-in"><span>  <span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 4 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   variable        value new_column_name   new_column_level</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>           </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span> number subjects    10 sex &amp;&amp;&amp; age_group Male &amp;&amp;&amp; &lt;40    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">2</span> number subjects    15 sex &amp;&amp;&amp; age_group Female &amp;&amp;&amp; &gt;40  </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">3</span> number subjects    40 sex &amp;&amp;&amp; age_group Male &amp;&amp;&amp; &gt;40    </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">4</span> number subjects    78 sex &amp;&amp;&amp; age_group Female &amp;&amp;&amp; &lt;40  </span>
-<span class="r-in"><span></span></span>
-</code></pre></div>
-    </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
 

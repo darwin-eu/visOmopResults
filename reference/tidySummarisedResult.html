@@ -53,7 +53,6 @@ Provides tools for obtaining a tidy version of a summarised_result object.</p>
 <span>  splitStrata <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  splitAdditional <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  settingsColumns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu"><a href="https://darwin-eu-dev.github.io/omopgenerics/reference/settings.html" class="external-link">settings</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span>,</span>
-<span>  addSettings <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span>,</span>
 <span>  pivotEstimatesBy <span class="op">=</span> <span class="st">"estimate_name"</span>,</span>
 <span>  nameStyle <span class="op">=</span> <span class="cn">NULL</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -83,10 +82,6 @@ Provides tools for obtaining a tidy version of a summarised_result object.</p>
 <dd><p>Settings to be added as columns, by default all
 settings will be added. If NULL or empty character vector, no settings will
 be added.</p></dd>
-
-
-<dt id="arg-addsettings">addSettings<a class="anchor" aria-label="anchor" href="#arg-addsettings"></a></dt>
-<dd><p><a href="https://lifecycle.r-lib.org/articles/stages.html#deprecated" class="external-link"><img src="figures/lifecycle-deprecated.svg" alt="[Deprecated]"></a></p></dd>
 
 
 <dt id="arg-pivotestimatesby">pivotEstimatesBy<a class="anchor" aria-label="anchor" href="#arg-pivotestimatesby"></a></dt>
@@ -125,27 +120,30 @@ be used.</p></dd>
 <span class="r-in"><span>    nameStyle <span class="op">=</span> <span class="st">"{estimate_name}_{variable_name}_{variable_level}"</span></span></span>
 <span class="r-in"><span>  <span class="op">)</span></span></span>
 <span class="r-in"><span><span class="op">}</span></span></span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span class="warning">Warning: </span>The `addSettings` argument of `visOmopTable()` is deprecated as of</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> visOmopResults 0.4.0.</span>
+<span class="r-wrn co"><span class="r-pr">#&gt;</span> <span style="color: #00BBBB;">ℹ</span> Please use the `settingsColumns` argument instead.</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 18 × 12</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>    result_id cdm_name cohort_name age_group sex     `count_number subjects`</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                     <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>         1 mock     cohort1     overall   overall                 7<span style="text-decoration: underline;">642</span>874</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>         1 mock     cohort1     &lt;40       Male                    6<span style="text-decoration: underline;">267</span>808</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>         1 mock     cohort1     &gt;=40      Male                    5<span style="text-decoration: underline;">345</span>031</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>         1 mock     cohort1     &lt;40       Female                  2<span style="text-decoration: underline;">033</span>205</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>         1 mock     cohort1     &gt;=40      Female                  9<span style="text-decoration: underline;">183</span>192</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>         1 mock     cohort1     overall   Male                    9<span style="text-decoration: underline;">184</span>110</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>         1 mock     cohort1     overall   Female                  3<span style="text-decoration: underline;">837</span>050</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>         1 mock     cohort1     &lt;40       overall                 4<span style="text-decoration: underline;">240</span>499</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>         1 mock     cohort1     &gt;=40      overall                 3<span style="text-decoration: underline;">046</span>179</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>         1 mock     cohort2     overall   overall                 6<span style="text-decoration: underline;">072</span>955</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>         1 mock     cohort2     &lt;40       Male                    6<span style="text-decoration: underline;">449</span>619</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span>         1 mock     cohort2     &gt;=40      Male                    1<span style="text-decoration: underline;">397</span>020</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span>         1 mock     cohort2     &lt;40       Female                  9<span style="text-decoration: underline;">989</span>548</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span>         1 mock     cohort2     &gt;=40      Female                    <span style="text-decoration: underline;">99</span>190</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span>         1 mock     cohort2     overall   Male                    1<span style="text-decoration: underline;">999</span>574</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span>         1 mock     cohort2     overall   Female                  2<span style="text-decoration: underline;">912</span>880</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span>         1 mock     cohort2     &lt;40       overall                 2<span style="text-decoration: underline;">244</span>196</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span>         1 mock     cohort2     &gt;=40      overall                 4<span style="text-decoration: underline;">710</span>702</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 1</span>         1 mock     cohort1     overall   overall                 4<span style="text-decoration: underline;">739</span>725</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 2</span>         1 mock     cohort1     &lt;40       Male                    9<span style="text-decoration: underline;">722</span>978</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 3</span>         1 mock     cohort1     &gt;=40      Male                     <span style="text-decoration: underline;">921</span>884</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 4</span>         1 mock     cohort1     &lt;40       Female                  2<span style="text-decoration: underline;">069</span>944</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 5</span>         1 mock     cohort1     &gt;=40      Female                  2<span style="text-decoration: underline;">437</span>146</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 6</span>         1 mock     cohort1     overall   Male                    6<span style="text-decoration: underline;">493</span>812</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 7</span>         1 mock     cohort1     overall   Female                  2<span style="text-decoration: underline;">602</span>081</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 8</span>         1 mock     cohort1     &lt;40       overall                 3<span style="text-decoration: underline;">232</span>491</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;"> 9</span>         1 mock     cohort1     &gt;=40      overall                 6<span style="text-decoration: underline;">612</span>474</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">10</span>         1 mock     cohort2     overall   overall                 2<span style="text-decoration: underline;">370</span>871</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">11</span>         1 mock     cohort2     &lt;40       Male                    8<span style="text-decoration: underline;">282</span>743</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">12</span>         1 mock     cohort2     &gt;=40      Male                    6<span style="text-decoration: underline;">662</span>380</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">13</span>         1 mock     cohort2     &lt;40       Female                  5<span style="text-decoration: underline;">409</span>234</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">14</span>         1 mock     cohort2     &gt;=40      Female                  1<span style="text-decoration: underline;">210</span>301</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">15</span>         1 mock     cohort2     overall   Male                    2<span style="text-decoration: underline;">914</span>821</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">16</span>         1 mock     cohort2     overall   Female                  9<span style="text-decoration: underline;">069</span>306</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">17</span>         1 mock     cohort2     &lt;40       overall                 1<span style="text-decoration: underline;">782</span>145</span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">18</span>         1 mock     cohort2     &gt;=40      overall                 9<span style="text-decoration: underline;">140</span>250</span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># ℹ 6 more variables: mean_age &lt;dbl&gt;, sd_age &lt;dbl&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   count_Medications_Amoxiciline &lt;int&gt;,</span></span>
 <span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;">#   percentage_Medications_Amoxiciline &lt;dbl&gt;,</span></span>
