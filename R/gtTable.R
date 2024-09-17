@@ -16,10 +16,8 @@
 #' By default, the new group name will be a combination of the column names,
 #' joined by "_". To assign a custom group name, provide a named list such as:
 #' list(`newGroupName` = c("variable_name", "variable_level"))
-#' @param groupNameCol `r lifecycle::badge("deprecated")`
 #' @param groupAsColumn Whether to display the group labels as a column
 #' (TRUE) or rows (FALSE).
-#' @param groupNameAsColumn `r lifecycle::badge("deprecated")`
 #' @param groupOrder Order in which to display group labels.
 #' @param colsToMergeRows Names of the columns to merge vertically
 #' when consecutive row cells have identical values. Alternatively, use
@@ -76,13 +74,6 @@ gtTable <- function(
     groupOrder = NULL,
     colsToMergeRows = NULL
 ) {
-
-  if (lifecycle::is_present(groupNameCol)) {
-    lifecycle::deprecate_stop("0.3.0", "gtTable(groupNameCol)", "gtTable(groupColumn)")
-  }
-  if (lifecycle::is_present(groupNameAsColumn)) {
-    lifecycle::deprecate_stop("0.3.0", "gtTable(groupNameAsColumn)", "gtTable(groupAsColumn)")
-  }
 
   # Package checks
   rlang::check_installed("gt")

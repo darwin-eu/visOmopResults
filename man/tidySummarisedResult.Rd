@@ -10,7 +10,6 @@ tidySummarisedResult(
   splitStrata = TRUE,
   splitAdditional = TRUE,
   settingsColumns = colnames(settings(result)),
-  addSettings = lifecycle::deprecated(),
   pivotEstimatesBy = "estimate_name",
   nameStyle = NULL
 )
@@ -27,8 +26,6 @@ tidySummarisedResult(
 \item{settingsColumns}{Settings to be added as columns, by default all
 settings will be added. If NULL or empty character vector, no settings will
 be added.}
-
-\item{addSettings}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 
 \item{pivotEstimatesBy}{Names from which pivot wider the estimate values. If
 NULL the table will not be pivotted.}

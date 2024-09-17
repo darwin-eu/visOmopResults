@@ -11,25 +11,18 @@
 #' @description
 #' Unites targeted table columns into a pair of name-level columns.
 #'
-#'
-#' @examples
-#' x <- dplyr::tibble(
-#'   variable = "number subjects",
-#'   value = c(10, 15, 40, 78),
-#'   sex = c("Male", "Female", "Male", "Female"),
-#'   age_group = c("<40", ">40", ">40", "<40")
-#' )
-#'
-#' x |>
-#'   uniteNameLevel(
-#'     cols = c("sex", "age_group"),
-#'     name = "new_column_name",
-#'     level = "new_column_level"
-#'   )
-#'
 #' @export
 #'
 uniteNameLevel <- function(x,
+                           cols = character(0),
+                           name = "group_name",
+                           level = "group_level",
+                           keep = FALSE,
+                           ignore = c(NA, "overall")) {
+  lifecycle::deprecate_soft(when = "0.4.0", what = "uniteNameLevel()")
+}
+
+uniteNameLevelInternal <- function(x,
                            cols = character(0),
                            name = "group_name",
                            level = "group_level",
@@ -135,7 +128,7 @@ uniteGroup <- function(x,
                        cols = character(0),
                        keep = FALSE,
                        ignore = c(NA, "overall")) {
-  uniteNameLevel(
+  uniteNameLevelInternal(
     x = x, cols = cols, name = "group_name", level = "group_level", keep = keep,
     ignore = ignore
   )
@@ -169,7 +162,7 @@ uniteStrata <- function(x,
                         cols = character(0),
                         keep = FALSE,
                         ignore = c(NA, "overall")) {
-  uniteNameLevel(
+  uniteNameLevelInternal(
     x = x, cols = cols, name = "strata_name", level = "strata_level",
     keep = keep, ignore = ignore
   )
@@ -203,7 +196,7 @@ uniteAdditional <- function(x,
                             cols = character(0),
                             keep = FALSE,
                             ignore = c(NA, "overall")) {
-  uniteNameLevel(
+  uniteNameLevelInternal(
     x = x, cols = cols, name = "additional_name", level = "additional_level",
     keep = keep, ignore = ignore
   )

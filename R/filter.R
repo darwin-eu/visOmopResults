@@ -191,11 +191,11 @@ filterNameLevel <- function(result, prefix, ..., call = parent.frame()) {
   cols <- paste0(prefix, c("_name", "_level"))
   omopgenerics::assertTable(result, columns = cols, call = call)
 
-  # splitNameLevel
+  # splitNameLevelInternal
   labs <- result |>
     dplyr::select(dplyr::all_of(cols)) |>
     dplyr::distinct() |>
-    splitNameLevel(name = cols[1], level = cols[2], keep = TRUE)
+    splitNameLevelInternal(name = cols[1], level = cols[2], keep = TRUE)
 
   # filter
   tryCatch(
