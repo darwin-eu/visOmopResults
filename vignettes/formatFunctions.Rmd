@@ -12,13 +12,14 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   warning = FALSE,
-  message = FALSE
+  message = FALSE,
+  eval = FALSE # meanwhile because of breaking changes
 )
 ```
 
 The **format** set of functions can be combined to format a summarised_result object (see R package *omopgenerics*) into a nice *tibble*, *flextable* or *gt* table to display in reports and shiny apps. 
 
-The functions `formatEstimateValue()`, `formatEstimateName()`, `formatHeader()`, and lastly `gtTable()` or `fxTable()` can be implemented in a pipeline to obtain the desired formatted table. Otherwise, these steps are implemented in the function `visOmopTable()`. 
+The functions `formatEstimateValue()`, `formatEstimateName()`, `formatHeader()`, and lastly `formatTable()` can be implemented in a pipeline to obtain the desired formatted table. Otherwise, these steps are implemented in the function `visOmopTable()`. 
 
 ## Formatting functions in a pipeline
 

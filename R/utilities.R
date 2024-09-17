@@ -140,20 +140,20 @@ validateGroupColumn <- function(groupColumn, resultIn, sr = FALSE, formatName = 
   return(invisible(groupColumn))
 }
 
-validateColsToMergeRows <- function(x, colsToMergeRows, groupColumn, call = parent.frame()) {
-  if (!is.null(colsToMergeRows)) {
-    if (any(colsToMergeRows %in% groupColumn)) {
-      cli::cli_abort("groupColumn and colsToMergeRows must have different column names.", call = call)
+validateMerge <- function(x, merge, groupColumn, call = parent.frame()) {
+  if (!is.null(merge)) {
+    if (any(merge %in% groupColumn)) {
+      cli::cli_abort("groupColumn and merge must have different column names.", call = call)
     }
-    ind <- ! colsToMergeRows %in% c(colnames(x), "all_columns")
+    ind <- ! merge %in% c(colnames(x), "all_columns")
     if (sum(ind) == 1) {
-      cli::cli_inform(c("!" = "{colsToMergeRows[ind]} is not a column in the dataframe.", call = call))
+      cli::cli_inform(c("!" = "{merge[ind]} is not a column in the dataframe.", call = call))
     } else if (sum(ind) > 1) {
-      cli::cli_inform(c("!" = "{colsToMergeRows[ind]} are not columns in the dataframe.", call = call))
+      cli::cli_inform(c("!" = "{merge[ind]} are not columns in the dataframe.", call = call))
     }
-    omopgenerics::assertCharacter(colsToMergeRows)
+    omopgenerics::assertCharacter(merge)
   }
-  return(invisible(colsToMergeRows))
+  return(invisible(merge))
 }
 
 validateDelim <- function(delim, call = parent.frame()) {

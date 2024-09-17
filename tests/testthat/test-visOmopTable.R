@@ -276,6 +276,7 @@ test_that("don't want scientific",{
       estimate_type = "integer",
       estimate_value = "100000",
       additional_name = "overall",
+
       additional_level = "overall"
     ) |> omopgenerics::newSummarisedResult(),
     formatEstimateName = c(N = "<count>"),

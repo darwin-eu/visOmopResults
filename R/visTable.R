@@ -67,7 +67,7 @@ visTable <- function(result,
   .options <- defaultTableOptions(.options)
   # default hide columns
   # hide <- c(hide, "result_id", "estimate_type")
-  checkvisTableInputs(header, groupColumn, hide)
+  checkVisTableInputs(header, groupColumn, hide)
 
   # format estimate values and names
   result <- result |>
@@ -112,38 +112,24 @@ visTable <- function(result,
     result <- result |> dplyr::rename(!!estimateValue := "estimate_value")
   }
 
-  if (type == "gt") {
-    result <- result |>
-      visOmopResults::gtTableInternal(
-        delim = .options$delim,
-        style = .options$style,
-        na = .options$na,
-        title = .options$title,
-        subtitle = .options$subtitle,
-        caption = .options$caption,
-        groupColumn = groupColumn,
-        groupAsColumn = .options$groupAsColumn,
-        groupOrder = .options$groupOrder,
-        colsToMergeRows = .options$colsToMergeRows
-      )
-  } else if (type == "flextable") {
-    result <- result |>
-      visOmopResults::fxTableInternal(
-        delim = .options$delim,
-        style = .options$style,
-        na = .options$na,
-        title = .options$title,
-        subtitle = .options$subtitle,
-        caption = .options$caption,
-        groupColumn = groupColumn,
-        groupAsColumn = .options$groupAsColumn,
-        groupOrder = .options$groupOrder,
-        colsToMergeRows = .options$colsToMergeRows
-      )
-  } else if (type == "tibble") {
+  if (type == "tibble") {
     class(result) <- class(result)[!class(result) %in% c("summarised_result", "omop_result")]
+  } else {
+    result <- result |>
+      formatTable(
+        type = type,
+        delim = .options$delim,
+        style = .options$style,
+        na = .options$na,
+        title = .options$title,
+        subtitle = .options$subtitle,
+        caption = .options$caption,
+        groupColumn = groupColumn,
+        groupAsColumn = .options$groupAsColumn,
+        groupOrder = .options$groupOrder,
+        merge = .options$merge
+      )
   }
-
   return(result)
 }
 

@@ -22,6 +22,9 @@ formatTable(
 \arguments{
 \item{x}{A dataframe.}
 
+\item{type}{The type of desired formatted table. Options are: "gt",
+and "flextable".}
+
 \item{delim}{Delimiter.}
 
 \item{style}{Named list that specifies how to style the different parts of

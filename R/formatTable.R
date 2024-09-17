@@ -1,6 +1,8 @@
 #' Creates a flextable or gt object from a dataframe
 #'
 #' @param x A dataframe.
+#' @param type The type of desired formatted table. Options are: "gt",
+#' and "flextable".
 #' @param delim Delimiter.
 #' @param style Named list that specifies how to style the different parts of
 #' the gt or flextable table. Accepted style entries are: title, subtitle,
@@ -108,7 +110,7 @@ formatTable <- function(x,
   omopgenerics::assertCharacter(groupOrder, null = TRUE)
   delim <- validateDelim(delim)
   groupColumn <- validateGroupColumn(groupColumn, x)
-  colsToMergeRows <- validateColsToMergeRows(x, colsToMergeRows, groupColumn[[1]])
+  merge <- validateMerge(x, merge, groupColumn[[1]])
   style <- validateStyle(style, type)
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
@@ -121,7 +123,7 @@ formatTable <- function(x,
   # format
   if (type == "gt") {
     result <- result |>
-      visOmopResults::gtTableInternal(
+      gtTableInternal(
         delim = delim,
         style = style,
         na = na,
@@ -131,11 +133,11 @@ formatTable <- function(x,
         groupColumn = groupColumn,
         groupAsColumn = groupAsColumn,
         groupOrder = groupOrder,
-        colsToMergeRows = colsToMergeRows
+        colsToMergeRows = merge
       )
   } else if (type == "flextable") {
     result <- result |>
-      visOmopResults::fxTableInternal(
+      fxTableInternal(
         delim = delim,
         style = style,
         na = na,
