@@ -87,26 +87,6 @@ gtTable <- function(
   # Package checks
   rlang::check_installed("gt")
 
-  # Input checks
-  omopgenerics::assertTable(x)
-  omopgenerics::assertCharacter(na, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(title, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(subtitle, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(caption, length = 1, null= TRUE)
-  omopgenerics::assertLogical(groupAsColumn, length = 1)
-  omopgenerics::assertCharacter(groupOrder, null = TRUE)
-  delim <- validateDelim(delim)
-  groupColumn <- validateGroupColumn(groupColumn, x)
-  colsToMergeRows <- validateColsToMergeRows(x, colsToMergeRows, groupColumn[[1]])
-  style <- validateStyle(style, "gt")
-  if (is.null(title) & !is.null(subtitle)) {
-    cli::cli_abort("There must be a title for a subtitle.")
-  }
-  if (dplyr::is.grouped_df(x)) {
-    x <- x |> dplyr::ungroup()
-    cli::cli_inform("`x` will be ungrouped.")
-  }
-
   # na
   if (!is.null(na)){
     x <- x |>
@@ -316,7 +296,7 @@ gtTable <- function(
   return(gtResult)
 }
 
-gtStyles <- function(styleName) {
+gtStyleInternal <- function(styleName) {
   styles <- list (
     "default" = list(
       "header" = list(gt::cell_fill(color = "#c8c8c8"),
@@ -333,7 +313,7 @@ gtStyles <- function(styleName) {
       "body" = list()
     )
   )
-  if (! styleName %in% names(styles)) {
+  if (!styleName %in% names(styles)) {
     cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
     styleName <- "default"
   }
@@ -387,4 +367,26 @@ gtMergeRows <- function(gt_x, colsToMergeRows, groupColumn, groupOrder) {
       )
   }
   return(gt_x)
+}
+
+#' Default style code expresion for gt tables.
+#' @export
+gtStyle <- function() {
+  list (
+    "default" = list(
+      "header" = list(gt::cell_fill(color = "#c8c8c8"),
+                      gt::cell_text(weight = "bold", align = "center")),
+      "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
+                           gt::cell_text(weight = "bold", align = "center")),
+      "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
+                            gt::cell_text(weight = "bold", align = "center")),
+      "column_name" = list(gt::cell_text(weight = "bold", align = "center")),
+      "group_label" = list(gt::cell_fill(color = "#e9e9e9"),
+                           gt::cell_text(weight = "bold")),
+      "title" = list(gt::cell_text(weight = "bold", size = 15, align = "center")),
+      "subtitle" = list(gt::cell_text(weight = "bold", size = 12, align = "center")),
+      "body" = list()
+    )
+  ) |>
+    rlang::expr()
 }

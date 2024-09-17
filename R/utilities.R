@@ -59,11 +59,8 @@ validateStyle <- function(style, tableFormatType) {
     omopgenerics::assertList(style, null = TRUE, named = TRUE)
   } else if (is.character(style)) {
     omopgenerics::assertCharacter(style, null = TRUE)
-    eval(parse(text = paste0("style <- ", tableFormatType, "Styles(styleName = style)")))
+    eval(parse(text = paste0("style <- ", tableFormatType, "StyleInternal(styleName = style)")))
   } else {
-    if (tableFormatType == "fx") {
-      tableFormatType <- "flextable"
-    }
     cli::cli_abort(paste0("Style must be one of 1) a named list of ", tableFormatType, " styling functions,
                    2) the string 'default' for visOmopResults default style, or 3) NULL to indicate no styling."))
   }
@@ -187,7 +184,7 @@ validateSettingsAttribute <- function(result, call = parent.frame()) {
   return(invisible(set))
 }
 
-checkFormatTableInputs <- function(header, groupColumn, hide, call = parent.frame()) {
+checkVisTableInputs <- function(header, groupColumn, hide, call = parent.frame()) {
   int1 <- dplyr::intersect(header, groupColumn[[1]])
   int2 <- dplyr::intersect(header, hide)
   int3 <- dplyr::intersect(hide, groupColumn[[1]])

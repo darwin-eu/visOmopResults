@@ -1,162 +1,151 @@
-#' Generate a formatted table from a data.table
+#' Creates a flextable or gt object from a dataframe
 #'
-#' @param result A table to format.
-#' @param formatEstimateName A named list of estimate names to join, sorted by
-#' computation order. Use `<...>` to indicate estimate names. This argument
-#' requires that the table has `estimate_name` and `estimate_value` columns.
-#' @param header A vector specifying the elements to include in the header.
-#' The order of elements matters, with the first being the topmost header.
-#' The vector elements can be column names or labels for overall headers.
-#' The table must contain an `estimate_value` column to pivot the headers.
-#' @param groupColumn Columns to use as group labels. By default, the name of the
-#' new group will be the tidy* column names separated by ";". To specify a custom
-#' group name, use a named list such as:
-#' list("newGroupName" = c("variable_name", "variable_level")).
+#' @param x A dataframe.
+#' @param delim Delimiter.
+#' @param style Named list that specifies how to style the different parts of
+#' the gt or flextable table. Accepted style entries are: title, subtitle,
+#' header, header_name, header_level, column_name, group_label, and body.
+#' Alternatively, use "default" to get visOmopResults style, or NULL for
+#' flextable/gt style.
+#' Keep in mind that styling code is different for gt and flextable. To see
+#' the "deafult" gt style code use `gtStyle()`, and `flextableStyle()` for
+#' flextable code style.
+#' @param na How to display missing values.
+#' @param title Title of the table, or NULL for no title.
+#' @param subtitle Subtitle of the table, or NULL for no subtitle.
+#' @param caption Caption for the table, or NULL for no caption. Text in
+#' markdown formatting style (e.g. `*Your caption here*` for caption in
+#' italics).
+#' @param groupColumn Specifies the columns to use for group labels.
+#' By default, the new group name will be a combination of the column names,
+#' joined by "_". To assign a custom group name, provide a named list such as:
+#' list(`newGroupName` = c("variable_name", "variable_level"))
+#' @param groupAsColumn Whether to display the group labels as a column
+#' (TRUE) or rows (FALSE).
+#' @param groupOrder Order in which to display group labels.
+#' @param merge Names of the columns to merge vertically when consecutive row
+#' cells have identical values. Alternatively, use "all_columns" to apply this
+#' merging to all columns, or use NULL to indicate no merging.
 #'
-#' *tidy: The tidy format applied to column names replaces "_" with a space and
-#' converts them to sentence case. Use `renameColumns` to customize specific column names.
-#'
-#' @param renameColumns A named vector to customize column names, e.g.,
-#' c("Database name" = "cdm_name"). The function will rename all column names
-#' not specified here into a tidy* format.
-#' @param type The desired format of the output table. Options are: "gt",
-#' "flextable", or "tibble".
-#' @param hide Columns to drop from the output table.
-#' @param .options A named list with additional formatting options.
-#' `visOmopResults::optionsTable()` shows allowed arguments and their default values.
-#'
-#' @return A tibble, gt, or flextable object.
+#' @return A flextable object.
 #'
 #' @description
-#' This function combines the functionalities of `formatEstimateValue()`,
-#' `formatEstimateName()`, `formatHeader()`, `gtTable()`, and `fxTable()`
-#' into a single function. While it does not require the input table to be
-#' a `summarised_result`, it does expect specific fields to apply formatting.
+#' Creates a flextable object from a dataframe using a delimiter to span
+#' the header, and allows to easily customise table style.
+#'
+#' @examples
+#' # Example 1
+#' mockSummarisedResult() |>
+#'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
+#'   formatHeader(
+#'     header = c("Study strata", "strata_name", "strata_level"),
+#'     includeHeaderName = FALSE
+#'   ) |>
+#'   formatTable(
+#'     type = "flextable",
+#'     style = "default",
+#'     na = "--",
+#'     title = "fxTable example",
+#'     subtitle = NULL,
+#'     caption = NULL,
+#'     groupColumn = "group_level",
+#'     groupAsColumn = TRUE,
+#'     groupOrder = c("cohort1", "cohort2"),
+#'     merge = "all_columns"
+#'   )
+#'
+#' # Example 2
+#' mockSummarisedResult() |>
+#'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
+#'   formatHeader(header = c("Study strata", "strata_name", "strata_level"),
+#'               includeHeaderName = FALSE) |>
+#'   formatTable(
+#'     type = "gt",
+#'     style = list("header" = list(
+#'       gt::cell_fill(color = "#d9d9d9"),
+#'       gt::cell_text(weight = "bold")),
+#'       "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
+#'                             gt::cell_text(weight = "bold")),
+#'       "column_name" = list(gt::cell_text(weight = "bold")),
+#'       "title" = list(gt::cell_text(weight = "bold"),
+#'                      gt::cell_fill(color = "#c8c8c8")),
+#'       "group_label" = gt::cell_fill(color = "#e1e1e1")),
+#'     na = "--",
+#'     title = "gtTable example",
+#'     subtitle = NULL,
+#'     caption = NULL,
+#'     groupColumn = "group_level",
+#'     groupAsColumn = FALSE,
+#'     groupOrder = c("cohort1", "cohort2"),
+#'     merge = "all_columns"
+#'   )
+#'
+#' @return A flextable or gt object.
 #'
 #' @export
 #'
-#' @examples
-#' result <- mockSummarisedResult()
-#' result |>
-#'   formatTable(
-#'     formatEstimateName = c("N%" = "<count> (<percentage>)",
-#'                            "N" = "<count>",
-#'                            "Mean (SD)" = "<mean> (<sd>)"),
-#'     header = c("Estimate"),
-#'     renameColumns = c("Database name" = "cdm_name"),
-#'     groupColumn = c("strata_name", "strata_level"),
-#'     hide = c("additional_name", "additional_level", "estimate_type", "result_type")
-#'   )
-
-formatTable <- function(result,
-                        formatEstimateName = character(),
-                        header = character(),
-                        groupColumn = character(),
-                        renameColumns = character(),
+formatTable <- function(x,
                         type = "gt",
-                        hide = character(),
-                        .options = list()) {
-  # initial checks
-  omopgenerics::assertTable(result)
-  omopgenerics::assertChoice(type, choices = c("gt", "flextable", "tibble"), length = 1)
-  omopgenerics::assertCharacter(hide, null = TRUE)
-  omopgenerics::assertCharacter(header, null = TRUE)
-  renameColumns <- validateRenameColumns(renameColumns, result)
-  groupColumn <- validateGroupColumn(groupColumn, result, formatName = TRUE)
-  # .options
-  .options <- defaultTableOptions(.options)
-  # default hide columns
-  # hide <- c(hide, "result_id", "estimate_type")
-  checkFormatTableInputs(header, groupColumn, hide)
-
-  # format estimate values and names
-  result <- result |>
-    visOmopResults::formatEstimateValue(
-      decimals = .options$decimals,
-      decimalMark = .options$decimalMark,
-      bigMark = .options$bigMark
-    ) |>
-    visOmopResults::formatEstimateName(
-      estimateNameFormat = formatEstimateName,
-      keepNotFormatted = .options$keepNotFormatted,
-      useFormatOrder = .options$useFormatOrder
-    )
-
-  # rename and hide columns
-  dontRename <- c("estimate_value")
-  dontRename <- dontRename[dontRename %in% colnames(result)]
-  estimateValue <- renameColumnsInternal("estimate_value", renameColumns)
-  renameColumns <- renameColumns[!renameColumns %in% dontRename]
-  result <- result |>
-    dplyr::select(!dplyr::any_of(hide)) |>
-    dplyr::rename_with(
-      .fn = ~ renameColumnsInternal(.x, rename = renameColumns),
-      .cols = !dplyr::all_of(c(dontRename))
-    )
-  # rename headers
-  header <- purrr::map(header, renameColumnsInternal, rename = renameColumns) |> unlist()
-  if (length(groupColumn[[1]]) > 0) {
-    groupColumn[[1]] <- purrr::map(groupColumn[[1]], renameColumnsInternal, rename = renameColumns) |> unlist()
+                        delim = "\n",
+                        style = "default",
+                        na = "-",
+                        title = NULL,
+                        subtitle = NULL,
+                        caption = NULL,
+                        groupColumn = NULL,
+                        groupAsColumn = FALSE,
+                        groupOrder = NULL,
+                        merge = NULL
+) {
+  # Input checks
+  omopgenerics::assertChoice(type, choices = c("gt", "flextable"), length = 1)
+  omopgenerics::assertTable(x)
+  omopgenerics::assertCharacter(na, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(title, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(subtitle, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(caption, length = 1, null= TRUE)
+  omopgenerics::assertLogical(groupAsColumn, length = 1)
+  omopgenerics::assertCharacter(groupOrder, null = TRUE)
+  delim <- validateDelim(delim)
+  groupColumn <- validateGroupColumn(groupColumn, x)
+  colsToMergeRows <- validateColsToMergeRows(x, colsToMergeRows, groupColumn[[1]])
+  style <- validateStyle(style, type)
+  if (is.null(title) & !is.null(subtitle)) {
+    cli::cli_abort("There must be a title for a subtitle.")
+  }
+  if (dplyr::is.grouped_df(x)) {
+    x <- x |> dplyr::ungroup()
+    cli::cli_inform("`x` will be ungrouped.")
   }
 
-  # format header
-  if (length(header) > 0) {
-    result <- result |>
-      visOmopResults::formatHeader(
-        header = header,
-        delim = .options$delim,
-        includeHeaderName = .options$includeHeaderName,
-        includeHeaderKey = .options$includeHeaderKey
-      )
-  } else if ("estimate_value" %in% colnames(result)) {
-    result <- result |> dplyr::rename(!!estimateValue := "estimate_value")
-  }
-
+  # format
   if (type == "gt") {
     result <- result |>
       visOmopResults::gtTable(
-        delim = .options$delim,
-        style = .options$style,
-        na = .options$na,
-        title = .options$title,
-        subtitle = .options$subtitle,
-        caption = .options$caption,
+        delim = delim,
+        style = style,
+        na = na,
+        title = title,
+        subtitle = subtitle,
+        caption = caption,
         groupColumn = groupColumn,
-        groupAsColumn = .options$groupAsColumn,
-        groupOrder = .options$groupOrder,
-        colsToMergeRows = .options$colsToMergeRows
+        groupAsColumn = groupAsColumn,
+        groupOrder = groupOrder,
+        colsToMergeRows = colsToMergeRows
       )
   } else if (type == "flextable") {
     result <- result |>
       visOmopResults::fxTable(
-        delim = .options$delim,
-        style = .options$style,
-        na = .options$na,
-        title = .options$title,
-        subtitle = .options$subtitle,
-        caption = .options$caption,
+        delim = delim,
+        style = style,
+        na = na,
+        title = title,
+        subtitle = subtitle,
+        caption = caption,
         groupColumn = groupColumn,
-        groupAsColumn = .options$groupAsColumn,
-        groupOrder = .options$groupOrder,
-        colsToMergeRows = .options$colsToMergeRows
+        groupAsColumn = groupAsColumn,
+        groupOrder = groupOrder,
+        colsToMergeRows = merge
       )
-  } else if (type == "tibble") {
-    class(result) <- class(result)[!class(result) %in% c("summarised_result", "omop_result")]
   }
-
-  return(result)
-}
-
-renameColumnsInternal <- function(x, rename, toSentence = TRUE) {
-  newNames <- character()
-  for (xx in x) {
-    if (isTRUE(xx %in% rename)) {
-      newNames <- c(newNames, names(rename[rename == xx]))
-    } else if (toSentence) {
-      newNames <- c(newNames, formatToSentence(xx))
-    } else {
-      newNames <- c(newNames, xx)
-    }
-  }
-  return(newNames)
 }

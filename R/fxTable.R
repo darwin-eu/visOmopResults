@@ -80,26 +80,6 @@ fxTable <- function(
   rlang::check_installed("flextable")
   rlang::check_installed("officer")
 
-  # Input checks
-  omopgenerics::assertTable(x)
-  omopgenerics::assertCharacter(na, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(title, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(subtitle, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(caption, length = 1, null= TRUE)
-  omopgenerics::assertLogical(groupAsColumn, length = 1)
-  omopgenerics::assertCharacter(groupOrder, null = TRUE)
-  delim <- validateDelim(delim)
-  groupColumn <- validateGroupColumn(groupColumn, x)
-  colsToMergeRows <- validateColsToMergeRows(x, colsToMergeRows, groupColumn[[1]])
-  style <- validateStyle(style, "fx")
-  if (is.null(title) & !is.null(subtitle)) {
-    cli::cli_abort("There must be a title for a subtitle.")
-  }
-  if (dplyr::is.grouped_df(x)) {
-    x <- x |> dplyr::ungroup()
-    cli::cli_inform("`x` will be ungrouped.")
-  }
-
   # na
   if (!is.null(na)) {
     x <- x |>
@@ -335,7 +315,7 @@ getNonNaIndices <- function(x, nameGroup) {
   which(!is.na(x[[nameGroup]]))
 }
 
-fxStyles <- function(styleName) {
+flextableStyle <- function(styleName) {
   styles <- list(
     "default" = list(
       "header" = list(
@@ -375,6 +355,7 @@ fxStyles <- function(styleName) {
   }
   return(styles[[styleName]])
 }
+
 fxMergeRows <- function(fx_x, colsToMergeRows, groupColumn) {
   colNms <- colnames(fx_x$body$dataset)
   if (colsToMergeRows[1] == "all_columns") {
@@ -495,3 +476,41 @@ fxMergeRows <- function(fx_x, colsToMergeRows, groupColumn) {
   return(fx_x)
 }
 
+#' Default style code expresion for flextable tables.
+#' @export
+flextableStyle <- function() {
+  list(
+    "default" = list(
+      "header" = list(
+        "cell" = officer::fp_cell(background.color = "#c8c8c8"),
+        "text" = officer::fp_text(bold = TRUE)
+      ),
+      "header_name" = list(
+        "cell" = officer::fp_cell(background.color = "#d9d9d9"),
+        "text" = officer::fp_text(bold = TRUE)
+      ),
+      "header_level" = list(
+        "cell" = officer::fp_cell(background.color = "#e1e1e1"),
+        "text" = officer::fp_text(bold = TRUE)
+      ),
+      "column_name" = list(
+        "text" = officer::fp_text(bold = TRUE)
+      ),
+      "group_label" = list(
+        "cell" = officer::fp_cell(
+          background.color = "#e9e9e9",
+          border = officer::fp_border(color = "gray")
+        ),
+        "text" = officer::fp_text(bold = TRUE)
+      ),
+      "title" = list(
+        "text" = officer::fp_text(bold = TRUE, font.size = 15)
+      ),
+      "subtitle" = list(
+        "text" = officer::fp_text(bold = TRUE, font.size = 12)
+      ),
+      "body" = list()
+    )
+  ) |>
+    rlang::expr()
+}

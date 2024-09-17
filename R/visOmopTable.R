@@ -103,7 +103,7 @@ visOmopTable <- function(result,
   showMinCellCount <- validateShowMinCellCount(showMinCellCount, settings(result))
   # default SR hide columns
   hide <- c(hide, "result_id", "estimate_type") |> unique()
-  checkFormatTableInputs(header, groupColumn, hide)
+  checkVisTableInputs(header, groupColumn, hide)
 
   # showMinCellCount
   if (showMinCellCount) {
@@ -125,7 +125,7 @@ visOmopTable <- function(result,
     }
   }
 
-  tableOut <- formatTable(
+  tableOut <- visTable(
     result = resultTidy,
     formatEstimateName = formatEstimateName,
     header = header,
