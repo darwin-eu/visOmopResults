@@ -27,7 +27,7 @@
 #' result <- mockSummarisedResult() |>
 #'   dplyr::filter(variable_name == "age")
 #'
-#' visScatterplot(
+#' scatterPlot(
 #'   result = result,
 #'   x = "cohort_name",
 #'   y = "mean",
@@ -37,7 +37,7 @@
 #'   facet = age_group ~ sex)
 #' }
 #'
-visScatterplot <- function(result,
+scatterPlot <- function(result,
                            x,
                            y,
                            line,
@@ -133,7 +133,7 @@ visScatterplot <- function(result,
 #' @return A ggplot2 object.
 #' @export
 #'
-visBoxplot <- function(result,
+boxPlot <- function(result,
                        x = NULL,
                        lower = "q25",
                        middle = "median",
@@ -220,7 +220,7 @@ visBoxplot <- function(result,
 #' \donttest{
 #' result <- mockSummarisedResult() |> dplyr::filter(variable_name == "age")
 #'
-#' visBarplot(
+#' barPlot(
 #'   result = result,
 #'   x = "cohort_name",
 #'   y = "mean",
@@ -228,7 +228,7 @@ visBoxplot <- function(result,
 #'   colour = "sex")
 #' }
 #'
-visBarplot <- function(result,
+barPlot <- function(result,
                        x,
                        y,
                        facet = NULL,

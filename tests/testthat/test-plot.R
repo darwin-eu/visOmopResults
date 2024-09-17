@@ -7,7 +7,7 @@ test_that("Function returns a ggplot object", {
 
   result <- mockSummarisedResult() |>
     dplyr::filter(variable_name == "age")
-  p <- visScatterplot(
+  p <- scatterPlot(
     result = result,
     x = "cohort_name",
     y = "mean",
@@ -34,7 +34,7 @@ test_that("Function returns a ggplot object", {
     omopgenerics::newSummarisedResult()
 
 
-  p_box <- visBoxplot(
+  p_box <- boxPlot(
     result,
     lower = "q25",
     middle = "mean",
@@ -49,7 +49,7 @@ test_that("Function returns a ggplot object", {
   expect_false(has_no_legend_labels(p_box))
 
   expect_no_error(
-    visScatterplot(
+    scatterPlot(
       result,
       x = "sex",
       line = TRUE,
@@ -65,7 +65,7 @@ test_that("Function returns a ggplot object", {
   result <- mockSummarisedResult() |>
     dplyr::filter(variable_name == "age")
 
-  p_bar <- visBarplot(
+  p_bar <- barPlot(
     result = result,
     x = "cohort_name",
     y = "mean",
@@ -81,14 +81,14 @@ test_that("Function returns a ggplot object", {
         result |>
           dplyr::mutate('variable_name' = 'age2')
       ) |>
-      visBarplot(
+      barPlot(
         x = "cohort_name",
         y = "mean",
         facet = c("age_group", "sex"))
   )
 
   expect_message(
-    visScatterplot(
+    scatterPlot(
       result,
       x = "sex",
       line = TRUE,
@@ -99,7 +99,7 @@ test_that("Function returns a ggplot object", {
   )
 
   expect_error(
-    visScatterplot(
+    scatterPlot(
       result,
       x = "sex",
       y =  "xxx",
