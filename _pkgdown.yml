@@ -5,22 +5,23 @@ template:
 reference:
 - subtitle: Functions to tidy `summarise_result`
 - contents:
-  - matches("tidy()|tidySummariseResult()|addSettings|pivot|split")
-- subtitle: Table functions
+  - matches("tidy.summarised_result|tidySummarisedResult|addSettings|pivot|split")
+- subtitle: Table function
 - contents:
-  - matches("format|Table")
+  - starts_with("format")
+  - ends_with("Table")
 - subtitle: Plot functions
 - contents:
-  - matches("plot")
+  - ends_with("plot")
 - subtitle: Filter functions
 - contents:
-  - matches("filter")
+  - starts_with("filter")
 - subtitle: Columns retrieval functions
 - contents:
-  - matches("Columns")
+  - ends_with("Columns")
 - subtitle: Unite functions
 - contents:
-  - matches("unite")
+  - starts_with("unite")
 - subtitle: Mock `summarised_result`
 - contents:
   - matches("mock")

@@ -86,10 +86,15 @@ validatePivotEstimatesBy <- function(pivotEstimatesBy, call = parent.frame()) {
 }
 
 validateSettingsColumns <- function(settingsColumns, result, call = parent.frame()) {
+  set <- settings(result)
   omopgenerics::assertCharacter(x = settingsColumns, null = TRUE, call = call)
   if (!is.null(settingsColumns)) {
-    omopgenerics::assertTable(settings(result), columns = settingsColumns)
+    omopgenerics::assertTable(set, columns = settingsColumns)
     settingsColumns <- settingsColumns[settingsColumns != "result_id"]
+    notPresent <- settingsColumns[!settingsColumns %in% colnames(set)]
+    if (length(notPresent) > 0) {
+      cli::cli_abort("The following `settingsColumns` are not present in settings: {notPresent}.")
+    }
   } else {
     settingsColumns <- character()
   }
@@ -169,6 +174,17 @@ validateShowMinCellCount <- function(showMinCellCount, set) {
     showMinCellCount <- FALSE
   }
   return(invisible(showMinCellCount))
+}
+
+validateSettingsAttribute <- function(result, call = parent.frame()) {
+  set <- attr(result, "settings")
+  if (is.null(set)) {
+    cli::cli_abort("`result` does not have attribute settings", call = call)
+  }
+  if (!"result_id" %in% colnames(set) | !"result_id" %in% colnames(result)) {
+    cli::cli_abort("'result_id' must be part of both `result` and its settings attribute.", call = call)
+  }
+  return(invisible(set))
 }
 
 checkFormatTableInputs <- function(header, groupColumn, hide, call = parent.frame()) {

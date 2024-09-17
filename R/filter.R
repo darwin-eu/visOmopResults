@@ -40,22 +40,16 @@
 #'
 filterSettings <- function(result, ...) {
   # initial check
-  set <- attr(result, "settings")
-  if (is.null(set)) {
-    cli::cli_abort("result` does not have attribute settings")
-  }
-  if (!"result_id" %in% set | !"result_id" %in% colnames(result)) {
-    cli::cli_abort("'result_id' must be part of both `result` and its settings attribute.")
-  }
+  set <- validateSettingsAttribute(result)
 
   # filter settings (try if error)
   result <- tryCatch(
     {
-      attr(result, "settings") <- settings(result) |>
+      attr(result, "settings") <- set |>
         dplyr::filter(...)
 
       # filter id from settings
-      resId <- settings(result) |> dplyr::pull("result_id")
+      resId <- set |> dplyr::pull("result_id")
       result |> dplyr::filter(.data$result_id %in% .env$resId)
     },
     error = function(e) {

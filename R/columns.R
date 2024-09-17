@@ -65,11 +65,8 @@ additionalColumns <- function(result) {
 #'   settingsColumns()
 #'
 settingsColumns <- function(result) {
-  omopgenerics::validateResultArguemnt(result)
-  colsSet <- colnames(settings(result))
-  c("cdm_name", groupColumns(result), strataColumns(result), "variable_name",
-    "variable_level", unique(result$estimate_name), additionalColumns(result),
-    colsSet[colsSet != "result_id"])
+  set <- validateSettingsAttribute(result)
+  return(set)
 }
 
 #' Identify tidy columns of a summarised_result
@@ -88,7 +85,10 @@ settingsColumns <- function(result) {
 #'
 tidyColumns <- function(result) {
   omopgenerics::validateResultArguemnt(result)
-  colnames(tidy(result))
+  colsSet <- colnames(settings(result))
+  c("cdm_name", groupColumns(result), strataColumns(result), "variable_name",
+    "variable_level", unique(result$estimate_name), additionalColumns(result),
+    colsSet[colsSet != "result_id"])
 }
 
 getColumns <- function(result, col) {
