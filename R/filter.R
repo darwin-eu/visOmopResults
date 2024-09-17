@@ -40,12 +40,12 @@
 #'
 filterSettings <- function(result, ...) {
   # initial check
-  result <- omopgenerics::validateResultArguemnt(result)
+  set <- validateSettingsAttribute(result)
 
   # filter settings (try if error)
   result <- tryCatch(
     {
-      attr(result, "settings") <- settings(result) |>
+      attr(result, "settings") <- set |>
         dplyr::filter(...)
 
       # filter id from settings

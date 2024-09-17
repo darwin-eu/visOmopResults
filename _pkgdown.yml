@@ -3,27 +3,40 @@ template:
   bootstrap: 5
 
 reference:
-- subtitle: Functions to tidy `summarise_result`
+- title: Functions to tidy `summarise_result`
+- subtitle: Tidy functions
 - contents:
-  - matches("tidy()|tidySummariseResult()|addSettings|pivot|split")
-- subtitle: Table functions
+  - matches("tidy.summarised_result|tidySummarisedResult")
+- subtitle: Split functions
 - contents:
-  - matches("format|Table")
-- subtitle: Plot functions
+  - matches("split")
+- subtitle: Add settings and estimates
 - contents:
-  - matches("plot")
-- subtitle: Filter functions
+  - matches("addSettings|pivot")
+
+- title: Table functions
+- subtitle: Main functions
 - contents:
-  - matches("filter")
-- subtitle: Columns retrieval functions
+  - matches("visOmopTable|formatTable")
+- subtitle: Additional table formating functions
 - contents:
-  - matches("Columns")
+  - matches("formatEstimate|Header|gt|fx|options")
+
+- title: Plot functions
+- contents:
+  - ends_with("plot")
+
+- title: Filter functions
+- contents:
+  - starts_with("filter")
+
+- title: Other functionalities
+- subtitle: Column retrieval functions
+- contents:
+  - ends_with("Columns")
 - subtitle: Unite functions
 - contents:
-  - matches("unite")
+  - starts_with("unite")
 - subtitle: Mock `summarised_result`
 - contents:
   - matches("mock")
-
-
-

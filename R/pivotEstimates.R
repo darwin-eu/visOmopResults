@@ -25,7 +25,7 @@ pivotEstimates <- function(result,
   # initial checks
   pivotEstimatesBy <- validatePivotEstimatesBy(pivotEstimatesBy = pivotEstimatesBy)
   omopgenerics::assertCharacter(nameStyle, null = TRUE, length = 1)
-  omopgenerics::assertTable(result, columns = pivotEstimatesBy, class = "summarised_result")
+  omopgenerics::assertTable(result, columns = pivotEstimatesBy)
 
   # pivot estimates
   result_out <- result
