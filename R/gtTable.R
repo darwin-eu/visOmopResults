@@ -68,9 +68,7 @@ gtTable <- function(
     subtitle = NULL,
     caption = NULL,
     groupColumn = NULL,
-    groupNameCol = lifecycle::deprecated(),
     groupAsColumn = FALSE,
-    groupNameAsColumn = lifecycle::deprecated(),
     groupOrder = NULL,
     colsToMergeRows = NULL
 ) {
