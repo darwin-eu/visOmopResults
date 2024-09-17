@@ -24,7 +24,7 @@ reference:
 
 - title: Plot functions
 - contents:
-  - ends_with("plot")
+  - ends_with("Plot")
 
 - title: Filter functions
 - contents:
