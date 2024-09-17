@@ -37,8 +37,14 @@
     </div>
 
     <div class="section level2">
+      <h2 id="functions-to-tidy-summarise-result-">Functions to tidy <code>summarise_result</code><a class="anchor" aria-label="anchor" href="#functions-to-tidy-summarise-result-"></a></h2>
 
-      <h3 id="functions-to-tidy-summarise-result-">Functions to tidy <code>summarise_result</code><a class="anchor" aria-label="anchor" href="#functions-to-tidy-summarise-result-"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+      <h3 id="tidy-functions">Tidy functions<a class="anchor" aria-label="anchor" href="#tidy-functions"></a></h3>
 
 
 
@@ -49,17 +55,28 @@
 
       <dl><dt>
 
-          <code><a href="addSettings.html">addSettings()</a></code>
-
-        </dt>
-        <dd>Add settings columns to a summaries_result object.</dd>
-      </dl><dl><dt>
-
-          <code><a href="pivotEstimates.html">pivotEstimates()</a></code>
+          <code><a href="tidy.summarised_result.html">tidy(<i>&lt;summarised_result&gt;</i>)</a></code>
           <span class="badge lifecycle lifecycle-experimental">experimental</span>
         </dt>
-        <dd>Set estimates as columns</dd>
+        <dd>Turn a summarised_result object into a tidy tibble</dd>
       </dl><dl><dt>
+
+          <code><a href="tidySummarisedResult.html">tidySummarisedResult()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Get a custom tidy visualization of a summarised_result object</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="split-functions">Split functions<a class="anchor" aria-label="anchor" href="#split-functions"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
 
           <code><a href="splitAdditional.html">splitAdditional()</a></code>
 
@@ -89,27 +106,61 @@
 
         </dt>
         <dd>Split strata_name and strata_level columns</dd>
-      </dl><dl><dt>
-
-          <code><a href="tidy.summarised_result.html">tidy(<i>&lt;summarised_result&gt;</i>)</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
-        </dt>
-        <dd>Turn a summarised_result object into a tidy tibble</dd>
-      </dl><dl><dt>
-
-          <code><a href="tidyColumns.html">tidyColumns()</a></code>
-
-        </dt>
-        <dd>Identify tidy columns of a summarised_result</dd>
-      </dl><dl><dt>
-
-          <code><a href="tidySummarisedResult.html">tidySummarisedResult()</a></code>
-          <span class="badge lifecycle lifecycle-experimental">experimental</span>
-        </dt>
-        <dd>Get a custom tidy visualization of a summarised_result object</dd>
       </dl></div><div class="section level2">
 
-      <h3 id="table-functions">Table functions<a class="anchor" aria-label="anchor" href="#table-functions"></a></h3>
+      <h3 id="add-settings-and-estimates">Add settings and estimates<a class="anchor" aria-label="anchor" href="#add-settings-and-estimates"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="addSettings.html">addSettings()</a></code>
+
+        </dt>
+        <dd>Add settings columns to a summaries_result object.</dd>
+      </dl><dl><dt>
+
+          <code><a href="pivotEstimates.html">pivotEstimates()</a></code>
+          <span class="badge lifecycle lifecycle-experimental">experimental</span>
+        </dt>
+        <dd>Set estimates as columns</dd>
+      </dl></div><div class="section level2">
+      <h2 id="table-functions">Table functions<a class="anchor" aria-label="anchor" href="#table-functions"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+      <h3 id="main-functions">Main functions<a class="anchor" aria-label="anchor" href="#main-functions"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="formatTable.html">formatTable()</a></code>
+
+        </dt>
+        <dd>Generate a formatted table from a data.table</dd>
+      </dl><dl><dt>
+
+          <code><a href="visOmopTable.html">visOmopTable()</a></code>
+
+        </dt>
+        <dd>Format a summarised_result object into a gt, flextable, or tibble object.</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="additional-table-formating-functions">Additional table formating functions<a class="anchor" aria-label="anchor" href="#additional-table-formating-functions"></a></h3>
 
 
 
@@ -138,12 +189,6 @@
         <dd>Create a header for gt and flextable objects.</dd>
       </dl><dl><dt>
 
-          <code><a href="formatTable.html">formatTable()</a></code>
-
-        </dt>
-        <dd>Generate a formatted table from a data.table</dd>
-      </dl><dl><dt>
-
           <code><a href="fxTable.html">fxTable()</a></code>
 
         </dt>
@@ -160,15 +205,9 @@
 
         </dt>
         <dd>Additional arguments for the function visOmopTable</dd>
-      </dl><dl><dt>
-
-          <code><a href="visOmopTable.html">visOmopTable()</a></code>
-
-        </dt>
-        <dd>Format a summarised_result object into a gt, flextable, or tibble object.</dd>
       </dl></div><div class="section level2">
+      <h2 id="plot-functions">Plot functions<a class="anchor" aria-label="anchor" href="#plot-functions"></a></h2>
 
-      <h3 id="plot-functions">Plot functions<a class="anchor" aria-label="anchor" href="#plot-functions"></a></h3>
 
 
 
@@ -196,8 +235,8 @@
         </dt>
         <dd>Create a scatter plot visualisation from a summarised result object.</dd>
       </dl></div><div class="section level2">
+      <h2 id="filter-functions">Filter functions<a class="anchor" aria-label="anchor" href="#filter-functions"></a></h2>
 
-      <h3 id="filter-functions">Filter functions<a class="anchor" aria-label="anchor" href="#filter-functions"></a></h3>
 
 
 
@@ -231,8 +270,14 @@
         </dt>
         <dd>Filter the strata_name-strata_level pair in a summarised_result</dd>
       </dl></div><div class="section level2">
+      <h2 id="other-functionalities">Other functionalities<a class="anchor" aria-label="anchor" href="#other-functionalities"></a></h2>
 
-      <h3 id="columns-retrieval-functions">Columns retrieval functions<a class="anchor" aria-label="anchor" href="#columns-retrieval-functions"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+      <h3 id="column-retrieval-functions">Column retrieval functions<a class="anchor" aria-label="anchor" href="#column-retrieval-functions"></a></h3>
 
 
 
