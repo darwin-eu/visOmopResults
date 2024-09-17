@@ -1,4 +1,4 @@
-test_that("fxTable", {
+test_that("fxTableInternal", {
   table_to_format <- mockSummarisedResult() |>
     formatHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
                  includeHeaderName = FALSE) |>
@@ -6,7 +6,7 @@ test_that("fxTable", {
   # Input 1 ----
   # Title but no subtitle
   # Styles
-  fxResult <- fxTable(
+  fxResult <- fxTableInternal(
     table_to_format,
     style = list(
       "header" = list( "cell" = officer::fp_cell(background.color = "#c8c8c8"),
@@ -41,7 +41,7 @@ test_that("fxTable", {
   expect_equal(fxResult$header$styles$text$bold$data[, "cdm_name"] |> unique(), TRUE)
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"][1], "blue")
 
-  # default fxTable format
+  # default fxTableInternal format
   expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
   expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
   expect_equal(fxResult$body$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
@@ -64,7 +64,7 @@ test_that("fxTable", {
     formatHeader(header = c("strata_name", "strata_level"),
                  includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
-  fxResult <- fxTable(
+  fxResult <- fxTableInternal(
     table_to_format,
     style = list(
       "subtitle" = list("text" = officer::fp_text(bold = TRUE, font.size = 12, color = "blue")),
@@ -122,7 +122,7 @@ test_that("fxTable", {
                  delim = ":",
                  includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
-  fxResult <- fxTable(
+  fxResult <- fxTableInternal(
     table_to_format,
     delim = ":",
     style = list(
@@ -148,7 +148,7 @@ test_that("fxTable", {
   expect_equal(fxResult$body$styles$cells$background.color$data[,2] |> unique(), "transparent")
 
   # Wrong inputs ----
-  expect_error(fxTable(
+  expect_error(fxTableInternal(
     table_to_format,
     style = NA,
     na = "-",
@@ -161,13 +161,13 @@ test_that("fxTable", {
   ))
 })
 
-test_that("fxTable, test default styles and NULL", {
+test_that("fxTableInternal, test default styles and NULL", {
   table_to_format <- mockSummarisedResult() |>
     formatHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
                  includeHeaderName = FALSE) |>
     dplyr::select(-result_id)
   # Input 1: NULL ----
-  fxResult <- fxTable(
+  fxResult <- fxTableInternal(
     table_to_format,
     style = NULL,
     na = NULL,
@@ -191,7 +191,7 @@ test_that("fxTable, test default styles and NULL", {
   expect_true(fxResult$header$styles$text$bold$data[1, "cdm_name"] |> unique())
   expect_false(fxResult$header$styles$text$bold$data[2:6, "cdm_name"] |> unique())
 
-  # default fxTable format
+  # default fxTableInternal format
   expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
   expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
   expect_equal(fxResult$body$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
@@ -203,7 +203,7 @@ test_that("fxTable, test default styles and NULL", {
     formatHeader(header = c("Strata", "strata_name", "strata_level"),
                  includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
-  fxResult <- fxTable(
+  fxResult <- fxTableInternal(
     table_to_format,
     style = "default",
     na = "-",
@@ -236,7 +236,7 @@ test_that("fxTable, test default styles and NULL", {
 
   #Input 3: woring name style ----
   expect_message(
-    fxResult <- fxTable(
+    fxResult <- fxTableInternal(
       table_to_format,
       style = "heythere",
       na = "-",
@@ -250,12 +250,12 @@ test_that("fxTable, test default styles and NULL", {
   )
 })
 
-test_that("fxTable, test colsToMergeRows", {
+test_that("fxTableInternal, test colsToMergeRows", {
   table_to_format<- mockSummarisedResult() |>
     formatHeader(header = c("strata_name", "strata_level")) |>
     dplyr::select(-result_id)
   # colsToMergeRows = "all"
-  fxResult <- fxTable(
+  fxResult <- fxTableInternal(
     x = table_to_format,
     style = "default",
     na = "-",
@@ -285,7 +285,7 @@ test_that("fxTable, test colsToMergeRows", {
                  "gray", "gray", "gray", "gray", "gray", "gray", "gray", "gray"))
 
   # colsToMergeRows = c("cdm_name", "variable_name")
-  fxResult <- fxTable(
+  fxResult <- fxTableInternal(
     table_to_format,
     style = "default",
     na = "-",
@@ -308,7 +308,7 @@ test_that("fxTable, test colsToMergeRows", {
                  "gray", "gray", "gray", "black", "gray", "black", "black", "black"))
 
   # Wroing input
-  expect_message(fxTable(
+  expect_message(fxTableInternal(
     table_to_format,
     style = "default",
     na = "-",
@@ -334,7 +334,7 @@ test_that("multiple groupColumn", {
                  includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
 
-  fxResult <- fxTable(
+  fxResult <- fxTableInternal(
     table_to_format,
     delim = ":",
     style = list(

@@ -70,7 +70,7 @@ A tibble, gt, or flextable object.
 }
 \description{
 This function combines the functionalities of \code{formatEstimateValue()},
-\code{formatEstimateName()}, \code{formatHeader()}, \code{gtTable()}, and \code{fxTable()}
+\code{formatEstimateName()}, \code{formatHeader()}, and \code{formatTable()}
 into a single function specifically for \code{summarised_result} objects.
 }
 \examples{

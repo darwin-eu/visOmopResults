@@ -53,18 +53,32 @@
 #'
 #' @export
 #'
-fxTable <- function(
-    x,
-    delim = "\n",
-    style = "default",
-    na = "-",
-    title = NULL,
-    subtitle = NULL,
-    caption = NULL,
-    groupColumn = NULL,
-    groupAsColumn = FALSE,
-    groupOrder = NULL,
-    colsToMergeRows = NULL) {
+fxTable <- function(x,
+                    delim = "\n",
+                    style = "default",
+                    na = "-",
+                    title = NULL,
+                    subtitle = NULL,
+                    caption = NULL,
+                    groupColumn = NULL,
+                    groupAsColumn = FALSE,
+                    groupOrder = NULL,
+                    colsToMergeRows = NULL) {
+  lifecycle::deprecate_soft(when = "0.4.0", what = "fxTable()")
+}
+
+
+fxTableInternal <- function(x,
+                            delim = "\n",
+                            style = "default",
+                            na = "-",
+                            title = NULL,
+                            subtitle = NULL,
+                            caption = NULL,
+                            groupColumn = NULL,
+                            groupAsColumn = FALSE,
+                            groupOrder = NULL,
+                            colsToMergeRows = NULL) {
 
   # Package checks
   rlang::check_installed("flextable")

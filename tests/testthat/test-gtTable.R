@@ -1,5 +1,4 @@
 test_that("gtTable", {
-
   table_to_format <- mockSummarisedResult() |>
     formatHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
                includeHeaderName = FALSE) |>
@@ -7,7 +6,7 @@ test_that("gtTable", {
   # Input 1 ----
   # Title but no subtitle
   # Styles
-  gtResult <- gtTable(
+  gtTableInternal <- gtTable(
     table_to_format,
     style = list(
       "header" = list(
@@ -32,35 +31,35 @@ test_that("gtTable", {
 
   # Spanners
   expect_equal(
-    gtResult$`_spanners`$spanner_label |> unlist(),
+    gtTableInternal$`_spanners`$spanner_label |> unlist(),
     c("overall", "age_group &&& sex", "sex", "age_group", "overall", "age_group &&& sex",
       "sex", "age_group", "Study strata", "cohort1", "cohort2", "Study cohorts")
   )
-  expect_true(sum(gtResult$`_spanners`$spanner_level == 1) == 8)
-  expect_true(sum(gtResult$`_spanners`$spanner_level == 2) == 1)
-  expect_true(sum(gtResult$`_spanners`$spanner_level == 3) == 2)
-  expect_true(sum(gtResult$`_spanners`$spanner_level == 4) == 1)
+  expect_true(sum(gtTableInternal$`_spanners`$spanner_level == 1) == 8)
+  expect_true(sum(gtTableInternal$`_spanners`$spanner_level == 2) == 1)
+  expect_true(sum(gtTableInternal$`_spanners`$spanner_level == 3) == 2)
+  expect_true(sum(gtTableInternal$`_spanners`$spanner_level == 4) == 1)
   # spanner styles
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level %in% c(1,3)]] |>
+  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level %in% c(1,3)]] |>
                  unlist() |> unique(),
                c("#E1E1E1", "bold"))
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level %in% c(2,4)]] |>
+  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level %in% c(2,4)]] |>
                  unlist() |> unique(),
                c("#C8C8C8", "bold"))
   # title
-  expect_true(gtResult$`_heading`$title == "Test 1")
-  expect_true(is.null(gtResult$`_heading`$subtitle))
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "title"] |> unlist(),
+  expect_true(gtTableInternal$`_heading`$title == "Test 1")
+  expect_true(is.null(gtTableInternal$`_heading`$subtitle))
+  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "title"] |> unlist(),
                c("cell_text.color" = "#0000FF", "cell_text.weight" = "bold"))
   # column names
-  expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[1:36] |> unique(), c("#E1E1E1", "bold"))
-  expect_true(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[37:44] |> unique() == "bold")
-  expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
+  expect_equal(unlist(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "columns_columns"])[1:36] |> unique(), c("#E1E1E1", "bold"))
+  expect_true(unlist(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "columns_columns"])[37:44] |> unique() == "bold")
+  expect_false(lapply(gtTableInternal$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
   # na
-  expect_identical(gtResult$`_substitutions`, list())
+  expect_identical(gtTableInternal$`_substitutions`, list())
   # Group labels
-  expect_true(is.null(gtResult$`_stub_df`$group_label |> unlist()))
-  expect_false(gtResult$`_options`$value[gtResult$`_options`$parameter == "row_group_as_column"] |> unlist())
+  expect_true(is.null(gtTableInternal$`_stub_df`$group_label |> unlist()))
+  expect_false(gtTableInternal$`_options`$value[gtTableInternal$`_options`$parameter == "row_group_as_column"] |> unlist())
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
@@ -69,7 +68,7 @@ test_that("gtTable", {
     formatHeader(header = c("strata_name", "strata_level"),
                includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
-  gtResult <- gtTable(
+  gtTableInternal <- gtTable(
     table_to_format,
     style = list(
       "subtitle" = list(gt::cell_text(weight = "lighter", size = "large", color = "blue")),
@@ -89,40 +88,40 @@ test_that("gtTable", {
 
   # Spanners
   expect_equal(
-    gtResult$`_spanners`$spanner_label |> unlist(),
+    gtTableInternal$`_spanners`$spanner_label |> unlist(),
     c("strata_level", "overall", "age_group &&& sex", "sex", "age_group", "strata_name")
   )
-  expect_true(sum(gtResult$`_spanners`$spanner_level == 1) == 1)
-  expect_true(sum(gtResult$`_spanners`$spanner_level == 2) == 4)
-  expect_true(sum(gtResult$`_spanners`$spanner_level == 3) == 1)
+  expect_true(sum(gtTableInternal$`_spanners`$spanner_level == 1) == 1)
+  expect_true(sum(gtTableInternal$`_spanners`$spanner_level == 2) == 4)
+  expect_true(sum(gtTableInternal$`_spanners`$spanner_level == 3) == 1)
   # spanner styles
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level %in% c(1,3)]] |>
+  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level %in% c(1,3)]] |>
                  unlist() |> unique(),
                c("#000000", "#FFFFFF"))
-  expect_true(is.null(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level == 2]] |>
+  expect_true(is.null(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level == 2]] |>
                  unlist() |> unique()))
   # title &&& subtitle
-  expect_true(gtResult$`_heading`$title == "Title test 2")
-  expect_true(gtResult$`_heading`$subtitle == "Subtitle for test 2")
-  expect_true(is.null(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "title"] |> unlist()))
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "subtitle"] |> unlist(),
+  expect_true(gtTableInternal$`_heading`$title == "Title test 2")
+  expect_true(gtTableInternal$`_heading`$subtitle == "Subtitle for test 2")
+  expect_true(is.null(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "title"] |> unlist()))
+  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "subtitle"] |> unlist(),
                c("cell_text.color" = "#0000FF", "cell_text.size" = "large", "cell_text.weight" = "lighter"))
   # column names
-  expect_true(length(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"] |> unlist()) == 8)
-  expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header\\]|\\[header_name\\]", x)}) |> unlist() |> unique())
+  expect_true(length(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "columns_columns"] |> unlist()) == 8)
+  expect_false(lapply(gtTableInternal$`_boxhead`$column_label, function(x){grepl("\\[header\\]|\\[header_name\\]", x)}) |> unlist() |> unique())
   # na
-  expect_equal(unique(gtResult$`_data`$variable_level[1:3]), "-")
+  expect_equal(unique(gtTableInternal$`_data`$variable_level[1:3]), "-")
   # Group labels
-  expect_equal(gtResult$`_stub_df`$group_label |> unlist() |> unique(), c("cohort1", "cohort2"))
-  expect_false(gtResult$`_options`$value[gtResult$`_options`$parameter == "row_group_as_column"] |> unlist())
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "row_groups"] |> unlist() |> unique(),
+  expect_equal(gtTableInternal$`_stub_df`$group_label |> unlist() |> unique(), c("cohort1", "cohort2"))
+  expect_false(gtTableInternal$`_options`$value[gtTableInternal$`_options`$parameter == "row_group_as_column"] |> unlist())
+  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "row_groups"] |> unlist() |> unique(),
                c("#E1E1E1"))
   # caption
-  expect_equal(gtResult$`_options`[2, "value"] |> unlist(), c("value" = "*This* is the caption"))
-  expect_equal(gtResult$`_options`$value[gtResult$`_options`$parameter == "table_caption"][[1]] |> attr("class"),
+  expect_equal(gtTableInternal$`_options`[2, "value"] |> unlist(), c("value" = "*This* is the caption"))
+  expect_equal(gtTableInternal$`_options`$value[gtTableInternal$`_options`$parameter == "table_caption"][[1]] |> attr("class"),
                "from_markdown")
   # body
-  body_style <- gtResult$`_styles`$styles[gtResult$`_styles`$locname == "data" & gtResult$`_styles`$rownum %in% 2:8] |> unlist()
+  body_style <- gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "data" & gtTableInternal$`_styles`$rownum %in% 2:8] |> unlist()
   expect_equal(body_style[names(body_style) %in% c("cell_text.color", "cell_border_top.color", "cell_border_top.style")] |> unique(),
                c("solid","#D3D3D3", "#FF0000", "#000000"))
 
@@ -134,7 +133,7 @@ test_that("gtTable", {
                delim = ":",
                includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
-  gtResult <- gtTable(
+  gtTableInternal <- gtTable(
     table_to_format,
     delim = ":",
     style = list(
@@ -152,9 +151,9 @@ test_that("gtTable", {
     groupOrder = c("cohort2", "cohort1")
   )
   # groupAsColumn
-  expect_true(gtResult$`_options`$value[gtResult$`_options`$parameter == "row_group_as_column"] |> unlist())
+  expect_true(gtTableInternal$`_options`$value[gtTableInternal$`_options`$parameter == "row_group_as_column"] |> unlist())
   # groupOrder
-  expect_identical(gtResult$`_row_groups`, c( "cohort2", "cohort1"))
+  expect_identical(gtTableInternal$`_row_groups`, c( "cohort2", "cohort1"))
 
   # Wrong inputs ----
   expect_error(gtTable(
@@ -176,7 +175,7 @@ test_that("gtTable, test default styles and NULL", {
                 includeHeaderName = FALSE) |>
     dplyr::select(-result_id)
   # Input 1: NULL ----
-  gtResult <- gtTable(
+  gtTableInternal <- gtTable(
     table_to_format,
     style = NULL,
     na = NULL,
@@ -189,8 +188,8 @@ test_that("gtTable, test default styles and NULL", {
   )
 
   # style
-  expect_true(gtResult$`_styles`$styles[1][[1]]$cell_text$align == "right")
-  expect_true(gtResult$`_styles`$styles[182][[1]]$cell_text$align == "left")
+  expect_true(gtTableInternal$`_styles`$styles[1][[1]]$cell_text$align == "right")
+  expect_true(gtTableInternal$`_styles`$styles[182][[1]]$cell_text$align == "left")
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
@@ -199,7 +198,7 @@ test_that("gtTable, test default styles and NULL", {
     formatHeader(header = c("strata", "strata_name", "strata_level"),
                 includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
-  gtResult <- gtTable(
+  gtTableInternal <- gtTable(
     table_to_format,
     style = "default",
     na = "-",
@@ -212,35 +211,35 @@ test_that("gtTable, test default styles and NULL", {
   )
 
   # spanner styles
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level %in% c(1,3)]] |>
+  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level %in% c(1,3)]] |>
                  unlist() |> unique(),
                c("#D9D9D9", "center", "bold"))
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level == 2]] |>
+  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level == 2]] |>
                  unlist() |> unique(),
                c("#E1E1E1", "center", "bold"))
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$grpname %in% gtResult$`_spanners`$spanner_id[gtResult$`_spanners`$spanner_level == 4]] |>
+  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level == 4]] |>
                  unlist() |> unique(),
                c("#C8C8C8", "center", "bold"))
   # title
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "title"] |> unlist() |> unique(),
+  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "title"] |> unlist() |> unique(),
                c("15", "center", "bold"))
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "subtitle"] |> unlist() |> unique(),
+  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "subtitle"] |> unlist() |> unique(),
                c("12", "center", "bold"))
   # column names
-  expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[1:27] |> unique(),
+  expect_equal(unlist(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "columns_columns"])[1:27] |> unique(),
                c("#E1E1E1", "center", "bold"))
-  expect_equal(unlist(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "columns_columns"])[28:43] |> unique(),
+  expect_equal(unlist(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "columns_columns"])[28:43] |> unique(),
               c("center", "bold"))
-  expect_false(lapply(gtResult$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
+  expect_false(lapply(gtTableInternal$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
 
   # Group labels
-  expect_equal(gtResult$`_styles`$styles[gtResult$`_styles`$locname == "row_groups"] |> unlist() |> unique(),
+  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "row_groups"] |> unlist() |> unique(),
                c("#E9E9E9", "bold"))
 
 
   #Input 3: woring name style ----
   expect_message(
-    gtResult <- gtTable(
+    gtTableInternal <- gtTable(
       table_to_format,
       style = "heythere",
       na = "-",
@@ -255,7 +254,7 @@ test_that("gtTable, test colsToMergeRows", {
     formatHeader(header = c("strata_name", "strata_level")) |>
     dplyr::select(-result_id)
   # colsToMergeRows = "all"
-  gtResult <- gtTable(
+  gtTableInternal <- gtTable(
     table_to_format,
     style = "default",
     na = "-",
@@ -267,16 +266,16 @@ test_that("gtTable, test colsToMergeRows", {
     groupOrder = NULL,
     colsToMergeRows = "all_columns"
   )
-  expect_equal(gtResult$`_data`$cdm_name,
+  expect_equal(gtTableInternal$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$variable_level,
+  expect_equal(gtTableInternal$`_data`$variable_level,
                c("-", "-", "", "Amoxiciline", "", "Ibuprofen", "", "-", "-", "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
-  expect_equal(gtResult$`_data`$group_level|> levels(),
+  expect_equal(gtTableInternal$`_data`$group_level|> levels(),
                c("cohort1", "cohort2"))
 
   # colsToMergeRows = c("cdm_name", "variable_name")
-  gtResult <- gtTable(
+  gtTableInternal <- gtTable(
     table_to_format,
     style = "default",
     na = "-",
@@ -288,16 +287,16 @@ test_that("gtTable, test colsToMergeRows", {
     groupOrder = NULL,
     colsToMergeRows = c("cdm_name", "variable_level")
   )
-  expect_equal(gtResult$`_data`$cdm_name,
+  expect_equal(gtTableInternal$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$variable_level,
+  expect_equal(gtTableInternal$`_data`$variable_level,
                c("-", "", "", "Amoxiciline", "", "Ibuprofen", "", "-", "", "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
-  expect_equal(gtResult$`_data`$group_level|> levels(),
+  expect_equal(gtTableInternal$`_data`$group_level|> levels(),
                c("cohort1", "cohort2"))
 
   # no groupColumn
-  gtResult <- gtTable(
+  gtTableInternal <- gtTable(
     table_to_format,
     style = "default",
     na = "-",
@@ -309,13 +308,13 @@ test_that("gtTable, test colsToMergeRows", {
     groupOrder = NULL,
     colsToMergeRows = "all_columns"
   )
-  expect_equal(gtResult$`_data`$cdm_name,
+  expect_equal(gtTableInternal$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$variable_level,
+  expect_equal(gtTableInternal$`_data`$variable_level,
                c("-", "-", "-", "-", "-", "-",
                  "Amoxiciline", "Amoxiciline", "Amoxiciline", "Amoxiciline", "Ibuprofen", "Ibuprofen",
                  "Ibuprofen","Ibuprofen"))
-  expect_null(gtResult$`_data`$group_level|> levels())
+  expect_null(gtTableInternal$`_data`$group_level|> levels())
 })
 
 test_that("groupColumn",{
@@ -323,7 +322,7 @@ test_that("groupColumn",{
     formatHeader(header = c("strata_name", "strata_level")) |>
     dplyr::select(-result_id)
 
-  gtResult <- gtTable(
+  gtTableInternal <- gtTable(
     table_to_format,
     style = "default",
     na = "-",
@@ -336,15 +335,15 @@ test_that("groupColumn",{
     colsToMergeRows = "all_columns"
   )
 
-  expect_equal(gtResult$`_data`$cdm_name,
+  expect_equal(gtTableInternal$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
-  expect_equal(gtResult$`_data`$variable_level,
+  expect_equal(gtTableInternal$`_data`$variable_level,
                c("-", "-", "", "Amoxiciline", "", "Ibuprofen", "", "-", "-", "", "Amoxiciline",
                  "","Ibuprofen",  ""  ))
-  expect_equal(gtResult$`_data`$group_name_group_level |> levels(),
+  expect_equal(gtTableInternal$`_data`$group_name_group_level |> levels(),
                c('cohort_name; cohort1', 'cohort_name; cohort2'))
 
-  gtResult <- gtTable(
+  gtTableInternal <- gtTable(
     table_to_format,
     style = "default",
     na = "-",
@@ -356,7 +355,7 @@ test_that("groupColumn",{
     groupOrder = NULL,
     colsToMergeRows = "all_columns"
   )
-  expect_equal(gtResult$`_data`$hi_there |> levels(),
+  expect_equal(gtTableInternal$`_data`$hi_there |> levels(),
                c('cohort_name; cohort1', 'cohort_name; cohort2'))
 
 })

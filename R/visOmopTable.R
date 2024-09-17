@@ -39,7 +39,7 @@
 #'
 #' @description
 #' This function combines the functionalities of `formatEstimateValue()`,
-#' `formatEstimateName()`, `formatHeader()`, `gtTable()`, and `fxTable()`
+#' `formatEstimateName()`, `formatHeader()`, and `formatTable()`
 #' into a single function specifically for `summarised_result` objects.
 #'
 #' @export

@@ -52,7 +52,7 @@ A tibble, gt, or flextable object.
 }
 \description{
 This function combines the functionalities of \code{formatEstimateValue()},
-\code{formatEstimateName()}, \code{formatHeader()}, \code{gtTable()}, and \code{fxTable()}
+\code{formatEstimateName()}, \code{formatHeader()}, and \code{formatTable()}
 into a single function. While it does not require the input table to be
 a \code{summarised_result}, it does expect specific fields to apply formatting.
 }

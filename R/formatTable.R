@@ -121,7 +121,7 @@ formatTable <- function(x,
   # format
   if (type == "gt") {
     result <- result |>
-      visOmopResults::gtTable(
+      visOmopResults::gtTableInternal(
         delim = delim,
         style = style,
         na = na,
@@ -135,7 +135,7 @@ formatTable <- function(x,
       )
   } else if (type == "flextable") {
     result <- result |>
-      visOmopResults::fxTable(
+      visOmopResults::fxTableInternal(
         delim = delim,
         style = style,
         na = na,

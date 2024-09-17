@@ -29,7 +29,7 @@
 #'
 #' @description
 #' This function combines the functionalities of `formatEstimateValue()`,
-#' `formatEstimateName()`, `formatHeader()`, `gtTable()`, and `fxTable()`
+#' `formatEstimateName()`, `formatHeader()`, and `formatTable()`
 #' into a single function. While it does not require the input table to be
 #' a `summarised_result`, it does expect specific fields to apply formatting.
 #'
@@ -114,7 +114,7 @@ visTable <- function(result,
 
   if (type == "gt") {
     result <- result |>
-      visOmopResults::gtTable(
+      visOmopResults::gtTableInternal(
         delim = .options$delim,
         style = .options$style,
         na = .options$na,
@@ -128,7 +128,7 @@ visTable <- function(result,
       )
   } else if (type == "flextable") {
     result <- result |>
-      visOmopResults::fxTable(
+      visOmopResults::fxTableInternal(
         delim = .options$delim,
         style = .options$style,
         na = .options$na,

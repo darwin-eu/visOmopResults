@@ -2,10 +2,10 @@
 % Please edit documentation in R/gtTable.R
 \name{gtStyle}
 \alias{gtStyle}
-\title{Default style code for gt tables.}
+\title{Default style code expresion for gt tables.}
 \usage{
 gtStyle()
 }
 \description{
-Default style code for gt tables.
+Default style code expresion for gt tables.
 }
