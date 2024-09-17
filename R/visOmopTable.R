@@ -33,7 +33,6 @@
 #' used.
 #' @param .options A named list with additional formatting options.
 #' `visOmopResults::optionsTable()` shows allowed arguments and their default values.
-#' @param minCellCount `r lifecycle::badge("deprecated")`
 #' @param split `r lifecycle::badge("deprecated")`
 #'
 #' @return A tibble, gt, or flextable object.
@@ -67,12 +66,8 @@ visOmopTable <- function(result,
                          hide = character(),
                          showMinCellCount = TRUE,
                          .options = list(),
-                         split = lifecycle::deprecated(),
-                         minCellCount = lifecycle::deprecated()) {
+                         split = lifecycle::deprecated()) {
 
-  if (lifecycle::is_present(minCellCount)) {
-    lifecycle::deprecate_stop("0.3.0", "visOmopTable(minCellCount)")
-  }
   if (lifecycle::is_present(split)) {
     lifecycle::deprecate_warn("0.4.0", "visOmopTable(split)")
   }

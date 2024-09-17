@@ -21,7 +21,7 @@
 splitGroup <- function(result,
                        keep = FALSE,
                        fill = "overall") {
-  splitNameLevel(
+  splitNameLevelInternal(
     result = result,
     name = "group_name",
     level = "group_level",
@@ -52,7 +52,7 @@ splitGroup <- function(result,
 splitStrata <- function(result,
                         keep = FALSE,
                         fill = "overall") {
-  splitNameLevel(
+  splitNameLevelInternal(
     result = result,
     name = "strata_name",
     level = "strata_level",
@@ -83,7 +83,7 @@ splitStrata <- function(result,
 splitAdditional <- function(result,
                             keep = FALSE,
                             fill = "overall") {
-  splitNameLevel(
+  splitNameLevelInternal(
     result = result,
     name = "additional_name",
     level = "additional_level",
@@ -134,7 +134,7 @@ splitAll <- function(result,
     result <- tryCatch(
       expr = {
         result |>
-          splitNameLevel(
+          splitNameLevelInternal(
             name = paste0(col, "_name"),
             level = paste0(col, "_level"),
             keep = keep,
@@ -164,22 +164,25 @@ splitAll <- function(result,
 #'
 #' @return A dataframe with the specified name column values as columns.
 #' @description
+#' `r lifecycle::badge("deprecated")`
 #' Pivots the input dataframe so the values of the name columns are transformed
 #' into columns, which values come from the specified level column.
 #'
 #' @export
-#'
-#' @examples
-#' mockSummarisedResult() |>
-#'   splitNameLevel(name = "group_name",
-#'                  level = "group_level",
-#'                  keep = FALSE)
 #'
 splitNameLevel <- function(result,
                            name = "group_name",
                            level = "group_level",
                            keep = FALSE,
                            fill = "overall") {
+  lifecycle::deprecate_soft(when = "0.4.0", what = "splitNameLevel()")
+}
+
+splitNameLevelInternal <- function(result,
+                                   name = "group_name",
+                                   level = "group_level",
+                                   keep = FALSE,
+                                   fill = "overall") {
   omopgenerics::assertCharacter(name, length = 1)
   omopgenerics::assertCharacter(level, length = 1)
   omopgenerics::assertLogical(keep, length = 1)
