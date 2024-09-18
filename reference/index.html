@@ -37,7 +37,7 @@
     </div>
 
     <div class="section level2">
-      <h2 id="functions-to-tidy-summarise-result-">Functions to tidy <code>summarise_result</code><a class="anchor" aria-label="anchor" href="#functions-to-tidy-summarise-result-"></a></h2>
+      <h2 id="functions-to-tidy-">Functions to tidy <summarised_result></summarised_result><a class="anchor" aria-label="anchor" href="#functions-to-tidy-"></a></h2>
 
 
 
@@ -96,12 +96,6 @@
         <dd>Split group_name and group_level columns</dd>
       </dl><dl><dt>
 
-          <code><a href="splitNameLevel.html">splitNameLevel()</a></code>
-          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
-        </dt>
-        <dd>Split name and level columns into the columns</dd>
-      </dl><dl><dt>
-
           <code><a href="splitStrata.html">splitStrata()</a></code>
 
         </dt>
@@ -122,7 +116,7 @@
           <code><a href="addSettings.html">addSettings()</a></code>
 
         </dt>
-        <dd>Add settings columns to a summaries_result object.</dd>
+        <dd>Add settings columns to a summarised_result object</dd>
       </dl><dl><dt>
 
           <code><a href="pivotEstimates.html">pivotEstimates()</a></code>
@@ -148,16 +142,16 @@
 
       <dl><dt>
 
-          <code><a href="formatTable.html">formatTable()</a></code>
-
-        </dt>
-        <dd>Generate a formatted table from a data.table</dd>
-      </dl><dl><dt>
-
           <code><a href="visOmopTable.html">visOmopTable()</a></code>
 
         </dt>
-        <dd>Format a summarised_result object into a gt, flextable, or tibble object.</dd>
+        <dd>Format a summarised_result object into a gt, flextable, or tibble object</dd>
+      </dl><dl><dt>
+
+          <code><a href="visTable.html">visTable()</a></code>
+
+        </dt>
+        <dd>Generate a formatted table from a data.table</dd>
       </dl></div><div class="section level2">
 
       <h3 id="additional-table-formating-functions">Additional table formating functions<a class="anchor" aria-label="anchor" href="#additional-table-formating-functions"></a></h3>
@@ -186,19 +180,36 @@
           <code><a href="formatHeader.html">formatHeader()</a></code>
 
         </dt>
-        <dd>Create a header for gt and flextable objects.</dd>
+        <dd>Create a header for gt and flextable objects</dd>
       </dl><dl><dt>
 
-          <code><a href="fxTable.html">fxTable()</a></code>
+          <code><a href="formatTable.html">formatTable()</a></code>
 
         </dt>
-        <dd>Creates a flextable object from a dataframe</dd>
+        <dd>Creates a flextable or gt object from a dataframe</dd>
+      </dl></div><div class="section level2">
+
+      <h3 id="helper-table-functions">Helper table functions<a class="anchor" aria-label="anchor" href="#helper-table-functions"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="flextableStyle.html">flextableStyle()</a></code>
+
+        </dt>
+        <dd>Default style code expresion for flextable tables.</dd>
       </dl><dl><dt>
 
-          <code><a href="gtTable.html">gtTable()</a></code>
+          <code><a href="gtStyle.html">gtStyle()</a></code>
 
         </dt>
-        <dd>Creates a gt object from a dataframe</dd>
+        <dd>Default style code expresion for gt tables.</dd>
       </dl><dl><dt>
 
           <code><a href="optionsTable.html">optionsTable()</a></code>
@@ -221,19 +232,19 @@
           <code><a href="barPlot.html">barPlot()</a></code>
           <span class="badge lifecycle lifecycle-experimental">experimental</span>
         </dt>
-        <dd>Create a bar plot visualisation from a summarised result object.</dd>
+        <dd>Create a bar plot visualisation from a summarised result object</dd>
       </dl><dl><dt>
 
           <code><a href="boxPlot.html">boxPlot()</a></code>
           <span class="badge lifecycle lifecycle-experimental">experimental</span>
         </dt>
-        <dd>Create a box plot visualisation from a summarised_result object.</dd>
+        <dd>Create a box plot visualisation from a summarised_result object</dd>
       </dl><dl><dt>
 
           <code><a href="scatterPlot.html">scatterPlot()</a></code>
           <span class="badge lifecycle lifecycle-experimental">experimental</span>
         </dt>
-        <dd>Create a scatter plot visualisation from a summarised result object.</dd>
+        <dd>Create a scatter plot visualisation from a summarised result object</dd>
       </dl></div><div class="section level2">
       <h2 id="filter-functions">Filter functions<a class="anchor" aria-label="anchor" href="#filter-functions"></a></h2>
 
@@ -262,7 +273,7 @@
           <code><a href="filterSettings.html">filterSettings()</a></code>
 
         </dt>
-        <dd>Filter a summarised_result using the settings.</dd>
+        <dd>Filter a summarised_result using the settings</dd>
       </dl><dl><dt>
 
           <code><a href="filterStrata.html">filterStrata()</a></code>
@@ -341,19 +352,13 @@
         <dd>Unite one or more columns in group_name-group_level format</dd>
       </dl><dl><dt>
 
-          <code><a href="uniteNameLevel.html">uniteNameLevel()</a></code>
-
-        </dt>
-        <dd>Unite one or more columns in name-level format</dd>
-      </dl><dl><dt>
-
           <code><a href="uniteStrata.html">uniteStrata()</a></code>
 
         </dt>
         <dd>Unite one or more columns in strata_name-strata_level format</dd>
       </dl></div><div class="section level2">
 
-      <h3 id="mock-summarised-result-">Mock <code>summarised_result</code><a class="anchor" aria-label="anchor" href="#mock-summarised-result-"></a></h3>
+      <h3 id="mock-">Mock <summarised_result></summarised_result><a class="anchor" aria-label="anchor" href="#mock-"></a></h3>
 
 
 
@@ -368,6 +373,41 @@
 
         </dt>
         <dd>A summarised_result object filled with mock data</dd>
+      </dl></div><div class="section level2">
+      <h2 id="deprecated">Deprecated<a class="anchor" aria-label="anchor" href="#deprecated"></a></h2>
+
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="fxTable.html">fxTable()</a></code>
+
+        </dt>
+        <dd>Creates a flextable object from a dataframe</dd>
+      </dl><dl><dt>
+
+          <code><a href="gtTable.html">gtTable()</a></code>
+
+        </dt>
+        <dd>Creates a gt object from a dataframe</dd>
+      </dl><dl><dt>
+
+          <code><a href="splitNameLevel.html">splitNameLevel()</a></code>
+          <span class="badge lifecycle lifecycle-deprecated">deprecated</span>
+        </dt>
+        <dd>Split name and level columns into the columns</dd>
+      </dl><dl><dt>
+
+          <code><a href="uniteNameLevel.html">uniteNameLevel()</a></code>
+
+        </dt>
+        <dd>Unite one or more columns in name-level format</dd>
       </dl></div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
     </nav></aside></div>
@@ -378,7 +418,7 @@
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>

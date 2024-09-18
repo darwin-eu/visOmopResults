@@ -16,12 +16,14 @@
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/filterGroup.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/filterSettings.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/filterStrata.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/flextableStyle.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/formatEstimateName.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/formatEstimateValue.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/formatHeader.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/formatTable.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/fxTable.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/groupColumns.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/gtStyle.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/gtTable.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/index.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/mockSummarisedResult.html</loc></url>
@@ -45,5 +47,6 @@
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/uniteStrata.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/visOmopResults-package.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/visOmopTable.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/visTable.html</loc></url>
 </urlset>
 

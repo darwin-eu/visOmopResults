@@ -49,7 +49,7 @@ estimate name and/or joining different estimates together in a single row.</p>
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">formatEstimateName</span><span class="op">(</span></span>
 <span>  <span class="va">result</span>,</span>
-<span>  estimateNameFormat <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>  estimateName <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keepNotFormatted <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>  useFormatOrder <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
@@ -63,7 +63,7 @@ estimate name and/or joining different estimates together in a single row.</p>
 <dd><p>A summarised_result.</p></dd>
 
 
-<dt id="arg-estimatenameformat">estimateNameFormat<a class="anchor" aria-label="anchor" href="#arg-estimatenameformat"></a></dt>
+<dt id="arg-estimatename">estimateName<a class="anchor" aria-label="anchor" href="#arg-estimatename"></a></dt>
 <dd><p>Named list of estimate name's to join, sorted by
 computation order. Indicate estimate_name's between &lt;...&gt;.</p></dd>
 
@@ -74,7 +74,7 @@ computation order. Indicate estimate_name's between &lt;...&gt;.</p></dd>
 
 <dt id="arg-useformatorder">useFormatOrder<a class="anchor" aria-label="anchor" href="#arg-useformatorder"></a></dt>
 <dd><p>Whether to use the order in which estimate names
-appear in the estimateNameFormat (TRUE), or use the order in the
+appear in the estimateName (TRUE), or use the order in the
 input dataframe (FALSE).</p></dd>
 
 </dl></div>
@@ -88,7 +88,7 @@ input dataframe (FALSE).</p></dd>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="mockSummarisedResult.html">mockSummarisedResult</a></span><span class="op">(</span><span class="op">)</span></span></span>
 <span class="r-in"><span><span class="va">result</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">formatEstimateName</span><span class="op">(</span></span></span>
-<span class="r-in"><span>    estimateNameFormat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
+<span class="r-in"><span>    estimateName <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span></span>
 <span class="r-in"><span>      <span class="st">"N (%)"</span> <span class="op">=</span> <span class="st">"&lt;count&gt; (&lt;percentage&gt;%)"</span>, <span class="st">"N"</span> <span class="op">=</span> <span class="st">"&lt;count&gt;"</span></span></span>
 <span class="r-in"><span>    <span class="op">)</span>,</span></span>
 <span class="r-in"><span>    keepNotFormatted <span class="op">=</span> <span class="cn">FALSE</span></span></span>
@@ -122,7 +122,7 @@ input dataframe (FALSE).</p></dd>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.1.</p>
 </div>
 
     </footer></div>
