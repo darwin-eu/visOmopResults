@@ -40,7 +40,7 @@ validateDecimals <- function(result, decimals) {
   return(decimals)
 }
 
-validateEstimateNameFormat <- function(format, call = parent.frame()) {
+validateEstimateName <- function(format, call = parent.frame()) {
   omopgenerics::assertCharacter(format, null = TRUE)
   if (!is.null(format)) {
     if (length(format) > 0){
@@ -105,21 +105,21 @@ validateSettingsColumns <- function(settingsColumns, result, call = parent.frame
   return(invisible(settingsColumns))
 }
 
-validateRenameColumns <- function(renameColumns, result, call = parent.frame()) {
-  omopgenerics::assertCharacter(renameColumns, null = TRUE, named = TRUE, call = call)
-  if (!is.null(renameColumns)) {
-    notCols <- !renameColumns %in% colnames(result)
+validateRename <- function(rename, result, call = parent.frame()) {
+  omopgenerics::assertCharacter(rename, null = TRUE, named = TRUE, call = call)
+  if (!is.null(rename)) {
+    notCols <- !rename %in% colnames(result)
     if (sum(notCols) > 0) {
       cli::cli_warn(
-        "The following values of `renameColumns` do not refer to column names
-        and will be ignored: {renameColumns[notCols]}", call = call
+        "The following values of `rename` do not refer to column names
+        and will be ignored: {rename[notCols]}", call = call
       )
-      renameColumns <- renameColumns[!notCols]
+      rename <- rename[!notCols]
     }
   } else {
-    renameColumns <- character()
+    rename <- character()
   }
-  return(invisible(renameColumns))
+  return(invisible(rename))
 }
 
 validateGroupColumn <- function(groupColumn, resultIn, sr = FALSE, formatName = FALSE, call = parent.frame()) {
@@ -133,7 +133,7 @@ validateGroupColumn <- function(groupColumn, resultIn, sr = FALSE, formatName = 
     omopgenerics::assertCharacter(groupColumn[[1]], null = TRUE, call = call)
     if (any(!groupColumn[[1]] %in% colnames(resultIn))) {
       set <- character()
-      if (sr) set <- "or in the settings stated in `settingsColumns`"
+      if (sr) set <- "or in the settings stated in `settings`"
       cli::cli_abort("`groupColumn` must refer to columns in the result table {set}", call = call)
     }
     if (is.null(names(groupColumn)) & length(groupColumn[[1]]) > 0) {

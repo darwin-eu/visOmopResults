@@ -28,13 +28,13 @@
 #'
 #' result |>
 #'   tidySummarisedResult(
-#'     settings = character(),
+#'     settingsColumns =character(),
 #'     pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name")
 #'   )
 #'
 #' result |>
 #'   tidySummarisedResult(
-#'     settings = character(),
+#'     settingsColumns =character(),
 #'     pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name"),
 #'     nameStyle = "{estimate_name}_{variable_name}_{variable_level}"
 #'   )
@@ -44,7 +44,7 @@ tidySummarisedResult <- function(result,
                                  splitGroup = TRUE,
                                  splitStrata = TRUE,
                                  splitAdditional = TRUE,
-                                 settingsColumns = colnames(settings(result)),
+                                 settingsColumns =colnames(settings(result)),
                                  pivotEstimatesBy = "estimate_name",
                                  nameStyle = NULL) {
   # initial checks

@@ -1,7 +1,7 @@
 #' Generate a formatted table from a data.table
 #'
 #' @param result A table to format.
-#' @param formatEstimateName A named list of estimate names to join, sorted by
+#' @param estimateName A named list of estimate names to join, sorted by
 #' computation order. Use `<...>` to indicate estimate names. This argument
 #' requires that the table has `estimate_name` and `estimate_value` columns.
 #' @param header A vector specifying the elements to include in the header.
@@ -14,9 +14,9 @@
 #' list("newGroupName" = c("variable_name", "variable_level")).
 #'
 #' *tidy: The tidy format applied to column names replaces "_" with a space and
-#' converts them to sentence case. Use `renameColumns` to customize specific column names.
+#' converts them to sentence case. Use `rename` to customize specific column names.
 #'
-#' @param renameColumns A named vector to customize column names, e.g.,
+#' @param rename A named vector to customize column names, e.g.,
 #' c("Database name" = "cdm_name"). The function will rename all column names
 #' not specified here into a tidy* format.
 #' @param type The desired format of the output table. Options are: "gt",
@@ -29,7 +29,7 @@
 #'
 #' @description
 #' This function combines the functionalities of `formatEstimateValue()`,
-#' `formatEstimateName()`, `formatHeader()`, and `formatTable()`
+#' `estimateName()`, `formatHeader()`, and `formatTable()`
 #' into a single function. While it does not require the input table to be
 #' a `summarised_result`, it does expect specific fields to apply formatting.
 #'
@@ -39,20 +39,20 @@
 #' result <- mockSummarisedResult()
 #' result |>
 #'   visTable(
-#'     formatEstimateName = c("N%" = "<count> (<percentage>)",
-#'                            "N" = "<count>",
-#'                            "Mean (SD)" = "<mean> (<sd>)"),
+#'     estimateName = c("N%" = "<count> (<percentage>)",
+#'                      "N" = "<count>",
+#'                      "Mean (SD)" = "<mean> (<sd>)"),
 #'     header = c("Estimate"),
-#'     renameColumns = c("Database name" = "cdm_name"),
+#'     rename = c("Database name" = "cdm_name"),
 #'     groupColumn = c("strata_name", "strata_level"),
 #'     hide = c("additional_name", "additional_level", "estimate_type", "result_type")
 #'   )
 
 visTable <- function(result,
-                     formatEstimateName = character(),
+                     estimateName = character(),
                      header = character(),
                      groupColumn = character(),
-                     renameColumns = character(),
+                     rename = character(),
                      type = "gt",
                      hide = character(),
                      .options = list()) {
@@ -61,7 +61,7 @@ visTable <- function(result,
   omopgenerics::assertChoice(type, choices = c("gt", "flextable", "tibble"), length = 1)
   omopgenerics::assertCharacter(hide, null = TRUE)
   omopgenerics::assertCharacter(header, null = TRUE)
-  renameColumns <- validateRenameColumns(renameColumns, result)
+  rename <- validateRename(rename, result)
   groupColumn <- validateGroupColumn(groupColumn, result, formatName = TRUE)
   # .options
   .options <- defaultTableOptions(.options)
@@ -77,7 +77,7 @@ visTable <- function(result,
       bigMark = .options$bigMark
     ) |>
     visOmopResults::formatEstimateName(
-      estimateNameFormat = formatEstimateName,
+      estimateName = estimateName,
       keepNotFormatted = .options$keepNotFormatted,
       useFormatOrder = .options$useFormatOrder
     )
@@ -85,18 +85,18 @@ visTable <- function(result,
   # rename and hide columns
   dontRename <- c("estimate_value")
   dontRename <- dontRename[dontRename %in% colnames(result)]
-  estimateValue <- renameColumnsInternal("estimate_value", renameColumns)
-  renameColumns <- renameColumns[!renameColumns %in% dontRename]
+  estimateValue <- renameInternal("estimate_value", rename)
+  rename <- rename[!rename %in% dontRename]
   result <- result |>
     dplyr::select(!dplyr::any_of(hide)) |>
     dplyr::rename_with(
-      .fn = ~ renameColumnsInternal(.x, rename = renameColumns),
+      .fn = ~ renameInternal(.x, rename = rename),
       .cols = !dplyr::all_of(c(dontRename))
     )
   # rename headers
-  header <- purrr::map(header, renameColumnsInternal, rename = renameColumns) |> unlist()
+  header <- purrr::map(header, renameInternal, rename = rename) |> unlist()
   if (length(groupColumn[[1]]) > 0) {
-    groupColumn[[1]] <- purrr::map(groupColumn[[1]], renameColumnsInternal, rename = renameColumns) |> unlist()
+    groupColumn[[1]] <- purrr::map(groupColumn[[1]], renameInternal, rename = rename) |> unlist()
   }
 
   # format header
@@ -133,7 +133,7 @@ visTable <- function(result,
   return(result)
 }
 
-renameColumnsInternal <- function(x, rename, toSentence = TRUE) {
+renameInternal <- function(x, rename, toSentence = TRUE) {
   newNames <- character()
   for (xx in x) {
     if (isTRUE(xx %in% rename)) {

@@ -59,8 +59,8 @@ test_that("fxTableInternal", {
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
-    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
-                                              "N" = "<count>")) |>
+    formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
+                                        "N" = "<count>")) |>
     formatHeader(header = c("strata_name", "strata_level"),
                  includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
@@ -116,8 +116,8 @@ test_that("fxTableInternal", {
 
   # Input 3 ----
   table_to_format <- mockSummarisedResult() |>
-    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
-                                              "N" = "<count>")) |>
+    formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
+                                        "N" = "<count>")) |>
     formatHeader(header = c("strata_name", "strata_level"),
                  delim = ":",
                  includeHeaderName = TRUE) |>
@@ -185,8 +185,8 @@ test_that("fxTableInternal, test default styles and NULL", {
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
-    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
-                                              "N" = "<count>")) |>
+    formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
+                                        "N" = "<count>")) |>
     formatHeader(header = c("Strata", "strata_name", "strata_level"),
                  includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
@@ -283,8 +283,8 @@ test_that("fxTableInternal, test merge", {
 
 test_that("multiple groupColumn", {
   table_to_format <- mockSummarisedResult() |>
-    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
-                                              "N" = "<count>")) |>
+    formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
+                                        "N" = "<count>")) |>
     formatHeader(header = c("strata_name", "strata_level"),
                  delim = ":",
                  includeHeaderName = TRUE) |>

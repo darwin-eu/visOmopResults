@@ -6,10 +6,10 @@
 \usage{
 visTable(
   result,
-  formatEstimateName = character(),
+  estimateName = character(),
   header = character(),
   groupColumn = character(),
-  renameColumns = character(),
+  rename = character(),
   type = "gt",
   hide = character(),
   .options = list()
@@ -18,7 +18,7 @@ visTable(
 \arguments{
 \item{result}{A table to format.}
 
-\item{formatEstimateName}{A named list of estimate names to join, sorted by
+\item{estimateName}{A named list of estimate names to join, sorted by
 computation order. Use \verb{<...>} to indicate estimate names. This argument
 requires that the table has \code{estimate_name} and \code{estimate_value} columns.}
 
@@ -33,9 +33,9 @@ group name, use a named list such as:
 list("newGroupName" = c("variable_name", "variable_level")).
 
 *tidy: The tidy format applied to column names replaces "_" with a space and
-converts them to sentence case. Use \code{renameColumns} to customize specific column names.}
+converts them to sentence case. Use \code{rename} to customize specific column names.}
 
-\item{renameColumns}{A named vector to customize column names, e.g.,
+\item{rename}{A named vector to customize column names, e.g.,
 c("Database name" = "cdm_name"). The function will rename all column names
 not specified here into a tidy* format.}
 
@@ -52,7 +52,7 @@ A tibble, gt, or flextable object.
 }
 \description{
 This function combines the functionalities of \code{formatEstimateValue()},
-\code{formatEstimateName()}, \code{formatHeader()}, and \code{formatTable()}
+\code{estimateName()}, \code{formatHeader()}, and \code{formatTable()}
 into a single function. While it does not require the input table to be
 a \code{summarised_result}, it does expect specific fields to apply formatting.
 }
@@ -60,11 +60,11 @@ a \code{summarised_result}, it does expect specific fields to apply formatting.
 result <- mockSummarisedResult()
 result |>
   visTable(
-    formatEstimateName = c("N\%" = "<count> (<percentage>)",
-                           "N" = "<count>",
-                           "Mean (SD)" = "<mean> (<sd>)"),
+    estimateName = c("N\%" = "<count> (<percentage>)",
+                     "N" = "<count>",
+                     "Mean (SD)" = "<mean> (<sd>)"),
     header = c("Estimate"),
-    renameColumns = c("Database name" = "cdm_name"),
+    rename = c("Database name" = "cdm_name"),
     groupColumn = c("strata_name", "strata_level"),
     hide = c("additional_name", "additional_level", "estimate_type", "result_type")
   )

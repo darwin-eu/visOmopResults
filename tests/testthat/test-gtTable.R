@@ -1,7 +1,7 @@
 test_that("gtTable", {
   table_to_format <- mockSummarisedResult() |>
     formatHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
-               includeHeaderName = FALSE) |>
+                 includeHeaderName = FALSE) |>
     dplyr::select(-result_id)
   # Input 1 ----
   # Title but no subtitle
@@ -63,10 +63,10 @@ test_that("gtTable", {
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
-    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
-                                  "N" = "<count>")) |>
+    formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
+                                        "N" = "<count>")) |>
     formatHeader(header = c("strata_name", "strata_level"),
-               includeHeaderName = TRUE) |>
+                 includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
   gtTableInternal <- gtTableInternal(
     table_to_format,
@@ -99,7 +99,7 @@ test_that("gtTable", {
                  unlist() |> unique(),
                c("#000000", "#FFFFFF"))
   expect_true(is.null(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level == 2]] |>
-                 unlist() |> unique()))
+                        unlist() |> unique()))
   # title &&& subtitle
   expect_true(gtTableInternal$`_heading`$title == "Title test 2")
   expect_true(gtTableInternal$`_heading`$subtitle == "Subtitle for test 2")
@@ -127,11 +127,11 @@ test_that("gtTable", {
 
   # Input 3 ----
   table_to_format <- mockSummarisedResult() |>
-    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
-                                  "N" = "<count>")) |>
+    formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
+                                        "N" = "<count>")) |>
     formatHeader(header = c("strata_name", "strata_level"),
-               delim = ":",
-               includeHeaderName = TRUE) |>
+                 delim = ":",
+                 includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
   gtTableInternal <- gtTableInternal(
     table_to_format,
@@ -159,7 +159,7 @@ test_that("gtTable", {
 test_that("gtTable, test default styles and NULL", {
   table_to_format <- mockSummarisedResult() |>
     formatHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
-                includeHeaderName = FALSE) |>
+                 includeHeaderName = FALSE) |>
     dplyr::select(-result_id)
   # Input 1: NULL ----
   gtTableInternal <- gtTableInternal(
@@ -180,10 +180,10 @@ test_that("gtTable, test default styles and NULL", {
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
-    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
-                                              "N" = "<count>")) |>
+    formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
+                                        "N" = "<count>")) |>
     formatHeader(header = c("strata", "strata_name", "strata_level"),
-                includeHeaderName = TRUE) |>
+                 includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
   gtTableInternal <- gtTableInternal(
     table_to_format,
@@ -216,7 +216,7 @@ test_that("gtTable, test default styles and NULL", {
   expect_equal(unlist(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "columns_columns"])[1:27] |> unique(),
                c("#E1E1E1", "center", "bold"))
   expect_equal(unlist(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "columns_columns"])[28:43] |> unique(),
-              c("center", "bold"))
+               c("center", "bold"))
   expect_false(lapply(gtTableInternal$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
 
   # Group labels

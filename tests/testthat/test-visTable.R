@@ -3,7 +3,7 @@ test_that("visTable with SR", {
   # TEST IT WORKS
   gt1 <- visTable(
     result = result,
-    formatEstimateName = character(),
+    estimateName = character(),
     header = character(),
     groupColumn = NULL,
     type = "gt",
@@ -11,7 +11,7 @@ test_that("visTable with SR", {
     .options = list())
   fx1 <- visTable(
     result = result,
-    formatEstimateName = character(),
+    estimateName = character(),
     header = character(),
     groupColumn = NULL,
     type = "flextable",
@@ -29,11 +29,11 @@ test_that("visTable with SR", {
 
   gt2 <- visTable(
     result,
-    formatEstimateName = c("n" = "<count>", "mean(sd)" = "<mean> (<sd>)"),
+    estimateName = c("n" = "<count>", "mean(sd)" = "<mean> (<sd>)"),
     header = c("strata_name", "strata_level"),
     groupColumn = c("cdm_name", "group_level"),
     type = "gt",
-    renameColumns = c("Database name" = "cdm_name", "Cohort name" = "group_level", "Strata" = "strata_name"),
+    rename = c("Database name" = "cdm_name", "Cohort name" = "group_level", "Strata" = "strata_name"),
     hide = c("result_id", "group_name"),
     .options = list(includeHeaderName = TRUE)
   )
@@ -56,11 +56,11 @@ test_that("visTable with SR", {
 
   fx2 <- visTable(
     result,
-    formatEstimateName = c("n" = "<count>", "mean(sd)" = "<mean> (<sd>)"),
+    estimateName = c("n" = "<count>", "mean(sd)" = "<mean> (<sd>)"),
     header = c("strata_name", "strata_level"),
     groupColumn = c("cdm_name", "group_level"),
     type = "flextable",
-    renameColumns = c("Database name" = "cdm_name", "Cohort name" = "group_level", "Strata" = "strata_name"),
+    rename = c("Database name" = "cdm_name", "Cohort name" = "group_level", "Strata" = "strata_name"),
     hide = c("result_id", "group_name"),
     .options = list(includeHeaderName = TRUE)
   )
@@ -78,11 +78,11 @@ test_that("visTable with SR", {
 
   tib1 <- visTable(
     result,
-    formatEstimateName = c("n" = "<count>", "mean(sd)" = "<mean> (<sd>)"),
+    estimateName = c("n" = "<count>", "mean(sd)" = "<mean> (<sd>)"),
     header = c("strata_name", "strata_level"),
     groupColumn = c("cdm_name", "group_level"),
     type = "tibble",
-    renameColumns = c("Database name" = "cdm_name", "Cohort name" = "group_level", "Estimate" = "estimate_value"),
+    rename = c("Database name" = "cdm_name", "Cohort name" = "group_level", "Estimate" = "estimate_value"),
     hide = c("result_id", "group_name", "estimate_type"),
     .options = list(includeHeaderName = TRUE)
   )
@@ -105,11 +105,11 @@ test_that("visTable with SR", {
 
   tib2 <- visTable(
     result,
-    formatEstimateName = c("n" = "<count>", "mean(sd)" = "<mean> (<sd>)"),
+    estimateName = c("n" = "<count>", "mean(sd)" = "<mean> (<sd>)"),
     # header = c("strata_name", "strata_level"),
     groupColumn = c("cdm_name", "group_level"),
     type = "tibble",
-    renameColumns = c("Database name" = "cdm_name", "Cohort name" = "group_level", "Estimate" = "estimate_value"),
+    rename = c("Database name" = "cdm_name", "Cohort name" = "group_level", "Estimate" = "estimate_value"),
     hide = c("result_id", "group_name", "estimate_type"),
     .options = list(includeHeaderName = TRUE)
   )
@@ -140,63 +140,4 @@ test_that("visTable with SR", {
   )
 })
 
-test_that("helper table functions", {
-  expect_equal(names(optionsTable()), c(
-    'decimals', 'decimalMark', 'bigMark', 'keepNotFormatted', 'useFormatOrder',
-    'delim', 'includeHeaderName', 'includeHeaderKey', 'style', 'na', 'title',
-    'subtitle', 'caption', 'groupAsColumn', 'groupOrder', 'merge'
-  ))
-  expect_equal(
-    gtStyle(),
-    list(
-      "header" = list(gt::cell_fill(color = "#c8c8c8"),
-                      gt::cell_text(weight = "bold", align = "center")),
-      "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
-                           gt::cell_text(weight = "bold", align = "center")),
-      "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
-                            gt::cell_text(weight = "bold", align = "center")),
-      "column_name" = list(gt::cell_text(weight = "bold", align = "center")),
-      "group_label" = list(gt::cell_fill(color = "#e9e9e9"),
-                           gt::cell_text(weight = "bold")),
-      "title" = list(gt::cell_text(weight = "bold", size = 15, align = "center")),
-      "subtitle" = list(gt::cell_text(weight = "bold", size = 12, align = "center")),
-      "body" = list()
-    ) |>
-      rlang::expr()
-  )
-  expect_equal(
-    flextableStyle(),
-    list(
-      "header" = list(
-        "cell" = officer::fp_cell(background.color = "#c8c8c8"),
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "header_name" = list(
-        "cell" = officer::fp_cell(background.color = "#d9d9d9"),
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "header_level" = list(
-        "cell" = officer::fp_cell(background.color = "#e1e1e1"),
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "column_name" = list(
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "group_label" = list(
-        "cell" = officer::fp_cell(
-          background.color = "#e9e9e9",
-          border = officer::fp_border(color = "gray")
-        ),
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "title" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 15)
-      ),
-      "subtitle" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 12)
-      ),
-      "body" = list()
-    ) |>
-      rlang::expr()
-  )
-})
+

@@ -4,7 +4,7 @@
 \alias{flextableStyle}
 \title{Default style code expresion for flextable tables.}
 \usage{
-flextableStyle(nameStyle = "default")
+flextableStyle(styleName = "default")
 }
 \arguments{
 \item{styleName}{Name of the style. Currently the package just have one

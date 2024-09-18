@@ -4,7 +4,7 @@ test_that("formatEstimateName", {
 
   # input 1 ----
   result_output <-  formatEstimateName(result,
-                                       estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
+                                       estimateName = c("N (%)" = "<count> (<percentage>%)",
                                                               "N" = "<count>"),
                                        keepNotFormatted = TRUE)
   # check count as "N"
@@ -40,7 +40,7 @@ test_that("formatEstimateName", {
 
   # input 2 ----
   result_output <-  formatEstimateName(result,
-                                       estimateNameFormat = c("<mean> (<sd>)",
+                                       estimateName = c("<mean> (<sd>)",
                                                               "N%" = "<count> (<percentage> %)"),
                                        keepNotFormatted = FALSE)
   # Check not keep formatted
@@ -75,7 +75,7 @@ test_that("formatEstimateName", {
   expect_message(expect_message(
     result_output <- formatEstimateName(
       result,
-      estimateNameFormat = c("N (%)" = "<count> (<notAKey>%)",
+      estimateName = c("N (%)" = "<count> (<notAKey>%)",
                              "N" = "<count>",
                              "<alsoNotAkey>",
                              "%" = "<percentage>"),
@@ -106,7 +106,7 @@ test_that("formatEstimateName", {
   result$estimate_value[1] <- NA_character_
   res <- formatEstimateName(
     result,
-    estimateNameFormat = "<mean> (<sd>)",
+    estimateName = "<mean> (<sd>)",
     keepNotFormatted = TRUE,
     useFormatOrder = TRUE)
   expect_true(is.na(res$estimate_value[1]))
@@ -116,7 +116,7 @@ test_that("formatEstimateName", {
   class(result) <- c("tbl_df", "tbl", "data.frame")
   res <- formatEstimateName(
     result,
-    estimateNameFormat = "<mean> (<sd>)",
+    estimateName = "<mean> (<sd>)",
     keepNotFormatted = TRUE,
     useFormatOrder = TRUE)
   expect_false(inherits(res, "summarised_result"))
@@ -124,21 +124,21 @@ test_that("formatEstimateName", {
   # Wrong input ----
   expect_error(result |> dplyr::select(-"estimate_name") |> formatEstimateName())
   expect_error(formatEstimateName(result,
-                                  estimateNameFormat = c("N" = "count",
+                                  estimateName = c("N" = "count",
                                                          "N (%)" = "count (percentage%)"),
                                   keepNotFormatted = FALSE))
   expect_message(formatEstimateName(result,
-                                    estimateNameFormat = c("N" = "<count>",
+                                    estimateName = c("N" = "<count>",
                                                            "N (%)" = "count (<lala>%)"),
                                     keepNotFormatted = TRUE),
                  "has not been formatted.")
   expect_message(formatEstimateName(result,
-                                    estimateNameFormat = c("N" = "count",
+                                    estimateName = c("N" = "count",
                                                            "N (%)" = "<count> (<percentage>%)"),
                                     keepNotFormatted = FALSE),
                  "does not contain an estimate name indicated by <...>")
   expect_error(formatEstimateName(result,
-                                  estimateNameFormat = NA,
+                                  estimateName = NA,
                                   keepNotFormatted = TRUE))
 })
 
@@ -243,7 +243,7 @@ test_that("formatEstimateName, useFormatOrder", {
 
   # FALSE ----
   result_output <-  formatEstimateName(result,
-                                       estimateNameFormat = c("<mean>",
+                                       estimateName = c("<mean>",
                                                               "range" = "[<min> - <max>]"),
                                        keepNotFormatted = TRUE,
                                        useFormatOrder = FALSE)
@@ -257,7 +257,7 @@ test_that("formatEstimateName, useFormatOrder", {
 
   # TRUE ----
   result_output <-  formatEstimateName(result,
-                                       estimateNameFormat = c("<mean>",
+                                       estimateName = c("<mean>",
                                                               "range" = "[<min> - <max>]"),
                                        keepNotFormatted = TRUE,
                                        useFormatOrder = TRUE)
@@ -275,14 +275,14 @@ test_that("empty format",{
   result <- mockSummarisedResult()
   expect_no_error(res0 <- formatEstimateName(
     result,
-    estimateNameFormat = character(0),
+    estimateName = character(0),
     keepNotFormatted = TRUE,
     useFormatOrder = TRUE)
   )
   expect_true(res0 |> dplyr::anti_join(result, by = colnames(res0)) |> nrow() == 0)
   expect_no_error(res1 <- formatEstimateName(
     result,
-    estimateNameFormat = NULL,
+    estimateName = NULL,
     keepNotFormatted = TRUE,
     useFormatOrder = TRUE)
   )
@@ -299,7 +299,7 @@ test_that("not a summarised result",{
   )
   res0 <- formatEstimateName(
     result,
-    estimateNameFormat = c("N (%)" = "<count> (<percentage>%)")
+    estimateName = c("N (%)" = "<count> (<percentage>%)")
   )
   expect_true(nrow(res0) == 1)
   expect_equal(class(result), class(res0))
@@ -347,7 +347,7 @@ test_that("common key word",{
         "additional_level" = "overall"
       )
     )
-  res <- formatEstimateName(result, estimateNameFormat = "<count> <count_95CI_lower>")
+  res <- formatEstimateName(result, estimateName = "<count> <count_95CI_lower>")
   expect_true(unique(res$estimate_name) == "count count_95CI_lower")
 
   result <- dplyr::tibble(
@@ -391,6 +391,6 @@ test_that("common key word",{
         "additional_level" = "overall"
       )
     )
-  res <- formatEstimateName(result, estimateNameFormat = "<count> <95CI_lower_count>")
+  res <- formatEstimateName(result, estimateName = "<count> <95CI_lower_count>")
   expect_true(unique(res$estimate_name) == "count 95CI_lower_count")
 })

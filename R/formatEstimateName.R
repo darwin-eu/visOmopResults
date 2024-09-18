@@ -1,11 +1,11 @@
 #' Formats estimate_name and estimate_value column
 #'
 #' @param result A summarised_result.
-#' @param estimateNameFormat Named list of estimate name's to join, sorted by
+#' @param estimateName Named list of estimate name's to join, sorted by
 #' computation order. Indicate estimate_name's between <...>.
 #' @param keepNotFormatted Whether to keep rows not formatted.
 #' @param useFormatOrder Whether to use the order in which estimate names
-#' appear in the estimateNameFormat (TRUE), or use the order in the
+#' appear in the estimateName (TRUE), or use the order in the
 #' input dataframe (FALSE).
 #'
 #' @description
@@ -20,26 +20,26 @@
 #' result <- mockSummarisedResult()
 #' result |>
 #'   formatEstimateName(
-#'     estimateNameFormat = c(
+#'     estimateName = c(
 #'       "N (%)" = "<count> (<percentage>%)", "N" = "<count>"
 #'     ),
 #'     keepNotFormatted = FALSE
 #'   )
 #'
 formatEstimateName <- function(result,
-                               estimateNameFormat = NULL,
+                               estimateName = NULL,
                                keepNotFormatted = TRUE,
                                useFormatOrder = TRUE) {
   # initial checks
   omopgenerics::assertTable(result, columns = c("estimate_name", "estimate_value"))
-  estimateNameFormat <- validateEstimateNameFormat(estimateNameFormat)
+  estimateName <- validateEstimateName(estimateName)
   omopgenerics::assertLogical(keepNotFormatted, length = 1)
   omopgenerics::assertLogical(useFormatOrder, length = 1)
 
   # format estimate
-  if (!is.null(estimateNameFormat)) {
+  if (!is.null(estimateName)) {
     resultFormatted <- formatEstimateNameInternal(
-      result = result, format = estimateNameFormat,
+      result = result, format = estimateName,
       keepNotFormatted = keepNotFormatted, useFormatOrder = useFormatOrder
     )
   } else {

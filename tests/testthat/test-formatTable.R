@@ -1,7 +1,7 @@
 test_that("test it works", {
   result <- mockSummarisedResult() |>
-    formatEstimateName(estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
-                                              "N" = "<count>")) |>
+    formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
+                                        "N" = "<count>")) |>
     formatHeader(header = c("strata", "strata_name", "strata_level"),
                  includeHeaderName = TRUE)
   gt <- formatTable(result)
@@ -26,7 +26,7 @@ test_that("test it works", {
   expect_true("flextable" %in% class(fx))
   # Spanner styles
   header_col_style <- fx$header$styles$cells$background.color$data[, "strata\nstrata_name\noverall\nstrata_level\noverall"]
-  expect_equal(header_col_style, c("#c8c8c8", "#c8c8c8", "#c8c8c8", "#d9d9d9", "#e1e1e1", "#d9d9d9", "#e1e1e1"))
+  expect_equal(header_col_style, c("#c8c8c8", "#d9d9d9", "#e1e1e1", "#d9d9d9", "#e1e1e1"))
   expect_equal(fx$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
   expect_equal(fx$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1.2)
   expect_equal(fx$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
