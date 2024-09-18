@@ -25,7 +25,7 @@ tools are useful to plot either `<summarised_result>` dataset or a usual
 library(visOmopResults)
 ```
 
-## Plotting with a <summarised_result>
+## Plotting with a `<summarised_result>`
 
 For the purpose of this vignette we will turn summarise the dataset penguins 
 from the palmerpenguins package using `PatientProfiles::summariseResult()`
@@ -62,14 +62,14 @@ penguinsSummary <- bind(
 
 ### Plotting principles
 
-Although the input of a visOmopResult plot function can be a <summarised_result>
+Although the input of a visOmopResult plot function can be a `<summarised_result>`
 when referring to inputs, we will use the columns shown in its tidy format:
 
 ```{r}
 tidyColumns(penguinsSummary)
 ```
 
-And not the column names seen in the <summarised_result> format:
+And not the column names seen in the `<summarised_result>` format:
 ```{r}
 colnames(penguinsSummary)
 ```
@@ -77,7 +77,7 @@ colnames(penguinsSummary)
 That's the most important thing to be aware of, otherwise populating arguments
 becomes a bit tricky.
 
-We should always subset the <summarised_result> to the variable_name of interest
+We should always subset the `<summarised_result>` to the variable_name of interest
 before calling the plotting functions. It is not advised to combine results of
 different variables if they don't share common estimates that we want to plot as
 in the tidy form NAs will be created.
@@ -205,9 +205,9 @@ penguinsSummary |>
 Note that as we didnt specify x there is no levels in the x axis, but box plots
 are produced anyway.
 
-## Plotting with a <data.frame>
+## Plotting with a `<data.frame>`
 
-Plotting functions can also be used with a normal <data.frame>. In this case we 
+Plotting functions can also be used with a normal `<data.frame>`. In this case we 
 will use the tidy format of `penguinsSummary`.
 
 ```{r}
