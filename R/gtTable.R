@@ -24,7 +24,7 @@
 #' @param groupAsColumn Whether to display the group labels as a column
 #' (TRUE) or rows (FALSE).
 #' @param groupOrder Order in which to display group labels.
-#' @param merge Names of the columns to merge vertically
+#' @param colsToMergeRows Names of the columns to merge vertically
 #' when consecutive row cells have identical values. Alternatively, use
 #' "all_columns" to apply this merging to all columns, or use NULL to indicate
 #' no merging.
@@ -48,8 +48,22 @@ gtTable <- function(x,
                     groupColumn = NULL,
                     groupAsColumn = FALSE,
                     groupOrder = NULL,
-                    merge = NULL) {
+                    colsToMergeRows = NULL) {
   lifecycle::deprecate_soft(when = "0.4.0", what = "gtTable()", with = "formatTable()")
+  x |>
+    formatTable(
+      type = "gt",
+      delim = delim,
+      style = style,
+      na = na,
+      title = title,
+      subtitle = subtitle,
+      caption = caption,
+      groupColumn = groupColumn,
+      groupAsColumn = groupAsColumn,
+      groupOrder = groupOrder,
+      merge = colsToMergeRows
+    )
 }
 
 
