@@ -79,7 +79,7 @@ very useful. These tools are useful to plot either
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/visOmopResults/">visOmopResults</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
-<h2 id="plotting-with-a">Plotting with a <summarised_result></summarised_result><a class="anchor" aria-label="anchor" href="#plotting-with-a"></a>
+<h2 id="plotting-with-a-summarised_result">Plotting with a <code>&lt;summarised_result&gt;</code><a class="anchor" aria-label="anchor" href="#plotting-with-a-summarised_result"></a>
 </h2>
 <p>For the purpose of this vignette we will turn summarise the dataset
 penguins from the palmerpenguins package using
@@ -124,8 +124,8 @@ penguins from the palmerpenguins package using
 <h3 id="plotting-principles">Plotting principles<a class="anchor" aria-label="anchor" href="#plotting-principles"></a>
 </h3>
 <p>Although the input of a visOmopResult plot function can be a
-<summarised_result> when referring to inputs, we will use the columns
-shown in its tidy format:</summarised_result></p>
+<code>&lt;summarised_result&gt;</code> when referring to inputs, we will
+use the columns shown in its tidy format:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/tidyColumns.html">tidyColumns</a></span><span class="op">(</span><span class="va">penguinsSummary</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "cdm_name"        "species"         "year"            "sex"            </span></span>
@@ -133,7 +133,8 @@ shown in its tidy format:</summarised_result></p>
 <span><span class="co">#&gt;  [9] "q25"             "q75"             "min"             "max"            </span></span>
 <span><span class="co">#&gt; [13] "count_missing"   "density_x"       "density_y"       "percentage"     </span></span>
 <span><span class="co">#&gt; [17] "result_type"     "package_name"    "package_version"</span></span></code></pre></div>
-<p>And not the column names seen in the <summarised_result> format:</summarised_result></p>
+<p>And not the column names seen in the
+<code>&lt;summarised_result&gt;</code> format:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="va">penguinsSummary</span><span class="op">)</span></span>
 <span><span class="co">#&gt;  [1] "result_id"        "cdm_name"         "group_name"       "group_level"     </span></span>
@@ -142,11 +143,11 @@ shown in its tidy format:</summarised_result></p>
 <span><span class="co">#&gt; [13] "additional_level"</span></span></code></pre></div>
 <p>That’s the most important thing to be aware of, otherwise populating
 arguments becomes a bit tricky.</p>
-<p>We should always subset the <summarised_result> to the variable_name
-of interest before calling the plotting functions. It is not advised to
-combine results of different variables if they don’t share common
-estimates that we want to plot as in the tidy form NAs will be
-created.</summarised_result></p>
+<p>We should always subset the <code>&lt;summarised_result&gt;</code> to
+the variable_name of interest before calling the plotting functions. It
+is not advised to combine results of different variables if they don’t
+share common estimates that we want to plot as in the tidy form NAs will
+be created.</p>
 </div>
 <div class="section level3">
 <h3 id="scatter-plot">Scatter plot<a class="anchor" aria-label="anchor" href="#scatter-plot"></a>
@@ -268,11 +269,11 @@ box plots are produced anyway.</p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="plotting-with-a-data-frame">Plotting with a &lt;data.frame&gt;<a class="anchor" aria-label="anchor" href="#plotting-with-a-data-frame"></a>
+<h2 id="plotting-with-a-data-frame">Plotting with a <code>&lt;data.frame&gt;</code><a class="anchor" aria-label="anchor" href="#plotting-with-a-data-frame"></a>
 </h2>
-<p>Plotting functions can also be used with a normal &lt;data.frame&gt;.
-In this case we will use the tidy format of
-<code>penguinsSummary</code>.</p>
+<p>Plotting functions can also be used with a normal
+<code>&lt;data.frame&gt;</code>. In this case we will use the tidy
+format of <code>penguinsSummary</code>.</p>
 <div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsTidy</span> <span class="op">&lt;-</span> <span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">estimate_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"density_x"</span>, <span class="st">"density_y"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># remove density for simplicity</span></span>
