@@ -414,6 +414,7 @@ asCharacterFacet <- function(facet) {
     facet <- facet |>
       stringr::str_split(pattern = stringr::fixed(" + ")) |>
       unlist()
+    facet <- facet[facet != "."]
   }
   return(facet)
 }
