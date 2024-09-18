@@ -2,7 +2,7 @@
 % Please edit documentation in R/addSettings.R
 \name{addSettings}
 \alias{addSettings}
-\title{Add settings columns to a summaries_result object.}
+\title{Add settings columns to a summarised_result object}
 \usage{
 addSettings(
   result,
@@ -23,7 +23,7 @@ be added.}
 A summarised_result object with the added setting columns.
 }
 \description{
-Add settings columns to a summaries_result object.
+Add settings columns to a summarised_result object
 }
 \examples{
 library(visOmopResults)

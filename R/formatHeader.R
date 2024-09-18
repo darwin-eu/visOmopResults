@@ -1,4 +1,4 @@
-#' Create a header for gt and flextable objects.
+#' Create a header for gt and flextable objects
 #'
 #' @param result A summarised_result.
 #' @param header Names of the variables to make headers.

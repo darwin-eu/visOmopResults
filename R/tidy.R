@@ -47,10 +47,6 @@ tidySummarisedResult <- function(result,
                                  settingsColumns = colnames(settings(result)),
                                  pivotEstimatesBy = "estimate_name",
                                  nameStyle = NULL) {
-  if (lifecycle::is_present(addSettings)) {
-    lifecycle::deprecate_warn("0.4.0", "visOmopTable(addSettings)", "visOmopTable(settingsColumns)")
-  }
-
   # initial checks
   result <- omopgenerics::validateResultArguemnt(result = result)
   pivotEstimatesBy <- validatePivotEstimatesBy(pivotEstimatesBy = pivotEstimatesBy)

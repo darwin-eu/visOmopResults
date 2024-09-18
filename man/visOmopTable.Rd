@@ -2,7 +2,7 @@
 % Please edit documentation in R/visOmopTable.R
 \name{visOmopTable}
 \alias{visOmopTable}
-\title{Format a summarised_result object into a gt, flextable, or tibble object.}
+\title{Format a summarised_result object into a gt, flextable, or tibble object}
 \usage{
 visOmopTable(
   result,

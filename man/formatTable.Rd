@@ -28,13 +28,14 @@ and "flextable".}
 \item{delim}{Delimiter.}
 
 \item{style}{Named list that specifies how to style the different parts of
-the gt or flextable table. Accepted style entries are: title, subtitle,
-header, header_name, header_level, column_name, group_label, and body.
+the gt or flextable table generated. Accepted style entries are: title,
+subtitle, header, header_name, header_level, column_name, group_label, and
+body.
 Alternatively, use "default" to get visOmopResults style, or NULL for
-flextable/gt style.
+gt/flextable style.
 Keep in mind that styling code is different for gt and flextable. To see
 the "deafult" gt style code use \code{gtStyle()}, and \code{flextableStyle()} for
-flextable code style.}
+flextable default code style.}
 
 \item{na}{How to display missing values.}
 

@@ -1,4 +1,4 @@
-#' Format a summarised_result object into a gt, flextable, or tibble object.
+#' Format a summarised_result object into a gt, flextable, or tibble object
 #'
 #' @param result A `summarised_result` object.
 #' @param formatEstimateName A named list of estimate names to join, sorted by
@@ -155,7 +155,7 @@ defaultTableOptions <- function(userOptions) {
     caption = NULL,
     groupAsColumn = FALSE,
     groupOrder = NULL,
-    colsToMergeRows = "all_columns"
+    merge = "all_columns"
   )
 
   for (opt in names(userOptions)) {

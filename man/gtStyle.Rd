@@ -4,7 +4,11 @@
 \alias{gtStyle}
 \title{Default style code expresion for gt tables.}
 \usage{
-gtStyle()
+gtStyle(styleName = "default")
+}
+\arguments{
+\item{styleName}{Name of the style. Currently the package just have one
+predefined style ("default").}
 }
 \description{
 Default style code expresion for gt tables.

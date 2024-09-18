@@ -5,13 +5,14 @@
 #' and "flextable".
 #' @param delim Delimiter.
 #' @param style Named list that specifies how to style the different parts of
-#' the gt or flextable table. Accepted style entries are: title, subtitle,
-#' header, header_name, header_level, column_name, group_label, and body.
+#' the gt or flextable table generated. Accepted style entries are: title,
+#' subtitle, header, header_name, header_level, column_name, group_label, and
+#' body.
 #' Alternatively, use "default" to get visOmopResults style, or NULL for
-#' flextable/gt style.
+#' gt/flextable style.
 #' Keep in mind that styling code is different for gt and flextable. To see
 #' the "deafult" gt style code use `gtStyle()`, and `flextableStyle()` for
-#' flextable code style.
+#' flextable default code style.
 #' @param na How to display missing values.
 #' @param title Title of the table, or NULL for no title.
 #' @param subtitle Subtitle of the table, or NULL for no subtitle.
@@ -122,7 +123,7 @@ formatTable <- function(x,
 
   # format
   if (type == "gt") {
-    result <- result |>
+    x <- x |>
       gtTableInternal(
         delim = delim,
         style = style,
@@ -133,10 +134,10 @@ formatTable <- function(x,
         groupColumn = groupColumn,
         groupAsColumn = groupAsColumn,
         groupOrder = groupOrder,
-        colsToMergeRows = merge
+        merge = merge
       )
   } else if (type == "flextable") {
-    result <- result |>
+    x <- x |>
       fxTableInternal(
         delim = delim,
         style = style,
@@ -147,7 +148,7 @@ formatTable <- function(x,
         groupColumn = groupColumn,
         groupAsColumn = groupAsColumn,
         groupOrder = groupOrder,
-        colsToMergeRows = merge
+        merge = merge
       )
   }
 }

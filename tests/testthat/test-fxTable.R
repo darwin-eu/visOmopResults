@@ -77,7 +77,7 @@ test_that("fxTableInternal", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupColumn = "group_level",
+    groupColumn = list("group_level" = "group_level"),
     groupAsColumn = FALSE,
     groupOrder = NULL
   )
@@ -135,7 +135,7 @@ test_that("fxTableInternal", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupColumn = "group_level",
+    groupColumn = list("group_level" = "group_level"),
     groupAsColumn = TRUE,
     groupOrder = c("cohort2", "cohort1")
   )
@@ -146,19 +146,6 @@ test_that("fxTableInternal", {
   expect_equal(fxResult$body$spans$rows[3,], rep(1, 18))
   expect_equal(fxResult$body$styles$cells$background.color$data[,1] |> unique(), "#e1e1e1")
   expect_equal(fxResult$body$styles$cells$background.color$data[,2] |> unique(), "transparent")
-
-  # Wrong inputs ----
-  expect_error(fxTableInternal(
-    table_to_format,
-    style = NA,
-    na = "-",
-    title = "Title test 2",
-    subtitle = "Subtitle for test 2",
-    caption = "*This* is the caption",
-    groupColumn = "group_level",
-    groupAsColumn = TRUE,
-    groupOrder = c("cohort2", "cohort1")
-  ))
 })
 
 test_that("fxTableInternal, test default styles and NULL", {
@@ -203,14 +190,15 @@ test_that("fxTableInternal, test default styles and NULL", {
     formatHeader(header = c("Strata", "strata_name", "strata_level"),
                  includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
+  style <- flextableStyle() |> rlang::eval_bare()
   fxResult <- fxTableInternal(
     table_to_format,
-    style = "default",
+    style = style,
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupColumn = "group_level",
+    groupColumn = list("group_level" = "group_level"),
     groupAsColumn = FALSE,
     groupOrder = NULL
   )
@@ -233,39 +221,24 @@ test_that("fxTableInternal, test default styles and NULL", {
                c("#e9e9e9", "transparent", "transparent", "transparent", "transparent","transparent",
                  "#e9e9e9","transparent", "transparent", "transparent", "transparent", "transparent"))
   expect_equal(fxResult$body$styles$text$color$data[, "cdm_name"] |> unique(), "black")
-
-  #Input 3: woring name style ----
-  expect_message(
-    fxResult <- fxTableInternal(
-      table_to_format,
-      style = "heythere",
-      na = "-",
-      title = "Title test 2",
-      subtitle = "Subtitle for test 2",
-      caption = "*This* is the caption",
-      groupColumn = "group_level",
-      groupAsColumn = FALSE,
-      groupOrder = NULL
-    )
-  )
 })
 
-test_that("fxTableInternal, test colsToMergeRows", {
+test_that("fxTableInternal, test merge", {
   table_to_format<- mockSummarisedResult() |>
     formatHeader(header = c("strata_name", "strata_level")) |>
     dplyr::select(-result_id)
-  # colsToMergeRows = "all"
+  style <- flextableStyle() |> rlang::eval_bare()
   fxResult <- fxTableInternal(
     x = table_to_format,
-    style = "default",
+    style = style,
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupColumn = "group_level",
+    groupColumn = list("group_level" = "group_level"),
     groupAsColumn = FALSE,
     groupOrder = NULL,
-    colsToMergeRows = "all_columns"
+    merge = "all_columns"
   )
 
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,1],
@@ -284,18 +257,18 @@ test_that("fxTableInternal, test colsToMergeRows", {
                c("gray", "gray", "gray", "gray", "gray", "gray", "gray", "gray",
                  "gray", "gray", "gray", "gray", "gray", "gray", "gray", "gray"))
 
-  # colsToMergeRows = c("cdm_name", "variable_name")
+  # merge = c("cdm_name", "variable_name")
   fxResult <- fxTableInternal(
     table_to_format,
-    style = "default",
+    style =  style,
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupColumn = "group_level",
+    groupColumn = list("group_level" = "group_level"),
     groupAsColumn = FALSE,
     groupOrder = NULL,
-    colsToMergeRows = c("cdm_name", "variable_name")
+    merge = c("cdm_name", "variable_name")
   )
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,1],
                c("gray", "black", "black", "black", "black", "black", "black", "black",
@@ -306,24 +279,7 @@ test_that("fxTableInternal, test colsToMergeRows", {
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,4],
                c("gray", "gray", "gray", "black", "gray", "black", "black", "black",
                  "gray", "gray", "gray", "black", "gray", "black", "black", "black"))
-
-  # Wroing input
-  expect_message(fxTableInternal(
-    table_to_format,
-    style = "default",
-    na = "-",
-    title = "Title test 2",
-    subtitle = "Subtitle for test 2",
-    caption = "*This* is the caption",
-    groupColumn = "group_level",
-    groupAsColumn = FALSE,
-    groupOrder = NULL,
-    colsToMergeRows = c("cdm_name", "lala")
-  ))
 })
-
-
-
 
 test_that("multiple groupColumn", {
   table_to_format <- mockSummarisedResult() |>
@@ -347,7 +303,7 @@ test_that("multiple groupColumn", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupColumn = c("group_name", "group_level"),
+    groupColumn = list("group_name_group_level" = c("group_name", "group_level")),
     groupAsColumn = TRUE
   )
 

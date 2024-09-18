@@ -2,10 +2,15 @@
 #'
 #' @param x A dataframe.
 #' @param delim Delimiter.
-#' @param style Named list that specifies how to style the different parts of
-#' the gt table. Accepted entries are: title, subtitle, header, header_name,
-#' header_level, column_name, group_label, and body. Alternatively, use
-#' "default" to get visOmopResults style, or NULL for flextable style.
+#' @param style  Named list that specifies how to style the different parts of
+#' the gt or flextable table generated. Accepted style entries are: title,
+#' subtitle, header, header_name, header_level, column_name, group_label, and
+#' body.
+#' Alternatively, use "default" to get visOmopResults style, or NULL for
+#' gt/flextable style.
+#' Keep in mind that styling code is different for gt and flextable. To see
+#' the "deafult" gt style code use `gtStyle()`, and `flextableStyle()` for
+#' flextable default code style.
 #' @param na How to display missing values.
 #' @param title Title of the table, or NULL for no title.
 #' @param subtitle Subtitle of the table, or NULL for no subtitle.
@@ -19,7 +24,7 @@
 #' @param groupAsColumn Whether to display the group labels as a column
 #' (TRUE) or rows (FALSE).
 #' @param groupOrder Order in which to display group labels.
-#' @param colsToMergeRows Names of the columns to merge vertically
+#' @param merge Names of the columns to merge vertically
 #' when consecutive row cells have identical values. Alternatively, use
 #' "all_columns" to apply this merging to all columns, or use NULL to indicate
 #' no merging.
@@ -29,25 +34,6 @@
 #' @description
 #' Creates a flextable object from a dataframe using a delimiter to span
 #' the header, and allows to easily customise table style.
-#'
-#' @examples
-#' mockSummarisedResult() |>
-#'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-#'   formatHeader(
-#'     header = c("Study strata", "strata_name", "strata_level"),
-#'     includeHeaderName = FALSE
-#'   ) |>
-#'   fxTable(
-#'     style = "default",
-#'     na = "--",
-#'     title = "fxTable example",
-#'     subtitle = NULL,
-#'     caption = NULL,
-#'     groupColumn = "group_level",
-#'     groupAsColumn = TRUE,
-#'     groupOrder = c("cohort1", "cohort2"),
-#'     colsToMergeRows = "all_columns"
-#'   )
 #'
 #' @return A flextable object.
 #'
@@ -63,8 +49,8 @@ fxTable <- function(x,
                     groupColumn = NULL,
                     groupAsColumn = FALSE,
                     groupOrder = NULL,
-                    colsToMergeRows = NULL) {
-  lifecycle::deprecate_soft(when = "0.4.0", what = "fxTable()")
+                    merge = NULL) {
+  lifecycle::deprecate_soft(when = "0.4.0", what = "fxTable()", with = "formatTable()")
 }
 
 
@@ -78,7 +64,7 @@ fxTableInternal <- function(x,
                             groupColumn = NULL,
                             groupAsColumn = FALSE,
                             groupOrder = NULL,
-                            colsToMergeRows = NULL) {
+                            merge = NULL) {
 
   # Package checks
   rlang::check_installed("flextable")
@@ -189,8 +175,8 @@ fxTableInternal <- function(x,
   }
 
   # Basic default + merge columns
-  if (!is.null(colsToMergeRows)) { # style while merging rows
-    flex_x <- fxMergeRows(flex_x, colsToMergeRows, nameGroup)
+  if (!is.null(merge)) { # style while merging rows
+    flex_x <- fxMergeRows(flex_x, merge, nameGroup)
   } else {
     if (!length(groupColumn) == 0) { # style group different
       indRowGroup <- getNonNaIndices(flex_x$body$dataset, nameGroup)
@@ -319,7 +305,7 @@ getNonNaIndices <- function(x, nameGroup) {
   which(!is.na(x[[nameGroup]]))
 }
 
-flextableStyle <- function(styleName) {
+flextableStyleInternal <- function(styleName) {
   styles <- list(
     "default" = list(
       "header" = list(
@@ -360,20 +346,20 @@ flextableStyle <- function(styleName) {
   return(styles[[styleName]])
 }
 
-fxMergeRows <- function(fx_x, colsToMergeRows, groupColumn) {
+fxMergeRows <- function(fx_x, merge, groupColumn) {
   colNms <- colnames(fx_x$body$dataset)
-  if (colsToMergeRows[1] == "all_columns") {
+  if (merge[1] == "all_columns") {
     if (length(groupColumn) == 0) {
-      colsToMergeRows <- colNms
+      merge <- colNms
     } else {
-      colsToMergeRows <- colNms[!colNms %in% groupColumn]
+      merge <- colNms[!colNms %in% groupColumn]
     }
   }
 
   # Sort columns to merge
-  ind <- match(colsToMergeRows, colNms)
-  names(ind) <- colsToMergeRows
-  colsToMergeRows <- names(sort(ind))
+  ind <- match(merge, colNms)
+  names(ind) <- merge
+  merge <- names(sort(ind))
 
   # Fill group column if necessary
   indColGroup <- NULL
@@ -404,7 +390,7 @@ fxMergeRows <- function(fx_x, colsToMergeRows, groupColumn) {
   }
 
 
-  for (k in seq_along(colsToMergeRows)) {
+  for (k in seq_along(merge)) {
 
     if (k > 1) {
       prevMerged <- mergeCol
@@ -413,7 +399,7 @@ fxMergeRows <- function(fx_x, colsToMergeRows, groupColumn) {
       prevId <- rep(TRUE, nrow(fx_x$body$dataset))
     }
 
-    col <- colsToMergeRows[k]
+    col <- merge[k]
     mergeCol <- fx_x$body$dataset[[col]]
     mergeCol[is.na(mergeCol)] <- "this is NA"
 
@@ -481,40 +467,40 @@ fxMergeRows <- function(fx_x, colsToMergeRows, groupColumn) {
 }
 
 #' Default style code expresion for flextable tables.
+#' @param styleName Name of the style. Currently the package just have one
+#' predefined style ("default").
 #' @export
-flextableStyle <- function() {
+flextableStyle <- function(styleName = "default") {
   list(
-    "default" = list(
-      "header" = list(
-        "cell" = officer::fp_cell(background.color = "#c8c8c8"),
-        "text" = officer::fp_text(bold = TRUE)
+    "header" = list(
+      "cell" = officer::fp_cell(background.color = "#c8c8c8"),
+      "text" = officer::fp_text(bold = TRUE)
+    ),
+    "header_name" = list(
+      "cell" = officer::fp_cell(background.color = "#d9d9d9"),
+      "text" = officer::fp_text(bold = TRUE)
+    ),
+    "header_level" = list(
+      "cell" = officer::fp_cell(background.color = "#e1e1e1"),
+      "text" = officer::fp_text(bold = TRUE)
+    ),
+    "column_name" = list(
+      "text" = officer::fp_text(bold = TRUE)
+    ),
+    "group_label" = list(
+      "cell" = officer::fp_cell(
+        background.color = "#e9e9e9",
+        border = officer::fp_border(color = "gray")
       ),
-      "header_name" = list(
-        "cell" = officer::fp_cell(background.color = "#d9d9d9"),
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "header_level" = list(
-        "cell" = officer::fp_cell(background.color = "#e1e1e1"),
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "column_name" = list(
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "group_label" = list(
-        "cell" = officer::fp_cell(
-          background.color = "#e9e9e9",
-          border = officer::fp_border(color = "gray")
-        ),
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "title" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 15)
-      ),
-      "subtitle" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 12)
-      ),
-      "body" = list()
-    )
+      "text" = officer::fp_text(bold = TRUE)
+    ),
+    "title" = list(
+      "text" = officer::fp_text(bold = TRUE, font.size = 15)
+    ),
+    "subtitle" = list(
+      "text" = officer::fp_text(bold = TRUE, font.size = 12)
+    ),
+    "body" = list()
   ) |>
     rlang::expr()
 }

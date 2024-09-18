@@ -1,4 +1,4 @@
-#' Filter a summarised_result using the settings.
+#' Filter a summarised_result using the settings
 #'
 #' @param result A summarised_result object.
 #' @param ... Expressions that return a logical value (columns in settings are

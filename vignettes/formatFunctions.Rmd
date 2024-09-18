@@ -137,7 +137,7 @@ mock_sr |>
     groupColumn = "cohort_name",
     groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
-    colsToMergeRows = "all_columns"
+    merge = "all_columns"
   )
 ```
 
@@ -160,7 +160,7 @@ mock_sr |>
     groupColumn = "cohort_name",
     groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
-    colsToMergeRows = "all_columns"
+    merge = "all_columns"
   )
 ```
 
@@ -187,7 +187,7 @@ mock_sr |>
     groupColumn = "cohort_name",
     groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
-    colsToMergeRows = "all_columns"
+    merge = "all_columns"
   )
 ```
 

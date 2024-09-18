@@ -222,11 +222,7 @@ test_that("renameColumn works", {
   expect_true(colnames(fx3$body$dataset)[1] == "group")
 })
 
-
 test_that("empty result",{
-
-  result = omopgenerics::emptySummarisedResult()
-
   result = omopgenerics::emptySummarisedResult()
   type = "gt"
   formatEstimateName = c(
@@ -258,7 +254,6 @@ test_that("empty result",{
   }, "Empty summarized results provided.")
 
 })
-
 
 test_that("don't want scientific",{
   res <- visOmopResults::visOmopTable(

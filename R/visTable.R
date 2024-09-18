@@ -49,13 +49,13 @@
 #'   )
 
 visTable <- function(result,
-                        formatEstimateName = character(),
-                        header = character(),
-                        groupColumn = character(),
-                        renameColumns = character(),
-                        type = "gt",
-                        hide = character(),
-                        .options = list()) {
+                     formatEstimateName = character(),
+                     header = character(),
+                     groupColumn = character(),
+                     renameColumns = character(),
+                     type = "gt",
+                     hide = character(),
+                     .options = list()) {
   # initial checks
   omopgenerics::assertTable(result)
   omopgenerics::assertChoice(type, choices = c("gt", "flextable", "tibble"), length = 1)

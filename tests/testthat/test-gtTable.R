@@ -6,7 +6,7 @@ test_that("gtTable", {
   # Input 1 ----
   # Title but no subtitle
   # Styles
-  gtTableInternal <- gtTable(
+  gtTableInternal <- gtTableInternal(
     table_to_format,
     style = list(
       "header" = list(
@@ -68,7 +68,7 @@ test_that("gtTable", {
     formatHeader(header = c("strata_name", "strata_level"),
                includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
-  gtTableInternal <- gtTable(
+  gtTableInternal <- gtTableInternal(
     table_to_format,
     style = list(
       "subtitle" = list(gt::cell_text(weight = "lighter", size = "large", color = "blue")),
@@ -81,7 +81,7 @@ test_that("gtTable", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupColumn = "group_level",
+    groupColumn = list("group_level" = "group_level"),
     groupAsColumn = FALSE,
     groupOrder = NULL
   )
@@ -133,7 +133,7 @@ test_that("gtTable", {
                delim = ":",
                includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
-  gtTableInternal <- gtTable(
+  gtTableInternal <- gtTableInternal(
     table_to_format,
     delim = ":",
     style = list(
@@ -146,7 +146,7 @@ test_that("gtTable", {
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupColumn = "group_level",
+    groupColumn = list("group_level" = "group_level"),
     groupAsColumn = TRUE,
     groupOrder = c("cohort2", "cohort1")
   )
@@ -154,19 +154,6 @@ test_that("gtTable", {
   expect_true(gtTableInternal$`_options`$value[gtTableInternal$`_options`$parameter == "row_group_as_column"] |> unlist())
   # groupOrder
   expect_identical(gtTableInternal$`_row_groups`, c( "cohort2", "cohort1"))
-
-  # Wrong inputs ----
-  expect_error(gtTable(
-    table_to_format,
-    style = NA,
-    na = "-",
-    title = "Title test 2",
-    subtitle = "Subtitle for test 2",
-    caption = "*This* is the caption",
-    groupColumn = "group_level",
-    groupAsColumn = TRUE,
-    groupOrder = c("cohort2", "cohort1")
-  ))
 })
 
 test_that("gtTable, test default styles and NULL", {
@@ -175,7 +162,7 @@ test_that("gtTable, test default styles and NULL", {
                 includeHeaderName = FALSE) |>
     dplyr::select(-result_id)
   # Input 1: NULL ----
-  gtTableInternal <- gtTable(
+  gtTableInternal <- gtTableInternal(
     table_to_format,
     style = NULL,
     na = NULL,
@@ -198,14 +185,14 @@ test_that("gtTable, test default styles and NULL", {
     formatHeader(header = c("strata", "strata_name", "strata_level"),
                 includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
-  gtTableInternal <- gtTable(
+  gtTableInternal <- gtTableInternal(
     table_to_format,
-    style = "default",
+    style = gtStyleInternal("default"),
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupColumn = "group_level",
+    groupColumn = list("group_level" = "group_level"),
     groupAsColumn = FALSE,
     groupOrder = NULL
   )
@@ -235,36 +222,24 @@ test_that("gtTable, test default styles and NULL", {
   # Group labels
   expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "row_groups"] |> unlist() |> unique(),
                c("#E9E9E9", "bold"))
-
-
-  #Input 3: woring name style ----
-  expect_message(
-    gtTableInternal <- gtTable(
-      table_to_format,
-      style = "heythere",
-      na = "-",
-      title = "Title test 2",
-      subtitle = "Subtitle for test 2",
-      caption = "*This* is the caption"
-    ))
 })
 
-test_that("gtTable, test colsToMergeRows", {
+test_that("gtTable, test merge", {
   table_to_format<- mockSummarisedResult() |>
     formatHeader(header = c("strata_name", "strata_level")) |>
     dplyr::select(-result_id)
-  # colsToMergeRows = "all"
-  gtTableInternal <- gtTable(
+  # merge = "all"
+  gtTableInternal <- gtTableInternal(
     table_to_format,
-    style = "default",
+    style = gtStyleInternal("default"),
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupColumn = "group_level",
+    groupColumn = list("group_level" = "group_level"),
     groupAsColumn = FALSE,
     groupOrder = NULL,
-    colsToMergeRows = "all_columns"
+    merge = "all_columns"
   )
   expect_equal(gtTableInternal$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
@@ -274,18 +249,18 @@ test_that("gtTable, test colsToMergeRows", {
   expect_equal(gtTableInternal$`_data`$group_level|> levels(),
                c("cohort1", "cohort2"))
 
-  # colsToMergeRows = c("cdm_name", "variable_name")
-  gtTableInternal <- gtTable(
+  # merge = c("cdm_name", "variable_name")
+  gtTableInternal <- gtTableInternal(
     table_to_format,
-    style = "default",
+    style = gtStyleInternal("default"),
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupColumn = "group_level",
+    groupColumn = list("group_level" = "group_level"),
     groupAsColumn = TRUE,
     groupOrder = NULL,
-    colsToMergeRows = c("cdm_name", "variable_level")
+    merge = c("cdm_name", "variable_level")
   )
   expect_equal(gtTableInternal$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "mock", "", "", "", "", "", ""))
@@ -296,9 +271,9 @@ test_that("gtTable, test colsToMergeRows", {
                c("cohort1", "cohort2"))
 
   # no groupColumn
-  gtTableInternal <- gtTable(
+  gtTableInternal <- gtTableInternal(
     table_to_format,
-    style = "default",
+    style = gtStyleInternal("default"),
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
@@ -306,7 +281,7 @@ test_that("gtTable, test colsToMergeRows", {
     groupColumn = NULL,
     groupAsColumn = FALSE,
     groupOrder = NULL,
-    colsToMergeRows = "all_columns"
+    merge = "all_columns"
   )
   expect_equal(gtTableInternal$`_data`$cdm_name,
                c("mock", "", "", "", "", "", "", "", "", "", "", "", "", ""))
@@ -322,17 +297,17 @@ test_that("groupColumn",{
     formatHeader(header = c("strata_name", "strata_level")) |>
     dplyr::select(-result_id)
 
-  gtTableInternal <- gtTable(
+  gtTableInternal <- gtTableInternal(
     table_to_format,
-    style = "default",
+    style = gtStyleInternal("default"),
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
-    groupColumn = c("group_name", "group_level"),
+    groupColumn = list("group_name_group_level" = c("group_name", "group_level")),
     groupAsColumn = TRUE,
     groupOrder = NULL,
-    colsToMergeRows = "all_columns"
+    merge = "all_columns"
   )
 
   expect_equal(gtTableInternal$`_data`$cdm_name,
@@ -343,9 +318,9 @@ test_that("groupColumn",{
   expect_equal(gtTableInternal$`_data`$group_name_group_level |> levels(),
                c('cohort_name; cohort1', 'cohort_name; cohort2'))
 
-  gtTableInternal <- gtTable(
+  gtTableInternal <- gtTableInternal(
     table_to_format,
-    style = "default",
+    style = gtStyleInternal("default"),
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
@@ -353,9 +328,8 @@ test_that("groupColumn",{
     groupColumn = list("hi_there" = c("group_name", "group_level")),
     groupAsColumn = TRUE,
     groupOrder = NULL,
-    colsToMergeRows = "all_columns"
+    merge = "all_columns"
   )
   expect_equal(gtTableInternal$`_data`$hi_there |> levels(),
                c('cohort_name; cohort1', 'cohort_name; cohort2'))
-
 })

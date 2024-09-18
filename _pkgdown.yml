@@ -3,13 +3,13 @@ template:
   bootstrap: 5
 
 reference:
-- title: Functions to tidy `summarise_result`
+- title: Functions to tidy <summarised_result>
 - subtitle: Tidy functions
 - contents:
   - matches("tidy.summarised_result|tidySummarisedResult")
 - subtitle: Split functions
 - contents:
-  - matches("split")
+  - matches("splitStrata|splitGroup|splitAdditional|splitAll")
 - subtitle: Add settings and estimates
 - contents:
   - matches("addSettings|pivot")
@@ -17,10 +17,13 @@ reference:
 - title: Table functions
 - subtitle: Main functions
 - contents:
-  - matches("visOmopTable|formatTable")
+  - matches("visOmopTable|visTable")
 - subtitle: Additional table formating functions
 - contents:
-  - matches("formatEstimate|Header|gt|fx|options")
+  - matches("format")
+- subtitle: Helper table functions
+- contents:
+  - matches("Style|options")
 
 - title: Plot functions
 - contents:
@@ -36,7 +39,11 @@ reference:
   - ends_with("Columns")
 - subtitle: Unite functions
 - contents:
-  - starts_with("unite")
-- subtitle: Mock `summarised_result`
+  - matches("uniteStrata|uniteGroup|uniteAdditional")
+- subtitle: Mock <summarised_result>
 - contents:
   - matches("mock")
+
+- title: Deprecated
+- contents:
+  - matches("fxTable|gtTable|NameLevel")

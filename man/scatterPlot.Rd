@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{scatterPlot}
 \alias{scatterPlot}
-\title{Create a scatter plot visualisation from a summarised result object.}
+\title{Create a scatter plot visualisation from a summarised result object}
 \usage{
 scatterPlot(
   result,

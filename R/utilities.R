@@ -57,6 +57,13 @@ validateEstimateNameFormat <- function(format, call = parent.frame()) {
 validateStyle <- function(style, tableFormatType) {
   if (is.list(style) | is.null(style)) {
     omopgenerics::assertList(style, null = TRUE, named = TRUE)
+    if (is.list(style)) {
+      notIn <- !names(style) %in% names(gtStyleInternal("default"))
+      if (sum(notIn) > 0) {
+        cli::cli_abort(c("`style` can only be defined for the following table parts: {gtStyleInternal('default') |> names()}.",
+                      "x" =  "{.strong {names(style)[notIn]}} {?is/are} not one of them."))
+      }
+    }
   } else if (is.character(style)) {
     omopgenerics::assertCharacter(style, null = TRUE)
     eval(parse(text = paste0("style <- ", tableFormatType, "StyleInternal(styleName = style)")))
