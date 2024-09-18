@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{boxPlot}
 \alias{boxPlot}
-\title{Create a box plot visualisation from a summarised_result object.}
+\title{Create a box plot visualisation from a summarised_result object}
 \usage{
 boxPlot(
   result,

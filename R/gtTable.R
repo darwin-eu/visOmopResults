@@ -2,10 +2,15 @@
 #'
 #' @param x A dataframe.
 #' @param delim Delimiter.
-#' @param style Named list that specifies how to style the different parts of
-#' the gt table. Accepted entries are: title, subtitle, header, header_name,
-#' header_level, column_name, group_label, and body. Alternatively, use
-#' "default" to get visOmopResults style, or NULL for gt style
+#' @param style  Named list that specifies how to style the different parts of
+#' the gt or flextable table generated. Accepted style entries are: title,
+#' subtitle, header, header_name, header_level, column_name, group_label, and
+#' body.
+#' Alternatively, use "default" to get visOmopResults style, or NULL for
+#' gt/flextable style.
+#' Keep in mind that styling code is different for gt and flextable. To see
+#' the "deafult" gt style code use `gtStyle()`, and `flextableStyle()` for
+#' flextable default code style.
 #' @param na How to display missing values.
 #' @param title Title of the table, or NULL for no title.
 #' @param subtitle Subtitle of the table, or NULL for no subtitle.
@@ -29,72 +34,54 @@
 #' @description
 #' Creates a flextable object from a dataframe using a delimiter to span
 #' the header, and allows to easily customise table style.
-#'
-#' @examples
-#' mockSummarisedResult() |>
-#'   formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-#'   formatHeader(header = c("Study strata", "strata_name", "strata_level"),
-#'               includeHeaderName = FALSE) |>
-#'   gtTable(
-#'     style = list("header" = list(
-#'       gt::cell_fill(color = "#d9d9d9"),
-#'       gt::cell_text(weight = "bold")),
-#'       "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
-#'                             gt::cell_text(weight = "bold")),
-#'       "column_name" = list(gt::cell_text(weight = "bold")),
-#'       "title" = list(gt::cell_text(weight = "bold"),
-#'                      gt::cell_fill(color = "#c8c8c8")),
-#'       "group_label" = gt::cell_fill(color = "#e1e1e1")),
-#'     na = "--",
-#'     title = "gtTable example",
-#'     subtitle = NULL,
-#'     caption = NULL,
-#'     groupColumn = "group_level",
-#'     groupAsColumn = FALSE,
-#'     groupOrder = c("cohort1", "cohort2"),
-#'     colsToMergeRows = "all_columns"
-#'   )
-#'
 #' @return A gt table.
 #'
 #' @export
 #'
-gtTable <- function(
-    x,
-    delim = "\n",
-    style = "default",
-    na = "-",
-    title = NULL,
-    subtitle = NULL,
-    caption = NULL,
-    groupColumn = NULL,
-    groupAsColumn = FALSE,
-    groupOrder = NULL,
-    colsToMergeRows = NULL
+gtTable <- function(x,
+                    delim = "\n",
+                    style = "default",
+                    na = "-",
+                    title = NULL,
+                    subtitle = NULL,
+                    caption = NULL,
+                    groupColumn = NULL,
+                    groupAsColumn = FALSE,
+                    groupOrder = NULL,
+                    colsToMergeRows = NULL) {
+  lifecycle::deprecate_soft(when = "0.4.0", what = "gtTable()", with = "formatTable()")
+  x |>
+    formatTable(
+      type = "gt",
+      delim = delim,
+      style = style,
+      na = na,
+      title = title,
+      subtitle = subtitle,
+      caption = caption,
+      groupColumn = groupColumn,
+      groupAsColumn = groupAsColumn,
+      groupOrder = groupOrder,
+      merge = colsToMergeRows
+    )
+}
+
+
+gtTableInternal <- function(x,
+                            delim = "\n",
+                            style = "default",
+                            na = "-",
+                            title = NULL,
+                            subtitle = NULL,
+                            caption = NULL,
+                            groupColumn = NULL,
+                            groupAsColumn = FALSE,
+                            groupOrder = NULL,
+                            merge = NULL
 ) {
 
   # Package checks
   rlang::check_installed("gt")
-
-  # Input checks
-  omopgenerics::assertTable(x)
-  omopgenerics::assertCharacter(na, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(title, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(subtitle, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(caption, length = 1, null= TRUE)
-  omopgenerics::assertLogical(groupAsColumn, length = 1)
-  omopgenerics::assertCharacter(groupOrder, null = TRUE)
-  delim <- validateDelim(delim)
-  groupColumn <- validateGroupColumn(groupColumn, x)
-  colsToMergeRows <- validateColsToMergeRows(x, colsToMergeRows, groupColumn[[1]])
-  style <- validateStyle(style, "gt")
-  if (is.null(title) & !is.null(subtitle)) {
-    cli::cli_abort("There must be a title for a subtitle.")
-  }
-  if (dplyr::is.grouped_df(x)) {
-    x <- x |> dplyr::ungroup()
-    cli::cli_inform("`x` will be ungrouped.")
-  }
 
   # na
   if (!is.null(na)){
@@ -233,8 +220,8 @@ gtTable <- function(
     )
 
   # Merge rows
-  if (!is.null(colsToMergeRows)) {
-    gtResult <- gtMergeRows(gtResult, colsToMergeRows, names(groupColumn), groupOrder)
+  if (!is.null(merge)) {
+    gtResult <- gtMergeRows(gtResult, merge, names(groupColumn), groupOrder)
   }
 
   # Other options:
@@ -305,7 +292,7 @@ gtTable <- function(
   return(gtResult)
 }
 
-gtStyles <- function(styleName) {
+gtStyleInternal <- function(styleName) {
   styles <- list (
     "default" = list(
       "header" = list(gt::cell_fill(color = "#c8c8c8"),
@@ -322,32 +309,32 @@ gtStyles <- function(styleName) {
       "body" = list()
     )
   )
-  if (! styleName %in% names(styles)) {
+  if (!styleName %in% names(styles)) {
     cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
     styleName <- "default"
   }
   return(styles[[styleName]])
 }
 
-gtMergeRows <- function(gt_x, colsToMergeRows, groupColumn, groupOrder) {
+gtMergeRows <- function(gt_x, merge, groupColumn, groupOrder) {
 
   colNms <- colnames(gt_x$`_data`)
   colsToExclude <- c("group_label", paste(groupColumn, collapse = "_"))
 
-  if (colsToMergeRows[1] == "all_columns") {
+  if (merge[1] == "all_columns") {
     if (length(groupColumn) == 0) {
-      colsToMergeRows <- colNms[!colNms %in% colsToExclude]
+      merge <- colNms[!colNms %in% colsToExclude]
     } else {
-      colsToMergeRows <- colNms[!colNms %in% c(groupColumn, colsToExclude)]
+      merge <- colNms[!colNms %in% c(groupColumn, colsToExclude)]
     }
   }
 
   # sort
-  ind <- match(colsToMergeRows, colNms)
-  names(ind) <- colsToMergeRows
-  colsToMergeRows <- names(sort(ind))
+  ind <- match(merge, colNms)
+  names(ind) <- merge
+  merge <- names(sort(ind))
 
-  for (k in seq_along(colsToMergeRows)) {
+  for (k in seq_along(merge)) {
 
     if (k > 1) {
       prevMerged <- mergeCol
@@ -356,7 +343,7 @@ gtMergeRows <- function(gt_x, colsToMergeRows, groupColumn, groupOrder) {
       prevId <- rep(TRUE, nrow(gt_x$`_data`))
     }
 
-    col <- colsToMergeRows[k]
+    col <- merge[k]
     mergeCol <- as.character(gt_x$`_data`[[col]])
     mergeCol[is.na(mergeCol)] <- "-"
 
@@ -376,4 +363,26 @@ gtMergeRows <- function(gt_x, colsToMergeRows, groupColumn, groupOrder) {
       )
   }
   return(gt_x)
+}
+
+#' Default style code expresion for gt tables.
+#' @param styleName Name of the style. Currently the package just have one
+#' predefined style ("default").
+#' @export
+gtStyle <- function(styleName = "default") {
+  list(
+    "header" = list(gt::cell_fill(color = "#c8c8c8"),
+                    gt::cell_text(weight = "bold", align = "center")),
+    "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
+                         gt::cell_text(weight = "bold", align = "center")),
+    "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
+                          gt::cell_text(weight = "bold", align = "center")),
+    "column_name" = list(gt::cell_text(weight = "bold", align = "center")),
+    "group_label" = list(gt::cell_fill(color = "#e9e9e9"),
+                         gt::cell_text(weight = "bold")),
+    "title" = list(gt::cell_text(weight = "bold", size = 15, align = "center")),
+    "subtitle" = list(gt::cell_text(weight = "bold", size = 12, align = "center")),
+    "body" = list()
+  ) |>
+    rlang::expr()
 }

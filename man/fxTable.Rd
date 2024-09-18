@@ -24,9 +24,14 @@ fxTable(
 \item{delim}{Delimiter.}
 
 \item{style}{Named list that specifies how to style the different parts of
-the gt table. Accepted entries are: title, subtitle, header, header_name,
-header_level, column_name, group_label, and body. Alternatively, use
-"default" to get visOmopResults style, or NULL for flextable style.}
+the gt or flextable table generated. Accepted style entries are: title,
+subtitle, header, header_name, header_level, column_name, group_label, and
+body.
+Alternatively, use "default" to get visOmopResults style, or NULL for
+gt/flextable style.
+Keep in mind that styling code is different for gt and flextable. To see
+the "deafult" gt style code use \code{gtStyle()}, and \code{flextableStyle()} for
+flextable default code style.}
 
 \item{na}{How to display missing values.}
 
@@ -61,24 +66,4 @@ A flextable object.
 \description{
 Creates a flextable object from a dataframe using a delimiter to span
 the header, and allows to easily customise table style.
-}
-\examples{
-mockSummarisedResult() |>
-  formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
-  formatHeader(
-    header = c("Study strata", "strata_name", "strata_level"),
-    includeHeaderName = FALSE
-  ) |>
-  fxTable(
-    style = "default",
-    na = "--",
-    title = "fxTable example",
-    subtitle = NULL,
-    caption = NULL,
-    groupColumn = "group_level",
-    groupAsColumn = TRUE,
-    groupOrder = c("cohort1", "cohort2"),
-    colsToMergeRows = "all_columns"
-  )
-
 }

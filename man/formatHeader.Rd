@@ -2,7 +2,7 @@
 % Please edit documentation in R/formatHeader.R
 \name{formatHeader}
 \alias{formatHeader}
-\title{Create a header for gt and flextable objects.}
+\title{Create a header for gt and flextable objects}
 \usage{
 formatHeader(
   result,
@@ -31,7 +31,7 @@ subsequent header formatting.
 \description{
 Pivots a summarised_result object based on the column names in header,
 generating specific column names for subsequent header formatting in
-gtTable and fxTable functions.
+formatTable function.
 }
 \examples{
 result <- mockSummarisedResult()

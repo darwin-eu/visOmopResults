@@ -206,7 +206,7 @@ gtResult <- result |>
     groupColumn = "group_level",
     groupAsColumn = FALSE,
     groupOrder = c("cohort1", "cohort2"),
-    colsToMergeRows = "all_columns"
+    merge = "all_columns"
     )
 ```
 

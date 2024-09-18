@@ -1,5 +1,5 @@
 
-#' Create a scatter plot visualisation from a summarised result object.
+#' Create a scatter plot visualisation from a summarised result object
 #'
 #' `r lifecycle::badge("experimental")`
 #'
@@ -115,7 +115,7 @@ scatterPlot <- function(result,
   return(p)
 }
 
-#' Create a box plot visualisation from a summarised_result object.
+#' Create a box plot visualisation from a summarised_result object
 #'
 #' `r lifecycle::badge("experimental")`
 #'
@@ -202,7 +202,7 @@ boxPlot <- function(result,
   return(p)
 }
 
-#' Create a bar plot visualisation from a summarised result object.
+#' Create a bar plot visualisation from a summarised result object
 #'
 #' `r lifecycle::badge("experimental")`
 #'

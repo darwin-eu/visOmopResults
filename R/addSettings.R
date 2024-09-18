@@ -1,4 +1,4 @@
-#' Add settings columns to a summaries_result object.
+#' Add settings columns to a summarised_result object
 #'
 #' @param result A summarised_result object.
 #' @param settingsColumns Settings to be added as columns, by default all

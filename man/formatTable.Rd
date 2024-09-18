@@ -2,70 +2,119 @@
 % Please edit documentation in R/formatTable.R
 \name{formatTable}
 \alias{formatTable}
-\title{Generate a formatted table from a data.table}
+\title{Creates a flextable or gt object from a dataframe}
 \usage{
 formatTable(
-  result,
-  formatEstimateName = character(),
-  header = character(),
-  groupColumn = character(),
-  renameColumns = character(),
+  x,
   type = "gt",
-  hide = character(),
-  .options = list()
+  delim = "\\n",
+  style = "default",
+  na = "-",
+  title = NULL,
+  subtitle = NULL,
+  caption = NULL,
+  groupColumn = NULL,
+  groupAsColumn = FALSE,
+  groupOrder = NULL,
+  merge = NULL
 )
 }
 \arguments{
-\item{result}{A table to format.}
+\item{x}{A dataframe.}
 
-\item{formatEstimateName}{A named list of estimate names to join, sorted by
-computation order. Use \verb{<...>} to indicate estimate names. This argument
-requires that the table has \code{estimate_name} and \code{estimate_value} columns.}
+\item{type}{The type of desired formatted table. Options are: "gt",
+and "flextable".}
 
-\item{header}{A vector specifying the elements to include in the header.
-The order of elements matters, with the first being the topmost header.
-The vector elements can be column names or labels for overall headers.
-The table must contain an \code{estimate_value} column to pivot the headers.}
+\item{delim}{Delimiter.}
 
-\item{groupColumn}{Columns to use as group labels. By default, the name of the
-new group will be the tidy* column names separated by ";". To specify a custom
-group name, use a named list such as:
-list("newGroupName" = c("variable_name", "variable_level")).
+\item{style}{Named list that specifies how to style the different parts of
+the gt or flextable table generated. Accepted style entries are: title,
+subtitle, header, header_name, header_level, column_name, group_label, and
+body.
+Alternatively, use "default" to get visOmopResults style, or NULL for
+gt/flextable style.
+Keep in mind that styling code is different for gt and flextable. To see
+the "deafult" gt style code use \code{gtStyle()}, and \code{flextableStyle()} for
+flextable default code style.}
 
-*tidy: The tidy format applied to column names replaces "_" with a space and
-converts them to sentence case. Use \code{renameColumns} to customize specific column names.}
+\item{na}{How to display missing values.}
 
-\item{renameColumns}{A named vector to customize column names, e.g.,
-c("Database name" = "cdm_name"). The function will rename all column names
-not specified here into a tidy* format.}
+\item{title}{Title of the table, or NULL for no title.}
 
-\item{type}{The desired format of the output table. Options are: "gt",
-"flextable", or "tibble".}
+\item{subtitle}{Subtitle of the table, or NULL for no subtitle.}
 
-\item{hide}{Columns to drop from the output table.}
+\item{caption}{Caption for the table, or NULL for no caption. Text in
+markdown formatting style (e.g. \verb{*Your caption here*} for caption in
+italics).}
 
-\item{.options}{A named list with additional formatting options.
-\code{visOmopResults::optionsTable()} shows allowed arguments and their default values.}
+\item{groupColumn}{Specifies the columns to use for group labels.
+By default, the new group name will be a combination of the column names,
+joined by "_". To assign a custom group name, provide a named list such as:
+list(\code{newGroupName} = c("variable_name", "variable_level"))}
+
+\item{groupAsColumn}{Whether to display the group labels as a column
+(TRUE) or rows (FALSE).}
+
+\item{groupOrder}{Order in which to display group labels.}
+
+\item{merge}{Names of the columns to merge vertically when consecutive row
+cells have identical values. Alternatively, use "all_columns" to apply this
+merging to all columns, or use NULL to indicate no merging.}
 }
 \value{
-A tibble, gt, or flextable object.
+A flextable object.
+
+A flextable or gt object.
 }
 \description{
-This function combines the functionalities of \code{formatEstimateValue()},
-\code{formatEstimateName()}, \code{formatHeader()}, \code{gtTable()}, and \code{fxTable()}
-into a single function. While it does not require the input table to be
-a \code{summarised_result}, it does expect specific fields to apply formatting.
+Creates a flextable object from a dataframe using a delimiter to span
+the header, and allows to easily customise table style.
 }
 \examples{
-result <- mockSummarisedResult()
-result |>
+# Example 1
+mockSummarisedResult() |>
+  formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
+  formatHeader(
+    header = c("Study strata", "strata_name", "strata_level"),
+    includeHeaderName = FALSE
+  ) |>
   formatTable(
-    formatEstimateName = c("N\%" = "<count> (<percentage>)",
-                           "N" = "<count>",
-                           "Mean (SD)" = "<mean> (<sd>)"),
-    header = c("Estimate"),
-    renameColumns = c("Database name" = "cdm_name"),
-    groupColumn = c("strata_name", "strata_level"),
-    hide = c("additional_name", "additional_level", "estimate_type", "result_type")
+    type = "flextable",
+    style = "default",
+    na = "--",
+    title = "fxTable example",
+    subtitle = NULL,
+    caption = NULL,
+    groupColumn = "group_level",
+    groupAsColumn = TRUE,
+    groupOrder = c("cohort1", "cohort2"),
+    merge = "all_columns"
   )
+
+# Example 2
+mockSummarisedResult() |>
+  formatEstimateValue(decimals = c(integer = 0, numeric = 1)) |>
+  formatHeader(header = c("Study strata", "strata_name", "strata_level"),
+              includeHeaderName = FALSE) |>
+  formatTable(
+    type = "gt",
+    style = list("header" = list(
+      gt::cell_fill(color = "#d9d9d9"),
+      gt::cell_text(weight = "bold")),
+      "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
+                            gt::cell_text(weight = "bold")),
+      "column_name" = list(gt::cell_text(weight = "bold")),
+      "title" = list(gt::cell_text(weight = "bold"),
+                     gt::cell_fill(color = "#c8c8c8")),
+      "group_label" = gt::cell_fill(color = "#e1e1e1")),
+    na = "--",
+    title = "gtTable example",
+    subtitle = NULL,
+    caption = NULL,
+    groupColumn = "group_level",
+    groupAsColumn = FALSE,
+    groupOrder = c("cohort1", "cohort2"),
+    merge = "all_columns"
+  )
+
 }
