@@ -15,7 +15,7 @@ fxTable(
   groupColumn = NULL,
   groupAsColumn = FALSE,
   groupOrder = NULL,
-  merge = NULL
+  colsToMergeRows = NULL
 )
 }
 \arguments{
@@ -53,7 +53,7 @@ list(\code{newGroupName} = c("variable_name", "variable_level"))}
 
 \item{groupOrder}{Order in which to display group labels.}
 
-\item{merge}{Names of the columns to merge vertically
+\item{colsToMergeRows}{Names of the columns to merge vertically
 when consecutive row cells have identical values. Alternatively, use
 "all_columns" to apply this merging to all columns, or use NULL to indicate
 no merging.}
