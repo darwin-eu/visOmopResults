@@ -23,14 +23,13 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/darwin-eu/visOmopResults/branch/main/graph/badge.svg)](https://app.codecov.io/gh/darwin-eu/visOmopResults?branch=main)
 <!-- badges: end -->
 
-
 ## Package overview
 
-visOmopResults contains functions for formatting objects of the class *summarised_result* (see R package [omopgenerics](https://cran.r-project.org/package=omopgenerics)). 
-This package simplifies the handling of these objects to obtain nice output tables in the format of *gt* or *flextable*' to report results via Shiny apps, RMarkdown, Quarto, and more.
+**visOmopResults** contains functions to format objects of the class *<summarised_result>* (as defined in [omopgenerics](https://cran.r-project.org/package=omopgenerics)). 
 
+It provides functionality to: **transform**, **create table visualisations** and **create plot visualisations**. These visualisatoins can be very useful to report results via Shiny apps, RMarkdown, Quarto, and more; as they allow multiple formating outputs: html, png, word, pdf, ...
 
-## Installation
+## Let's get started
 
 You can install the latest version of visOmopResults from CRAN:
 
@@ -42,109 +41,117 @@ Or you can install the development version from
 [GitHub](https://github.com/darwin-eu/visOmopResults) with:
 
 ```{r, eval = FALSE}
-# install.packages("devtools")
-devtools::install_github("darwin-eu/visOmopResults")
+# install.packages("pak")
+pak::pkg_install("darwin-eu/visOmopResults")
 ```
 
-## Example usage
+As mentioned before the *<summarised_result>* object is defined in omopgenerics and can be created with `omopgenerics::newSummarisedResult()`. This standardised output is used in many other packages such as:
 
-First, we load the package and create a summarised result object with mock results
+- [CohortCharacteristics](https://cran.r-project.org/package=CohortCharacteristics)
+- [DrugUtilisation](https://cran.r-project.org/package=DrugUtilisation)
+- [IncidencePrevalence](https://cran.r-project.org/package=IncidencePrevalence)
+- [PatientProfiles](https://cran.r-project.org/package=PatientProfiles)
+- [CodelistGenerator](https://cran.r-project.org/package=CodelistGenerator)
+- [CohortSurvival](https://cran.r-project.org/package=CohortSurvival)
+- [CohortSymmetry](https://cran.r-project.org/package=CohortSymmetry)
+- [omopSketch](https://cran.r-project.org/package=omopSketch)
+- [PhenotypeR](https://cran.r-project.org/package=PhenotypeR)
 
-```{r, message=F}
+Although standard output is needed it can be hard to manage some times. The purpose of this package is to make it easier to manage. To show the different functionality we will use some mock data:
+
+```{r}
 library(visOmopResults)
 result <- mockSummarisedResult()
 ```
 
-We can use the function `visOmopTable()` to get a nice *gt* table:
+## Transformation of a *<summarised_result>* object
 
-```{r, eval = FALSE}
-visOmopTable(
-  result,
-  formatEstimateName = c("N%" = "<count> (<percentage>)",
-                         "N" = "<count>",
-                         "Mean (SD)" = "<mean> (<sd>)"),
-  header = c("Stratifications", "strata"),
-  split = c("group","additional")
-)
+A tidy version of the summarised can be obtained with the tidy function:
+```{r}
+tidy(result)
 ```
 
-![](./man/figures/visOmopTable.png)
-
-In the code snipped showed, we specified how to group and display the estimates with `formatEstimateName`. Also, we created a header based on the stratifications with `header`, and we split the name-level paired columns group and additional (refer to the "split and unite functions" vignette for more information on splitting). 
-
-
-## Custom formatting - Example usage
-The function `visOmopTable()` is wrapped around other functions of the package. These can be implemented in a pipeline for additional customisation of the summarised_result. 
-
-### 1. formatEstimateValue()
-We utilize this function to modify the *estimate_value* column. In this case, we will apply the default settings of the function, which include using 0 decimals for integer values, 2 decimals for numeric values, 1 decimal for percentages, and 3 decimals for proportions. Additionally, the function sets the decimal mark to '.', and the thousand/millions separator to ',' by default."
-
+Note that tidy format is not standardised any more but it makes easier to manipulate. The `tidy()` function does not have any customisation function, but a sibling function is `tidySummarisedResult()` that provides all custom functionality to specify how you want to tidy your *<summarised_result>* object.
 ```{r}
-result <- result |> 
-  formatEstimateValue(
-    decimals = c(integer = 0, numeric = 2, percentage = 1, proportion = 3),
-    decimalMark = ".",
-    bigMark = ",")
+result |>
+  tidySummarisedResult(
+    splitStrata = FALSE,
+    settingsColumns = "package_name", 
+    pivotEstimatesBy = NULL
+  )
 ```
 
-```{r}
-result |> dplyr::glimpse()
-```
+## Filter a *<summarised_result>* object
 
+A *<summarised_result>* object is a *<data.frame>* so it can easily be filtered using the `dplyr::filter()` function, but some times it can be quite challenging to filter variables that are joined in a name-level structure or are present in the settings of the analysis. The functions:
 
-### 2. formatEstimateName()
-With this function we can transform the *estimate_name* and *estimate_value* columns. For example, it allows to consolidate into one row counts and percentages related to the same variable within the same group and strata. It's worth noting that the *estimate_name* is enclosed within <...> in the `estimateNameFormat` argument.
+- `filterSettings()`
+- `filterGroup()`
+- `filterStrata()`
+- `filterAdditional()`
+
+can help to do that:
+
 ```{r}
-result <- result |> formatEstimateName(
-  estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
-                         "N" = "<count>",
-                         "Mean (SD)" = "<mean> (<sd>)"),
-  keepNotFormatted = FALSE)
+result |>
+  filterSettings(package_name == "visOmopResults")
 ```
 
 ```{r}
-result |> dplyr::glimpse()
-```
-
-### 3. formatHeader()
-Next step is to format our table before transforming to gt object. We will pivot *strata_name* and *strata_level* columns to have the strata groups as columns under the header "Study strata".
-
-```{r}
-result <- result |>
-  formatHeader(header = c("Study strata", "strata_name", "strata_level"),
-               delim = "\n", 
-               includeHeaderName = FALSE,
-               includeHeaderKey = TRUE)
+result |>
+  filterSettings(package_name == "other")
 ```
 
 ```{r}
-result |> dplyr::glimpse()
+result |>
+  filterStrata(sex == "Female")
 ```
 
-### 4. gtTable()
-Finally, we convert the transformed *summarised_result* object in steps 1, 2, and 3, into a nice gt object. We use the default visOmopResults style. Additionally, we separate data into groups specified by *group_level* column to differentiate between cohort1 and cohort2.
+## Tables visualisations
 
-```{r, eval = FALSE}
-gtResult <- result |>
-  dplyr::select(-c("result_type", "package_name", "package_version", 
-                   "group_name", "additional_name", "additional_level",
-                   "estimate_type", "result_id")) |>
-  gtTable(
-    delim = "\n",
-    style = "default",
-    na = "-",
-    title = "My first gt table with visOmopResults!",
-    groupColumn = "group_level",
-    groupAsColumn = FALSE,
-    groupOrder = c("cohort1", "cohort2"),
-    merge = "all_columns"
-    )
+Currently all table functionalities are built around 3 packages: [tibble](https://cran.r-project.org/package=tibble), [gt](https://cran.r-project.org/package=gt), and [flextable](https://cran.r-project.org/package=flextable).
+
+There exist two main functions:
+
+- `visOmopTable()` used to create a nice table from a *<summarised_result>* object.
+- `visTable()` used to create a nice table from a *<data.frame>* object.
+
+Let's see a simple example:
+```{r}
+result |>
+  visOmopTable(
+    type = "flextable", # to change to gt when issue 223 is fixed
+    estimateName = c(
+      "N(%)" = "<count> (<percentage>%)", 
+      "N" = "<count>", 
+      "mean (sd)" = "<mean> (<sd>)"),
+    header = c("sex"),
+    settingsColumns = NULL,
+    groupColumn = c("cohort_name", "age_group"),
+    rename = c("Variable" = "variable_name", " " = "variable_level"),
+    hide = "cdm_name"
+  )
 ```
 
-```{r, eval = FALSE}
-gtResult 
+## Plots visualisations
+
+Currently all plot functionalities are built around [ggplot2](https://cran.r-project.org/package=ggplot2). The output of these plot functions is a *<ggplot2>* object that can be further customised.
+
+There are three plotting functions:
+
+- `plotScatter()` to create a scatter plot.
+- `plotBar()` to create a bar plot.
+- `plotBox()` to create a box plot.
+
+Let's see how we can create a simple boxplot for age using this tool:
+
+```{r}
+library(dplyr, warn.conflicts = FALSE)
+result |>
+  filter(variable_name == "number subjects") |>
+  filterStrata(sex != "overall") |>
+  barPlot(x = "age_group", 
+          y = "count",
+          facet = "cohort_name", 
+          colour = "sex")
 ```
-
-![](./man/figures/gtTable.png)
-
-It is important to notice that `visOmopTable` has additional arguments to customise the output table in a similar manner as in the pipeline. See the vignette "format functions".
