@@ -270,15 +270,138 @@ result |>
 ## 2) Format Header
 `formatHeader()` is used to create complex multi-level headers for tables, making it easy to represent grouped data clearly.
 
+There are 3 different levels of headers each identified with the following keys:
+
+- `header`: labels ihat do not correspond to column names or values in the table.
+
+- `header_name`: labels that come from column names.
+
+- `header_level`: labels that come from values of selected columns (identified by `header_name`).
+
+These keys, together with a deliminter between headers (`delim`) are used in `formatTable()` to format and style `gt` or `flextable` tables.
+
+Let's create a header for the strata, first including all three keys, and see the new column names:
+
+```{r}
+result |>
+  mutate(across(c("strata_name", "strata_level"), ~ gsub("&&&", "and", .x))) |>
+  formatHeader(
+    header = c("Stratifications", "strata_name", "strata_level"),
+    delim = "\n",
+    includeHeaderName = TRUE,
+    includeHeaderKey = TRUE
+  ) |> 
+  colnames()
+```
+
+For the main table, we won't use the `header_name` labels:
+
+```{r}
+result <- result |>
+  mutate(across(c("strata_name", "strata_level"), ~ gsub("&&&", "and", .x))) |>
+  formatHeader(
+    header = c("Stratifications", "strata_name", "strata_level"),
+    delim = "\n",
+    includeHeaderName = FALSE,
+    includeHeaderKey = TRUE
+  )  
+
+colnames(result)
+```
 
 
 ## 3) Format Table
+
 `formatTable()` provides the basic structure and styling for a table, allowing you to integrate other formatting elements seamlessly.
 
+This is the last step, where the formatted `<data.frame>` can be converted to either a `<gt>` or `<flextable>`. Before that, we will split the group and additional name-level columns to tidy the table (see vignette on tidying `<summarised_result>`), and drop some unwanted columns:
 
+```{r}
+result <- result |>
+  splitGroup() |>
+  splitAdditional() |>
+  select(!c("result_id", "estimate_type", "cdm_name"))
+head(result)
+```
 
+Now let's get a `<gt>` table with the *visOmopResults* style:
+```{r}
+result |>
+  formatTable(
+    type = "gt",
+    delim = "\n",
+    style = "default",
+    na = "-",
+    title = "My formatted table!",
+    subtitle = "Created with the `visOmopResults` R package.",
+    caption = NULL,
+    groupColumn = "cohort_name",
+    groupAsColumn = FALSE,
+    groupOrder = c("cohort2", "cohort1"),
+    merge = "variable_name"
+  )
+```
 
+We can customise the style of different parts of the table. Next, we create a full-color style for a `<gt>` table as an example:
 
-```{r setup}
-library(visOmopResults)
+Now let's get a `<gt>` table with the *visOmopResults* style:
+```{r}
+result |>
+  formatTable(
+    type = "gt",
+    delim = "\n",
+    style = list(
+      "header" = list(gt::cell_text(weight = "bold"), 
+                      gt::cell_fill(color = "orange")),
+      "header_level" = list(gt::cell_text(weight = "bold"), 
+                      gt::cell_fill(color = "yellow")),
+      "column_name" = gt::cell_text(weight = "bold"),
+      "group_label" = list(gt::cell_fill(color = "blue"),
+                           gt::cell_text(color = "white", weight = "bold")),
+      "title" = list(gt::cell_text(size = 20, weight = "bold")),
+      "subtitle" = list(gt::cell_text(size = 15)),
+      "body" = gt::cell_text(color = "red")
+    ),
+    na = "-",
+    title = "My formatted table!",
+    subtitle = "Created with the `visOmopResults` R package.",
+    caption = NULL,
+    groupColumn = "cohort_name",
+    groupAsColumn = FALSE,
+    groupOrder = c("cohort2", "cohort1"),
+    merge = "variable_name"
+  )
+```
+
+And this is how the stylish code would look like for a `<flextable>` (we need the [`office`]() R package for it):
+Now let's get a `<gt>` table with the *visOmopResults* style:
+```{r}
+result |>
+  formatTable(
+    type = "gt",
+    delim = "\n",
+    style = list(
+      "header" = list(
+        "cell" = officer::fp_cell(background.color = "orange"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "header_level" = list(
+        "cell" = officer::fp_cell(background.color = "yellow"),
+        "text" = officer::fp_text(bold = TRUE)),
+      "column_name" = list("text" = officer::fp_text(bold = TRUE)),
+      "group_label" = list(
+        "cell" = officer::fp_cell(background.color = "blue"),
+        "text" = officer::fp_text(bold = TRUE, color = "white")),
+      "title" = list("text" = officer::fp_text(bold = TRUE, font.size = 20)),
+      "subtitle" = list("text" = officer::fp_text(font.size = 15)),
+      "body" = list("text" = officer::fp_text(color = "red"))
+    ),
+    na = "-",
+    title = "My formatted table!",
+    subtitle = "Created with the `visOmopResults` R package.",
+    caption = NULL,
+    groupColumn = "cohort_name",
+    groupAsColumn = FALSE,
+    groupOrder = c("cohort2", "cohort1"),
+    merge = "variable_name"
+  )
 ```
