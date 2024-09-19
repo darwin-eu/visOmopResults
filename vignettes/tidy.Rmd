@@ -157,14 +157,12 @@ Note that 'variable_level' can contain NA values, these will be ignored on the n
 The default values of `tidySummarisedResult()` will make that it is nearly equivalent to the tidy method ('result_id' is not eliminated by `tidySummarisedResult()`).
 
 ```{r}
-# There is a warning here that shouldn't appear
 tidySummarisedResult(result)
 ```
 
 But then we can have some customised behaviour:
 
 ```{r, error=TRUE}
-# this should work
 result |>
   tidySummarisedResult(
     splitAdditional = FALSE,

@@ -48,7 +48,7 @@ tidySummarisedResult <- function(result,
                                  pivotEstimatesBy = "estimate_name",
                                  nameStyle = NULL) {
   if (lifecycle::is_present(addSettings)) {
-    lifecycle::deprecate_warn("0.4.0", "visOmopTable(addSettings)", "visOmopTable(settingsColumns)")
+    lifecycle::deprecate_soft("0.4.0", "visOmopTable(addSettings)", "visOmopTable(settingsColumns)")
   }
 
   # initial checks
