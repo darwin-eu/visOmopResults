@@ -82,10 +82,10 @@ visOmopTable <- function(result,
   # Backward compatibility ---> to be deleted in the future
   omopgenerics::assertCharacter(header, null = TRUE)
   omopgenerics::assertCharacter(hide, null = TRUE)
-  settingsColumns <- validateSettingsColumns(settingsColumns, result) # to remove > 0.4.0
-  bc <- backwardCompatibility(header, hide, result, settingsColumns) # to remove > 0.4.0
-  header <- bc$header # to remove > 0.4.0
-  hide <- bc$hide # to remove > 0.4.0
+  settingsColumns <- validateSettingsColumns(settingsColumns, result)
+  bc <- omopResultHeader(header, hide, result, settingsColumns)
+  header <- bc$header
+  hide <- bc$hide
   if ("variable_level" %in% header) {
     resultTidy <- resultTidy |>
       dplyr::mutate(dplyr::across(dplyr::starts_with("variable"), ~ dplyr::if_else(is.na(.x), .options$na, .x)))
@@ -94,7 +94,7 @@ visOmopTable <- function(result,
   # initial checks and preparation
   rename <- validateRename(rename, result)
   if (!"cdm_name" %in% rename) rename <- c(rename, "CDM name" = "cdm_name")
-  groupColumn <- validateGroupColumn(groupColumn, resultTidy, sr = TRUE, formatName = TRUE)
+  groupColumn <- validateGroupColumn(groupColumn, colnames(resultTidy), sr = result, formatName = TRUE)
   showMinCellCount <- validateShowMinCellCount(showMinCellCount, settings(result))
   # default SR hide columns
   hide <- c(hide, "result_id", "estimate_type") |> unique()
@@ -186,7 +186,7 @@ optionsTable <- function() {
   return(defaultTableOptions(NULL))
 }
 
-backwardCompatibility <- function(header, hide, result, settingsColumns) {
+omopResultHeader <- function(header, hide, result, settingsColumns) {
 
   if (all(is.na(result$variable_level)) & "variable" %in% header) {
     colsVariable <- c("variable_name")

@@ -2,72 +2,72 @@
 title: "Formatting tables"
 output: rmarkdown::html_vignette
 vignette: >
- %\VignetteIndexEntry{formatting_tables}
+  %\VignetteIndexEntry{formatting_tables}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
   
 ```{r, include = FALSE}
-knitr::opts_chunk$set(
-collapse = TRUE,
-comment = "#>",
-warning = FALSE
-)
+  knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE
+  )
 ```
-
-# Introduction
-
-The **visOmopResults** package provides user-friendly tools for creating well-formatted tables and plots that are publication-ready. In this vignette, we focus specifically on the table formatting functionalities. The package supports three table formats: [`tibble`](https://cran.r-project.org/package=tibble), [`gt`](https://cran.r-project.org/package=gt), and [`flextable`](https://cran.r-project.org/package=flextable). While `tibble` is an `<data.frame>` R object, `gt` and `flextable` are designed to create publication-ready tables that can be exported to different formats (e.g., PNG, Word, PDF, HTML) and used in ShinyApps, RMarkdown, Quarto, and more.
-
-Although the primary aim of the package is to simplify the handling of the `summarised_result` class (see [omopgenerics]() for more details), its functionalities can be applied to any `<data.frame>` if certain requirements are met.
-
-## Types of Table Functions
-
-There are two main categories of table functions in the package:
-
-- **Main Table Functions**: Comprehensive functions like `visOmopTable()` and `visTable()` allow users to fully format tables, including specifying headers, grouping columns, and customizing styles.
-
-- **Additional Table Formatting Functions**: The `format` function set provides more granular control over specific table elements, enabling advanced customization beyond the main functions.
-
-This vignette will guide you through the usage of these functions.
-
-# Main Functions
-
-These functions are built on top of the `format` functions, offering an quicker and straight forward way to table formatting. 
-
-## visTable()
-`visTable()` is a flexible function designed for formatting any `<data.frame>`.
-
-To demonstrate how to work with it, we'll use the following dataset from the `palmerpenguins` package. 
-
+  
+  # Introduction
+  
+  The **visOmopResults** package provides user-friendly tools for creating well-formatted tables and plots that are publication-ready. In this vignette, we focus specifically on the table formatting functionalities. The package supports three table formats: [`<tibble>`](https://cran.r-project.org/package=tibble), [`<gt>`](https://cran.r-project.org/package=gt), and [`<flextable>`](https://cran.r-project.org/package=flextable). While `<tibble>` is an `<data.frame>` R object, `<gt>` and `<flextable>` are designed to create publication-ready tables that can be exported to different formats (e.g., PNG, Word, PDF, HTML) and used in ShinyApps, RMarkdown, Quarto, and more.
+  
+  Although the primary aim of the package is to simplify the handling of the `<summarised_result>` class (see [omopgenerics]() for more details), its functionalities can be applied to any `<data.frame>` if certain requirements are met.
+  
+  ## Types of Table Functions
+  
+  There are two main categories of table functions in the package:
+  
+  - **Main Table Functions**: Comprehensive functions like `visOmopTable()` and `visTable()` allow users to fully format tables, including specifying headers, grouping columns, and customizing styles.
+  
+  - **Additional Table Formatting Functions**: The `format` function set provides more granular control over specific table elements, enabling advanced customization beyond the main functions.
+  
+  This vignette will guide you through the usage of these functions.
+  
+  # Main Functions
+  
+  These functions are built on top of the `format` functions, offering an quicker and straight forward way to table formatting. 
+  
+  ## visTable()
+  `visTable()` is a flexible function designed for formatting any `<data.frame>`.
+  
+  To demonstrate how to work with it, we'll use the following dataset from the `palmerpenguins` package. 
+  
 ```{r}
-library(visOmopResults)
-library(palmerpenguins)
-library(dplyr)
-library(tidyr)
-x <- penguins |> 
+  library(visOmopResults)
+  library(palmerpenguins)
+  library(dplyr)
+  library(tidyr)
+  x <- penguins |> 
   filter(!is.na(sex) & year == 2008) |> 
   select(!"body_mass_g") |>
   summarise(across(ends_with("mm"), ~mean(.x)), .by = c("species", "island", "sex"))
-head(x)
+  head(x)
 ```
-
-We can obtained a visOmopTable-formatted `gt` table from the previous data as follows:
+  
+  We can obtained a visOmopTable-formatted `<gt>` table from the previous data as follows:
 ```{r}
-visTable(
-  result = x,
-  groupColumn = c("sex"),
-  rename = c("Bill length (mm)" = "bill_length_mm",
-             "Bill depth (mm)" = "bill_depth_mm",
-             "Flipper length (mm)" = "flipper_length_mm",
-             "Body mass (g)" = "body_mass_g"),
-  type = "gt",
-  hide = "year"
+  visTable(
+result = x,
+groupColumn = c("sex"),
+rename = c("Bill length (mm)" = "bill_length_mm",
+"Bill depth (mm)" = "bill_depth_mm",
+"Flipper length (mm)" = "flipper_length_mm",
+"Body mass (g)" = "body_mass_g"),
+type = "gt",
+hide = "year"
 )
 ```
 
 To use functionalities such as `estimateName` and `header`, our `<data.frame>` must have the estimates arranged in the following columns: `estimate_name`, `estimate_type`, and `estimate_value`. 
-Let's transform the example dataset and use these functionalities, this time to create a `flextable` object:
+Let's transform the example dataset and use these functionalities, this time to create a `<flextable>` object:
 
 ```{r}
 x <- x |>
@@ -96,17 +96,183 @@ visTable(
 ## visOmopTable()
 `visOmopTable()` extends the capabilities of `visTable()` by offering additional features specifically tailored for `<summarised_result>`, making it easier to handle this standardised result format.
 
-## Styling `vis` tables
+Let's use the table function with a mock `<summarised_result>`:
+```{r}
+result <- mockSummarisedResult() |>
+  filter(strata_name == "age_group &&& sex") 
+head(result)
+
+visOmopTable(
+  result = result,
+  estimateName = c(
+    "N%" = "<count> (<percentage>)",
+    "N" = "<count>",
+    "Mean (SD)" = "<mean> (<sd>)"
+  ),
+  header = c("package_name", "age_group"),
+  groupColumn = c("cohort_name", "sex"),
+  settingsColumns = "package_name",
+  type = "gt"
+)
+```
+
+The workflow is quite similar to `visTable`. Specific functionalities to `<summarised_result>` are:
+
+- The `result` is always splitted ([`splitAll()`](https://darwin-eu.github.io/visOmopResults/reference/splitAll.html)). Column names to use in other arguments are based on this splitted result. 
+
+- `settingsColumns` argument to specify which settings should be display in the main table. Settings specified here can be used in the other arguments (e.g. header, rename, and groupColumn). 
+
+- `header` allows specific `<summarised_result>` inputs a part from its usual use (like in `visTable()`). For instance, if you would like to use as header all variables in `strata_name`, use "strata" in header, or similarly if you want to use all settings specified in `settingsColumns` use "settings".
+
+- `result_id` and `estimate_type` are always hidden, as these are helper functions. 
+
+- If the `result` has been [suppress()](https://darwin-eu-dev.github.io/omopgenerics/reference/suppress.html), clouded estimates can be displayed as the `na` value chosen, or with "<{minCellCount}" witht he corresponent value of the minimum counts used. This is set by the `showMinCellCount` argument.
+
+Let's see another use case:
+
+```{r}
+result |>
+  suppress(minCellCount = 1000000) |>
+  visOmopTable(
+    estimateName = c(
+      "N%" = "<count> (<percentage>)",
+      "N" = "<count>",
+      "Mean (SD)" = "<mean> (<sd>)"
+    ),
+    header = c("My visOmopTable", "group"),
+    groupColumn = c("strata"),
+    hide = c("cdm_name"),
+    showMinCellCount = TRUE,
+    type = "gt"
+  )
+```
+
+## Styling tables
+
+Tables shown follow the `visOmopResults` default style. The `.options` argument allow the user to play with the style and customise more the formatted table. The style options that can go into `.options` are arguments of the `format` functions. 
+
+The following table explains from which function do they come from and their description:
+
+```{r, echo=FALSE}
+bind_rows(
+  tibble(
+    Function = "formatEstimateValue()",
+    Argument = c("decimals", "decimalMark", "bigMark"),
+    Description = c(
+      "Number of decimals per estimate type (integer, numeric, percentage, proportion), estimate name, or all estimate values (introduce the number of decimals).",
+      "Decimal separator mark.",
+      "Thousand and millions separator mark."
+    )
+  ) ,
+  tibble(
+    Function = "formatEstimateName()",
+    Argument = c("keepNotFormatted", "useFormatOrder"),
+    Description = c(
+      "Whether to keep rows not formatted.",
+      "Whether to use the order in which estimate names appear in the estimateName (TRUE), or use the order in the input dataframe (FALSE)."
+    )
+  ),
+  tibble(
+    Function = "formatHeader()",
+    Argument = c("delim", "includeHeaderName", "includeHeaderKey"),
+    Description = c(
+      "Delimiter to use to separate headers.",
+      "Whether to include the column name as header.",
+      "Whether to include the header key (header, header_name, header_level) before each header type in the column names."
+    )
+  ),
+  tibble(
+    Function = "formatTable()",
+    Argument = c("style", "na", "title", "subtitle", "caption", "groupAsColumn", "groupOrder", "merge"),
+    Description = c(
+      "Named list that specifies how to style the different parts of the gt or flextable table generated. Accepted style entries are: title, subtitle, header, header_name, header_level, column_name, group_label, and body. Alternatively, use 'default' to get visOmopResults style, or NULL for gt/flextable style. Keep in mind that styling code is different for gt and flextable. To see the 'deafult' gt style code use gtStyle(), and flextableStyle() for flextable default code style",
+      "How to display missing values.",
+      "Title of the table, or NULL for no title.",
+      "Subtitle of the table, or NULL for no subtitle.",
+      "Caption for the table, or NULL for no caption. Text in markdown formatting style (e.g. ⁠*Your caption here*⁠ for caption in italics)",
+      "Whether to display the group labels as a column (TRUE) or rows (FALSE).",
+      "Order in which to display group labels.",
+      "Names of the columns to merge vertically when consecutive row cells have identical values. Alternatively, use 'all_columns' to apply this merging to all columns, or use NULL to indicate no merging."
+    )
+  )  
+) |>
+  formatTable(groupColumn = "Function")
+
+```
+
+To know which are the default values used in `vis` tables we can use the following function:
+
+```{r}
+optionsTable()
+```
+
+Additionally, to take a look on how is the code for the `<gt>` and `<flextable>` "default" style, we have the following functions:
+
+```{r}
+gtStyle()
+
+flextableStyle()
+```
+
+To know more on how to customise your tables, see the next section where the `format` functions pipeline is explained!
 
 # `format` Functions
+The `format` set of functions can be combined to format a `<data.frame>` or a `<summarised_result>`. These functions can be implemented in a piple-fashion as we show next:
 
-## Format Estimates
+## 1) Format Estimates
 The `formatEstimateName()` and `formatEstimateValue()` functions allow you to customize how estimates are named and displayed within the table.
 
-## Format Header
-`formatHeader()` is used to create complex multi-level headers for your tables, making it easy to represent grouped data clearly.
+To showcase how to use these functions we will keep using the `result` data. Let's see some of the estimates of this data before formatting:
+```{r}
+result |> 
+  filterGroup(cohort_name == "cohort1") |>  # visOmopResult filter function
+  filterStrata(age_group == "<40", sex == "Female") |>  # visOmopResult filter function
+  select(variable_name, variable_level, estimate_name, estimate_type, estimate_value)
+```
 
-## Format Table
+Let's first format the values, we can choose how many decimals we want for each `estimate_type` or `estimate_name`, and the decimal and thousand separators. Let's see how the previous estimates are updated afterwars:
+
+```{r}
+result <- result |>
+  formatEstimateValue(
+    decimals = c(integer = 0, numeric = 4, percentage = 2),
+    decimalMark = ".",
+    bigMark = ","
+  )
+
+result |> 
+  filterGroup(cohort_name == "cohort1") |>  
+  filterStrata(age_group == "<40", sex == "Female") |> 
+  select(variable_name, variable_level, estimate_name, estimate_type, estimate_value)
+```
+
+
+Now let's format the estimate names. For instance, we can display counts and percentages together as “N (%)”, among other estimate combinations. Let's format them and see how the previous estimate subset is changed:
+
+```{r}
+result <- result |> 
+  formatEstimateName(
+    estimateName = c(
+      "N (%)" = "<count> (<percentage>%)", 
+      "N" = "<count>",
+      "Mean (SD)" = "<mean> (<sd>)"
+    ),
+    keepNotFormatted = TRUE,
+    useFormatOrder = FALSE
+  )
+
+result |> 
+  filterGroup(cohort_name == "cohort1") |>  
+  filterStrata(age_group == "<40", sex == "Female") |> 
+  select(variable_name, variable_level, estimate_name, estimate_type, estimate_value)
+```
+
+## 2) Format Header
+`formatHeader()` is used to create complex multi-level headers for tables, making it easy to represent grouped data clearly.
+
+
+
+## 3) Format Table
 `formatTable()` provides the basic structure and styling for a table, allowing you to integrate other formatting elements seamlessly.
 
 

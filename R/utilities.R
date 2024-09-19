@@ -122,7 +122,7 @@ validateRename <- function(rename, result, call = parent.frame()) {
   return(invisible(rename))
 }
 
-validateGroupColumn <- function(groupColumn, resultIn, sr = FALSE, formatName = FALSE, call = parent.frame()) {
+validateGroupColumn <- function(groupColumn, cols, sr = NULL, formatName = FALSE, call = parent.frame()) {
   if (!is.null(groupColumn)) {
     if (!is.list(groupColumn)) {
       groupColumn <- list(groupColumn)
@@ -131,9 +131,25 @@ validateGroupColumn <- function(groupColumn, resultIn, sr = FALSE, formatName = 
       cli::cli_abort("`groupColumn` must be a character vector, or a list with just one element (a character vector).", call = call)
     }
     omopgenerics::assertCharacter(groupColumn[[1]], null = TRUE, call = call)
-    if (any(!groupColumn[[1]] %in% colnames(resultIn))) {
+    if (!is.null(sr)) {
+      settingsColumns <- colnames(settings(sr))
+      settingsColumns <- settingsColumns[settingsColumns %in% cols]
+      groupColumn[[1]] <- purrr::map(groupColumn[[1]], function(x) {
+        if (x %in% c("cdm_name", "group", "strata", "additional", "variable", "estimate", "settings")) {
+          switch(x,
+                 group = groupColumns(result),
+                 strata = strataColumns(result),
+                 additional = additionalColumns(result),
+                 estimate = "estimate_name",
+                 settings = settingsColumns)
+        } else {
+          x
+        }
+      }) |> unlist()
+    }
+    if (any(!groupColumn[[1]] %in% cols)) {
       set <- character()
-      if (sr) set <- "or in the settings stated in `settings`"
+      if (!is.null(sr)) set <- "or in the settings stated in `settings`"
       cli::cli_abort("`groupColumn` must refer to columns in the result table {set}", call = call)
     }
     if (is.null(names(groupColumn)) & length(groupColumn[[1]]) > 0) {
