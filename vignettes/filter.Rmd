@@ -25,6 +25,11 @@ Dealing with an *<summarised_result>* object can be difficult to handle speciall
 - `filterStrata` to filter the *<summarised_result>* object using the strata_name-starta_level tidy columns.
 - `filterAdditional` to filter the *<summarised_result>* object using the additional_name-additional_level tidy columns.
 
+In this vignette we will also cover two types of utility functions:
+
+- `unite*` type functions: to join multiple columns in the name-level structure.
+- `*Columns` type functions: to identify the columns that are contained in a name-level structure.
+
 Now we will see some examples.
 
 ## filterSettings
@@ -131,3 +136,6 @@ result |>
   filterSettings(setting_that_does_not_exist == 1)
 ```
 
+## unite functions
+
+In this previous section we have mentioned the function `uniteStrata()` without explaining its functionality so let's cover it with a couple of examples. The `uniteGroup()`, `uniteStrata()` and `uniteAdditional()` functions are the opposite to the `split*()` type functions:
