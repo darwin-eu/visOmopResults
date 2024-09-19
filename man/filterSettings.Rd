@@ -2,7 +2,7 @@
 % Please edit documentation in R/filter.R
 \name{filterSettings}
 \alias{filterSettings}
-\title{Filter a summarised_result using the settings.}
+\title{Filter a summarised_result using the settings}
 \usage{
 filterSettings(result, ...)
 }
@@ -19,7 +19,7 @@ A summarised_result object with only the result_id rows that fulfill
 the required specified settings.
 }
 \description{
-Filter a summarised_result using the settings.
+Filter a summarised_result using the settings
 }
 \examples{
 library(dplyr)

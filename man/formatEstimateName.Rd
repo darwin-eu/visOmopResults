@@ -6,7 +6,7 @@
 \usage{
 formatEstimateName(
   result,
-  estimateNameFormat = NULL,
+  estimateName = NULL,
   keepNotFormatted = TRUE,
   useFormatOrder = TRUE
 )
@@ -14,13 +14,13 @@ formatEstimateName(
 \arguments{
 \item{result}{A summarised_result.}
 
-\item{estimateNameFormat}{Named list of estimate name's to join, sorted by
+\item{estimateName}{Named list of estimate name's to join, sorted by
 computation order. Indicate estimate_name's between <...>.}
 
 \item{keepNotFormatted}{Whether to keep rows not formatted.}
 
 \item{useFormatOrder}{Whether to use the order in which estimate names
-appear in the estimateNameFormat (TRUE), or use the order in the
+appear in the estimateName (TRUE), or use the order in the
 input dataframe (FALSE).}
 }
 \value{
@@ -34,7 +34,7 @@ estimate name and/or joining different estimates together in a single row.
 result <- mockSummarisedResult()
 result |>
   formatEstimateName(
-    estimateNameFormat = c(
+    estimateName = c(
       "N (\%)" = "<count> (<percentage>\%)", "N" = "<count>"
     ),
     keepNotFormatted = FALSE

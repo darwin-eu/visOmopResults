@@ -1,141 +1,50 @@
-test_that("formatTable with SR", {
-  result <- mockSummarisedResult()
-  # TEST IT WORKS
-  gt1 <- formatTable(
-    result = result,
-    formatEstimateName = character(),
-    header = character(),
-    groupColumn = NULL,
-    type = "gt",
-    hide = NULL,
-    .options = list())
-  fx1 <- formatTable(
-    result = result,
-    formatEstimateName = character(),
-    header = character(),
-    groupColumn = NULL,
-    type = "flextable",
-    hide = NULL,
-    .options = list())
+test_that("test it works", {
+  result <- mockSummarisedResult() |>
+    formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
+                                        "N" = "<count>")) |>
+    formatHeader(header = c("strata", "strata_name", "strata_level"),
+                 includeHeaderName = TRUE)
+  gt <- formatTable(result)
+  expect_true("gt_tbl" %in% class(gt))
+  # check correct style:
+  expect_equal(unlist(gt$`_styles`$styles[gt$`_styles`$locname == "columns_columns"])[1:27] |> unique(),
+               c("#E1E1E1", "center", "bold"))
+  expect_equal(unlist(gt$`_styles`$styles[gt$`_styles`$locname == "columns_columns"])[28:43] |> unique(),
+               c("center", "bold"))
+  expect_false(lapply(gt$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
+  expect_equal(gt$`_styles`$styles[gt$`_styles`$grpname %in% gt$`_spanners`$spanner_id[gt$`_spanners`$spanner_level %in% c(1,3)]] |>
+                 unlist() |> unique(),
+               c("#D9D9D9", "center", "bold"))
+  expect_equal(gt$`_styles`$styles[gt$`_styles`$grpname %in% gt$`_spanners`$spanner_id[gt$`_spanners`$spanner_level == 2]] |>
+                 unlist() |> unique(),
+               c("#E1E1E1", "center", "bold"))
+  expect_equal(gt$`_styles`$styles[gt$`_styles`$grpname %in% gt$`_spanners`$spanner_id[gt$`_spanners`$spanner_level == 4]] |>
+                 unlist() |> unique(),
+               c("#C8C8C8", "center", "bold"))
 
-  expect_true("gt_tbl" %in% class(gt1))
-  expect_true("flextable" == class(fx1))
-  expect_true(all(c(
-    'Result id', 'Cdm name', 'Group name', 'Group level', 'Strata name', 'Strata level',
-    'Variable name', 'Variable level', 'Estimate name', 'Estimate type', 'Estimate value',
-    'Additional name', 'Additional level'
-  ) %in% colnames(gt1$`_data`)))
-  expect_equal(gt1$`_data` |> colnames(), fx1$body$dataset |> colnames())
+  fx <- formatTable(result, type = "flextable")
+  expect_true("flextable" %in% class(fx))
+  # Spanner styles
+  header_col_style <- fx$header$styles$cells$background.color$data[, "strata\nstrata_name\noverall\nstrata_level\noverall"]
+  expect_equal(header_col_style, c("#c8c8c8", "#d9d9d9", "#e1e1e1", "#d9d9d9", "#e1e1e1"))
+  expect_equal(fx$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
+  expect_equal(fx$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1.2)
+  expect_equal(fx$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
+  expect_true(fx$header$styles$text$bold$data[, "cdm_name"] |> unique())
+  expect_equal(fx$header$styles$text$color$data[, "cdm_name"] |> unique(), "black")
+  expect_equal(fx$header$styles$text$color$data[, "cdm_name"] |> unique(), "black")
+  expect_equal(fx$header$styles$text$font.size$data[, "cdm_name"] |> unique(), c(10))
 
-  gt2 <- formatTable(
-    result,
-    formatEstimateName = c("n" = "<count>", "mean(sd)" = "<mean> (<sd>)"),
-    header = c("strata_name", "strata_level"),
-    groupColumn = c("cdm_name", "group_level"),
-    type = "gt",
-    renameColumns = c("Database name" = "cdm_name", "Cohort name" = "group_level", "Strata" = "strata_name"),
-    hide = c("result_id", "group_name"),
-    .options = list(includeHeaderName = TRUE)
-  )
-  expect_true("gt_tbl" %in% class(gt2))
-  expect_equal(
-    colnames(gt2$`_data`),
-    c(
-      'Cdm name; Group level', 'Variable name', 'Variable level', 'Estimate name',
-      'Estimate type', 'Additional name', 'Additional level',
-      '[header_name]Strata\n[header_level]overall\n[header_name]Strata level\n[header_level]overall',
-      '[header_name]Strata\n[header_level]age_group &&& sex\n[header_name]Strata level\n[header_level]<40 &&& Male',
-      '[header_name]Strata\n[header_level]age_group &&& sex\n[header_name]Strata level\n[header_level]>=40 &&& Male',
-      '[header_name]Strata\n[header_level]age_group &&& sex\n[header_name]Strata level\n[header_level]<40 &&& Female',
-      '[header_name]Strata\n[header_level]age_group &&& sex\n[header_name]Strata level\n[header_level]>=40 &&& Female',
-      '[header_name]Strata\n[header_level]sex\n[header_name]Strata level\n[header_level]Male',
-      '[header_name]Strata\n[header_level]sex\n[header_name]Strata level\n[header_level]Female',
-      '[header_name]Strata\n[header_level]age_group\n[header_name]Strata level\n[header_level]<40',
-      '[header_name]Strata\n[header_level]age_group\n[header_name]Strata level\n[header_level]>=40')
-  )
+  # body
+  expect_equal(fx$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
+  expect_equal(fx$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
+  expect_equal(fx$body$styles$cells$background.color$data[, "cdm_name"],
+               c("transparent", "transparent", "transparent", "transparent","transparent",
+                 "transparent", "transparent", "transparent", "transparent", "transparent"))
+  expect_equal(fx$body$styles$text$color$data[, "cdm_name"] |> unique(), "black")
 
-  fx2 <- formatTable(
-    result,
-    formatEstimateName = c("n" = "<count>", "mean(sd)" = "<mean> (<sd>)"),
-    header = c("strata_name", "strata_level"),
-    groupColumn = c("cdm_name", "group_level"),
-    type = "flextable",
-    renameColumns = c("Database name" = "cdm_name", "Cohort name" = "group_level", "Strata" = "strata_name"),
-    hide = c("result_id", "group_name"),
-    .options = list(includeHeaderName = TRUE)
-  )
-  expect_true("flextable" == class(fx2))
-  expect_equal(
-    colnames(fx2$body$dataset),
-    c(
-      'Cdm name; Group level', 'Variable name', 'Variable level', 'Estimate name',
-      'Estimate type', 'Additional name', 'Additional level', 'Strata\noverall\nStrata level\noverall',
-      'Strata\nage_group &&& sex\nStrata level\n<40 &&& Male', 'Strata\nage_group &&& sex\nStrata level\n>=40 &&& Male',
-      'Strata\nage_group &&& sex\nStrata level\n<40 &&& Female', 'Strata\nage_group &&& sex\nStrata level\n>=40 &&& Female',
-      'Strata\nsex\nStrata level\nMale', 'Strata\nsex\nStrata level\nFemale', 'Strata\nage_group\nStrata level\n<40',
-      'Strata\nage_group\nStrata level\n>=40')
-  )
-
-  tib1 <- formatTable(
-    result,
-    formatEstimateName = c("n" = "<count>", "mean(sd)" = "<mean> (<sd>)"),
-    header = c("strata_name", "strata_level"),
-    groupColumn = c("cdm_name", "group_level"),
-    type = "tibble",
-    renameColumns = c("Database name" = "cdm_name", "Cohort name" = "group_level", "Estimate" = "estimate_value"),
-    hide = c("result_id", "group_name", "estimate_type"),
-    .options = list(includeHeaderName = TRUE)
-  )
-  expect_true(all(c("tbl_df", "tbl", "data.frame") == class(tib1)))
-  expect_equal(
-    colnames(tib1),
-    c(
-      'Database name', 'Cohort name', 'Variable name', 'Variable level', 'Estimate name',
-      'Additional name', 'Additional level',
-      '[header_name]Strata name\n[header_level]overall\n[header_name]Strata level\n[header_level]overall',
-      '[header_name]Strata name\n[header_level]age_group &&& sex\n[header_name]Strata level\n[header_level]<40 &&& Male',
-      '[header_name]Strata name\n[header_level]age_group &&& sex\n[header_name]Strata level\n[header_level]>=40 &&& Male',
-      '[header_name]Strata name\n[header_level]age_group &&& sex\n[header_name]Strata level\n[header_level]<40 &&& Female',
-      '[header_name]Strata name\n[header_level]age_group &&& sex\n[header_name]Strata level\n[header_level]>=40 &&& Female',
-      '[header_name]Strata name\n[header_level]sex\n[header_name]Strata level\n[header_level]Male',
-      '[header_name]Strata name\n[header_level]sex\n[header_name]Strata level\n[header_level]Female',
-      '[header_name]Strata name\n[header_level]age_group\n[header_name]Strata level\n[header_level]<40',
-      '[header_name]Strata name\n[header_level]age_group\n[header_name]Strata level\n[header_level]>=40')
-  )
-
-  tib2 <- formatTable(
-    result,
-    formatEstimateName = c("n" = "<count>", "mean(sd)" = "<mean> (<sd>)"),
-    # header = c("strata_name", "strata_level"),
-    groupColumn = c("cdm_name", "group_level"),
-    type = "tibble",
-    renameColumns = c("Database name" = "cdm_name", "Cohort name" = "group_level", "Estimate" = "estimate_value"),
-    hide = c("result_id", "group_name", "estimate_type"),
-    .options = list(includeHeaderName = TRUE)
-  )
-  expect_true(all(c("tbl_df", "tbl", "data.frame") == class(tib2)))
-  expect_equal(
-    colnames(tib2),
-    c(
-      'Database name', 'Cohort name', 'Strata name', 'Strata level', 'Variable name',
-      'Variable level', 'Estimate name', 'Estimate', 'Additional name', 'Additional level')
-  )
-
-  # expected errors
-  expect_error(
-    formatTable(
-      result,
-      header = c("strata_name", "strata_level"),
-      groupColumn = c("cdm_name", "group_level"),
-      hide = c("result_id", "group_name", "estimate_type", "strata_level")
-    )
-  )
-  expect_error(
-    formatTable(
-      result,
-      header = c("strata_name", "strata_level"),
-      groupColumn = c("cdm_name", "group_level", "strata_level"),
-      hide = c("result_id", "group_name", "estimate_type")
-    )
-  )
+  # wrong inputs
+  expect_error(formatTable(result, type = "ha"))
+  expect_error(formatTable(result, style = list("hi" = gt::cell_fill())))
+  expect_message(result |> dplyr::group_by(cdm_name) |> formatTable())
 })

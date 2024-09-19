@@ -1,5 +1,5 @@
 
-#' Create a scatter plot visualisation from a summarised result object.
+#' Create a scatter plot visualisation from a summarised result object
 #'
 #' `r lifecycle::badge("experimental")`
 #'
@@ -70,9 +70,13 @@ scatterPlot <- function(result,
     return(ggplot2::ggplot())
   }
 
+  est <- c(x, y, ymin, ymax, asCharacterFacet(facet), colour, group)
+
+  # check that all data is present
+  checkInData(result, est)
+
   # get estimates
-  result <- cleanEstimates(result, c(
-    x, y, ymin, ymax, asCharacterFacet(facet), colour, group))
+  result <- cleanEstimates(result, est)
 
   # tidy result
   result <- tidyResult(result)
@@ -115,7 +119,7 @@ scatterPlot <- function(result,
   return(p)
 }
 
-#' Create a box plot visualisation from a summarised_result object.
+#' Create a box plot visualisation from a summarised_result object
 #'
 #' `r lifecycle::badge("experimental")`
 #'
@@ -162,9 +166,13 @@ boxPlot <- function(result,
     return(ggplot2::ggplot())
   }
 
+  est <- c(x, lower, middle, upper, ymin, ymax, asCharacterFacet(facet), colour)
+
+  # check that all data is present
+  checkInData(result, est)
+
   # subset to estimates of use
-  result <- cleanEstimates(result, c(
-    x, lower, middle, upper, ymin, ymax, asCharacterFacet(facet), colour))
+  result <- cleanEstimates(result, est)
   ylab <- styleLabel(unique(suppressWarnings(result$variable_name)))
 
   # tidy result
@@ -202,7 +210,7 @@ boxPlot <- function(result,
   return(p)
 }
 
-#' Create a bar plot visualisation from a summarised result object.
+#' Create a bar plot visualisation from a summarised result object
 #'
 #' `r lifecycle::badge("experimental")`
 #'
@@ -229,10 +237,10 @@ boxPlot <- function(result,
 #' }
 #'
 barPlot <- function(result,
-                       x,
-                       y,
-                       facet = NULL,
-                       colour = NULL) {
+                    x,
+                    y,
+                    facet = NULL,
+                    colour = NULL) {
 
   rlang::check_installed("ggplot2")
 
@@ -249,8 +257,13 @@ barPlot <- function(result,
     return(ggplot2::ggplot())
   }
 
+  est <- c(x, y, asCharacterFacet(facet), colour)
+
+  # check that all data is present
+  checkInData(result, est)
+
   # subset to estimates of use
-  result <- cleanEstimates(result, c(x, y, asCharacterFacet(facet), colour))
+  result <- cleanEstimates(result, est)
 
   # tidy result
   result <- tidyResult(result)
@@ -425,4 +438,18 @@ cleanEstimates <- function(result, est) {
       dplyr::filter(.data$estimate_name %in% .env$est)
   }
   return(result)
+}
+checkInData <- function(result, est, call = parent.frame()) {
+  cols <- colnames(result)
+  if (inherits(result, "summarised_result") &
+      all(omopgenerics::resultColumns("summarised_result") %in% cols)) {
+    cols <- tidyColumns(result)
+  }
+  est <- unique(est)
+  notPresent <- est[!est %in% cols]
+  if (length(notPresent) > 0) {
+    "{.var {notPresent}} {?is/are} not present in data." |>
+      cli::cli_abort(call = call)
+  }
+  return(invisible(NULL))
 }

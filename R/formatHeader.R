@@ -1,4 +1,4 @@
-#' Create a header for gt and flextable objects.
+#' Create a header for gt and flextable objects
 #'
 #' @param result A summarised_result.
 #' @param header Names of the variables to make headers.
@@ -13,7 +13,7 @@
 #' @description
 #' Pivots a summarised_result object based on the column names in header,
 #' generating specific column names for subsequent header formatting in
-#' gtTable and fxTable functions.
+#' formatTable function.
 #'
 #' @export
 #'

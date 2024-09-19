@@ -4,7 +4,7 @@ test_that("visOmopTable", {
     expect_no_error(
       gt1 <- visOmopTable(
         result = result,
-        formatEstimateName = character(),
+        estimateName = character(),
         header = character(),
         groupColumn = NULL,
         type = "gt",
@@ -21,7 +21,7 @@ test_that("visOmopTable", {
     expect_no_error(
       gt2 <- visOmopTable(
         result = result,
-        formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>"),
+        estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>"),
         header = c("strata"),
         groupColumn = NULL,
         type = "gt",
@@ -47,7 +47,7 @@ test_that("visOmopTable", {
     expect_no_error(
       fx1 <- visOmopTable(
         result = result,
-        formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
+        estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
         header = c("group", "estimate"),
         groupColumn = NULL,
         type = "flextable",
@@ -66,7 +66,7 @@ test_that("visOmopTable", {
     expect_no_error(
       fx2 <- visOmopTable(
         result = result,
-        formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
+        estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
         header = c("variable", "estimate"),
         groupColumn = NULL,
         type = "flextable",
@@ -87,7 +87,7 @@ test_that("visOmopTable", {
     expect_no_error(
       fx3 <- visOmopTable(
         result = result,
-        formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
+        estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
         header = c("strata", "estimate"),
         groupColumn = "cohort_name",
         type = "flextable",
@@ -120,7 +120,7 @@ test_that("visOmopTable", {
   expect_no_error(
     tib1 <- visOmopTable(
       result = result,
-      formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
+      estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
       header = c("group", "settings"),
       settingsColumns = colnames(settings(result)),
       groupColumn = NULL,
@@ -139,7 +139,7 @@ test_that("visOmopTable", {
   expect_error(
     visOmopTable(
       result = result,
-      formatEstimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
+      estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
       header = c("group", "settings"),
       groupColumn = "hola",
       type = "tibble",
@@ -154,11 +154,11 @@ test_that("renameColumn works", {
     expect_no_error(
       gt1 <- visOmopTable(
         result = result,
-        formatEstimateName = character(),
+        estimateName = character(),
         header = character(),
         groupColumn = NULL,
         type = "gt",
-        renameColumns = c("Database name" = "cdm_name"),
+        rename = c("Database name" = "cdm_name"),
         hide = c("result_id", "estimate_type"),
         .options = list())
     )
@@ -172,11 +172,11 @@ test_that("renameColumn works", {
   expect_no_error(
     gt2 <- visOmopTable(
       result = result,
-      formatEstimateName = character(),
+      estimateName = character(),
       header = c("cdm_name", "strata"),
       groupColumn = NULL,
       type = "gt",
-      renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
+      rename = c("Database name" = "cdm_name", "changeName" = "variable_name"),
       hide = c("result_id", "estimate_type"),
       .options = list())
   )
@@ -187,11 +187,11 @@ test_that("renameColumn works", {
     expect_warning(
       fx1 <- visOmopTable(
         result = result,
-        formatEstimateName = character(),
-        header = c("cdm_name", "strata"),
+        estimateName = character(),
+        header = c("cdm_name", "Sex"),
         groupColumn = NULL,
         type = "flextable",
-        renameColumns = c("Database name" = "cdm_name", "changeName" = "name"),
+        rename = c("Database name" = "cdm_name", "changeName" = "name"),
         hide = c("result_id", "estimate_type"),
         .options = list())
     )
@@ -200,36 +200,36 @@ test_that("renameColumn works", {
   # more than 1 group column
   fx2 <- visOmopTable(
     result = result,
-    formatEstimateName = character(),
+    estimateName = character(),
     header = c("strata"),
     type = "flextable",
     groupColumn = c("cdm_name", "cohort_name"),
-    renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
+    rename = c("Database name" = "cdm_name", "changeName" = "variable_name"),
     hide = c("result_id", "estimate_type"),
     .options = list())
   expect_true(colnames(fx2$body$dataset)[1] == "Cdm name; Cohort name")
+  expect_equal(colnames(fx1$body$dataset),
+               c("Cohort name", "Age group", "Variable name", "Variable level",
+                 "Estimate name", "Database name\nmock\nSex\noverall",
+                 "Database name\nmock\nSex\nMale", "Database name\nmock\nSex\nFemale"))
 
   # more than 1 group column
   fx3 <- visOmopTable(
     result = result,
-    formatEstimateName = character(),
+    estimateName = character(),
     header = c("strata"),
     type = "flextable",
     groupColumn = list("group" = c("cdm_name", "cohort_name")),
-    renameColumns = c("Database name" = "cdm_name", "changeName" = "variable_name"),
+    rename = c("Database name" = "cdm_name", "changeName" = "variable_name"),
     hide = c("result_id", "estimate_type"),
     .options = list())
   expect_true(colnames(fx3$body$dataset)[1] == "group")
 })
 
-
 test_that("empty result",{
-
-  result = omopgenerics::emptySummarisedResult()
-
   result = omopgenerics::emptySummarisedResult()
   type = "gt"
-  formatEstimateName = c(
+  estimateName = c(
     "N (%)" = "<count> (<percentage>%)",
     "N" = "<count>",
     "Median [Q25 - Q75]" = "<median> [<q25> - <q75>]",
@@ -247,7 +247,7 @@ test_that("empty result",{
   expect_warning({
     res0 <-  visOmopResults::visOmopTable(
       result = result,
-      formatEstimateName = formatEstimateName,
+      estimateName = estimateName,
       header = header,
       groupColumn = groupColumn,
       type = type,
@@ -258,7 +258,6 @@ test_that("empty result",{
   }, "Empty summarized results provided.")
 
 })
-
 
 test_that("don't want scientific",{
   res <- visOmopResults::visOmopTable(
@@ -276,9 +275,10 @@ test_that("don't want scientific",{
       estimate_type = "integer",
       estimate_value = "100000",
       additional_name = "overall",
+
       additional_level = "overall"
     ) |> omopgenerics::newSummarisedResult(),
-    formatEstimateName = c(N = "<count>"),
+    estimateName = c(N = "<count>"),
     header = "cdm_name",
     hide = NULL
   )
