@@ -1,0 +1,25 @@
+---
+title: "Filter helpers"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{Filter helpers}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+## Background
+
+Dealing with an *<summarised_result>* object can be difficult to handle specially when we are trying to filter. For example, difficult tasks would be to filter to a certain result_type or when there are many strata joined together filter only one of the variables. On the other hand it exists the [tidy](https://darwin-eu.github.io/visOmopResults/articles/tidy.html) format that makes it easy to filter, but then you loose the *<summarised_result>* object. There exist some functions that only work with *<summarised_result>* objects.
+
+**visOmopResults** package contains some functionalities that helps on this process:
+
+- `filterSettings` to filter the *<summarised_result>* object using the `settings()` attribute.
+- `filterStrata` to filter the *<summarised_result>* object using the strata_name-starta_level version   attribute.
+
