@@ -47,4 +47,6 @@ test_that("test it works", {
   expect_error(formatTable(result, type = "ha"))
   expect_error(formatTable(result, style = list("hi" = gt::cell_fill())))
   expect_message(result |> dplyr::group_by(cdm_name) |> formatTable())
+
+  expect_error(formatTable(result, subtitle = "subtitle"))
 })
