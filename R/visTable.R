@@ -70,17 +70,21 @@ visTable <- function(result,
   checkVisTableInputs(header, groupColumn, hide)
 
   # format estimate values and names
-  result <- result |>
-    visOmopResults::formatEstimateValue(
-      decimals = .options$decimals,
-      decimalMark = .options$decimalMark,
-      bigMark = .options$bigMark
-    ) |>
-    visOmopResults::formatEstimateName(
-      estimateName = estimateName,
-      keepNotFormatted = .options$keepNotFormatted,
-      useFormatOrder = .options$useFormatOrder
-    )
+  if (!any(c("estimate_name", "estimate_type", "estimate_value") %in% colnames(result))) {
+    cli::cli_inform("`estimate_name`, `estimate_type`, and `estimate_value` must be present in `result` to apply `formatEstimateValue()` and `formatEstimateName()`.")
+  } else {
+    result <- result |>
+      visOmopResults::formatEstimateValue(
+        decimals = .options$decimals,
+        decimalMark = .options$decimalMark,
+        bigMark = .options$bigMark
+      ) |>
+      visOmopResults::formatEstimateName(
+        estimateName = estimateName,
+        keepNotFormatted = .options$keepNotFormatted,
+        useFormatOrder = .options$useFormatOrder
+      )
+  }
 
   # rename and hide columns
   dontRename <- c("estimate_value")

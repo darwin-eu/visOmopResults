@@ -1,0 +1,118 @@
+---
+title: "Formatting tables"
+output: rmarkdown::html_vignette
+vignette: >
+ %\VignetteIndexEntry{formatting_tables}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+  
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+collapse = TRUE,
+comment = "#>",
+warning = FALSE
+)
+```
+
+# Introduction
+
+The **visOmopResults** package provides user-friendly tools for creating well-formatted tables and plots that are publication-ready. In this vignette, we focus specifically on the table formatting functionalities. The package supports three table formats: [`tibble`](https://cran.r-project.org/package=tibble), [`gt`](https://cran.r-project.org/package=gt), and [`flextable`](https://cran.r-project.org/package=flextable). While `tibble` is an `<data.frame>` R object, `gt` and `flextable` are designed to create publication-ready tables that can be exported to different formats (e.g., PNG, Word, PDF, HTML) and used in ShinyApps, RMarkdown, Quarto, and more.
+
+Although the primary aim of the package is to simplify the handling of the `summarised_result` class (see [omopgenerics]() for more details), its functionalities can be applied to any `<data.frame>` if certain requirements are met.
+
+## Types of Table Functions
+
+There are two main categories of table functions in the package:
+
+- **Main Table Functions**: Comprehensive functions like `visOmopTable()` and `visTable()` allow users to fully format tables, including specifying headers, grouping columns, and customizing styles.
+
+- **Additional Table Formatting Functions**: The `format` function set provides more granular control over specific table elements, enabling advanced customization beyond the main functions.
+
+This vignette will guide you through the usage of these functions.
+
+# Main Functions
+
+These functions are built on top of the `format` functions, offering an quicker and straight forward way to table formatting. 
+
+## visTable()
+`visTable()` is a flexible function designed for formatting any `<data.frame>`.
+
+To demonstrate how to work with it, we'll use the following dataset from the `palmerpenguins` package. 
+
+```{r}
+library(visOmopResults)
+library(palmerpenguins)
+library(dplyr)
+library(tidyr)
+x <- penguins |> 
+  filter(!is.na(sex) & year == 2008) |> 
+  select(!"body_mass_g") |>
+  summarise(across(ends_with("mm"), ~mean(.x)), .by = c("species", "island", "sex"))
+head(x)
+```
+
+We can obtained a visOmopTable-formatted `gt` table from the previous data as follows:
+```{r}
+visTable(
+  result = x,
+  groupColumn = c("sex"),
+  rename = c("Bill length (mm)" = "bill_length_mm",
+             "Bill depth (mm)" = "bill_depth_mm",
+             "Flipper length (mm)" = "flipper_length_mm",
+             "Body mass (g)" = "body_mass_g"),
+  type = "gt",
+  hide = "year"
+)
+```
+
+To use functionalities such as `estimateName` and `header`, our `<data.frame>` must have the estimates arranged in the following columns: `estimate_name`, `estimate_type`, and `estimate_value`. 
+Let's transform the example dataset and use these functionalities, this time to create a `flextable` object:
+
+```{r}
+x <- x |>
+  pivot_longer(
+    cols = ends_with("_mm"), 
+    names_to = "estimate_name", 
+    values_to = "estimate_value"
+  ) |>
+  mutate("estimate_type" = "numeric")
+
+visTable(
+  result = x,
+  estimateName = c(
+    "Bill length (mm)" = "<bill_length_mm>",
+    "Bill depth (mm)" = "<bill_depth_mm>",
+    "Flipper length (mm)" = "<flipper_length_mm>"
+  ),
+  header = c("species", "island"),
+  groupColumn = "sex",
+  type = "flextable",
+  hide = c("year", "estimate_type")
+)
+```
+
+
+## visOmopTable()
+`visOmopTable()` extends the capabilities of `visTable()` by offering additional features specifically tailored for `<summarised_result>`, making it easier to handle this standardised result format.
+
+## Styling `vis` tables
+
+# `format` Functions
+
+## Format Estimates
+The `formatEstimateName()` and `formatEstimateValue()` functions allow you to customize how estimates are named and displayed within the table.
+
+## Format Header
+`formatHeader()` is used to create complex multi-level headers for your tables, making it easy to represent grouped data clearly.
+
+## Format Table
+`formatTable()` provides the basic structure and styling for a table, allowing you to integrate other formatting elements seamlessly.
+
+
+
+
+
+```{r setup}
+library(visOmopResults)
+```
