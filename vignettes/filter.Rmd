@@ -14,12 +14,120 @@ knitr::opts_chunk$set(
 )
 ```
 
-## Background
+## Introduction
 
 Dealing with an *<summarised_result>* object can be difficult to handle specially when we are trying to filter. For example, difficult tasks would be to filter to a certain result_type or when there are many strata joined together filter only one of the variables. On the other hand it exists the [tidy](https://darwin-eu.github.io/visOmopResults/articles/tidy.html) format that makes it easy to filter, but then you loose the *<summarised_result>* object. There exist some functions that only work with *<summarised_result>* objects.
 
 **visOmopResults** package contains some functionalities that helps on this process:
 
 - `filterSettings` to filter the *<summarised_result>* object using the `settings()` attribute.
-- `filterStrata` to filter the *<summarised_result>* object using the strata_name-starta_level version   attribute.
+- `filterGroup` to filter the *<summarised_result>* object using the group_name-group_level tidy columns.
+- `filterStrata` to filter the *<summarised_result>* object using the strata_name-starta_level tidy columns.
+- `filterAdditional` to filter the *<summarised_result>* object using the additional_name-additional_level tidy columns.
+
+Now we will see some examples.
+
+## filterSettings
+
+For this example we will use some mock data.
+
+```{r}
+library(visOmopResults)
+library(dplyr, warn.conflicts = FALSE)
+```
+
+Let's generate two sets of results:
+```{r}
+result1 <- mockSummarisedResult()
+result2 <- mockSummarisedResult()
+```
+
+We can change the settings of the second set of results simulating that results come from a different package ans set of results:
+```{r}
+result2 <- result2 |>
+  omopgenerics::newSummarisedResult(settings = tibble(
+    result_id = 1L,
+    result_type = "second_mock_result",
+    package_name = "omopgenerics",
+    package_version = "1.0.0",
+    my_parameter = TRUE
+  ))
+```
+
+We can now merge both results in a unique *<summarised_result>* object:
+```{r}
+result <- bind(result1, result2)
+settings(result)
+result
+```
+
+You could potentially add the settings with `addSettings()`, then filter and finally eliminate the columns. Let's see an example where we subset to the results that have *my_parameter == TRUE*:
+
+```{r}
+resultMyParam <- result |>
+  addSettings(settingsColumns = "my_parameter") |>
+  filter(my_parameter == TRUE) |>
+  select(!"my_parameter")
+resultMyParam
+```
+
+This approach has some problems:
+
+- It is not efficient.
+- We have to use three different functions.
+- The settings attribute still contains both sets:
+
+```{r}
+settings(resultMyParam)
+```
+
+We can do the same solving the three problems using `filterSettings()`:
+
+```{r}
+resultMyParam <- result |>
+  filterSettings(my_parameter == TRUE)
+resultMyParam
+settings(resultMyParam)
+```
+
+## filterStrata
+
+Using the same mock data we can try to filter the rows that contain data related to 'Female', the problematic with the strata_name-strata_level display is that it is difficult to easily filter the "Female" columns:
+
+```{r}
+result |>
+  select(strata_name, strata_level) |>
+  distinct()
+```
+
+One option that we could use is `splitStrata()`, `filter()` and then `uniteStrata()` again:
+
+```{r}
+result |>
+  splitStrata() |>
+  filter(sex == "Female") |>
+  uniteStrata(c("age_group", "sex"))
+```
+
+Problem of this is that:
+
+- It is extremely inefficient (all the rows must be splitted and united back).
+- You need to know which are the strata columns (you could potentially use `strataColumns()`).
+- You have to use multiple functions.
+
+We could do exactly the same with the function `filterStrata()`:
+
+```{r}
+result |>
+  filterStrata(sex == "Female")
+```
+
+`filterGroup()` and `filterAdditional()` work exactly in the same way than `filterStrata()` but with their analogous columns.
+
+A nice functionality that you may have is that is that if you filter by a column/setting that does not exist the output will be warning + return emptySummarisedResult() which can be quite hekpful in some occasions.
+
+```{r}
+result |>
+  filterSettings(setting_that_does_not_exist == 1)
+```
 

@@ -5,7 +5,7 @@ generics::tidy
 
 #' @importFrom omopgenerics settings
 #' @export
-settings
+omopgenerics::settings
 
 #' @importFrom omopgenerics bind
 #' @export
