@@ -45,3 +45,13 @@ test_that("addSettings", {
       'result_type')
   )
 })
+
+test_that("addSettings", {
+  results <- mockSummarisedResult()
+
+  expect_warning(
+    addSettings(results, columns = "results_type"),
+    "The `columns` argument of `addSettings\\(\\)` is deprecated"
+  )
+})
+
