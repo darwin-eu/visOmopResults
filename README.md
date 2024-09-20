@@ -16,15 +16,16 @@ coverage](https://codecov.io/gh/darwin-eu/visOmopResults/branch/main/graph/badge
 
 ## Package overview
 
-**visOmopResults** contains functions to format objects of the class
-*<summarised_result>* (as defined in
-[omopgenerics](https://cran.r-project.org/package=omopgenerics)).
+**visOmopResults** offers a set of functions tailored to format objects
+of class `<summarised_result>` (as defined in
+[omopgenerics](https://cran.r-project.org/package=omopgenerics)
+package).
 
-It provides functionality to: **transform**, **create table
-visualisations** and **create plot visualisations**. These
-visualisatoins can be very useful to report results via Shiny apps,
-RMarkdown, Quarto, and more; as they allow multiple formating outputs:
-html, png, word, pdf, …
+It provides functionality to: **transform** data, create **table**
+visualizations, and generate **plot** visualizations. These
+visualizations are highly versatile for reporting results through Shiny
+apps, RMarkdown, Quarto, and more, supporting various output formats
+such as HTML, PNG, Word, and PDF.
 
 ## Let’s get started
 
@@ -42,10 +43,8 @@ Or you can install the development version from
 pak::pkg_install("darwin-eu/visOmopResults")
 ```
 
-As mentioned before the *<summarised_result>* object is defined in
-omopgenerics and can be created with
-`omopgenerics::newSummarisedResult()`. This standardised output is used
-in many other packages such as:
+The *<summarised_result>* is a standardised output format utilized
+across various packages, including:
 
 - [CohortCharacteristics](https://cran.r-project.org/package=CohortCharacteristics)
 - [DrugUtilisation](https://cran.r-project.org/package=DrugUtilisation)
@@ -57,16 +56,17 @@ in many other packages such as:
 - [omopSketch](https://cran.r-project.org/package=omopSketch)
 - [PhenotypeR](https://cran.r-project.org/package=PhenotypeR)
 
-Although standard output is needed it can be hard to manage some times.
-The purpose of this package is to make it easier to manage. To show the
-different functionality we will use some mock data:
+Although this standard output format is essential, it can sometimes be
+challenging to manage. The *visOmopResults* package aims to simplify
+this process. To demonstrate the package’s functionality, let’s start by
+using some mock result:
 
 ``` r
 library(visOmopResults)
 result <- mockSummarisedResult()
 ```
 
-## Transformation of a *<summarised_result>* object
+## Transformation of a `<summarised_result>` object
 
 A tidy version of the summarised can be obtained with the tidy function:
 
@@ -75,26 +75,26 @@ tidy(result)
 #> # A tibble: 72 × 13
 #>    cdm_name cohort_name age_group sex     variable_name   variable_level   count
 #>    <chr>    <chr>       <chr>     <chr>   <chr>           <chr>            <int>
-#>  1 mock     cohort1     overall   overall number subjects <NA>           4264105
-#>  2 mock     cohort1     <40       Male    number subjects <NA>           2700733
-#>  3 mock     cohort1     >=40      Male    number subjects <NA>            318143
-#>  4 mock     cohort1     <40       Female  number subjects <NA>           8657326
-#>  5 mock     cohort1     >=40      Female  number subjects <NA>           2794707
-#>  6 mock     cohort1     overall   Male    number subjects <NA>           4910475
-#>  7 mock     cohort1     overall   Female  number subjects <NA>           1577535
-#>  8 mock     cohort1     <40       overall number subjects <NA>           3554527
-#>  9 mock     cohort1     >=40      overall number subjects <NA>           5378514
-#> 10 mock     cohort2     overall   overall number subjects <NA>           6113854
+#>  1 mock     cohort1     overall   overall number subjects <NA>           1348839
+#>  2 mock     cohort1     <40       Male    number subjects <NA>           1966995
+#>  3 mock     cohort1     >=40      Male    number subjects <NA>           4455875
+#>  4 mock     cohort1     <40       Female  number subjects <NA>           7942969
+#>  5 mock     cohort1     >=40      Female  number subjects <NA>           1392213
+#>  6 mock     cohort1     overall   Male    number subjects <NA>           1513680
+#>  7 mock     cohort1     overall   Female  number subjects <NA>           8052240
+#>  8 mock     cohort1     <40       overall number subjects <NA>           7809694
+#>  9 mock     cohort1     >=40      overall number subjects <NA>           9470519
+#> 10 mock     cohort2     overall   overall number subjects <NA>           6718175
 #> # ℹ 62 more rows
 #> # ℹ 6 more variables: mean <dbl>, sd <dbl>, percentage <dbl>,
 #> #   result_type <chr>, package_name <chr>, package_version <chr>
 ```
 
-Note that tidy format is not standardised any more but it makes easier
-to manipulate. The `tidy()` function does not have any customisation
-function, but a sibling function is `tidySummarisedResult()` that
-provides all custom functionality to specify how you want to tidy your
-*<summarised_result>* object.
+This tidy format is no longer standardized but offers easier
+manipulation. While `tidy()` provides a straightforward transformation,
+the more customizable sibling function `tidySummarisedResult()` allows
+you to specify exactly how you’d like to tidy your `<summarised_result>`
+object:
 
 ``` r
 result |>
@@ -121,19 +121,19 @@ result |>
 #> #   estimate_type <chr>, estimate_value <chr>, package_name <chr>
 ```
 
-## Filter a *<summarised_result>* object
+## Filter a `<summarised_result>` object
 
-A *<summarised_result>* object is a *\<data.frame\>* so it can easily be
-filtered using the `dplyr::filter()` function, but some times it can be
-quite challenging to filter variables that are joined in a name-level
-structure or are present in the settings of the analysis. The functions:
+A `<summarised_result>` object is essentially a `<data.frame>`, so it
+can be filtered easily using `dplyr::filter()`. However, filtering
+variables within name-level structures or those present in the settings
+can be challenging. The following functions simplify this process:
 
 - `filterSettings()`
 - `filterGroup()`
 - `filterStrata()`
 - `filterAdditional()`
 
-can help to do that:
+Here are some examples on how to use them:
 
 ``` r
 result |>
@@ -197,11 +197,11 @@ Currently all table functionalities are built around 3 packages:
 [gt](https://cran.r-project.org/package=gt), and
 [flextable](https://cran.r-project.org/package=flextable).
 
-There exist two main functions:
+There are two main functions:
 
-- `visOmopTable()` used to create a nice table from a
-  *<summarised_result>* object.
-- `visTable()` used to create a nice table from a *\<data.frame\>*
+- `visOmopTable()`: Creates a well-formatted table specifically from a
+  `<summarised_result>` object.
+- `visTable()`: Creates a nicely formatted table from any `<data.frame>`
   object.
 
 Let’s see a simple example:
@@ -220,7 +220,6 @@ result |>
     rename = c("Variable" = "variable_name", " " = "variable_level"),
     hide = "cdm_name"
   )
-#> ! Results have not been suppressed.
 ```
 
 <img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
@@ -229,7 +228,7 @@ result |>
 
 Currently all plot functionalities are built around
 [ggplot2](https://cran.r-project.org/package=ggplot2). The output of
-these plot functions is a *<ggplot2>* object that can be further
+these plot functions is a `<ggplot2>` object that can be further
 customised.
 
 There are three plotting functions:
@@ -241,7 +240,7 @@ There are three plotting functions:
 Let’s see how we can create a simple boxplot for age using this tool:
 
 ``` r
-library(dplyr, warn.conflicts = FALSE)
+library(dplyr)
 result |>
   filter(variable_name == "number subjects") |>
   filterStrata(sex != "overall") |>
