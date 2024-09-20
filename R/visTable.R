@@ -1,5 +1,7 @@
 #' Generate a formatted table from a data.table
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' @param result A table to format.
 #' @param estimateName A named list of estimate names to join, sorted by
 #' computation order. Use `<...>` to indicate estimate names. This argument

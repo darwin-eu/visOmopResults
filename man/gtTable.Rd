@@ -64,6 +64,7 @@ gt object.
 A gt table.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Creates a flextable object from a dataframe using a delimiter to span
 the header, and allows to easily customise table style.
 }
