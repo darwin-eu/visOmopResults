@@ -4,6 +4,7 @@
 \name{reexports}
 \alias{reexports}
 \alias{tidy}
+\alias{settings}
 \alias{bind}
 \alias{exportSummarisedResult}
 \alias{importSummarisedResult}
@@ -17,6 +18,6 @@ below to see their documentation.
 \describe{
   \item{generics}{\code{\link[generics]{tidy}}}
 
-  \item{omopgenerics}{\code{\link[omopgenerics]{bind}}, \code{\link[omopgenerics]{exportSummarisedResult}}, \code{\link[omopgenerics]{importSummarisedResult}}, \code{\link[omopgenerics]{suppress}}}
+  \item{omopgenerics}{\code{\link[omopgenerics]{bind}}, \code{\link[omopgenerics]{exportSummarisedResult}}, \code{\link[omopgenerics]{importSummarisedResult}}, \code{\link[omopgenerics]{settings}}, \code{\link[omopgenerics]{suppress}}}
 }}
 
