@@ -139,3 +139,57 @@ result |>
 ## unite functions
 
 In this previous section we have mentioned the function `uniteStrata()` without explaining its functionality so let's cover it with a couple of examples. The `uniteGroup()`, `uniteStrata()` and `uniteAdditional()` functions are the opposite to the `split*()` type functions:
+
+```{r}
+result |>
+  splitStrata()
+```
+
+```{r}
+result |>
+  splitStrata() |>
+  uniteStrata(c("age_group", "sex"))
+```
+
+Note that missing will be not included (if all missing: overall-overall will be considered), for example:
+```{r, echo = FALSE}
+dplyr::tibble(
+  age_group = c(NA, NA, "<40", ">40"),
+  sex = c(NA, "Male", "Female", NA),
+  year = c(NA, NA, 2010L, 2011L)
+) |> 
+  gt::gt()
+```
+
+With `uniteStrata(cols = c("age_group", "sex", "year"))` the output would be:
+```{r, echo = FALSE}
+dplyr::tibble(
+  strata_name = c("overall", "sex", "age_group &&& sex &&& year", "age_group &&& year"),
+  strata_level = c("overall", "Male", "<40 &&& Female &&& 2010", ">40 &&& 2011")
+) |> 
+  gt::gt()
+```
+
+Note that is we split again then year will be a character vector instead of an integer. In future releases conserving type may be possible.
+
+`uniteGroup()` and `uniteAdditional()` work exactly in the same way than `uniteStrata()` but with their analogous columns.
+
+## Columns
+
+Splitting and tidying your *<summarised_result>* can give you many advantages, as we have seen across the different vignettes. One of the problems that you may face is the ability to know which are the available `settings` to add, or how many columns will be generated when splitting group. That's why visOmopResults created some helper functions:
+
+- `settingsColumns()` gives you the setting names that are available in a *<summarised_result>* object.
+- `groupColumns()` gives you the new columns that will be generated when splitting group_name-group_level pair into different columns.
+- `strataColumns()` gives you the new columns that will be generated when splitting strata_name-strata_level pair into different columns.
+- `additionalColumns()` gives you the new columns that will be generated when splitting additional_name-additional_level pair into different columns.
+- `tidyColumns()` gives you the columns that will have the object if you tidy it (`tidy(result)`). This function in very useful to know which are the columns that can be included in **plot** and **table** functions.
+
+Let's see the different values with out example mock data set:
+
+```{r}
+settingsColumns(result)
+groupColumns(result)
+strataColumns(result)
+additionalColumns(result)
+tidyColumns(result)
+```
