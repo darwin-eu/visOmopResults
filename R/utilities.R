@@ -131,7 +131,7 @@ validateGroupColumn <- function(groupColumn, cols, sr = NULL, rename = NULL, cal
       cli::cli_abort("`groupColumn` must be a character vector, or a list with just one element (a character vector).", call = call)
     }
     omopgenerics::assertCharacter(groupColumn[[1]], null = TRUE, call = call)
-    if (!is.null(sr) & length(groupColumn[[1]]) > 1) {
+    if (!is.null(sr) & length(groupColumn[[1]]) > 0) {
       settingsColumns <- settingsColumns(sr)
       settingsColumns <- settingsColumns[settingsColumns %in% cols]
       groupColumn[[1]] <- purrr::map(groupColumn[[1]], function(x) {
@@ -149,7 +149,7 @@ validateGroupColumn <- function(groupColumn, cols, sr = NULL, rename = NULL, cal
     }
     if (any(!groupColumn[[1]] %in% cols)) {
       set <- character()
-      if (!is.null(sr)) set <- "or in the settings stated in `settings`"
+      if (!is.null(sr)) set <- "or in the settings stated in `settingsColumns`"
       cli::cli_abort("`groupColumn` must refer to columns in the result table {set}", call = call)
     }
     if (is.null(names(groupColumn)) & length(groupColumn[[1]]) > 0) {

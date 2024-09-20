@@ -42,28 +42,28 @@ These functions are built on top of the `format` functions, providing a quick an
 Let's demonstrate its usage with a dataset from the `palmerpenguins` package. 
   
 ```{r}
-  library(visOmopResults)
-  library(palmerpenguins)
-  library(dplyr)
-  library(tidyr)
-  x <- penguins |> 
+library(visOmopResults)
+library(palmerpenguins)
+library(dplyr)
+library(tidyr)
+x <- penguins |> 
   filter(!is.na(sex) & year == 2008) |> 
   select(!"body_mass_g") |>
   summarise(across(ends_with("mm"), ~mean(.x)), .by = c("species", "island", "sex"))
-  head(x)
+head(x)
 ```
   
 We can format this data into a `<gt>` table using `visTable()` as follows:
 ```{r}
-  visTable(
-result = x,
-groupColumn = c("sex"),
-rename = c("Bill length (mm)" = "bill_length_mm",
-"Bill depth (mm)" = "bill_depth_mm",
-"Flipper length (mm)" = "flipper_length_mm",
-"Body mass (g)" = "body_mass_g"),
-type = "gt",
-hide = "year"
+visTable(
+  result = x,
+  groupColumn = c("sex"),
+  rename = c("Bill length (mm)" = "bill_length_mm",
+             "Bill depth (mm)" = "bill_depth_mm",
+             "Flipper length (mm)" = "flipper_length_mm",
+             "Body mass (g)" = "body_mass_g"),
+  type = "gt",
+  hide = "year"
 )
 ```
 
