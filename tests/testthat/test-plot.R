@@ -110,3 +110,37 @@ test_that("Function returns a ggplot object", {
   )
 
 })
+
+test_that("Empty result object returns warning", {
+
+  result <- omopgenerics::emptySummarisedResult()
+
+  expect_warning(
+    output_plot <- scatterPlot(
+      result,
+      x = "sex",
+      line = TRUE,
+      point = TRUE,
+      ribbon = FALSE,
+      y =  "mean",
+      facet = "age_group"),
+    "result object is empty, returning empty plot."
+  )
+
+  expect_warning(
+    output_plot <- boxPlot(
+      result = result
+    ),
+    "result object is empty, returning empty plot."
+  )
+
+  expect_warning(
+    output_plot <- barPlot(
+      result = result,
+      x = "cdm_name",
+      y = "variable_level"
+    ),
+    "result object is empty, returning empty plot."
+  )
+
+})
