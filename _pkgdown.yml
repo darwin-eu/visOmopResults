@@ -3,7 +3,7 @@ template:
   bootstrap: 5
 
 reference:
-- title: Functions to tidy <summarised_result>
+- title: Functions to tidy `<summarised_result>`
 - subtitle: Tidy functions
 - contents:
   - matches("tidy.summarised_result|tidySummarisedResult")

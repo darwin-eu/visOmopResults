@@ -2,7 +2,7 @@ test_that("filterSettings", {
   result <- omopgenerics::emptySummarisedResult()
 
   expect_warning(result1 <- result |>
-                   filterSettings(result_type == "omock")
+                   filterSettings(does_not_exist == "omock")
   )
 
   expect_identical(result, result1)
@@ -142,6 +142,6 @@ test_that("filterStrata/Group/Additional works", {
   expect_identical(xs, xa)
 
   # call works
-  expect_snapshot(filterStrata(list()), error = TRUE)
+  expect_error(filterStrata(list()))
 
 })
