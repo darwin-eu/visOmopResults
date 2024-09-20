@@ -7,6 +7,7 @@
 #' @param useFormatOrder Whether to use the order in which estimate names
 #' appear in the estimateName (TRUE), or use the order in the
 #' input dataframe (FALSE).
+#' @param estimateNameFormat deprecated.
 #'
 #' @description
 #' Formats estimate_name and estimate_value columns by changing the name of the
@@ -29,7 +30,14 @@
 formatEstimateName <- function(result,
                                estimateName = NULL,
                                keepNotFormatted = TRUE,
-                               useFormatOrder = TRUE) {
+                               useFormatOrder = TRUE,
+                               estimateNameFormat = lifecycle::deprecated()) {
+  if (lifecycle::is_present(estimateNameFormat)) {
+    lifecycle::deprecate_soft(
+      "0.4.0", "formatEstimateName(estimateNameFormat = )", "formatEstimateName(estimateName = )")
+    if (missing(estimateName)) estimateName <- estimateNameFormat
+  }
+
   # initial checks
   omopgenerics::assertTable(result, columns = c("estimate_name", "estimate_value"))
   estimateName <- validateEstimateName(estimateName)

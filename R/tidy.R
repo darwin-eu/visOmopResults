@@ -100,6 +100,7 @@ tidy.summarised_result <- function(x, ...) {
         ">" = "If you want to customise the tidy version of your summarised_result
         object, use {.strong `tidySummarisedResult()`}.")
     )
+    return(tidySummarisedResult(x, ...))
   }
 
   setNames <- colnames(settings(x))
