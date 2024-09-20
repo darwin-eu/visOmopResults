@@ -53,7 +53,7 @@ fxTable <- function(x,
   lifecycle::deprecate_soft(when = "0.4.0", what = "fxTable()", with = "formatTable()")
   x |>
     formatTable(
-      type = "fx",
+      type = "flextable",
       delim = delim,
       style = style,
       na = na,

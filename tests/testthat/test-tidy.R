@@ -101,5 +101,5 @@ test_that("tidySummarisedResult, dates", {
   expect_equal(tidy(result), result_out |> dplyr::select(!"result_id"))
 
   # check no more aguments in tidy method
-  expect_warning(tidy(result, split = 1))
+  expect_warning(tidy(result, splitStrata = FALSE))
 })

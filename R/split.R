@@ -176,6 +176,13 @@ splitNameLevel <- function(result,
                            keep = FALSE,
                            fill = "overall") {
   lifecycle::deprecate_soft(when = "0.4.0", what = "splitNameLevel()")
+  splitNameLevelInternal(
+    result = result,
+    name = name,
+    level = level,
+    keep = keep,
+    fill = fill
+  )
 }
 
 splitNameLevelInternal <- function(result,

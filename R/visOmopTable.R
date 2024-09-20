@@ -34,6 +34,9 @@
 #' @param .options A named list with additional formatting options.
 #' `visOmopResults::optionsTable()` shows allowed arguments and their default values.
 #' @param split `r lifecycle::badge("deprecated")`
+#' @param excludeColumns `r lifecycle::badge("deprecated")`
+#' @param formatEstimateName `r lifecycle::badge("deprecated")`
+#' @param renameColumns `r lifecycle::badge("deprecated")`
 #'
 #' @return A tibble, gt, or flextable object.
 #'
@@ -55,7 +58,6 @@
 #'     rename = c("Database name" = "cdm_name"),
 #'     groupColumn = strataColumns(result)
 #'   )
-
 visOmopTable <- function(result,
                          estimateName = character(),
                          header = character(),
@@ -66,10 +68,28 @@ visOmopTable <- function(result,
                          hide = character(),
                          showMinCellCount = TRUE,
                          .options = list(),
-                         split = lifecycle::deprecated()) {
+                         split = lifecycle::deprecated(),
+                         excludeColumns = lifecycle::deprecated(),
+                         formatEstimateName = lifecycle::deprecated(),
+                         renameColumns = lifecycle::deprecated()) {
 
   if (lifecycle::is_present(split)) {
     lifecycle::deprecate_warn("0.4.0", "visOmopTable(split)")
+  }
+  if (lifecycle::is_present(excludeColumns)) {
+    lifecycle::deprecate_soft(
+      "0.4.0", "visOmopTable(excludeColumns = )", "visOmopTable(hide = )")
+    if (missing(hide)) hide <- excludeColumns
+  }
+  if (lifecycle::is_present(renameColumns)) {
+    lifecycle::deprecate_soft(
+      "0.4.0", "visOmopTable(renameColumns = )", "visOmopTable(rename = )")
+    if (missing(rename)) rename <- renameColumns
+  }
+  if (lifecycle::is_present(formatEstimateName)) {
+    lifecycle::deprecate_soft(
+      "0.4.0", "visOmopTable(formatEstimateName = )", "visOmopTable(estimateName = )")
+    if (missing(estimateName)) estimateName <- formatEstimateName
   }
 
   # Tidy results
@@ -83,9 +103,10 @@ visOmopTable <- function(result,
   omopgenerics::assertCharacter(header, null = TRUE)
   omopgenerics::assertCharacter(hide, null = TRUE)
   settingsColumns <- validateSettingsColumns(settingsColumns, result) # to remove > 0.4.0
-  bc <- backwardCompatibility(header, hide, result, settingsColumns) # to remove > 0.4.0
+  bc <- backwardCompatibility(header, hide, result, settingsColumns, groupColumn) # to remove > 0.4.0
   header <- bc$header # to remove > 0.4.0
   hide <- bc$hide # to remove > 0.4.0
+  groupColumn <- bc$groupColumn
   if ("variable_level" %in% header) {
     resultTidy <- resultTidy |>
       dplyr::mutate(dplyr::across(dplyr::starts_with("variable"), ~ dplyr::if_else(is.na(.x), .options$na, .x)))
@@ -186,7 +207,17 @@ optionsTable <- function() {
   return(defaultTableOptions(NULL))
 }
 
-backwardCompatibility <- function(header, hide, result, settingsColumns) {
+#' Deprecated
+#'
+#' @return list of options
+#' @export
+#'
+optionsVisOmopTable <- function() {
+  lifecycle::deprecate_soft("0.4.0", "optionsVisOmopTable()", "optionsTable()")
+  optionsTable()
+}
+
+backwardCompatibility <- function(header, hide, result, settingsColumns, groupColumn) {
 
   if (all(is.na(result$variable_level)) & "variable" %in% header) {
     colsVariable <- c("variable_name")
@@ -195,20 +226,34 @@ backwardCompatibility <- function(header, hide, result, settingsColumns) {
     colsVariable <- c("variable_name", "variable_level")
   }
 
-  header <- purrr::map(header, function(x) {
-    if (x %in% c("cdm_name", "group", "strata", "additional", "variable", "estimate", "settings")) {
-      switch(x,
-             cdm_name = "cdm_name",
-             group = groupColumns(result),
-             strata = strataColumns(result),
-             additional = additionalColumns(result),
-             variable = colsVariable,
-             estimate = c("estimate_name"),
-             settings = settingsColumns)
-    } else {
-      x
-    }
-  }) |> unlist()
+  cols <- list(
+    "group" = groupColumns(result),
+    "strata" = strataColumns(result),
+    "additional" = additionalColumns(result),
+    "variable" = colsVariable,
+    "estimate" = "estimate_name",
+    "settings" = settingsColumns,
+    "group_name" = character(),
+    "strata_name" = character(),
+    "additional_name" = character()
+  )
+  cols$group_level <- cols$group
+  cols$strata_level <- cols$strata
+  cols$additional_level <- cols$additional
 
-  return(list(hide = hide, header = header))
+  header <- correctColumnn(header, cols)
+
+  if (is.list(groupColumn)) {
+    groupColumn <- purrr::map(groupColumn, \(x) correctColumnn(x, cols))
+  } else if (is.character(groupColumn)) {
+    groupColumn <- correctColumnn(groupColumn, cols)
+  }
+
+  return(list(hide = hide, header = header, groupColumn = groupColumn))
+}
+
+correctColumnn <- function(col, cols) {
+  purrr::map(col, \(x) if (x %in% names(cols)) cols[[x]] else x) |>
+    unlist() |>
+    unique()
 }
