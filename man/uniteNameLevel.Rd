@@ -30,5 +30,6 @@ uniteNameLevel(
 A tibble with the new columns.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 Unites targeted table columns into a pair of name-level columns.
 }

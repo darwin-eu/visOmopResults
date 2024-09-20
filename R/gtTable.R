@@ -32,6 +32,7 @@
 #' @return gt object.
 #'
 #' @description
+#' `r lifecycle::badge("deprecated")`
 #' Creates a flextable object from a dataframe using a delimiter to span
 #' the header, and allows to easily customise table style.
 #' @return A gt table.

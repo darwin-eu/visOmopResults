@@ -56,6 +56,9 @@ This function combines the functionalities of \code{formatEstimateValue()},
 into a single function. While it does not require the input table to be
 a \code{summarised_result}, it does expect specific fields to apply formatting.
 }
+\details{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
 \examples{
 result <- mockSummarisedResult()
 result |>

@@ -9,6 +9,7 @@
 #'
 #' @return A tibble with the new columns.
 #' @description
+#' `r lifecycle::badge("deprecated")`
 #' Unites targeted table columns into a pair of name-level columns.
 #'
 #' @export
