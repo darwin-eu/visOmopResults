@@ -20,7 +20,8 @@ obtained by using settings() in a summarised_result object."><meta property="og:
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/formatFunctions.html">format functions</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/filter.html">Filter helpers</a></li>
+    <li><a class="dropdown-item" href="../articles/formatFunctions.html">format functions</a></li>
     <li><a class="dropdown-item" href="../articles/plots.html">Plotting tools</a></li>
     <li><a class="dropdown-item" href="../articles/splitAndUnite.html">split and unite functions</a></li>
     <li><a class="dropdown-item" href="../articles/tidy.html">Tidy your summarised result object</a></li>
@@ -67,10 +68,7 @@ obtained by using <code><a href="https://darwin-eu-dev.github.io/omopgenerics/re
     <h2 id="ref-examples">Examples<a class="anchor" aria-label="anchor" href="#ref-examples"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span class="r-in"><span><span class="fu"><a href="mockSummarisedResult.html">mockSummarisedResult</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span></span>
 <span class="r-in"><span>  <span class="fu">settingsColumns</span><span class="op">(</span><span class="op">)</span></span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #949494;"># A tibble: 1 × 4</span></span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>   result_id result_type            package_name   package_version</span>
-<span class="r-out co"><span class="r-pr">#&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>                  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span>
-<span class="r-out co"><span class="r-pr">#&gt;</span> <span style="color: #BCBCBC;">1</span>         1 mock_summarised_result visOmopResults 0.3.0.900      </span>
+<span class="r-out co"><span class="r-pr">#&gt;</span> [1] "result_type"     "package_name"    "package_version"</span>
 <span class="r-in"><span></span></span>
 </code></pre></div>
     </div>

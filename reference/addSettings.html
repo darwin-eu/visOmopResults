@@ -18,7 +18,8 @@
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/formatFunctions.html">format functions</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/filter.html">Filter helpers</a></li>
+    <li><a class="dropdown-item" href="../articles/formatFunctions.html">format functions</a></li>
     <li><a class="dropdown-item" href="../articles/plots.html">Plotting tools</a></li>
     <li><a class="dropdown-item" href="../articles/splitAndUnite.html">split and unite functions</a></li>
     <li><a class="dropdown-item" href="../articles/tidy.html">Tidy your summarised result object</a></li>
@@ -46,7 +47,7 @@
     <h2 id="ref-usage">Usage<a class="anchor" aria-label="anchor" href="#ref-usage"></a></h2>
     <div class="sourceCode"><pre class="sourceCode r"><code><span><span class="fu">addSettings</span><span class="op">(</span></span>
 <span>  <span class="va">result</span>,</span>
-<span>  settingsColumns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu">settings</span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>  settingsColumns <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/colnames.html" class="external-link">colnames</a></span><span class="op">(</span><span class="fu"><a href="https://darwin-eu-dev.github.io/omopgenerics/reference/settings.html" class="external-link">settings</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  columns <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
