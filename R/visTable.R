@@ -62,7 +62,7 @@ visTable <- function(result,
   omopgenerics::assertCharacter(hide, null = TRUE)
   omopgenerics::assertCharacter(header, null = TRUE)
   rename <- validateRename(rename, result)
-  groupColumn <- validateGroupColumn(groupColumn, colnames(result), formatName = TRUE)
+  groupColumn <- validateGroupColumn(groupColumn, colnames(result), rename = rename)
   # .options
   .options <- defaultTableOptions(.options)
   # default hide columns

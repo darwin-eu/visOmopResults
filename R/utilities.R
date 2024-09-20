@@ -122,7 +122,7 @@ validateRename <- function(rename, result, call = parent.frame()) {
   return(invisible(rename))
 }
 
-validateGroupColumn <- function(groupColumn, cols, sr = NULL, formatName = FALSE, call = parent.frame()) {
+validateGroupColumn <- function(groupColumn, cols, sr = NULL, rename = NULL, call = parent.frame()) {
   if (!is.null(groupColumn)) {
     if (!is.list(groupColumn)) {
       groupColumn <- list(groupColumn)
@@ -131,15 +131,15 @@ validateGroupColumn <- function(groupColumn, cols, sr = NULL, formatName = FALSE
       cli::cli_abort("`groupColumn` must be a character vector, or a list with just one element (a character vector).", call = call)
     }
     omopgenerics::assertCharacter(groupColumn[[1]], null = TRUE, call = call)
-    if (!is.null(sr)) {
-      settingsColumns <- colnames(settings(sr))
+    if (!is.null(sr) & length(groupColumn[[1]]) > 1) {
+      settingsColumns <- settingsColumns(sr)
       settingsColumns <- settingsColumns[settingsColumns %in% cols]
       groupColumn[[1]] <- purrr::map(groupColumn[[1]], function(x) {
-        if (x %in% c("cdm_name", "group", "strata", "additional", "variable", "estimate", "settings")) {
+        if (x %in% c("group", "strata", "additional", "estimate", "settings")) {
           switch(x,
-                 group = groupColumns(result),
-                 strata = strataColumns(result),
-                 additional = additionalColumns(result),
+                 group = groupColumns(sr),
+                 strata = strataColumns(sr),
+                 additional = additionalColumns(sr),
                  estimate = "estimate_name",
                  settings = settingsColumns)
         } else {
@@ -153,8 +153,8 @@ validateGroupColumn <- function(groupColumn, cols, sr = NULL, formatName = FALSE
       cli::cli_abort("`groupColumn` must refer to columns in the result table {set}", call = call)
     }
     if (is.null(names(groupColumn)) & length(groupColumn[[1]]) > 0) {
-      if (formatName) {
-        names(groupColumn) <- paste0(formatToSentence(groupColumn[[1]]), collapse = "; ")
+      if (!is.null(rename)) {
+        names(groupColumn) <- paste0(renameInternal(groupColumn[[1]], rename), collapse = "; ")
       } else {
         names(groupColumn) <- paste0(groupColumn[[1]], collapse = "_")
       }
