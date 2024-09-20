@@ -109,6 +109,15 @@ test_that("Function returns a ggplot object", {
       facet = "age_group")
   )
 
+  expect_error(
+    mockSummarisedResult() |>
+      dplyr::filter(
+        .data$variable_name == "age",
+        .data$estimate_name %in% c("mean", "sd")
+      ) |>
+      boxPlot()
+  )
+
 })
 
 test_that("Empty result object returns warning", {

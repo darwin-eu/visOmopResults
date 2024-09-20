@@ -188,7 +188,7 @@ test_that("renameColumn works", {
       fx1 <- visOmopTable(
         result = result,
         estimateName = character(),
-        header = c("cdm_name", "strata"),
+        header = c("cdm_name", "Sex"),
         groupColumn = NULL,
         type = "flextable",
         rename = c("Database name" = "cdm_name", "changeName" = "name"),
@@ -208,6 +208,10 @@ test_that("renameColumn works", {
     hide = c("result_id", "estimate_type"),
     .options = list())
   expect_true(colnames(fx2$body$dataset)[1] == "Cdm name; Cohort name")
+  expect_equal(colnames(fx1$body$dataset),
+               c("Cohort name", "Age group", "Variable name", "Variable level",
+                 "Estimate name", "Database name\nmock\nSex\noverall",
+                 "Database name\nmock\nSex\nMale", "Database name\nmock\nSex\nFemale"))
 
   # more than 1 group column
   fx3 <- visOmopTable(

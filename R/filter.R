@@ -212,7 +212,7 @@ filterNameLevel <- function(result, prefix, ..., call = parent.frame()) {
       cli::cli_warn(c(
         "!" = "Variable filtering does not exist, returning empty result: ",
         e$message))
-      omopgenerics::emptySummarisedResult()  # return empty result here
+      omopgenerics::emptySummarisedResult(settings = settings(result))
     }
   )
 }

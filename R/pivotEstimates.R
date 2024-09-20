@@ -53,10 +53,9 @@ pivotEstimates <- function(result,
       tidyr::pivot_wider(
         names_from = dplyr::all_of(pivotEstimatesBy),
         values_from = "estimate_value",
-        names_glue = nameStyle,
-        names_repair = "minimal"
+        names_glue = nameStyle
       ) |>
-      dplyr::rename_with(~ stringr::str_remove_all(., "_NA")) |>
+      dplyr::rename_with(~ stringr::str_remove_all(., "_NA|NA_")) |>
       dplyr::mutate(
         dplyr::across(dplyr::all_of(typeNameConvert$new_name),
                       ~ asEstimateType(.x, name = deparse(substitute(.)), dict = typeNameConvert)

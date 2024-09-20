@@ -196,14 +196,18 @@ backwardCompatibility <- function(header, hide, result, settingsColumns) {
   }
 
   header <- purrr::map(header, function(x) {
-    switch(x,
-           cdm_name = "cdm_name",
-           group = groupColumns(result),
-           strata = strataColumns(result),
-           additional = additionalColumns(result),
-           variable = colsVariable,
-           estimate = c("estimate_name"),
-           settings = settingsColumns)
+    if (x %in% c("cdm_name", "group", "strata", "additional", "variable", "estimate", "settings")) {
+      switch(x,
+             cdm_name = "cdm_name",
+             group = groupColumns(result),
+             strata = strataColumns(result),
+             additional = additionalColumns(result),
+             variable = colsVariable,
+             estimate = c("estimate_name"),
+             settings = settingsColumns)
+    } else {
+      x
+    }
   }) |> unlist()
 
   return(list(hide = hide, header = header))
