@@ -65,8 +65,10 @@ additionalColumns <- function(result) {
 #'   settingsColumns()
 #'
 settingsColumns <- function(result) {
-  set <- validateSettingsAttribute(result)
-  return(set)
+  cols <- result |>
+    validateSettingsAttribute() |>
+    colnames()
+  cols[cols != "result_id"]
 }
 
 #' Identify tidy columns of a summarised_result

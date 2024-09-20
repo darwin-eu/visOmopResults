@@ -9,8 +9,12 @@ Authors@R: c(
     person(
         "Núria", "Mercadé-Besora", , "nuria.mercadebesora@ndorms.ox.ac.uk", 
         role = c("aut", "cre"), comment = c(ORCID = "0009-0006-7948-3747")
+    ),
+    person(
+    "Yuchen", "Guo", , "yuchen.guo@ndorms.ox.ac.uk", 
+    role = c("aut"), comment = c(ORCID = "0000-0002-0847-4855")
     )
-    )
+  )
 Maintainer: Núria Mercadé-Besora <nuria.mercadebesora@ndorms.ox.ac.uk>
 Description: Provides methods to transform omop_result objects into
     formatted tables and figures, facilitating the visualization of study

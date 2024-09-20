@@ -1,5 +1,7 @@
 #' Generate a formatted table from a data.table
 #'
+#' `r lifecycle::badge("experimental")`
+#'
 #' @param result A table to format.
 #' @param estimateName A named list of estimate names to join, sorted by
 #' computation order. Use `<...>` to indicate estimate names. This argument
@@ -62,7 +64,7 @@ visTable <- function(result,
   omopgenerics::assertCharacter(hide, null = TRUE)
   omopgenerics::assertCharacter(header, null = TRUE)
   rename <- validateRename(rename, result)
-  groupColumn <- validateGroupColumn(groupColumn, result, formatName = TRUE)
+  groupColumn <- validateGroupColumn(groupColumn, colnames(result), rename = rename)
   # .options
   .options <- defaultTableOptions(.options)
   # default hide columns
@@ -70,34 +72,41 @@ visTable <- function(result,
   checkVisTableInputs(header, groupColumn, hide)
 
   # format estimate values and names
-  result <- result |>
-    visOmopResults::formatEstimateValue(
-      decimals = .options$decimals,
-      decimalMark = .options$decimalMark,
-      bigMark = .options$bigMark
-    ) |>
-    visOmopResults::formatEstimateName(
-      estimateName = estimateName,
-      keepNotFormatted = .options$keepNotFormatted,
-      useFormatOrder = .options$useFormatOrder
-    )
+  if (!any(c("estimate_name", "estimate_type", "estimate_value") %in% colnames(result))) {
+    cli::cli_inform("`estimate_name`, `estimate_type`, and `estimate_value` must be present in `result` to apply `formatEstimateValue()` and `formatEstimateName()`.")
+  } else {
+    result <- result |>
+      visOmopResults::formatEstimateValue(
+        decimals = .options$decimals,
+        decimalMark = .options$decimalMark,
+        bigMark = .options$bigMark
+      ) |>
+      visOmopResults::formatEstimateName(
+        estimateName = estimateName,
+        keepNotFormatted = .options$keepNotFormatted,
+        useFormatOrder = .options$useFormatOrder
+      )
+  }
 
   # rename and hide columns
   dontRename <- c("estimate_value")
   dontRename <- dontRename[dontRename %in% colnames(result)]
   estimateValue <- renameInternal("estimate_value", rename)
   rename <- rename[!rename %in% dontRename]
+  # rename headers
+  header <- purrr::map(header, renameInternal, cols = colnames(result), rename = rename) |> unlist()
+  # rename group columns
+  if (length(groupColumn[[1]]) > 0) {
+    groupColumn[[1]] <- purrr::map(groupColumn[[1]], renameInternal, rename = rename) |> unlist()
+  }
+  # rename result
   result <- result |>
     dplyr::select(!dplyr::any_of(hide)) |>
     dplyr::rename_with(
       .fn = ~ renameInternal(.x, rename = rename),
       .cols = !dplyr::all_of(c(dontRename))
     )
-  # rename headers
-  header <- purrr::map(header, renameInternal, rename = rename) |> unlist()
-  if (length(groupColumn[[1]]) > 0) {
-    groupColumn[[1]] <- purrr::map(groupColumn[[1]], renameInternal, rename = rename) |> unlist()
-  }
+
 
   # format header
   if (length(header) > 0) {
@@ -133,12 +142,12 @@ visTable <- function(result,
   return(result)
 }
 
-renameInternal <- function(x, rename, toSentence = TRUE) {
+renameInternal <- function(x, rename, cols = NULL, toSentence = TRUE) {
   newNames <- character()
   for (xx in x) {
     if (isTRUE(xx %in% rename)) {
       newNames <- c(newNames, names(rename[rename == xx]))
-    } else if (toSentence) {
+    } else if (toSentence & any(xx %in% cols | is.null(cols))) {
       newNames <- c(newNames, formatToSentence(xx))
     } else {
       newNames <- c(newNames, xx)

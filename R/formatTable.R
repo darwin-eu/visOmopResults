@@ -110,7 +110,7 @@ formatTable <- function(x,
   omopgenerics::assertLogical(groupAsColumn, length = 1)
   omopgenerics::assertCharacter(groupOrder, null = TRUE)
   delim <- validateDelim(delim)
-  groupColumn <- validateGroupColumn(groupColumn, x)
+  groupColumn <- validateGroupColumn(groupColumn, colnames(x))
   merge <- validateMerge(x, merge, groupColumn[[1]])
   style <- validateStyle(style, type)
   if (is.null(title) & !is.null(subtitle)) {
@@ -151,4 +151,5 @@ formatTable <- function(x,
         merge = merge
       )
   }
+  return(x)
 }
