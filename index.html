@@ -73,157 +73,196 @@
 <div class="section level2">
 <h2 id="package-overview">Package overview<a class="anchor" aria-label="anchor" href="#package-overview"></a>
 </h2>
-<p>visOmopResults contains functions for formatting objects of the class <em>summarised_result</em> (see R package <a href="https://cran.r-project.org/package=omopgenerics" class="external-link">omopgenerics</a>). This package simplifies the handling of these objects to obtain nice output tables in the format of <em>gt</em> or <em>flextable</em>’ to report results via Shiny apps, RMarkdown, Quarto, and more.</p>
+<p><strong>visOmopResults</strong> offers a set of functions tailored to format objects of class <code>&lt;summarised_result&gt;</code> (as defined in <a href="https://cran.r-project.org/package=omopgenerics" class="external-link">omopgenerics</a> package).</p>
+<p>It provides functionality to: <strong>transform</strong> data, create <strong>table</strong> visualizations, and generate <strong>plot</strong> visualizations. These visualizations are highly versatile for reporting results through Shiny apps, RMarkdown, Quarto, and more, supporting various output formats such as HTML, PNG, Word, and PDF.</p>
 </div>
 <div class="section level2">
-<h2 id="installation">Installation<a class="anchor" aria-label="anchor" href="#installation"></a>
+<h2 id="lets-get-started">Let’s get started<a class="anchor" aria-label="anchor" href="#lets-get-started"></a>
 </h2>
 <p>You can install the latest version of visOmopResults from CRAN:</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://rdrr.io/r/utils/install.packages.html" class="external-link">install.packages</a></span><span class="op">(</span><span class="st">"visOmopResults"</span><span class="op">)</span></span></code></pre></div>
 <p>Or you can install the development version from <a href="https://github.com/darwin-eu/visOmopResults" class="external-link">GitHub</a> with:</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="co"># install.packages("devtools")</span></span>
-<span><span class="fu">devtools</span><span class="fu">::</span><span class="fu">install_github</span><span class="op">(</span><span class="st">"darwin-eu/visOmopResults"</span><span class="op">)</span></span></code></pre></div>
-</div>
-<div class="section level2">
-<h2 id="example-usage">Example usage<a class="anchor" aria-label="anchor" href="#example-usage"></a>
-</h2>
-<p>First, we load the package and create a summarised result object with mock results</p>
+<code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
+<span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"darwin-eu/visOmopResults"</span><span class="op">)</span></span></code></pre></div>
+<p>The <em><summarised_result></summarised_result></em> is a standardised output format utilized across various packages, including:</p>
+<ul>
+<li><a href="https://cran.r-project.org/package=CohortCharacteristics" class="external-link">CohortCharacteristics</a></li>
+<li><a href="https://cran.r-project.org/package=DrugUtilisation" class="external-link">DrugUtilisation</a></li>
+<li><a href="https://cran.r-project.org/package=IncidencePrevalence" class="external-link">IncidencePrevalence</a></li>
+<li><a href="https://cran.r-project.org/package=PatientProfiles" class="external-link">PatientProfiles</a></li>
+<li><a href="https://cran.r-project.org/package=CodelistGenerator" class="external-link">CodelistGenerator</a></li>
+<li><a href="https://cran.r-project.org/package=CohortSurvival" class="external-link">CohortSurvival</a></li>
+<li><a href="https://cran.r-project.org/package=CohortSymmetry" class="external-link">CohortSymmetry</a></li>
+<li><a href="https://cran.r-project.org/package=omopSketch" class="external-link">omopSketch</a></li>
+<li><a href="https://cran.r-project.org/package=PhenotypeR" class="external-link">PhenotypeR</a></li>
+</ul>
+<p>Although this standard output format is essential, it can sometimes be challenging to manage. The <em>visOmopResults</em> package aims to simplify this process. To demonstrate the package’s functionality, let’s start by using some mock result:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/visOmopResults/">visOmopResults</a></span><span class="op">)</span></span>
 <span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="reference/mockSummarisedResult.html">mockSummarisedResult</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
-<p>We can use the function <code><a href="reference/visOmopTable.html">visOmopTable()</a></code> to get a nice <em>gt</em> table:</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="reference/visOmopTable.html">visOmopTable</a></span><span class="op">(</span></span>
-<span>  <span class="va">result</span>,</span>
-<span>  formatEstimateName <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N%"</span> <span class="op">=</span> <span class="st">"&lt;count&gt; (&lt;percentage&gt;)"</span>,</span>
-<span>                         <span class="st">"N"</span> <span class="op">=</span> <span class="st">"&lt;count&gt;"</span>,</span>
-<span>                         <span class="st">"Mean (SD)"</span> <span class="op">=</span> <span class="st">"&lt;mean&gt; (&lt;sd&gt;)"</span><span class="op">)</span>,</span>
-<span>  header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Stratifications"</span>, <span class="st">"strata"</span><span class="op">)</span>,</span>
-<span>  split <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"group"</span>,<span class="st">"additional"</span><span class="op">)</span></span>
-<span><span class="op">)</span></span></code></pre></div>
-<p><img src="./reference/figures/visOmopTable.png"></p>
-<p>In the code snipped showed, we specified how to group and display the estimates with <code>formatEstimateName</code>. Also, we created a header based on the stratifications with <code>header</code>, and we split the name-level paired columns group and additional (refer to the “split and unite functions” vignette for more information on splitting).</p>
 </div>
 <div class="section level2">
-<h2 id="custom-formatting---example-usage">Custom formatting - Example usage<a class="anchor" aria-label="anchor" href="#custom-formatting---example-usage"></a>
+<h2 id="transformation-of-a-summarised_result-object">Transformation of a <code>&lt;summarised_result&gt;</code> object<a class="anchor" aria-label="anchor" href="#transformation-of-a-summarised_result-object"></a>
 </h2>
-<p>The function <code><a href="reference/visOmopTable.html">visOmopTable()</a></code> is wrapped around other functions of the package. These can be implemented in a pipeline for additional customisation of the summarised_result.</p>
-<div class="section level3">
-<h3 id="id_1-formatestimatevalue">1. formatEstimateValue()<a class="anchor" aria-label="anchor" href="#id_1-formatestimatevalue"></a>
-</h3>
-<p>We utilize this function to modify the <em>estimate_value</em> column. In this case, we will apply the default settings of the function, which include using 0 decimals for integer values, 2 decimals for numeric values, 1 decimal for percentages, and 3 decimals for proportions. Additionally, the function sets the decimal mark to ‘.’, and the thousand/millions separator to ‘,’ by default.”</p>
+<p>A tidy version of the summarised can be obtained with the tidy function:</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 72 × 13</span></span>
+<span><span class="co">#&gt;    cdm_name cohort_name age_group sex     variable_name   variable_level   count</span></span>
+<span><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;            &lt;int&gt;</span></span>
+<span><span class="co">#&gt;  1 mock     cohort1     overall   overall number subjects &lt;NA&gt;           1348839</span></span>
+<span><span class="co">#&gt;  2 mock     cohort1     &lt;40       Male    number subjects &lt;NA&gt;           1966995</span></span>
+<span><span class="co">#&gt;  3 mock     cohort1     &gt;=40      Male    number subjects &lt;NA&gt;           4455875</span></span>
+<span><span class="co">#&gt;  4 mock     cohort1     &lt;40       Female  number subjects &lt;NA&gt;           7942969</span></span>
+<span><span class="co">#&gt;  5 mock     cohort1     &gt;=40      Female  number subjects &lt;NA&gt;           1392213</span></span>
+<span><span class="co">#&gt;  6 mock     cohort1     overall   Male    number subjects &lt;NA&gt;           1513680</span></span>
+<span><span class="co">#&gt;  7 mock     cohort1     overall   Female  number subjects &lt;NA&gt;           8052240</span></span>
+<span><span class="co">#&gt;  8 mock     cohort1     &lt;40       overall number subjects &lt;NA&gt;           7809694</span></span>
+<span><span class="co">#&gt;  9 mock     cohort1     &gt;=40      overall number subjects &lt;NA&gt;           9470519</span></span>
+<span><span class="co">#&gt; 10 mock     cohort2     overall   overall number subjects &lt;NA&gt;           6718175</span></span>
+<span><span class="co">#&gt; # ℹ 62 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 6 more variables: mean &lt;dbl&gt;, sd &lt;dbl&gt;, percentage &lt;dbl&gt;,</span></span>
+<span><span class="co">#&gt; #   result_type &lt;chr&gt;, package_name &lt;chr&gt;, package_version &lt;chr&gt;</span></span></code></pre></div>
+<p>This tidy format is no longer standardized but offers easier manipulation. While <code><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy()</a></code> provides a straightforward transformation, the more customizable sibling function <code><a href="reference/tidySummarisedResult.html">tidySummarisedResult()</a></code> allows you to specify exactly how you’d like to tidy your <code>&lt;summarised_result&gt;</code> object:</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op">|&gt;</span> </span>
-<span>  <span class="fu"><a href="reference/formatEstimateValue.html">formatEstimateValue</a></span><span class="op">(</span></span>
-<span>    decimals <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span>integer <span class="op">=</span> <span class="fl">0</span>, numeric <span class="op">=</span> <span class="fl">2</span>, percentage <span class="op">=</span> <span class="fl">1</span>, proportion <span class="op">=</span> <span class="fl">3</span><span class="op">)</span>,</span>
-<span>    decimalMark <span class="op">=</span> <span class="st">"."</span>,</span>
-<span>    bigMark <span class="op">=</span> <span class="st">","</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/tidySummarisedResult.html">tidySummarisedResult</a></span><span class="op">(</span></span>
+<span>    splitStrata <span class="op">=</span> <span class="cn">FALSE</span>,</span>
+<span>    settingsColumns <span class="op">=</span> <span class="st">"package_name"</span>, </span>
+<span>    pivotEstimatesBy <span class="op">=</span> <span class="cn">NULL</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 126 × 11</span></span>
+<span><span class="co">#&gt;    result_id cdm_name cohort_name strata_name       strata_level   variable_name</span></span>
+<span><span class="co">#&gt;        &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;             &lt;chr&gt;          &lt;chr&gt;        </span></span>
+<span><span class="co">#&gt;  1         1 mock     cohort1     overall           overall        number subje…</span></span>
+<span><span class="co">#&gt;  2         1 mock     cohort1     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Male   number subje…</span></span>
+<span><span class="co">#&gt;  3         1 mock     cohort1     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Male  number subje…</span></span>
+<span><span class="co">#&gt;  4         1 mock     cohort1     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Female number subje…</span></span>
+<span><span class="co">#&gt;  5         1 mock     cohort1     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Fema… number subje…</span></span>
+<span><span class="co">#&gt;  6         1 mock     cohort1     sex               Male           number subje…</span></span>
+<span><span class="co">#&gt;  7         1 mock     cohort1     sex               Female         number subje…</span></span>
+<span><span class="co">#&gt;  8         1 mock     cohort1     age_group         &lt;40            number subje…</span></span>
+<span><span class="co">#&gt;  9         1 mock     cohort1     age_group         &gt;=40           number subje…</span></span>
+<span><span class="co">#&gt; 10         1 mock     cohort2     overall           overall        number subje…</span></span>
+<span><span class="co">#&gt; # ℹ 116 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 5 more variables: variable_level &lt;chr&gt;, estimate_name &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   estimate_type &lt;chr&gt;, estimate_value &lt;chr&gt;, package_name &lt;chr&gt;</span></span></code></pre></div>
+</div>
+<div class="section level2">
+<h2 id="filter-a-summarised_result-object">Filter a <code>&lt;summarised_result&gt;</code> object<a class="anchor" aria-label="anchor" href="#filter-a-summarised_result-object"></a>
+</h2>
+<p>A <code>&lt;summarised_result&gt;</code> object is essentially a <code>&lt;data.frame&gt;</code>, so it can be filtered easily using <code><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">dplyr::filter()</a></code>. However, filtering variables within name-level structures or those present in the settings can be challenging. The following functions simplify this process:</p>
+<ul>
+<li><code><a href="reference/filterSettings.html">filterSettings()</a></code></li>
+<li><code><a href="reference/filterGroup.html">filterGroup()</a></code></li>
+<li><code><a href="reference/filterStrata.html">filterStrata()</a></code></li>
+<li><code><a href="reference/filterAdditional.html">filterAdditional()</a></code></li>
+</ul>
+<p>Here are some examples on how to use them:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 126</span></span>
-<span><span class="co">#&gt; Columns: 13</span></span>
-<span><span class="co">#&gt; $ result_id        &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
-<span><span class="co">#&gt; $ cdm_name         &lt;chr&gt; "mock", "mock", "mock", "mock", "mock", "mock", "mock…</span></span>
-<span><span class="co">#&gt; $ group_name       &lt;chr&gt; "cohort_name", "cohort_name", "cohort_name", "cohort_…</span></span>
-<span><span class="co">#&gt; $ group_level      &lt;chr&gt; "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…</span></span>
-<span><span class="co">#&gt; $ strata_name      &lt;chr&gt; "overall", "age_group &amp;&amp;&amp; sex", "age_group &amp;&amp;&amp; sex", …</span></span>
-<span><span class="co">#&gt; $ strata_level     &lt;chr&gt; "overall", "&lt;40 &amp;&amp;&amp; Male", "&gt;=40 &amp;&amp;&amp; Male", "&lt;40 &amp;&amp;&amp; …</span></span>
-<span><span class="co">#&gt; $ variable_name    &lt;chr&gt; "number subjects", "number subjects", "number subject…</span></span>
-<span><span class="co">#&gt; $ variable_level   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
-<span><span class="co">#&gt; $ estimate_name    &lt;chr&gt; "count", "count", "count", "count", "count", "count",…</span></span>
-<span><span class="co">#&gt; $ estimate_type    &lt;chr&gt; "integer", "integer", "integer", "integer", "integer"…</span></span>
-<span><span class="co">#&gt; $ estimate_value   &lt;chr&gt; "4,392,319", "7,536,112", "537,318", "3,563,375", "4,…</span></span>
-<span><span class="co">#&gt; $ additional_name  &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span>
-<span><span class="co">#&gt; $ additional_level &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="id_2-formatestimatename">2. formatEstimateName()<a class="anchor" aria-label="anchor" href="#id_2-formatestimatename"></a>
-</h3>
-<p>With this function we can transform the <em>estimate_name</em> and <em>estimate_value</em> columns. For example, it allows to consolidate into one row counts and percentages related to the same variable within the same group and strata. It’s worth noting that the <em>estimate_name</em> is enclosed within &lt;…&gt; in the <code>estimateNameFormat</code> argument.</p>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/filterSettings.html">filterSettings</a></span><span class="op">(</span><span class="va">package_name</span> <span class="op">==</span> <span class="st">"visOmopResults"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 126 × 13</span></span>
+<span><span class="co">#&gt;    result_id cdm_name group_name  group_level strata_name       strata_level   </span></span>
+<span><span class="co">#&gt;        &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;             &lt;chr&gt;          </span></span>
+<span><span class="co">#&gt;  1         1 mock     cohort_name cohort1     overall           overall        </span></span>
+<span><span class="co">#&gt;  2         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Male   </span></span>
+<span><span class="co">#&gt;  3         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Male  </span></span>
+<span><span class="co">#&gt;  4         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Female </span></span>
+<span><span class="co">#&gt;  5         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Female</span></span>
+<span><span class="co">#&gt;  6         1 mock     cohort_name cohort1     sex               Male           </span></span>
+<span><span class="co">#&gt;  7         1 mock     cohort_name cohort1     sex               Female         </span></span>
+<span><span class="co">#&gt;  8         1 mock     cohort_name cohort1     age_group         &lt;40            </span></span>
+<span><span class="co">#&gt;  9         1 mock     cohort_name cohort1     age_group         &gt;=40           </span></span>
+<span><span class="co">#&gt; 10         1 mock     cohort_name cohort2     overall           overall        </span></span>
+<span><span class="co">#&gt; # ℹ 116 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 7 more variables: variable_name &lt;chr&gt;, variable_level &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   estimate_name &lt;chr&gt;, estimate_type &lt;chr&gt;, estimate_value &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   additional_name &lt;chr&gt;, additional_level &lt;chr&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op">|&gt;</span> <span class="fu"><a href="reference/formatEstimateName.html">formatEstimateName</a></span><span class="op">(</span></span>
-<span>  estimateNameFormat <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"N (%)"</span> <span class="op">=</span> <span class="st">"&lt;count&gt; (&lt;percentage&gt;%)"</span>,</span>
-<span>                         <span class="st">"N"</span> <span class="op">=</span> <span class="st">"&lt;count&gt;"</span>,</span>
-<span>                         <span class="st">"Mean (SD)"</span> <span class="op">=</span> <span class="st">"&lt;mean&gt; (&lt;sd&gt;)"</span><span class="op">)</span>,</span>
-<span>  keepNotFormatted <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/filterSettings.html">filterSettings</a></span><span class="op">(</span><span class="va">package_name</span> <span class="op">==</span> <span class="st">"other"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 0 × 13</span></span>
+<span><span class="co">#&gt; # ℹ 13 variables: result_id &lt;int&gt;, cdm_name &lt;chr&gt;, group_name &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   group_level &lt;chr&gt;, strata_name &lt;chr&gt;, strata_level &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   variable_name &lt;chr&gt;, variable_level &lt;chr&gt;, estimate_name &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   estimate_type &lt;chr&gt;, estimate_value &lt;chr&gt;, additional_name &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   additional_level &lt;chr&gt;</span></span></code></pre></div>
 <div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 72</span></span>
-<span><span class="co">#&gt; Columns: 13</span></span>
-<span><span class="co">#&gt; $ result_id        &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…</span></span>
-<span><span class="co">#&gt; $ cdm_name         &lt;chr&gt; "mock", "mock", "mock", "mock", "mock", "mock", "mock…</span></span>
-<span><span class="co">#&gt; $ group_name       &lt;chr&gt; "cohort_name", "cohort_name", "cohort_name", "cohort_…</span></span>
-<span><span class="co">#&gt; $ group_level      &lt;chr&gt; "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…</span></span>
-<span><span class="co">#&gt; $ strata_name      &lt;chr&gt; "overall", "age_group &amp;&amp;&amp; sex", "age_group &amp;&amp;&amp; sex", …</span></span>
-<span><span class="co">#&gt; $ strata_level     &lt;chr&gt; "overall", "&lt;40 &amp;&amp;&amp; Male", "&gt;=40 &amp;&amp;&amp; Male", "&lt;40 &amp;&amp;&amp; …</span></span>
-<span><span class="co">#&gt; $ variable_name    &lt;chr&gt; "number subjects", "number subjects", "number subject…</span></span>
-<span><span class="co">#&gt; $ variable_level   &lt;chr&gt; NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…</span></span>
-<span><span class="co">#&gt; $ estimate_name    &lt;chr&gt; "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N"…</span></span>
-<span><span class="co">#&gt; $ estimate_type    &lt;chr&gt; "character", "character", "character", "character", "…</span></span>
-<span><span class="co">#&gt; $ estimate_value   &lt;chr&gt; "4,392,319", "7,536,112", "537,318", "3,563,375", "4,…</span></span>
-<span><span class="co">#&gt; $ additional_name  &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span>
-<span><span class="co">#&gt; $ additional_level &lt;chr&gt; "overall", "overall", "overall", "overall", "overall"…</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/filterStrata.html">filterStrata</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">==</span> <span class="st">"Female"</span><span class="op">)</span></span>
+<span><span class="co">#&gt; # A tibble: 42 × 13</span></span>
+<span><span class="co">#&gt;    result_id cdm_name group_name  group_level strata_name       strata_level   </span></span>
+<span><span class="co">#&gt;        &lt;int&gt; &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;       &lt;chr&gt;             &lt;chr&gt;          </span></span>
+<span><span class="co">#&gt;  1         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Female </span></span>
+<span><span class="co">#&gt;  2         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Female</span></span>
+<span><span class="co">#&gt;  3         1 mock     cohort_name cohort1     sex               Female         </span></span>
+<span><span class="co">#&gt;  4         1 mock     cohort_name cohort2     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Female </span></span>
+<span><span class="co">#&gt;  5         1 mock     cohort_name cohort2     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Female</span></span>
+<span><span class="co">#&gt;  6         1 mock     cohort_name cohort2     sex               Female         </span></span>
+<span><span class="co">#&gt;  7         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Female </span></span>
+<span><span class="co">#&gt;  8         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Female</span></span>
+<span><span class="co">#&gt;  9         1 mock     cohort_name cohort1     sex               Female         </span></span>
+<span><span class="co">#&gt; 10         1 mock     cohort_name cohort2     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Female </span></span>
+<span><span class="co">#&gt; # ℹ 32 more rows</span></span>
+<span><span class="co">#&gt; # ℹ 7 more variables: variable_name &lt;chr&gt;, variable_level &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   estimate_name &lt;chr&gt;, estimate_type &lt;chr&gt;, estimate_value &lt;chr&gt;,</span></span>
+<span><span class="co">#&gt; #   additional_name &lt;chr&gt;, additional_level &lt;chr&gt;</span></span></code></pre></div>
 </div>
-<div class="section level3">
-<h3 id="id_3-formatheader">3. formatHeader()<a class="anchor" aria-label="anchor" href="#id_3-formatheader"></a>
-</h3>
-<p>Next step is to format our table before transforming to gt object. We will pivot <em>strata_name</em> and <em>strata_level</em> columns to have the strata groups as columns under the header “Study strata”.</p>
+<div class="section level2">
+<h2 id="tables-visualisations">Tables visualisations<a class="anchor" aria-label="anchor" href="#tables-visualisations"></a>
+</h2>
+<p>Currently all table functionalities are built around 3 packages: <a href="https://cran.r-project.org/package=tibble" class="external-link">tibble</a>, <a href="https://cran.r-project.org/package=gt" class="external-link">gt</a>, and <a href="https://cran.r-project.org/package=flextable" class="external-link">flextable</a>.</p>
+<p>There are two main functions:</p>
+<ul>
+<li>
+<code><a href="reference/visOmopTable.html">visOmopTable()</a></code>: Creates a well-formatted table specifically from a <code>&lt;summarised_result&gt;</code> object.</li>
+<li>
+<code><a href="reference/visTable.html">visTable()</a></code>: Creates a nicely formatted table from any <code>&lt;data.frame&gt;</code> object.</li>
+</ul>
+<p>Let’s see a simple example:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/formatHeader.html">formatHeader</a></span><span class="op">(</span>header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Study strata"</span>, <span class="st">"strata_name"</span>, <span class="st">"strata_level"</span><span class="op">)</span>,</span>
-<span>               delim <span class="op">=</span> <span class="st">"\n"</span>, </span>
-<span>               includeHeaderName <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>               includeHeaderKey <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/visOmopTable.html">visOmopTable</a></span><span class="op">(</span></span>
+<span>    type <span class="op">=</span> <span class="st">"flextable"</span>, <span class="co"># to change to gt when issue 223 is fixed</span></span>
+<span>    estimateName <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
+<span>      <span class="st">"N(%)"</span> <span class="op">=</span> <span class="st">"&lt;count&gt; (&lt;percentage&gt;%)"</span>, </span>
+<span>      <span class="st">"N"</span> <span class="op">=</span> <span class="st">"&lt;count&gt;"</span>, </span>
+<span>      <span class="st">"mean (sd)"</span> <span class="op">=</span> <span class="st">"&lt;mean&gt; (&lt;sd&gt;)"</span><span class="op">)</span>,</span>
+<span>    header <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"sex"</span><span class="op">)</span>,</span>
+<span>    settingsColumns <span class="op">=</span> <span class="cn">NULL</span>,</span>
+<span>    groupColumn <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cohort_name"</span>, <span class="st">"age_group"</span><span class="op">)</span>,</span>
+<span>    rename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Variable"</span> <span class="op">=</span> <span class="st">"variable_name"</span>, <span class="st">" "</span> <span class="op">=</span> <span class="st">"variable_level"</span><span class="op">)</span>,</span>
+<span>    hide <span class="op">=</span> <span class="st">"cdm_name"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-10-1.png" width="100%"></p>
+</div>
+<div class="section level2">
+<h2 id="plots-visualisations">Plots visualisations<a class="anchor" aria-label="anchor" href="#plots-visualisations"></a>
+</h2>
+<p>Currently all plot functionalities are built around <a href="https://cran.r-project.org/package=ggplot2" class="external-link">ggplot2</a>. The output of these plot functions is a <code>&lt;ggplot2&gt;</code> object that can be further customised.</p>
+<p>There are three plotting functions:</p>
+<ul>
+<li>
+<code>plotScatter()</code> to create a scatter plot.</li>
+<li>
+<code>plotBar()</code> to create a bar plot.</li>
+<li>
+<code>plotBox()</code> to create a box plot.</li>
+</ul>
+<p>Let’s see how we can create a simple boxplot for age using this tool:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span> <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
-<span><span class="co">#&gt; Rows: 8</span></span>
-<span><span class="co">#&gt; Columns: 19</span></span>
-<span><span class="co">#&gt; $ result_id                                                                              &lt;int&gt; …</span></span>
-<span><span class="co">#&gt; $ cdm_name                                                                               &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ group_name                                                                             &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ group_level                                                                            &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ variable_name                                                                          &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ variable_level                                                                         &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ estimate_name                                                                          &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ estimate_type                                                                          &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ additional_name                                                                        &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ additional_level                                                                       &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ `[header]Study strata\n[header_level]overall\n[header_level]overall`                   &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ `[header]Study strata\n[header_level]age_group &amp;&amp;&amp; sex\n[header_level]&lt;40 &amp;&amp;&amp; Male`    &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ `[header]Study strata\n[header_level]age_group &amp;&amp;&amp; sex\n[header_level]&gt;=40 &amp;&amp;&amp; Male`   &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ `[header]Study strata\n[header_level]age_group &amp;&amp;&amp; sex\n[header_level]&lt;40 &amp;&amp;&amp; Female`  &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ `[header]Study strata\n[header_level]age_group &amp;&amp;&amp; sex\n[header_level]&gt;=40 &amp;&amp;&amp; Female` &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ `[header]Study strata\n[header_level]sex\n[header_level]Male`                          &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ `[header]Study strata\n[header_level]sex\n[header_level]Female`                        &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ `[header]Study strata\n[header_level]age_group\n[header_level]&lt;40`                     &lt;chr&gt; …</span></span>
-<span><span class="co">#&gt; $ `[header]Study strata\n[header_level]age_group\n[header_level]&gt;=40`                    &lt;chr&gt; …</span></span></code></pre></div>
-</div>
-<div class="section level3">
-<h3 id="id_4-gttable">4. gtTable()<a class="anchor" aria-label="anchor" href="#id_4-gttable"></a>
-</h3>
-<p>Finally, we convert the transformed <em>summarised_result</em> object in steps 1, 2, and 3, into a nice gt object. We use the default visOmopResults style. Additionally, we separate data into groups specified by <em>group_level</em> column to differentiate between cohort1 and cohort2.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gtResult</span> <span class="op">&lt;-</span> <span class="va">result</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu">dplyr</span><span class="fu">::</span><span class="fu"><a href="https://dplyr.tidyverse.org/reference/select.html" class="external-link">select</a></span><span class="op">(</span><span class="op">-</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"result_type"</span>, <span class="st">"package_name"</span>, <span class="st">"package_version"</span>, </span>
-<span>                   <span class="st">"group_name"</span>, <span class="st">"additional_name"</span>, <span class="st">"additional_level"</span>,</span>
-<span>                   <span class="st">"estimate_type"</span>, <span class="st">"result_id"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="reference/gtTable.html">gtTable</a></span><span class="op">(</span></span>
-<span>    delim <span class="op">=</span> <span class="st">"\n"</span>,</span>
-<span>    style <span class="op">=</span> <span class="st">"default"</span>,</span>
-<span>    na <span class="op">=</span> <span class="st">"-"</span>,</span>
-<span>    title <span class="op">=</span> <span class="st">"My first gt table with visOmopResults!"</span>,</span>
-<span>    groupColumn <span class="op">=</span> <span class="st">"group_level"</span>,</span>
-<span>    groupAsColumn <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    groupOrder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cohort1"</span>, <span class="st">"cohort2"</span><span class="op">)</span>,</span>
-<span>    merge <span class="op">=</span> <span class="st">"all_columns"</span></span>
-<span>    <span class="op">)</span></span></code></pre></div>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">gtResult</span> </span></code></pre></div>
-<p><img src="./reference/figures/gtTable.png"></p>
-<p>It is important to notice that <code>visOmopTable</code> has additional arguments to customise the output table in a similar manner as in the pipeline. See the vignette “format functions”.</p>
-</div>
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://dplyr.tidyverse.org" class="external-link">dplyr</a></span><span class="op">)</span></span>
+<span><span class="va">result</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_name</span> <span class="op">==</span> <span class="st">"number subjects"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/filterStrata.html">filterStrata</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">!=</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="reference/barPlot.html">barPlot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"age_group"</span>, </span>
+<span>          y <span class="op">=</span> <span class="st">"count"</span>,</span>
+<span>          facet <span class="op">=</span> <span class="st">"cohort_name"</span>, </span>
+<span>          colour <span class="op">=</span> <span class="st">"sex"</span><span class="op">)</span></span></code></pre></div>
+<p><img src="reference/figures/README-unnamed-chunk-11-1.png" width="100%"></p>
 </div>
 </div>
   </main><aside class="col-md-3"><div class="links">
