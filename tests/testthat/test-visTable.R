@@ -140,4 +140,14 @@ test_that("visTable with SR", {
   )
 })
 
+test_that("newName", {
 
+  result <- mockSummarisedResult()
+
+  x <- colnames(result)
+
+  newNames <- renameInternal(x, c("New Name" = "new_name"), toSentence = FALSE)
+
+  expect_equal(newNames,x)
+
+})
