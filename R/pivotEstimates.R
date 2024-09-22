@@ -69,3 +69,70 @@ asEstimateType <- function(x, name, dict) {
   type <- dict$estimate_type[dict$new_name == name]
   return(eval(parse(text = paste0("as.", type, "(x)"))))
 }
+
+#' Pivot longer multiple columns using the type column, so they can be pivoted
+#' back. All values will be converted to characters.
+#'
+#' @param result A data.frame.
+#' @param cols Columns of this data.frame that you want to pivot.
+#' @param prefix Prefix for the new columns.
+#'
+#' @return The data.frame with the new 3 columns
+#' @export
+#'
+#' @examples
+#' library(dplyr, warn.conflicts = FALSE)
+#'
+#' tibble(
+#'   cdm_name = c("mock 1", "mock 1", "mock 2", "mock 2"),
+#'   cohort_name = c("cohort1", "cohort2", "cohort1", "cohort2"),
+#'   age_mean = c(40L, 32L, 44L, 67L),
+#'   blood_mode = c("A", "B", "0", "B")
+#' ) |>
+#'   pivotLongerType(cols = c("age_mean", "blood_mode"))
+#'
+pivotLongerType <- function(result,
+                            cols,
+                            prefix = "estimate") {
+  # initial checks
+  omopgenerics::assertCharacter(cols)
+  if (length(cols) == 0) {
+    cli::cli_abort("{.var cols} must select at least one column.")
+  }
+  omopgenerics::assertTable(result, class = "data.frame", columns = cols)
+  omopgenerics::assertCharacter(prefix, length = 1)
+
+  # new cols
+  nms <- paste0(prefix, "_name")
+  typ <- paste0(prefix, "_type")
+  vls <- paste0(prefix, "_value")
+  pos <- which(colnames(result) %in% cols)[1]
+
+  # pivot estimates
+  types <- purrr::map(result, \(x) dplyr::type_sum(x) |> getTypes())
+  result |>
+    dplyr::mutate(dplyr::across(dplyr::all_of(cols), as.character)) |>
+    tidyr::pivot_longer(
+      cols = dplyr::all_of(cols), names_to = nms, values_to = vls
+    ) |>
+    dplyr::mutate(!!!typeColumn(prefix, types)) |>
+    dplyr::relocate(
+      dplyr::all_of(c(paste0(prefix, c("_name", "_type", "_value")))),
+      .before = !!pos
+    )
+}
+getTypes <- function(x) {
+  x
+}
+typeColumn <- function(prefix, types) {
+  paste0(
+    "dplyr::case_when(",
+    paste0(
+      '.data[["', prefix, '_name"]] == "', names(types), '" ~ "', unlist(types),
+      '"', collapse = ", "
+    ),
+    ")"
+  ) |>
+    rlang::parse_exprs() |>
+    rlang::set_names(paste0(prefix, "_type"))
+}
