@@ -1,12 +1,11 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://darwin-eu.github.io/visOmopResults/404.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/LICENSE.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/articles/filter.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/articles/formattingTables.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/articles/filterSummarisedResult.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/articles/index.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/articles/plots.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/articles/splitAndUnite.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/articles/tidy.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/articles/tables.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/articles/tidySummarisedResult.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/articles/utilityFunctions.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/authors.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/index.html</loc></url>
