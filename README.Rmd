@@ -46,7 +46,7 @@ Or you can install the development version from
 pak::pkg_install("darwin-eu/visOmopResults")
 ```
 
-The *<summarised_result>* is a standardised output format utilized across various packages, including:
+The `<summarised_result>` is a standardised output format utilized across various packages, including:
 
 - [CohortCharacteristics](https://cran.r-project.org/package=CohortCharacteristics)
 - [DrugUtilisation](https://cran.r-project.org/package=DrugUtilisation)
@@ -55,8 +55,6 @@ The *<summarised_result>* is a standardised output format utilized across variou
 - [CodelistGenerator](https://cran.r-project.org/package=CodelistGenerator)
 - [CohortSurvival](https://cran.r-project.org/package=CohortSurvival)
 - [CohortSymmetry](https://cran.r-project.org/package=CohortSymmetry)
-- [omopSketch](https://cran.r-project.org/package=omopSketch)
-- [PhenotypeR](https://cran.r-project.org/package=PhenotypeR)
 
 Although this standard output format is essential, it can sometimes be challenging to manage. The *visOmopResults* package aims to simplify this process. To demonstrate the package's functionality, let's start by using some mock result:
 

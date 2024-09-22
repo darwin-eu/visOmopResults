@@ -43,7 +43,7 @@ Or you can install the development version from
 pak::pkg_install("darwin-eu/visOmopResults")
 ```
 
-The *<summarised_result>* is a standardised output format utilized
+The `<summarised_result>` is a standardised output format utilized
 across various packages, including:
 
 - [CohortCharacteristics](https://cran.r-project.org/package=CohortCharacteristics)
@@ -53,8 +53,6 @@ across various packages, including:
 - [CodelistGenerator](https://cran.r-project.org/package=CodelistGenerator)
 - [CohortSurvival](https://cran.r-project.org/package=CohortSurvival)
 - [CohortSymmetry](https://cran.r-project.org/package=CohortSymmetry)
-- [omopSketch](https://cran.r-project.org/package=omopSketch)
-- [PhenotypeR](https://cran.r-project.org/package=PhenotypeR)
 
 Although this standard output format is essential, it can sometimes be
 challenging to manage. The *visOmopResults* package aims to simplify
@@ -75,16 +73,16 @@ tidy(result)
 #> # A tibble: 72 × 13
 #>    cdm_name cohort_name age_group sex     variable_name   variable_level   count
 #>    <chr>    <chr>       <chr>     <chr>   <chr>           <chr>            <int>
-#>  1 mock     cohort1     overall   overall number subjects <NA>           1348839
-#>  2 mock     cohort1     <40       Male    number subjects <NA>           1966995
-#>  3 mock     cohort1     >=40      Male    number subjects <NA>           4455875
-#>  4 mock     cohort1     <40       Female  number subjects <NA>           7942969
-#>  5 mock     cohort1     >=40      Female  number subjects <NA>           1392213
-#>  6 mock     cohort1     overall   Male    number subjects <NA>           1513680
-#>  7 mock     cohort1     overall   Female  number subjects <NA>           8052240
-#>  8 mock     cohort1     <40       overall number subjects <NA>           7809694
-#>  9 mock     cohort1     >=40      overall number subjects <NA>           9470519
-#> 10 mock     cohort2     overall   overall number subjects <NA>           6718175
+#>  1 mock     cohort1     overall   overall number subjects <NA>           8073003
+#>  2 mock     cohort1     <40       Male    number subjects <NA>           8850788
+#>  3 mock     cohort1     >=40      Male    number subjects <NA>           3811096
+#>  4 mock     cohort1     <40       Female  number subjects <NA>           7230087
+#>  5 mock     cohort1     >=40      Female  number subjects <NA>           6508723
+#>  6 mock     cohort1     overall   Male    number subjects <NA>           7643684
+#>  7 mock     cohort1     overall   Female  number subjects <NA>           4209114
+#>  8 mock     cohort1     <40       overall number subjects <NA>           5850048
+#>  9 mock     cohort1     >=40      overall number subjects <NA>           8239237
+#> 10 mock     cohort2     overall   overall number subjects <NA>           7597918
 #> # ℹ 62 more rows
 #> # ℹ 6 more variables: mean <dbl>, sd <dbl>, percentage <dbl>,
 #> #   result_type <chr>, package_name <chr>, package_version <chr>
