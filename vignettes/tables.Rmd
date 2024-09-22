@@ -2,25 +2,26 @@
 title: "Formatting tables"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{formatting_tables}
+  %\VignetteIndexEntry{01_tables}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
   
 ```{r, include = FALSE}
-  knitr::opts_chunk$set(
+knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   warning = FALSE,
   message = FALSE
-  )
+)
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
   
 # Introduction
   
 The **visOmopResults** package provides user-friendly tools for creating well-formatted tables and plots that are publication-ready. In this vignette, we focus specifically on the table formatting functionalities. The package supports three table formats: [`<tibble>`](https://cran.r-project.org/package=tibble), [`<gt>`](https://cran.r-project.org/package=gt), and [`<flextable>`](https://cran.r-project.org/package=flextable). While `<tibble>` is an `<data.frame>` R object, `<gt>` and `<flextable>` are designed to create publication-ready tables that can be exported to different formats (e.g., PNG, Word, PDF, HTML) and used in ShinyApps, RMarkdown, Quarto, and more.
   
-Although the primary aim of the package is to simplify the handling of the `<summarised_result>` class (see [omopgenerics]() for more details), its functionalities can be applied to any `<data.frame>` if certain requirements are met.
+Although the primary aim of the package is to simplify the handling of the `<summarised_result>` class (see [omopgenerics](https://CRAN.R-project.org/package=omopgenerics) for more details), its functionalities can be applied to any `<data.frame>` if certain requirements are met.
   
 ## Types of Table Functions
   

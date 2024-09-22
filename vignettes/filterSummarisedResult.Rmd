@@ -2,7 +2,7 @@
 title: "Filter helpers"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Filter helpers}
+  %\VignetteIndexEntry{04_filter_summarised_result}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,6 +12,7 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>"
 )
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 ## Introduction
