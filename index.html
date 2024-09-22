@@ -29,7 +29,7 @@
 
     <a class="navbar-brand me-2" href="index.html">visOmopResults</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -86,7 +86,7 @@
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># install.packages("pak")</span></span>
 <span><span class="fu">pak</span><span class="fu">::</span><span class="fu"><a href="https://pak.r-lib.org/reference/pkg_install.html" class="external-link">pkg_install</a></span><span class="op">(</span><span class="st">"darwin-eu/visOmopResults"</span><span class="op">)</span></span></code></pre></div>
-<p>The <em><summarised_result></summarised_result></em> is a standardised output format utilized across various packages, including:</p>
+<p>The <code>&lt;summarised_result&gt;</code> is a standardised output format utilized across various packages, including:</p>
 <ul>
 <li><a href="https://cran.r-project.org/package=CohortCharacteristics" class="external-link">CohortCharacteristics</a></li>
 <li><a href="https://cran.r-project.org/package=DrugUtilisation" class="external-link">DrugUtilisation</a></li>
@@ -95,8 +95,6 @@
 <li><a href="https://cran.r-project.org/package=CodelistGenerator" class="external-link">CodelistGenerator</a></li>
 <li><a href="https://cran.r-project.org/package=CohortSurvival" class="external-link">CohortSurvival</a></li>
 <li><a href="https://cran.r-project.org/package=CohortSymmetry" class="external-link">CohortSymmetry</a></li>
-<li><a href="https://cran.r-project.org/package=omopSketch" class="external-link">omopSketch</a></li>
-<li><a href="https://cran.r-project.org/package=PhenotypeR" class="external-link">PhenotypeR</a></li>
 </ul>
 <p>Although this standard output format is essential, it can sometimes be challenging to manage. The <em>visOmopResults</em> package aims to simplify this process. To demonstrate the package’s functionality, let’s start by using some mock result:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
@@ -112,16 +110,16 @@
 <span><span class="co">#&gt; # A tibble: 72 × 13</span></span>
 <span><span class="co">#&gt;    cdm_name cohort_name age_group sex     variable_name   variable_level   count</span></span>
 <span><span class="co">#&gt;    &lt;chr&gt;    &lt;chr&gt;       &lt;chr&gt;     &lt;chr&gt;   &lt;chr&gt;           &lt;chr&gt;            &lt;int&gt;</span></span>
-<span><span class="co">#&gt;  1 mock     cohort1     overall   overall number subjects &lt;NA&gt;           1348839</span></span>
-<span><span class="co">#&gt;  2 mock     cohort1     &lt;40       Male    number subjects &lt;NA&gt;           1966995</span></span>
-<span><span class="co">#&gt;  3 mock     cohort1     &gt;=40      Male    number subjects &lt;NA&gt;           4455875</span></span>
-<span><span class="co">#&gt;  4 mock     cohort1     &lt;40       Female  number subjects &lt;NA&gt;           7942969</span></span>
-<span><span class="co">#&gt;  5 mock     cohort1     &gt;=40      Female  number subjects &lt;NA&gt;           1392213</span></span>
-<span><span class="co">#&gt;  6 mock     cohort1     overall   Male    number subjects &lt;NA&gt;           1513680</span></span>
-<span><span class="co">#&gt;  7 mock     cohort1     overall   Female  number subjects &lt;NA&gt;           8052240</span></span>
-<span><span class="co">#&gt;  8 mock     cohort1     &lt;40       overall number subjects &lt;NA&gt;           7809694</span></span>
-<span><span class="co">#&gt;  9 mock     cohort1     &gt;=40      overall number subjects &lt;NA&gt;           9470519</span></span>
-<span><span class="co">#&gt; 10 mock     cohort2     overall   overall number subjects &lt;NA&gt;           6718175</span></span>
+<span><span class="co">#&gt;  1 mock     cohort1     overall   overall number subjects &lt;NA&gt;           8073003</span></span>
+<span><span class="co">#&gt;  2 mock     cohort1     &lt;40       Male    number subjects &lt;NA&gt;           8850788</span></span>
+<span><span class="co">#&gt;  3 mock     cohort1     &gt;=40      Male    number subjects &lt;NA&gt;           3811096</span></span>
+<span><span class="co">#&gt;  4 mock     cohort1     &lt;40       Female  number subjects &lt;NA&gt;           7230087</span></span>
+<span><span class="co">#&gt;  5 mock     cohort1     &gt;=40      Female  number subjects &lt;NA&gt;           6508723</span></span>
+<span><span class="co">#&gt;  6 mock     cohort1     overall   Male    number subjects &lt;NA&gt;           7643684</span></span>
+<span><span class="co">#&gt;  7 mock     cohort1     overall   Female  number subjects &lt;NA&gt;           4209114</span></span>
+<span><span class="co">#&gt;  8 mock     cohort1     &lt;40       overall number subjects &lt;NA&gt;           5850048</span></span>
+<span><span class="co">#&gt;  9 mock     cohort1     &gt;=40      overall number subjects &lt;NA&gt;           8239237</span></span>
+<span><span class="co">#&gt; 10 mock     cohort2     overall   overall number subjects &lt;NA&gt;           7597918</span></span>
 <span><span class="co">#&gt; # ℹ 62 more rows</span></span>
 <span><span class="co">#&gt; # ℹ 6 more variables: mean &lt;dbl&gt;, sd &lt;dbl&gt;, percentage &lt;dbl&gt;,</span></span>
 <span><span class="co">#&gt; #   result_type &lt;chr&gt;, package_name &lt;chr&gt;, package_version &lt;chr&gt;</span></span></code></pre></div>
