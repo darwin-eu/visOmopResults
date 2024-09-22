@@ -2,7 +2,7 @@
 title: "Plotting tools"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{Plotting tools}
+  %\VignetteIndexEntry{02_plots}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -15,6 +15,7 @@ knitr::opts_chunk$set(
   fig.width=7, 
   fig.height=5
 )
+options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
 **visOmopResults** offer some plotting tools that can be very useful. These 
