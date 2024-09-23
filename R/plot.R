@@ -336,7 +336,7 @@ prepareColumn <- function(result,
                           varName,
                           opts,
                           call) {
-  if (is.null(cols)) {
+  if (length(cols) == 0) {
     return(
       result |>
         dplyr::mutate(!!newName := "")
