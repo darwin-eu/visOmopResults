@@ -153,3 +153,17 @@ test_that("Empty result object returns warning", {
   )
 
 })
+
+test_that("test prepareColumn",{
+  result <- mockSummarisedResult()
+
+  result2 <- prepareColumn(result, newName = "newName", cols = c("group_name", "group_level") , opts = c("group_name", "group_level"), varName = NULL)
+
+  expect_error(prepareColumn(result, cols = c("group_name", "group_level") , opts = c("group_name"), varName = NULL))
+
+  expect_equal(result2,
+                 result <- result |>
+                   tidyr::unite(
+                     col = !!"newName", dplyr::all_of(c("group_name", "group_level")), remove = FALSE, sep = " - ")
+    )
+  })
