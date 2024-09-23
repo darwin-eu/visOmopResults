@@ -2,7 +2,11 @@
 title: "Utility functions"
 output: rmarkdown::html_vignette
 vignette: >
+
   %\VignetteIndexEntry{05_utility_functions}
+
+  %\VignetteIndexEntry{utilityFunctions}
+
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -14,6 +18,7 @@ knitr::opts_chunk$set(
   warning = FALSE,
   message = FALSE
 )
+
 options(rmarkdown.html_vignette.check_title = FALSE)
 ```
 
