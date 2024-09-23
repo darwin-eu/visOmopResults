@@ -76,30 +76,33 @@
 <div class="section level2">
 <h2 id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
 </h2>
-<p>Dealing with an <em><summarised_result></summarised_result></em> object can be difficult
-to handle specially when we are trying to filter. For example, difficult
-tasks would be to filter to a certain result_type or when there are many
-strata joined together filter only one of the variables. On the other
-hand it exists the <a href="https://darwin-eu.github.io/visOmopResults/articles/tidy.html">tidy</a>
+<p>Dealing with an <code>&lt;summarised_result&gt;</code> object can be
+difficult to handle specially when we are trying to filter. For example,
+difficult tasks would be to filter to a certain result_type or when
+there are many strata joined together filter only one of the variables.
+On the other hand it exists the <a href="https://darwin-eu.github.io/visOmopResults/articles/tidy.html">tidy</a>
 format that makes it easy to filter, but then you loose the
-<em><summarised_result></summarised_result></em> object. There exist some functions that
-only work with <em><summarised_result></summarised_result></em> objects.</p>
+<code>&lt;summarised_result&gt;</code> object. There exist some
+functions that only work with <code>&lt;summarised_result&gt;</code>
+objects.</p>
 <p><strong>visOmopResults</strong> package contains some functionalities
 that helps on this process:</p>
 <ul>
 <li>
 <code>filterSettings</code> to filter the
-<em><summarised_result></summarised_result></em> object using the <code><a href="https://darwin-eu-dev.github.io/omopgenerics/reference/settings.html" class="external-link">settings()</a></code>
-attribute.</li>
+<code>&lt;summarised_result&gt;</code> object using the
+<code><a href="https://darwin-eu-dev.github.io/omopgenerics/reference/settings.html" class="external-link">settings()</a></code> attribute.</li>
 <li>
-<code>filterGroup</code> to filter the <em><summarised_result></summarised_result></em>
-object using the group_name-group_level tidy columns.</li>
+<code>filterGroup</code> to filter the
+<code>&lt;summarised_result&gt;</code> object using the
+group_name-group_level tidy columns.</li>
 <li>
-<code>filterStrata</code> to filter the <em><summarised_result></summarised_result></em>
-object using the strata_name-starta_level tidy columns.</li>
+<code>filterStrata</code> to filter the
+<code>&lt;summarised_result&gt;</code> object using the
+strata_name-starta_level tidy columns.</li>
 <li>
 <code>filterAdditional</code> to filter the
-<em><summarised_result></summarised_result></em> object using the
+<code>&lt;summarised_result&gt;</code> object using the
 additional_name-additional_level tidy columns.</li>
 </ul>
 <p>In this vignette we will also cover two types of utility
@@ -137,7 +140,7 @@ that results come from a different package ans set of results:</p>
 <span>    my_parameter <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span>  <span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <p>We can now merge both results in a unique
-<em><summarised_result></summarised_result></em> object:</p>
+<code>&lt;summarised_result&gt;</code> object:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">result</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu-dev.github.io/omopgenerics/reference/bind.html" class="external-link">bind</a></span><span class="op">(</span><span class="va">result1</span>, <span class="va">result2</span><span class="op">)</span></span>
 <span><span class="fu"><a href="https://darwin-eu-dev.github.io/omopgenerics/reference/settings.html" class="external-link">settings</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
@@ -1345,16 +1348,16 @@ analogous columns.</p>
 <div class="section level2">
 <h2 id="columns">Columns<a class="anchor" aria-label="anchor" href="#columns"></a>
 </h2>
-<p>Splitting and tidying your <em><summarised_result></summarised_result></em> can give you
-many advantages, as we have seen across the different vignettes. One of
-the problems that you may face is the ability to know which are the
-available <code>settings</code> to add, or how many columns will be
-generated when splitting group. That’s why visOmopResults created some
-helper functions:</p>
+<p>Splitting and tidying your <code>&lt;summarised_result&gt;</code> can
+give you many advantages, as we have seen across the different
+vignettes. One of the problems that you may face is the ability to know
+which are the available <code>settings</code> to add, or how many
+columns will be generated when splitting group. That’s why
+visOmopResults created some helper functions:</p>
 <ul>
 <li>
 <code><a href="../reference/settingsColumns.html">settingsColumns()</a></code> gives you the setting names that are
-available in a <em><summarised_result></summarised_result></em> object.</li>
+available in a <code>&lt;summarised_result&gt;</code> object.</li>
 <li>
 <code><a href="../reference/groupColumns.html">groupColumns()</a></code> gives you the new columns that will be
 generated when splitting group_name-group_level pair into different

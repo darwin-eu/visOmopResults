@@ -3528,88 +3528,7 @@ NAs.</p>
 <h2 id="customise-your-tidy-summarised_result">Customise your tidy summarised_result<a class="anchor" aria-label="anchor" href="#customise-your-tidy-summarised_result"></a>
 </h2>
 <p>We have several functions to customise the tidy version of the
-<code>&lt;summarised_result&gt;</code> object. The main one is:
-<code><a href="../reference/tidySummarisedResult.html">tidySummarisedResult()</a></code>.</p>
-<p>With this function we can choose which one of the pairs are
-splitted:</p>
-<ul>
-<li>
-<code>splitGroup = TRUE</code> splits the pair
-group_name-group_level columns.</li>
-<li>
-<code>splitStrata = TRUE</code> splits the pair
-strata_name-strata_level columns.</li>
-<li>
-<code>splitAdditional = TRUE</code> splits the pair
-additional_name-additional_level columns.</li>
-</ul>
-<p>Which are the settings columns to be added in the
-<code>&lt;summarised_result&gt;</code> object can be chosen with the
-<code>settingsColumns</code> argument.</p>
-<p>Then we have one argument <code>pivotEstimatesBy</code> to decide
-which are the variables that we want to use to pivot by, there are four
-options:</p>
-<ul>
-<li>
-<code>NULL/character()</code> to not pivot anything.</li>
-<li>
-<code>c("estimates_name")</code> to pivot only estimate_name.</li>
-<li>
-<code>c("variable_level", "estimates_name")</code> to pivot
-estimate_name and variable_level.</li>
-<li>
-<code>c("variable_name", "variable_level", "estimates_name")</code>
-to pivot estimate_name, variable_level and variable_name.</li>
-</ul>
-<p>Note that ‘variable_level’ can contain NA values, these will be
-ignored on the naming part.</p>
-<p>The default values of <code><a href="../reference/tidySummarisedResult.html">tidySummarisedResult()</a></code> will make
-that it is nearly equivalent to the tidy method (‘result_id’ is not
-eliminated by <code><a href="../reference/tidySummarisedResult.html">tidySummarisedResult()</a></code>).</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tidySummarisedResult.html">tidySummarisedResult</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 72 × 14</span></span></span>
-<span><span class="co">#&gt;    result_id cdm_name cohort_name age_group sex     variable_name variable_level</span></span>
-<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>         1 mock     cohort1     overall   overall number subje… <span style="color: #BB0000;">NA</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>         1 mock     cohort1     &lt;40       Male    number subje… <span style="color: #BB0000;">NA</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>         1 mock     cohort1     &gt;=40      Male    number subje… <span style="color: #BB0000;">NA</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>         1 mock     cohort1     &lt;40       Female  number subje… <span style="color: #BB0000;">NA</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>         1 mock     cohort1     &gt;=40      Female  number subje… <span style="color: #BB0000;">NA</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>         1 mock     cohort1     overall   Male    number subje… <span style="color: #BB0000;">NA</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>         1 mock     cohort1     overall   Female  number subje… <span style="color: #BB0000;">NA</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>         1 mock     cohort1     &lt;40       overall number subje… <span style="color: #BB0000;">NA</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>         1 mock     cohort1     &gt;=40      overall number subje… <span style="color: #BB0000;">NA</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>         1 mock     cohort2     overall   overall number subje… <span style="color: #BB0000;">NA</span>            </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 62 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 7 more variables: count &lt;int&gt;, mean &lt;dbl&gt;, sd &lt;dbl&gt;, percentage &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   result_type &lt;chr&gt;, package_name &lt;chr&gt;, package_version &lt;chr&gt;</span></span></span></code></pre></div>
-<p>But then we can have some customised behaviour:</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">result</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/tidySummarisedResult.html">tidySummarisedResult</a></span><span class="op">(</span></span>
-<span>    splitAdditional <span class="op">=</span> <span class="cn">FALSE</span>,</span>
-<span>    settingsColumns <span class="op">=</span> <span class="st">"package_name"</span>,</span>
-<span>    pivotEstimatesBy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"variable_level"</span>, <span class="st">"estimate_name"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 54 × 16</span></span></span>
-<span><span class="co">#&gt;    result_id cdm_name cohort_name age_group sex    variable_name additional_name</span></span>
-<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>         1 mock     cohort1     overall   overa… number subje… overall        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>         1 mock     cohort1     &lt;40       Male   number subje… overall        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>         1 mock     cohort1     &gt;=40      Male   number subje… overall        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>         1 mock     cohort1     &lt;40       Female number subje… overall        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>         1 mock     cohort1     &gt;=40      Female number subje… overall        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>         1 mock     cohort1     overall   Male   number subje… overall        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>         1 mock     cohort1     overall   Female number subje… overall        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>         1 mock     cohort1     &lt;40       overa… number subje… overall        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>         1 mock     cohort1     &gt;=40      overa… number subje… overall        </span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>         1 mock     cohort2     overall   overa… number subje… overall        </span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 44 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 9 more variables: additional_level &lt;chr&gt;, count &lt;int&gt;, mean &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   sd &lt;dbl&gt;, Amoxiciline_count &lt;int&gt;, Amoxiciline_percentage &lt;dbl&gt;,</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;">#   Ibuprofen_count &lt;int&gt;, Ibuprofen_percentage &lt;dbl&gt;, package_name &lt;chr&gt;</span></span></span></code></pre></div>
-<p>Each one of the options have their custom functions:</p>
+<code>&lt;summarised_result&gt;</code> object.</p>
 <div class="section level3">
 <h3 id="split">Split<a class="anchor" aria-label="anchor" href="#split"></a>
 </h3>
@@ -3627,25 +3546,107 @@ additional_name-additional_level columns.</li>
 </ul>
 <p>There is also the function: - <code><a href="../reference/splitAll.html">splitAll()</a></code> that splits any
 pair x_name-x_level that is found on the data.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/splitAll.html">splitAll</a></span><span class="op">(</span><span class="va">result</span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 126 × 10</span></span></span>
+<span><span class="co">#&gt;    result_id cdm_name cohort_name age_group sex     variable_name variable_level</span></span>
+<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>         1 mock     cohort1     overall   overall number subje… <span style="color: #BB0000;">NA</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>         1 mock     cohort1     &lt;40       Male    number subje… <span style="color: #BB0000;">NA</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>         1 mock     cohort1     &gt;=40      Male    number subje… <span style="color: #BB0000;">NA</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>         1 mock     cohort1     &lt;40       Female  number subje… <span style="color: #BB0000;">NA</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>         1 mock     cohort1     &gt;=40      Female  number subje… <span style="color: #BB0000;">NA</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>         1 mock     cohort1     overall   Male    number subje… <span style="color: #BB0000;">NA</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>         1 mock     cohort1     overall   Female  number subje… <span style="color: #BB0000;">NA</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>         1 mock     cohort1     &lt;40       overall number subje… <span style="color: #BB0000;">NA</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>         1 mock     cohort1     &gt;=40      overall number subje… <span style="color: #BB0000;">NA</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>         1 mock     cohort2     overall   overall number subje… <span style="color: #BB0000;">NA</span>            </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 116 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 3 more variables: estimate_name &lt;chr&gt;, estimate_type &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   estimate_value &lt;chr&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="pivot-estimates">Pivot estimates<a class="anchor" aria-label="anchor" href="#pivot-estimates"></a>
 </h3>
+<p><code><a href="../reference/pivotEstimates.html">pivotEstimates()</a></code> can be used to pivot the variables that
+we are interested in.</p>
+<p>The argument <code>pivotEstimatesBy</code> specifies which are the
+variables that we want to use to pivot by, there are four options:</p>
 <ul>
 <li>
-<code><a href="../reference/pivotEstimates.html">pivotEstimates()</a></code> can be used to pivot the variables
-that we are interested in.</li>
+<code>NULL/character()</code> to not pivot anything.</li>
+<li>
+<code>c("estimate_name")</code> to pivot only estimate_name.</li>
+<li>
+<code>c("variable_level", "estimate_name")</code> to pivot
+estimate_name and variable_level.</li>
+<li>
+<code>c("variable_name", "variable_level", "estimate_name")</code>
+to pivot estimate_name, variable_level and variable_name.</li>
 </ul>
+<p>Note that <code>variable_level</code> can contain NA values, these
+will be ignored on the naming part.</p>
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/pivotEstimates.html">pivotEstimates</a></span><span class="op">(</span></span>
+<span>  <span class="va">result</span>, </span>
+<span>  pivotEstimatesBy <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"variable_name"</span>,<span class="st">"variable_level"</span>, <span class="st">"estimate_name"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 18 × 15</span></span></span>
+<span><span class="co">#&gt;    result_id cdm_name group_name  group_level strata_name       strata_level   </span></span>
+<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>         1 mock     cohort_name cohort1     overall           overall        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Male   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Male  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Female </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Female</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>         1 mock     cohort_name cohort1     sex               Male           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>         1 mock     cohort_name cohort1     sex               Female         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>         1 mock     cohort_name cohort1     age_group         &lt;40            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>         1 mock     cohort_name cohort1     age_group         &gt;=40           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>         1 mock     cohort_name cohort2     overall           overall        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">11</span>         1 mock     cohort_name cohort2     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Male   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">12</span>         1 mock     cohort_name cohort2     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Male  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">13</span>         1 mock     cohort_name cohort2     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Female </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">14</span>         1 mock     cohort_name cohort2     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Female</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">15</span>         1 mock     cohort_name cohort2     sex               Male           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">16</span>         1 mock     cohort_name cohort2     sex               Female         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">17</span>         1 mock     cohort_name cohort2     age_group         &lt;40            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">18</span>         1 mock     cohort_name cohort2     age_group         &gt;=40           </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 9 more variables: additional_name &lt;chr&gt;, additional_level &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   `number subjects_count` &lt;int&gt;, age_mean &lt;dbl&gt;, age_sd &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Medications_Amoxiciline_count &lt;int&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Medications_Amoxiciline_percentage &lt;dbl&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   Medications_Ibuprofen_count &lt;int&gt;, Medications_Ibuprofen_percentage &lt;dbl&gt;</span></span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="add-settings">Add settings<a class="anchor" aria-label="anchor" href="#add-settings"></a>
 </h3>
-<ul>
-<li>
-<code><a href="../reference/addSettings.html">addSettings()</a></code> is used to add the settings that we want
-as new columns to our <code>&lt;summarised_result&gt;</code>
-object.</li>
-</ul>
+<p><code><a href="../reference/addSettings.html">addSettings()</a></code> is used to add the settings that we want
+as new columns to our <code>&lt;summarised_result&gt;</code> object.</p>
+<p>The <code>settingsColumns</code> argument is used to choose which are
+the settings we want to add.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/addSettings.html">addSettings</a></span><span class="op">(</span></span>
+<span>  <span class="va">result</span>, </span>
+<span>  settingsColumns <span class="op">=</span> <span class="st">"result_type"</span></span>
+<span><span class="op">)</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 126 × 14</span></span></span>
+<span><span class="co">#&gt;    result_id cdm_name group_name  group_level strata_name       strata_level   </span></span>
+<span><span class="co">#&gt;        <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span>         1 mock     cohort_name cohort1     overall           overall        </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span>         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Male   </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span>         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Male  </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span>         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &lt;40 &amp;&amp;&amp; Female </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span>         1 mock     cohort_name cohort1     age_group &amp;&amp;&amp; sex &gt;=40 &amp;&amp;&amp; Female</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span>         1 mock     cohort_name cohort1     sex               Male           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span>         1 mock     cohort_name cohort1     sex               Female         </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span>         1 mock     cohort_name cohort1     age_group         &lt;40            </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span>         1 mock     cohort_name cohort1     age_group         &gt;=40           </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span>         1 mock     cohort_name cohort2     overall           overall        </span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 116 more rows</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 8 more variables: variable_name &lt;chr&gt;, variable_level &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   estimate_name &lt;chr&gt;, estimate_type &lt;chr&gt;, estimate_value &lt;chr&gt;,</span></span></span>
+<span><span class="co">#&gt; <span style="color: #949494;">#   additional_name &lt;chr&gt;, additional_level &lt;chr&gt;, result_type &lt;chr&gt;</span></span></span></code></pre></div>
 </div>
 </div>
   </main><aside class="col-md-3"><nav id="toc" aria-label="Table of contents"><h2>On this page</h2>
