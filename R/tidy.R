@@ -1,6 +1,6 @@
-#' Get a custom tidy visualization of a summarised_result object
+#' Get a custom tidy visualization of a `<summarised_result>` object
 #'
-#' @param result A summarised_result.
+#' @param result A `<summarised_result>`.
 #' @param splitGroup If TRUE it will split the group name-level column pair.
 #' @param splitStrata If TRUE it will split the group name-level column pair.
 #' @param splitAdditional If TRUE it will split the group name-level column pair.
@@ -17,29 +17,8 @@
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' Provides tools for obtaining a tidy version of a summarised_result object.
+#' Provides tools for obtaining a tidy version of a `<summarised_result>` object.
 #'
-#' @export
-#'
-#' @examples {
-#' result <- mockSummarisedResult()
-#'
-#' result |> tidySummarisedResult()
-#'
-#' result |>
-#'   tidySummarisedResult(
-#'     settingsColumns =character(),
-#'     pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name")
-#'   )
-#'
-#' result |>
-#'   tidySummarisedResult(
-#'     settingsColumns =character(),
-#'     pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name"),
-#'     nameStyle = "{estimate_name}_{variable_name}_{variable_level}"
-#'   )
-#'}
-
 tidySummarisedResult <- function(result,
                                  splitGroup = TRUE,
                                  splitStrata = TRUE,
@@ -70,16 +49,16 @@ tidySummarisedResult <- function(result,
   return(result)
 }
 
-#' Turn a summarised_result object into a tidy tibble
+#' Turn a `<summarised_result>` object into a tidy tibble
 #'
-#' @param x A summarised_result.
+#' @param x A `<summarised_result>`.
 #' @param ... For compatibility (not used).
 #'
 #' @return A tibble.
 #'
 #' @description
 #' `r lifecycle::badge("experimental")`
-#' Provides tools for obtaining a tidy version of a summarised_result object.
+#' Provides tools for obtaining a tidy version of a `<summarised_result>` object.
 #' This tidy version will include the settings as columns, `estimate_value` will
 #' be pivotted into columns using `estimate_name` as names, and group, strata,
 #' and additional will be splitted.

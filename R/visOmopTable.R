@@ -1,6 +1,6 @@
-#' Format a summarised_result object into a gt, flextable, or tibble object
+#' Format a `<summarised_result>` object into a gt, flextable, or tibble object
 #'
-#' @param result A `summarised_result` object.
+#' @param result A `<summarised_result>` object.
 #' @param estimateName A named list of estimate names to join, sorted by
 #' computation order. Use `<...>` to indicate estimate names.
 #' @param header A vector specifying the elements to include in the header.
@@ -43,7 +43,7 @@
 #' @description
 #' This function combines the functionalities of `formatEstimateValue()`,
 #' `estimateName()`, `formatHeader()`, and `formatTable()`
-#' into a single function specifically for `summarised_result` objects.
+#' into a single function specifically for `<summarised_result>` objects.
 #'
 #' @export
 #'

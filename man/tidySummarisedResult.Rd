@@ -2,7 +2,7 @@
 % Please edit documentation in R/tidy.R
 \name{tidySummarisedResult}
 \alias{tidySummarisedResult}
-\title{Get a custom tidy visualization of a summarised_result object}
+\title{Get a custom tidy visualization of a \verb{<summarised_result>} object}
 \usage{
 tidySummarisedResult(
   result,
@@ -15,7 +15,7 @@ tidySummarisedResult(
 )
 }
 \arguments{
-\item{result}{A summarised_result.}
+\item{result}{A \verb{<summarised_result>}.}
 
 \item{splitGroup}{If TRUE it will split the group name-level column pair.}
 
@@ -39,25 +39,5 @@ A tibble.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-Provides tools for obtaining a tidy version of a summarised_result object.
-}
-\examples{
-{
-result <- mockSummarisedResult()
-
-result |> tidySummarisedResult()
-
-result |>
-  tidySummarisedResult(
-    settingsColumns =character(),
-    pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name")
-  )
-
-result |>
-  tidySummarisedResult(
-    settingsColumns =character(),
-    pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name"),
-    nameStyle = "{estimate_name}_{variable_name}_{variable_level}"
-  )
-}
+Provides tools for obtaining a tidy version of a \verb{<summarised_result>} object.
 }

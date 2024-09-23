@@ -12,7 +12,7 @@ formatEstimateValue(
 )
 }
 \arguments{
-\item{result}{A summarised_result.}
+\item{result}{A \verb{<summarised_result>}.}
 
 \item{decimals}{Number of decimals per estimate type (integer, numeric,
 percentage, proportion), estimate name, or all estimate values (introduce the
@@ -23,10 +23,10 @@ number of decimals).}
 \item{bigMark}{Thousand and millions separator mark.}
 }
 \value{
-A summarised_result.
+A \verb{<summarised_result>}.
 }
 \description{
-Formats the estimate_value column of summarised_result object by editing
+Formats the estimate_value column of \verb{<summarised_result>} object by editing
 number of decimals, decimal and thousand/millions separator marks.
 }
 \examples{

@@ -1,6 +1,4 @@
-#' Generate a formatted table from a data.table
-#'
-#' `r lifecycle::badge("experimental")`
+#' Generate a formatted table from a `<data.table>`
 #'
 #'
 #' @param result A table to format.
@@ -31,10 +29,12 @@
 #' @return A tibble, gt, or flextable object.
 #'
 #' @description
+#' `r lifecycle::badge("experimental")`
 #' This function combines the functionalities of `formatEstimateValue()`,
 #' `formatEstimateName()`, `formatHeader()`, and `formatTable()`
 #' into a single function. While it does not require the input table to be
-#' a `summarised_result`, it does expect specific fields to apply formatting.
+#' a `<summarised_result>`, it does expect specific fields to apply some
+#' formatting functionalities.
 #'
 #' @export
 #'

@@ -2,7 +2,7 @@
 % Please edit documentation in R/visTable.R
 \name{visTable}
 \alias{visTable}
-\title{Generate a formatted table from a data.table}
+\title{Generate a formatted table from a \verb{<data.table>}}
 \usage{
 visTable(
   result,
@@ -51,13 +51,12 @@ allowed options.}
 A tibble, gt, or flextable object.
 }
 \description{
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 This function combines the functionalities of \code{formatEstimateValue()},
 \code{formatEstimateName()}, \code{formatHeader()}, and \code{formatTable()}
 into a single function. While it does not require the input table to be
-a \code{summarised_result}, it does expect specific fields to apply formatting.
-}
-\details{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+a \verb{<summarised_result>}, it does expect specific fields to apply some
+formatting functionalities.
 }
 \examples{
 result <- mockSummarisedResult()

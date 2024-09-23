@@ -1,9 +1,9 @@
 
-#' Create a scatter plot visualisation from a summarised result object
+#' Create a scatter plot visualisation from a `<summarised_result>` object
 #'
 #' `r lifecycle::badge("experimental")`
 #'
-#' @param result A summarised result object.
+#' @param result A `<summarised_result>` object.
 #' @param x Column or estimate name that is used as x variable.
 #' @param y Column or estimate name that is used as y variable
 #' @param line Whether to plot a line using `geom_line`.
@@ -119,11 +119,11 @@ scatterPlot <- function(result,
   return(p)
 }
 
-#' Create a box plot visualisation from a summarised_result object
+#' Create a box plot visualisation from a `<summarised_result>` object
 #'
 #' `r lifecycle::badge("experimental")`
 #'
-#' @param result A summarised result object.
+#' @param result A `<summarised_result>` object.
 #' @param x Columns to use as x axes.
 #' @param lower Estimate name for the lower quantile of the box.
 #' @param middle Estimate name for the middle line of the box.
@@ -210,11 +210,11 @@ boxPlot <- function(result,
   return(p)
 }
 
-#' Create a bar plot visualisation from a summarised result object
+#' Create a bar plot visualisation from a `<summarised_result>` object
 #'
 #' `r lifecycle::badge("experimental")`
 #'
-#' @param result A summarised result object.
+#' @param result A `<summarised_result>` object.
 #' @param x Column or estimate name that is used as x variable.
 #' @param y Column or estimate name that is used as y variable
 #' @param facet Variables to facet by, a formula can be provided to specify

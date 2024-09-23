@@ -2,19 +2,19 @@
 % Please edit documentation in R/columns.R
 \name{settingsColumns}
 \alias{settingsColumns}
-\title{Identify settings columns of a summarised_result}
+\title{Identify settings columns of a \verb{<summarised_result>}}
 \usage{
 settingsColumns(result)
 }
 \arguments{
-\item{result}{A summarised_result.}
+\item{result}{A \verb{<summarised_result>}.}
 }
 \value{
 Vector with names of the settings columns
 }
 \description{
 Identifies and returns the columns of the settings table
-obtained by using \code{settings()} in a summarised_result object.
+obtained by using \code{settings()} in a \verb{<summarised_result>} object.
 }
 \examples{
 mockSummarisedResult() |>

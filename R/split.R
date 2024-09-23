@@ -155,7 +155,7 @@ splitAll <- function(result,
 
 #' Split name and level columns into the columns
 #'
-#' @param result A summarised_result object.
+#' @param result A `<summarised_result>` object.
 #' @param name Column with the names.
 #' @param level Column with the levels.
 #' @param keep Whether to keep the original group_name and group_level columns.

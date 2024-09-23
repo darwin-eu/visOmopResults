@@ -17,14 +17,14 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 
 ## Introduction
 
-Dealing with an *<summarised_result>* object can be difficult to handle specially when we are trying to filter. For example, difficult tasks would be to filter to a certain result_type or when there are many strata joined together filter only one of the variables. On the other hand it exists the [tidy](https://darwin-eu.github.io/visOmopResults/articles/tidy.html) format that makes it easy to filter, but then you loose the *<summarised_result>* object. There exist some functions that only work with *<summarised_result>* objects.
+Dealing with an `<summarised_result>` object can be difficult to handle specially when we are trying to filter. For example, difficult tasks would be to filter to a certain result_type or when there are many strata joined together filter only one of the variables. On the other hand it exists the [tidy](https://darwin-eu.github.io/visOmopResults/articles/tidy.html) format that makes it easy to filter, but then you loose the `<summarised_result>` object. There exist some functions that only work with `<summarised_result>` objects.
 
 **visOmopResults** package contains some functionalities that helps on this process:
 
-- `filterSettings` to filter the *<summarised_result>* object using the `settings()` attribute.
-- `filterGroup` to filter the *<summarised_result>* object using the group_name-group_level tidy columns.
-- `filterStrata` to filter the *<summarised_result>* object using the strata_name-starta_level tidy columns.
-- `filterAdditional` to filter the *<summarised_result>* object using the additional_name-additional_level tidy columns.
+- `filterSettings` to filter the `<summarised_result>` object using the `settings()` attribute.
+- `filterGroup` to filter the `<summarised_result>` object using the group_name-group_level tidy columns.
+- `filterStrata` to filter the `<summarised_result>` object using the strata_name-starta_level tidy columns.
+- `filterAdditional` to filter the `<summarised_result>` object using the additional_name-additional_level tidy columns.
 
 In this vignette we will also cover two types of utility functions:
 
@@ -60,7 +60,7 @@ result2 <- result2 |>
   ))
 ```
 
-We can now merge both results in a unique *<summarised_result>* object:
+We can now merge both results in a unique `<summarised_result>` object:
 ```{r}
 result <- bind(result1, result2)
 settings(result)
@@ -177,9 +177,9 @@ Note that is we split again then year will be a character vector instead of an i
 
 ## Columns
 
-Splitting and tidying your *<summarised_result>* can give you many advantages, as we have seen across the different vignettes. One of the problems that you may face is the ability to know which are the available `settings` to add, or how many columns will be generated when splitting group. That's why visOmopResults created some helper functions:
+Splitting and tidying your `<summarised_result>` can give you many advantages, as we have seen across the different vignettes. One of the problems that you may face is the ability to know which are the available `settings` to add, or how many columns will be generated when splitting group. That's why visOmopResults created some helper functions:
 
-- `settingsColumns()` gives you the setting names that are available in a *<summarised_result>* object.
+- `settingsColumns()` gives you the setting names that are available in a `<summarised_result>` object.
 - `groupColumns()` gives you the new columns that will be generated when splitting group_name-group_level pair into different columns.
 - `strataColumns()` gives you the new columns that will be generated when splitting strata_name-strata_level pair into different columns.
 - `additionalColumns()` gives you the new columns that will be generated when splitting additional_name-additional_level pair into different columns.

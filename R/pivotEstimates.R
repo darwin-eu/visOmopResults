@@ -1,6 +1,6 @@
 #' Set estimates as columns
 #'
-#' @param result A summarised_result.
+#' @param result A `<summarised_result>`.
 #' @param pivotEstimatesBy Names from which pivot wider the estimate values. If
 #' NULL the table will not be pivotted.
 #' @param nameStyle Name style (glue package specifications) to customise names

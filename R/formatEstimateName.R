@@ -1,6 +1,6 @@
 #' Formats estimate_name and estimate_value column
 #'
-#' @param result A summarised_result.
+#' @param result A `<summarised_result>`.
 #' @param estimateName Named list of estimate name's to join, sorted by
 #' computation order. Indicate estimate_name's between <...>.
 #' @param keepNotFormatted Whether to keep rows not formatted.
@@ -13,7 +13,7 @@
 #' Formats estimate_name and estimate_value columns by changing the name of the
 #' estimate name and/or joining different estimates together in a single row.
 #'
-#' @return A summarised_result object.
+#' @return A `<summarised_result>` object.
 #'
 #' @export
 #'

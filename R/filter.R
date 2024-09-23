@@ -1,6 +1,6 @@
-#' Filter a summarised_result using the settings
+#' Filter a `<summarised_result>` using the settings
 #'
-#' @param result A summarised_result object.
+#' @param result A `<summarised_result>` object.
 #' @param ... Expressions that return a logical value (columns in settings are
 #' used to evaluate the expression), and are defined in terms of the variables
 #' in .data. If multiple expressions are included, they are combined with the &
@@ -8,7 +8,7 @@
 #'
 #' @export
 #'
-#' @return A summarised_result object with only the result_id rows that fulfill
+#' @return A `<summarised_result>` object with only the result_id rows that fulfill
 #' the required specified settings.
 #'
 #' @examples
@@ -65,7 +65,7 @@ filterSettings <- function(result, ...) {
 
 #' Filter the strata_name-strata_level pair in a summarised_result
 #'
-#' @param result A summarised_result object.
+#' @param result A `<summarised_result>` object.
 #' @param ... Expressions that return a logical value (`strataColumns()` are
 #' used to evaluate the expression), and are defined in terms of the variables
 #' in .data. If multiple expressions are included, they are combined with the &
@@ -73,7 +73,7 @@ filterSettings <- function(result, ...) {
 #'
 #' @export
 #'
-#' @return A summarised_result object with only the rows that fulfill the
+#' @return A `<summarised_result>` object with only the rows that fulfill the
 #' required specified strata.
 #'
 #' @examples
@@ -106,7 +106,7 @@ filterStrata <- function(result, ...) {
 
 #' Filter the group_name-group_level pair in a summarised_result
 #'
-#' @param result A summarised_result object.
+#' @param result A `<summarised_result>` object.
 #' @param ... Expressions that return a logical value (`groupColumns()` are
 #' used to evaluate the expression), and are defined in terms of the variables
 #' in .data. If multiple expressions are included, they are combined with the &
@@ -114,7 +114,7 @@ filterStrata <- function(result, ...) {
 #'
 #' @export
 #'
-#' @return A summarised_result object with only the rows that fulfill the
+#' @return A `<summarised_result>` object with only the rows that fulfill the
 #' required specified group.
 #'
 #' @examples
@@ -147,7 +147,7 @@ filterGroup <- function(result, ...) {
 
 #' Filter the additional_name-additional_level pair in a summarised_result
 #'
-#' @param result A summarised_result object.
+#' @param result A `<summarised_result>` object.
 #' @param ... Expressions that return a logical value (`additionalColumns()` are
 #' used to evaluate the expression), and are defined in terms of the variables
 #' in .data. If multiple expressions are included, they are combined with the &
@@ -155,7 +155,7 @@ filterGroup <- function(result, ...) {
 #'
 #' @export
 #'
-#' @return A summarised_result object with only the rows that fulfill the
+#' @return A `<summarised_result>` object with only the rows that fulfill the
 #' required specified additional.
 #'
 #' @examples

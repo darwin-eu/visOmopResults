@@ -82,7 +82,7 @@ validatePivotEstimatesBy <- function(pivotEstimatesBy, call = parent.frame()) {
   ))
   if (isTRUE(notValid)) {
     cli::cli_abort(
-      c("x" = "`pivotEstimatesBy` must refer to summarised_result columns.
+      c("x" = "`pivotEstimatesBy` must refer to <summarised_result> columns.
         It cannot include `estimate_value` and `estimate_type`."),
       call = call)
   }

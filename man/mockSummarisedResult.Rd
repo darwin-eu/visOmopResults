@@ -2,15 +2,15 @@
 % Please edit documentation in R/mockResults.R
 \name{mockSummarisedResult}
 \alias{mockSummarisedResult}
-\title{A summarised_result object filled with mock data}
+\title{A \verb{<summarised_result>} object filled with mock data}
 \usage{
 mockSummarisedResult()
 }
 \value{
-An object of the class summarised_result with mock data.
+An object of the class \verb{<summarised_result>} with mock data.
 }
 \description{
-Creates an object of the class summarised_result with mock data
+Creates an object of the class \verb{<summarised_result>} with mock data
 for illustration purposes.
 }
 \examples{

@@ -2,7 +2,7 @@
 % Please edit documentation in R/plot.R
 \name{boxPlot}
 \alias{boxPlot}
-\title{Create a box plot visualisation from a summarised_result object}
+\title{Create a box plot visualisation from a \verb{<summarised_result>} object}
 \usage{
 boxPlot(
   result,
@@ -17,7 +17,7 @@ boxPlot(
 )
 }
 \arguments{
-\item{result}{A summarised result object.}
+\item{result}{A \verb{<summarised_result>} object.}
 
 \item{x}{Columns to use as x axes.}
 

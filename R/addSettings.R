@@ -1,6 +1,6 @@
-#' Add settings columns to a summarised_result object
+#' Add settings columns to a `<summarised_result>` object
 #'
-#' @param result A summarised_result object.
+#' @param result A `<summarised_result>` object.
 #' @param settingsColumns Settings to be added as columns, by default all
 #' settings will be added. If NULL or empty character vector, no settings will
 #' be added.
@@ -8,7 +8,7 @@
 #'
 #' @export
 #'
-#' @return A summarised_result object with the added setting columns.
+#' @return A `<summarised_result>` object with the added setting columns.
 #'
 #' @examples
 #' library(visOmopResults)

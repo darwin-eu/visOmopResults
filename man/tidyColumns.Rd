@@ -2,19 +2,20 @@
 % Please edit documentation in R/columns.R
 \name{tidyColumns}
 \alias{tidyColumns}
-\title{Identify tidy columns of a summarised_result}
+\title{Identify tidy columns of a \verb{<summarised_result>}}
 \usage{
 tidyColumns(result)
 }
 \arguments{
-\item{result}{A summarised_result.}
+\item{result}{A \verb{<summarised_result>}.}
 }
 \value{
-Table columns after applying \code{tidy()} function to a summarisd result.
+Table columns after applying \code{tidy()} function to a
+\verb{<summarised_result>}.
 }
 \description{
 Identifies and returns the columns that the tidy version of the
-summarised_result will have.
+\verb{<summarised_result>} will have.
 }
 \examples{
 mockSummarisedResult() |>

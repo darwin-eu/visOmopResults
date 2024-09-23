@@ -13,7 +13,7 @@ formatHeader(
 )
 }
 \arguments{
-\item{result}{A summarised_result.}
+\item{result}{A \verb{<summarised_result>}.}
 
 \item{header}{Names of the variables to make headers.}
 
@@ -29,7 +29,7 @@ A tibble with rows pivotted into columns with key names for
 subsequent header formatting.
 }
 \description{
-Pivots a summarised_result object based on the column names in header,
+Pivots a \verb{<summarised_result>} object based on the column names in header,
 generating specific column names for subsequent header formatting in
 formatTable function.
 }
