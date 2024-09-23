@@ -111,7 +111,7 @@ pivotLongerType <- function(result,
   # pivot estimates
   types <- result |>
     dplyr::select(dplyr::all_of(cols)) |>
-    purrr::map(\(x) dplyr::type_sum(x) |> getTypes())
+    purrr::map(\(x) getTypes(x))
   result |>
     dplyr::mutate(dplyr::across(dplyr::all_of(cols), as.character)) |>
     tidyr::pivot_longer(
@@ -124,7 +124,8 @@ pivotLongerType <- function(result,
     )
 }
 getTypes <- function(x) {
-  x
+  dplyr::type_sum(x) # do we want to add any conversion? which types do we want
+  # to use?
 }
 typeColumn <- function(prefix, types) {
   paste0(
