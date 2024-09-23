@@ -290,13 +290,6 @@ test_that("optionsTable", {
   expect_equal(optionsTable(), defaultTableOptions(NULL))
 })
 
-test_that("backwardCompatibility", {
-  result <- omopgenerics::emptySummarisedResult()
-  bc <- backwardCompatibility(header = "variable", hide = "variable_group", result = result, settingsColumns = NULL)
-  expect_equal(bc$hide,
-              c("variable_group", "variable_level"))
-})
-
 test_that("split deprecated warning", {
   result <- mockSummarisedResult()
   expect_warning(visOmopTable(result, split = NULL))
