@@ -208,7 +208,7 @@ test_that("renameColumn works", {
     rename = c("Database name" = "cdm_name", "changeName" = "variable_name"),
     hide = c("result_id", "estimate_type"),
     .options = list())
-  expect_true(colnames(fx2$body$dataset)[1] == "Cdm name; Cohort name")
+  expect_true(colnames(fx2$body$dataset)[1] == "Database name; Cohort name")
   expect_equal(colnames(fx1$body$dataset),
                c("Cohort name", "Age group", "Variable name", "Variable level",
                  "Estimate name", "Database name\nmock\nSex\noverall",

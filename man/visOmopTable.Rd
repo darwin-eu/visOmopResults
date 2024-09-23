@@ -15,7 +15,10 @@ visOmopTable(
   hide = character(),
   showMinCellCount = TRUE,
   .options = list(),
-  split = lifecycle::deprecated()
+  split = lifecycle::deprecated(),
+  excludeColumns = lifecycle::deprecated(),
+  formatEstimateName = lifecycle::deprecated(),
+  renameColumns = lifecycle::deprecated()
 )
 }
 \arguments{
@@ -64,6 +67,12 @@ used.}
 \code{visOmopResults::optionsTable()} shows allowed arguments and their default values.}
 
 \item{split}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+
+\item{excludeColumns}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+
+\item{formatEstimateName}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+
+\item{renameColumns}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
 \value{
 A tibble, gt, or flextable object.

@@ -7,6 +7,7 @@
 #' @param useFormatOrder Whether to use the order in which estimate names
 #' appear in the estimateName (TRUE), or use the order in the
 #' input dataframe (FALSE).
+#' @param estimateNameFormat deprecated.
 #'
 #' @description
 #' Formats estimate_name and estimate_value columns by changing the name of the
@@ -29,7 +30,14 @@
 formatEstimateName <- function(result,
                                estimateName = NULL,
                                keepNotFormatted = TRUE,
-                               useFormatOrder = TRUE) {
+                               useFormatOrder = TRUE,
+                               estimateNameFormat = lifecycle::deprecated()) {
+  if (lifecycle::is_present(estimateNameFormat)) {
+    lifecycle::deprecate_soft(
+      "0.4.0", "formatEstimateName(estimateNameFormat = )", "formatEstimateName(estimateName = )")
+    if (missing(estimateName)) estimateName <- estimateNameFormat
+  }
+
   # initial checks
   omopgenerics::assertTable(result, columns = c("estimate_name", "estimate_value"))
   estimateName <- validateEstimateName(estimateName)
@@ -89,26 +97,34 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
       res <- result |>
         dplyr::filter(!.data$formatted) |>
         dplyr::filter(.data$estimate_name %in% .env$keysK) |>
-        dplyr::filter(dplyr::n() == .env$len, .by = dplyr::all_of(cols)) |>
-        dplyr::mutate("id" = min(.data$id), .by = dplyr::all_of(cols))
-      resF <- res |>
-        dplyr::select(-"estimate_type") |>
-        tidyr::pivot_wider(
-          names_from = "estimate_name", values_from = "estimate_value"
-        ) |>
-        evalName(formatKNum, keysK) |>
-        dplyr::mutate(
-          "estimate_name" = nameK,
-          "formatted" = TRUE,
-          "estimate_type" = "character"
-        ) |>
-        dplyr::select(dplyr::all_of(c(ocols, "id", "group_id", "formatted")))
-      result <- result |>
-        dplyr::anti_join(
-          res |> dplyr::select(dplyr::all_of(c(cols, "estimate_name"))),
-          by = c(cols, "estimate_name")
-        ) |>
-        dplyr::union_all(resF)
+        dplyr::filter(dplyr::n() == .env$len, .by = dplyr::all_of(cols))
+      if (nrow(res) == 0) {
+        if (len > 1) {
+          cli::cli_warn("No combined entries in `result` for estimates {.strong {keysK}}")
+        } else {
+          cli::cli_warn("No entries in `result` for estimate {.strong {keysK}}")
+        }
+      } else {
+        res <- res |> dplyr::mutate("id" = min(.data$id), .by = dplyr::all_of(cols))
+        resF <- res |>
+          dplyr::select(-"estimate_type") |>
+          tidyr::pivot_wider(
+            names_from = "estimate_name", values_from = "estimate_value"
+          ) |>
+          evalName(formatKNum, keysK) |>
+          dplyr::mutate(
+            "estimate_name" = nameK,
+            "formatted" = TRUE,
+            "estimate_type" = "character"
+          ) |>
+          dplyr::select(dplyr::all_of(c(ocols, "id", "group_id", "formatted")))
+        result <- result |>
+          dplyr::anti_join(
+            res |> dplyr::select(dplyr::all_of(c(cols, "estimate_name"))),
+            by = c(cols, "estimate_name")
+          ) |>
+          dplyr::union_all(resF)
+      }
     } else {
       if (len > 0) {
         cli::cli_inform(c("i" = "{formatK} has not been formatted."))

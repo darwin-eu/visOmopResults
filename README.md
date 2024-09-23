@@ -16,14 +16,18 @@ coverage](https://codecov.io/gh/darwin-eu/visOmopResults/branch/main/graph/badge
 
 ## Package overview
 
-visOmopResults contains functions for formatting objects of the class
-*summarised_result* (see R package
-[omopgenerics](https://cran.r-project.org/package=omopgenerics)). This
-package simplifies the handling of these objects to obtain nice output
-tables in the format of *gt* or *flextable*’ to report results via Shiny
-apps, RMarkdown, Quarto, and more.
+**visOmopResults** offers a set of functions tailored to format objects
+of class `<summarised_result>` (as defined in
+[omopgenerics](https://cran.r-project.org/package=omopgenerics)
+package).
 
-## Installation
+It provides functionality to: **transform** data, create **table**
+visualizations, and generate **plot** visualizations. These
+visualizations are highly versatile for reporting results through Shiny
+apps, RMarkdown, Quarto, and more, supporting various output formats
+such as HTML, PNG, Word, and PDF.
+
+## Let’s get started
 
 You can install the latest version of visOmopResults from CRAN:
 
@@ -35,187 +39,213 @@ Or you can install the development version from
 [GitHub](https://github.com/darwin-eu/visOmopResults) with:
 
 ``` r
-# install.packages("devtools")
-devtools::install_github("darwin-eu/visOmopResults")
+# install.packages("pak")
+pak::pkg_install("darwin-eu/visOmopResults")
 ```
 
-## Example usage
+The `<summarised_result>` is a standardised output format utilized
+across various packages, including:
 
-First, we load the package and create a summarised result object with
-mock results
+- [CohortCharacteristics](https://cran.r-project.org/package=CohortCharacteristics)
+- [DrugUtilisation](https://cran.r-project.org/package=DrugUtilisation)
+- [IncidencePrevalence](https://cran.r-project.org/package=IncidencePrevalence)
+- [PatientProfiles](https://cran.r-project.org/package=PatientProfiles)
+- [CodelistGenerator](https://cran.r-project.org/package=CodelistGenerator)
+- [CohortSurvival](https://cran.r-project.org/package=CohortSurvival)
+- [CohortSymmetry](https://cran.r-project.org/package=CohortSymmetry)
+
+Although this standard output format is essential, it can sometimes be
+challenging to manage. The *visOmopResults* package aims to simplify
+this process. To demonstrate the package’s functionality, let’s start by
+using some mock result:
 
 ``` r
 library(visOmopResults)
 result <- mockSummarisedResult()
 ```
 
-We can use the function `visOmopTable()` to get a nice *gt* table:
+## Transformation of a `<summarised_result>` object
+
+A tidy version of the summarised can be obtained with the tidy function:
 
 ``` r
-visOmopTable(
-  result,
-  formatEstimateName = c("N%" = "<count> (<percentage>)",
-                         "N" = "<count>",
-                         "Mean (SD)" = "<mean> (<sd>)"),
-  header = c("Stratifications", "strata"),
-  split = c("group","additional")
-)
+tidy(result)
+#> # A tibble: 72 × 13
+#>    cdm_name cohort_name age_group sex     variable_name   variable_level   count
+#>    <chr>    <chr>       <chr>     <chr>   <chr>           <chr>            <int>
+#>  1 mock     cohort1     overall   overall number subjects <NA>           8073003
+#>  2 mock     cohort1     <40       Male    number subjects <NA>           8850788
+#>  3 mock     cohort1     >=40      Male    number subjects <NA>           3811096
+#>  4 mock     cohort1     <40       Female  number subjects <NA>           7230087
+#>  5 mock     cohort1     >=40      Female  number subjects <NA>           6508723
+#>  6 mock     cohort1     overall   Male    number subjects <NA>           7643684
+#>  7 mock     cohort1     overall   Female  number subjects <NA>           4209114
+#>  8 mock     cohort1     <40       overall number subjects <NA>           5850048
+#>  9 mock     cohort1     >=40      overall number subjects <NA>           8239237
+#> 10 mock     cohort2     overall   overall number subjects <NA>           7597918
+#> # ℹ 62 more rows
+#> # ℹ 6 more variables: mean <dbl>, sd <dbl>, percentage <dbl>,
+#> #   result_type <chr>, package_name <chr>, package_version <chr>
 ```
 
-![](./man/figures/visOmopTable.png)
-
-In the code snipped showed, we specified how to group and display the
-estimates with `formatEstimateName`. Also, we created a header based on
-the stratifications with `header`, and we split the name-level paired
-columns group and additional (refer to the “split and unite functions”
-vignette for more information on splitting).
-
-## Custom formatting - Example usage
-
-The function `visOmopTable()` is wrapped around other functions of the
-package. These can be implemented in a pipeline for additional
-customisation of the summarised_result.
-
-### 1. formatEstimateValue()
-
-We utilize this function to modify the *estimate_value* column. In this
-case, we will apply the default settings of the function, which include
-using 0 decimals for integer values, 2 decimals for numeric values, 1
-decimal for percentages, and 3 decimals for proportions. Additionally,
-the function sets the decimal mark to ‘.’, and the thousand/millions
-separator to ‘,’ by default.”
+This tidy format is no longer standardized but offers easier
+manipulation. While `tidy()` provides a straightforward transformation,
+the more customizable sibling function `tidySummarisedResult()` allows
+you to specify exactly how you’d like to tidy your `<summarised_result>`
+object:
 
 ``` r
-result <- result |> 
-  formatEstimateValue(
-    decimals = c(integer = 0, numeric = 2, percentage = 1, proportion = 3),
-    decimalMark = ".",
-    bigMark = ",")
+result |>
+  tidySummarisedResult(
+    splitStrata = FALSE,
+    settingsColumns = "package_name", 
+    pivotEstimatesBy = NULL
+  )
+#> # A tibble: 126 × 11
+#>    result_id cdm_name cohort_name strata_name       strata_level   variable_name
+#>        <int> <chr>    <chr>       <chr>             <chr>          <chr>        
+#>  1         1 mock     cohort1     overall           overall        number subje…
+#>  2         1 mock     cohort1     age_group &&& sex <40 &&& Male   number subje…
+#>  3         1 mock     cohort1     age_group &&& sex >=40 &&& Male  number subje…
+#>  4         1 mock     cohort1     age_group &&& sex <40 &&& Female number subje…
+#>  5         1 mock     cohort1     age_group &&& sex >=40 &&& Fema… number subje…
+#>  6         1 mock     cohort1     sex               Male           number subje…
+#>  7         1 mock     cohort1     sex               Female         number subje…
+#>  8         1 mock     cohort1     age_group         <40            number subje…
+#>  9         1 mock     cohort1     age_group         >=40           number subje…
+#> 10         1 mock     cohort2     overall           overall        number subje…
+#> # ℹ 116 more rows
+#> # ℹ 5 more variables: variable_level <chr>, estimate_name <chr>,
+#> #   estimate_type <chr>, estimate_value <chr>, package_name <chr>
 ```
 
-``` r
-result |> dplyr::glimpse()
-#> Rows: 126
-#> Columns: 13
-#> $ result_id        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
-#> $ cdm_name         <chr> "mock", "mock", "mock", "mock", "mock", "mock", "mock…
-#> $ group_name       <chr> "cohort_name", "cohort_name", "cohort_name", "cohort_…
-#> $ group_level      <chr> "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…
-#> $ strata_name      <chr> "overall", "age_group &&& sex", "age_group &&& sex", …
-#> $ strata_level     <chr> "overall", "<40 &&& Male", ">=40 &&& Male", "<40 &&& …
-#> $ variable_name    <chr> "number subjects", "number subjects", "number subject…
-#> $ variable_level   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-#> $ estimate_name    <chr> "count", "count", "count", "count", "count", "count",…
-#> $ estimate_type    <chr> "integer", "integer", "integer", "integer", "integer"…
-#> $ estimate_value   <chr> "4,392,319", "7,536,112", "537,318", "3,563,375", "4,…
-#> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
-#> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
-```
+## Filter a `<summarised_result>` object
 
-### 2. formatEstimateName()
+A `<summarised_result>` object is essentially a `<data.frame>`, so it
+can be filtered easily using `dplyr::filter()`. However, filtering
+variables within name-level structures or those present in the settings
+can be challenging. The following functions simplify this process:
 
-With this function we can transform the *estimate_name* and
-*estimate_value* columns. For example, it allows to consolidate into one
-row counts and percentages related to the same variable within the same
-group and strata. It’s worth noting that the *estimate_name* is enclosed
-within \<…\> in the `estimateNameFormat` argument.
+- `filterSettings()`
+- `filterGroup()`
+- `filterStrata()`
+- `filterAdditional()`
+
+Here are some examples on how to use them:
 
 ``` r
-result <- result |> formatEstimateName(
-  estimateNameFormat = c("N (%)" = "<count> (<percentage>%)",
-                         "N" = "<count>",
-                         "Mean (SD)" = "<mean> (<sd>)"),
-  keepNotFormatted = FALSE)
-```
-
-``` r
-result |> dplyr::glimpse()
-#> Rows: 72
-#> Columns: 13
-#> $ result_id        <int> 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,…
-#> $ cdm_name         <chr> "mock", "mock", "mock", "mock", "mock", "mock", "mock…
-#> $ group_name       <chr> "cohort_name", "cohort_name", "cohort_name", "cohort_…
-#> $ group_level      <chr> "cohort1", "cohort1", "cohort1", "cohort1", "cohort1"…
-#> $ strata_name      <chr> "overall", "age_group &&& sex", "age_group &&& sex", …
-#> $ strata_level     <chr> "overall", "<40 &&& Male", ">=40 &&& Male", "<40 &&& …
-#> $ variable_name    <chr> "number subjects", "number subjects", "number subject…
-#> $ variable_level   <chr> NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, NA, N…
-#> $ estimate_name    <chr> "N", "N", "N", "N", "N", "N", "N", "N", "N", "N", "N"…
-#> $ estimate_type    <chr> "character", "character", "character", "character", "…
-#> $ estimate_value   <chr> "4,392,319", "7,536,112", "537,318", "3,563,375", "4,…
-#> $ additional_name  <chr> "overall", "overall", "overall", "overall", "overall"…
-#> $ additional_level <chr> "overall", "overall", "overall", "overall", "overall"…
-```
-
-### 3. formatHeader()
-
-Next step is to format our table before transforming to gt object. We
-will pivot *strata_name* and *strata_level* columns to have the strata
-groups as columns under the header “Study strata”.
-
-``` r
-result <- result |>
-  formatHeader(header = c("Study strata", "strata_name", "strata_level"),
-               delim = "\n", 
-               includeHeaderName = FALSE,
-               includeHeaderKey = TRUE)
+result |>
+  filterSettings(package_name == "visOmopResults")
+#> # A tibble: 126 × 13
+#>    result_id cdm_name group_name  group_level strata_name       strata_level   
+#>        <int> <chr>    <chr>       <chr>       <chr>             <chr>          
+#>  1         1 mock     cohort_name cohort1     overall           overall        
+#>  2         1 mock     cohort_name cohort1     age_group &&& sex <40 &&& Male   
+#>  3         1 mock     cohort_name cohort1     age_group &&& sex >=40 &&& Male  
+#>  4         1 mock     cohort_name cohort1     age_group &&& sex <40 &&& Female 
+#>  5         1 mock     cohort_name cohort1     age_group &&& sex >=40 &&& Female
+#>  6         1 mock     cohort_name cohort1     sex               Male           
+#>  7         1 mock     cohort_name cohort1     sex               Female         
+#>  8         1 mock     cohort_name cohort1     age_group         <40            
+#>  9         1 mock     cohort_name cohort1     age_group         >=40           
+#> 10         1 mock     cohort_name cohort2     overall           overall        
+#> # ℹ 116 more rows
+#> # ℹ 7 more variables: variable_name <chr>, variable_level <chr>,
+#> #   estimate_name <chr>, estimate_type <chr>, estimate_value <chr>,
+#> #   additional_name <chr>, additional_level <chr>
 ```
 
 ``` r
-result |> dplyr::glimpse()
-#> Rows: 8
-#> Columns: 19
-#> $ result_id                                                                              <int> …
-#> $ cdm_name                                                                               <chr> …
-#> $ group_name                                                                             <chr> …
-#> $ group_level                                                                            <chr> …
-#> $ variable_name                                                                          <chr> …
-#> $ variable_level                                                                         <chr> …
-#> $ estimate_name                                                                          <chr> …
-#> $ estimate_type                                                                          <chr> …
-#> $ additional_name                                                                        <chr> …
-#> $ additional_level                                                                       <chr> …
-#> $ `[header]Study strata\n[header_level]overall\n[header_level]overall`                   <chr> …
-#> $ `[header]Study strata\n[header_level]age_group &&& sex\n[header_level]<40 &&& Male`    <chr> …
-#> $ `[header]Study strata\n[header_level]age_group &&& sex\n[header_level]>=40 &&& Male`   <chr> …
-#> $ `[header]Study strata\n[header_level]age_group &&& sex\n[header_level]<40 &&& Female`  <chr> …
-#> $ `[header]Study strata\n[header_level]age_group &&& sex\n[header_level]>=40 &&& Female` <chr> …
-#> $ `[header]Study strata\n[header_level]sex\n[header_level]Male`                          <chr> …
-#> $ `[header]Study strata\n[header_level]sex\n[header_level]Female`                        <chr> …
-#> $ `[header]Study strata\n[header_level]age_group\n[header_level]<40`                     <chr> …
-#> $ `[header]Study strata\n[header_level]age_group\n[header_level]>=40`                    <chr> …
-```
-
-### 4. gtTable()
-
-Finally, we convert the transformed *summarised_result* object in steps
-1, 2, and 3, into a nice gt object. We use the default visOmopResults
-style. Additionally, we separate data into groups specified by
-*group_level* column to differentiate between cohort1 and cohort2.
-
-``` r
-gtResult <- result |>
-  dplyr::select(-c("result_type", "package_name", "package_version", 
-                   "group_name", "additional_name", "additional_level",
-                   "estimate_type", "result_id")) |>
-  gtTable(
-    delim = "\n",
-    style = "default",
-    na = "-",
-    title = "My first gt table with visOmopResults!",
-    groupColumn = "group_level",
-    groupAsColumn = FALSE,
-    groupOrder = c("cohort1", "cohort2"),
-    merge = "all_columns"
-    )
+result |>
+  filterSettings(package_name == "other")
+#> # A tibble: 0 × 13
+#> # ℹ 13 variables: result_id <int>, cdm_name <chr>, group_name <chr>,
+#> #   group_level <chr>, strata_name <chr>, strata_level <chr>,
+#> #   variable_name <chr>, variable_level <chr>, estimate_name <chr>,
+#> #   estimate_type <chr>, estimate_value <chr>, additional_name <chr>,
+#> #   additional_level <chr>
 ```
 
 ``` r
-gtResult 
+result |>
+  filterStrata(sex == "Female")
+#> # A tibble: 42 × 13
+#>    result_id cdm_name group_name  group_level strata_name       strata_level   
+#>        <int> <chr>    <chr>       <chr>       <chr>             <chr>          
+#>  1         1 mock     cohort_name cohort1     age_group &&& sex <40 &&& Female 
+#>  2         1 mock     cohort_name cohort1     age_group &&& sex >=40 &&& Female
+#>  3         1 mock     cohort_name cohort1     sex               Female         
+#>  4         1 mock     cohort_name cohort2     age_group &&& sex <40 &&& Female 
+#>  5         1 mock     cohort_name cohort2     age_group &&& sex >=40 &&& Female
+#>  6         1 mock     cohort_name cohort2     sex               Female         
+#>  7         1 mock     cohort_name cohort1     age_group &&& sex <40 &&& Female 
+#>  8         1 mock     cohort_name cohort1     age_group &&& sex >=40 &&& Female
+#>  9         1 mock     cohort_name cohort1     sex               Female         
+#> 10         1 mock     cohort_name cohort2     age_group &&& sex <40 &&& Female 
+#> # ℹ 32 more rows
+#> # ℹ 7 more variables: variable_name <chr>, variable_level <chr>,
+#> #   estimate_name <chr>, estimate_type <chr>, estimate_value <chr>,
+#> #   additional_name <chr>, additional_level <chr>
 ```
 
-![](./man/figures/gtTable.png)
+## Tables visualisations
 
-It is important to notice that `visOmopTable` has additional arguments
-to customise the output table in a similar manner as in the pipeline.
-See the vignette “format functions”.
+Currently all table functionalities are built around 3 packages:
+[tibble](https://cran.r-project.org/package=tibble),
+[gt](https://cran.r-project.org/package=gt), and
+[flextable](https://cran.r-project.org/package=flextable).
+
+There are two main functions:
+
+- `visOmopTable()`: Creates a well-formatted table specifically from a
+  `<summarised_result>` object.
+- `visTable()`: Creates a nicely formatted table from any `<data.frame>`
+  object.
+
+Let’s see a simple example:
+
+``` r
+result |>
+  visOmopTable(
+    type = "flextable", # to change to gt when issue 223 is fixed
+    estimateName = c(
+      "N(%)" = "<count> (<percentage>%)", 
+      "N" = "<count>", 
+      "mean (sd)" = "<mean> (<sd>)"),
+    header = c("sex"),
+    settingsColumns = NULL,
+    groupColumn = c("cohort_name", "age_group"),
+    rename = c("Variable" = "variable_name", " " = "variable_level"),
+    hide = "cdm_name"
+  )
+```
+
+<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+
+## Plots visualisations
+
+Currently all plot functionalities are built around
+[ggplot2](https://cran.r-project.org/package=ggplot2). The output of
+these plot functions is a `<ggplot2>` object that can be further
+customised.
+
+There are three plotting functions:
+
+- `plotScatter()` to create a scatter plot.
+- `plotBar()` to create a bar plot.
+- `plotBox()` to create a box plot.
+
+Let’s see how we can create a simple boxplot for age using this tool:
+
+``` r
+library(dplyr)
+result |>
+  filter(variable_name == "number subjects") |>
+  filterStrata(sex != "overall") |>
+  barPlot(x = "age_group", 
+          y = "count",
+          facet = "cohort_name", 
+          colour = "sex")
+```
+
+<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
