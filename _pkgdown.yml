@@ -46,4 +46,4 @@ reference:
 
 - title: Deprecated
 - contents:
-  - matches("fxTable|gtTable|NameLevel")
+  - matches("fxTable|gtTable|NameLevel|optionsVisOmopTable")

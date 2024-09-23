@@ -1,4 +1,4 @@
-#' Additional Options for `visOmopTable()` and `visTable()`
+#' Additional table formatting options for `visOmopTable()` and `visTable()`
 #'
 #' @description
 #' This function provides a list of allowed inputs for the `.option` argument in
@@ -26,7 +26,7 @@ optionsVisOmopTable <- function() {
   tableOptions()
 }
 
-#' `visOmopResults` styles for formatted tables.
+#' Supported predefined styles for formatted tables
 #'
 #' @param type Character string specifying the formatted table class.
 #' See `tableType()` for supported classes. Default is "gt".
