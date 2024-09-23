@@ -2,12 +2,12 @@
 % Please edit documentation in R/plot.R
 \name{barPlot}
 \alias{barPlot}
-\title{Create a bar plot visualisation from a summarised result object}
+\title{Create a bar plot visualisation from a \verb{<summarised_result>} object}
 \usage{
 barPlot(result, x, y, facet = NULL, colour = NULL)
 }
 \arguments{
-\item{result}{A summarised result object.}
+\item{result}{A \verb{<summarised_result>} object.}
 
 \item{x}{Column or estimate name that is used as x variable.}
 

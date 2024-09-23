@@ -2,7 +2,7 @@
 % Please edit documentation in R/visOmopTable.R
 \name{visOmopTable}
 \alias{visOmopTable}
-\title{Format a summarised_result object into a gt, flextable, or tibble object}
+\title{Format a \verb{<summarised_result>} object into a gt, flextable, or tibble object}
 \usage{
 visOmopTable(
   result,
@@ -22,7 +22,7 @@ visOmopTable(
 )
 }
 \arguments{
-\item{result}{A \code{summarised_result} object.}
+\item{result}{A \verb{<summarised_result>} object.}
 
 \item{estimateName}{A named list of estimate names to join, sorted by
 computation order. Use \verb{<...>} to indicate estimate names.}
@@ -80,7 +80,7 @@ A tibble, gt, or flextable object.
 \description{
 This function combines the functionalities of \code{formatEstimateValue()},
 \code{estimateName()}, \code{formatHeader()}, and \code{formatTable()}
-into a single function specifically for \code{summarised_result} objects.
+into a single function specifically for \verb{<summarised_result>} objects.
 }
 \examples{
 result <- mockSummarisedResult()

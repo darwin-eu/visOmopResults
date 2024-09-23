@@ -2,12 +2,12 @@
 % Please edit documentation in R/tidy.R
 \name{tidy.summarised_result}
 \alias{tidy.summarised_result}
-\title{Turn a summarised_result object into a tidy tibble}
+\title{Turn a \verb{<summarised_result>} object into a tidy tibble}
 \usage{
 \method{tidy}{summarised_result}(x, ...)
 }
 \arguments{
-\item{x}{A summarised_result.}
+\item{x}{A \verb{<summarised_result>}.}
 
 \item{...}{For compatibility (not used).}
 }
@@ -16,7 +16,7 @@ A tibble.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
-Provides tools for obtaining a tidy version of a summarised_result object.
+Provides tools for obtaining a tidy version of a \verb{<summarised_result>} object.
 This tidy version will include the settings as columns, \code{estimate_value} will
 be pivotted into columns using \code{estimate_name} as names, and group, strata,
 and additional will be splitted.

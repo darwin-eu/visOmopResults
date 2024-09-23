@@ -7,7 +7,7 @@
 filterStrata(result, ...)
 }
 \arguments{
-\item{result}{A summarised_result object.}
+\item{result}{A \verb{<summarised_result>} object.}
 
 \item{...}{Expressions that return a logical value (\code{strataColumns()} are
 used to evaluate the expression), and are defined in terms of the variables
@@ -15,7 +15,7 @@ in .data. If multiple expressions are included, they are combined with the &
 operator. Only rows for which all conditions evaluate to TRUE are kept.}
 }
 \value{
-A summarised_result object with only the rows that fulfill the
+A \verb{<summarised_result>} object with only the rows that fulfill the
 required specified strata.
 }
 \description{

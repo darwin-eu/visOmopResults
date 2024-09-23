@@ -13,7 +13,7 @@ formatEstimateName(
 )
 }
 \arguments{
-\item{result}{A summarised_result.}
+\item{result}{A \verb{<summarised_result>}.}
 
 \item{estimateName}{Named list of estimate name's to join, sorted by
 computation order. Indicate estimate_name's between <...>.}
@@ -27,7 +27,7 @@ input dataframe (FALSE).}
 \item{estimateNameFormat}{deprecated.}
 }
 \value{
-A summarised_result object.
+A \verb{<summarised_result>} object.
 }
 \description{
 Formats estimate_name and estimate_value columns by changing the name of the

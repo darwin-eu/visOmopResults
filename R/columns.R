@@ -50,13 +50,13 @@ additionalColumns <- function(result) {
   getColumns(result = result, col = "additional_name")
 }
 
-#' Identify settings columns of a summarised_result
+#' Identify settings columns of a `<summarised_result>`
 #'
-#' @param result A summarised_result.
+#' @param result A `<summarised_result>`.
 #'
 #' @return Vector with names of the settings columns
 #' @description Identifies and returns the columns of the settings table
-#' obtained by using `settings()` in a summarised_result object.
+#' obtained by using `settings()` in a `<summarised_result>` object.
 #'
 #' @export
 #'
@@ -71,13 +71,15 @@ settingsColumns <- function(result) {
   cols[cols != "result_id"]
 }
 
-#' Identify tidy columns of a summarised_result
+#' Identify tidy columns of a `<summarised_result>`
 #'
-#' @param result A summarised_result.
+#' @param result A `<summarised_result>`.
 #'
-#' @return Table columns after applying `tidy()` function to a summarisd result.
+#' @return Table columns after applying `tidy()` function to a
+#' `<summarised_result>`.
+#'
 #' @description Identifies and returns the columns that the tidy version of the
-#' summarised_result will have.
+#' `<summarised_result>` will have.
 #'
 #' @export
 #'

@@ -13,7 +13,7 @@ splitNameLevel(
 )
 }
 \arguments{
-\item{result}{A summarised_result object.}
+\item{result}{A \verb{<summarised_result>} object.}
 
 \item{name}{Column with the names.}
 

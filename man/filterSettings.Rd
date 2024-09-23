@@ -2,12 +2,12 @@
 % Please edit documentation in R/filter.R
 \name{filterSettings}
 \alias{filterSettings}
-\title{Filter a summarised_result using the settings}
+\title{Filter a \verb{<summarised_result>} using the settings}
 \usage{
 filterSettings(result, ...)
 }
 \arguments{
-\item{result}{A summarised_result object.}
+\item{result}{A \verb{<summarised_result>} object.}
 
 \item{...}{Expressions that return a logical value (columns in settings are
 used to evaluate the expression), and are defined in terms of the variables
@@ -15,11 +15,11 @@ in .data. If multiple expressions are included, they are combined with the &
 operator. Only rows for which all conditions evaluate to TRUE are kept.}
 }
 \value{
-A summarised_result object with only the result_id rows that fulfill
+A \verb{<summarised_result>} object with only the result_id rows that fulfill
 the required specified settings.
 }
 \description{
-Filter a summarised_result using the settings
+Filter a \verb{<summarised_result>} using the settings
 }
 \examples{
 library(dplyr)

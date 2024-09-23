@@ -4,9 +4,8 @@ template:
 
 reference:
 - title: Functions to tidy `<summarised_result>`
-- subtitle: Tidy functions
 - contents:
-  - matches("tidy.summarised_result|tidySummarisedResult")
+  - matches("tidy.summarised_result")
 - subtitle: Split functions
 - contents:
   - matches("splitStrata|splitGroup|splitAdditional|splitAll")

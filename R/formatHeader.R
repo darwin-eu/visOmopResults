@@ -1,6 +1,6 @@
 #' Create a header for gt and flextable objects
 #'
-#' @param result A summarised_result.
+#' @param result A `<summarised_result>`.
 #' @param header Names of the variables to make headers.
 #' @param delim Delimiter to use to separate headers.
 #' @param includeHeaderName Whether to include the column name as header.
@@ -11,7 +11,7 @@
 #' subsequent header formatting.
 #'
 #' @description
-#' Pivots a summarised_result object based on the column names in header,
+#' Pivots a `<summarised_result>` object based on the column names in header,
 #' generating specific column names for subsequent header formatting in
 #' formatTable function.
 #'
