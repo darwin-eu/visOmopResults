@@ -1,5 +1,6 @@
 test_that("visOmopTable", {
   result <- mockSummarisedResult()
+  expect_message(visOmopTable(result))
   expect_message(
     expect_no_error(
       gt1 <- visOmopTable(
@@ -283,4 +284,20 @@ test_that("don't want scientific",{
     hide = NULL
   )
   expect_true(res$`_data`$`[header_name]CDM name\n[header_level]test` == "100,000")
+})
+
+test_that("optionsTable", {
+  expect_equal(optionsTable(), defaultTableOptions(NULL))
+})
+
+test_that("backwardCompatibility", {
+  result <- omopgenerics::emptySummarisedResult()
+  bc <- backwardCompatibility(header = "variable", hide = "variable_group", result = result, settingsColumns = NULL)
+  expect_equal(bc$hide,
+              c("variable_group", "variable_level"))
+})
+
+test_that("split deprecated warning", {
+  result <- mockSummarisedResult()
+  expect_warning(visOmopTable(result, split = NULL))
 })
