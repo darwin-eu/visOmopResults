@@ -44,3 +44,16 @@ test_that("uniteGroup", {
   expect_warning(res5 <- uniteAdditional(tib |> dplyr::group_by(age), cols = c("region")))
   expect_warning(res5 <- uniteStrata(tib |> dplyr::group_by(age), cols = c("age")))
 })
+
+test_that("test unitNameLevelInternal", {
+  x <- mockSummarisedResult()
+  expect_error(uniteNameLevelInternal(x, name = "group_name", level = "group_name"))
+  expect_error(uniteNameLevelInternal(x, name = "group_name", level = "group_name"))
+})
+
+test_that("test unitNameLevelInternal", {
+  x <- mockSummarisedResult()
+  expect_warning(uniteNameLevel(x))
+})
+
+
