@@ -62,3 +62,16 @@ test_that("splitGroup", {
   expect_false(all(c("strata_name", "strata_level") %in% colnames(res)))
   expect_false(all(c("additional_name", "additional_level") %in% colnames(res)))
 })
+
+test_that("deprecation warning", {
+
+  result <- data.frame(
+    group_name = c("age_group", "sex"),
+    group_level = c("18-25", "male"),
+    other_column = c("value1", "value2")
+  )
+
+  expect_warning(
+      output <- splitNameLevel(result, name = "group_name", level = "group_level")
+  )
+})

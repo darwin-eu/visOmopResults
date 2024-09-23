@@ -122,7 +122,7 @@ fxTableInternal <- function(x,
     if (!is.null(groupOrder)) {
       if (any(!groupLevel %in% groupOrder)) {
         cli::cli_abort(c(
-          "x" = "`groupOrder` supplied does not macth the group variable created based on `groupName`.",
+          "x" = "`groupOrder` supplied does not match the group variable created based on `groupName`.",
           "i" = "Group variables to use in `groupOrder` are the following: {groupLevel}"
         ))
       } else {

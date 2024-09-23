@@ -263,3 +263,14 @@ test_that("formatHeader. includeHeaderKey", {
 
 })
 
+test_that("formatHeader", {
+
+result <- mockSummarisedResult()
+
+expect_error(formatHeader(result,
+    header = c("Study cohorts", "group_level", "Study strata", "strata_name",
+               "strata_level", "Variables", "variable_name", "variable_level"
+    ),
+    includeHeaderName = FALSE))
+})
+

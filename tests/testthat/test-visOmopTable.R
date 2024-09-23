@@ -1,5 +1,6 @@
 test_that("visOmopTable", {
   result <- mockSummarisedResult()
+  expect_message(visOmopTable(result))
   expect_message(
     expect_no_error(
       gt1 <- visOmopTable(
@@ -283,4 +284,17 @@ test_that("don't want scientific",{
     hide = NULL
   )
   expect_true(res$`_data`$`[header_name]CDM name\n[header_level]test` == "100,000")
+})
+
+test_that("optionsTable", {
+  expect_equal(optionsTable(), defaultTableOptions(NULL))
+})
+
+test_that("deprecated warning", {
+  result <- mockSummarisedResult()
+  expect_warning(visOmopTable(result, split = NULL))
+  expect_warning(visOmopTable(result, excludeColumns = NULL))
+  expect_warning(visOmopTable(result, renameColumns = NULL))
+  expect_warning(visOmopTable(result, formatEstimateName = NULL))
+  expect_warning(optionsVisOmopTable())
 })

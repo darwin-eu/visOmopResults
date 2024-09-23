@@ -333,3 +333,10 @@ test_that("groupColumn",{
   expect_equal(gtTableInternal$`_data`$hi_there |> levels(),
                c('cohort_name; cohort1', 'cohort_name; cohort2'))
 })
+
+test_that("lifestyle::deprecate_soft works", {
+
+  x <- mockSummarisedResult()
+
+  expect_warning(gtTable(x))
+})

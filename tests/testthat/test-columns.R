@@ -28,3 +28,15 @@ test_that("test columns in mock", {
   )
 
 })
+
+test_that("settingsColumns", {
+  result <- mockSummarisedResult()
+
+  cols <- result |>
+    validateSettingsAttribute() |>
+    colnames()
+
+  cols <- cols[cols != "result_id"]
+
+  expect_equal(settingsColumns(result), cols)
+})

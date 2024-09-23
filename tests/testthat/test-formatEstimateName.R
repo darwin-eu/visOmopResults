@@ -394,3 +394,21 @@ test_that("common key word",{
   res <- formatEstimateName(result, estimateName = "<count> <95CI_lower_count>")
   expect_true(unique(res$estimate_name) == "count 95CI_lower_count")
 })
+
+test_that("No format in formatEstimateNameInternal", {
+
+  result <- mockSummarisedResult()
+
+  fen <- formatEstimateNameInternal(result, format = c())
+
+  expect_identical(fen, result)
+
+})
+
+test_that("Empty results warning in formatEstimateNameInternal", {
+
+  result <- omopgenerics::emptySummarisedResult()
+
+  expect_warning(formatEstimateNameInternal(result, format = c("")))
+
+})
