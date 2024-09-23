@@ -290,7 +290,11 @@ test_that("optionsTable", {
   expect_equal(optionsTable(), defaultTableOptions(NULL))
 })
 
-test_that("split deprecated warning", {
+test_that("deprecated warning", {
   result <- mockSummarisedResult()
   expect_warning(visOmopTable(result, split = NULL))
+  expect_warning(visOmopTable(result, excludeColumns = NULL))
+  expect_warning(visOmopTable(result, renameColumns = NULL))
+  expect_warning(visOmopTable(result, formatEstimateName = NULL))
+  expect_warning(optionsVisOmopTable())
 })
