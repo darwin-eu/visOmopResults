@@ -2,7 +2,7 @@
 % Please edit documentation in R/helperTableFunctions.R
 \name{tableOptions}
 \alias{tableOptions}
-\title{Additional Options for \code{visOmopTable()} and \code{visTable()}}
+\title{Additional table formatting options for \code{visOmopTable()} and \code{visTable()}}
 \usage{
 tableOptions()
 }

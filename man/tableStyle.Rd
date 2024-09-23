@@ -2,7 +2,7 @@
 % Please edit documentation in R/helperTableFunctions.R
 \name{tableStyle}
 \alias{tableStyle}
-\title{\code{visOmopResults} styles for formatted tables.}
+\title{Supported predefined styles for formatted tables}
 \usage{
 tableStyle(type = "gt", styleName = "default")
 }
@@ -17,7 +17,7 @@ package supports only one predefined style: "default".}
 A code expression for the selected style and table type.
 }
 \description{
-\code{visOmopResults} styles for formatted tables.
+Supported predefined styles for formatted tables
 }
 \examples{
 tableStyle("gt")
