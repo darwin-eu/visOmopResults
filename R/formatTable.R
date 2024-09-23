@@ -1,8 +1,8 @@
 #' Creates a flextable or gt object from a dataframe
 #'
 #' @param x A dataframe.
-#' @param type The type of desired formatted table. Options are: "gt",
-#' and "flextable".
+#' @param type The desired format of the output table. See `tableType()` for
+#' allowed options. If "tibble", no formatting will be applied.
 #' @param delim Delimiter.
 #' @param style Named list that specifies how to style the different parts of
 #' the gt or flextable table generated. Accepted style entries are: title,
@@ -101,7 +101,7 @@ formatTable <- function(x,
                         merge = NULL
 ) {
   # Input checks
-  omopgenerics::assertChoice(type, choices = c("gt", "flextable"), length = 1)
+  omopgenerics::assertChoice(type, choices = tableType(), length = 1)
   omopgenerics::assertTable(x)
   omopgenerics::assertCharacter(na, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1, null = TRUE)
@@ -150,6 +150,8 @@ formatTable <- function(x,
         groupOrder = groupOrder,
         merge = merge
       )
+  } else if ("tibble") {
+    return(x)
   }
   return(x)
 }

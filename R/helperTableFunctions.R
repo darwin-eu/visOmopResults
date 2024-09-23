@@ -1,14 +1,48 @@
-test_that("check utilities", {
-  expect_error(validateSummarisedResult(1))
-})
-test_that("helper table functions", {
-  expect_equal(names(optionsTable()), c(
-    'decimals', 'decimalMark', 'bigMark', 'keepNotFormatted', 'useFormatOrder',
-    'delim', 'includeHeaderName', 'includeHeaderKey', 'style', 'na', 'title',
-    'subtitle', 'caption', 'groupAsColumn', 'groupOrder', 'merge'
-  ))
-  expect_equal(
-    gtStyle(),
+#' Additional Options for `visOmopTable()` and `visTable()`
+#'
+#' @description
+#' This function provides a list of allowed inputs for the `.option` argument in
+#' `visOmopTable()` and `visTable()`, and their corresponding default values.
+#'
+#' @return A named list of default options for table customization.
+#'
+#' @export
+#'
+#' @examples
+#' tableOptions()
+#'
+tableOptions <- function() {
+  return(defaultTableOptions(NULL))
+}
+
+
+#' Deprecated
+#'
+#' @return list of options
+#' @export
+#'
+optionsVisOmopTable <- function() {
+  lifecycle::deprecate_soft("0.4.0", "optionsVisOmopTable()", "tableOptions()")
+  tableOptions()
+}
+
+#' `visOmopResults` styles for formatted tables.
+#'
+#' @param type Character string specifying the formatted table class.
+#' See `tableType()` for supported classes. Default is "gt".
+#' @param styleName A character string specifying the style name. Currently, the
+#' package supports only one predefined style: "default".
+#'
+#' @return A code expression for the selected style and table type.
+#'
+#' @export
+#'
+#' @examples
+#' tableStyle("gt")
+#' tableStyle("flextable")
+#'
+tableStyle <- function(type = "gt", styleName = "default") {
+  if (type == "gt") {
     list(
       "header" = list(gt::cell_fill(color = "#c8c8c8"),
                       gt::cell_text(weight = "bold", align = "center")),
@@ -24,9 +58,7 @@ test_that("helper table functions", {
       "body" = list()
     ) |>
       rlang::expr()
-  )
-  expect_equal(
-    flextableStyle(),
+  } else if (type == "flextable") {
     list(
       "header" = list(
         "cell" = officer::fp_cell(background.color = "#c8c8c8"),
@@ -59,5 +91,25 @@ test_that("helper table functions", {
       "body" = list()
     ) |>
       rlang::expr()
-  )
-})
+  }
+}
+
+
+#' Supported table classes
+#'
+#' @description
+#' This function returns the supported table classes that can be used in the
+#' `type` argument of `visOmopTable()`, `visTable()`, and `formatTable()`
+#' functions.
+#'
+#' @return A character vector of supported table types.
+#'
+#' @export
+#'
+#' @examples
+#' tableType()
+#'
+tableType <- function() {
+  c("gt", "flextable", "tibble")
+}
+

@@ -22,8 +22,8 @@ formatTable(
 \arguments{
 \item{x}{A dataframe.}
 
-\item{type}{The type of desired formatted table. Options are: "gt",
-and "flextable".}
+\item{type}{The desired format of the output table. See \code{tableType()} for
+allowed options. If "tibble", no formatting will be applied.}
 
 \item{delim}{Delimiter.}
 

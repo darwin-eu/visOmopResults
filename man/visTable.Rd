@@ -39,20 +39,20 @@ converts them to sentence case. Use \code{rename} to customize specific column n
 c("Database name" = "cdm_name"). The function will rename all column names
 not specified here into a tidy* format.}
 
-\item{type}{The desired format of the output table. Options are: "gt",
-"flextable", or "tibble".}
+\item{type}{The desired format of the output table. See \code{tableType()} for
+allowed options.}
 
 \item{hide}{Columns to drop from the output table.}
 
 \item{.options}{A named list with additional formatting options.
-\code{visOmopResults::optionsTable()} shows allowed arguments and their default values.}
+\code{visOmopResults::tableOptions()} shows allowed arguments and their default values.}
 }
 \value{
 A tibble, gt, or flextable object.
 }
 \description{
 This function combines the functionalities of \code{formatEstimateValue()},
-\code{estimateName()}, \code{formatHeader()}, and \code{formatTable()}
+\code{formatEstimateName()}, \code{formatHeader()}, and \code{formatTable()}
 into a single function. While it does not require the input table to be
 a \code{summarised_result}, it does expect specific fields to apply formatting.
 }

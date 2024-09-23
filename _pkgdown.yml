@@ -23,7 +23,7 @@ reference:
   - matches("format")
 - subtitle: Helper table functions
 - contents:
-  - matches("Style|options")
+  - matches("tableType|tableOptions|tableStyle")
 
 - title: Plot functions
 - contents:

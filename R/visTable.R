@@ -2,6 +2,7 @@
 #'
 #' `r lifecycle::badge("experimental")`
 #'
+#'
 #' @param result A table to format.
 #' @param estimateName A named list of estimate names to join, sorted by
 #' computation order. Use `<...>` to indicate estimate names. This argument
@@ -21,17 +22,17 @@
 #' @param rename A named vector to customize column names, e.g.,
 #' c("Database name" = "cdm_name"). The function will rename all column names
 #' not specified here into a tidy* format.
-#' @param type The desired format of the output table. Options are: "gt",
-#' "flextable", or "tibble".
+#' @param type The desired format of the output table. See `tableType()` for
+#' allowed options.
 #' @param hide Columns to drop from the output table.
 #' @param .options A named list with additional formatting options.
-#' `visOmopResults::optionsTable()` shows allowed arguments and their default values.
+#' `visOmopResults::tableOptions()` shows allowed arguments and their default values.
 #'
 #' @return A tibble, gt, or flextable object.
 #'
 #' @description
 #' This function combines the functionalities of `formatEstimateValue()`,
-#' `estimateName()`, `formatHeader()`, and `formatTable()`
+#' `formatEstimateName()`, `formatHeader()`, and `formatTable()`
 #' into a single function. While it does not require the input table to be
 #' a `summarised_result`, it does expect specific fields to apply formatting.
 #'
@@ -60,7 +61,7 @@ visTable <- function(result,
                      .options = list()) {
   # initial checks
   omopgenerics::assertTable(result)
-  omopgenerics::assertChoice(type, choices = c("gt", "flextable", "tibble"), length = 1)
+  omopgenerics::assertChoice(type, choices = tableType(), length = 1)
   omopgenerics::assertCharacter(hide, null = TRUE)
   omopgenerics::assertCharacter(header, null = TRUE)
   rename <- validateRename(rename, result)
