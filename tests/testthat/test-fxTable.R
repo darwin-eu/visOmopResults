@@ -190,7 +190,7 @@ test_that("fxTableInternal, test default styles and NULL", {
     formatHeader(header = c("Strata", "strata_name", "strata_level"),
                  includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
-  style <- flextableStyle() |> rlang::eval_bare()
+  style <- tableStyle(type = "flextable") |> rlang::eval_bare()
   fxResult <- fxTableInternal(
     table_to_format,
     style = style,
@@ -227,7 +227,7 @@ test_that("fxTableInternal, test merge", {
   table_to_format<- mockSummarisedResult() |>
     formatHeader(header = c("strata_name", "strata_level")) |>
     dplyr::select(-result_id)
-  style <- flextableStyle() |> rlang::eval_bare()
+  style <- tableStyle(type = "flextable") |> rlang::eval_bare()
   fxResult <- fxTableInternal(
     x = table_to_format,
     style = style,

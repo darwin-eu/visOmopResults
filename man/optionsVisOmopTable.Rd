@@ -2,7 +2,7 @@
 % Please edit documentation in R/helperTableFunctions.R
 \name{optionsVisOmopTable}
 \alias{optionsVisOmopTable}
-\title{Deprecated}
+\title{Additional table formatting options}
 \usage{
 optionsVisOmopTable()
 }
@@ -10,5 +10,5 @@ optionsVisOmopTable()
 list of options
 }
 \description{
-Deprecated
+\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}
 }

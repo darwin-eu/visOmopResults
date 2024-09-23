@@ -11,8 +11,7 @@
 #' Alternatively, use "default" to get visOmopResults style, or NULL for
 #' gt/flextable style.
 #' Keep in mind that styling code is different for gt and flextable. To see
-#' the "deafult" gt style code use `gtStyle()`, and `flextableStyle()` for
-#' flextable default code style.
+#' the "deafult" style code use `tableStyle()`.
 #' @param na How to display missing values.
 #' @param title Title of the table, or NULL for no title.
 #' @param subtitle Subtitle of the table, or NULL for no subtitle.
