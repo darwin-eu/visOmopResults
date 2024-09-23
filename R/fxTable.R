@@ -9,8 +9,7 @@
 #' Alternatively, use "default" to get visOmopResults style, or NULL for
 #' gt/flextable style.
 #' Keep in mind that styling code is different for gt and flextable. To see
-#' the "deafult" gt style code use `gtStyle()`, and `flextableStyle()` for
-#' flextable default code style.
+#' the "deafult" gt style code use `tableStyle()`.
 #' @param na How to display missing values.
 #' @param title Title of the table, or NULL for no title.
 #' @param subtitle Subtitle of the table, or NULL for no subtitle.
@@ -479,43 +478,4 @@ fxMergeRows <- function(fx_x, merge, groupColumn) {
   }
 
   return(fx_x)
-}
-
-#' Default style code expresion for flextable tables.
-#' @param styleName Name of the style. Currently the package just have one
-#' predefined style ("default").
-#' @export
-flextableStyle <- function(styleName = "default") {
-  list(
-    "header" = list(
-      "cell" = officer::fp_cell(background.color = "#c8c8c8"),
-      "text" = officer::fp_text(bold = TRUE)
-    ),
-    "header_name" = list(
-      "cell" = officer::fp_cell(background.color = "#d9d9d9"),
-      "text" = officer::fp_text(bold = TRUE)
-    ),
-    "header_level" = list(
-      "cell" = officer::fp_cell(background.color = "#e1e1e1"),
-      "text" = officer::fp_text(bold = TRUE)
-    ),
-    "column_name" = list(
-      "text" = officer::fp_text(bold = TRUE)
-    ),
-    "group_label" = list(
-      "cell" = officer::fp_cell(
-        background.color = "#e9e9e9",
-        border = officer::fp_border(color = "gray")
-      ),
-      "text" = officer::fp_text(bold = TRUE)
-    ),
-    "title" = list(
-      "text" = officer::fp_text(bold = TRUE, font.size = 15)
-    ),
-    "subtitle" = list(
-      "text" = officer::fp_text(bold = TRUE, font.size = 12)
-    ),
-    "body" = list()
-  ) |>
-    rlang::expr()
 }

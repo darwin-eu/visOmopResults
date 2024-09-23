@@ -23,7 +23,7 @@ reference:
   - matches("format")
 - subtitle: Helper table functions
 - contents:
-  - matches("Style|options")
+  - matches("tableType|tableOptions|tableStyle")
 
 - title: Plot functions
 - contents:
@@ -46,4 +46,4 @@ reference:
 
 - title: Deprecated
 - contents:
-  - matches("fxTable|gtTable|NameLevel")
+  - matches("fxTable|gtTable|NameLevel|optionsVisOmopTable")

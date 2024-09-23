@@ -53,8 +53,8 @@ converts to sentence case. Use \code{rename} to customize specific column names.
 c("Database name" = "cdm_name"). The function renames all column names
 not specified here into a tidy* format.}
 
-\item{type}{The type of desired formatted table. Options are: "gt",
-"flextable", or "tibble".}
+\item{type}{The desired format of the output table. See \code{tableType()} for
+allowed options.}
 
 \item{hide}{Columns to drop from the output table. By default, \code{result_id} and
 \code{estimate_type} are always dropped.}
@@ -64,7 +64,7 @@ not specified here into a tidy* format.}
 used.}
 
 \item{.options}{A named list with additional formatting options.
-\code{visOmopResults::optionsTable()} shows allowed arguments and their default values.}
+\code{visOmopResults::tableOptions()} shows allowed arguments and their default values.}
 
 \item{split}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 

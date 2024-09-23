@@ -9,8 +9,7 @@
 #' Alternatively, use "default" to get visOmopResults style, or NULL for
 #' gt/flextable style.
 #' Keep in mind that styling code is different for gt and flextable. To see
-#' the "deafult" gt style code use `gtStyle()`, and `flextableStyle()` for
-#' flextable default code style.
+#' the "deafult" style code use `tableStyle()`.
 #' @param na How to display missing values.
 #' @param title Title of the table, or NULL for no title.
 #' @param subtitle Subtitle of the table, or NULL for no subtitle.
@@ -364,26 +363,4 @@ gtMergeRows <- function(gt_x, merge, groupColumn, groupOrder) {
       )
   }
   return(gt_x)
-}
-
-#' Default style code expresion for gt tables.
-#' @param styleName Name of the style. Currently the package just have one
-#' predefined style ("default").
-#' @export
-gtStyle <- function(styleName = "default") {
-  list(
-    "header" = list(gt::cell_fill(color = "#c8c8c8"),
-                    gt::cell_text(weight = "bold", align = "center")),
-    "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
-                         gt::cell_text(weight = "bold", align = "center")),
-    "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
-                          gt::cell_text(weight = "bold", align = "center")),
-    "column_name" = list(gt::cell_text(weight = "bold", align = "center")),
-    "group_label" = list(gt::cell_fill(color = "#e9e9e9"),
-                         gt::cell_text(weight = "bold")),
-    "title" = list(gt::cell_text(weight = "bold", size = 15, align = "center")),
-    "subtitle" = list(gt::cell_text(weight = "bold", size = 12, align = "center")),
-    "body" = list()
-  ) |>
-    rlang::expr()
 }

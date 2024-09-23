@@ -24,15 +24,15 @@
 #' @param rename A named vector to customize column names, e.g.,
 #' c("Database name" = "cdm_name"). The function renames all column names
 #' not specified here into a tidy* format.
-#' @param type The type of desired formatted table. Options are: "gt",
-#' "flextable", or "tibble".
+#' @param type The desired format of the output table. See `tableType()` for
+#' allowed options.
 #' @param hide Columns to drop from the output table. By default, `result_id` and
 #' `estimate_type` are always dropped.
 #' @param showMinCellCount If `TRUE`, suppressed estimates will be indicated with
 #' "<\{min_cell_count\}", otherwise, the default `na` defined in `.options` will be
 #' used.
 #' @param .options A named list with additional formatting options.
-#' `visOmopResults::optionsTable()` shows allowed arguments and their default values.
+#' `visOmopResults::tableOptions()` shows allowed arguments and their default values.
 #' @param split `r lifecycle::badge("deprecated")`
 #' @param excludeColumns `r lifecycle::badge("deprecated")`
 #' @param formatEstimateName `r lifecycle::badge("deprecated")`
@@ -184,38 +184,6 @@ defaultTableOptions <- function(userOptions) {
   }
 
   return(defaultOpts)
-}
-
-#' Additional arguments for the function visOmopTable
-#'
-#' @description
-#' It provides a list of allowed inputs for .option argument in
-#' visOmopTable and their given default value.
-#'
-#'
-#' @return The default .options named list.
-#'
-#' @export
-#'
-#' @examples
-#' {
-#' optionsTable()
-#' }
-#'
-#'
-optionsTable <- function() {
-  return(defaultTableOptions(NULL))
-}
-
-
-#' Deprecated
-#'
-#' @return list of options
-#' @export
-#'
-optionsVisOmopTable <- function() {
-  lifecycle::deprecate_soft("0.4.0", "optionsVisOmopTable()", "optionsTable()")
-  optionsTable()
 }
 
 backwardCompatibility <- function(header, hide, result, settingsColumns, groupColumn) {

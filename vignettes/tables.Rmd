@@ -213,7 +213,7 @@ bind_rows(
 To view the default `.options` settings used in `vis` tables, use the following function:
 
 ```{r}
-optionsTable()
+tableOptions()
 ```
 
 ### Styling `<gt>` and `<flextable>`
@@ -221,9 +221,9 @@ optionsTable()
 To inspect the code for the default styles of `<gt>` and `<flextable>`, use these functions:
 
 ```{r}
-gtStyle()
+tableStyle(type = "gt")
 
-flextableStyle()
+tableStyle(type = "flextable")
 ```
 
 

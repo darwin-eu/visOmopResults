@@ -22,8 +22,8 @@ formatTable(
 \arguments{
 \item{x}{A dataframe.}
 
-\item{type}{The type of desired formatted table. Options are: "gt",
-and "flextable".}
+\item{type}{The desired format of the output table. See \code{tableType()} for
+allowed options. If "tibble", no formatting will be applied.}
 
 \item{delim}{Delimiter.}
 
@@ -34,8 +34,7 @@ body.
 Alternatively, use "default" to get visOmopResults style, or NULL for
 gt/flextable style.
 Keep in mind that styling code is different for gt and flextable. To see
-the "deafult" gt style code use \code{gtStyle()}, and \code{flextableStyle()} for
-flextable default code style.}
+the "deafult" style code use \code{tableStyle()}.}
 
 \item{na}{How to display missing values.}
 
