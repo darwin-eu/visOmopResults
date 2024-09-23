@@ -19,6 +19,7 @@
 #' `r lifecycle::badge("experimental")`
 #' Provides tools for obtaining a tidy version of a `<summarised_result>` object.
 #'
+#'@noRd
 tidySummarisedResult <- function(result,
                                  splitGroup = TRUE,
                                  splitStrata = TRUE,
