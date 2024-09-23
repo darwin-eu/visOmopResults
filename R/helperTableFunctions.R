@@ -16,7 +16,9 @@ tableOptions <- function() {
 }
 
 
-#' Deprecated
+#' Additional table formatting options
+#'
+#'  `r lifecycle::badge("deprecated")`
 #'
 #' @return list of options
 #' @export
