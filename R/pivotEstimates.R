@@ -109,7 +109,9 @@ pivotLongerType <- function(result,
   pos <- which(colnames(result) %in% cols)[1]
 
   # pivot estimates
-  types <- purrr::map(result, \(x) dplyr::type_sum(x) |> getTypes())
+  types <- result |>
+    dplyr::select(dplyr::all_of(cols)) |>
+    purrr::map(\(x) dplyr::type_sum(x) |> getTypes())
   result |>
     dplyr::mutate(dplyr::across(dplyr::all_of(cols), as.character)) |>
     tidyr::pivot_longer(
