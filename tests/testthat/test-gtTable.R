@@ -340,3 +340,11 @@ test_that("lifestyle::deprecate_soft works", {
 
   expect_warning(gtTable(x))
 })
+
+test_that("gtStyleInternal", {
+
+  expect_message(gtStyleInternal("style"))
+
+  expect_equal(gtStyleInternal("style"), gtStyleInternal("default"))
+
+})
