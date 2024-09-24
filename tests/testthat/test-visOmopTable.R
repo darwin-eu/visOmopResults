@@ -298,5 +298,8 @@ test_that("deprecate warnings", {
   expect_warning(visOmopTable(result, formatEstimateName = NULL, estimateName = c("N%" = "<count> (<percentage>)",
                                                                             "N" = "<count>",
                                                                             "Mean (SD)" = "<mean> (<sd>)")))
+
+  table <- visOmopTable(suppress(result, minCellCount = 50000000), showMinCellCount = TRUE, type = "tibble", settingsColumns = character(0))
+  expect_true(all(table$`Estimate value` == "<50,000,000"))
 })
 
