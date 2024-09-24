@@ -284,3 +284,19 @@ test_that("don't want scientific",{
   )
   expect_true(res$`_data`$`[header_name]CDM name\n[header_level]test` == "100,000")
 })
+
+test_that("deprecate warnings", {
+
+  result <- mockSummarisedResult()
+
+  expect_warning(visOmopTable(result, split = TRUE))
+
+  expect_warning(visOmopTable(result, hide = NULL, excludeColumns = "result_id"))
+
+  expect_warning(visOmopTable(result, rename = NULL, renameColumns = c("Database name" = "cdm_name")))
+
+  expect_warning(visOmopTable(result, formatEstimateName = NULL, estimateName = c("N%" = "<count> (<percentage>)",
+                                                                            "N" = "<count>",
+                                                                            "Mean (SD)" = "<mean> (<sd>)")))
+})
+
