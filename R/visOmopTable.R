@@ -113,7 +113,7 @@ visOmopTable <- function(result,
   }
 
   # initial checks and preparation
-  rename <- validateRename(rename, result)
+  rename <- validateRename(rename, resultTidy)
   if (!"cdm_name" %in% rename) rename <- c(rename, "CDM name" = "cdm_name")
   groupColumn <- validateGroupColumn(groupColumn, colnames(resultTidy), sr = result, rename = rename)
   showMinCellCount <- validateShowMinCellCount(showMinCellCount, settings(result))
