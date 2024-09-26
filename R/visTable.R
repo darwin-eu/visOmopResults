@@ -143,16 +143,6 @@ visTable <- function(result,
   return(result)
 }
 
-renameInternal <- function(x, rename, cols = NULL, toSentence = TRUE) {
-  newNames <- character()
-  for (xx in x) {
-    if (isTRUE(xx %in% rename)) {
-      newNames <- c(newNames, names(rename[rename == xx]))
-    } else if (toSentence & any(xx %in% cols | is.null(cols))) {
-      newNames <- c(newNames, formatToSentence(xx))
-    } else {
-      newNames <- c(newNames, xx)
-    }
-  }
-  return(newNames)
+formatToSentence <- function(x) {
+  stringr::str_to_sentence(gsub("_", " ", gsub("&&&", "and", x)))
 }

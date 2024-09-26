@@ -155,10 +155,6 @@ visOmopTable <- function(result,
   return(tableOut)
 }
 
-formatToSentence <- function(x) {
-  stringr::str_to_sentence(gsub("_", " ", gsub("&&&", "and", x)))
-}
-
 defaultTableOptions <- function(userOptions) {
   defaultOpts <- list(
     decimals = c(integer = 0, percentage = 2, numeric = 2, proportion = 2),
