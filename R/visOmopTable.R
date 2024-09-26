@@ -141,6 +141,12 @@ visOmopTable <- function(result,
     }
   }
 
+  resultTidy <- resultTidy |>
+    dplyr::relocate(
+      c(visOmopResults::additionalColumns(result), settingsColumns),
+      .before = "estimate_name"
+    )
+
   tableOut <- visTable(
     result = resultTidy,
     estimateName = estimateName,
