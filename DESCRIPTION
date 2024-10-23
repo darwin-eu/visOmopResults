@@ -21,7 +21,7 @@ Description: Provides methods to transform omop_result objects into
     results working with the Observational Medical Outcomes Partnership
     (OMOP) Common Data Model.
 License: Apache License (>= 2)
-URL: https://darwin-eu.github.io/visOmopResults/
+URL: https://darwin-eu.github.io/visOmopResults/, https://github.com/darwin-eu/visOmopResults/
 BugReports: https://github.com/darwin-eu/visOmopResults/issues
 Imports: 
     cli,

@@ -1,6 +1,14 @@
 url: https://darwin-eu.github.io/visOmopResults/
+
 template:
   bootstrap: 5
+  bootswatch: flatly
+
+
+navbar:
+  structure:
+    right: [search, github, lightswitch]
+
 
 reference:
 - title: Functions to tidy `<summarised_result>`
