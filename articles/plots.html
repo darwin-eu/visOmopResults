@@ -84,7 +84,7 @@ very useful. These tools are useful to plot either
 </h2>
 <p>For the purpose of this vignette we will turn summarise the dataset
 penguins from the palmerpenguins package using
-<code><a href="https://darwin-eu-dev.github.io/PatientProfiles/reference/summariseResult.html" class="external-link">PatientProfiles::summariseResult()</a></code></p>
+<code><a href="https://rdrr.io/pkg/PatientProfiles/man/summariseResult.html" class="external-link">PatientProfiles::summariseResult()</a></code></p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu-dev.github.io/PatientProfiles/" class="external-link">PatientProfiles</a></span><span class="op">)</span></span>
 <span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://allisonhorst.github.io/palmerpenguins/" class="external-link">palmerpenguins</a></span><span class="op">)</span></span>
@@ -101,7 +101,7 @@ penguins from the palmerpenguins package using
 <span><span class="va">summariseIsland</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">island</span><span class="op">)</span> <span class="op">{</span></span>
 <span>  <span class="va">penguins</span> <span class="op">|&gt;</span></span>
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">.data</span><span class="op">$</span><span class="va">island</span> <span class="op">==</span> <span class="va">.env</span><span class="op">$</span><span class="va">island</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>    <span class="fu"><a href="https://darwin-eu-dev.github.io/PatientProfiles/reference/summariseResult.html" class="external-link">summariseResult</a></span><span class="op">(</span></span>
+<span>    <span class="fu"><a href="https://rdrr.io/pkg/PatientProfiles/man/summariseResult.html" class="external-link">summariseResult</a></span><span class="op">(</span></span>
 <span>      group <span class="op">=</span> <span class="st">"species"</span>,</span>
 <span>      includeOverallGroup <span class="op">=</span> <span class="cn">TRUE</span>,</span>
 <span>      strata <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"sex"</span>, <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"sex"</span><span class="op">)</span><span class="op">)</span>,</span>
@@ -116,7 +116,7 @@ penguins from the palmerpenguins package using
 <span>    <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>cdm_name <span class="op">=</span> <span class="va">island</span><span class="op">)</span></span>
 <span><span class="op">}</span></span>
 <span></span>
-<span><span class="va">penguinsSummary</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://darwin-eu-dev.github.io/omopgenerics/reference/bind.html" class="external-link">bind</a></span><span class="op">(</span></span>
+<span><span class="va">penguinsSummary</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/omopgenerics/man/bind.html" class="external-link">bind</a></span><span class="op">(</span></span>
 <span>  <span class="fu">summariseIsland</span><span class="op">(</span><span class="st">"Torgersen"</span><span class="op">)</span>, </span>
 <span>  <span class="fu">summariseIsland</span><span class="op">(</span><span class="st">"Biscoe"</span><span class="op">)</span>, </span>
 <span>  <span class="fu">summariseIsland</span><span class="op">(</span><span class="st">"Dream"</span><span class="op">)</span></span>
@@ -298,7 +298,7 @@ format of <code>penguinsSummary</code>.</p>
 <span><span class="co">#&gt; $ percentage      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, 46.153846, 44.230769, 9.615385, NA…</span></span>
 <span><span class="co">#&gt; $ result_type     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "summarise_table", "summarise_table", "summarise_table…</span></span>
 <span><span class="co">#&gt; $ package_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "PatientProfiles", "PatientProfiles", "PatientProfiles…</span></span>
-<span><span class="co">#&gt; $ package_version <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1.2.0", "1.2.0", "1.2.0", "1.2.0", "1.2.0", "1.2.0", …</span></span></code></pre></div>
+<span><span class="co">#&gt; $ package_version <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1.2.1", "1.2.1", "1.2.1", "1.2.1", "1.2.1", "1.2.1", …</span></span></code></pre></div>
 <p>That as it can be seen is a normal data.frame:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsTidy</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="op">)</span></span>
