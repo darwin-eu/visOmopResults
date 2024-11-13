@@ -39,7 +39,10 @@ reference:
 - subtitle: Unite functions
 - contents:
   - matches("uniteStrata|uniteGroup|uniteAdditional")
-- subtitle: Mock <summarised_result>
+- subtitle: To style text
+- contents:
+  - contains("customiseText")
+- subtitle: Mock `<summarised_result>`
 - contents:
   - matches("mock")
 
