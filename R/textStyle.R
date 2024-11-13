@@ -20,14 +20,14 @@
 #'
 #' @examples
 #' # Styling a character vector
-#' styleText(c("some_column_name", "another_column"))
+#' customiseText(c("some_column_name", "another_column"))
 #'
 #' # Custom styling for specific values
-#' styleText(x = c("some_column", "another_column"),
+#' customiseText(x = c("some_column", "another_column"),
 #'           custom = c("Custom Name" = "another_column"))
 #'
 #' # Keeping specific values unchanged
-#' styleText(x = c("some_column", "another_column"), keep = "another_column")
+#' customiseText(x = c("some_column", "another_column"), keep = "another_column")
 #'
 #' # Styling column names and variables in a data frame
 #' dplyr::tibble(
@@ -36,14 +36,14 @@
 #'   to_keep = "as_is"
 #' ) |>
 #'   dplyr::mutate(
-#'     "some_column" = styleText(some_column, custom = c("EXAMPLE" = "example"), keep = "to_keep")
+#'     "some_column" = customiseText(some_column, custom = c("EXAMPLE" = "example"), keep = "to_keep")
 #'   ) |>
-#'   dplyr::rename_with(.fn = ~ styleText(.x, keep = "to_keep"))
+#'   dplyr::rename_with(.fn = ~ customiseText(.x, keep = "to_keep"))
 
-styleText <- function(x,
-                      fun = \(x)stringr::str_to_sentence(gsub("_", " ", x)),
-                      custom = NULL,
-                      keep = NULL) {
+customiseText <- function(x,
+                       fun = \(x)stringr::str_to_sentence(gsub("_", " ", x)),
+                       custom = NULL,
+                       keep = NULL) {
   # Checks
   omopgenerics::assertCharacter(x)
   omopgenerics::assertCharacter(custom, named = TRUE, null = TRUE)

@@ -41,7 +41,7 @@ reference:
   - matches("uniteStrata|uniteGroup|uniteAdditional")
 - subtitle: To style text
 - contents:
-  - contains("styleText")
+  - contains("customiseText")
 - subtitle: Mock `<summarised_result>`
 - contents:
   - matches("mock")

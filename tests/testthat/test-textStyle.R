@@ -1,18 +1,18 @@
-test_that("styleText works", {
+test_that("customiseText works", {
   # vectors
   expect_equal(
-    styleText(c("some_column_name", "another_column")),
+    customiseText(c("some_column_name", "another_column")),
     c("Some column name", "Another column")
   )
 
   expect_equal(
-    styleText(x = c("some_column", "another_column"),
+    customiseText(x = c("some_column", "another_column"),
               custom = c("Custom Name" = "another_column")),
     c("Some column", "Custom Name")
   )
 
   expect_equal(
-    styleText(x = c("some_column", "another_column"), keep = "another_column"),
+    customiseText(x = c("some_column", "another_column"), keep = "another_column"),
     c("Some column", "another_column")
   )
 
@@ -23,9 +23,9 @@ test_that("styleText works", {
     to_keep = "as_is"
   ) |>
     dplyr::mutate(
-      "some_column" = styleText(some_column, custom = c("EXAMPLE" = "example"), keep = "to_keep")
+      "some_column" = customiseText(some_column, custom = c("EXAMPLE" = "example"), keep = "to_keep")
     ) |>
-    dplyr::rename_with(.fn = ~ styleText(.x, keep = "to_keep"))
+    dplyr::rename_with(.fn = ~ customiseText(.x, keep = "to_keep"))
   expect_equal(
     df,
     dplyr::tibble(
@@ -37,7 +37,7 @@ test_that("styleText works", {
 
   # other functions
   expect_equal(
-    styleText("hi_removeMe_there", fun = \(x)gsub("_removeMe_", " ", x)),
+    customiseText("hi_removeMe_there", fun = \(x)gsub("_removeMe_", " ", x)),
     "hi there"
   )
 })
