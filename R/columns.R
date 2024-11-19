@@ -88,7 +88,7 @@ settingsColumns <- function(result) {
 #'   tidyColumns()
 #'
 tidyColumns <- function(result) {
-  omopgenerics::validateResultArguemnt(result)
+  omopgenerics::validateResultArgument(result)
   colsSet <- colnames(settings(result))
   c("cdm_name", groupColumns(result), strataColumns(result), "variable_name",
     "variable_level", unique(result$estimate_name), additionalColumns(result),

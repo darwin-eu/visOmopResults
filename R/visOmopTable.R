@@ -28,6 +28,9 @@
 #' allowed options.
 #' @param hide Columns to drop from the output table. By default, `result_id` and
 #' `estimate_type` are always dropped.
+#' @param columnOrder Character vector establishing the position of the columns
+#' in the formatted table. Columns in either header, groupColumn, or hide will
+#' be ignored.
 #' @param showMinCellCount If `TRUE`, suppressed estimates will be indicated with
 #' "<\{min_cell_count\}", otherwise, the default `na` defined in `.options` will be
 #' used.
@@ -66,6 +69,7 @@ visOmopTable <- function(result,
                          rename = character(),
                          type = "gt",
                          hide = character(),
+                         columnOrder = character(),
                          showMinCellCount = TRUE,
                          .options = list(),
                          split = lifecycle::deprecated(),
@@ -93,7 +97,7 @@ visOmopTable <- function(result,
   }
 
   # Tidy results
-  result <- omopgenerics::validateResultArguemnt(result)
+  result <- omopgenerics::validateResultArgument(result)
   resultTidy <- tidySummarisedResult(result, settingsColumns = settingsColumns, pivotEstimatesBy = NULL)
 
   # .options
@@ -141,11 +145,17 @@ visOmopTable <- function(result,
     }
   }
 
-  resultTidy <- resultTidy |>
-    dplyr::relocate(
-      c(visOmopResults::additionalColumns(result), settingsColumns),
-      .before = "estimate_name"
-    )
+  if (length(columnOrder) == 0) {
+    resultTidy <- resultTidy |>
+      dplyr::relocate(
+        c(visOmopResults::additionalColumns(result), settingsColumns),
+        .before = "estimate_name"
+      )
+  } else {
+    columnOrder <- getColumnOrder(colnames(resultTidy), columnOrder, header, groupColumn[[1]], hide)
+    resultTidy <- resultTidy |>
+      dplyr::select(dplyr::any_of(columnOrder))
+  }
 
   tableOut <- visTable(
     result = resultTidy,
@@ -230,4 +240,31 @@ correctColumnn <- function(col, cols) {
   purrr::map(col, \(x) if (x %in% names(cols)) cols[[x]] else x) |>
     unlist() |>
     unique()
+}
+
+getColumnOrder <- function(currentOrder, newOrder, header, group, hide) {
+  # initial check
+  if (any(!newOrder %in% currentOrder)) {
+    cli::cli_warn("Dropping the following from `columnOrder` as they are not part of the table: {newOrder[!newOrder %in% currentOrder]}")
+  }
+  # group
+  if (length(group) != 0) {
+    newOrder <- c(newOrder, group[group %in% currentOrder])
+  }
+  # hide
+  if (length(hide) != 0) {
+    newOrder <- c(newOrder, hide[hide %in% currentOrder])
+  }
+  # header
+  if (length(header) != 0) {
+    newOrder <- c(newOrder, header[header %in% currentOrder])
+  }
+  # estimate_value
+  newOrder <- c(newOrder, "estimate_value")
+  newOrder <- unique(newOrder)
+  # final check
+  if (length(newOrder) != length(currentOrder)) {
+    cli::cli_abort("Please make sure `columnOrder` argument contains all the table columns. Missing columns to allocate a position are: {currentOrder[!currentOrder %in% newOrder]}")
+  }
+  return(newOrder)
 }

@@ -301,3 +301,40 @@ test_that("estimates at the end", {
   )
 })
 
+
+test_that("columnOrder", {
+  result <- mockSummarisedResult()
+  expect_warning(expect_error(
+    visOmopTable(
+      result,
+      settingsColumns = "package_name",
+      columnOrder = c("cdm_name", "cohort_name", "age_group", "sex", "variable_name", "variable_level", "count", "mean", "sd", "percentage"),
+      type = "tibble"
+    )
+  ))
+
+  table <- visOmopTable(
+      result,
+      settingsColumns = "package_name",
+      columnOrder = c("cdm_name", "cohort_name", "age_group", "sex", "variable_name", "variable_level", "package_name", "estimate_name"),
+      type = "tibble"
+    )
+  expect_true(all(colnames(table) == c('CDM name', 'Cohort name', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', 'Estimate name', 'Estimate value')))
+
+  table <- visOmopTable(
+    result,
+    settingsColumns = "package_name",
+    columnOrder = c("cdm_name", "cohort_name", "estimate_value", "age_group", "sex", "variable_name", "variable_level", "package_name", "estimate_name"),
+    type = "tibble"
+  )
+  expect_true(all(colnames(table) == c('CDM name', 'Cohort name', 'Estimate value', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', 'Estimate name')))
+
+  table <- visOmopTable(
+    result,
+    header = "estimate_name",
+    settingsColumns = "package_name",
+    columnOrder = c("cdm_name", "cohort_name", "estimate_value", "age_group", "sex", "variable_name", "variable_level", "package_name", "estimate_name"),
+    type = "tibble"
+  )
+  expect_true(all(colnames(table) == c('CDM name', 'Cohort name', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', '[header_name]Estimate name\n[header_level]count', '[header_name]Estimate name\n[header_level]mean', '[header_name]Estimate name\n[header_level]sd', '[header_name]Estimate name\n[header_level]percentage')))
+})

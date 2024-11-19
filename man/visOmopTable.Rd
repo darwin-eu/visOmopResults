@@ -13,6 +13,7 @@ visOmopTable(
   rename = character(),
   type = "gt",
   hide = character(),
+  columnOrder = character(),
   showMinCellCount = TRUE,
   .options = list(),
   split = lifecycle::deprecated(),
@@ -58,6 +59,10 @@ allowed options.}
 
 \item{hide}{Columns to drop from the output table. By default, \code{result_id} and
 \code{estimate_type} are always dropped.}
+
+\item{columnOrder}{Character vector establishing the position of the columns
+in the formatted table. Columns in either header, groupColumn, or hide will
+be ignored.}
 
 \item{showMinCellCount}{If \code{TRUE}, suppressed estimates will be indicated with
 "<\{min_cell_count\}", otherwise, the default \code{na} defined in \code{.options} will be

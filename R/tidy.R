@@ -28,7 +28,7 @@ tidySummarisedResult <- function(result,
                                  pivotEstimatesBy = "estimate_name",
                                  nameStyle = NULL) {
   # initial checks
-  result <- omopgenerics::validateResultArguemnt(result = result)
+  result <- omopgenerics::validateResultArgument(result = result)
   pivotEstimatesBy <- validatePivotEstimatesBy(pivotEstimatesBy = pivotEstimatesBy)
   settingsColumns <- validateSettingsColumns(settingsColumns = settingsColumns, result = result)
   omopgenerics::assertCharacter(x = nameStyle, null = TRUE)
