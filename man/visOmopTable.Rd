@@ -8,17 +8,15 @@ visOmopTable(
   result,
   estimateName = character(),
   header = character(),
-  settingsColumns = character(),
+  settingsColumn = character(),
   groupColumn = character(),
   rename = character(),
   type = "gt",
   hide = character(),
+  columnOrder = character(),
   showMinCellCount = TRUE,
   .options = list(),
-  split = lifecycle::deprecated(),
-  excludeColumns = lifecycle::deprecated(),
-  formatEstimateName = lifecycle::deprecated(),
-  renameColumns = lifecycle::deprecated()
+  settingsColumns = lifecycle::deprecated()
 )
 }
 \arguments{
@@ -38,7 +36,7 @@ to refer to all columns within these groups
 \item Any other input to create overall header labels at the specified location.
 }}
 
-\item{settingsColumns}{A character vector with the names of settings to
+\item{settingsColumn}{A character vector with the names of settings to
 include in the table.}
 
 \item{groupColumn}{Columns to use as group labels. By default, the name of the
@@ -59,6 +57,10 @@ allowed options.}
 \item{hide}{Columns to drop from the output table. By default, \code{result_id} and
 \code{estimate_type} are always dropped.}
 
+\item{columnOrder}{Character vector establishing the position of the columns
+in the formatted table. Columns in either header, groupColumn, or hide will
+be ignored.}
+
 \item{showMinCellCount}{If \code{TRUE}, suppressed estimates will be indicated with
 "<\{min_cell_count\}", otherwise, the default \code{na} defined in \code{.options} will be
 used.}
@@ -66,13 +68,7 @@ used.}
 \item{.options}{A named list with additional formatting options.
 \code{visOmopResults::tableOptions()} shows allowed arguments and their default values.}
 
-\item{split}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
-
-\item{excludeColumns}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
-
-\item{formatEstimateName}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
-
-\item{renameColumns}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
+\item{settingsColumns}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
 \value{
 A tibble, gt, or flextable object.

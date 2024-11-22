@@ -6,14 +6,15 @@
 \usage{
 boxPlot(
   result,
-  x = NULL,
+  x,
   lower = "q25",
   middle = "median",
   upper = "q75",
   ymin = "min",
   ymax = "max",
   facet = NULL,
-  colour = NULL
+  colour = NULL,
+  label = character()
 )
 }
 \arguments{
@@ -35,10 +36,18 @@ boxPlot(
 which variables should be used as rows and which ones as columns.}
 
 \item{colour}{Columns to use to determine the colors.}
+
+\item{label}{Character vector with the columns to display interactively in
+\code{plotly}.}
 }
 \value{
 A ggplot2 object.
 }
 \description{
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+}
+\examples{
+dplyr::tibble(year = "2000", q25 = 25, median = 50, q75 = 75, min = 0, max = 100) |>
+  boxPlot(x = "year")
+
 }

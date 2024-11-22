@@ -1,6 +1,6 @@
 Package: visOmopResults
 Title: Graphs and Tables for OMOP Results
-Version: 0.4.00001
+Version: 0.5.0
 Authors@R: c(
     person(
         "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -12,7 +12,15 @@ Authors@R: c(
     ),
     person(
     "Yuchen", "Guo", , "yuchen.guo@ndorms.ox.ac.uk", 
-    role = c("aut"), comment = c(ORCID = "0000-0002-0847-4855")
+    role = c("ctb"), comment = c(ORCID = "0000-0002-0847-4855")
+    ),
+    person(
+    "Elin", "Rowlands", , "elin.rowlands@ndorms.ox.ac.uk", 
+    role = c("ctb"), comment = c(ORCID = "0009-0007-6629-4661")
+    ),
+    person(
+    "Edward", "Burn", , "edward.burn@ndorms.ox.ac.uk", 
+    role = c("ctb"), comment = c(ORCID = "0000-0002-9286-1128")
     )
   )
 Maintainer: Núria Mercadé-Besora <nuria.mercadebesora@ndorms.ox.ac.uk>
@@ -21,7 +29,7 @@ Description: Provides methods to transform omop_result objects into
     results working with the Observational Medical Outcomes Partnership
     (OMOP) Common Data Model.
 License: Apache License (>= 2)
-URL: https://darwin-eu.github.io/visOmopResults/
+URL: https://darwin-eu.github.io/visOmopResults/, https://github.com/darwin-eu/visOmopResults
 BugReports: https://github.com/darwin-eu/visOmopResults/issues
 Imports: 
     cli,
@@ -29,7 +37,7 @@ Imports:
     generics,
     glue,
     lifecycle,
-    omopgenerics (>= 0.2.0),
+    omopgenerics (>= 0.3.1),
     purrr,
     rlang,
     stringr,
@@ -53,3 +61,5 @@ Config/testthat/parallel: true
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 RoxygenNote: 7.3.2
+Remotes:
+    darwin-eu-dev/omopgenerics

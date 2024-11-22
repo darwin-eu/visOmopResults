@@ -17,6 +17,8 @@
 #' which variables should be used as rows and which ones as columns.
 #' @param colour Columns to use to determine the colors.
 #' @param group Columns to use to determine the group.
+#' @param label Character vector with the columns to display interactively in
+#' `plotly`.
 #'
 #' @return A plot object.
 #'
@@ -38,16 +40,17 @@
 #' }
 #'
 scatterPlot <- function(result,
-                           x,
-                           y,
-                           line,
-                           point,
-                           ribbon,
-                           ymin = NULL,
-                           ymax = NULL,
-                           facet = NULL,
-                           colour = NULL,
-                           group = colour) {
+                        x,
+                        y,
+                        line,
+                        point,
+                        ribbon,
+                        ymin = NULL,
+                        ymax = NULL,
+                        facet = NULL,
+                        colour = NULL,
+                        group = colour,
+                        label = character()) {
 
   rlang::check_installed("ggplot2")
 
@@ -63,6 +66,7 @@ scatterPlot <- function(result,
   validateFacet(facet)
   omopgenerics::assertCharacter(colour, null = TRUE)
   omopgenerics::assertCharacter(group, null = TRUE)
+  omopgenerics::assertCharacter(label, null = TRUE)
 
   # empty
   if (nrow(result) == 0) {
@@ -70,10 +74,10 @@ scatterPlot <- function(result,
     return(ggplot2::ggplot())
   }
 
-  est <- c(x, y, ymin, ymax, asCharacterFacet(facet), colour, group)
+  est <- c(x, y, ymin, ymax, asCharacterFacet(facet), colour, group, label)
 
   # check that all data is present
-  checkInData(result, est)
+  checkInData(result, unique(est))
 
   # get estimates
   result <- cleanEstimates(result, est)
@@ -89,8 +93,10 @@ scatterPlot <- function(result,
   # prepare result
   cols = list(
     x = x, y = y, ymin = ymin, ymax = ymax, colour = colour, group = group,
-    fill = colour)
-  result <- prepareColumns(result = result, cols = cols, facet = facet)
+    fill = colour
+  )
+  cols <- addLabels(cols, label)
+  result <- prepareColumns(result, cols)
 
   # get aes
   aes <- getAes(cols)
@@ -98,23 +104,25 @@ scatterPlot <- function(result,
 
   # make plot
   p <- ggplot2::ggplot(data = result, mapping = aes)
-  if (line) p <- p + ggplot2::geom_line()
-  if (yminymax) p <- p + ggplot2::geom_errorbar()
-  if (point) p <- p + ggplot2::geom_point()
+  if (line) p <- p + ggplot2::geom_line(size = 0.75)
+  if (yminymax) p <- p + ggplot2::geom_errorbar(width = 0, size = 0.6)
+  if (point) p <- p + ggplot2::geom_point(size = 2)
   if (ribbon & yminymax) {
     p <- p +
       ggplot2::geom_ribbon(alpha = .3, color = NA, show.legend = FALSE)
   }
-  p <- plotFacet(p, facet) +
+  if(!is.null(facet)){
+    p <- plotFacet(p, facet)
+  }
+
+  p <- p +
     ggplot2::labs(
       x = styleLabel(x),
       fill = styleLabel(colour),
       colour = styleLabel(colour),
       y = styleLabel(y)
     ) +
-    ggplot2::theme(
-      legend.position = hideLegend(colour)
-    )
+    ggplot2::theme(legend.position = hideLegend(colour))
 
   return(p)
 }
@@ -133,25 +141,32 @@ scatterPlot <- function(result,
 #' @param facet Variables to facet by, a formula can be provided to specify
 #' which variables should be used as rows and which ones as columns.
 #' @param colour Columns to use to determine the colors.
+#' @param label Character vector with the columns to display interactively in
+#' `plotly`.
 #'
 #' @return A ggplot2 object.
 #' @export
 #'
+#' @examples
+#' dplyr::tibble(year = "2000", q25 = 25, median = 50, q75 = 75, min = 0, max = 100) |>
+#'   boxPlot(x = "year")
+#'
 boxPlot <- function(result,
-                       x = NULL,
-                       lower = "q25",
-                       middle = "median",
-                       upper = "q75",
-                       ymin = "min",
-                       ymax = "max",
-                       facet = NULL,
-                       colour = NULL) {
+                    x,
+                    lower = "q25",
+                    middle = "median",
+                    upper = "q75",
+                    ymin = "min",
+                    ymax = "max",
+                    facet = NULL,
+                    colour = NULL,
+                    label = character()) {
 
   rlang::check_installed("ggplot2")
 
   # initial checks
   omopgenerics::assertTable(result)
-  omopgenerics::assertCharacter(x, null = TRUE)
+  omopgenerics::assertCharacter(x)
   omopgenerics::assertCharacter(lower, length = 1)
   omopgenerics::assertCharacter(middle, length = 1)
   omopgenerics::assertCharacter(upper, length = 1)
@@ -159,6 +174,7 @@ boxPlot <- function(result,
   omopgenerics::assertCharacter(ymax, length = 1)
   validateFacet(facet)
   omopgenerics::assertCharacter(colour, null = TRUE)
+  omopgenerics::assertCharacter(label, null = TRUE)
 
   # empty
   if (nrow(result) == 0) {
@@ -166,14 +182,14 @@ boxPlot <- function(result,
     return(ggplot2::ggplot())
   }
 
-  est <- c(x, lower, middle, upper, ymin, ymax, asCharacterFacet(facet), colour)
+  est <- c(x, lower, middle, upper, ymin, ymax, asCharacterFacet(facet), colour, label)
 
   # check that all data is present
   checkInData(result, est)
 
   # subset to estimates of use
   result <- cleanEstimates(result, est)
-  ylab <- styleLabel(unique(suppressWarnings(result$variable_name)))
+  ylab <- unique(suppressWarnings(result$variable_name))
 
   # tidy result
   result <- tidyResult(result)
@@ -187,25 +203,30 @@ boxPlot <- function(result,
   col <- omopgenerics::uniqueId(exclude = colnames(result))
   result <- result |>
     dplyr::mutate(!!col := dplyr::row_number())
+
   cols = list(
-    x = x, lower = lower, middle = middle, upper = upper, ymin = ymin,
-    ymax = ymax, colour = colour, group = col)
-  result <- prepareColumns(result = result, cols = cols, facet = facet)
+    x = x, lower = lower, middle = middle, upper = upper,
+    ymin = ymin, ymax = ymax, colour = colour, group = col)
+  cols <- addLabels(cols, label)
+  result <- prepareColumns(result, cols)
 
   # get aes
   aes <- getAes(cols)
   yminymax <- !is.null(ymin) & !is.null(ymax)
 
-  clab <- styleLabel(colour)
-  xlab <- styleLabel(x)
-
   p <- ggplot2::ggplot(data = result, mapping = aes) +
     ggplot2::geom_boxplot(stat = "identity")
-  p <- plotFacet(p, facet) +
-    ggplot2::labs(y = ylab, colour = clab, x = xlab) +
-    ggplot2::theme(
-      legend.position =  hideLegend(colour)
-    )
+  if(!is.null(facet)){
+    p <- plotFacet(p, facet)
+  }
+
+  p <- p +
+    ggplot2::labs(
+      x = styleLabel(x),
+      fill = styleLabel(colour),
+      colour = styleLabel(colour)
+    ) +
+    ggplot2::theme(legend.position = hideLegend(colour))
 
   return(p)
 }
@@ -220,6 +241,8 @@ boxPlot <- function(result,
 #' @param facet Variables to facet by, a formula can be provided to specify
 #' which variables should be used as rows and which ones as columns.
 #' @param colour Columns to use to determine the colors.
+#' @param label Character vector with the columns to display interactively in
+#' `plotly`.
 #'
 #' @return A plot object.
 #' @export
@@ -240,7 +263,8 @@ barPlot <- function(result,
                     x,
                     y,
                     facet = NULL,
-                    colour = NULL) {
+                    colour = NULL,
+                    label = character()) {
 
   rlang::check_installed("ggplot2")
 
@@ -250,6 +274,7 @@ barPlot <- function(result,
   omopgenerics::assertCharacter(y, length = 1)
   validateFacet(facet)
   omopgenerics::assertCharacter(colour, null = TRUE)
+  omopgenerics::assertCharacter(label, null = TRUE)
 
   # empty
   if (nrow(result) == 0) {
@@ -257,7 +282,7 @@ barPlot <- function(result,
     return(ggplot2::ggplot())
   }
 
-  est <- c(x, y, asCharacterFacet(facet), colour)
+  est <- c(x, y, asCharacterFacet(facet), colour, label)
 
   # check that all data is present
   checkInData(result, est)
@@ -275,7 +300,8 @@ barPlot <- function(result,
 
   # prepare result
   cols = list(x = x, y = y, colour = colour, fill = colour)
-  result <- prepareColumns(result = result, cols = cols, facet = facet)
+  cols <- addLabels(cols, label)
+  result <- prepareColumns(result, cols)
 
   # get aes
   aes <- getAes(cols)
@@ -283,17 +309,18 @@ barPlot <- function(result,
   # create plot
   p <- ggplot2::ggplot(data = result, mapping = aes) +
     ggplot2::geom_col()
+  if(!is.null(facet)){
+    p <- plotFacet(p, facet)
+  }
 
-  p <- plotFacet(p, facet) +
+  p <- p +
     ggplot2::labs(
       x = styleLabel(x),
       fill = styleLabel(colour),
       colour = styleLabel(colour),
       y = styleLabel(y)
     ) +
-    ggplot2::theme(
-      legend.position =  hideLegend(colour)
-    )
+    ggplot2::theme(legend.position = hideLegend(colour))
 
   return(p)
 }
@@ -305,64 +332,17 @@ tidyResult <- function(result) {
   }
   return(result)
 }
-prepareColumns <- function(result,
-                           cols,
-                           facet,
-                           call = parent.frame()) {
-  opts <- colnames(result)
-
-  # prepare columns
-  varNames <- names(cols)
-  newNames <- omopgenerics::uniqueId(n = length(cols), exclude = opts)
-  for (k in seq_along(cols)) {
-    result <- prepareColumn(
-      result = result, newName = newNames[k], cols = cols[[k]],
-      varName = varNames[k], opts = opts, call = call
-    )
-  }
-
-  # variables to keep
-  toSelect <- c(rlang::set_names(newNames, varNames), asCharacterFacet(facet))
-
-  # select variables of interest
-  result <- result |>
-    dplyr::select(dplyr::all_of(toSelect))
-
-  return(result)
-}
-prepareColumn <- function(result,
-                          newName,
-                          cols,
-                          varName,
-                          opts,
-                          call) {
-  if (length(cols) == 0) {
-    return(
-      result |>
-        dplyr::mutate(!!newName := "")
-    )
-  }
-  if (!is.character(cols) || !all(cols %in% opts)) {
-    c("x" = "{varName} ({.var {cols}}) is not a column in result.") |>
-      cli::cli_abort(call = call)
-  }
-  if (length(cols) == 1) {
-    result <- result |>
-      dplyr::mutate(!!newName := .data[[cols]])
-  } else {
-    result <- result |>
-      tidyr::unite(
-        col = !!newName, dplyr::all_of(cols), remove = FALSE, sep = " - ")
-  }
-  return(result)
-}
 getAes <- function(cols) {
-  if (is.null(cols$ymin)) cols$ymin <- NULL
-  if (is.null(cols$ymax)) cols$ymax <- NULL
-  vars <- names(cols)
+  colsClean <- cols[!unlist(lapply(cols, is.null))]
+  for (k in seq_along(colsClean)) {
+    if (length(colsClean[[k]]) > 1) {
+      colsClean[[k]] <- paste0(colsClean[[k]], collapse = "_")
+    }
+  }
+  vars <- names(colsClean)
   paste0(
     "ggplot2::aes(",
-    glue::glue("{vars} = .data${vars}") |>
+    glue::glue("{vars} = .data${colsClean}") |>
       stringr::str_c(collapse = ", "),
     ")"
   ) |>
@@ -378,20 +358,6 @@ plotFacet <- function(p, facet) {
     }
   }
   return(p)
-}
-styleLabel <- function(x) {
-  #length(x) > 0 remove the character(0)
-  if (!is.null(x) && all(x != "") && length(x) > 0) {
-    x |>
-      stringr::str_replace_all(pattern = "_", replacement = " ") |>
-      stringr::str_to_sentence() |>
-      stringr::str_flatten(collapse = ", ", last = " and ")
-  } else {
-    NULL
-  }
-}
-hideLegend <- function(x) {
-  if (length(x) > 0 && !identical(x, "")) "right" else "none"
 }
 validateFacet <- function(x, call = parent.frame()) {
   if (rlang::is_formula(x)) return(invisible(NULL))
@@ -452,4 +418,56 @@ checkInData <- function(result, est, call = parent.frame()) {
       cli::cli_abort(call = call)
   }
   return(invisible(NULL))
+}
+prepareColumns <- function(result,
+                           cols,
+                           call = parent.frame()) {
+  opts <- colnames(result)
+
+  colsUnite <- cols[unlist(lapply(cols, length)) > 1]
+  # prepare columns
+  varNames <- names(colsUnite)
+  for (k in seq_along(colsUnite)) {
+    result <- prepareColumn(
+      result = result, cols = colsUnite[[k]], opts = opts, call = call
+    )
+  }
+
+  return(result)
+}
+prepareColumn <- function(result,
+                          cols,
+                          opts,
+                          call) {
+
+  if (!is.character(cols) || !all(cols %in% opts)) {
+    c("x" = "{varName} ({.var {cols}}) is not a column in result.") |>
+      cli::cli_abort(call = call)
+  }
+  newName <- paste0(cols, collapse = "_")
+  result <- result |>
+    tidyr::unite(
+      col = !!newName, dplyr::all_of(cols), remove = FALSE, sep = " - ")
+
+  return(result)
+}
+styleLabel <- function(x) {
+  if (!is.null(x) && all(x != "") && length(x) > 0) {
+    x |>
+      stringr::str_replace_all(pattern = "_", replacement = " ") |>
+      stringr::str_to_sentence() |>
+      stringr::str_flatten(collapse = ", ", last = " and ")
+  } else {
+    NULL
+  }
+}
+hideLegend <- function(x) {
+  if (length(x) > 0 && !identical(x, "")) "right" else "none"
+}
+addLabels <- function(cols, label) {
+  listLabs <- list()
+  for (k in seq_along(label)) {
+    listLabs[[paste0("label", k)]] <- label[k]
+  }
+  return(c(cols, listLabs))
 }

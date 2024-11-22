@@ -3,16 +3,6 @@ template:
   bootstrap: 5
 
 reference:
-- title: Functions to tidy `<summarised_result>`
-- contents:
-  - matches("tidy.summarised_result")
-- subtitle: Split functions
-- contents:
-  - matches("splitStrata|splitGroup|splitAdditional|splitAll")
-- subtitle: Add settings and estimates
-- contents:
-  - matches("addSettings|pivot")
-
 - title: Table functions
 - subtitle: Main functions
 - contents:
@@ -22,27 +12,19 @@ reference:
   - matches("format")
 - subtitle: Helper table functions
 - contents:
-  - matches("tableType|tableOptions|tableStyle")
+  - matches("tableType|tableOptions|tableStyle|emptyTable")
 
 - title: Plot functions
 - contents:
   - ends_with("Plot")
-
-- title: Filter functions
+- subtitle: Helper plot functions
 - contents:
-  - starts_with("filter")
+  - matches("themeVisOmop")
 
 - title: Other functionalities
-- subtitle: Column retrieval functions
+- subtitle: To style text
 - contents:
-  - ends_with("Columns")
-- subtitle: Unite functions
-- contents:
-  - matches("uniteStrata|uniteGroup|uniteAdditional")
-- subtitle: Mock <summarised_result>
+  - contains("customiseText")
+- subtitle: Mock `<summarised_result>`
 - contents:
   - matches("mock")
-
-- title: Deprecated
-- contents:
-  - matches("fxTable|gtTable|NameLevel|optionsVisOmopTable")

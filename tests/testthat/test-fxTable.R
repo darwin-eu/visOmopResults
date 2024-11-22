@@ -338,13 +338,6 @@ test_that("multiple groupColumn", {
   expect_equal(fxResult$body$spans$rows[1,], rep(1, 17))
 })
 
-test_that("lifestyle::deprecate_soft works", {
-
-  x <- mockSummarisedResult()
-
-  expect_warning(fxTable(x))
-})
-
 test_that("abort when groupOrder doesn't match groupName", {
 
   x <- mockSummarisedResult()

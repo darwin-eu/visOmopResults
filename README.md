@@ -20,11 +20,10 @@ of class `<summarised_result>` (as defined in
 [omopgenerics](https://cran.r-project.org/package=omopgenerics)
 package).
 
-It provides functionality to: **transform** data, create **table**
-visualizations, and generate **plot** visualizations. These
-visualizations are highly versatile for reporting results through Shiny
-apps, RMarkdown, Quarto, and more, supporting various output formats
-such as HTML, PNG, Word, and PDF.
+It provides functionality to create formatted **tables** and generate
+**plots**. These visualizations are highly versatile for reporting
+results through Shiny apps, RMarkdown, Quarto, and more, supporting
+various output formats such as HTML, PNG, Word, and PDF.
 
 ## Let’s get started
 
@@ -63,130 +62,6 @@ library(visOmopResults)
 result <- mockSummarisedResult()
 ```
 
-## Transformation of a `<summarised_result>` object
-
-A tidy version of the summarised can be obtained with the tidy function:
-
-``` r
-tidy(result)
-#> # A tibble: 72 × 13
-#>    cdm_name cohort_name age_group sex     variable_name   variable_level   count
-#>    <chr>    <chr>       <chr>     <chr>   <chr>           <chr>            <int>
-#>  1 mock     cohort1     overall   overall number subjects <NA>           8073003
-#>  2 mock     cohort1     <40       Male    number subjects <NA>           8850788
-#>  3 mock     cohort1     >=40      Male    number subjects <NA>           3811096
-#>  4 mock     cohort1     <40       Female  number subjects <NA>           7230087
-#>  5 mock     cohort1     >=40      Female  number subjects <NA>           6508723
-#>  6 mock     cohort1     overall   Male    number subjects <NA>           7643684
-#>  7 mock     cohort1     overall   Female  number subjects <NA>           4209114
-#>  8 mock     cohort1     <40       overall number subjects <NA>           5850048
-#>  9 mock     cohort1     >=40      overall number subjects <NA>           8239237
-#> 10 mock     cohort2     overall   overall number subjects <NA>           7597918
-#> # ℹ 62 more rows
-#> # ℹ 6 more variables: mean <dbl>, sd <dbl>, percentage <dbl>,
-#> #   result_type <chr>, package_name <chr>, package_version <chr>
-```
-
-This tidy format is no longer standardized but offers easier
-manipulation. While `tidy()` provides a straightforward transformation,
-the more customizable sibling function `tidySummarisedResult()` allows
-you to specify exactly how you’d like to tidy your `<summarised_result>`
-object:
-
-``` r
-result |>
-  tidySummarisedResult(
-    splitStrata = FALSE,
-    settingsColumns = "package_name", 
-    pivotEstimatesBy = NULL
-  )
-#> # A tibble: 126 × 11
-#>    result_id cdm_name cohort_name strata_name       strata_level   variable_name
-#>        <int> <chr>    <chr>       <chr>             <chr>          <chr>        
-#>  1         1 mock     cohort1     overall           overall        number subje…
-#>  2         1 mock     cohort1     age_group &&& sex <40 &&& Male   number subje…
-#>  3         1 mock     cohort1     age_group &&& sex >=40 &&& Male  number subje…
-#>  4         1 mock     cohort1     age_group &&& sex <40 &&& Female number subje…
-#>  5         1 mock     cohort1     age_group &&& sex >=40 &&& Fema… number subje…
-#>  6         1 mock     cohort1     sex               Male           number subje…
-#>  7         1 mock     cohort1     sex               Female         number subje…
-#>  8         1 mock     cohort1     age_group         <40            number subje…
-#>  9         1 mock     cohort1     age_group         >=40           number subje…
-#> 10         1 mock     cohort2     overall           overall        number subje…
-#> # ℹ 116 more rows
-#> # ℹ 5 more variables: variable_level <chr>, estimate_name <chr>,
-#> #   estimate_type <chr>, estimate_value <chr>, package_name <chr>
-```
-
-## Filter a `<summarised_result>` object
-
-A `<summarised_result>` object is essentially a `<data.frame>`, so it
-can be filtered easily using `dplyr::filter()`. However, filtering
-variables within name-level structures or those present in the settings
-can be challenging. The following functions simplify this process:
-
-- `filterSettings()`
-- `filterGroup()`
-- `filterStrata()`
-- `filterAdditional()`
-
-Here are some examples on how to use them:
-
-``` r
-result |>
-  filterSettings(package_name == "visOmopResults")
-#> # A tibble: 126 × 13
-#>    result_id cdm_name group_name  group_level strata_name       strata_level   
-#>        <int> <chr>    <chr>       <chr>       <chr>             <chr>          
-#>  1         1 mock     cohort_name cohort1     overall           overall        
-#>  2         1 mock     cohort_name cohort1     age_group &&& sex <40 &&& Male   
-#>  3         1 mock     cohort_name cohort1     age_group &&& sex >=40 &&& Male  
-#>  4         1 mock     cohort_name cohort1     age_group &&& sex <40 &&& Female 
-#>  5         1 mock     cohort_name cohort1     age_group &&& sex >=40 &&& Female
-#>  6         1 mock     cohort_name cohort1     sex               Male           
-#>  7         1 mock     cohort_name cohort1     sex               Female         
-#>  8         1 mock     cohort_name cohort1     age_group         <40            
-#>  9         1 mock     cohort_name cohort1     age_group         >=40           
-#> 10         1 mock     cohort_name cohort2     overall           overall        
-#> # ℹ 116 more rows
-#> # ℹ 7 more variables: variable_name <chr>, variable_level <chr>,
-#> #   estimate_name <chr>, estimate_type <chr>, estimate_value <chr>,
-#> #   additional_name <chr>, additional_level <chr>
-```
-
-``` r
-result |>
-  filterSettings(package_name == "other")
-#> # A tibble: 0 × 13
-#> # ℹ 13 variables: result_id <int>, cdm_name <chr>, group_name <chr>,
-#> #   group_level <chr>, strata_name <chr>, strata_level <chr>,
-#> #   variable_name <chr>, variable_level <chr>, estimate_name <chr>,
-#> #   estimate_type <chr>, estimate_value <chr>, additional_name <chr>,
-#> #   additional_level <chr>
-```
-
-``` r
-result |>
-  filterStrata(sex == "Female")
-#> # A tibble: 42 × 13
-#>    result_id cdm_name group_name  group_level strata_name       strata_level   
-#>        <int> <chr>    <chr>       <chr>       <chr>             <chr>          
-#>  1         1 mock     cohort_name cohort1     age_group &&& sex <40 &&& Female 
-#>  2         1 mock     cohort_name cohort1     age_group &&& sex >=40 &&& Female
-#>  3         1 mock     cohort_name cohort1     sex               Female         
-#>  4         1 mock     cohort_name cohort2     age_group &&& sex <40 &&& Female 
-#>  5         1 mock     cohort_name cohort2     age_group &&& sex >=40 &&& Female
-#>  6         1 mock     cohort_name cohort2     sex               Female         
-#>  7         1 mock     cohort_name cohort1     age_group &&& sex <40 &&& Female 
-#>  8         1 mock     cohort_name cohort1     age_group &&& sex >=40 &&& Female
-#>  9         1 mock     cohort_name cohort1     sex               Female         
-#> 10         1 mock     cohort_name cohort2     age_group &&& sex <40 &&& Female 
-#> # ℹ 32 more rows
-#> # ℹ 7 more variables: variable_name <chr>, variable_level <chr>,
-#> #   estimate_name <chr>, estimate_type <chr>, estimate_value <chr>,
-#> #   additional_name <chr>, additional_level <chr>
-```
-
 ## Tables visualisations
 
 Currently all table functionalities are built around 3 packages:
@@ -206,20 +81,20 @@ Let’s see a simple example:
 ``` r
 result |>
   visOmopTable(
-    type = "flextable", # to change to gt when issue 223 is fixed
+    type = "flextable",
     estimateName = c(
       "N(%)" = "<count> (<percentage>%)", 
       "N" = "<count>", 
       "mean (sd)" = "<mean> (<sd>)"),
     header = c("sex"),
-    settingsColumns = NULL,
+    settingsColumn = NULL,
     groupColumn = c("cohort_name", "age_group"),
     rename = c("Variable" = "variable_name", " " = "variable_level"),
     hide = "cdm_name"
   )
 ```
 
-<img src="man/figures/README-unnamed-chunk-10-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-5-1.png" width="100%" />
 
 ## Plots visualisations
 
@@ -247,4 +122,4 @@ result |>
           colour = "sex")
 ```
 
-<img src="man/figures/README-unnamed-chunk-11-1.png" width="100%" />
+<img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />

@@ -289,7 +289,6 @@ test_that("empty format",{
   expect_identical(res1, result)
 })
 
-
 test_that("not a summarised result",{
   result <- dplyr::tibble(
     variable = "variable",
@@ -411,4 +410,47 @@ test_that("Empty results warning in formatEstimateNameInternal", {
 
   expect_warning(formatEstimateNameInternal(result, format = c("")))
 
+})
+
+test_that("test suppressed is kept", {
+  result <- dplyr::tibble(
+    result_id = 1L,
+    cdm_name = "mock",
+    cohort_name = "my_cohort",
+    age_group = "<=40",
+    variable_name = c(
+      "number subjects", rep("age", 3), "Medications any time prior",
+      "Medications any time prior"
+    ),
+    variable_level = c(rep(NA_character_, 4), rep("acetaminophen", 2)),
+    estimate_name = c("count", "median", "q25", "q75", "count", "percentage"),
+    estimate_type = c("integer", rep("numeric", 3), "integer", "percentage"),
+    estimate_value = "-"
+  ) |>
+    omopgenerics::uniteGroup("cohort_name") |>
+    omopgenerics::uniteStrata("age_group") |>
+    omopgenerics::uniteAdditional() |>
+    omopgenerics::newSummarisedResult(settings = dplyr::tibble(
+      result_id = 1L, min_cell_count = "20", result_type = "",
+      package_name = "", package_version = ""
+    ))
+
+  x <-  result |>
+    formatEstimateName(estimateName = c(
+      "N (%)" = "<count> (<percentage>%)", "N" = "<count>",
+      "median [Q25 - Q75]" = "<median> [<q25> - <q75>]"
+    ))
+
+  x <-  result |>
+    formatMinCellCount() |>
+    formatEstimateName(estimateName = c(
+      "N (%)" = "<count> (<percentage>%)", "N" = "<count>",
+      "median [Q25 - Q75]" = "<median> [<q25> - <q75>]"
+    ))
+
+  x <- result |>
+    visOmopTable(estimateName = c(
+      "N (%)" = "<count> (<percentage>%)", "N" = "<count>",
+      "median [Q25 - Q75]" = "<median> [<q25> - <q75>]"
+    ))
 })

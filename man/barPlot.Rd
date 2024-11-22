@@ -4,7 +4,7 @@
 \alias{barPlot}
 \title{Create a bar plot visualisation from a \verb{<summarised_result>} object}
 \usage{
-barPlot(result, x, y, facet = NULL, colour = NULL)
+barPlot(result, x, y, facet = NULL, colour = NULL, label = character())
 }
 \arguments{
 \item{result}{A \verb{<summarised_result>} object.}
@@ -17,6 +17,9 @@ barPlot(result, x, y, facet = NULL, colour = NULL)
 which variables should be used as rows and which ones as columns.}
 
 \item{colour}{Columns to use to determine the colors.}
+
+\item{label}{Character vector with the columns to display interactively in
+\code{plotly}.}
 }
 \value{
 A plot object.

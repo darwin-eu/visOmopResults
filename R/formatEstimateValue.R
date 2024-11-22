@@ -60,9 +60,15 @@ formatEstimateValueInternal <- function(result, decimals, decimalMark, bigMark) 
     formatted <- rep(FALSE, nrow(result))
     for (nm in names(decimals)) {
       if (nm %in% nms_name) {
-        id <- result[["estimate_name"]] == nm & !formatted & !is.na(result$estimate_value) & !grepl("<", result$estimate_value)
+        id <- result[["estimate_name"]] == nm & !formatted &
+          result$estimate_value != "-" &
+          !grepl("<", result$estimate_value) &
+          !is.na(result$estimate_value)
       } else {
-        id <- result[["estimate_type"]] == nm & !formatted & !is.na(result$estimate_value) & !grepl("<", result$estimate_value)
+        id <- result[["estimate_type"]] == nm & !formatted &
+          result$estimate_value != "-" &
+          !grepl("<", result$estimate_value) &
+          !is.na(result$estimate_value)
       }
       n <- decimals[nm] |> unname()
       result$estimate_value[id] <- result$estimate_value[id] |>

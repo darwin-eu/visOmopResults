@@ -120,7 +120,7 @@ visOmopTable(
   ),
   header = c("package_name", "age_group"),
   groupColumn = c("cohort_name", "sex"),
-  settingsColumns = "package_name",
+  settingsColumn = "package_name",
   type = "gt"
 )
 ```
@@ -129,7 +129,7 @@ The workflow is quite similar to `visTable()`, but it includes specific enhancem
 
 - **Automatic splitting**: The result object is always processed using the [`splitAll()`](https://darwin-eu.github.io/visOmopResults/reference/splitAll.html) function. Thereby, column names to use in other arguments must be based on the split result.
 
-- **`settingsColumns` argument**: Use this argument to specify which settings should be displayed in the main table. The columns specified here can also be referenced in other arguments such as `header`, `rename`, and `groupColumn.`
+- **`settingsColumn` argument**: Use this argument to specify which settings should be displayed in the main table. The columns specified here can also be referenced in other arguments such as `header`, `rename`, and `groupColumn.`
 
 - **`header` argument**: accepts specific `<summarised_result>` inputs, in addition to its typical usage as in `visTable()`. For example, use "strata" in the header to display all variables in `strata_name`, or use "settings" to show all settings specified in `settingsColumns.`
 

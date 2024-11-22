@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
 
 **visOmopResults** offers a set of functions tailored to format objects of class  `<summarised_result>` (as defined in [omopgenerics](https://cran.r-project.org/package=omopgenerics) package). 
 
-It provides functionality to: **transform** data, create **table** visualizations, and generate **plot** visualizations. These visualizations are highly versatile for reporting results through Shiny apps, RMarkdown, Quarto, and more, supporting various output formats such as HTML, PNG, Word, and PDF.
+It provides functionality to create formatted **tables** and generate **plots**. These visualizations are highly versatile for reporting results through Shiny apps, RMarkdown, Quarto, and more, supporting various output formats such as HTML, PNG, Word, and PDF.
 
 ## Let's get started
 
@@ -63,50 +63,6 @@ library(visOmopResults)
 result <- mockSummarisedResult()
 ```
 
-## Transformation of a `<summarised_result>` object
-
-A tidy version of the summarised can be obtained with the tidy function:
-```{r}
-tidy(result)
-```
-
-This tidy format is no longer standardized but offers easier manipulation. While `tidy()` provides a straightforward transformation, the more customizable sibling function `tidySummarisedResult()` allows you to specify exactly how you'd like to tidy your `<summarised_result>` object:
-
-```{r}
-result |>
-  tidySummarisedResult(
-    splitStrata = FALSE,
-    settingsColumns = "package_name", 
-    pivotEstimatesBy = NULL
-  )
-```
-
-## Filter a `<summarised_result>` object
-
-A `<summarised_result>` object is essentially a `<data.frame>`, so it can be filtered easily using `dplyr::filter()`. However, filtering variables within name-level structures or those present in the settings can be challenging. The following functions simplify this process:
-
-- `filterSettings()`
-- `filterGroup()`
-- `filterStrata()`
-- `filterAdditional()`
-
-Here are some examples on how to use them:
-
-```{r}
-result |>
-  filterSettings(package_name == "visOmopResults")
-```
-
-```{r}
-result |>
-  filterSettings(package_name == "other")
-```
-
-```{r}
-result |>
-  filterStrata(sex == "Female")
-```
-
 ## Tables visualisations
 
 Currently all table functionalities are built around 3 packages: [tibble](https://cran.r-project.org/package=tibble), [gt](https://cran.r-project.org/package=gt), and [flextable](https://cran.r-project.org/package=flextable).
@@ -120,13 +76,13 @@ Let's see a simple example:
 ```{r}
 result |>
   visOmopTable(
-    type = "flextable", # to change to gt when issue 223 is fixed
+    type = "flextable",
     estimateName = c(
       "N(%)" = "<count> (<percentage>%)", 
       "N" = "<count>", 
       "mean (sd)" = "<mean> (<sd>)"),
     header = c("sex"),
-    settingsColumns = NULL,
+    settingsColumn = NULL,
     groupColumn = c("cohort_name", "age_group"),
     rename = c("Variable" = "variable_name", " " = "variable_level"),
     hide = "cdm_name"

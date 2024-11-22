@@ -9,6 +9,24 @@
 \alias{exportSummarisedResult}
 \alias{importSummarisedResult}
 \alias{suppress}
+\alias{splitAdditional}
+\alias{splitGroup}
+\alias{splitStrata}
+\alias{splitAll}
+\alias{tidyColumns}
+\alias{strataColumns}
+\alias{additionalColumns}
+\alias{groupColumns}
+\alias{settingsColumns}
+\alias{addSettings}
+\alias{pivotEstimates}
+\alias{filterAdditional}
+\alias{filterGroup}
+\alias{filterSettings}
+\alias{filterStrata}
+\alias{uniteAdditional}
+\alias{uniteGroup}
+\alias{uniteStrata}
 \title{Objects exported from other packages}
 \keyword{internal}
 \description{
@@ -18,6 +36,6 @@ below to see their documentation.
 \describe{
   \item{generics}{\code{\link[generics]{tidy}}}
 
-  \item{omopgenerics}{\code{\link[omopgenerics]{bind}}, \code{\link[omopgenerics]{exportSummarisedResult}}, \code{\link[omopgenerics]{importSummarisedResult}}, \code{\link[omopgenerics]{settings}}, \code{\link[omopgenerics]{suppress}}}
+  \item{omopgenerics}{\code{\link[omopgenerics]{additionalColumns}}, \code{\link[omopgenerics]{addSettings}}, \code{\link[omopgenerics]{bind}}, \code{\link[omopgenerics]{exportSummarisedResult}}, \code{\link[omopgenerics]{filterAdditional}}, \code{\link[omopgenerics]{filterGroup}}, \code{\link[omopgenerics]{filterSettings}}, \code{\link[omopgenerics]{filterStrata}}, \code{\link[omopgenerics]{groupColumns}}, \code{\link[omopgenerics]{importSummarisedResult}}, \code{\link[omopgenerics]{pivotEstimates}}, \code{\link[omopgenerics]{settings}}, \code{\link[omopgenerics]{settingsColumns}}, \code{\link[omopgenerics]{splitAdditional}}, \code{\link[omopgenerics]{splitAll}}, \code{\link[omopgenerics]{splitGroup}}, \code{\link[omopgenerics]{splitStrata}}, \code{\link[omopgenerics]{strataColumns}}, \code{\link[omopgenerics]{suppress}}, \code{\link[omopgenerics:reexports]{tidy}}, \code{\link[omopgenerics]{tidyColumns}}, \code{\link[omopgenerics]{uniteAdditional}}, \code{\link[omopgenerics]{uniteGroup}}, \code{\link[omopgenerics]{uniteStrata}}}
 }}
 
