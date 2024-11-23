@@ -11,7 +11,7 @@
 #' 3) `group`, `strata`, `additional`, `variable`, `estimate`, and/or `settings`
 #'    to refer to all columns within these groups
 #' 4) Any other input to create overall header labels at the specified location.
-#' @param settingsColumns A character vector with the names of settings to
+#' @param settingsColumn A character vector with the names of settings to
 #' include in the table.
 #' @param groupColumn Columns to use as group labels. By default, the name of the
 #' new group will be the tidy* column names separated by ";". To specify a custom
@@ -28,15 +28,15 @@
 #' allowed options.
 #' @param hide Columns to drop from the output table. By default, `result_id` and
 #' `estimate_type` are always dropped.
+#' @param columnOrder Character vector establishing the position of the columns
+#' in the formatted table. Columns in either header, groupColumn, or hide will
+#' be ignored.
 #' @param showMinCellCount If `TRUE`, suppressed estimates will be indicated with
 #' "<\{min_cell_count\}", otherwise, the default `na` defined in `.options` will be
 #' used.
 #' @param .options A named list with additional formatting options.
 #' `visOmopResults::tableOptions()` shows allowed arguments and their default values.
-#' @param split `r lifecycle::badge("deprecated")`
-#' @param excludeColumns `r lifecycle::badge("deprecated")`
-#' @param formatEstimateName `r lifecycle::badge("deprecated")`
-#' @param renameColumns `r lifecycle::badge("deprecated")`
+#' @param settingsColumns `r lifecycle::badge("deprecated")`
 #'
 #' @return A tibble, gt, or flextable object.
 #'
@@ -61,40 +61,24 @@
 visOmopTable <- function(result,
                          estimateName = character(),
                          header = character(),
-                         settingsColumns = character(),
+                         settingsColumn = character(),
                          groupColumn = character(),
                          rename = character(),
                          type = "gt",
                          hide = character(),
+                         columnOrder = character(),
                          showMinCellCount = TRUE,
                          .options = list(),
-                         split = lifecycle::deprecated(),
-                         excludeColumns = lifecycle::deprecated(),
-                         formatEstimateName = lifecycle::deprecated(),
-                         renameColumns = lifecycle::deprecated()) {
+                         settingsColumns = lifecycle::deprecated()) {
 
-  if (lifecycle::is_present(split)) {
-    lifecycle::deprecate_warn("0.4.0", "visOmopTable(split)")
-  }
-  if (lifecycle::is_present(excludeColumns)) {
-    lifecycle::deprecate_soft(
-      "0.4.0", "visOmopTable(excludeColumns = )", "visOmopTable(hide = )")
-    if (missing(hide)) hide <- excludeColumns
-  }
-  if (lifecycle::is_present(renameColumns)) {
-    lifecycle::deprecate_soft(
-      "0.4.0", "visOmopTable(renameColumns = )", "visOmopTable(rename = )")
-    if (missing(rename)) rename <- renameColumns
-  }
-  if (lifecycle::is_present(formatEstimateName)) {
-    lifecycle::deprecate_soft(
-      "0.4.0", "visOmopTable(formatEstimateName = )", "visOmopTable(estimateName = )")
-    if (missing(estimateName)) estimateName <- formatEstimateName
+  if (lifecycle::is_present(settingsColumns)) {
+    settingsColumn <- settingsColumns
+    lifecycle::deprecate_soft(when = "0.5.0", what = "visOmopTable(settingsColumns)", with = "visOmopTable(settingsColumn)")
   }
 
   # Tidy results
-  result <- omopgenerics::validateResultArguemnt(result)
-  resultTidy <- tidySummarisedResult(result, settingsColumns = settingsColumns, pivotEstimatesBy = NULL)
+  result <- omopgenerics::validateResultArgument(result)
+  resultTidy <- tidySummarisedResult(result, settingsColumn = settingsColumn, pivotEstimatesBy = NULL)
 
   # .options
   .options <- defaultTableOptions(.options)
@@ -102,8 +86,8 @@ visOmopTable <- function(result,
   # Backward compatibility ---> to be deleted in the future
   omopgenerics::assertCharacter(header, null = TRUE)
   omopgenerics::assertCharacter(hide, null = TRUE)
-  settingsColumns <- validateSettingsColumns(settingsColumns, result)
-  bc <- backwardCompatibility(header, hide, result, settingsColumns, groupColumn)
+  settingsColumn <- validateSettingsColumn(settingsColumn, result)
+  bc <- backwardCompatibility(header, hide, result, settingsColumn, groupColumn)
   header <- bc$header
   hide <- bc$hide
   groupColumn <- bc$groupColumn
@@ -123,29 +107,21 @@ visOmopTable <- function(result,
 
   # showMinCellCount
   if (showMinCellCount) {
-    if ("min_cell_count" %in% settingsColumns) {
-      resultTidy <- resultTidy |>
-        dplyr::mutate(estimate_value = dplyr::if_else(
-          is.na(.data$estimate_value), paste0("<", base::format(.data$min_cell_count, big.mark = ",")), .data$estimate_value
-        ))
-    } else {
-      resultTidy <- resultTidy |>
-        dplyr::left_join(
-          settings(result) |> dplyr::select("result_id", "min_cell_count"),
-          by = "result_id"
-        ) |>
-        dplyr::mutate(estimate_value = dplyr::if_else(
-          is.na(.data$estimate_value), paste0("<", base::format(.data$min_cell_count, big.mark = ",")), .data$estimate_value
-        )) |>
-        dplyr::select(!"min_cell_count")
-    }
+    resultTidy <- resultTidy |>
+      formatMinCellCount(set = settings(result))
   }
 
-  resultTidy <- resultTidy |>
-    dplyr::relocate(
-      c(visOmopResults::additionalColumns(result), settingsColumns),
-      .before = "estimate_name"
-    )
+  if (length(columnOrder) == 0) {
+    resultTidy <- resultTidy |>
+      dplyr::relocate(
+        c(visOmopResults::additionalColumns(result), settingsColumn),
+        .before = "estimate_name"
+      )
+  } else {
+    columnOrder <- getColumnOrder(colnames(resultTidy), columnOrder, header, groupColumn[[1]], hide)
+    resultTidy <- resultTidy |>
+      dplyr::select(dplyr::any_of(columnOrder))
+  }
 
   tableOut <- visTable(
     result = resultTidy,
@@ -192,7 +168,7 @@ defaultTableOptions <- function(userOptions) {
   return(defaultOpts)
 }
 
-backwardCompatibility <- function(header, hide, result, settingsColumns, groupColumn) {
+backwardCompatibility <- function(header, hide, result, settingsColumn, groupColumn) {
   if (all(is.na(result$variable_level)) & "variable" %in% header) {
     colsVariable <- c("variable_name")
     hide <- c(hide, "variable_level")
@@ -206,7 +182,7 @@ backwardCompatibility <- function(header, hide, result, settingsColumns, groupCo
     "additional" = additionalColumns(result),
     "variable" = colsVariable,
     "estimate" = "estimate_name",
-    "settings" = settingsColumns,
+    "settings" = settingsColumn,
     "group_name" = character(),
     "strata_name" = character(),
     "additional_name" = character()
@@ -230,4 +206,53 @@ correctColumnn <- function(col, cols) {
   purrr::map(col, \(x) if (x %in% names(cols)) cols[[x]] else x) |>
     unlist() |>
     unique()
+}
+
+getColumnOrder <- function(currentOrder, newOrder, header, group, hide) {
+  # initial check
+  if (any(!newOrder %in% currentOrder)) {
+    cli::cli_warn("Dropping the following from `columnOrder` as they are not part of the table: {newOrder[!newOrder %in% currentOrder]}")
+  }
+  # group
+  if (length(group) != 0) {
+    newOrder <- c(newOrder, group[group %in% currentOrder])
+  }
+  # hide
+  if (length(hide) != 0) {
+    newOrder <- c(newOrder, hide[hide %in% currentOrder])
+  }
+  # header
+  if (length(header) != 0) {
+    newOrder <- c(newOrder, header[header %in% currentOrder])
+  }
+  # estimate_value
+  newOrder <- c(newOrder, "estimate_value")
+  newOrder <- unique(newOrder)
+  # final check
+  if (length(newOrder) != length(currentOrder)) {
+    cli::cli_abort("Please make sure `columnOrder` argument contains all the table columns. Missing columns to allocate a position are: {currentOrder[!currentOrder %in% newOrder]}")
+  }
+  return(newOrder)
+}
+
+formatMinCellCount <- function(result, set = NULL) {
+  if (is.null(set)) {
+    result <- result |>
+      omopgenerics::addSettings(settingsColumn = "min_cell_count")
+  } else {
+    result <- result |>
+      dplyr::left_join(
+        set |>
+          dplyr::select("result_id", "min_cell_count"),
+        by = "result_id"
+      )
+  }
+  result |>
+    dplyr::mutate(min_cell_count = paste0("<", base::format(as.numeric(.data$min_cell_count), big.mark = ",", scientific = FALSE))) |>
+    dplyr::mutate(estimate_value = dplyr::if_else(
+      .data$estimate_value == "-",
+      .data$min_cell_count,
+      .data$estimate_value
+    )) |>
+    dplyr::select(!"min_cell_count")
 }

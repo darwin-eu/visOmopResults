@@ -15,7 +15,8 @@ scatterPlot(
   ymax = NULL,
   facet = NULL,
   colour = NULL,
-  group = colour
+  group = colour,
+  label = character()
 )
 }
 \arguments{
@@ -43,6 +44,9 @@ which variables should be used as rows and which ones as columns.}
 \item{colour}{Columns to use to determine the colors.}
 
 \item{group}{Columns to use to determine the group.}
+
+\item{label}{Character vector with the columns to display interactively in
+\code{plotly}.}
 }
 \value{
 A plot object.

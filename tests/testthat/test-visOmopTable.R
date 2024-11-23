@@ -1,32 +1,28 @@
 test_that("visOmopTable", {
   result <- mockSummarisedResult()
-  expect_message(
-    expect_no_error(
-      gt1 <- visOmopTable(
-        result = result,
-        estimateName = character(),
-        header = character(),
-        groupColumn = NULL,
-        type = "gt",
-        settingsColumns = character(),
-        hide = c("result_id", "estimate_type"),
-        .options = list())
-    )
+  expect_no_error(
+    gt1 <- visOmopTable(
+      result = result,
+      estimateName = character(),
+      header = character(),
+      groupColumn = NULL,
+      type = "gt",
+      settingsColumn = character(),
+      hide = c("result_id", "estimate_type"),
+      .options = list())
   )
   expect_true("gt_tbl" %in% class(gt1))
   expect_true(all(c("CDM name", "Cohort name", "Age group", "Sex", "Variable name", "Variable level", "Estimate name", "Estimate value") %in%
                     colnames(gt1$`_data`)))
 
-  expect_message(
-    expect_no_error(
-      gt2 <- visOmopTable(
-        result = result,
-        estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>"),
-        header = c("strata"),
-        groupColumn = NULL,
-        type = "gt",
-        .options = list())
-    )
+  expect_no_error(
+    gt2 <- visOmopTable(
+      result = result,
+      estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>"),
+      header = c("strata"),
+      groupColumn = NULL,
+      type = "gt",
+      .options = list())
   )
   expect_true("gt_tbl" %in% class(gt2))
   expect_true(all(c(
@@ -43,17 +39,15 @@ test_that("visOmopTable", {
   ) %in% colnames(gt2$`_data`)))
   expect_true(nrow(gt2$`_data`) == 10)
 
-  expect_message(
-    expect_no_error(
-      fx1 <- visOmopTable(
-        result = result,
-        estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
-        header = c("group", "estimate"),
-        groupColumn = NULL,
-        type = "flextable",
-        hide = c("result_id", "estimate_type", "cdm_name"),
-        .options = list(includeHeaderName = FALSE))
-    )
+  expect_no_error(
+    fx1 <- visOmopTable(
+      result = result,
+      estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
+      header = c("group", "estimate"),
+      groupColumn = NULL,
+      type = "flextable",
+      hide = c("result_id", "estimate_type", "cdm_name"),
+      .options = list(includeHeaderName = FALSE))
   )
   expect_true("flextable" == class(fx1))
   expect_true(all(c(
@@ -62,17 +56,15 @@ test_that("visOmopTable", {
   ) %in% colnames(fx1$body$dataset)))
   expect_true(nrow(fx1$body$dataset) == 36)
 
-  expect_message(
-    expect_no_error(
-      fx2 <- visOmopTable(
-        result = result,
-        estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
-        header = c("variable", "estimate"),
-        groupColumn = NULL,
-        type = "flextable",
-        hide = c("result_id", "estimate_type", "cdm_name"),
-        .options = list(includeHeaderName = TRUE))
-    )
+  expect_no_error(
+    fx2 <- visOmopTable(
+      result = result,
+      estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
+      header = c("variable", "estimate"),
+      groupColumn = NULL,
+      type = "flextable",
+      hide = c("result_id", "estimate_type", "cdm_name"),
+      .options = list(includeHeaderName = TRUE))
   )
   expect_true("flextable" == class(fx2))
   expect_true(all(c(
@@ -83,17 +75,15 @@ test_that("visOmopTable", {
   ) %in% colnames(fx2$body$dataset)))
   expect_true(nrow(fx2$body$dataset) == 18)
 
-  expect_message(
-    expect_no_error(
-      fx3 <- visOmopTable(
-        result = result,
-        estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
-        header = c("strata", "estimate"),
-        groupColumn = "cohort_name",
-        type = "flextable",
-        hide = c("result_id", "estimate_type", "cdm_name"),
-        .options = list())
-    )
+  expect_no_error(
+    fx3 <- visOmopTable(
+      result = result,
+      estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
+      header = c("strata", "estimate"),
+      groupColumn = "cohort_name",
+      type = "flextable",
+      hide = c("result_id", "estimate_type", "cdm_name"),
+      .options = list())
   )
   expect_true("flextable" == class(fx3))
   expect_true(all(c(
@@ -122,7 +112,7 @@ test_that("visOmopTable", {
       result = result,
       estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
       header = c("group", "settings"),
-      settingsColumns = colnames(settings(result)),
+      settingsColumn = settingsColumns(result),
       groupColumn = NULL,
       type = "tibble",
       hide = c("result_id", "estimate_type", "cdm_name"),
@@ -130,10 +120,14 @@ test_that("visOmopTable", {
   )
   expect_true(all(c("tbl_df", "tbl", "data.frame") %in% class(tib1)))
   expect_true(all(c(
-    'Age group', 'Sex', 'Variable name', 'Variable level', 'Estimate name',
-    glue::glue('[header_name]Cohort name\n[header_level]cohort1\n[header_name]Result type\n[header_level]mock_summarised_result\n[header_name]Package name\n[header_level]visOmopResults\n[header_name]Package version\n[header_level]{utils::packageVersion("visOmopResults")}\n[header_name]Min cell count\n[header_level]10000000'),
-    glue::glue('[header_name]Cohort name\n[header_level]cohort2\n[header_name]Result type\n[header_level]mock_summarised_result\n[header_name]Package name\n[header_level]visOmopResults\n[header_name]Package version\n[header_level]{utils::packageVersion("visOmopResults")}\n[header_name]Min cell count\n[header_level]10000000'))  %in% colnames(tib1)))
+    'Age group', 'Sex', 'Variable name', 'Variable level', 'Estimate name', '[header_name]Cohort name\n[header_level]cohort1', '[header_name]Cohort name\n[header_level]cohort2') %in% colnames(tib1)))
   expect_true(all(tib1[,6] |> dplyr::pull() |> unique() == c("<10,000,000", "<10,000,000, <10,000,000", "<10,000,000 (<10,000,000)")))
+
+  result$estimate_value[1:3] <- NA_character_
+
+  expect_equal(visOmopTable(result, type = "tibble")$`Estimate value`[1:6],c(
+    NA_character_, NA_character_, NA_character_, "<10,000,000", "<10,000,000", "<10,000,000"
+  ))
 
   # woring group column
   expect_error(
@@ -150,18 +144,16 @@ test_that("visOmopTable", {
 
 test_that("renameColumn works", {
   result <- mockSummarisedResult()
-  expect_message(
-    expect_no_error(
-      gt1 <- visOmopTable(
-        result = result,
-        estimateName = character(),
-        header = character(),
-        groupColumn = NULL,
-        type = "gt",
-        rename = c("Database name" = "cdm_name"),
-        hide = c("result_id", "estimate_type"),
-        .options = list())
-    )
+  expect_no_error(
+    gt1 <- visOmopTable(
+      result = result,
+      estimateName = character(),
+      header = character(),
+      groupColumn = NULL,
+      type = "gt",
+      rename = c("Database name" = "cdm_name"),
+      hide = c("result_id", "estimate_type"),
+      .options = list())
   )
   expect_true(all(
     colnames(gt1$`_data`) ==
@@ -182,19 +174,16 @@ test_that("renameColumn works", {
   )
   expect_true(all(colnames(gt2$`_data`)[1:2] == c("Cohort name", "changeName")))
   expect_true(all(colnames(gt2$`_data`)[5] == "[header_name]Database name\n[header_level]mock\n[header_name]Age group\n[header_level]overall\n[header_name]Sex\n[header_level]overall"))
-
-  expect_message(
-    expect_warning(
-      fx1 <- visOmopTable(
-        result = result,
-        estimateName = character(),
-        header = c("cdm_name", "Sex"),
-        groupColumn = NULL,
-        type = "flextable",
-        rename = c("Database name" = "cdm_name", "changeName" = "name"),
-        hide = c("result_id", "estimate_type"),
-        .options = list())
-    )
+  expect_warning(
+    fx1 <- visOmopTable(
+      result = result,
+      estimateName = character(),
+      header = c("cdm_name", "Sex"),
+      groupColumn = NULL,
+      type = "flextable",
+      rename = c("Database name" = "cdm_name", "changeName" = "name"),
+      hide = c("result_id", "estimate_type"),
+      .options = list())
   )
 
   # more than 1 group column
@@ -224,39 +213,6 @@ test_that("renameColumn works", {
     hide = c("result_id", "estimate_type"),
     .options = list())
   expect_true(colnames(fx3$body$dataset)[1] == "group")
-})
-
-test_that("empty result",{
-  result = omopgenerics::emptySummarisedResult()
-  type = "gt"
-  estimateName = c(
-    "N (%)" = "<count> (<percentage>%)",
-    "N" = "<count>",
-    "Median [Q25 - Q75]" = "<median> [<q25> - <q75>]",
-    "Mean (SD)" = "<mean> (<sd>)",
-    "Range" = "<min> to <max>"
-  )
-  header = c("group")
-  groupColumn = NULL
-  hide = c(
-    "result_id", "estimate_type",
-    "additional_name", "additional_level"
-  )
-  .options = list()
-
-  expect_warning({
-    res0 <-  visOmopResults::visOmopTable(
-      result = result,
-      estimateName = estimateName,
-      header = header,
-      groupColumn = groupColumn,
-      type = type,
-      hide = hide,
-      .options = .options
-    )
-
-  }, "Empty summarized results provided.")
-
 })
 
 test_that("don't want scientific",{
@@ -291,8 +247,9 @@ test_that("estimates at the end", {
       "additional_name" = "something_name",
       "additional_level" ="something_level"
     ) |>
-    dplyr::select(omopgenerics::resultColumns())
-  tab <- visOmopTable(result, settingsColumns = "package_name", type = "tibble")
+    dplyr::select(omopgenerics::resultColumns()) |>
+    omopgenerics::newSummarisedResult(settings = NULL)
+  tab <- visOmopTable(result, settingsColumn = "package_name", type = "tibble")
   expect_equal(
     colnames(tab),
     c('CDM name', 'Cohort name', 'Age group', 'Sex', 'Variable name',
@@ -301,3 +258,50 @@ test_that("estimates at the end", {
   )
 })
 
+
+test_that("columnOrder", {
+  result <- mockSummarisedResult()
+  expect_warning(expect_error(
+    visOmopTable(
+      result,
+      settingsColumn = "package_name",
+      columnOrder = c("cdm_name", "cohort_name", "age_group", "sex", "variable_name", "variable_level", "count", "mean", "sd", "percentage"),
+      type = "tibble"
+    )
+  ))
+
+  table <- visOmopTable(
+    result,
+    settingsColumn = "package_name",
+    columnOrder = c("cdm_name", "cohort_name", "age_group", "sex", "variable_name", "variable_level", "package_name", "estimate_name"),
+    type = "tibble"
+  )
+  expect_true(all(colnames(table) == c('CDM name', 'Cohort name', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', 'Estimate name', 'Estimate value')))
+
+  table <- visOmopTable(
+    result,
+    settingsColumn = "package_name",
+    columnOrder = c("cdm_name", "cohort_name", "estimate_value", "age_group", "sex", "variable_name", "variable_level", "package_name", "estimate_name"),
+    type = "tibble"
+  )
+  expect_true(all(colnames(table) == c('CDM name', 'Cohort name', 'Estimate value', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', 'Estimate name')))
+
+  table <- visOmopTable(
+    result,
+    header = "estimate_name",
+    settingsColumn = "package_name",
+    columnOrder = c("cdm_name", "cohort_name", "estimate_value", "age_group", "sex", "variable_name", "variable_level", "package_name", "estimate_name"),
+    type = "tibble"
+  )
+  expect_true(all(colnames(table) == c('CDM name', 'Cohort name', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', '[header_name]Estimate name\n[header_level]count', '[header_name]Estimate name\n[header_level]mean', '[header_name]Estimate name\n[header_level]sd', '[header_name]Estimate name\n[header_level]percentage')))
+})
+
+
+test_that("empty table", {
+  gt <- visOmopTable(omopgenerics::emptySummarisedResult(), type = "gt")
+  fx <- visOmopTable(omopgenerics::emptySummarisedResult(), type = "flextable")
+  tib <- visOmopTable(omopgenerics::emptySummarisedResult(), type = "tibble")
+  expect_true(nrow(gt$`_data`) == 0)
+  expect_true(fx$body$col_keys == "Table has no data")
+  expect_true(nrow(tib) == 0)
+})

@@ -8,7 +8,6 @@ test_that("tidySummarisedResult", {
   expect_true(class(res0$percentage) == "numeric")
   expect_true(class(res0$mean) == "numeric")
   expect_true(class(res0$count) == "integer")
-  expect_equal(tidy(mocksum), res0 |> dplyr::select(!"result_id"))
 
   expect_no_error(res1 <- tidySummarisedResult(mocksum, splitGroup = FALSE, splitAdditional = FALSE,
                                                splitStrata = FALSE, pivotEstimatesBy = c("variable_name", "variable_level", "estimate_name")))
@@ -41,7 +40,6 @@ test_that("tidySummarisedResult", {
   # 2 id's:
   mocksum2 <- mocksum |> omopgenerics::bind(mocksum)
   expect_no_error(res4 <- tidySummarisedResult(result = mocksum2))
-  expect_equal(tidy(mocksum2), res4 |> dplyr::select(!"result_id"))
 })
 
 test_that("tidySummarisedResult, dates", {
@@ -98,8 +96,4 @@ test_that("tidySummarisedResult, dates", {
     )
   expect_no_error(result_out <- tidySummarisedResult(result))
   expect_true(class(as.Date(result_out |> dplyr::pull(date))) == "Date")
-  expect_equal(tidy(result), result_out |> dplyr::select(!"result_id"))
-
-  # check no more aguments in tidy method
-  expect_warning(tidy(result, splitStrata = FALSE))
 })

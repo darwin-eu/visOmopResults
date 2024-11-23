@@ -23,7 +23,7 @@
 #' @param groupAsColumn Whether to display the group labels as a column
 #' (TRUE) or rows (FALSE).
 #' @param groupOrder Order in which to display group labels.
-#' @param colsToMergeRows Names of the columns to merge vertically
+#' @param merge Names of the columns to merge vertically
 #' when consecutive row cells have identical values. Alternatively, use
 #' "all_columns" to apply this merging to all columns, or use NULL to indicate
 #' no merging.
@@ -31,43 +31,12 @@
 #' @return A flextable object.
 #'
 #' @description
-#' `r lifecycle::badge("deprecated")`
 #' Creates a flextable object from a dataframe using a delimiter to span
 #' the header, and allows to easily customise table style.
 #'
 #' @return A flextable object.
+#' @noRd
 #'
-#' @export
-#'
-fxTable <- function(x,
-                    delim = "\n",
-                    style = "default",
-                    na = "-",
-                    title = NULL,
-                    subtitle = NULL,
-                    caption = NULL,
-                    groupColumn = NULL,
-                    groupAsColumn = FALSE,
-                    groupOrder = NULL,
-                    colsToMergeRows = NULL) {
-  lifecycle::deprecate_soft(when = "0.4.0", what = "fxTable()", with = "formatTable()")
-  x |>
-    formatTable(
-      type = "flextable",
-      delim = delim,
-      style = style,
-      na = na,
-      title = title,
-      subtitle = subtitle,
-      caption = caption,
-      groupColumn = groupColumn,
-      groupAsColumn = groupAsColumn,
-      groupOrder = groupOrder,
-      merge = colsToMergeRows
-    )
-}
-
-
 fxTableInternal <- function(x,
                             delim = "\n",
                             style = "default",

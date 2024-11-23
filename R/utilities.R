@@ -89,20 +89,20 @@ validatePivotEstimatesBy <- function(pivotEstimatesBy, call = parent.frame()) {
   return(invisible(pivotEstimatesBy))
 }
 
-validateSettingsColumns <- function(settingsColumns, result, call = parent.frame()) {
+validateSettingsColumn <- function(settingsColumn, result, call = parent.frame()) {
   set <- settings(result)
-  omopgenerics::assertCharacter(x = settingsColumns, null = TRUE, call = call)
-  if (!is.null(settingsColumns)) {
-    omopgenerics::assertTable(set, columns = settingsColumns)
-    settingsColumns <- settingsColumns[settingsColumns != "result_id"]
-    notPresent <- settingsColumns[!settingsColumns %in% colnames(set)]
+  omopgenerics::assertCharacter(x = settingsColumn, null = TRUE, call = call)
+  if (!is.null(settingsColumn)) {
+    omopgenerics::assertTable(set, columns = settingsColumn)
+    settingsColumn <- settingsColumn[settingsColumn != "result_id"]
+    notPresent <- settingsColumn[!settingsColumn %in% colnames(set)]
     if (length(notPresent) > 0) {
-      cli::cli_abort("The following `settingsColumns` are not present in settings: {notPresent}.")
+      cli::cli_abort("The following `settingsColumn` are not present in settings: {notPresent}.")
     }
   } else {
-    settingsColumns <- character()
+    settingsColumn <- character()
   }
-  return(invisible(settingsColumns))
+  return(invisible(settingsColumn))
 }
 
 validateRename <- function(rename, result, call = parent.frame()) {
@@ -132,8 +132,8 @@ validateGroupColumn <- function(groupColumn, cols, sr = NULL, rename = NULL, cal
     }
     omopgenerics::assertCharacter(groupColumn[[1]], null = TRUE, call = call)
     if (!is.null(sr) & length(groupColumn[[1]]) > 0) {
-      settingsColumns <- settingsColumns(sr)
-      settingsColumns <- settingsColumns[settingsColumns %in% cols]
+      settingsColumn <- settingsColumns(sr)
+      settingsColumn <- settingsColumn[settingsColumn %in% cols]
       groupColumn[[1]] <- purrr::map(groupColumn[[1]], function(x) {
         if (x %in% c("group", "strata", "additional", "estimate", "settings")) {
           switch(x,
@@ -141,7 +141,7 @@ validateGroupColumn <- function(groupColumn, cols, sr = NULL, rename = NULL, cal
                  strata = strataColumns(sr),
                  additional = additionalColumns(sr),
                  estimate = "estimate_name",
-                 settings = settingsColumns)
+                 settings = settingsColumn)
         } else {
           x
         }
@@ -149,7 +149,7 @@ validateGroupColumn <- function(groupColumn, cols, sr = NULL, rename = NULL, cal
     }
     if (any(!groupColumn[[1]] %in% cols)) {
       set <- character()
-      if (!is.null(sr)) set <- "or in the settings stated in `settingsColumns`"
+      if (!is.null(sr)) set <- "or in the settings stated in `settingsColumn`"
       cli::cli_abort("`groupColumn` must refer to columns in the result table {set}", call = call)
     }
     if (is.null(names(groupColumn)) & length(groupColumn[[1]]) > 0) {
@@ -189,8 +189,7 @@ validateDelim <- function(delim, call = parent.frame()) {
 
 validateShowMinCellCount <- function(showMinCellCount, set) {
   omopgenerics::assertLogical(showMinCellCount, length = 1)
-  if ((!"min_cell_count" %in% colnames(set)) & isTRUE(showMinCellCount)) {
-    cli::cli_inform(c("!" = "Results have not been suppressed."))
+  if ((!"min_cell_count" %in% colnames(set) | all(set$min_cell_count == "0")) & isTRUE(showMinCellCount)) {
     showMinCellCount <- FALSE
   }
   return(invisible(showMinCellCount))

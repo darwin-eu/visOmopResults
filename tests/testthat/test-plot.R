@@ -14,7 +14,8 @@ test_that("Function returns a ggplot object", {
     line = TRUE,
     point = TRUE,
     ribbon = FALSE,
-    facet = c("age_group", "sex"))
+    facet = c("age_group", "sex")) +
+    themeVisOmop()
 
   expect_no_error(p)
 
@@ -36,20 +37,27 @@ test_that("Function returns a ggplot object", {
 
   p_box <- boxPlot(
     result,
+    x = "variable_name",
     lower = "q25",
     middle = "mean",
     upper = "q75",
     ymin = "min",
     ymax = "max",
     facet = age_group ~ sex,
-    colour = "cohort_name")
+    colour = "cohort_name",
+    label = "min"
+    ) +
+    themeVisOmop(fontsizeRef = 10, legendPosition = "bottom")
 
   expect_no_error(p_box)
 
   expect_false(has_no_legend_labels(p_box))
+  expect_true(p_box$theme$axis.title.y$size == 10)
+  expect_true(p_box$theme$legend.position == "bottom")
+  expect_true(p_box$labels$label1 == "min")
 
   expect_no_error(
-    scatterPlot(
+    p <- scatterPlot(
       result,
       x = "sex",
       line = TRUE,
@@ -59,8 +67,14 @@ test_that("Function returns a ggplot object", {
       ymin = "q25",
       ymax = "q75",
       facet = "age_group",
-      colour = "cohort_name")
+      colour = "cohort_name",
+      label = c("age_group", "mean", "cohort_name")
+    ) +
+      themeVisOmop()
   )
+  expect_true(p$labels$label1 == "age_group")
+  expect_true(p$labels$label2 == "mean")
+  expect_true(p$labels$label3 == "cohort_name")
 
   result <- mockSummarisedResult() |>
     dplyr::filter(variable_name == "age")
@@ -69,11 +83,12 @@ test_that("Function returns a ggplot object", {
     result = result,
     x = "cohort_name",
     y = "mean",
-    facet = c("age_group", "sex"))
+    facet = c("age_group", "sex"), label = c("cohort_name")) +
+    themeVisOmop()
 
   expect_no_error(p_bar)
-
   expect_true(has_no_legend_labels(p_bar))
+  expect_true(p_bar$labels$label1 == "cohort_name")
 
   expect_message(
     result |>
@@ -115,7 +130,7 @@ test_that("Function returns a ggplot object", {
         .data$variable_name == "age",
         .data$estimate_name %in% c("mean", "sd")
       ) |>
-      boxPlot()
+      boxPlot(x = "variable_name")
   )
 
 })
@@ -138,6 +153,7 @@ test_that("Empty result object returns warning", {
 
   expect_warning(
     output_plot <- boxPlot(
+      x = "sex",
       result = result
     ),
     "result object is empty, returning empty plot."
@@ -153,17 +169,3 @@ test_that("Empty result object returns warning", {
   )
 
 })
-
-test_that("test prepareColumn",{
-  result <- mockSummarisedResult()
-
-  result2 <- prepareColumn(result, newName = "newName", cols = c("group_name", "group_level") , opts = c("group_name", "group_level"), varName = NULL)
-
-  expect_error(prepareColumn(result, cols = c("group_name", "group_level") , opts = c("group_name"), varName = NULL))
-
-  expect_equal(result2,
-                 result <- result |>
-                   tidyr::unite(
-                     col = !!"newName", dplyr::all_of(c("group_name", "group_level")), remove = FALSE, sep = " - ")
-    )
-  })

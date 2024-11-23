@@ -7,7 +7,6 @@
 #' @param useFormatOrder Whether to use the order in which estimate names
 #' appear in the estimateName (TRUE), or use the order in the
 #' input dataframe (FALSE).
-#' @param estimateNameFormat deprecated.
 #'
 #' @description
 #' Formats estimate_name and estimate_value columns by changing the name of the
@@ -30,14 +29,7 @@
 formatEstimateName <- function(result,
                                estimateName = NULL,
                                keepNotFormatted = TRUE,
-                               useFormatOrder = TRUE,
-                               estimateNameFormat = lifecycle::deprecated()) {
-  if (lifecycle::is_present(estimateNameFormat)) {
-    lifecycle::deprecate_soft(
-      "0.4.0", "formatEstimateName(estimateNameFormat = )", "formatEstimateName(estimateName = )")
-    if (missing(estimateName)) estimateName <- estimateNameFormat
-  }
-
+                               useFormatOrder = TRUE) {
   # initial checks
   omopgenerics::assertTable(result, columns = c("estimate_name", "estimate_value"))
   estimateName <- validateEstimateName(estimateName)
@@ -84,7 +76,6 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
       dplyr::mutate(group_id = min(.data$id), .by = dplyr::all_of(cols))
   }
 
-  resultF <- NULL
   for (k in seq_along(format)) {
     nameK <- nms[k]
     formatK <- format[k] |> unname()
@@ -105,7 +96,8 @@ formatEstimateNameInternal <- function(result, format, keepNotFormatted, useForm
           cli::cli_warn("No entries in `result` for estimate {.strong {keysK}}")
         }
       } else {
-        res <- res |> dplyr::mutate("id" = min(.data$id), .by = dplyr::all_of(cols))
+        res <- res |>
+          dplyr::mutate("id" = min(.data$id), .by = dplyr::all_of(cols))
         resF <- res |>
           dplyr::select(-"estimate_type") |>
           tidyr::pivot_wider(
@@ -188,10 +180,10 @@ evalName <- function(result, format, keys) {
   result <- result |>
     dplyr::mutate(
       "estimate_value" =
-        dplyr::if_else(
-          dplyr::if_any(dplyr::all_of(keys), ~ is.na(.x)),
-          NA_character_,
-          eval(parse(text = format))
+        dplyr::case_when(
+          dplyr::if_any(dplyr::all_of(keys), \(x) x == "-") ~ "-",
+          dplyr::if_any(dplyr::all_of(keys), ~ is.na(.x)) ~ NA_character_,
+          .default = eval(parse(text = format))
         )
     )
   return(result)

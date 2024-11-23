@@ -72,6 +72,8 @@ visTable <- function(result,
   # hide <- c(hide, "result_id", "estimate_type")
   checkVisTableInputs(header, groupColumn, hide)
 
+  if (nrow(result) == 0) return(emptyTable(type = type))
+
   # format estimate values and names
   if (!any(c("estimate_name", "estimate_type", "estimate_value") %in% colnames(result))) {
     cli::cli_inform("`estimate_name`, `estimate_type`, and `estimate_value` must be present in `result` to apply `formatEstimateValue()` and `formatEstimateName()`.")
@@ -143,16 +145,32 @@ visTable <- function(result,
   return(result)
 }
 
-renameInternal <- function(x, rename, cols = NULL, toSentence = TRUE) {
-  newNames <- character()
-  for (xx in x) {
-    if (isTRUE(xx %in% rename)) {
-      newNames <- c(newNames, names(rename[rename == xx]))
-    } else if (toSentence & any(xx %in% cols | is.null(cols))) {
-      newNames <- c(newNames, formatToSentence(xx))
-    } else {
-      newNames <- c(newNames, xx)
-    }
-  }
-  return(newNames)
+formatToSentence <- function(x) {
+  stringr::str_to_sentence(gsub("_", " ", gsub("&&&", "and", x)))
 }
+
+#' Returns an empty table
+#'
+#' @param type The desired format of the output table. See `tableType()` for
+#' allowed options.
+#'
+#' @return An empty table of the class specified in `type`
+#'
+#' @description
+#' `r lifecycle::badge("experimental")`
+#'
+#' @export
+#'
+#' @examples
+#' emptyTable(type = "flextable")
+#'
+emptyTable <- function(type = "gt") {
+  omopgenerics::assertChoice(type, choices = tableType())
+  empty <- dplyr::tibble()
+  switch (type,
+    "gt" = empty |> gt::gt(),
+    "flextable" = empty |> dplyr::mutate("Table has no data" = NA) |> flextable::flextable(cwidth = 1.5),
+    "tibble" = empty
+  )
+}
+

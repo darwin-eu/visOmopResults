@@ -15,19 +15,6 @@ tableOptions <- function() {
   return(defaultTableOptions(NULL))
 }
 
-
-#' Additional table formatting options
-#'
-#'  `r lifecycle::badge("deprecated")`
-#'
-#' @return list of options
-#' @export
-#'
-optionsVisOmopTable <- function() {
-  lifecycle::deprecate_soft("0.4.0", "optionsVisOmopTable()", "tableOptions()")
-  tableOptions()
-}
-
 #' Supported predefined styles for formatted tables
 #'
 #' @param type Character string specifying the formatted table class.

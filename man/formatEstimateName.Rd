@@ -8,8 +8,7 @@ formatEstimateName(
   result,
   estimateName = NULL,
   keepNotFormatted = TRUE,
-  useFormatOrder = TRUE,
-  estimateNameFormat = lifecycle::deprecated()
+  useFormatOrder = TRUE
 )
 }
 \arguments{
@@ -23,8 +22,6 @@ computation order. Indicate estimate_name's between <...>.}
 \item{useFormatOrder}{Whether to use the order in which estimate names
 appear in the estimateName (TRUE), or use the order in the
 input dataframe (FALSE).}
-
-\item{estimateNameFormat}{deprecated.}
 }
 \value{
 A \verb{<summarised_result>} object.
