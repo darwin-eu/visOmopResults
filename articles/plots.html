@@ -26,7 +26,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visOmopResults</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -39,11 +39,8 @@
 <li class="active nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles">
-<li><a class="dropdown-item" href="../articles/filterSummarisedResult.html">Filter helpers</a></li>
-    <li><a class="dropdown-item" href="../articles/plots.html">Plotting tools</a></li>
+<li><a class="dropdown-item" href="../articles/plots.html">Plotting tools</a></li>
     <li><a class="dropdown-item" href="../articles/tables.html">Formatting tables</a></li>
-    <li><a class="dropdown-item" href="../articles/tidySummarisedResult.html">Tidy your summarised result object</a></li>
-    <li><a class="dropdown-item" href="../articles/utilityFunctions.html">Utility functions</a></li>
   </ul>
 </li>
       </ul>
@@ -78,7 +75,7 @@ very useful. These tools are useful to plot either
 <code>&lt;summarised_result&gt;</code> dataset or a usual
 <code>&lt;data.frame&gt;</code>.</p>
 <div class="sourceCode" id="cb1"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/visOmopResults/">visOmopResults</a></span><span class="op">)</span></span></code></pre></div>
+<code class="sourceCode R"><span>  <span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://darwin-eu.github.io/visOmopResults/">visOmopResults</a></span><span class="op">)</span></span></code></pre></div>
 <div class="section level2">
 <h2 id="plotting-with-a-summarised_result">Plotting with a <code>&lt;summarised_result&gt;</code><a class="anchor" aria-label="anchor" href="#plotting-with-a-summarised_result"></a>
 </h2>
@@ -128,12 +125,11 @@ penguins from the palmerpenguins package using
 <code>&lt;summarised_result&gt;</code> when referring to inputs, we will
 use the columns shown in its tidy format:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/tidyColumns.html">tidyColumns</a></span><span class="op">(</span><span class="va">penguinsSummary</span><span class="op">)</span></span>
-<span><span class="co">#&gt;  [1] "cdm_name"        "species"         "year"            "sex"            </span></span>
-<span><span class="co">#&gt;  [5] "variable_name"   "variable_level"  "count"           "median"         </span></span>
-<span><span class="co">#&gt;  [9] "q25"             "q75"             "min"             "max"            </span></span>
-<span><span class="co">#&gt; [13] "count_missing"   "density_x"       "density_y"       "percentage"     </span></span>
-<span><span class="co">#&gt; [17] "result_type"     "package_name"    "package_version"</span></span></code></pre></div>
+<code class="sourceCode R"><span><span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/tidyColumns.html" class="external-link">tidyColumns</a></span><span class="op">(</span><span class="va">penguinsSummary</span><span class="op">)</span></span>
+<span><span class="co">#&gt;  [1] "cdm_name"       "species"        "year"           "sex"           </span></span>
+<span><span class="co">#&gt;  [5] "variable_name"  "variable_level" "count"          "median"        </span></span>
+<span><span class="co">#&gt;  [9] "q25"            "q75"            "min"            "max"           </span></span>
+<span><span class="co">#&gt; [13] "count_missing"  "density_x"      "density_y"      "percentage"</span></span></code></pre></div>
 <p>And not the column names seen in the
 <code>&lt;summarised_result&gt;</code> format:</p>
 <div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
@@ -158,7 +154,7 @@ be created.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_name</span> <span class="op">==</span> <span class="st">"bill_depth_mm"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/filterStrata.html">filterStrata</a></span><span class="op">(</span><span class="va">year</span> <span class="op">!=</span> <span class="st">"overall"</span>, <span class="va">sex</span> <span class="op">==</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterStrata.html" class="external-link">filterStrata</a></span><span class="op">(</span><span class="va">year</span> <span class="op">!=</span> <span class="st">"overall"</span>, <span class="va">sex</span> <span class="op">==</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/scatterPlot.html">scatterPlot</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="st">"year"</span>, </span>
 <span>    y <span class="op">=</span> <span class="st">"median"</span>,</span>
@@ -169,11 +165,15 @@ be created.</p>
 <span>    colour <span class="op">=</span> <span class="st">"species"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-5-1.png" width="672"></p>
+<p>Additionally, we can use the function <code><a href="../reference/themeVisOmop.html">themeVisOmop()</a></code> to
+change the default <code>ggplot2</code> style to our default style. Not
+only that, but we can use standard ggplot2 functionalities to the
+returned plot:</p>
 <div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span><span class="op">)</span><span class="op">)</span><span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/filterStrata.html">filterStrata</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="st">"overall"</span>, <span class="va">sex</span> <span class="op">==</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/filterGroup.html">filterGroup</a></span><span class="op">(</span><span class="va">species</span> <span class="op">!=</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterStrata.html" class="external-link">filterStrata</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="st">"overall"</span>, <span class="va">sex</span> <span class="op">==</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterGroup.html" class="external-link">filterGroup</a></span><span class="op">(</span><span class="va">species</span> <span class="op">!=</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/scatterPlot.html">scatterPlot</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="st">"density_x"</span>, </span>
 <span>    y <span class="op">=</span> <span class="st">"density_y"</span>,</span>
@@ -183,12 +183,13 @@ be created.</p>
 <span>    facet <span class="op">=</span> <span class="va">cdm_name</span> <span class="op">~</span> <span class="va">variable_name</span>,</span>
 <span>    colour <span class="op">=</span> <span class="st">"species"</span></span>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="va">cdm_name</span> <span class="op">~</span> <span class="va">variable_name</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/themeVisOmop.html">themeVisOmop</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="va">cdm_name</span> <span class="op">~</span> <span class="va">variable_name</span>, scales <span class="op">=</span> <span class="st">"free_x"</span><span class="op">)</span> </span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-6-1.png" width="672"></p>
 <div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_name</span> <span class="op">==</span> <span class="st">"flipper_length_mm"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/filterStrata.html">filterStrata</a></span><span class="op">(</span><span class="va">year</span> <span class="op">!=</span> <span class="st">"overall"</span>, <span class="va">sex</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterStrata.html" class="external-link">filterStrata</a></span><span class="op">(</span><span class="va">year</span> <span class="op">!=</span> <span class="st">"overall"</span>, <span class="va">sex</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/scatterPlot.html">scatterPlot</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"sex"</span><span class="op">)</span>, </span>
 <span>    y <span class="op">=</span> <span class="st">"median"</span>,</span>
@@ -200,7 +201,8 @@ be created.</p>
 <span>    facet <span class="op">=</span> <span class="va">cdm_name</span> <span class="op">~</span> <span class="va">species</span>,</span>
 <span>    colour <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"year"</span>, <span class="st">"sex"</span><span class="op">)</span></span>
-<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="op">)</span>  <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/themeVisOmop.html">themeVisOmop</a></span><span class="op">(</span>fontsizeRef <span class="op">=</span> <span class="fl">10</span>, legendPosition <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/coord_flip.html" class="external-link">coord_flip</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>y <span class="op">=</span> <span class="st">"Flipper length (mm)"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-7-1.png" width="672"></p>
@@ -208,7 +210,7 @@ be created.</p>
 <code class="sourceCode R"><span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span></span>
 <span>    <span class="st">"flipper_length_mm"</span>, <span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/filterStrata.html">filterStrata</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">==</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterStrata.html" class="external-link">filterStrata</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">==</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/scatterPlot.html">scatterPlot</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="st">"year"</span>, </span>
 <span>    y <span class="op">=</span> <span class="st">"median"</span>,</span>
@@ -220,6 +222,10 @@ be created.</p>
 <span>    facet <span class="op">=</span> <span class="va">cdm_name</span> <span class="op">~</span> <span class="va">species</span>,</span>
 <span>    colour <span class="op">=</span> <span class="st">"variable_name"</span>,</span>
 <span>    group <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"variable_name"</span><span class="op">)</span></span>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/themeVisOmop.html">themeVisOmop</a></span><span class="op">(</span></span>
+<span>    fontsizeRef <span class="op">=</span> <span class="fl">10</span>,</span>
+<span>    legendPosition <span class="op">=</span> <span class="st">"top"</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-8-1.png" width="672"></p>
 </div>
@@ -230,14 +236,15 @@ be created.</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_name</span> <span class="op">==</span> <span class="st">"number records"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/filterGroup.html">filterGroup</a></span><span class="op">(</span><span class="va">species</span> <span class="op">!=</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/filterStrata.html">filterStrata</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">!=</span> <span class="st">"overall"</span>, <span class="va">year</span> <span class="op">!=</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterGroup.html" class="external-link">filterGroup</a></span><span class="op">(</span><span class="va">species</span> <span class="op">!=</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterStrata.html" class="external-link">filterStrata</a></span><span class="op">(</span><span class="va">sex</span> <span class="op">!=</span> <span class="st">"overall"</span>, <span class="va">year</span> <span class="op">!=</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/barPlot.html">barPlot</a></span><span class="op">(</span></span>
 <span>    x <span class="op">=</span> <span class="st">"year"</span>,</span>
 <span>    y <span class="op">=</span> <span class="st">"count"</span>,</span>
 <span>    colour <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>    facet <span class="op">=</span> <span class="va">cdm_name</span> <span class="op">~</span> <span class="va">species</span></span>
-<span>  <span class="op">)</span></span></code></pre></div>
+<span>  <span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/themeVisOmop.html">themeVisOmop</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-9-1.png" width="672"></p>
 </div>
 <div class="section level3">
@@ -247,13 +254,15 @@ be created.</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_name</span> <span class="op">==</span> <span class="st">"body_mass_g"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/boxPlot.html">boxPlot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"year"</span>, facet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cdm_name"</span>, <span class="st">"species"</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"sex"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/boxPlot.html">boxPlot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"year"</span>, facet <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cdm_name"</span>, <span class="st">"species"</span><span class="op">)</span>, colour <span class="op">=</span> <span class="st">"sex"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/themeVisOmop.html">themeVisOmop</a></span><span class="op">(</span>fontsizeRef <span class="op">=</span> <span class="fl">10</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-10-1.png" width="672"></p>
 <p>We can specify how we want to facet using a formula:</p>
 <div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_name</span> <span class="op">==</span> <span class="st">"body_mass_g"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/boxPlot.html">boxPlot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"year"</span>, facet <span class="op">=</span> <span class="va">cdm_name</span> <span class="op">~</span> <span class="va">species</span>, colour <span class="op">=</span> <span class="st">"sex"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/boxPlot.html">boxPlot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"year"</span>, facet <span class="op">=</span> <span class="va">cdm_name</span> <span class="op">~</span> <span class="va">species</span>, colour <span class="op">=</span> <span class="st">"sex"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/themeVisOmop.html">themeVisOmop</a></span><span class="op">(</span>fontsizeRef <span class="op">=</span> <span class="fl">10</span>, legendPosition <span class="op">=</span> <span class="st">"bottom"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-11-1.png" width="672"></p>
 <p>Arguments before <code>~</code> specify the rows, and arguments after
 the columns, see another example faceting also by sex in the columns.
@@ -261,9 +270,10 @@ And in this case colouring by year:</p>
 <div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_name</span> <span class="op">==</span> <span class="st">"body_mass_g"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/filterGroup.html">filterGroup</a></span><span class="op">(</span><span class="va">species</span> <span class="op">!=</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/filterStrata.html">filterStrata</a></span><span class="op">(</span><span class="va">sex</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span><span class="op">)</span>, <span class="va">year</span> <span class="op">!=</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/boxPlot.html">boxPlot</a></span><span class="op">(</span>facet <span class="op">=</span> <span class="va">cdm_name</span> <span class="op">~</span> <span class="va">species</span> <span class="op">+</span> <span class="va">sex</span>, colour <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterGroup.html" class="external-link">filterGroup</a></span><span class="op">(</span><span class="va">species</span> <span class="op">!=</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterStrata.html" class="external-link">filterStrata</a></span><span class="op">(</span><span class="va">sex</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span><span class="op">)</span>, <span class="va">year</span> <span class="op">!=</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/boxPlot.html">boxPlot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"cdm_name"</span>, facet <span class="op">=</span> <span class="va">sex</span> <span class="op">~</span> <span class="va">species</span>, colour <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/themeVisOmop.html">themeVisOmop</a></span><span class="op">(</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-12-1.png" width="672"></p>
 <p>Note that as we didnt specify x there is no levels in the x axis, but
 box plots are produced anyway.</p>
@@ -281,24 +291,21 @@ format of <code>penguinsSummary</code>.</p>
 <span>  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="va">penguinsTidy</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
 <span><span class="co">#&gt; Rows: 720</span></span>
-<span><span class="co">#&gt; Columns: 17</span></span>
-<span><span class="co">#&gt; $ cdm_name        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Torgersen", "Torgersen", "Torgersen", "Torgersen", "T…</span></span>
-<span><span class="co">#&gt; $ species         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall",…</span></span>
-<span><span class="co">#&gt; $ year            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall",…</span></span>
-<span><span class="co">#&gt; $ sex             <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall",…</span></span>
-<span><span class="co">#&gt; $ variable_name   <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "number records", "bill_length_mm", "bill_depth_mm", "…</span></span>
-<span><span class="co">#&gt; $ variable_level  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, "female", "male", NA, NA, NA, NA, …</span></span>
-<span><span class="co">#&gt; $ count           <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 52, NA, NA, NA, NA, 24, 23, 5, 20, 16, 16, NA, NA, NA,…</span></span>
-<span><span class="co">#&gt; $ median          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> NA, 38, 18, 191, 3700, NA, NA, NA, NA, NA, NA, 38, 38,…</span></span>
-<span><span class="co">#&gt; $ q25             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> NA, 36, 17, 187, 3338, NA, NA, NA, NA, NA, NA, 37, 35,…</span></span>
-<span><span class="co">#&gt; $ q75             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> NA, 41, 19, 195, 4000, NA, NA, NA, NA, NA, NA, 39, 41,…</span></span>
-<span><span class="co">#&gt; $ min             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> NA, 33, 15, 176, 2900, NA, NA, NA, NA, NA, NA, 34, 33,…</span></span>
-<span><span class="co">#&gt; $ max             <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> NA, 46, 21, 210, 4700, NA, NA, NA, NA, NA, NA, 46, 45,…</span></span>
-<span><span class="co">#&gt; $ count_missing   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> NA, 1, 1, 1, 1, NA, NA, NA, NA, NA, NA, 1, 0, 0, 1, 0,…</span></span>
-<span><span class="co">#&gt; $ percentage      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, 46.153846, 44.230769, 9.615385, NA…</span></span>
-<span><span class="co">#&gt; $ result_type     <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "summarise_table", "summarise_table", "summarise_table…</span></span>
-<span><span class="co">#&gt; $ package_name    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "PatientProfiles", "PatientProfiles", "PatientProfiles…</span></span>
-<span><span class="co">#&gt; $ package_version <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "1.2.1", "1.2.1", "1.2.1", "1.2.1", "1.2.1", "1.2.1", …</span></span></code></pre></div>
+<span><span class="co">#&gt; Columns: 14</span></span>
+<span><span class="co">#&gt; $ cdm_name       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "Torgersen", "Torgersen", "Torgersen", "Torgersen", "To…</span></span>
+<span><span class="co">#&gt; $ species        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall", …</span></span>
+<span><span class="co">#&gt; $ year           <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall", …</span></span>
+<span><span class="co">#&gt; $ sex            <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "overall", "overall", "overall", "overall", "overall", …</span></span>
+<span><span class="co">#&gt; $ variable_name  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> "number records", "bill_length_mm", "bill_depth_mm", "f…</span></span>
+<span><span class="co">#&gt; $ variable_level <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> NA, NA, NA, NA, NA, "female", "male", NA, NA, NA, NA, N…</span></span>
+<span><span class="co">#&gt; $ count          <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 52, NA, NA, NA, NA, 24, 23, 5, 20, 16, 16, NA, NA, NA, …</span></span>
+<span><span class="co">#&gt; $ median         <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> NA, 38, 18, 191, 3700, NA, NA, NA, NA, NA, NA, 38, 38, …</span></span>
+<span><span class="co">#&gt; $ q25            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> NA, 36, 17, 187, 3338, NA, NA, NA, NA, NA, NA, 37, 35, …</span></span>
+<span><span class="co">#&gt; $ q75            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> NA, 41, 19, 195, 4000, NA, NA, NA, NA, NA, NA, 39, 41, …</span></span>
+<span><span class="co">#&gt; $ min            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> NA, 33, 15, 176, 2900, NA, NA, NA, NA, NA, NA, 34, 33, …</span></span>
+<span><span class="co">#&gt; $ max            <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> NA, 46, 21, 210, 4700, NA, NA, NA, NA, NA, NA, 46, 45, …</span></span>
+<span><span class="co">#&gt; $ count_missing  <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> NA, 1, 1, 1, 1, NA, NA, NA, NA, NA, NA, 1, 0, 0, 1, 0, …</span></span>
+<span><span class="co">#&gt; $ percentage     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> NA, NA, NA, NA, NA, 46.153846, 44.230769, 9.615385, NA,…</span></span></code></pre></div>
 <p>That as it can be seen is a normal data.frame:</p>
 <div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsTidy</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://rdrr.io/r/base/class.html" class="external-link">class</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -313,7 +320,8 @@ plot but from the tidy format:</p>
 <span>    <span class="va">sex</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"female"</span>, <span class="st">"male"</span><span class="op">)</span>,</span>
 <span>    <span class="va">year</span> <span class="op">!=</span> <span class="st">"overall"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/boxPlot.html">boxPlot</a></span><span class="op">(</span>facet <span class="op">=</span> <span class="va">cdm_name</span> <span class="op">~</span> <span class="va">species</span> <span class="op">+</span> <span class="va">sex</span>, colour <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="../reference/boxPlot.html">boxPlot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"cdm_name"</span>, facet <span class="op">=</span> <span class="op">~</span> <span class="va">species</span> <span class="op">+</span> <span class="va">sex</span>, colour <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/themeVisOmop.html">themeVisOmop</a></span><span class="op">(</span>fontsizeRef <span class="op">=</span> <span class="fl">12</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-15-1.png" width="672"></p>
 </div>
 <div class="section level2">
@@ -327,6 +335,7 @@ function that we may be interested on:</p>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_name</span> <span class="op">==</span> <span class="st">"number records"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggplot.html" class="external-link">ggplot</a></span><span class="op">(</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/aes.html" class="external-link">aes</a></span><span class="op">(</span>x <span class="op">=</span> <span class="va">year</span>, y <span class="op">=</span> <span class="va">sex</span>, fill <span class="op">=</span> <span class="va">count</span>, label <span class="op">=</span> <span class="va">count</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/themeVisOmop.html">themeVisOmop</a></span><span class="op">(</span>fontsizeRef <span class="op">=</span> <span class="fl">10</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_tile.html" class="external-link">geom_tile</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_viridis.html" class="external-link">scale_fill_viridis_c</a></span><span class="op">(</span>trans <span class="op">=</span> <span class="st">"log"</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
@@ -348,10 +357,10 @@ location of the legend.</p>
 <span>    <span class="va">strata_name</span> <span class="op">==</span> <span class="st">"year &amp;&amp;&amp; sex"</span>,</span>
 <span>    <span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/grep.html" class="external-link">grepl</a></span><span class="op">(</span><span class="st">"NA"</span>, <span class="va">strata_level</span><span class="op">)</span>,</span>
 <span>    <span class="va">variable_name</span> <span class="op">==</span> <span class="st">"body_mass_g"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/boxPlot.html">boxPlot</a></span><span class="op">(</span>facet <span class="op">=</span> <span class="va">cdm_name</span> <span class="op">~</span> <span class="va">species</span> <span class="op">+</span> <span class="va">sex</span>, colour <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/boxPlot.html">boxPlot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"species"</span>, facet <span class="op">=</span> <span class="va">cdm_name</span> <span class="op">~</span> <span class="va">sex</span>, colour <span class="op">=</span> <span class="st">"year"</span><span class="op">)</span> <span class="op">+</span></span>
+<span>  <span class="fu"><a href="../reference/themeVisOmop.html">themeVisOmop</a></span><span class="op">(</span>legendPosition <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6500</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"My custom x label"</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>legend.position <span class="op">=</span> <span class="st">"top"</span><span class="op">)</span></span></code></pre></div>
+<span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"My custom x label"</span><span class="op">)</span></span></code></pre></div>
 <p><img src="plots_files/figure-html/unnamed-chunk-17-1.png" width="672"></p>
 <p>You can also use <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggplot2::ggsave()</a></code> to later save one of
 this plots into ‘.png’ file.</p>
@@ -376,7 +385,7 @@ plots better.</p>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Martí Català, Núria Mercadé-Besora, Yuchen Guo.</p>
+  <p>Developed by Martí Català, Núria Mercadé-Besora.</p>
 </div>
 
 <div class="pkgdown-footer-right">

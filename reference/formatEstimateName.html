@@ -9,7 +9,7 @@ estimate name and/or joining different estimates together in a single row."><met
 
     <a class="navbar-brand me-2" href="../index.html">visOmopResults</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.4.0001</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,11 +20,8 @@ estimate name and/or joining different estimates together in a single row."><met
       <ul class="navbar-nav me-auto"><li class="active nav-item"><a class="nav-link" href="../reference/index.html">Reference</a></li>
 <li class="nav-item dropdown">
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
-  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/filterSummarisedResult.html">Filter helpers</a></li>
-    <li><a class="dropdown-item" href="../articles/plots.html">Plotting tools</a></li>
+  <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/plots.html">Plotting tools</a></li>
     <li><a class="dropdown-item" href="../articles/tables.html">Formatting tables</a></li>
-    <li><a class="dropdown-item" href="../articles/tidySummarisedResult.html">Tidy your summarised result object</a></li>
-    <li><a class="dropdown-item" href="../articles/utilityFunctions.html">Utility functions</a></li>
   </ul></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
  <input class="form-control" type="search" name="search-input" id="search-input" autocomplete="off" aria-label="Search site" placeholder="Search for" data-search-index="../search.json"></form></li>
@@ -52,8 +49,7 @@ estimate name and/or joining different estimates together in a single row.</p>
 <span>  <span class="va">result</span>,</span>
 <span>  estimateName <span class="op">=</span> <span class="cn">NULL</span>,</span>
 <span>  keepNotFormatted <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  useFormatOrder <span class="op">=</span> <span class="cn">TRUE</span>,</span>
-<span>  estimateNameFormat <span class="op">=</span> <span class="fu">lifecycle</span><span class="fu">::</span><span class="fu"><a href="https://lifecycle.r-lib.org/reference/deprecated.html" class="external-link">deprecated</a></span><span class="op">(</span><span class="op">)</span></span>
+<span>  useFormatOrder <span class="op">=</span> <span class="cn">TRUE</span></span>
 <span><span class="op">)</span></span></code></pre></div>
     </div>
 
@@ -78,10 +74,6 @@ computation order. Indicate estimate_name's between &lt;...&gt;.</p></dd>
 <dd><p>Whether to use the order in which estimate names
 appear in the estimateName (TRUE), or use the order in the
 input dataframe (FALSE).</p></dd>
-
-
-<dt id="arg-estimatenameformat">estimateNameFormat<a class="anchor" aria-label="anchor" href="#arg-estimatenameformat"></a></dt>
-<dd><p>deprecated.</p></dd>
 
 </dl></div>
     <div class="section level2">
@@ -124,7 +116,7 @@ input dataframe (FALSE).</p></dd>
 
 
     <footer><div class="pkgdown-footer-left">
-  <p>Developed by Martí Català, Núria Mercadé-Besora, Yuchen Guo.</p>
+  <p>Developed by Martí Català, Núria Mercadé-Besora.</p>
 </div>
 
 <div class="pkgdown-footer-right">
