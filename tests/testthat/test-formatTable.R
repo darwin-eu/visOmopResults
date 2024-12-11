@@ -49,4 +49,60 @@ test_that("test it works", {
   expect_message(result |> dplyr::group_by(cdm_name) |> formatTable())
 
   expect_error(formatTable(result, subtitle = "subtitle"))
+
+  res <- formatTable(x = result, type = "tibble")
+  expect_identical(res, result)
+})
+
+test_that("datatable works", {
+  result <- mockSummarisedResult() |>
+    filterStrata(strata_name == "sex") |>
+    formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
+                                        "N" = "<count>")) |>
+    formatHeader(header = c("strata", "strata_name", "strata_level"),
+                 includeHeaderName = TRUE)
+
+  dt <- formatTable(result, type = "datatable")
+  expect_true(all(c("datatables", "htmlwidget") %in% class(dt)))
+  expect_identical(
+    dt$x$container,
+    "<table class='display'><thead><tr><tr><th rowspan='5'>result_id</th>\n<th rowspan='5'>cdm_name</th>\n<th rowspan='5'>group_name</th>\n<th rowspan='5'>group_level</th>\n<th rowspan='5'>variable_name</th>\n<th rowspan='5'>variable_level</th>\n<th rowspan='5'>estimate_name</th>\n<th rowspan='5'>estimate_type</th>\n<th rowspan='5'>additional_name</th>\n<th rowspan='5'>additional_level</th>\n<th colspan ='2'>strata</th></tr></tr>\n<tr><tr><th colspan ='2'>strata_name</th></tr></tr>\n<tr><tr><th colspan ='2'>sex</th></tr></tr>\n<tr><tr><th colspan ='2'>strata_level</th></tr></tr>\n<tr><th>Male</th>\n<th>Female</th></tr></thead></table>"
+  )
+  expect_identical(
+    dt$x$caption,
+    "<caption style=\"caption-side: bottom; text-align: center;\"></caption>"
+  )
+  expect_true(dt$x$filter == "bottom")
+  expect_true(dt$x$class == "display")
+  expect_true(dt$x$options$pageLength == 10)
+  expect_identical(
+    dt$x$options$fixedColumns,
+    list(leftColumns = 0, rightColumns = 0)
+  )
+
+  dt <- formatTable(result, type = "datatable", style = list(scrollX = FALSE, filter = NULL, rownames = TRUE), delim = ".")
+  expect_true(all(c("datatables", "htmlwidget") %in% class(dt)))
+  expect_identical(
+    dt$x$container,
+    "<table class='display'><thead><tr><th>result_id</th>\n<th>cdm_name</th>\n<th>group_name</th>\n<th>group_level</th>\n<th>variable_name</th>\n<th>variable_level</th>\n<th>estimate_name</th>\n<th>estimate_type</th>\n<th>additional_name</th>\n<th>additional_level</th>\n<th>strata\nstrata_name\nsex\nstrata_level\nMale</th>\n<th>strata\nstrata_name\nsex\nstrata_level\nFemale</th></tr></thead></table>"
+  )
+  expect_identical(
+    dt$x$caption,
+    "<caption></caption>"
+  )
+  expect_true(dt$x$filter == "none")
+  expect_true(dt$x$class == "display")
+  expect_true(is.null(dt$x$options$pageLength))
+  expect_true(is.null(dt$x$options$fixedColumns))
+
+  dt <- formatTable(result, type = "datatable", groupColumn = "group_level", caption = "hi there")
+  expect_identical(
+    dt$x$caption,
+    "<caption style=\"caption-side: bottom; text-align: center;\">hi there</caption>"
+  )
+  expect_true(dt$x$filter == "bottom")
+  expect_true(colnames(dt$x$data)[1] == "group_level")
+  expect_identical(
+    dt$x$options$rowGroup, list(dataSrc = 1)
+  )
 })

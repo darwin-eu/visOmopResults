@@ -12,14 +12,14 @@ reference:
   - matches("format")
 - subtitle: Helper table functions
 - contents:
-  - matches("tableType|tableOptions|tableStyle|emptyTable")
+  - matches("tableType|tableOptions|tableStyle|emptyTable|tableColumns")
 
 - title: Plot functions
 - contents:
   - ends_with("Plot")
 - subtitle: Helper plot functions
 - contents:
-  - matches("themeVisOmop")
+  - matches("themeVisOmop|plotColumns")
 
 - title: Other functionalities
 - subtitle: To style text

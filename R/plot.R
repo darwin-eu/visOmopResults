@@ -25,7 +25,6 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' result <- mockSummarisedResult() |>
 #'   dplyr::filter(variable_name == "age")
 #'
@@ -37,7 +36,6 @@
 #'   point = TRUE,
 #'   ribbon = FALSE,
 #'   facet = age_group ~ sex)
-#' }
 #'
 scatterPlot <- function(result,
                         x,
@@ -59,10 +57,10 @@ scatterPlot <- function(result,
   omopgenerics::assertLogical(line, length = 1, call = call)
   omopgenerics::assertLogical(point, length = 1, call = call)
   omopgenerics::assertLogical(ribbon, length = 1, call = call)
-  omopgenerics::assertCharacter(x)
-  omopgenerics::assertCharacter(y, length = 1)
-  omopgenerics::assertCharacter(ymin, length = 1, null = TRUE)
-  omopgenerics::assertCharacter(ymax, length = 1, null = TRUE)
+  omopgenerics::assertCharacter(x, minNumCharacter = 1)
+  omopgenerics::assertCharacter(y, minNumCharacter = 1)
+  omopgenerics::assertCharacter(ymin, null = TRUE)
+  omopgenerics::assertCharacter(ymax, null = TRUE)
   validateFacet(facet)
   omopgenerics::assertCharacter(colour, null = TRUE)
   omopgenerics::assertCharacter(group, null = TRUE)
@@ -100,7 +98,7 @@ scatterPlot <- function(result,
 
   # get aes
   aes <- getAes(cols)
-  yminymax <- !is.null(ymin) & !is.null(ymax)
+  yminymax <- length(ymin) > 0 & length(ymax) > 0
 
   # make plot
   p <- ggplot2::ggplot(data = result, mapping = aes)
@@ -111,7 +109,7 @@ scatterPlot <- function(result,
     p <- p +
       ggplot2::geom_ribbon(alpha = .3, color = NA, show.legend = FALSE)
   }
-  if(!is.null(facet)){
+  if(length(facet) > 0){
     p <- plotFacet(p, facet)
   }
 
@@ -166,7 +164,7 @@ boxPlot <- function(result,
 
   # initial checks
   omopgenerics::assertTable(result)
-  omopgenerics::assertCharacter(x)
+  omopgenerics::assertCharacter(x, minNumCharacter = 1)
   omopgenerics::assertCharacter(lower, length = 1)
   omopgenerics::assertCharacter(middle, length = 1)
   omopgenerics::assertCharacter(upper, length = 1)
@@ -212,11 +210,11 @@ boxPlot <- function(result,
 
   # get aes
   aes <- getAes(cols)
-  yminymax <- !is.null(ymin) & !is.null(ymax)
+  yminymax <- length(ymin) > 0 & length(ymax) > 0
 
   p <- ggplot2::ggplot(data = result, mapping = aes) +
     ggplot2::geom_boxplot(stat = "identity")
-  if(!is.null(facet)){
+  if(length(facet) > 0){
     p <- plotFacet(p, facet)
   }
 
@@ -237,7 +235,10 @@ boxPlot <- function(result,
 #'
 #' @param result A `<summarised_result>` object.
 #' @param x Column or estimate name that is used as x variable.
-#' @param y Column or estimate name that is used as y variable
+#' @param y Column or estimate name that is used as y variable.
+#' @param width Bar width, as in `geom_col()` of the `ggplot2` package.
+#' @param just Adjustment for column placement, as in `geom_col()` of the
+#' `ggplot2` package.
 #' @param facet Variables to facet by, a formula can be provided to specify
 #' which variables should be used as rows and which ones as columns.
 #' @param colour Columns to use to determine the colors.
@@ -248,7 +249,6 @@ boxPlot <- function(result,
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' result <- mockSummarisedResult() |> dplyr::filter(variable_name == "age")
 #'
 #' barPlot(
@@ -257,11 +257,12 @@ boxPlot <- function(result,
 #'   y = "mean",
 #'   facet = c("age_group", "sex"),
 #'   colour = "sex")
-#' }
 #'
 barPlot <- function(result,
                     x,
                     y,
+                    width = NULL,
+                    just = 0.5,
                     facet = NULL,
                     colour = NULL,
                     label = character()) {
@@ -270,8 +271,8 @@ barPlot <- function(result,
 
   # initial checks
   omopgenerics::assertTable(result)
-  omopgenerics::assertCharacter(x)
-  omopgenerics::assertCharacter(y, length = 1)
+  omopgenerics::assertCharacter(x, minNumCharacter = 1)
+  omopgenerics::assertCharacter(y, minNumCharacter = 1)
   validateFacet(facet)
   omopgenerics::assertCharacter(colour, null = TRUE)
   omopgenerics::assertCharacter(label, null = TRUE)
@@ -308,8 +309,8 @@ barPlot <- function(result,
 
   # create plot
   p <- ggplot2::ggplot(data = result, mapping = aes) +
-    ggplot2::geom_col()
-  if(!is.null(facet)){
+    ggplot2::geom_col(width = width, just = just, position = "dodge")
+  if(length(facet) > 0){
     p <- plotFacet(p, facet)
   }
 
@@ -333,7 +334,7 @@ tidyResult <- function(result) {
   return(result)
 }
 getAes <- function(cols) {
-  colsClean <- cols[!unlist(lapply(cols, is.null))]
+  colsClean <- cols[unlist(lapply(cols, length)) > 0]
   for (k in seq_along(colsClean)) {
     if (length(colsClean[[k]]) > 1) {
       colsClean[[k]] <- paste0(colsClean[[k]], collapse = "_")
@@ -350,7 +351,7 @@ getAes <- function(cols) {
     rlang::eval_tidy()
 }
 plotFacet <- function(p, facet) {
-  if (!is.null(facet)) {
+  if (length(facet) > 0) {
     if (is.character(facet)) {
       p <- p + ggplot2::facet_wrap(facets = facet)
     } else {
@@ -452,7 +453,7 @@ prepareColumn <- function(result,
   return(result)
 }
 styleLabel <- function(x) {
-  if (!is.null(x) && all(x != "") && length(x) > 0) {
+  if (all(x != "") && length(x) > 0) {
     x |>
       stringr::str_replace_all(pattern = "_", replacement = " ") |>
       stringr::str_to_sentence() |>

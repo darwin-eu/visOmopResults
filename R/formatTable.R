@@ -12,9 +12,9 @@
 #' gt/flextable style.
 #' Keep in mind that styling code is different for gt and flextable. To see
 #' the "deafult" style code use `tableStyle()`.
-#' @param na How to display missing values.
-#' @param title Title of the table, or NULL for no title.
-#' @param subtitle Subtitle of the table, or NULL for no subtitle.
+#' @param na How to display missing values. Not used for "datatable".
+#' @param title Title of the table, or NULL for no title. Not used for "datatable".
+#' @param subtitle Subtitle of the table, or NULL for no subtitle. Not used for "datatable".
 #' @param caption Caption for the table, or NULL for no caption. Text in
 #' markdown formatting style (e.g. `*Your caption here*` for caption in
 #' italics).
@@ -23,11 +23,11 @@
 #' joined by "_". To assign a custom group name, provide a named list such as:
 #' list(`newGroupName` = c("variable_name", "variable_level"))
 #' @param groupAsColumn Whether to display the group labels as a column
-#' (TRUE) or rows (FALSE).
-#' @param groupOrder Order in which to display group labels.
+#' (TRUE) or rows (FALSE). Not used for "datatable".
+#' @param groupOrder Order in which to display group labels. Not used for "datatable".
 #' @param merge Names of the columns to merge vertically when consecutive row
 #' cells have identical values. Alternatively, use "all_columns" to apply this
-#' merging to all columns, or use NULL to indicate no merging.
+#' merging to all columns, or use NULL to indicate no merging. Not used for "datatable".
 #'
 #' @return A flextable object.
 #'
@@ -149,8 +149,14 @@ formatTable <- function(x,
         groupOrder = groupOrder,
         merge = merge
       )
-  } else if ("tibble") {
-    return(x)
+  } else if (type == "datatable") {
+    x <- x |>
+      datatableInternal(
+        delim = delim,
+        style = style,
+        caption = caption,
+        groupColumn = groupColumn
+      )
   }
   return(x)
 }

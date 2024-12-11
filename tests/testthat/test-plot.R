@@ -76,6 +76,21 @@ test_that("Function returns a ggplot object", {
   expect_true(p$labels$label2 == "mean")
   expect_true(p$labels$label3 == "cohort_name")
 
+  p <- scatterPlot(
+    result,
+    x = "sex",
+    line = TRUE,
+    point = TRUE,
+    ribbon = TRUE,
+    y =  "mean",
+    ymin = character(),
+    ymax = character(),
+    facet = character(),
+    colour = "cohort_name",
+    label = c("age_group", "mean", "cohort_name")
+  )
+  expect_true(all(!c("ymin", "ymax") %in% names(p$labels)))
+
   result <- mockSummarisedResult() |>
     dplyr::filter(variable_name == "age")
 
@@ -83,12 +98,21 @@ test_that("Function returns a ggplot object", {
     result = result,
     x = "cohort_name",
     y = "mean",
-    facet = c("age_group", "sex"), label = c("cohort_name")) +
+    facet = c("age_group", "sex"),
+    label = c("cohort_name")) +
     themeVisOmop()
 
   expect_no_error(p_bar)
   expect_true(has_no_legend_labels(p_bar))
   expect_true(p_bar$labels$label1 == "cohort_name")
+
+  p_bar <- barPlot(
+    result = result,
+    x = "cohort_name",
+    y = "mean",
+    colour = c("age_group", "sex"),
+    label = c("cohort_name")) +
+    themeVisOmop()
 
   expect_message(
     result |>

@@ -55,7 +55,6 @@ A plot object.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-\donttest{
 result <- mockSummarisedResult() |>
   dplyr::filter(variable_name == "age")
 
@@ -67,6 +66,5 @@ scatterPlot(
   point = TRUE,
   ribbon = FALSE,
   facet = age_group ~ sex)
-}
 
 }

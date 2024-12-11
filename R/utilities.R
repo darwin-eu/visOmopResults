@@ -55,21 +55,28 @@ validateEstimateName <- function(format, call = parent.frame()) {
 }
 
 validateStyle <- function(style, tableFormatType) {
-  if (is.list(style) | is.null(style)) {
-    omopgenerics::assertList(style, null = TRUE, named = TRUE)
-    if (is.list(style)) {
-      notIn <- !names(style) %in% names(gtStyleInternal("default"))
-      if (sum(notIn) > 0) {
-        cli::cli_abort(c("`style` can only be defined for the following table parts: {gtStyleInternal('default') |> names()}.",
-                      "x" =  "{.strong {names(style)[notIn]}} {?is/are} not one of them."))
+  if (tableFormatType != "tibble") {
+    if (is.list(style) | is.null(style)) {
+      omopgenerics::assertList(style, null = TRUE, named = TRUE)
+      if (is.list(style)) {
+        notIn <- !names(style) %in% names(gtStyleInternal("default"))
+        if (sum(notIn) > 0 & tableFormatType != "datatable") {
+          cli::cli_abort(c("`style` can only be defined for the following table parts: {gtStyleInternal('default') |> names()}.",
+                           "x" =  "{.strong {names(style)[notIn]}} {?is/are} not one of them."))
+        }
+        notIn <- !names(style) %in% names(datatableStyleInternal("default"))
+        if (sum(notIn) > 0 & tableFormatType == "datatable") {
+          cli::cli_abort(c("`style` can only be defined for the following table parts: {datatableStyleInternal('default') |> names()}.",
+                           "x" =  "{.strong {names(style)[notIn]}} {?is/are} not one of them."))
+        }
       }
-    }
-  } else if (is.character(style)) {
-    omopgenerics::assertCharacter(style, null = TRUE)
-    eval(parse(text = paste0("style <- ", tableFormatType, "StyleInternal(styleName = style)")))
-  } else {
-    cli::cli_abort(paste0("Style must be one of 1) a named list of ", tableFormatType, " styling functions,
+    } else if (is.character(style)) {
+      omopgenerics::assertCharacter(style, null = TRUE)
+      eval(parse(text = paste0("style <- ", tableFormatType, "StyleInternal(styleName = style)")))
+    } else {
+      cli::cli_abort(paste0("Style must be one of 1) a named list of ", tableFormatType, " styling functions,
                    2) the string 'default' for visOmopResults default style, or 3) NULL to indicate no styling."))
+    }
   }
   return(style)
 }
@@ -213,4 +220,18 @@ checkVisTableInputs <- function(header, groupColumn, hide, call = parent.frame()
   if (length(c(int1, int2, int3)) > 0) {
     cli::cli_abort("Columns passed to {.strong `header`}, {.strong `groupColumn`}, and {.strong `hide`} must be different.", call = call)
   }
+}
+
+validateFactor <- function(factor, resultTidy) {
+  if (length(factor) > 0) {
+    omopgenerics::assertList(factor, named = TRUE, class = "character")
+    for (nm in names(factor)) {
+      content <- resultTidy |> dplyr::pull(.data[[nm]]) |> unique()
+      notIn <- ! content %in% factor[[nm]]
+      if (any(notIn)) {
+        cli::cli_abort("{.strong {content[notIn]}} variable{?s} in {.strong {nm}} column are not in `factor`")
+      }
+    }
+  }
+  return(invisible(factor))
 }

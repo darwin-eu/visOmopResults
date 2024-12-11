@@ -4,14 +4,28 @@
 \alias{barPlot}
 \title{Create a bar plot visualisation from a \verb{<summarised_result>} object}
 \usage{
-barPlot(result, x, y, facet = NULL, colour = NULL, label = character())
+barPlot(
+  result,
+  x,
+  y,
+  width = NULL,
+  just = 0.5,
+  facet = NULL,
+  colour = NULL,
+  label = character()
+)
 }
 \arguments{
 \item{result}{A \verb{<summarised_result>} object.}
 
 \item{x}{Column or estimate name that is used as x variable.}
 
-\item{y}{Column or estimate name that is used as y variable}
+\item{y}{Column or estimate name that is used as y variable.}
+
+\item{width}{Bar width, as in \code{geom_col()} of the \code{ggplot2} package.}
+
+\item{just}{Adjustment for column placement, as in \code{geom_col()} of the
+\code{ggplot2} package.}
 
 \item{facet}{Variables to facet by, a formula can be provided to specify
 which variables should be used as rows and which ones as columns.}
@@ -28,7 +42,6 @@ A plot object.
 \ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 }
 \examples{
-\donttest{
 result <- mockSummarisedResult() |> dplyr::filter(variable_name == "age")
 
 barPlot(
@@ -37,6 +50,5 @@ barPlot(
   y = "mean",
   facet = c("age_group", "sex"),
   colour = "sex")
-}
 
 }

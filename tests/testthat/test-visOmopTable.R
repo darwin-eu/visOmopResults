@@ -259,7 +259,7 @@ test_that("estimates at the end", {
 })
 
 
-test_that("columnOrder", {
+test_that("columnOrder and factor", {
   result <- mockSummarisedResult()
   expect_warning(expect_error(
     visOmopTable(
@@ -294,6 +294,26 @@ test_that("columnOrder", {
     type = "tibble"
   )
   expect_true(all(colnames(table) == c('CDM name', 'Cohort name', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', '[header_name]Estimate name\n[header_level]count', '[header_name]Estimate name\n[header_level]mean', '[header_name]Estimate name\n[header_level]sd', '[header_name]Estimate name\n[header_level]percentage')))
+
+  table <- visOmopTable(
+    result,
+    header = "estimate_name",
+    settingsColumn = "package_name",
+    factor = list("sex" = c("overall", "Female", "Male", "hi"), "age_group" = c("overall", "<40", ">=40")),
+    type = "tibble"
+  )
+  expect_true(all(table$Sex |> unique() == c("overall", "Female", "Male")))
+  expect_true(all(table$`Age group` |> unique() == c("overall", "<40", ">=40")))
+
+  expect_error(
+    visOmopTable(
+      result,
+      header = "estimate_name",
+      settingsColumn = "package_name",
+      factor = list("sex" = c("overall", "Female"), "age_group" = c("overall", "<40", ">=40")),
+      type = "tibble"
+    )
+  )
 })
 
 
