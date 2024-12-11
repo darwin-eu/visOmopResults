@@ -80,6 +80,23 @@ tableStyle <- function(type = "gt", styleName = "default") {
       "body" = list()
     ) |>
       rlang::expr()
+  } else if (type == "datatable") {
+    list(
+        "caption" = 'caption-side: bottom; text-align: center;',
+        "scrollX" = TRUE,
+        "scrollY" = 400,
+        "scroller" = TRUE,
+        "deferRender" = TRUE,
+        "scrollCollapse" = TRUE,
+        "fixedColumns" = list(leftColumns = 1, rightColumns = 1),
+        "fixedHeader" = TRUE,
+        "pageLength" = 10,
+        "lengthMenu" = c(5, 10, 20, 50, 100),
+        "filter" = "bottom",
+        "searchHighlight" = TRUE,
+        "rownames" = FALSE
+    ) |>
+      rlang::expr()
   }
 }
 
@@ -99,6 +116,53 @@ tableStyle <- function(type = "gt", styleName = "default") {
 #' tableType()
 #'
 tableType <- function() {
-  c("gt", "flextable", "tibble")
+  c("gt", "flextable", "tibble", "datatable")
 }
 
+
+#' Columns for the table functions
+#'
+#' @description
+#' Names of the columns that can be used in the input arguments for the table
+#' functions.
+#'
+#' @param result A `<summarised_result>` object.
+#'
+#' @return A character vector of supported columns for tables.
+#'
+#' @export
+#'
+#' @examples
+#' result <- mockSummarisedResult()
+#' tableColumns(result)
+#'
+tableColumns <- function(result) {
+  result <- omopgenerics::validateResultArgument(result)
+  return(
+    c("cdm_name", groupColumns(result), strataColumns(result), "variable_name",
+      "variable_level", "estimate_name", additionalColumns(result),
+      settingsColumns(result))
+  )
+}
+
+
+#' Columns for the plot functions
+#'
+#' @description
+#' Names of the columns that can be used in the input arguments for the plot
+#' functions.
+#'
+#' @param result A `<summarised_result>` object.
+#'
+#' @return A character vector of supported columns for plots.
+#'
+#' @export
+#'
+#' @examples
+#' result <- mockSummarisedResult()
+#' plotColumns(result)
+#'
+plotColumns <- function(result) {
+  result <- omopgenerics::validateResultArgument(result)
+  return(c(tidyColumns(result)))
+}

@@ -8,7 +8,6 @@
 #' @export
 #'
 #' @examples
-#' \donttest{
 #' result <- mockSummarisedResult() |> dplyr::filter(variable_name == "age")
 #'
 #' barPlot(
@@ -18,7 +17,6 @@
 #'   facet = c("age_group", "sex"),
 #'   colour = "sex") +
 #'   themeVisOmop()
-#'}
 
 themeVisOmop <- function(fontsizeRef = 13, legendPosition = "right") {
   omopgenerics::assertNumeric(fontsizeRef)

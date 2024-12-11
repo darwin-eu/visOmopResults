@@ -1,6 +1,6 @@
 Package: visOmopResults
 Title: Graphs and Tables for OMOP Results
-Version: 0.5.0
+Version: 0.5.1999
 Authors@R: c(
     person(
         "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -37,16 +37,18 @@ Imports:
     generics,
     glue,
     lifecycle,
-    omopgenerics (> 0.3),
+    omopgenerics (>= 0.3.1),
     purrr,
     rlang,
     stringr,
     tidyr
 Suggests: 
     covr,
+    DT,
     flextable (>= 0.9.5),
     ggplot2,
     gt,
+    htmltools,
     knitr,
     officer,
     palmerpenguins,

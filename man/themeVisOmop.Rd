@@ -17,7 +17,6 @@ the same as for ggplot. By default it is in the right side.}
 Apply visOmopResults default styling to a ggplot
 }
 \examples{
-\donttest{
 result <- mockSummarisedResult() |> dplyr::filter(variable_name == "age")
 
 barPlot(
@@ -27,5 +26,4 @@ barPlot(
   facet = c("age_group", "sex"),
   colour = "sex") +
   themeVisOmop()
-}
 }
