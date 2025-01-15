@@ -1,7 +1,20 @@
+# Copyright 2025 DARWIN EU®
+#
+# This file is part of visOmopResults
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
 
 #' Create a scatter plot visualisation from a `<summarised_result>` object
-#'
-#' `r lifecycle::badge("experimental")`
 #'
 #' @param result A `<summarised_result>` object.
 #' @param x Column or estimate name that is used as x variable.
@@ -69,7 +82,7 @@ scatterPlot <- function(result,
   # empty
   if (nrow(result) == 0) {
     cli::cli_warn(c("!" = "result object is empty, returning empty plot."))
-    return(ggplot2::ggplot())
+    return(emptyPlot())
   }
 
   est <- c(x, y, ymin, ymax, asCharacterFacet(facet), colour, group, label)
@@ -127,8 +140,6 @@ scatterPlot <- function(result,
 
 #' Create a box plot visualisation from a `<summarised_result>` object
 #'
-#' `r lifecycle::badge("experimental")`
-#'
 #' @param result A `<summarised_result>` object.
 #' @param x Columns to use as x axes.
 #' @param lower Estimate name for the lower quantile of the box.
@@ -177,7 +188,7 @@ boxPlot <- function(result,
   # empty
   if (nrow(result) == 0) {
     cli::cli_warn(c("!" = "result object is empty, returning empty plot."))
-    return(ggplot2::ggplot())
+    return(emptyPlot())
   }
 
   est <- c(x, lower, middle, upper, ymin, ymax, asCharacterFacet(facet), colour, label)
@@ -213,7 +224,7 @@ boxPlot <- function(result,
   yminymax <- length(ymin) > 0 & length(ymax) > 0
 
   p <- ggplot2::ggplot(data = result, mapping = aes) +
-    ggplot2::geom_boxplot(stat = "identity")
+    ggplot2::geom_boxplot(stat = "identity", position = "dodge2")
   if(length(facet) > 0){
     p <- plotFacet(p, facet)
   }
@@ -230,8 +241,6 @@ boxPlot <- function(result,
 }
 
 #' Create a bar plot visualisation from a `<summarised_result>` object
-#'
-#' `r lifecycle::badge("experimental")`
 #'
 #' @param result A `<summarised_result>` object.
 #' @param x Column or estimate name that is used as x variable.
@@ -280,7 +289,7 @@ barPlot <- function(result,
   # empty
   if (nrow(result) == 0) {
     cli::cli_warn(c("!" = "result object is empty, returning empty plot."))
-    return(ggplot2::ggplot())
+    return(emptyPlot())
   }
 
   est <- c(x, y, asCharacterFacet(facet), colour, label)
@@ -324,6 +333,21 @@ barPlot <- function(result,
     ggplot2::theme(legend.position = hideLegend(colour))
 
   return(p)
+}
+
+#' Returns an empty plot
+#'
+#' @return An empty ggplot object
+#'
+#' @export
+#'
+#' @examples
+#' emptyPlot()
+#'
+emptyPlot <- function() {
+  ggplot2::ggplot() +
+    ggplot2::theme_bw() +
+    ggplot2::labs(title = "No data to plot")
 }
 
 tidyResult <- function(result) {

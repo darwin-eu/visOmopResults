@@ -1,9 +1,23 @@
+# Copyright 2025 DARWIN EU®
+#
+# This file is part of visOmopResults
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #' Apply visOmopResults default styling to a ggplot
 #'
 #' @param fontsizeRef An integer to use as reference when adjusting label
 #' fontsize.
-#' @param legendPosition If there is a legend, where should it go? Options are
-#' the same as for ggplot. By default it is in the right side.
 #'
 #' @export
 #'
@@ -18,7 +32,7 @@
 #'   colour = "sex") +
 #'   themeVisOmop()
 
-themeVisOmop <- function(fontsizeRef = 13, legendPosition = "right") {
+themeVisOmop <- function(fontsizeRef = 10) {
   omopgenerics::assertNumeric(fontsizeRef)
   color.background <- "#ffffff"
   color.grid.major <- "#d9d9d9"
@@ -42,7 +56,7 @@ themeVisOmop <- function(fontsizeRef = 13, legendPosition = "right") {
       # legend
       legend.text = ggplot2::element_text(size = fontsizeRef-1),
       legend.title = ggplot2::element_text(size = fontsizeRef),
-      legend.position = legendPosition,
+      legend.position = "right",
       # background
       panel.background = ggplot2::element_rect(fill = color.background, colour = color.background),
       plot.background = ggplot2::element_rect(fill = color.background, colour = color.background),

@@ -1,6 +1,6 @@
 Package: visOmopResults
 Title: Graphs and Tables for OMOP Results
-Version: 0.5.1
+Version: 1.0.0
 Authors@R: c(
     person(
         "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -25,7 +25,7 @@ Authors@R: c(
   )
 Maintainer: Núria Mercadé-Besora <nuria.mercadebesora@ndorms.ox.ac.uk>
 Description: Provides methods to transform omop_result objects into
-    formatted tables and figures, facilitating the visualization of study
+    formatted tables and figures, facilitating the visualisation of study
     results working with the Observational Medical Outcomes Partnership
     (OMOP) Common Data Model.
 License: Apache License (>= 2)
@@ -36,7 +36,6 @@ Imports:
     dplyr,
     generics,
     glue,
-    lifecycle,
     omopgenerics (>= 0.3.1),
     purrr,
     rlang,
@@ -50,6 +49,7 @@ Suggests:
     gt,
     htmltools,
     knitr,
+    lifecycle,
     officer,
     palmerpenguins,
     PatientProfiles,

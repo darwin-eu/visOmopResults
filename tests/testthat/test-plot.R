@@ -47,13 +47,12 @@ test_that("Function returns a ggplot object", {
     colour = "cohort_name",
     label = "min"
     ) +
-    themeVisOmop(fontsizeRef = 10, legendPosition = "bottom")
+    themeVisOmop(fontsizeRef = 10)
 
   expect_no_error(p_box)
 
   expect_false(has_no_legend_labels(p_box))
   expect_true(p_box$theme$axis.title.y$size == 10)
-  expect_true(p_box$theme$legend.position == "bottom")
   expect_true(p_box$labels$label1 == "min")
 
   expect_no_error(
@@ -174,6 +173,7 @@ test_that("Empty result object returns warning", {
       facet = "age_group"),
     "result object is empty, returning empty plot."
   )
+  expect_true(ggplot2::is.ggplot(output_plot))
 
   expect_warning(
     output_plot <- boxPlot(
@@ -182,6 +182,7 @@ test_that("Empty result object returns warning", {
     ),
     "result object is empty, returning empty plot."
   )
+  expect_true(ggplot2::is.ggplot(output_plot))
 
   expect_warning(
     output_plot <- barPlot(
@@ -191,5 +192,5 @@ test_that("Empty result object returns warning", {
     ),
     "result object is empty, returning empty plot."
   )
-
+  expect_true(ggplot2::is.ggplot(output_plot))
 })

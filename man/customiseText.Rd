@@ -30,7 +30,7 @@ names.
 }
 \description{
 This function styles character vectors or column names in a data frame.
-The styling function can be customized, or you can provide specific
+The styling function can be customised, or you can provide specific
 replacements for certain values.
 }
 \examples{

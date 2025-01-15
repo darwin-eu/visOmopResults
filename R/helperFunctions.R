@@ -1,10 +1,26 @@
+# Copyright 2025 DARWIN EU®
+#
+# This file is part of visOmopResults
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #' Additional table formatting options for `visOmopTable()` and `visTable()`
 #'
 #' @description
 #' This function provides a list of allowed inputs for the `.option` argument in
 #' `visOmopTable()` and `visTable()`, and their corresponding default values.
 #'
-#' @return A named list of default options for table customization.
+#' @return A named list of default options for table customisation.
 #'
 #' @export
 #'
@@ -19,8 +35,6 @@ tableOptions <- function() {
 #'
 #' @param type Character string specifying the formatted table class.
 #' See `tableType()` for supported classes. Default is "gt".
-#' @param styleName A character string specifying the style name. Currently, the
-#' package supports only one predefined style: "default".
 #'
 #' @return A code expression for the selected style and table type.
 #'
@@ -30,7 +44,7 @@ tableOptions <- function() {
 #' tableStyle("gt")
 #' tableStyle("flextable")
 #'
-tableStyle <- function(type = "gt", styleName = "default") {
+tableStyle <- function(type = "gt") {
   if (type == "gt") {
     list(
       "header" = list(gt::cell_fill(color = "#c8c8c8"),
