@@ -4,14 +4,11 @@
 \alias{themeVisOmop}
 \title{Apply visOmopResults default styling to a ggplot}
 \usage{
-themeVisOmop(fontsizeRef = 13, legendPosition = "right")
+themeVisOmop(fontsizeRef = 10)
 }
 \arguments{
 \item{fontsizeRef}{An integer to use as reference when adjusting label
 fontsize.}
-
-\item{legendPosition}{If there is a legend, where should it go? Options are
-the same as for ggplot. By default it is in the right side.}
 }
 \description{
 Apply visOmopResults default styling to a ggplot

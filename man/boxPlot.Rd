@@ -44,7 +44,7 @@ which variables should be used as rows and which ones as columns.}
 A ggplot2 object.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
+Create a box plot visualisation from a \verb{<summarised_result>} object
 }
 \examples{
 dplyr::tibble(year = "2000", q25 = 25, median = 50, q75 = 75, min = 0, max = 100) |>

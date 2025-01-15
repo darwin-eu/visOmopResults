@@ -1,3 +1,19 @@
+# Copyright 2025 DARWIN EU®
+#
+# This file is part of visOmopResults
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #' Format a `<summarised_result>` object into a gt, flextable, or tibble object
 #'
 #' @param result A `<summarised_result>` object.
@@ -18,9 +34,9 @@
 #' list("newGroupName" = c("variable_name", "variable_level")).
 #'
 #' *tidy: The tidy format applied to column names replaces "_" with a space and
-#' converts to sentence case. Use `rename` to customize specific column names.
+#' converts to sentence case. Use `rename` to customise specific column names.
 #'
-#' @param rename A named vector to customize column names, e.g.,
+#' @param rename A named vector to customise column names, e.g.,
 #' c("Database name" = "cdm_name"). The function renames all column names
 #' not specified here into a tidy* format.
 #' @param type The desired format of the output table. See `tableType()` for
@@ -39,7 +55,6 @@
 #' used.
 #' @param .options A named list with additional formatting options.
 #' `visOmopResults::tableOptions()` shows allowed arguments and their default values.
-#' @param settingsColumns `r lifecycle::badge("deprecated")`
 #'
 #' @return A tibble, gt, or flextable object.
 #'
@@ -72,14 +87,7 @@ visOmopTable <- function(result,
                          columnOrder = character(),
                          factor = list(),
                          showMinCellCount = TRUE,
-                         .options = list(),
-                         settingsColumns = lifecycle::deprecated()) {
-
-  if (lifecycle::is_present(settingsColumns)) {
-    settingsColumn <- settingsColumns
-    lifecycle::deprecate_soft(when = "0.5.0", what = "visOmopTable(settingsColumns)", with = "visOmopTable(settingsColumn)")
-  }
-
+                         .options = list()) {
   # Tidy results
   result <- omopgenerics::validateResultArgument(result)
   resultTidy <- tidySummarisedResult(result, settingsColumn = settingsColumn, pivotEstimatesBy = NULL)

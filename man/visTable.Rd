@@ -33,9 +33,9 @@ group name, use a named list such as:
 list("newGroupName" = c("variable_name", "variable_level")).
 
 *tidy: The tidy format applied to column names replaces "_" with a space and
-converts them to sentence case. Use \code{rename} to customize specific column names.}
+converts them to sentence case. Use \code{rename} to customise specific column names.}
 
-\item{rename}{A named vector to customize column names, e.g.,
+\item{rename}{A named vector to customise column names, e.g.,
 c("Database name" = "cdm_name"). The function will rename all column names
 not specified here into a tidy* format.}
 
@@ -51,7 +51,6 @@ allowed options.}
 A tibble, gt, or flextable object.
 }
 \description{
-\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#experimental}{\figure{lifecycle-experimental.svg}{options: alt='[Experimental]'}}}{\strong{[Experimental]}}
 This function combines the functionalities of \code{formatEstimateValue()},
 \code{formatEstimateName()}, \code{formatHeader()}, and \code{formatTable()}
 into a single function. While it does not require the input table to be

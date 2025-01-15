@@ -7,7 +7,7 @@
 tableOptions()
 }
 \value{
-A named list of default options for table customization.
+A named list of default options for table customisation.
 }
 \description{
 This function provides a list of allowed inputs for the \code{.option} argument in

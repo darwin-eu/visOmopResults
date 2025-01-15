@@ -1,3 +1,19 @@
+# Copyright 2025 DARWIN EU®
+#
+# This file is part of visOmopResults
+#
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at
+#
+#     http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing, software
+# distributed under the License is distributed on an "AS IS" BASIS,
+# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# See the License for the specific language governing permissions and
+# limitations under the License.
+
 #' Generate a formatted table from a `<data.table>`
 #'
 #'
@@ -15,9 +31,9 @@
 #' list("newGroupName" = c("variable_name", "variable_level")).
 #'
 #' *tidy: The tidy format applied to column names replaces "_" with a space and
-#' converts them to sentence case. Use `rename` to customize specific column names.
+#' converts them to sentence case. Use `rename` to customise specific column names.
 #'
-#' @param rename A named vector to customize column names, e.g.,
+#' @param rename A named vector to customise column names, e.g.,
 #' c("Database name" = "cdm_name"). The function will rename all column names
 #' not specified here into a tidy* format.
 #' @param type The desired format of the output table. See `tableType()` for
@@ -29,7 +45,6 @@
 #' @return A tibble, gt, or flextable object.
 #'
 #' @description
-#' `r lifecycle::badge("experimental")`
 #' This function combines the functionalities of `formatEstimateValue()`,
 #' `formatEstimateName()`, `formatHeader()`, and `formatTable()`
 #' into a single function. While it does not require the input table to be
@@ -155,9 +170,6 @@ formatToSentence <- function(x) {
 #' allowed options.
 #'
 #' @return An empty table of the class specified in `type`
-#'
-#' @description
-#' `r lifecycle::badge("experimental")`
 #'
 #' @export
 #'

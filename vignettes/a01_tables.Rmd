@@ -1,8 +1,8 @@
 ---
-title: "Formatting tables"
+title: "Tables"
 output: rmarkdown::html_vignette
 vignette: >
-  %\VignetteIndexEntry{01_tables}
+  %\VignetteIndexEntry{a01_tables}
   %\VignetteEngine{knitr::rmarkdown}
   %\VignetteEncoding{UTF-8}
 ---
@@ -12,14 +12,16 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   warning = FALSE,
-  message = FALSE
+  message = FALSE,
+  fig.width=7.2, 
+  fig.height=5
 )
 options(rmarkdown.html_vignette.check_title = FALSE)
 ```
   
 # Introduction
   
-The **visOmopResults** package provides user-friendly tools for creating well-formatted tables and plots that are publication-ready. In this vignette, we focus specifically on the table formatting functionalities. The package supports three table formats: [`<tibble>`](https://cran.r-project.org/package=tibble), [`<gt>`](https://cran.r-project.org/package=gt), and [`<flextable>`](https://cran.r-project.org/package=flextable). While `<tibble>` is an `<data.frame>` R object, `<gt>` and `<flextable>` are designed to create publication-ready tables that can be exported to different formats (e.g., PNG, Word, PDF, HTML) and used in ShinyApps, RMarkdown, Quarto, and more.
+The **visOmopResults** package provides user-friendly tools for creating well-formatted tables and plots that are publication-ready. In this vignette, we focus specifically on the table formatting functionalities. The package supports four table formats: [`<tibble>`](https://cran.r-project.org/package=tibble), [`<gt>`](https://cran.r-project.org/package=gt), [`<flextable>`](https://cran.r-project.org/package=flextable), and [`<datatables>`](https://CRAN.R-project.org/package=DT). While `<tibble>` is an `<data.frame>` R object, `<gt>` and `<flextable>` are designed to create publication-ready tables that can be exported to different formats (e.g., PNG, Word, PDF, HTML), and `<datatables>` display tables on HTML pages. These last three can be used in ShinyApps, RMarkdown, Quarto, and more.
   
 Although the primary aim of the package is to simplify the handling of the `<summarised_result>` class (see [omopgenerics](https://CRAN.R-project.org/package=omopgenerics) for more details), its functionalities can be applied to any `<data.frame>` if certain requirements are met.
   
@@ -27,9 +29,9 @@ Although the primary aim of the package is to simplify the handling of the `<sum
   
 There are two main categories of table functions in the package:
   
-- **Main Table Functions**: Comprehensive functions like `visOmopTable()` and `visTable()` allow users to fully format tables, including specifying headers, grouping columns, and customizing styles.
+- **Main Table Functions**: Comprehensive functions like `visOmopTable()` and `visTable()` allow users to fully format tables, including specifying headers, grouping columns, and customising styles.
   
-- **Additional Table Formatting Functions**: The `format` function set provides more granular control over specific table elements, enabling advanced customization beyond the main functions.
+- **Additional Table Formatting Functions**: The `format` function set provides more granular control over specific table elements, enabling advanced customisation beyond the main functions.
   
 This vignette will guide you through the usage of these functions.
   
@@ -84,8 +86,7 @@ x <- x |>
 visTable(
   result = x,
   estimateName = c(
-    "Bill length (mm)" = "<bill_length_mm>",
-    "Bill depth (mm)" = "<bill_depth_mm>",
+    "Bill length - Bill depth (mm)" = "<bill_length_mm> - <bill_depth_mm>",
     "Flipper length (mm)" = "<flipper_length_mm>"
   ),
   header = c("species", "island"),
@@ -159,7 +160,7 @@ result |>
 
 ## Styling tables
 
-Tables displayed in `visOmopResults()` follow a default style, but customization is possible through the `.options` argument. This argument allows users to modify various formatting aspects using options from the `format` functions (see the *`format` Functions* section to learn more).
+Tables displayed in `visOmopResults()` follow a default style, but customisation is possible through the `.options` argument. This argument allows users to modify various formatting aspects using options from the `format` functions (see the *`format` Functions* section to learn more).
 
 The table below details which `format` function each styling option belongs to, along with a description of each option:
 
@@ -216,14 +217,16 @@ To view the default `.options` settings used in `vis` tables, use the following 
 tableOptions()
 ```
 
-### Styling `<gt>` and `<flextable>`
+### Styling tables
 
-To inspect the code for the default styles of `<gt>` and `<flextable>`, use these functions:
+To inspect the code for the default styles of the different table types supported, you can use the following function:
 
 ```{r}
 tableStyle(type = "gt")
 
 tableStyle(type = "flextable")
+
+tableStyle(type = "datatable")
 ```
 
 
@@ -232,7 +235,7 @@ tableStyle(type = "flextable")
 The `format` set of functions can be used in a pipeline to transform and format a `<data.frame>` or a `<summarised_result>` object. Below, we'll demonstrate how to utilize these functions in a step-by-step manner.
 
 ## 1) Format Estimates
-The `formatEstimateName()` and `formatEstimateValue()` functions enable you to customize the naming and display of estimates in your table.
+The `formatEstimateName()` and `formatEstimateValue()` functions enable you to customise the naming and display of estimates in your table.
 
 To illustrate their usage, we'll continue with the `result` dataset. Let's first take a look at some of the estimates before any formatting is applied:
 
@@ -244,7 +247,7 @@ result |>
 ```
 
 ### 1.1) Estimate values
-The `formatEstimateValue()` function allows you to specify the number of decimals for different `estimate_types` or `estimate_names`, as well as customize decimal and thousand separators.
+The `formatEstimateValue()` function allows you to specify the number of decimals for different `estimate_types` or `estimate_names`, as well as customise decimal and thousand separators.
 
 Let's see how the previous estimates are updated afterwars:
 
@@ -375,9 +378,9 @@ result |>
   )
 ```
 
-In the examples above, we used the default style defined in the *visOmopResults* package (use `gtStyle()` and `flextableStyle()` to see these styles). However, it's possible to customize the appearance of different parts of the table to better suit your needs.
+In the examples above, we used the default style defined in the *visOmopResults* package (use `gtStyle()` and `flextableStyle()` to see these styles). However, it's possible to customise the appearance of different parts of the table to better suit your needs.
 
-### Customizing Table Styles
+### customising Table Styles
 
 Let's start by applying a custom style to a `<gt>` table:
 

@@ -16,8 +16,7 @@ visOmopTable(
   columnOrder = character(),
   factor = list(),
   showMinCellCount = TRUE,
-  .options = list(),
-  settingsColumns = lifecycle::deprecated()
+  .options = list()
 )
 }
 \arguments{
@@ -45,9 +44,9 @@ named list such as:
 list("newGroupName" = c("variable_name", "variable_level")).
 
 *tidy: The tidy format applied to column names replaces "_" with a space and
-converts to sentence case. Use \code{rename} to customize specific column names.}
+converts to sentence case. Use \code{rename} to customise specific column names.}
 
-\item{rename}{A named vector to customize column names, e.g.,
+\item{rename}{A named vector to customise column names, e.g.,
 c("Database name" = "cdm_name"). The function renames all column names
 not specified here into a tidy* format.}
 
@@ -72,8 +71,6 @@ used.}
 
 \item{.options}{A named list with additional formatting options.
 \code{visOmopResults::tableOptions()} shows allowed arguments and their default values.}
-
-\item{settingsColumns}{\ifelse{html}{\href{https://lifecycle.r-lib.org/articles/stages.html#deprecated}{\figure{lifecycle-deprecated.svg}{options: alt='[Deprecated]'}}}{\strong{[Deprecated]}}}
 }
 \value{
 A tibble, gt, or flextable object.
