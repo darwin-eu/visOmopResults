@@ -1,14 +1,16 @@
 <urlset xmlns = 'http://www.sitemaps.org/schemas/sitemap/0.9'>
 <url><loc>https://darwin-eu.github.io/visOmopResults/404.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/LICENSE.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/articles/a01_tables.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/articles/a02_plots.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/articles/index.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/articles/plots.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/articles/tables.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/authors.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/index.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/news/index.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/barPlot.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/boxPlot.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/customiseText.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/emptyPlot.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/emptyTable.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/formatEstimateName.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/formatEstimateValue.html</loc></url>
