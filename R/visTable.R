@@ -82,6 +82,7 @@ visTable <- function(result,
   rename <- validateRename(rename, result)
   groupColumn <- validateGroupColumn(groupColumn, colnames(result), rename = rename)
   # .options
+  omopgenerics::assertList(.options, named = TRUE)
   .options <- defaultTableOptions(.options)
   # default hide columns
   # hide <- c(hide, "result_id", "estimate_type")

@@ -1,7 +1,12 @@
 test_that("Function returns a ggplot object", {
 
+  get_labs <- function(x) x$labels
+  if ("get_labs" %in% getNamespaceExports("ggplot2")) {
+    get_labs <- ggplot2::get_labs
+  }
+
   has_no_legend_labels <- function(plot) {
-    labels <- plot$labels
+    labels <- get_labs(plot)
     is.null(labels$fill) && is.null(labels$colour)
   }
 
@@ -46,14 +51,14 @@ test_that("Function returns a ggplot object", {
     facet = age_group ~ sex,
     colour = "cohort_name",
     label = "min"
-    ) +
+  ) +
     themeVisOmop(fontsizeRef = 10)
 
   expect_no_error(p_box)
 
   expect_false(has_no_legend_labels(p_box))
   expect_true(p_box$theme$axis.title.y$size == 10)
-  expect_true(p_box$labels$label1 == "min")
+  expect_true(get_labs(p_box)$label1 == "min")
 
   expect_no_error(
     p <- scatterPlot(
@@ -71,9 +76,10 @@ test_that("Function returns a ggplot object", {
     ) +
       themeVisOmop()
   )
-  expect_true(p$labels$label1 == "age_group")
-  expect_true(p$labels$label2 == "mean")
-  expect_true(p$labels$label3 == "cohort_name")
+  labels <- get_labs(p)
+  expect_true(labels$label1 == "age_group")
+  expect_true(labels$label2 == "mean")
+  expect_true(labels$label3 == "cohort_name")
 
   p <- scatterPlot(
     result,
@@ -103,7 +109,7 @@ test_that("Function returns a ggplot object", {
 
   expect_no_error(p_bar)
   expect_true(has_no_legend_labels(p_bar))
-  expect_true(p_bar$labels$label1 == "cohort_name")
+  expect_true(get_labs(p_bar)$label1 == "cohort_name")
 
   p_bar <- barPlot(
     result = result,

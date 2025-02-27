@@ -87,20 +87,34 @@ test_that("visOmopTable", {
   )
   expect_true("flextable" == class(fx3))
   expect_true(all(c(
-    'Cohort name', 'Variable name', 'Variable level', 'Age group\noverall\nSex\noverall\nEstimate name\nN',
-    'Age group\n<40\nSex\nMale\nEstimate name\nN', 'Age group\n>=40\nSex\nMale\nEstimate name\nN',
-    'Age group\n<40\nSex\nFemale\nEstimate name\nN', 'Age group\n>=40\nSex\nFemale\nEstimate name\nN',
-    'Age group\noverall\nSex\nMale\nEstimate name\nN', 'Age group\noverall\nSex\nFemale\nEstimate name\nN',
-    'Age group\n<40\nSex\noverall\nEstimate name\nN', 'Age group\n>=40\nSex\noverall\nEstimate name\nN',
-    'Age group\noverall\nSex\noverall\nEstimate name\nmean, sd', 'Age group\n<40\nSex\nMale\nEstimate name\nmean, sd',
-    'Age group\n>=40\nSex\nMale\nEstimate name\nmean, sd', 'Age group\n<40\nSex\nFemale\nEstimate name\nmean, sd',
-    'Age group\n>=40\nSex\nFemale\nEstimate name\nmean, sd', 'Age group\noverall\nSex\nMale\nEstimate name\nmean, sd',
-    'Age group\noverall\nSex\nFemale\nEstimate name\nmean, sd', 'Age group\n<40\nSex\noverall\nEstimate name\nmean, sd',
-    'Age group\n>=40\nSex\noverall\nEstimate name\nmean, sd', 'Age group\noverall\nSex\noverall\nEstimate name\nN%',
-    'Age group\n<40\nSex\nMale\nEstimate name\nN%', 'Age group\n>=40\nSex\nMale\nEstimate name\nN%',
-    'Age group\n<40\nSex\nFemale\nEstimate name\nN%', 'Age group\n>=40\nSex\nFemale\nEstimate name\nN%',
-    'Age group\noverall\nSex\nMale\nEstimate name\nN%', 'Age group\noverall\nSex\nFemale\nEstimate name\nN%',
-    'Age group\n<40\nSex\noverall\nEstimate name\nN%', 'Age group\n>=40\nSex\noverall\nEstimate name\nN%'
+    'Variable name', 'Variable level',
+    'Age group\noverall\nSex\noverall\nEstimate name\nN',
+    'Age group\n<40\nSex\nMale\nEstimate name\nN',
+    'Age group\n>=40\nSex\nMale\nEstimate name\nN',
+    'Age group\n<40\nSex\nFemale\nEstimate name\nN',
+    'Age group\n>=40\nSex\nFemale\nEstimate name\nN',
+    'Age group\noverall\nSex\nMale\nEstimate name\nN',
+    'Age group\noverall\nSex\nFemale\nEstimate name\nN',
+    'Age group\n<40\nSex\noverall\nEstimate name\nN',
+    'Age group\n>=40\nSex\noverall\nEstimate name\nN',
+    'Age group\noverall\nSex\noverall\nEstimate name\nmean, sd',
+    'Age group\n<40\nSex\nMale\nEstimate name\nmean, sd',
+    'Age group\n>=40\nSex\nMale\nEstimate name\nmean, sd',
+    'Age group\n<40\nSex\nFemale\nEstimate name\nmean, sd',
+    'Age group\n>=40\nSex\nFemale\nEstimate name\nmean, sd',
+    'Age group\noverall\nSex\nMale\nEstimate name\nmean, sd',
+    'Age group\noverall\nSex\nFemale\nEstimate name\nmean, sd',
+    'Age group\n<40\nSex\noverall\nEstimate name\nmean, sd',
+    'Age group\n>=40\nSex\noverall\nEstimate name\nmean, sd',
+    'Age group\noverall\nSex\noverall\nEstimate name\nN%',
+    'Age group\n<40\nSex\nMale\nEstimate name\nN%',
+    'Age group\n>=40\nSex\nMale\nEstimate name\nN%',
+    'Age group\n<40\nSex\nFemale\nEstimate name\nN%',
+    'Age group\n>=40\nSex\nFemale\nEstimate name\nN%',
+    'Age group\noverall\nSex\nMale\nEstimate name\nN%',
+    'Age group\noverall\nSex\nFemale\nEstimate name\nN%',
+    'Age group\n<40\nSex\noverall\nEstimate name\nN%',
+    'Age group\n>=40\nSex\noverall\nEstimate name\nN%'
   ) %in% colnames(fx3$body$dataset)))
   expect_true(nrow(fx3$body$dataset) == 10)
 
@@ -121,7 +135,7 @@ test_that("visOmopTable", {
   expect_true(all(c("tbl_df", "tbl", "data.frame") %in% class(tib1)))
   expect_true(all(c(
     'Age group', 'Sex', 'Variable name', 'Variable level', 'Estimate name', '[header_name]Cohort name\n[header_level]cohort1', '[header_name]Cohort name\n[header_level]cohort2') %in% colnames(tib1)))
-  expect_true(all(tib1[,6] |> dplyr::pull() |> unique() == c("<10,000,000", "<10,000,000, <10,000,000", "<10,000,000 (<10,000,000)")))
+  expect_true(all(tib1[,6] |> dplyr::pull() |> unique() == c("<10,000,000")))
 
   result$estimate_value[1:3] <- NA_character_
 
@@ -196,7 +210,7 @@ test_that("renameColumn works", {
     rename = c("Database name" = "cdm_name", "changeName" = "variable_name"),
     hide = c("result_id", "estimate_type"),
     .options = list())
-  expect_true(colnames(fx2$body$dataset)[1] == "Database name; Cohort name")
+  expect_true(colnames(fx2$body$dataset)[1] == "changeName")
   expect_equal(colnames(fx1$body$dataset),
                c("Cohort name", "Age group", "Variable name", "Variable level",
                  "Estimate name", "Database name\nmock\nSex\noverall",
@@ -212,7 +226,7 @@ test_that("renameColumn works", {
     rename = c("Database name" = "cdm_name", "changeName" = "variable_name"),
     hide = c("result_id", "estimate_type"),
     .options = list())
-  expect_true(colnames(fx3$body$dataset)[1] == "group")
+  expect_true(colnames(fx3$body$dataset)[1] == "changeName")
 })
 
 test_that("don't want scientific",{
@@ -257,7 +271,6 @@ test_that("estimates at the end", {
       'Estimate value')
   )
 })
-
 
 test_that("columnOrder and factor", {
   result <- mockSummarisedResult()

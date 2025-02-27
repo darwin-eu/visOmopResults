@@ -313,3 +313,9 @@ test_that("formatEstimateValue, dates", {
   expect_warning(result_out <- formatEstimateValue(result, decimals = c(date = 1)))
   expect_true(class(as.Date(result_out |> dplyr::filter(estimate_type == "date") |> dplyr::pull(estimate_value))) == "Date")
 })
+
+test_that("formatMinCellCount works", {
+  result <- mockSummarisedResult() |> omopgenerics::suppress(minCellCount = 10000000)
+  expect_equal(result |> formatMinCellCount() |> dplyr::pull("estimate_value") |> unique(),
+               c("<10,000,000"))
+})

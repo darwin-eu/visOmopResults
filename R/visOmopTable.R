@@ -90,6 +90,10 @@ visOmopTable <- function(result,
                          .options = list()) {
   # Tidy results
   result <- omopgenerics::validateResultArgument(result)
+  showMinCellCount <- validateShowMinCellCount(showMinCellCount, settings(result))
+  if (showMinCellCount) {
+    result <- result |> formatMinCellCount()
+  }
   resultTidy <- tidySummarisedResult(result, settingsColumn = settingsColumn, pivotEstimatesBy = NULL)
 
   # Checks
@@ -115,16 +119,12 @@ visOmopTable <- function(result,
   rename <- validateRename(rename, resultTidy)
   if (!"cdm_name" %in% rename) rename <- c(rename, "CDM name" = "cdm_name")
   groupColumn <- validateGroupColumn(groupColumn, colnames(resultTidy), sr = result, rename = rename)
-  showMinCellCount <- validateShowMinCellCount(showMinCellCount, settings(result))
   # default SR hide columns
   hide <- c(hide, "result_id", "estimate_type") |> unique()
   checkVisTableInputs(header, groupColumn, hide)
 
   # showMinCellCount
-  if (showMinCellCount) {
-    resultTidy <- resultTidy |>
-      formatMinCellCount(set = settings(result))
-  }
+
 
   if (length(factor) > 0) {
     factorExp <- getFactorExp(factor)
@@ -255,28 +255,6 @@ getColumnOrder <- function(currentOrder, newOrder, header, group, hide) {
     cli::cli_abort("Please make sure `columnOrder` argument contains all the table columns. Missing columns to allocate a position are: {currentOrder[!currentOrder %in% newOrder]}")
   }
   return(newOrder)
-}
-
-formatMinCellCount <- function(result, set = NULL) {
-  if (is.null(set)) {
-    result <- result |>
-      omopgenerics::addSettings(settingsColumn = "min_cell_count")
-  } else {
-    result <- result |>
-      dplyr::left_join(
-        set |>
-          dplyr::select("result_id", "min_cell_count"),
-        by = "result_id"
-      )
-  }
-  result |>
-    dplyr::mutate(min_cell_count = paste0("<", base::format(as.numeric(.data$min_cell_count), big.mark = ",", scientific = FALSE))) |>
-    dplyr::mutate(estimate_value = dplyr::if_else(
-      .data$estimate_value == "-",
-      .data$min_cell_count,
-      .data$estimate_value
-    )) |>
-    dplyr::select(!"min_cell_count")
 }
 
 getFactorExp <- function(factor) {

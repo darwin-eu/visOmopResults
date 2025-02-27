@@ -180,6 +180,7 @@ getFormatNum <- function(format, keys) {
   return(format)
 }
 evalName <- function(result, format, keys) {
+
   for (k in seq_along(keys)) {
     format <- gsub(
       pattern = paste0("#", k, "#"),
@@ -187,12 +188,15 @@ evalName <- function(result, format, keys) {
       x = format
     )
   }
+
   format <- strsplit(x = format, split = "#x#") |> unlist()
   format <- format[format != ""]
+
   id <- !startsWith(format, ".data")
   format[id] <- paste0("\"", format[id], "\"")
   format <- paste0(format, collapse = ", ")
   format <- paste0("paste0(", format, ")")
+
   result <- result |>
     dplyr::mutate(
       "estimate_value" =
@@ -202,5 +206,10 @@ evalName <- function(result, format, keys) {
           .default = eval(parse(text = format))
         )
     )
+
+  if(any(c("percentage", "mean", "sd", "min", "max", "median", "q25", "q75") %in% keys)){
+    result <- result |>
+      dplyr::mutate("estimate_value" = dplyr::if_else(grepl("<", .data[[keys[1]]]), .data[[keys[1]]], .data$estimate_value))
+  }
   return(result)
 }

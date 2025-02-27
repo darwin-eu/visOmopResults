@@ -246,7 +246,17 @@ result |>
   select(variable_name, variable_level, estimate_name, estimate_type, estimate_value)
 ```
 
-### 1.1) Estimate values
+### 1.1) Suppressed estimates
+The function `formatMinCellCount()` indicates which estimates have been suppressed due to the minimum cell count specified in the study.  
+
+Estimates are suppressed using `omopgenerics::suppress()`, which replaces the estimate with the symbol "-". When reporting results, we want to distinguish suppressed estimates from missing values (`NA`), the `formatMinCellCount()` function can be used as follows:
+
+```{r}
+result <- result |> formatMinCellCount()
+```
+
+
+### 1.2) Estimate values
 The `formatEstimateValue()` function allows you to specify the number of decimals for different `estimate_types` or `estimate_names`, as well as customise decimal and thousand separators.
 
 Let's see how the previous estimates are updated afterwars:
@@ -269,7 +279,7 @@ result |>
 
 As you can see, the estimates now reflect the specified formatting rules.
 
-### 1.2) Estimate names
+### 1.3) Estimate names
 
 Next, we will format the estimate names using the `formatEstimateName()` function. This function allows us to combine counts and percentages as “N (%)”, among other estimate combinations
 
