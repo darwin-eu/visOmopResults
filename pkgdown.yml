@@ -4,7 +4,7 @@ pkgdown_sha: ~
 articles:
   a01_tables: a01_tables.html
   a02_plots: a02_plots.html
-last_built: 2025-01-15T22:17Z
+last_built: 2025-02-27T13:27Z
 urls:
   reference: https://darwin-eu.github.io/visOmopResults/reference
   article: https://darwin-eu.github.io/visOmopResults/articles
