@@ -111,6 +111,32 @@ test_that("formatEstimateName", {
     useFormatOrder = TRUE)
   expect_true(is.na(res$estimate_value[1]))
 
+  # Min cell count value ---
+  result <- mockSummarisedResult() |>
+    dplyr::mutate("estimate_value" = dplyr::if_else(.data$strata_level == "Female", "4", .data$estimate_value))
+  result <- omopgenerics::suppress(result, minCellCount = 5)
+  result <- result |> dplyr::mutate("estimate_value" = gsub("-","<5",.data$estimate_value))
+
+  expect_true(
+    formatEstimateName(
+      result,
+      estimateName = "<count> (<percentage>%)",
+      keepNotFormatted = FALSE
+    ) |>
+      dplyr::filter(.data$strata_level == "Female") |>
+      dplyr::pull(.data$estimate_value) |>
+      unique() == "<5")
+
+  expect_true(
+    formatEstimateName(
+      result,
+      estimateName = c("Mean (sd)" = "<mean> (<sd>)"),
+      keepNotFormatted = FALSE
+    ) |>
+      dplyr::filter(.data$strata_level == "Female") |>
+      dplyr::pull(.data$estimate_value) |>
+      unique() == "<5")
+
   # Class ----
   expect_true(inherits(res, "summarised_result"))
   class(result) <- c("tbl_df", "tbl", "data.frame")
@@ -440,6 +466,7 @@ test_that("test suppressed is kept", {
       "N (%)" = "<count> (<percentage>%)", "N" = "<count>",
       "median [Q25 - Q75]" = "<median> [<q25> - <q75>]"
     ))
+  expect_true(x$estimate_value |> unique() == "-")
 
   x <-  result |>
     formatMinCellCount() |>
@@ -447,10 +474,13 @@ test_that("test suppressed is kept", {
       "N (%)" = "<count> (<percentage>%)", "N" = "<count>",
       "median [Q25 - Q75]" = "<median> [<q25> - <q75>]"
     ))
+  expect_true(x$estimate_value |> unique() == "<20")
 
   x <- result |>
     visOmopTable(estimateName = c(
       "N (%)" = "<count> (<percentage>%)", "N" = "<count>",
       "median [Q25 - Q75]" = "<median> [<q25> - <q75>]"
     ))
+  expect_true(x$`_data`$`Estimate value` |> unique() == "<20")
 })
+

@@ -68,12 +68,14 @@ test_that("visTable with SR", {
   expect_equal(
     colnames(fx2$body$dataset),
     c(
-      'Database name; Cohort name', 'Variable name', 'Variable level', 'Estimate name',
-      'Estimate type', 'Additional name', 'Additional level', 'Strata\noverall\nStrata level\noverall',
-      'Strata\nage_group &&& sex\nStrata level\n<40 &&& Male', 'Strata\nage_group &&& sex\nStrata level\n>=40 &&& Male',
-      'Strata\nage_group &&& sex\nStrata level\n<40 &&& Female', 'Strata\nage_group &&& sex\nStrata level\n>=40 &&& Female',
-      'Strata\nsex\nStrata level\nMale', 'Strata\nsex\nStrata level\nFemale', 'Strata\nage_group\nStrata level\n<40',
-      'Strata\nage_group\nStrata level\n>=40')
+      'Variable name', 'Variable level', 'Estimate name', 'Estimate type', 'Additional name',
+      'Additional level', 'Strata\noverall\nStrata level\noverall',
+      'Strata\nage_group &&& sex\nStrata level\n<40 &&& Male',
+      'Strata\nage_group &&& sex\nStrata level\n>=40 &&& Male',
+      'Strata\nage_group &&& sex\nStrata level\n<40 &&& Female',
+      'Strata\nage_group &&& sex\nStrata level\n>=40 &&& Female',
+      'Strata\nsex\nStrata level\nMale', 'Strata\nsex\nStrata level\nFemale',
+      'Strata\nage_group\nStrata level\n<40', 'Strata\nage_group\nStrata level\n>=40')
   )
 
   tib1 <- visTable(

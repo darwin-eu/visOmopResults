@@ -79,7 +79,8 @@ test_that("fxTableInternal", {
     caption = "*This* is the caption",
     groupColumn = list("group_level" = "group_level"),
     groupAsColumn = FALSE,
-    groupOrder = NULL
+    groupOrder = NULL,
+    merge = "all_columns"
   )
 
   # Spanners
@@ -110,9 +111,9 @@ test_that("fxTableInternal", {
   expect_equal(fxResult$caption$value, "*This* is the caption")
 
   # group label
-  expect_equal(fxResult$body$spans$rows[1,], c(1, 17, rep(0, 16)))
-  expect_equal(fxResult$body$spans$rows[7,], c(1, 17, rep(0, 16)))
-  expect_equal(fxResult$body$spans$rows[3,], rep(1, 18))
+  expect_equal(fxResult$body$spans$rows[1,], c(17, rep(0, 16)))
+  expect_equal(fxResult$body$spans$rows[7,], c(17, rep(0, 16)))
+  expect_equal(fxResult$body$spans$rows[3,], rep(1, 17))
 
   # Input 3 ----
   table_to_format <- mockSummarisedResult() |>
@@ -242,20 +243,13 @@ test_that("fxTableInternal, test merge", {
   )
 
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,1],
-               c("gray", "black", "black", "black", "black", "black", "black", "black",
-                 "gray", "black", "black", "black", "black", "black", "black", "black"))
+               c('gray', 'gray', 'black', 'black', 'black', 'black', 'black', 'black', 'gray', 'gray', 'black', 'black', 'black', 'black', 'black', 'black'))
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,2],
-               c("gray", "gray", "black", "black", "black", "black", "black", "black",
-                 "gray", "gray", "black", "black", "black", "black", "black", "black"))
-  expect_equal(fxResult$body$styles$cells$border.color.top$data[,4],
-               c("gray", "gray", "gray", "black", "gray", "black", "black", "black",
-                 "gray", "gray", "gray", "black", "gray", "black", "black", "black"))
+               c('gray', 'gray', 'black', 'black', 'black', 'black', 'black', 'black', 'gray', 'gray', 'black', 'black', 'black', 'black', 'black', 'black'))
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,5],
-               c("gray", "gray", "gray", "black", "gray", "black", "gray", "black",
-                 "gray", "gray", "gray", "black", "gray", "black", "gray", "black"))
+               c('gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray'))
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,16],
-               c("gray", "gray", "gray", "gray", "gray", "gray", "gray", "gray",
-                 "gray", "gray", "gray", "gray", "gray", "gray", "gray", "gray"))
+               c('gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray'))
 
   # merge = c("cdm_name", "variable_name")
   fxResult <- fxTableInternal(
@@ -271,14 +265,11 @@ test_that("fxTableInternal, test merge", {
     merge = c("cdm_name", "variable_name")
   )
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,1],
-               c("gray", "black", "black", "black", "black", "black", "black", "black",
-                 "gray", "black", "black", "black", "black", "black", "black", "black"))
+               c('gray', 'gray', 'black', 'black', 'black', 'black', 'black', 'black', 'gray', 'gray', 'black', 'black', 'black', 'black', 'black', 'black'))
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,2],
-               c("gray", "gray", "black", "black", "black", "black", "black", "black",
-                 "gray", "gray", "black", "black", "black", "black", "black", "black"))
+               c('gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray'))
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,4],
-               c("gray", "gray", "gray", "black", "gray", "black", "black", "black",
-                 "gray", "gray", "gray", "black", "gray", "black", "black", "black"))
+               c('gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray'))
 })
 
 test_that("multiple groupColumn", {
@@ -339,8 +330,6 @@ test_that("multiple groupColumn", {
 })
 
 test_that("abort when groupOrder doesn't match groupName", {
-
   x <- mockSummarisedResult()
-
   expect_error(fxTableInternal(x, groupColumn = c("variable_name", "variable_level"), groupOrder = "variable_name"))
 })

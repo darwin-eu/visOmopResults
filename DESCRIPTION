@@ -1,6 +1,8 @@
 Package: visOmopResults
 Title: Graphs and Tables for OMOP Results
-Version: 1.0.0
+Version: 1.0.1
+Depends: 
+    R (>= 4.1.0)
 Authors@R: c(
     person(
         "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -17,6 +19,10 @@ Authors@R: c(
     person(
     "Elin", "Rowlands", , "elin.rowlands@ndorms.ox.ac.uk", 
     role = c("ctb"), comment = c(ORCID = "0009-0007-6629-4661")
+    ),
+    person(
+    "Marta", "Alcalde-Herraiz", , "marta.alcaldeherraiz@ndorms.ox.ac.uk", 
+    role = c("aut"), comment = c(ORCID = "0009-0002-4405-1814")
     ),
     person(
     "Edward", "Burn", , "edward.burn@ndorms.ox.ac.uk", 
