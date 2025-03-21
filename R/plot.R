@@ -115,8 +115,8 @@ scatterPlot <- function(result,
 
   # make plot
   p <- ggplot2::ggplot(data = result, mapping = aes)
-  if (line) p <- p + ggplot2::geom_line(size = 0.75)
-  if (yminymax) p <- p + ggplot2::geom_errorbar(width = 0, size = 0.6)
+  if (line) p <- p + ggplot2::geom_line(linewidth = 0.75)
+  if (yminymax) p <- p + ggplot2::geom_errorbar(width = 0, linewidth = 0.6)
   if (point) p <- p + ggplot2::geom_point(size = 2)
   if (ribbon & yminymax) {
     p <- p +

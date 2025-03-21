@@ -94,14 +94,6 @@ visOmopTable <- function(result,
   if (showMinCellCount) {
     result <- result |> formatMinCellCount()
   }
-  resultTidy <- tidySummarisedResult(result, settingsColumn = settingsColumn, pivotEstimatesBy = NULL)
-
-  # Checks
-  factor <- validateFactor(factor, resultTidy)
-
-  # .options
-  .options <- defaultTableOptions(.options)
-
   # Backward compatibility ---> to be deleted in the future
   omopgenerics::assertCharacter(header, null = TRUE)
   omopgenerics::assertCharacter(hide, null = TRUE)
@@ -110,6 +102,19 @@ visOmopTable <- function(result,
   header <- bc$header
   hide <- bc$hide
   groupColumn <- bc$groupColumn
+  if (length(header) > 0) {
+    neededCols <- validateHeader(result, header, hide, settingsColumn, TRUE)
+    hide <- neededCols$hide
+    settingsColumn <- neededCols$settingsColumn
+  }
+  resultTidy <- tidySummarisedResult(result, settingsColumn = settingsColumn, pivotEstimatesBy = NULL)
+
+  # Checks
+  factor <- validateFactor(factor, resultTidy)
+
+  # .options
+  .options <- defaultTableOptions(.options)
+
   if ("variable_level" %in% header) {
     resultTidy <- resultTidy |>
       dplyr::mutate(dplyr::across(dplyr::starts_with("variable"), ~ dplyr::if_else(is.na(.x), .options$na, .x)))
@@ -122,9 +127,6 @@ visOmopTable <- function(result,
   # default SR hide columns
   hide <- c(hide, "result_id", "estimate_type") |> unique()
   checkVisTableInputs(header, groupColumn, hide)
-
-  # showMinCellCount
-
 
   if (length(factor) > 0) {
     factorExp <- getFactorExp(factor)

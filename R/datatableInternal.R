@@ -31,6 +31,7 @@ datatableInternal <- function(x,
     "fixedHeader"
   )]
   options <- options[!sapply(options, is.null)]
+  if (is.null(style$filter)) style$filter <- "none"
 
   # Eliminate prefixes
   colnames(x) <- gsub("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", "", colnames(x))
@@ -43,85 +44,29 @@ datatableInternal <- function(x,
         !!nameGroup, groupColumn[[1]], sep = "; ", remove = TRUE, na.rm = TRUE
       ) |>
       dplyr::relocate(!!nameGroup)
-    options$rowGroup = list(dataSrc = 1)
+    options$rowGroup = list(dataSrc = 0)
   }
 
   # header
-  header <- colnames(x)
-  container <- paste0("<table class='display'><thead><tr>", paste0("<th>", header, "</th>", collapse = " "), "</tr></thead></table>")
-  if (any(grepl(delim, header))) {
-    header_split <- stringr::str_split(header, paste0("\\", delim))
-
-    levels <- sapply(header_split, length)
-    max_depth <- max(levels)
-    if (length(unique(levels)) > max_depth) {
-      cli::cli_abort("In this package version, all headers must have the same number of levels.")
-    }
-
-    inHtml <- NULL
-    for (ii in 1:max_depth) {
-      levelHeaders <- sapply(header_split, function(x){x[ii]})
-      levelHeaders <- levelHeaders[!is.na(levelHeaders)]
-      levelHeadersTable <- table(levelHeaders)
-
-      if (ii != max_depth) {
-        html.ii <- lapply(unique(levelHeaders), function(item) {
-          if (levelHeadersTable[item] == 1) {
-            paste0("<th rowspan='", max_depth, "'>", item, "</th>")
-          } else {
-            paste0("<th colspan ='", levelHeadersTable[item], "'>", item, "</th>")
-          }
-        }) |> unlist() |> paste0(collapse = "\n")
-        html.ii <- paste0("<tr>", html.ii, "</tr>")
-
-      } else {
-        html.ii <- paste0("<th>", levelHeaders, "</th>", collapse = "\n")
-      }
-
-      inHtml <- c(inHtml, paste0("<tr>", html.ii, "</tr>"))
-    }
-
-    container <- paste0("<table class='display'>",paste0("<thead>", inHtml |> paste0(collapse = "\n"), "</thead>"), "</table>")
-  }
+  container <- getHTMLContainer(x, delim)
 
   # datatable
-  if (is.null(style$filter)) {
-    DT::datatable(
-      x,
-      options = options,
-      caption =  htmltools::tags$caption(
-        style = style$caption, caption
-      ),
-      rownames = style$rownames,
-      extensions = list("FixedColumns", "FixedHeader", "Responsive", "RowGroup", "Scroller"),
-      container = container
-    )
-  } else {
-    DT::datatable(
-      x,
-      options = options,
-      caption =  htmltools::tags$caption(
-        style = style$caption, caption
-      ),
-      filter = style$filter,
-      rownames = style$rownames,
-      extensions = list("FixedColumns", "FixedHeader", "Responsive", "RowGroup", "Scroller"),
-      container = container
-    )
-  }
+  DT::datatable(
+    x,
+    options = options,
+    caption = if (!is.null(caption)) htmltools::tags$caption(
+      style = style$caption, caption
+    ) else NULL,
+    filter = style$filter,
+    rownames = style$rownames,
+    extensions = c("FixedColumns", "FixedHeader", "Responsive", "RowGroup", "Scroller"),
+    container = container
+  )
 }
 
 datatableStyleInternal <- function(styleName) {
   styles <- list(
     "default" = list(
-      # "header" = list(),
-      # "header_name" = list(),
-      # "header_level" = list(),
-      # "column_name" = list(),
-      # "group_label" = list(),
-      # "title" = list(),
-      # "subtitle" = list(),
-      # "body" = list()
       "caption" = 'caption-side: bottom; text-align: center;',
       "scrollX" = TRUE,
       "scrollY" = 400,
@@ -142,4 +87,61 @@ datatableStyleInternal <- function(styleName) {
     styleName <- "default"
   }
   return(styles[[styleName]])
+}
+
+getHTMLContainer <- function(x, delim) {
+  headers <- colnames(x)
+  split_headers <- stringr::str_split(headers, delim)
+  # number of header levels
+  max_depth <- max(sapply(split_headers, length))
+  # pad single level headers
+  padded_headers <- lapply(split_headers, function(header) {
+    c(header, rep("", max_depth - length(header)))
+  })
+  header_levels <- do.call(rbind, padded_headers)
+
+  # empty list to fill with html header code
+  html_rows <- vector("list", max_depth)
+  # get html by level
+  for (level in 1:max_depth) {
+    current_level <- header_levels[, level]
+    unique_headers <- rle(current_level)
+    current_row <- ""
+    col_index <- 1
+    # html for each header in the level
+    for (i in seq_along(unique_headers$values)) {
+      header <- unique_headers$values[i]
+      span <- unique_headers$lengths[i]
+      if (header != "") {
+        rowspan <- 1
+        colspan <- span
+        if (level < max_depth) {
+          # check next level over the spanning columns to determine rowspan
+          next_level_headers <- header_levels[col_index:(col_index + span - 1), level + 1]
+          if (all(next_level_headers == "")) {
+            rowspan <- max_depth - level + 1
+            colspan <- 1
+          }
+        }
+        th_element <- sprintf(
+          "<th%s%s style='text-align:center;'>%s</th>",
+          if (rowspan > 1) sprintf(" rowspan='%d'", rowspan) else "",
+          if (colspan > 1) sprintf(" colspan='%d'", colspan) else "",
+          header
+        )
+        current_row <- paste0(current_row, th_element)
+      }
+      col_index <- col_index + span
+    }
+    html_rows[[level]] <- paste0("<tr>", current_row, "</tr>")
+  }
+
+  container <- paste(unlist(html_rows), collapse = "\n")
+  container <- paste0(
+    "<table class='display'>\n",
+    "<thead>\n", container, "\n</thead>\n",
+    "</table>"
+  )
+
+  return(container)
 }

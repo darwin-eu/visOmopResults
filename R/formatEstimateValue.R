@@ -112,7 +112,7 @@ formatMinCellCount <- function(result) {
   result |>
     dplyr::mutate(min_cell_count = paste0("<", base::format(as.numeric(.data$min_cell_count), big.mark = ",", scientific = FALSE))) |>
     dplyr::mutate(estimate_value = dplyr::if_else(
-      .data$estimate_value == "-",
+      .data$estimate_value == "-" & grepl("count", .data$estimate_name),
       .data$min_cell_count,
       .data$estimate_value
     )) |>

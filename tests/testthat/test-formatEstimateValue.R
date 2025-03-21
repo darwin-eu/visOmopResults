@@ -316,6 +316,6 @@ test_that("formatEstimateValue, dates", {
 
 test_that("formatMinCellCount works", {
   result <- mockSummarisedResult() |> omopgenerics::suppress(minCellCount = 10000000)
-  expect_equal(result |> formatMinCellCount() |> dplyr::pull("estimate_value") |> unique(),
-               c("<10,000,000"))
+  expect_equal(result |> formatMinCellCount() |> dplyr::pull("estimate_value") |> unique() |> sort(),
+               c("-", "<10,000,000"))
 })

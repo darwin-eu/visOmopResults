@@ -84,27 +84,38 @@ visTable <- function(result,
   # .options
   omopgenerics::assertList(.options, named = TRUE)
   .options <- defaultTableOptions(.options)
-  # default hide columns
-  # hide <- c(hide, "result_id", "estimate_type")
+  if (length(header) > 0) {
+    neededCols <- validateHeader(result, header, hide)
+    hide <- neededCols$hide
+  }
   checkVisTableInputs(header, groupColumn, hide)
 
   if (nrow(result) == 0) return(emptyTable(type = type))
 
   # format estimate values and names
-  if (!any(c("estimate_name", "estimate_type", "estimate_value") %in% colnames(result))) {
-    cli::cli_inform("`estimate_name`, `estimate_type`, and `estimate_value` must be present in `result` to apply `formatEstimateValue()` and `formatEstimateName()`.")
-  } else {
-    result <- result |>
-      visOmopResults::formatEstimateValue(
-        decimals = .options$decimals,
-        decimalMark = .options$decimalMark,
-        bigMark = .options$bigMark
-      ) |>
-      visOmopResults::formatEstimateName(
-        estimateName = estimateName,
-        keepNotFormatted = .options$keepNotFormatted,
-        useFormatOrder = .options$useFormatOrder
-      )
+  if ("estimate_value" %in% colnames(result)) {
+    if (!any(c("estimate_name", "estimate_type") %in% colnames(result))) {
+      cli::cli_inform("`estimate_name` and `estimate_type` must be present in `result` to apply `formatEstimateValue()`.")
+    } else {
+      result <- result |>
+        visOmopResults::formatEstimateValue(
+          decimals = .options$decimals,
+          decimalMark = .options$decimalMark,
+          bigMark = .options$bigMark
+        )
+    }
+  }
+  if (length(estimateName) > 0) {
+    if (!any(c("estimate_name", "estimate_value") %in% colnames(result))) {
+      cli::cli_inform("`estimate_name` and `estimate_value` must be present in `result` to apply `formatEstimateName()`.")
+    } else {
+      result <- result |>
+        visOmopResults::formatEstimateName(
+          estimateName = estimateName,
+          keepNotFormatted = .options$keepNotFormatted,
+          useFormatOrder = .options$useFormatOrder
+        )
+    }
   }
 
   # rename and hide columns
