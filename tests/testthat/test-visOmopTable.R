@@ -135,7 +135,7 @@ test_that("visOmopTable", {
   expect_true(all(c("tbl_df", "tbl", "data.frame") %in% class(tib1)))
   expect_true(all(c(
     'Age group', 'Sex', 'Variable name', 'Variable level', 'Estimate name', '[header_name]Cohort name\n[header_level]cohort1', '[header_name]Cohort name\n[header_level]cohort2') %in% colnames(tib1)))
-  expect_true(all(tib1[,6] |> dplyr::pull() |> unique() == c("<10,000,000")))
+  expect_equal(tib1[,6] |> dplyr::pull() |> unique() |> sort(), c("-", "<10,000,000"))
 
   result$estimate_value[1:3] <- NA_character_
 
@@ -338,3 +338,55 @@ test_that("empty table", {
   expect_true(fx$body$col_keys == "Table has no data")
   expect_true(nrow(tib) == 0)
 })
+
+test_that("validate header works", {
+  res <- dplyr::tibble(
+    result_id = c(1L, 2L),
+    cdm_name = "test",
+    group_name = "overall",
+    group_level = "overall",
+    strata_name = "overall",
+    strata_level = "overall",
+    variable_name = "Number subjects",
+    variable_level = NA_character_,
+    estimate_name = "count",
+    estimate_type = "integer",
+    estimate_value = c("10", "20"),
+    additional_name = "overall",
+
+    additional_level = "overall"
+  ) |>
+    omopgenerics::newSummarisedResult(
+      settings = dplyr::tibble(
+        result_id = 1:2L, package_name = NA_character_, package_version = NA_character_,
+        result_type = "prova", for_header = c("res1", "res2")
+      )
+    )
+  expect_warning(newX <- visOmopTable(res, header = "variable_name", type = "tibble"))
+  expect_true("For header" %in% colnames(newX))
+
+  res <- dplyr::tibble(
+    result_id = 1L,
+    cdm_name = "test",
+    group_name = "overall",
+    group_level = "overall",
+    strata_name = "strata",
+    strata_level = c("strata1", "strata2"),
+    variable_name = "Number subjects",
+    variable_level = NA_character_,
+    estimate_name = "count",
+    estimate_type = "integer",
+    estimate_value = c("10", "20"),
+    additional_name = "overall",
+    additional_level = "overall"
+  ) |>
+    omopgenerics::newSummarisedResult(
+      settings = dplyr::tibble(
+        result_id = 1L, package_name = NA_character_, package_version = NA_character_,
+        result_type = "prova"
+      )
+    )
+  expect_warning(newX <- visOmopTable(res, header = "variable_name", type = "tibble", hide = "strata"))
+  expect_true("Strata" %in% colnames(newX))
+})
+

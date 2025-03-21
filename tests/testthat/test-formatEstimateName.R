@@ -474,13 +474,13 @@ test_that("test suppressed is kept", {
       "N (%)" = "<count> (<percentage>%)", "N" = "<count>",
       "median [Q25 - Q75]" = "<median> [<q25> - <q75>]"
     ))
-  expect_true(x$estimate_value |> unique() == "<20")
+  expect_equal(x$estimate_value |> unique() |> sort(), c("-", "<20"))
 
   x <- result |>
     visOmopTable(estimateName = c(
       "N (%)" = "<count> (<percentage>%)", "N" = "<count>",
       "median [Q25 - Q75]" = "<median> [<q25> - <q75>]"
     ))
-  expect_true(x$`_data`$`Estimate value` |> unique() == "<20")
+  expect_equal(x$`_data`$`Estimate value` |> sort(), c("-", "<20", "<20"))
 })
 

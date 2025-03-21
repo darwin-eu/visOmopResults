@@ -62,7 +62,7 @@ themeVisOmop <- function(fontsizeRef = 10) {
       plot.background = ggplot2::element_rect(fill = color.background, colour = color.background),
       panel.border = ggplot2::element_rect(colour = color.border),
       # grid
-      panel.grid.major = ggplot2::element_line(color = color.grid.major, size = .25),
+      panel.grid.major = ggplot2::element_line(color = color.grid.major, linewidth = .25),
       # margin
       plot.margin = grid::unit(c(0.35, 0.2, 0.3, 0.35), "cm")
     )

@@ -141,3 +141,14 @@ test_that("visTable with SR", {
     )
   )
 })
+
+test_that("validate header works", {
+  x <- dplyr::tibble(
+    a = "same_value",
+    b = c("category 1", "category 1", "category 2", "category 2"),
+    c = c("header 1", "header 2", "header 1", "header 2"),
+    estimate_value = c("value for 1", "value for 2", "value for 1", "value for 2")
+  )
+  expect_warning(newX <- visTable(x, header = "c", hide = "b", type = "tibble"))
+  expect_true("B" %in% colnames(newX))
+})

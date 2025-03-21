@@ -251,3 +251,47 @@ validateFactor <- function(factor, resultTidy) {
   }
   return(invisible(factor))
 }
+
+validateHeader <- function(x, header, hide, settingsColumn = NULL, summarisedResult = FALSE) {
+  # Check current header
+  if (summarisedResult) {
+    xTest <- tidySummarisedResult(x, settingsColumn = settingsColumn, pivotEstimatesBy = NULL)
+  } else {
+    xTest <- x
+  }
+  xTest <- xTest |> dplyr::select(!dplyr::any_of(c(hide, "result_id", "estimate_type")))
+  xCols <- colnames(xTest)
+  combinations <- xTest |>
+    dplyr::group_by(dplyr::across(dplyr::any_of(xCols[xCols != "estimate_value"]))) |>
+    dplyr::tally() |>
+    dplyr::filter(n > 1)
+
+  # Solve if needed
+  if (nrow(combinations) > 0) {
+    if (summarisedResult) {
+      setCols <- omopgenerics::settingsColumns(x)
+      x <- x |>
+        addSettings() |>
+        splitAll()
+      hideSettings <- setCols[!setCols %in% settingsColumn]
+    }
+    x <- x |>
+      dplyr::select(!dplyr::any_of(c(header, "result_id", "estimate_type", "estimate_value")))
+    colCounts <- sapply(x, dplyr::n_distinct)
+    mustCols <- names(colCounts)[colCounts > 1]
+    hideNeeded <- mustCols %in% hide
+    if (any(hideNeeded)) {
+      cli::cli_warn("{.strong {mustCols[hideNeeded]}} column{?s} will be added to the table to create a header with unique values")
+      hide <- hide[!hide %in% mustCols[hideNeeded]]
+    }
+    if (summarisedResult) {
+      settingsNeeded <- mustCols %in% hideSettings
+      if (any(settingsNeeded)) {
+        cli::cli_warn("{.strong {mustCols[settingsNeeded]}} column{?s} from settings will be added to the table to create a header with unique values")
+        settingsColumn <- c(settingsColumn, mustCols[settingsNeeded])
+      }
+    }
+  }
+
+  return(list(hide = hide, settingsColumn = settingsColumn))
+}

@@ -26,8 +26,7 @@
 #'
 #'
 mockSummarisedResult <- function() {
-  # TO modify when PatientProfiles works with omopgenerics
-  # number subjects
+  set.seed(1)
   result <- dplyr::tibble(
     "cdm_name" = "mock",
     "group_name" = "cohort_name",
@@ -189,6 +188,6 @@ mockSummarisedResult <- function() {
           as.character()
       )
     )
-
+  set.seed(NULL)
   return(result)
 }
