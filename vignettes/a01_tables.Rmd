@@ -63,12 +63,12 @@ visTable(
   groupColumn = c("sex"),
   rename = c("Bill length (mm)" = "bill_length_mm",
              "Bill depth (mm)" = "bill_depth_mm",
-             "Flipper length (mm)" = "flipper_length_mm",
-             "Body mass (g)" = "body_mass_g"),
+             "Flipper length (mm)" = "flipper_length_mm"),
   type = "gt",
   hide = "year"
 )
 ```
+
 
 To use the arguments `estimateName` and `header`, the `<data.frame>` must have the estimates arranged into three columns: `estimate_name`, `estimate_type`, and `estimate_value`. Let's reshape the example dataset accordingly and demonstrate creating a `<flextable>` object:
 
@@ -150,76 +150,23 @@ result |>
       "N" = "<count>",
       "Mean (SD)" = "<mean> (<sd>)"
     ),
-    header = c("My visOmopTable", "group"),
+    header = c("group"),
     groupColumn = c("strata"),
     hide = c("cdm_name"),
     showMinCellCount = TRUE,
-    type = "gt"
+    type = "reactable"
   )
 ```
 
-## Styling tables
+## Customise tables
 
-Tables displayed in `visOmopResults()` follow a default style, but customisation is possible through the `.options` argument. This argument allows users to modify various formatting aspects using options from the `format` functions (see the *`format` Functions* section to learn more).
+Tables displayed in `visOmopResults()` follow a default style, but customisation is possible through the `style` and `.options` arguments. These allow users to modify various formatting aspects using options from the `format` functions (see the *`format` Functions* section to learn more).
 
-The table below details which `format` function each styling option belongs to, along with a description of each option:
+### Style 
 
-```{r, echo=FALSE}
-bind_rows(
-  tibble(
-    Function = "formatEstimateValue()",
-    Argument = c("decimals", "decimalMark", "bigMark"),
-    Description = c(
-      "Number of decimals per estimate type (integer, numeric, percentage, proportion), estimate name, or all estimate values (introduce the number of decimals).",
-      "Decimal separator mark.",
-      "Thousand and millions separator mark."
-    )
-  ) ,
-  tibble(
-    Function = "formatEstimateName()",
-    Argument = c("keepNotFormatted", "useFormatOrder"),
-    Description = c(
-      "Whether to keep rows not formatted.",
-      "Whether to use the order in which estimate names appear in the estimateName (TRUE), or use the order in the input dataframe (FALSE)."
-    )
-  ),
-  tibble(
-    Function = "formatHeader()",
-    Argument = c("delim", "includeHeaderName", "includeHeaderKey"),
-    Description = c(
-      "Delimiter to use to separate headers.",
-      "Whether to include the column name as header.",
-      "Whether to include the header key (header, header_name, header_level) before each header type in the column names."
-    )
-  ),
-  tibble(
-    Function = "formatTable()",
-    Argument = c("style", "na", "title", "subtitle", "caption", "groupAsColumn", "groupOrder", "merge"),
-    Description = c(
-      "Named list that specifies how to style the different parts of the gt or flextable table generated. Accepted style entries are: title, subtitle, header, header_name, header_level, column_name, group_label, and body. Alternatively, use 'default' to get visOmopResults style, or NULL for gt/flextable style. Keep in mind that styling code is different for gt and flextable. To see the 'deafult' gt style code use gtStyle(), and flextableStyle() for flextable default code style",
-      "How to display missing values.",
-      "Title of the table, or NULL for no title.",
-      "Subtitle of the table, or NULL for no subtitle.",
-      "Caption for the table, or NULL for no caption. Text in markdown formatting style (e.g. ⁠*Your caption here*⁠ for caption in italics)",
-      "Whether to display the group labels as a column (TRUE) or rows (FALSE).",
-      "Order in which to display group labels.",
-      "Names of the columns to merge vertically when consecutive row cells have identical values. Alternatively, use 'all_columns' to apply this merging to all columns, or use NULL to indicate no merging."
-    )
-  )  
-) |>
-  formatTable(groupColumn = "Function")
+By default, the visOmopResults default style is applied for all tables. At the moment, besides from the default style, the package also supports the "darwin" style (only for `gt` and `flextable`).
 
-```
-
-To view the default `.options` settings used in `vis` tables, use the following function:
-
-```{r}
-tableOptions()
-```
-
-### Styling tables
-
-To inspect the code for the default styles of the different table types supported, you can use the following function:
+To inspect the code for the default styles of the different table types supported, you can use the `tableStyle()` function as showed next. To know more about styling with these options, please refer to each of the table packages.
 
 ```{r}
 tableStyle(type = "gt")
@@ -227,10 +174,73 @@ tableStyle(type = "gt")
 tableStyle(type = "flextable")
 
 tableStyle(type = "datatable")
+
+tableStyle(type = "reactable")
 ```
 
 
-# `format` Functions
+### Further Options
+
+The main `vis` table functions are built on top of specific formatting functions described in the next section. These core table functions do not directly expose all customization arguments in their signature. Instead, additional tweaks can be made via the `.options` argument.
+
+To view the full list of customization options and their default values, use:
+
+```{r}
+tableOptions()
+```
+
+As mentioned, all these arguments originate from specific formatting functions. The table below shows, for each argument, the function it belongs to and its purpose:
+
+```{r, echo=FALSE}
+bind_rows(
+  tibble(
+    Function = "formatEstimateValue()",
+    Argument = c("decimals", "decimalMark", "bigMark"),
+    Description = c(
+      "Number of decimals to display, which can be specified per estimate type (integer, numeric, percentage, proportion), per estimate name, or applied to all estimates.",
+      "Symbol to use as the decimal separator.",
+      "Symbol to use as the thousands and millions separator."
+    )
+  ),
+  tibble(
+    Function = "formatEstimateName()",
+    Argument = c("keepNotFormatted", "useFormatOrder"),
+    Description = c(
+      "Whether to retain rows with estimate names that are not explicitly formatted.",
+      "Whether to display estimate names in the order provided in `estimateName` (TRUE) or in the order of the input data frame (FALSE)."
+    )
+  ),
+  tibble(
+    Function = "formatHeader()",
+    Argument = c("delim", "includeHeaderName", "includeHeaderKey"),
+    Description = c(
+      "Delimiter to use when separating header components.",
+      "Whether to include the column name as part of the header.",
+      "Whether to prefix header elements with their type (e.g., header, header_name, header_level)."
+    )
+  ),
+  tibble(
+    Function = "formatTable()",
+    Argument = c("style", "na", "title", "subtitle", "caption", "groupAsColumn", "groupOrder", "merge"),
+    Description = c(
+      "Named list specifying styles for table components (e.g., title, subtitle, header, body). Use `'default'` for the default `visOmopResults` style or `NULL` for the package default (either `gt` or `flextable`). Use `gtStyle()` or `flextableStyle()` to preview the default styles.",
+      "Value to display for missing data.",
+      "Title of the table. Use `NULL` for no title.",
+      "Subtitle of the table. Use `NULL` for no subtitle.",
+      "Caption in markdown format. Use `NULL` for no caption. For example, *Your caption here* renders in italics.",
+      "Whether to display group labels as a separate column (`TRUE`) or as row headers (`FALSE`).",
+      "Order in which to display group labels.",
+      "Columns to merge vertically when consecutive cells have the same value. Use `'all_columns'` to merge all, or `NULL` for no merging."
+    )
+  )
+) |>
+  formatTable(groupColumn = "Function")
+```
+
+
+
+
+# Formatting Functions
 
 The `format` set of functions can be used in a pipeline to transform and format a `<data.frame>` or a `<summarised_result>` object. Below, we'll demonstrate how to utilize these functions in a step-by-step manner.
 
@@ -369,7 +379,7 @@ head(result)
 
 ### Use `formatTable()`
 
-Now that the data is cleaned and organized, `formatTable()` can be used to create a well-structured `<gt>` or `<flextable>` object. 
+Now that the data is cleaned and organized, `formatTable()` can be used to create a well-structured `<gt>`, `<flextable>`, `datatable`, or `reactable`` objects. 
 
 ```{r}
 result |>
@@ -388,7 +398,7 @@ result |>
   )
 ```
 
-In the examples above, we used the default style defined in the *visOmopResults* package (use `gtStyle()` and `flextableStyle()` to see these styles). However, it's possible to customise the appearance of different parts of the table to better suit your needs.
+In the examples above, we used the default style defined in the *visOmopResults* package (use `tableStyle()` to see these styles). However, it's possible to customise the appearance of different parts of the table to better suit your needs.
 
 ### customising Table Styles
 

@@ -2,7 +2,7 @@
 % Please edit documentation in R/visOmopTable.R
 \name{visOmopTable}
 \alias{visOmopTable}
-\title{Format a \verb{<summarised_result>} object into a gt, flextable, or tibble object}
+\title{Generate a formatted table from a \verb{<summarised_result>}}
 \usage{
 visOmopTable(
   result,
@@ -15,6 +15,7 @@ visOmopTable(
   hide = character(),
   columnOrder = character(),
   factor = list(),
+  style = "default",
   showMinCellCount = TRUE,
   .options = list()
 )
@@ -65,6 +66,13 @@ in \code{tableColumns()}) and list elements are the level order of that column
 to arrange the results. The column order in the list will be used for
 arranging the result.}
 
+\item{style}{Named list that specifies how to style the different parts of
+the table generated. It can either be a pre-defined style ("default" or
+"darwin" - the latter just for gt and flextable), NULL to get the table
+default style, or custom.
+Keep in mind that styling code is different for all table styles. To see
+the different styles use \code{tableStyle()}.}
+
 \item{showMinCellCount}{If \code{TRUE}, suppressed estimates will be indicated with
 "<\{min_cell_count\}", otherwise, the default \code{na} defined in \code{.options} will be
 used.}
@@ -79,16 +87,4 @@ A tibble, gt, or flextable object.
 This function combines the functionalities of \code{formatEstimateValue()},
 \code{estimateName()}, \code{formatHeader()}, and \code{formatTable()}
 into a single function specifically for \verb{<summarised_result>} objects.
-}
-\examples{
-result <- mockSummarisedResult()
-result |>
-  visOmopTable(
-    estimateName = c("N\%" = "<count> (<percentage>)",
-                     "N" = "<count>",
-                     "Mean (SD)" = "<mean> (<sd>)"),
-    header = c("group"),
-    rename = c("Database name" = "cdm_name"),
-    groupColumn = strataColumns(result)
-  )
 }

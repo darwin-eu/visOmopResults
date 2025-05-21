@@ -33,18 +33,22 @@ subtitle, header, header_name, header_level, column_name, group_label, and
 body.
 Alternatively, use "default" to get visOmopResults style, or NULL for
 gt/flextable style.
-Keep in mind that styling code is different for gt and flextable. To see
-the "deafult" style code use \code{tableStyle()}.}
+Keep in mind that styling code is different for gt and flextable.
+Additionally, "datatable" and "reactable" have their own style functions.
+To see style options for each table type use \code{tableStyle()}.}
 
-\item{na}{How to display missing values. Not used for "datatable".}
+\item{na}{How to display missing values. Not used for "datatable" and
+"reactable".}
 
-\item{title}{Title of the table, or NULL for no title. Not used for "datatable".}
+\item{title}{Title of the table, or NULL for no title. Not used for
+"datatable".}
 
-\item{subtitle}{Subtitle of the table, or NULL for no subtitle. Not used for "datatable".}
+\item{subtitle}{Subtitle of the table, or NULL for no subtitle. Not used for
+"datatable" and "reactable".}
 
 \item{caption}{Caption for the table, or NULL for no caption. Text in
 markdown formatting style (e.g. \verb{*Your caption here*} for caption in
-italics).}
+italics). Not used for "reactable".}
 
 \item{groupColumn}{Specifies the columns to use for group labels.
 By default, the new group name will be a combination of the column names,
@@ -52,13 +56,15 @@ joined by "_". To assign a custom group name, provide a named list such as:
 list(\code{newGroupName} = c("variable_name", "variable_level"))}
 
 \item{groupAsColumn}{Whether to display the group labels as a column
-(TRUE) or rows (FALSE). Not used for "datatable".}
+(TRUE) or rows (FALSE). Not used for "datatable" and "reactable"}
 
-\item{groupOrder}{Order in which to display group labels. Not used for "datatable".}
+\item{groupOrder}{Order in which to display group labels. Not used for
+"datatable" and "reactable".}
 
 \item{merge}{Names of the columns to merge vertically when consecutive row
 cells have identical values. Alternatively, use "all_columns" to apply this
-merging to all columns, or use NULL to indicate no merging. Not used for "datatable".}
+merging to all columns, or use NULL to indicate no merging. Not used for
+"datatable" and "reactable".}
 }
 \value{
 A flextable object.

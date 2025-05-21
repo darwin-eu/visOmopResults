@@ -320,6 +320,13 @@ fxTableInternal <- function(x,
         )
     }
   }
+
+  flex_x <- flex_x |>
+    flextable::border_outer(
+      part = "all",
+      border = officer::fp_border(color = flex_x$body$styles$cells$border.color.top$data[1,1], width = 2)
+    )
+
   return(flex_x)
 }
 
@@ -328,47 +335,6 @@ getNonNaIndices <- function(x, nameGroup) {
 }
 getGroupIndices <- function(tab) {
   which(rowSums(is.na(tab[, -1])) == ncol(tab) - 1)
-}
-
-flextableStyleInternal <- function(styleName) {
-  styles <- list(
-    "default" = list(
-      "header" = list(
-        "cell" = officer::fp_cell(background.color = "#c8c8c8"),
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "header_name" = list(
-        "cell" = officer::fp_cell(background.color = "#d9d9d9"),
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "header_level" = list(
-        "cell" = officer::fp_cell(background.color = "#e1e1e1"),
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "column_name" = list(
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "group_label" = list(
-        "cell" = officer::fp_cell(
-          background.color = "#e9e9e9",
-          border = officer::fp_border(color = "gray")
-        ),
-        "text" = officer::fp_text(bold = TRUE)
-      ),
-      "title" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 15)
-      ),
-      "subtitle" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 12)
-      ),
-      "body" = list()
-    )
-  )
-  if (!styleName %in% names(styles)) {
-    cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
-    styleName <- "default"
-  }
-  return(styles[[styleName]])
 }
 
 fxMergeRows <- function(fx_x, merge, groupColumn) {

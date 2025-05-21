@@ -1,6 +1,6 @@
 Package: visOmopResults
 Title: Graphs and Tables for OMOP Results
-Version: 1.0.2
+Version: 1.1.0
 Authors@R: c(
     person(
       "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -42,6 +42,7 @@ Imports:
     glue,
     omopgenerics (>= 0.3.1),
     purrr,
+    reactable,
     rlang,
     stringr,
     tidyr
@@ -62,6 +63,8 @@ Suggests:
     testthat (>= 3.0.0)
 VignetteBuilder: 
     knitr
+Depends: 
+    R (>= 4.1)
 Config/testthat/edition: 3
 Config/testthat/parallel: true
 Encoding: UTF-8

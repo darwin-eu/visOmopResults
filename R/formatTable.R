@@ -26,24 +26,30 @@
 #' body.
 #' Alternatively, use "default" to get visOmopResults style, or NULL for
 #' gt/flextable style.
-#' Keep in mind that styling code is different for gt and flextable. To see
-#' the "deafult" style code use `tableStyle()`.
-#' @param na How to display missing values. Not used for "datatable".
-#' @param title Title of the table, or NULL for no title. Not used for "datatable".
-#' @param subtitle Subtitle of the table, or NULL for no subtitle. Not used for "datatable".
+#' Keep in mind that styling code is different for gt and flextable.
+#' Additionally, "datatable" and "reactable" have their own style functions.
+#' To see style options for each table type use `tableStyle()`.
+#' @param na How to display missing values. Not used for "datatable" and
+#' "reactable".
+#' @param title Title of the table, or NULL for no title. Not used for
+#' "datatable".
+#' @param subtitle Subtitle of the table, or NULL for no subtitle. Not used for
+#' "datatable" and "reactable".
 #' @param caption Caption for the table, or NULL for no caption. Text in
 #' markdown formatting style (e.g. `*Your caption here*` for caption in
-#' italics).
+#' italics). Not used for "reactable".
 #' @param groupColumn Specifies the columns to use for group labels.
 #' By default, the new group name will be a combination of the column names,
 #' joined by "_". To assign a custom group name, provide a named list such as:
 #' list(`newGroupName` = c("variable_name", "variable_level"))
 #' @param groupAsColumn Whether to display the group labels as a column
-#' (TRUE) or rows (FALSE). Not used for "datatable".
-#' @param groupOrder Order in which to display group labels. Not used for "datatable".
+#' (TRUE) or rows (FALSE). Not used for "datatable" and "reactable"
+#' @param groupOrder Order in which to display group labels. Not used for
+#' "datatable" and "reactable".
 #' @param merge Names of the columns to merge vertically when consecutive row
 #' cells have identical values. Alternatively, use "all_columns" to apply this
-#' merging to all columns, or use NULL to indicate no merging. Not used for "datatable".
+#' merging to all columns, or use NULL to indicate no merging. Not used for
+#' "datatable" and "reactable".
 #'
 #' @return A flextable object.
 #'
@@ -171,6 +177,13 @@ formatTable <- function(x,
         delim = delim,
         style = style,
         caption = caption,
+        groupColumn = groupColumn
+      )
+  } else if (type == "reactable") {
+    x <- x |>
+      reactableInternal(
+        delim = delim,
+        style = style,
         groupColumn = groupColumn
       )
   }

@@ -64,31 +64,6 @@ datatableInternal <- function(x,
   )
 }
 
-datatableStyleInternal <- function(styleName) {
-  styles <- list(
-    "default" = list(
-      "caption" = 'caption-side: bottom; text-align: center;',
-      "scrollX" = TRUE,
-      "scrollY" = 400,
-      "scroller" = TRUE,
-      "deferRender" = TRUE,
-      "scrollCollapse" = TRUE,
-      "fixedColumns" = list(leftColumns = 0, rightColumns = 0),
-      "fixedHeader" = TRUE,
-      "pageLength" = 10,
-      "lengthMenu" = c(5, 10, 20, 50, 100),
-      "filter" = "bottom",
-      "searchHighlight" = TRUE,
-      "rownames" = FALSE
-    )
-  )
-  if (!styleName %in% names(styles)) {
-    cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
-    styleName <- "default"
-  }
-  return(styles[[styleName]])
-}
-
 getHTMLContainer <- function(x, delim) {
   headers <- colnames(x)
   split_headers <- stringr::str_split(headers, delim)
