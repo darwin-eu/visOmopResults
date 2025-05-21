@@ -275,31 +275,13 @@ gtTableInternal <- function(x,
         locations = gt::cells_row_groups()
       )
   }
-  return(gtResult)
-}
 
-gtStyleInternal <- function(styleName) {
-  styles <- list (
-    "default" = list(
-      "header" = list(gt::cell_fill(color = "#c8c8c8"),
-                      gt::cell_text(weight = "bold", align = "center")),
-      "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
-                           gt::cell_text(weight = "bold", align = "center")),
-      "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
-                            gt::cell_text(weight = "bold", align = "center")),
-      "column_name" = list(gt::cell_text(weight = "bold", align = "center")),
-      "group_label" = list(gt::cell_fill(color = "#e9e9e9"),
-                           gt::cell_text(weight = "bold")),
-      "title" = list(gt::cell_text(weight = "bold", size = 15, align = "center")),
-      "subtitle" = list(gt::cell_text(weight = "bold", size = 12, align = "center")),
-      "body" = list()
-    )
-  )
-  if (!styleName %in% names(styles)) {
-    cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
-    styleName <- "default"
-  }
-  return(styles[[styleName]])
+  # match table style with style:
+  gtResult <- gtResult |>
+    gt::opt_table_outline(style = "solid", color = gtResult$`_styles`$styles[[1]]$cell_fill$color) |>
+    gt::tab_options(table_body.border.top.color = gtResult$`_styles`$styles[[1]]$cell_fill$color, table_body.border.top.width = 3)
+
+  return(gtResult)
 }
 
 gtMergeRows <- function(gt_x, merge, groupColumn, groupOrder) {

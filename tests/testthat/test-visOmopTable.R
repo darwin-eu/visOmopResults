@@ -390,3 +390,20 @@ test_that("validate header works", {
   expect_true("Strata" %in% colnames(newX))
 })
 
+test_that("test styles", {
+  skip_on_cran()
+  # VISUAL STYLE INSPECTION IN DIFFERENT SCENARIOS
+  res <- mockSummarisedResult()
+  visOmopTable(res, header = c("HEADER", "strata"), .options = list(style = "default"))
+  visOmopTable(res, .options = list(style = "default"), groupColumn = "cohort_name")
+  visOmopTable(res, .options = list(style = "default"))
+  visOmopTable(res, header = c("HEADER", "strata"), .options = list(style = "darwin"))
+  visOmopTable(res, .options = list(style = "darwin"), groupColumn = "cohort_name")
+  visOmopTable(res, .options = list(style = "darwin"))
+  visOmopTable(res, header = c("HEADER", "strata"), .options = list(style = "default"), type = "flextable")
+  visOmopTable(res, .options = list(style = "default"), groupColumn = "cohort_name", type = "flextable")
+  visOmopTable(res, .options = list(style = "default"), type = "flextable")
+  visOmopTable(res, header = c("HEADER", "strata"), .options = list(style = "darwin"), type = "flextable")
+  visOmopTable(res, .options = list(style = "darwin"), groupColumn = "cohort_name", type = "flextable")
+  visOmopTable(res, .options = list(style = "darwin"), type = "flextable")
+})

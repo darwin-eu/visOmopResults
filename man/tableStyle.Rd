@@ -4,11 +4,13 @@
 \alias{tableStyle}
 \title{Supported predefined styles for formatted tables}
 \usage{
-tableStyle(type = "gt")
+tableStyle(type = "gt", style = "default")
 }
 \arguments{
 \item{type}{Character string specifying the formatted table class.
 See \code{tableType()} for supported classes. Default is "gt".}
+
+\item{style}{Supported predefined styles. Currently: "default" and "darwin".}
 }
 \value{
 A code expression for the selected style and table type.

@@ -14,7 +14,7 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#' Format a `<summarised_result>` object into a gt, flextable, or tibble object
+#' Generate a formatted table from a `<summarised_result>`
 #'
 #' @param result A `<summarised_result>` object.
 #' @param estimateName A named list of estimate names to join, sorted by
@@ -50,6 +50,12 @@
 #' in `tableColumns()`) and list elements are the level order of that column
 #' to arrange the results. The column order in the list will be used for
 #' arranging the result.
+#' @param style Named list that specifies how to style the different parts of
+#' the table generated. It can either be a pre-defined style ("default" or
+#' "darwin" - the latter just for gt and flextable), NULL to get the table
+#' default style, or custom.
+#' Keep in mind that styling code is different for all table styles. To see
+#' the different styles use `tableStyle()`.
 #' @param showMinCellCount If `TRUE`, suppressed estimates will be indicated with
 #' "<\{min_cell_count\}", otherwise, the default `na` defined in `.options` will be
 #' used.
@@ -76,6 +82,17 @@
 #'     rename = c("Database name" = "cdm_name"),
 #'     groupColumn = strataColumns(result)
 #'   )
+#' result |>
+#'   visOmopTable(
+#'     estimateName = c("N%" = "<count> (<percentage>)",
+#'                      "N" = "<count>",
+#'                      "Mean (SD)" = "<mean> (<sd>)"),
+#'     header = c("group"),
+#'     rename = c("Database name" = "cdm_name"),
+#'     groupColumn = strataColumns(result),
+#'     type = "reactable
+#'   )
+#'
 visOmopTable <- function(result,
                          estimateName = character(),
                          header = character(),
@@ -86,6 +103,7 @@ visOmopTable <- function(result,
                          hide = character(),
                          columnOrder = character(),
                          factor = list(),
+                         style = "default",
                          showMinCellCount = TRUE,
                          .options = list()) {
   # Tidy results
@@ -114,6 +132,10 @@ visOmopTable <- function(result,
 
   # .options
   .options <- defaultTableOptions(.options)
+  if ("style" %in% names(.options)) {
+    cli::cli_inform("`style` in `.options` was deprecated in v1.0.1, use the argument `style`.")
+    style <- .options$style
+  }
 
   if ("variable_level" %in% header) {
     resultTidy <- resultTidy |>
@@ -138,7 +160,7 @@ visOmopTable <- function(result,
   if (length(columnOrder) == 0) {
     resultTidy <- resultTidy |>
       dplyr::relocate(
-        c(visOmopResults::additionalColumns(result), settingsColumn),
+        dplyr::any_of(c(visOmopResults::additionalColumns(result), settingsColumn)),
         .before = "estimate_name"
       )
   } else {
@@ -155,6 +177,7 @@ visOmopTable <- function(result,
     type = type,
     rename = rename,
     hide = hide,
+    style = style,
     .options = .options
   )
 
@@ -175,7 +198,6 @@ defaultTableOptions <- function(userOptions) {
     delim = "\n",
     includeHeaderName = TRUE,
     includeHeaderKey = TRUE,
-    style = "default",
     na = "-",
     title = NULL,
     subtitle = NULL,
