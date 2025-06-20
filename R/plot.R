@@ -337,6 +337,8 @@ barPlot <- function(result,
 
 #' Returns an empty plot
 #'
+#' @param title Title to use in the empty plot.
+#' @param subtitle Subtitle to use in the empty plot.
 #' @return An empty ggplot object
 #'
 #' @export
@@ -344,10 +346,10 @@ barPlot <- function(result,
 #' @examples
 #' emptyPlot()
 #'
-emptyPlot <- function() {
+emptyPlot <- function(title = "No data to plot", subtitle = "") {
   ggplot2::ggplot() +
     ggplot2::theme_bw() +
-    ggplot2::labs(title = "No data to plot")
+    ggplot2::labs(title = title, subtitle = subtitle)
 }
 
 tidyResult <- function(result) {

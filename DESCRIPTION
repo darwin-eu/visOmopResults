@@ -1,6 +1,6 @@
 Package: visOmopResults
 Title: Graphs and Tables for OMOP Results
-Version: 1.1.0
+Version: 1.1.1
 Authors@R: c(
     person(
       "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -42,7 +42,6 @@ Imports:
     glue,
     omopgenerics (>= 0.3.1),
     purrr,
-    reactable,
     rlang,
     stringr,
     tidyr
@@ -59,6 +58,7 @@ Suggests:
     palmerpenguins,
     PatientProfiles,
     plotly,
+    reactable,
     rmarkdown,
     testthat (>= 3.0.0)
 VignetteBuilder: 

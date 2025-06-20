@@ -274,7 +274,7 @@ test_that("estimates at the end", {
 
 test_that("columnOrder and factor", {
   result <- mockSummarisedResult()
-  expect_warning(expect_error(
+  expect_warning(expect_warning(
     visOmopTable(
       result,
       settingsColumn = "package_name",

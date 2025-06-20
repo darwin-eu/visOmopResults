@@ -258,25 +258,13 @@ getColumnOrder <- function(currentOrder, newOrder, header, group, hide) {
   # initial check
   if (any(!newOrder %in% currentOrder)) {
     cli::cli_warn("Dropping the following from `columnOrder` as they are not part of the table: {newOrder[!newOrder %in% currentOrder]}")
+    newOrder <- base::intersect(newOrder, currentOrder)
   }
-  # group
-  if (length(group) != 0) {
-    newOrder <- c(newOrder, group[group %in% currentOrder])
-  }
-  # hide
-  if (length(hide) != 0) {
-    newOrder <- c(newOrder, hide[hide %in% currentOrder])
-  }
-  # header
-  if (length(header) != 0) {
-    newOrder <- c(newOrder, header[header %in% currentOrder])
-  }
-  # estimate_value
-  newOrder <- c(newOrder, "estimate_value")
-  newOrder <- unique(newOrder)
-  # final check
-  if (length(newOrder) != length(currentOrder)) {
-    cli::cli_abort("Please make sure `columnOrder` argument contains all the table columns. Missing columns to allocate a position are: {currentOrder[!currentOrder %in% newOrder]}")
+  newOrder <- c(newOrder, "result_id", "estimate_type")
+  notIn <- base::setdiff(c(currentOrder, "estimate_value"), newOrder)
+  if (length(notIn) > 0) {
+    cli::cli_warn("{.strong {notIn}} {?is/are} missing in `columnOrder`, will be added last.")
+    newOrder <- c(newOrder, notIn)
   }
   return(newOrder)
 }

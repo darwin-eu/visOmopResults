@@ -334,6 +334,7 @@ getNonNaIndices <- function(x, nameGroup) {
   which(!is.na(x[[nameGroup]]))
 }
 getGroupIndices <- function(tab) {
+  tab <- dplyr::as_tibble(tab)
   which(rowSums(is.na(tab[, -1])) == ncol(tab) - 1)
 }
 
