@@ -333,3 +333,15 @@ test_that("abort when groupOrder doesn't match groupName", {
   x <- mockSummarisedResult()
   expect_error(fxTableInternal(x, groupColumn = c("variable_name", "variable_level"), groupOrder = "variable_name"))
 })
+
+test_that("", {
+  expect_no_error(
+    dplyr::tibble(
+      cdm_name = "mock", age = c("under 40"), estimate_name = "count",
+      estimate_type = "integer", estimate_value = "0"
+    ) |>
+      visTable(
+        groupColumn = c("age", "cdm_name"), type = "flextable", hide = "estimate_type"
+      )
+  )
+})
