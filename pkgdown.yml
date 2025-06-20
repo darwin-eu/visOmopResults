@@ -1,10 +1,10 @@
 pandoc: 3.1.11
-pkgdown: 2.1.2
+pkgdown: 2.1.3
 pkgdown_sha: ~
 articles:
   a01_tables: a01_tables.html
   a02_plots: a02_plots.html
-last_built: 2025-05-21T14:37Z
+last_built: 2025-06-20T11:45Z
 urls:
   reference: https://darwin-eu.github.io/visOmopResults/reference
   article: https://darwin-eu.github.io/visOmopResults/articles
