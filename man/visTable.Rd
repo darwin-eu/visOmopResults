@@ -20,24 +20,24 @@ visTable(
 \item{result}{A table to format.}
 
 \item{estimateName}{A named list of estimate names to join, sorted by
-computation order. Use \verb{<...>} to indicate estimate names. This argument
-requires that the table has \code{estimate_name} and \code{estimate_value} columns.}
+computation order. Use \verb{<...>} to indicate estimate names.}
 
 \item{header}{A vector specifying the elements to include in the header.
 The order of elements matters, with the first being the topmost header.
 The vector elements can be column names or labels for overall headers.
 The table must contain an \code{estimate_value} column to pivot the headers.}
 
-\item{groupColumn}{Columns to use as group labels. By default, the name of the
-new group will be the tidy* column names separated by ";". To specify a custom
-group name, use a named list such as:
+\item{groupColumn}{Columns to use as group labels, to see options use
+\code{tableColumns(result)}. By default, the name of the new group will be the
+tidy* column names separated by ";". To specify a custom group name, use a
+named list such as:
 list("newGroupName" = c("variable_name", "variable_level")).
 
 *tidy: The tidy format applied to column names replaces "_" with a space and
-converts them to sentence case. Use \code{rename} to customise specific column names.}
+converts to sentence case. Use \code{rename} to customise specific column names.}
 
 \item{rename}{A named vector to customise column names, e.g.,
-c("Database name" = "cdm_name"). The function will rename all column names
+c("Database name" = "cdm_name"). The function renames all column names
 not specified here into a tidy* format.}
 
 \item{type}{The desired format of the output table. See \code{tableType()} for

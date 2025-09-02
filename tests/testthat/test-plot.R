@@ -19,8 +19,7 @@ test_that("Function returns a ggplot object", {
     line = TRUE,
     point = TRUE,
     ribbon = FALSE,
-    facet = c("age_group", "sex")) +
-    themeVisOmop()
+    facet = c("age_group", "sex"))
 
   expect_no_error(p)
 
@@ -51,8 +50,7 @@ test_that("Function returns a ggplot object", {
     facet = age_group ~ sex,
     colour = "cohort_name",
     label = "min"
-  ) +
-    themeVisOmop(fontsizeRef = 10)
+  )
 
   expect_no_error(p_box)
 
@@ -73,8 +71,7 @@ test_that("Function returns a ggplot object", {
       facet = "age_group",
       colour = "cohort_name",
       label = c("age_group", "mean", "cohort_name")
-    ) +
-      themeVisOmop()
+    )
   )
   labels <- get_labs(p)
   expect_true(labels$label1 == "age_group")
@@ -104,8 +101,8 @@ test_that("Function returns a ggplot object", {
     x = "cohort_name",
     y = "mean",
     facet = c("age_group", "sex"),
-    label = c("cohort_name")) +
-    themeVisOmop()
+    label = c("cohort_name"),
+    style = "darwin")
 
   expect_no_error(p_bar)
   expect_true(has_no_legend_labels(p_bar))
@@ -116,8 +113,8 @@ test_that("Function returns a ggplot object", {
     x = "cohort_name",
     y = "mean",
     colour = c("age_group", "sex"),
-    label = c("cohort_name")) +
-    themeVisOmop()
+    label = c("cohort_name"),
+    style = NULL)
 
   expect_message(
     result |>
@@ -151,6 +148,12 @@ test_that("Function returns a ggplot object", {
       point = TRUE,
       ribbon = FALSE,
       facet = "age_group")
+  )
+
+  expect_error(
+    scatterPlot(
+      result,
+      style = "nostyle")
   )
 
   expect_error(
@@ -199,4 +202,29 @@ test_that("Empty result object returns warning", {
     "result object is empty, returning empty plot."
   )
   expect_true(ggplot2::is.ggplot(output_plot))
+})
+test_that("test global style", {
+  setGlobalPlotOptions(style = "darwin")
+  result <- mockSummarisedResult() |>
+    dplyr::filter(variable_name == "age")
+  p <- scatterPlot(
+    result = result,
+    x = "cohort_name",
+    y = "mean",
+    line = TRUE,
+    point = TRUE,
+    ribbon = FALSE,
+    facet = c("age_group", "sex"))
+  expect_true("#003399" == p$theme$strip.background$fill)
+  p <- scatterPlot(
+    result = result,
+    x = "cohort_name",
+    y = "mean",
+    line = TRUE,
+    point = TRUE,
+    ribbon = FALSE,
+    facet = c("age_group", "sex"),
+    style = "default")
+  expect_true("#e5e6e4" == p$theme$strip.background$fill)
+  options(visOmopResults.plotStyle = NULL)
 })

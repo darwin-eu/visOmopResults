@@ -122,6 +122,14 @@ formatTable <- function(x,
                         merge = NULL
 ) {
   # Input checks
+  if (missing(type)) {
+    type <- getOption("visOmopResults.tableType")
+    if (length(type) == 0) type <- "gt"
+  }
+  if (missing(style)) {
+    style <- getOption("visOmopResults.tableStyle")
+    if (length(style) == 0) style <- "default"
+  }
   omopgenerics::assertChoice(type, choices = tableType(), length = 1)
   omopgenerics::assertTable(x)
   omopgenerics::assertCharacter(na, length = 1, null = TRUE)
@@ -185,6 +193,20 @@ formatTable <- function(x,
         delim = delim,
         style = style,
         groupColumn = groupColumn
+      )
+  } else if (type == "tinytable") {
+    x <- x |>
+      tinytableInternal(
+        delim = delim,
+        style = style,
+        na = na,
+        title = title,
+        subtitle = subtitle,
+        caption = caption,
+        groupColumn = groupColumn,
+        groupAsColumn = groupAsColumn,
+        groupOrder = groupOrder,
+        merge = merge
       )
   }
   return(x)

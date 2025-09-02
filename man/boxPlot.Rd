@@ -14,13 +14,14 @@ boxPlot(
   ymax = "max",
   facet = NULL,
   colour = NULL,
+  style = "default",
   label = character()
 )
 }
 \arguments{
 \item{result}{A \verb{<summarised_result>} object.}
 
-\item{x}{Columns to use as x axes.}
+\item{x}{Column or estimate name that is used as x variable.}
 
 \item{lower}{Estimate name for the lower quantile of the box.}
 
@@ -28,14 +29,20 @@ boxPlot(
 
 \item{upper}{Estimate name for the upper quantile of the box.}
 
-\item{ymin}{Estimate name for the lower limit of the bars.}
+\item{ymin}{Lower limit of error bars, if provided is plot using
+\code{geom_errorbar}.}
 
-\item{ymax}{Estimate name for the upper limit of the bars.}
+\item{ymax}{Upper limit of error bars, if provided is plot using
+\code{geom_errorbar}.}
 
 \item{facet}{Variables to facet by, a formula can be provided to specify
 which variables should be used as rows and which ones as columns.}
 
-\item{colour}{Columns to use to determine the colors.}
+\item{colour}{Columns to use to determine the colours.}
+
+\item{style}{Which style to apply to the plot, options are:
+"default", "darwin" and NULL (default ggplot style).
+Customised styles can be achieved by modifying the returned ggplot object.}
 
 \item{label}{Character vector with the columns to display interactively in
 \code{plotly}.}

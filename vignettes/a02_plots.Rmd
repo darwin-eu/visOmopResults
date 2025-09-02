@@ -97,7 +97,7 @@ penguinsSummary |>
   )
 ```
 
-Additionally, we can use the function `themeVisOmop()` to change the default `ggplot2` style to our default style. Not only that, but we can use standard ggplot2 functionalities to the returned plot:
+We can use the argument `style` to update the theme of the plot to either the visOmopResults *default* style, or our *darwin* style. 
 
 ```{r}
 penguinsSummary |>
@@ -111,11 +111,13 @@ penguinsSummary |>
     point = FALSE,
     ribbon = FALSE,
     facet = cdm_name ~ variable_name,
-    colour = "species"
-  ) +
-  themeVisOmop() +
-  ggplot2::facet_grid(cdm_name ~ variable_name, scales = "free_x") 
+    colour = "species",
+    style = "darwin"
+  ) 
 ```
+
+Otherwise, the style can be applied afterwards with the functions `themeVisOmop` and `themeDarwin`.
+Not only that, but the returned plot can be futher customised with the usual ggplot2 functionalities:
 
 ```{r}
 penguinsSummary |>
@@ -133,7 +135,7 @@ penguinsSummary |>
     colour = "sex",
     group = c("year", "sex")
   )  +
-  themeVisOmop() +
+  themeVisOmop(fontsizeRef = 13) +
   ggplot2::coord_flip() +
   ggplot2::labs(y = "Flipper length (mm)") + 
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust=1))
@@ -157,7 +159,7 @@ penguinsSummary |>
     colour = "variable_name",
     group = c("variable_name")
   ) +
-  themeVisOmop(fontsizeRef = 12) + 
+  themeDarwin(fontsizeRef = 12) + 
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
@@ -186,8 +188,7 @@ Let's create some box plots of their body mass:
 ```{r}
 penguinsSummary |>
   filter(variable_name == "body_mass_g") |>
-  boxPlot(x = "year", facet = species ~ cdm_name, colour = "sex") +
-  themeVisOmop()
+  boxPlot(x = "year", facet = species ~ cdm_name, colour = "sex", style = "default")
 ```
 
 ```{r}
@@ -201,6 +202,11 @@ penguinsSummary |>
 
 Note that as we didnt specify x there is no levels in the x axis, but box plots
 are produced anyway.
+
+## Plotting style
+The package provides support for standard plot themes, which can be applied either after plot creation using the functions `themeVisOmop()` and `themeDarwin()`, or directly at the time of creation via the `style` argument. 
+
+For creating multiple plots with the same style, you can use `setGlobalPlotOptions()` to apply a default style to all subsequent plots, unless a different style is specified in a specific function call.
 
 ## Plotting with a `<data.frame>`
 
@@ -223,8 +229,7 @@ penguinsTidy |>
     sex %in% c("female", "male"),
     year != "overall"
   ) |>
-  boxPlot(x = "cdm_name", facet = sex ~ species, colour = "year") +
-  themeVisOmop()
+  boxPlot(x = "cdm_name", facet = sex ~ species, colour = "year", style = "darwin")
 ```
 
 ## Custom plotting

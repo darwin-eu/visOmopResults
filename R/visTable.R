@@ -18,35 +18,13 @@
 #'
 #'
 #' @param result A table to format.
-#' @param estimateName A named list of estimate names to join, sorted by
-#' computation order. Use `<...>` to indicate estimate names. This argument
-#' requires that the table has `estimate_name` and `estimate_value` columns.
 #' @param header A vector specifying the elements to include in the header.
 #' The order of elements matters, with the first being the topmost header.
 #' The vector elements can be column names or labels for overall headers.
 #' The table must contain an `estimate_value` column to pivot the headers.
-#' @param groupColumn Columns to use as group labels. By default, the name of the
-#' new group will be the tidy* column names separated by ";". To specify a custom
-#' group name, use a named list such as:
-#' list("newGroupName" = c("variable_name", "variable_level")).
-#'
-#' *tidy: The tidy format applied to column names replaces "_" with a space and
-#' converts them to sentence case. Use `rename` to customise specific column names.
-#'
-#' @param rename A named vector to customise column names, e.g.,
-#' c("Database name" = "cdm_name"). The function will rename all column names
-#' not specified here into a tidy* format.
-#' @param type The desired format of the output table. See `tableType()` for
-#' allowed options.
 #' @param hide Columns to drop from the output table.
-#' @param style Named list that specifies how to style the different parts of
-#' the table generated. It can either be a pre-defined style ("default" or
-#' "darwin" - the latter just for gt and flextable), NULL to get the table
-#' default style, or custom.
-#' Keep in mind that styling code is different for all table styles. To see
-#' the different styles use `tableStyle()`.
-#' @param .options A named list with additional formatting options.
-#' `visOmopResults::tableOptions()` shows allowed arguments and their default values.
+#'
+#' @inheritParams tableDoc
 #'
 #' @return A tibble, gt, flextable, reactable, or datatable object.
 #'
@@ -81,6 +59,15 @@ visTable <- function(result,
                      hide = character(),
                      style = "default",
                      .options = list()) {
+  # global options
+  if (missing(type)) {
+    type <- getOption("visOmopResults.tableType")
+    if (length(type) == 0) type <- "gt"
+  }
+  if (missing(style)) {
+    style <- getOption("visOmopResults.tableStyle")
+    if (length(style) == 0) style <- "default"
+  }
   # initial checks
   omopgenerics::assertTable(result)
   omopgenerics::assertChoice(type, choices = tableType(), length = 1)
@@ -96,13 +83,12 @@ visTable <- function(result,
     hide <- neededCols$hide
   }
   checkVisTableInputs(header, groupColumn, hide)
+  if (missing(style)) {
+    style <- getOption("visOmopResults.tableStyle")
+    if (length(style) == 0) style <- "default"
+  }
 
   if (nrow(result) == 0) return(emptyTable(type = type))
-
-  if ("style" %in% names(.options)) {
-    cli::cli_inform("`style` in `.options` was deprecated in v1.0.1, use the argument `style`.")
-    style <- .options$style
-  }
 
   # format estimate values and names
   if ("estimate_value" %in% colnames(result)) {

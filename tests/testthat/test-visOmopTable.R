@@ -274,7 +274,7 @@ test_that("estimates at the end", {
 
 test_that("columnOrder and factor", {
   result <- mockSummarisedResult()
-  expect_warning(expect_warning(
+  expect_message(expect_message(
     visOmopTable(
       result,
       settingsColumn = "package_name",
@@ -406,4 +406,26 @@ test_that("test styles", {
   visOmopTable(res, header = c("HEADER", "strata"), .options = list(style = "darwin"), type = "flextable")
   visOmopTable(res, .options = list(style = "darwin"), groupColumn = "cohort_name", type = "flextable")
   visOmopTable(res, .options = list(style = "darwin"), type = "flextable")
+})
+
+test_that("global options works", {
+  result <- mockSummarisedResult()
+  setGlobalTableOptions("darwin", "tinytable")
+  tab <- visOmopTable(result, header = "strata_level")
+  expect_true(class(tab)[1] == "tinytable")
+  expect_equal(
+    getTinytableStyle(tab, -1, 12),
+    dplyr::tibble(
+      "i" = -1, "j" = 12, "tabularray" = factor(""), "color" = "white", "background" = "#003399",
+      "fontsize" = NA, "alignv" = NA, "line" = "lbtr", "line_color" = "#003399",
+      "line_width" = 0.1, "bold" = TRUE, "italic" = FALSE, "monospace" = FALSE,
+      "strikeout" = FALSE, "underline" = FALSE, "indent" = NA, "colspan" = NA,
+      "rowspan" = NA_integer_, "bootstrap_css" = NA, "align" = NA
+    ),
+    ignore_attr = TRUE
+  )
+  tab <- visOmopTable(result, type = "gt")
+  expect_true(class(tab)[1] == "gt_tbl")
+  options(visOmopResults.tableStyle = NULL)
+  options(visOmopResults.tableType = NULL)
 })

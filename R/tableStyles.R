@@ -14,9 +14,14 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-datatableStyleInternal <- function(styleName) {
-  styles <- list(
-    "default" = list(
+datatableStyleInternal <- function(styleName, asExpr = FALSE) {
+  if (!styleName %in% c("default")) {
+    cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles for datatable. Returning default style."))
+    styleName <- "default"
+  }
+
+  if (styleName == "default") {
+    style <- list(
       "caption" = 'caption-side: bottom; text-align: center;',
       "scrollX" = TRUE,
       "scrollY" = 400,
@@ -30,22 +35,29 @@ datatableStyleInternal <- function(styleName) {
       "filter" = "bottom",
       "searchHighlight" = TRUE,
       "rownames" = FALSE
-    )
-  )
-  if (!styleName %in% names(styles)) {
-    cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
-    styleName <- "default"
+    ) |>
+      rlang::expr()
   }
-  return(styles[[styleName]])
+
+  if (isFALSE(asExpr)) {
+    style <- style |> rlang::eval_tidy()
+  }
+
+  return(style)
 }
 
-reactableStyleInternal <- function(styleName) {
-  styles <- list(
-    "default" = list(
+reactableStyleInternal <- function(styleName, asExpr = FALSE) {
+  if (!styleName %in% c("default")) {
+    cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles for reactable. Returning default style."))
+    styleName <- "default"
+  }
+
+  if (styleName == "default") {
+    style <- list(
       "defaultColDef" = reactable::colDef(
         sortable = TRUE,
-        filterable = TRUE,
         resizable = TRUE,
+        filterable = TRUE,
         headerStyle = list(textAlign = "center")
       ),
       "defaultColGroup" = reactable::colGroup(
@@ -61,19 +73,26 @@ reactableStyleInternal <- function(styleName) {
       "borderless" = FALSE,
       "striped" = TRUE,
       "theme" = NULL
-    )
-  )
-  if (!styleName %in% names(styles)) {
-    cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
-    styleName <- "default"
+    ) |>
+      rlang::expr()
   }
-  return(styles[[styleName]])
+
+  if (isFALSE(asExpr)) {
+    style <- style |> rlang::eval_tidy()
+  }
+
+  return(style)
 }
 
 
-flextableStyleInternal <- function(styleName) {
-  styles <- list(
-    "default" = list(
+flextableStyleInternal <- function(styleName, asExpr = FALSE) {
+  if (!styleName %in% c("default", "darwin")) {
+    cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
+    styleName <- "default"
+  }
+
+  if (styleName == "default") {
+    style <- list(
       "header" = list(
         "cell" = officer::fp_cell(background.color = "#c8c8c8"),
         "text" = officer::fp_text(bold = TRUE)
@@ -87,7 +106,8 @@ flextableStyleInternal <- function(styleName) {
         "text" = officer::fp_text(bold = TRUE)
       ),
       "column_name" = list(
-        "text" = officer::fp_text(bold = TRUE)
+        "text" = officer::fp_text(bold = TRUE),
+        "cell" = officer::fp_cell( border = officer::fp_border(color = "gray"))
       ),
       "group_label" = list(
         "cell" = officer::fp_cell(
@@ -97,14 +117,26 @@ flextableStyleInternal <- function(styleName) {
         "text" = officer::fp_text(bold = TRUE)
       ),
       "title" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 15)
+        "text" = officer::fp_text(bold = TRUE, font.size = 15),
+        "paragraph" = officer::fp_par(text.align = "center"),
+        "cell" = officer::fp_cell( border = officer::fp_border(color = "gray"))
       ),
       "subtitle" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 12)
+        "text" = officer::fp_text(bold = TRUE, font.size = 12),
+        "paragraph" = officer::fp_par(text.align = "center"),
+        "cell" = officer::fp_cell( border = officer::fp_border(color = "gray"))
       ),
-      "body" = list()
-    ),
-    "darwin" = list(
+      "body" = list(
+        "cell" = officer::fp_cell(
+          background.color = "transparent",
+          border = officer::fp_border(color = "gray")
+        )
+      )
+    ) |>
+      rlang::expr()
+  }
+  if (styleName == "darwin") {
+    style <- list(
       "header" = list(
         "cell" = officer::fp_cell(
           background.color = "#003399",
@@ -141,44 +173,49 @@ flextableStyleInternal <- function(styleName) {
         "text" = officer::fp_text(bold = TRUE, color = "white")
       ),
       "title" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 15)
+        "text" = officer::fp_text(bold = TRUE, font.size = 15),
+        "paragraph" = officer::fp_par(text.align = "center")
       ),
       "subtitle" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 12)
+        "text" = officer::fp_text(bold = TRUE, font.size = 12),
+        "paragraph" = officer::fp_par(text.align = "center")
       ),
       "body" = list(
         "cell" = officer::fp_cell(border = officer::fp_border(color = "#003399"))
       )
-    )
-  )
-  if (!styleName %in% names(styles)) {
+    ) |>
+      rlang::expr()
+  }
+
+  if (isFALSE(asExpr)) {
+    style <- style |> rlang::eval_tidy()
+  }
+
+  return(style)
+}
+
+gtStyleInternal <- function(styleName, asExpr = FALSE) {
+  if (!styleName %in% c("default", "darwin")) {
     cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
     styleName <- "default"
   }
-  return(styles[[styleName]])
-}
 
-gtStyleInternal <- function(styleName) {
-  styles <- list (
-    "default" = list(
+  if (styleName == "default") {
+    style <- list(
       "header" = list(
         gt::cell_fill(color = "#c8c8c8"),
-        gt::cell_text(weight = "bold", align = "center"),
-        gt::cell_borders(color = "White")
+        gt::cell_text(weight = "bold", align = "center")
       ),
       "header_name" = list(
         gt::cell_fill(color = "#d9d9d9"),
-        gt::cell_text(weight = "bold", align = "center"),
-        gt::cell_borders(color = "White")
+        gt::cell_text(weight = "bold", align = "center")
       ),
       "header_level" = list(
         gt::cell_fill(color = "#e1e1e1"),
-        gt::cell_text(weight = "bold", align = "center"),
-        gt::cell_borders(color = "White")
+        gt::cell_text(weight = "bold", align = "center")
       ),
       "column_name" = list(
-        gt::cell_text(weight = "bold", align = "center"),
-        gt::cell_borders(color = "White")
+        gt::cell_text(weight = "bold", align = "center")
       ),
       "group_label" = list(
         gt::cell_fill(color = "#e9e9e9"),
@@ -191,8 +228,11 @@ gtStyleInternal <- function(styleName) {
         gt::cell_text(weight = "bold", size = 12, align = "center")
       ),
       "body" = list()
-    ),
-    "darwin" = list(
+    ) |>
+      rlang::expr()
+  }
+  if (styleName == "darwin") {
+    style <- list(
       "header" = list(
         gt::cell_fill(color = "#003399"),
         gt::cell_text(weight = "bold", color = "white", align = "center")
@@ -219,11 +259,69 @@ gtStyleInternal <- function(styleName) {
         gt::cell_text(weight = "bold", size = 12, align = "center")
       ),
       body = list(gt::cell_borders(color = "#003399"))
-    )
-  )
-  if (!styleName %in% names(styles)) {
+    ) |>
+      rlang::expr()
+  }
+
+  if (isFALSE(asExpr)) {
+    style <- style |> rlang::eval_tidy()
+  }
+
+  return(style)
+}
+
+tinytableStyleInternal <- function(styleName, asExpr = FALSE) {
+  if (!styleName %in% c("default", "darwin")) {
     cli::cli_inform(c("i" = "{styleName} does not correspon to any of our defined styles. Returning default style."))
     styleName <- "default"
   }
-  return(styles[[styleName]])
+
+  if (styleName == "default") {
+    style <- list(
+      "header" = list(
+        "bold" = TRUE, background = "#c8c8c8", line = "lbtr", line_color = "gray"
+      ),
+      "header_name" = list(
+        "bold" = TRUE, background = "#c8c8c8", line = "lbtr", line_color = "gray"
+      ),
+      "header_level" = list(
+        "bold" = TRUE, background = "#e1e1e1", line = "lbtr", line_color = "gray"
+      ),
+      "column_name" = list(
+        "bold" = TRUE, line = "lbtr", line_color = "gray"
+      ),
+      "group_label" = list(
+        "bold" = TRUE, background = "#e9e9e9", line = "lbtr", line_color = "gray"
+      ),
+      "body" = list(line = "lbtr", line_color = "gray")
+    ) |>
+      rlang::expr()
+  }
+  if (styleName == "darwin") {
+    style <- list(
+      "header" = list(
+        "bold" = TRUE, background = "#003399", line = "lbtr", line_color = "#003399", color = "white"
+      ),
+      "header_name" = list(
+        "bold" = TRUE, background = "#003399", line = "lbtr", line_color = "#003399", color = "white"
+      ),
+      "header_level" = list(
+        "bold" = TRUE, background = "#003399", line = "lbtr", line_color = "#003399", color = "white"
+      ),
+      "column_name" = list(
+        "bold" = TRUE, background = "#003399", line = "lbtr", line_color = "#003399", color = "white"
+      ),
+      "group_label" = list(
+        "bold" = TRUE, background = "#4a64bd", line = "lbtr", line_color = "#003399", color = "white"
+      ),
+      "body" = list(line = "lbtr", line_color = "#003399")
+    ) |>
+      rlang::expr()
+  }
+
+  if (isFALSE(asExpr)) {
+    style <- style |> rlang::eval_tidy()
+  }
+
+  return(style)
 }

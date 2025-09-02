@@ -164,20 +164,15 @@ Tables displayed in `visOmopResults()` follow a default style, but customisation
 
 ### Style 
 
-By default, the visOmopResults default style is applied for all tables. At the moment, besides from the default style, the package also supports the "darwin" style (only for `gt` and `flextable`).
+By default, the visOmopResults default style is applied for all tables. At the moment, besides from the default style, the package also supports the "darwin" style.
 
-To inspect the code for the default styles of the different table types supported, you can use the `tableStyle()` function as showed next. To know more about styling with these options, please refer to each of the table packages.
+To inspect the code for the default styles of the different table types supported, you can use the `tableStyle()` function as showed next.
 
 ```{r}
-tableStyle(type = "gt")
-
-tableStyle(type = "flextable")
-
-tableStyle(type = "datatable")
-
-tableStyle(type = "reactable")
+tableStyle(type = "gt", style = "default")
 ```
 
+If you want all your tables to use the same type and style, use `setGlobalTableOptions()`. This will apply the desired settings to all subsequent tables, unless you specify a different style in a specific function call.
 
 ### Further Options
 

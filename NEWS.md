@@ -1,26 +1,33 @@
+# visOmopResults 1.2.0
+
+* Support `tinytable`
+* Add argument `style` for plots
+* Add function `setGlobalPlotOptions()` to set global arguments to plots
+* Add function `setGlobalTableOptions()` to set global arguments to tables
+* Union borders from merged cells in flextable
+
 
 # visOmopResults 1.1.1
 
-* Fix that all table types were required to be installed even if not used by @nmercadeb
-* `columnOrder` when non-table columns throw warning instead of error by @nmercadeb
-* `columnOrder` when missing table columns adds them at the end instead of throwing error by @nmercadeb
-* reactable package to suggests by @catalamarti 
+* Fix that all table types were required to be installed even if not used 
+* `columnOrder` when non-table columns passed, throw warning instead of error
+* `columnOrder` when missing table columns adds them at the end instead of throwing error 
 
 # visOmopResults 1.1.0
 
-* Support `reactable` by @nmercadeb 
-* Add darwin style by @nmercadeb
+* Support `reactable` 
+* Add darwin style 
 
 # visOmopResults 1.0.2
 
-* Header pivotting - warning and addition of needed columns by @nmercadeb 
-* Fixed headers in datatable by @nmercadeb #340
-* Show min cell counts only for counts, set the other estimates to NA by @nmercadeb 
+* Header pivotting - warning and addition of needed columns to get unique estimates in cells
+* Fixed headers in datatable 
+* Show min cell counts only for counts, set the other estimates to NA
 
 # visOmopResults 1.0.1
 
-* Obscure percentage when there are less than five counts by @martaalcalde 
-* `formatMinCellCount` function by @nmercadeb 
+* Obscure percentage when there are less than five counts 
+* `formatMinCellCount` function 
 
 # visOmopResults 1.0.0
 

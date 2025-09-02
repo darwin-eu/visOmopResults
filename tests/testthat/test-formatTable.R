@@ -8,19 +8,19 @@ test_that("test it works", {
   expect_true("gt_tbl" %in% class(gt))
   # check correct style:
   expect_equal(unlist(gt$`_styles`$styles[gt$`_styles`$locname == "columns_columns"])[1:27] |> unique(),
-               c("#E1E1E1", "center", "bold", "left", "1px", "solid", "White", "right", "top", "bottom"))
+               c("#E1E1E1", "center", "bold"))
   expect_equal(unlist(gt$`_styles`$styles[gt$`_styles`$locname == "columns_columns"])[28:43] |> unique(),
-               c("1px", "solid", "White", "top", "bottom", "#E1E1E1", "center", "bold", "left"))
+               c("center", "bold"))
   expect_false(lapply(gt$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
   expect_equal(gt$`_styles`$styles[gt$`_styles`$grpname %in% gt$`_spanners`$spanner_id[gt$`_spanners`$spanner_level %in% c(1,3)]] |>
                  unlist() |> unique(),
-               c("#D9D9D9", "center", "bold", "left", "1px", "solid", "White", "right", "top", "bottom"))
+               c("#D9D9D9", "center", "bold"))
   expect_equal(gt$`_styles`$styles[gt$`_styles`$grpname %in% gt$`_spanners`$spanner_id[gt$`_spanners`$spanner_level == 2]] |>
                  unlist() |> unique(),
-               c("#E1E1E1", "center", "bold", "left", "1px", "solid", "White", "right", "top", "bottom"))
+               c("#E1E1E1", "center", "bold"))
   expect_equal(gt$`_styles`$styles[gt$`_styles`$grpname %in% gt$`_spanners`$spanner_id[gt$`_spanners`$spanner_level == 4]] |>
                  unlist() |> unique(),
-               c("#C8C8C8", "center", "bold", "left", "1px", "solid", "White", "right", "top", "bottom"))
+               c("#C8C8C8", "center", "bold"))
 
   fx <- formatTable(result, type = "flextable")
   expect_true("flextable" %in% class(fx))
@@ -28,7 +28,7 @@ test_that("test it works", {
   header_col_style <- fx$header$styles$cells$background.color$data[, "strata\nstrata_name\noverall\nstrata_level\noverall"]
   expect_equal(header_col_style, c("#c8c8c8", "#d9d9d9", "#e1e1e1", "#d9d9d9", "#e1e1e1"))
   expect_equal(fx$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fx$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2, 1.2))
+  expect_equal(fx$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2, 1))
   expect_equal(fx$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
   expect_true(fx$header$styles$text$bold$data[, "cdm_name"] |> unique())
   expect_equal(fx$header$styles$text$color$data[, "cdm_name"] |> unique(), "black")
@@ -89,4 +89,31 @@ test_that("reactable works", {
 
   dt <- formatTable(result, type = "reactable", groupColumn = "group_level", delim = ".")
   expect_snapshot(dt$x)
+})
+
+test_that("global options works", {
+  result <- mockSummarisedResult() |>
+    filterStrata(strata_name == "sex") |>
+    formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
+                                        "N" = "<count>")) |>
+    formatHeader(header = c("strata_level"),
+                 includeHeaderName = TRUE)
+  setGlobalTableOptions("darwin", "tinytable")
+  tab <- formatTable(result)
+  expect_true(class(tab)[1] == "tinytable")
+  expect_equal(
+    getTinytableStyle(tab, -1, 12),
+    dplyr::tibble(
+      "i" = -1, "j" = 12, "tabularray" = factor(""), "color" = "white", "background" = "#003399",
+      "fontsize" = NA, "alignv" = NA, "line" = "lbtr", "line_color" = "#003399",
+      "line_width" = 0.1, "bold" = TRUE, "italic" = FALSE, "monospace" = FALSE,
+      "strikeout" = FALSE, "underline" = FALSE, "indent" = NA, "colspan" = NA,
+      "rowspan" = NA, "bootstrap_css" = NA, "align" = NA
+    ),
+    ignore_attr = TRUE
+  )
+  tab <- formatTable(result, type = "gt")
+  expect_true(class(tab)[1] == "gt_tbl")
+  options(visOmopResults.tableStyle = NULL)
+  options(visOmopResults.tableType = NULL)
 })

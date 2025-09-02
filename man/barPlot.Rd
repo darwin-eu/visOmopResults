@@ -12,6 +12,7 @@ barPlot(
   just = 0.5,
   facet = NULL,
   colour = NULL,
+  style = "default",
   label = character()
 )
 }
@@ -30,7 +31,11 @@ barPlot(
 \item{facet}{Variables to facet by, a formula can be provided to specify
 which variables should be used as rows and which ones as columns.}
 
-\item{colour}{Columns to use to determine the colors.}
+\item{colour}{Columns to use to determine the colours.}
+
+\item{style}{Which style to apply to the plot, options are:
+"default", "darwin" and NULL (default ggplot style).
+Customised styles can be achieved by modifying the returned ggplot object.}
 
 \item{label}{Character vector with the columns to display interactively in
 \code{plotly}.}

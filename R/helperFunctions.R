@@ -46,182 +46,20 @@ tableOptions <- function() {
 #' tableStyle("flextable")
 #'
 tableStyle <- function(type = "gt", style = "default") {
-  omopgenerics::assertChoice(type, c("gt", "flextable", "datatable", "reactable"), length = 1)
+  omopgenerics::assertChoice(type, tableType(), length = 1)
   omopgenerics::assertChoice(style, c("default", "darwin"), length = 1)
   if (style == "darwin" & type %in% c("datatable", "reactable")) {
-    cli::cli_abort("`darwin` style is only available for `gt` and `flextable`.")
+    cli::cli_abort("`darwin` style is not currently available for `datatable` and `reactable`.")
   }
-  if (type == "gt") {
-    if (style == "default") {
-      list(
-        "header" = list(gt::cell_fill(color = "#c8c8c8"),
-                        gt::cell_text(weight = "bold", align = "center")),
-        "header_name" = list(gt::cell_fill(color = "#d9d9d9"),
-                             gt::cell_text(weight = "bold", align = "center")),
-        "header_level" = list(gt::cell_fill(color = "#e1e1e1"),
-                              gt::cell_text(weight = "bold", align = "center")),
-        "column_name" = list(gt::cell_text(weight = "bold", align = "center")),
-        "group_label" = list(gt::cell_fill(color = "#e9e9e9"),
-                             gt::cell_text(weight = "bold")),
-        "title" = list(gt::cell_text(weight = "bold", size = 15, align = "center")),
-        "subtitle" = list(gt::cell_text(weight = "bold", size = 12, align = "center")),
-        "body" = list()
-      ) |>
-        rlang::expr()
-    } else if (style == "darwin") {
-      list(
-        "header" = list(
-          gt::cell_fill(color = "#003399"),
-          gt::cell_text(weight = "bold", color = "white", align = "center")
-        ),
-        "header_name" = list(
-          gt::cell_fill(color = "#003399"),
-          gt::cell_text(weight = "bold", color = "white", align = "center")
-        ),
-        "header_level" = list(
-          gt::cell_fill(color = "#003399"),
-          gt::cell_text(color = "white", weight = "bold", align = "center")
-        ),
-        "column_name" = list(
-          gt::cell_fill(color = "#003399"),
-          gt::cell_text(weight = "bold", color = "white", align = "center")
-        ),
-        "group_label" = list(
-          gt::cell_fill(color = "#4a64bd"),
-          gt::cell_borders(color = "#003399"),
-          gt::cell_text(weight = "bold", color = "white")
-        ),
-        "title" = list(gt::cell_text(weight = "bold", size = 15, align = "center")),
-        "subtitle" = list(
-          gt::cell_text(weight = "bold", size = 12, align = "center")
-        ),
-        body = list(gt::cell_borders(color = "#003399"))
-      ) |>
-        rlang::expr()
-    }
-  } else if (type == "flextable") {
-    if (style == "default") {
-      list(
-        "header" = list(
-          "cell" = officer::fp_cell(background.color = "#c8c8c8"),
-          "text" = officer::fp_text(bold = TRUE)
-        ),
-        "header_name" = list(
-          "cell" = officer::fp_cell(background.color = "#d9d9d9"),
-          "text" = officer::fp_text(bold = TRUE)
-        ),
-        "header_level" = list(
-          "cell" = officer::fp_cell(background.color = "#e1e1e1"),
-          "text" = officer::fp_text(bold = TRUE)
-        ),
-        "column_name" = list(
-          "text" = officer::fp_text(bold = TRUE)
-        ),
-        "group_label" = list(
-          "cell" = officer::fp_cell(
-            background.color = "#e9e9e9",
-            border = officer::fp_border(color = "gray")
-          ),
-          "text" = officer::fp_text(bold = TRUE)
-        ),
-        "title" = list(
-          "text" = officer::fp_text(bold = TRUE, font.size = 15)
-        ),
-        "subtitle" = list(
-          "text" = officer::fp_text(bold = TRUE, font.size = 12)
-        ),
-        "body" = list()
-      ) |>
-        rlang::expr()
 
-    } else if (style == "darwin") {
-      list(
-        "header" = list(
-          "cell" = officer::fp_cell(
-            background.color = "#003399",
-            border = officer::fp_border(color = "white")
-          ),
-          "text" = officer::fp_text(bold = TRUE, color = "white")
-        ),
-        "header_name" = list(
-          "cell" = officer::fp_cell(
-            background.color = "#003399",
-            border = officer::fp_border(color = "white")
-          ),
-          "text" = officer::fp_text(bold = TRUE, color = "white")
-        ),
-        "header_level" = list(
-          "cell" = officer::fp_cell(
-            background.color = "#003399",
-            border = officer::fp_border(color = "white"),
-          ),
-          "text" = officer::fp_text(bold = TRUE, color = "white")
-        ),
-        "column_name" = list(
-          "cell" = officer::fp_cell(
-            background.color = "#003399",
-            border = officer::fp_border(color = "white"),
-          ),
-          "text" = officer::fp_text(bold = TRUE, color = "white")
-        ),
-        "group_label" = list(
-          "cell" = officer::fp_cell(
-            background.color = "#4a64bd",
-            border = officer::fp_border(color = "#003399")
-          ),
-          "text" = officer::fp_text(bold = TRUE, color = "white")
-        ),
-        "title" = list(
-          "text" = officer::fp_text(bold = TRUE, font.size = 15)
-        ),
-        "subtitle" = list(
-          "text" = officer::fp_text(bold = TRUE, font.size = 12)
-        ),
-        "body" = list(
-          "cell" = officer::fp_cell(border = officer::fp_border(color = "#003399"))
-        )
-      ) |>
-        rlang::expr()
-    }
-
-  } else if (type == "datatable") {
-    list(
-      "caption" = 'caption-side: bottom; text-align: center;',
-      "scrollX" = TRUE,
-      "scrollY" = 400,
-      "scroller" = TRUE,
-      "deferRender" = TRUE,
-      "scrollCollapse" = TRUE,
-      "fixedColumns" = list(leftColumns = 1, rightColumns = 1),
-      "fixedHeader" = TRUE,
-      "pageLength" = 10,
-      "lengthMenu" = c(5, 10, 20, 50, 100),
-      "filter" = "bottom",
-      "searchHighlight" = TRUE,
-      "rownames" = FALSE
-    ) |>
-      rlang::expr()
-  } else if (type == "reactable") {
-    list(
-      "defaultColDef" = reactable::colDef(
-        sortable = TRUE,
-        filterable = TRUE,
-        resizable = TRUE
-      ),
-      "defaultColGroup" = NULL,
-      "defaultSortOrder" = "asc",
-      "defaultSorted" = NULL,
-      "defaultPageSize" = 10,
-      "defaultExpanded" = TRUE,
-      "highlight" = TRUE,
-      "outlined" = FALSE,
-      "bordered" = FALSE,
-      "borderless" = FALSE,
-      "striped" = TRUE,
-      "theme" = NULL
-    ) |>
-      rlang::expr()
-  }
+  switch (type,
+    "gt" = gtStyleInternal(style, asExpr = TRUE),
+    "flextable" = flextableStyleInternal(style, asExpr = TRUE),
+    "tibble" = NULL,
+    "datatable" = datatableStyleInternal(style, asExpr = TRUE),
+    "reactable" = reactableStyleInternal(style, asExpr = TRUE),
+    "tinytable" = tinytableStyleInternal(style, asExpr = TRUE)
+  )
 }
 
 
@@ -240,7 +78,7 @@ tableStyle <- function(type = "gt", style = "default") {
 #' tableType()
 #'
 tableType <- function() {
-  c("gt", "flextable", "tibble", "datatable", "reactable")
+  c("gt", "flextable", "tibble", "datatable", "reactable", "tinytable")
 }
 
 
@@ -269,6 +107,44 @@ tableColumns <- function(result) {
   )
 }
 
+#' Set format options for all subsequent tables
+#'
+#' @description
+#' Set format options for all subsequent tables unless state a different style
+#' in a specific function
+#'
+#' @param style Named list that specifies how to style the different parts of
+#' the gt or flextable table generated. Accepted style entries are: title,
+#' subtitle, header, header_name, header_level, column_name, group_label, and
+#' body.
+#' Alternatively, use "default" to get visOmopResults style, or NULL for
+#' gt/flextable style.
+#' Keep in mind that styling code is different for gt and flextable.
+#' Additionally, "datatable" and "reactable" have their own style functions.
+#' To see style options for each table type use `tableStyle()`.
+#' @param type The desired format of the output table. See `tableType()` for
+#' allowed options. If "tibble", no formatting will be applied.
+#'
+#' @export
+#'
+#' @examples
+#' setGlobalTableOptions(style = "darwin", type = "tinytable")
+#' result <- mockSummarisedResult()
+#' result |>
+#'   visOmopTable(
+#'     estimateName = c("N%" = "<count> (<percentage>)",
+#'                      "N" = "<count>",
+#'                      "Mean (SD)" = "<mean> (<sd>)"),
+#'     header = c("cohort_name"),
+#'     rename = c("Database name" = "cdm_name"),
+#'     groupColumn = strataColumns(result)
+#'   )
+#'
+setGlobalTableOptions <- function(style = NULL, type = NULL) {
+  options(visOmopResults.tableStyle = style)
+  options(visOmopResults.tableType = type)
+}
+
 
 #' Columns for the plot functions
 #'
@@ -289,4 +165,35 @@ tableColumns <- function(result) {
 plotColumns <- function(result) {
   result <- omopgenerics::validateResultArgument(result)
   return(c(tidyColumns(result)))
+}
+
+#' Set format options for all subsequent plots
+#'
+#' @description
+#' Set format options for all subsequent plots unless state a different style in
+#' a specific function
+#'
+#' @param style Which style to apply to the plot, options are:
+#' "default", "darwin" and NULL (default ggplot style).
+#' Customised styles can be achieved by modifying the returned ggplot object.
+#'
+#' @export
+#'
+#' @examples
+#' setGlobalPlotOptions(style = "darwin")
+#'
+#' result <- mockSummarisedResult() |>
+#'   dplyr::filter(variable_name == "age")
+#'
+#' scatterPlot(
+#'   result = result,
+#'   x = "cohort_name",
+#'   y = "mean",
+#'   line = TRUE,
+#'   point = TRUE,
+#'   ribbon = FALSE,
+#'   facet = age_group ~ sex)
+#'
+setGlobalPlotOptions <- function(style = NULL) {
+  options(visOmopResults.plotStyle = style)
 }
