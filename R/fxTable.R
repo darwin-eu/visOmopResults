@@ -191,55 +191,17 @@ fxTableInternal <- function(x,
       )
   }
 
-  # Basic default + merge columns
+  # body
+  flex_x <- flex_x |>
+    flextable::style(
+      part = "body", pr_t = style$body$text,
+      pr_p = style$body$paragraph, pr_c = style$body$cell
+    )
+
+  # Merge columns
   if (!is.null(merge)) { # style while merging rows
     flex_x <- fxMergeRows(flex_x, merge, nameGroup)
-  } else {
-    if (!length(groupColumn) == 0) {
-      # style group different
-      indRowGroup <- getGroupIndices(flex_x$body$dataset)
-      flex_x <- flex_x |>
-        flextable::border(
-          border = officer::fp_border(color = "gray"),
-          part = "body"
-        )
-      # flextable::border(
-      #   j = 1,
-      #   border.left = officer::fp_border(color = "gray"),
-      #   part = "body"
-      # ) |>
-      # flextable::border( # correct group level bottom
-      #   i = nrow(flex_x$body$dataset),
-      #   border.bottom = officer::fp_border(color = "gray"),
-      #   part = "body"
-      # )
-      if (!groupAsColumn) {
-        flex_x <- flex_x |>
-          flextable::border( # correct group level right border
-            i = getGroupIndices(flex_x$body$dataset),
-            j = 1:(length(flex_x$body$dataset)-1),
-            border.right = officer::fp_border(color = "transparent"),
-            part = "body"
-          )
-      }
-    } else { # style body equally
-      flex_x <- flex_x |>
-        flextable::border(
-          border = officer::fp_border(color = "gray"),
-          part = "body"
-        )
-    }
   }
-  flex_x <- flex_x |>
-    flextable::border(
-      border = officer::fp_border(color = "gray", width = 1.2),
-      part = "header",
-      i = 1:nrow(flex_x$header$dataset)
-    ) |>
-    flextable::align(part = "header", align = "center") |>
-    flextable::valign(part = "header", valign = "center") |>
-    flextable::align(j = spanCols_ids, part = "body", align = "right") |>
-    flextable::align(j = which(!1:ncol(x) %in% spanCols_ids), part = "body", align = "left")
 
   # Other options:
   # caption
@@ -249,18 +211,6 @@ fxTableInternal <- function(x,
   }
   # title + subtitle
   if (!is.null(title) & !is.null(subtitle)) {
-    if (!"title" %in% names(style)) {
-      style$title <- list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 13),
-        "paragraph" = officer::fp_par(text.align = "center")
-      )
-    }
-    if (!"subtitle" %in% names(style)) {
-      style$subtitle <- list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 11),
-        "paragraph" = officer::fp_par(text.align = "center")
-      )
-    }
     flex_x <- flex_x |>
       flextable::add_header_lines(values = subtitle) |>
       flextable::add_header_lines(values = title) |>
@@ -275,12 +225,6 @@ fxTableInternal <- function(x,
   }
   # title
   if (!is.null(title) & is.null(subtitle)) {
-    if (!"title" %in% names(style)) {
-      style$title <- list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 13),
-        "paragraph" = officer::fp_par(text.align = "center")
-      )
-    }
     flex_x <- flex_x |>
       flextable::add_header_lines(values = title) |>
       flextable::style(
@@ -288,12 +232,6 @@ fxTableInternal <- function(x,
         pr_p = style$title$paragraph, pr_c = style$title$cell
       )
   }
-  # body
-  flex_x <- flex_x |>
-    flextable::style(
-      part = "body", pr_t = style$body$text,
-      pr_p = style$body$paragraph, pr_c = style$body$cell
-    )
   # group label
   if (length(groupColumn[[1]]) != 0) {
     if (!groupAsColumn) {
@@ -315,8 +253,11 @@ fxTableInternal <- function(x,
     } else {
       flex_x <- flex_x |>
         flextable::style(
-          part = "body", j = which(colnames(flex_x$body$dataset) %in% nameGroup),
-          pr_t = style$group_label$text, pr_p = style$group_label$paragraph, pr_c = style$group_label$cell
+          part = "body",
+          j = which(colnames(flex_x$body$dataset) %in% nameGroup),
+          pr_t = style$group_label$text,
+          pr_p = style$group_label$paragraph,
+          pr_c = style$group_label$cell
         )
     }
   }
@@ -383,7 +324,6 @@ fxMergeRows <- function(fx_x, merge, groupColumn) {
     }
   }
 
-
   for (k in seq_along(merge)) {
 
     if (k > 1) {
@@ -413,68 +353,21 @@ fxMergeRows <- function(fx_x, merge, groupColumn) {
         flextable::compose(
           i = id, j = ind[k],
           flextable::as_paragraph(flextable::as_chunk(""))
+        ) |>
+        flextable::border(
+          i = id[1:(length(id))]-1,
+          j = ind[k],
+          border.bottom = officer::fp_border(color = fx_x$body$styles$cells$background.color$data[1,1]),
+          part = "body"
         )
     }
     fx_x <- fx_x |>
       flextable::border(
         i = which(!1:nrow(fx_x$body$dataset) %in% id),
         j = ind[k],
-        border.top = officer::fp_border(color = "gray"),
+        border.top = officer::fp_border(color = fx_x$body$styles$cells$border.color.top$data[1,1]),
         part = "body"
       )
-  }
-
-  # Style the rest of the table
-  fx_x <- fx_x |>
-    flextable::border(
-      j = which(!1:ncol(fx_x$body$dataset) %in% c(ind, indColGroup)),
-      border.top = officer::fp_border(color = "gray"),
-      part = "body"
-    ) |>
-    flextable::border(
-      j = 1:ncol(fx_x$body$dataset),
-      border.right = officer::fp_border(color = "gray"),
-      part = "body"
-    ) |>
-    flextable::border(
-      j = 1,
-      border.left = officer::fp_border(color = "gray"),
-      part = "body"
-    ) |>
-    flextable::border( # Correct bottom border
-      i = nrow(fx_x$body$dataset),
-      border.bottom = officer::fp_border(color = "gray"),
-      part = "body"
-    )
-
-  if (!length(groupColumn) == 0) {
-    if (groupColumn %in% colNms) {
-      fx_x <- fx_x |>
-        flextable::border(
-          j = indColGroup,
-          i = indRowGroup,
-          border = officer::fp_border(color = "gray"),
-          part = "body"
-        )
-    }
-  }
-
-  if (!length(groupColumn) == 0) {
-    if (!groupColumn %in% colNms) {
-      fx_x <- fx_x |>
-        flextable::border(
-          j = 1,
-          i = getGroupIndices(fx_x$body$dataset),
-          border = officer::fp_border(color = "gray"),
-          part = "body"
-        ) |>
-        flextable::border(
-          i = getGroupIndices(fx_x$body$dataset),
-          j = 1:(length(fx_x$body$dataset)-1),
-          border.right = officer::fp_border(color = "transparent"),
-          part = "body"
-        )
-    }
   }
 
   return(fx_x)

@@ -41,7 +41,8 @@ test_that("helper table functions", {
         "text" = officer::fp_text(bold = TRUE)
       ),
       "column_name" = list(
-        "text" = officer::fp_text(bold = TRUE)
+        "text" = officer::fp_text(bold = TRUE),
+        "cell" = officer::fp_cell( border = officer::fp_border(color = "gray"))
       ),
       "group_label" = list(
         "cell" = officer::fp_cell(
@@ -51,12 +52,21 @@ test_that("helper table functions", {
         "text" = officer::fp_text(bold = TRUE)
       ),
       "title" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 15)
+        "text" = officer::fp_text(bold = TRUE, font.size = 15),
+        "paragraph" = officer::fp_par(text.align = "center"),
+        "cell" = officer::fp_cell( border = officer::fp_border(color = "gray"))
       ),
       "subtitle" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 12)
+        "text" = officer::fp_text(bold = TRUE, font.size = 12),
+        "paragraph" = officer::fp_par(text.align = "center"),
+        "cell" = officer::fp_cell( border = officer::fp_border(color = "gray"))
       ),
-      "body" = list()
+      "body" = list(
+        "cell" = officer::fp_cell(
+          background.color = "transparent",
+          border = officer::fp_border(color = "gray")
+        )
+      )
     ) |>
       rlang::expr()
   )
@@ -65,7 +75,7 @@ test_that("helper table functions", {
     tableStyle(type = "datatable"),
     list(caption = "caption-side: bottom; text-align: center;", scrollX = TRUE,
          scrollY = 400, scroller = TRUE, deferRender = TRUE, scrollCollapse = TRUE,
-         fixedColumns = list(leftColumns = 1, rightColumns = 1), fixedHeader = TRUE,
+         fixedColumns = list(leftColumns = 0, rightColumns = 0), fixedHeader = TRUE,
          pageLength = 10, lengthMenu = c(5, 10, 20, 50, 100), filter = "bottom",
          searchHighlight = TRUE, rownames = FALSE) |>
       rlang::expr()
@@ -73,11 +83,12 @@ test_that("helper table functions", {
 
   expect_equal(
     tableStyle(type = "reactable"),
-    list(defaultColDef = reactable::colDef(sortable = TRUE, filterable = TRUE,
-                                           resizable = TRUE), defaultColGroup = NULL, defaultSortOrder = "asc",
-         defaultSorted = NULL, defaultPageSize = 10, defaultExpanded = TRUE,
-         highlight = TRUE, outlined = FALSE, bordered = FALSE, borderless = FALSE,
-         striped = TRUE, theme = NULL) |>
+    list(defaultColDef = reactable::colDef(sortable = TRUE, resizable = TRUE,
+                                           filterable = TRUE, headerStyle = list(textAlign = "center")),
+         defaultColGroup = reactable::colGroup(headerStyle = list(textAlign = "center")),
+         defaultSortOrder = "asc", defaultSorted = NULL, defaultPageSize = 10,
+         defaultExpanded = TRUE, highlight = TRUE, outlined = FALSE,
+         bordered = FALSE, borderless = FALSE, striped = TRUE, theme = NULL) |>
       rlang::expr()
   )
 
@@ -153,10 +164,12 @@ test_that("helper table functions", {
         "text" = officer::fp_text(bold = TRUE, color = "white")
       ),
       "title" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 15)
+        "text" = officer::fp_text(bold = TRUE, font.size = 15),
+        "paragraph" = officer::fp_par(text.align = "center")
       ),
       "subtitle" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 12)
+        "text" = officer::fp_text(bold = TRUE, font.size = 12),
+        "paragraph" = officer::fp_par(text.align = "center")
       ),
       "body" = list(
         "cell" = officer::fp_cell(border = officer::fp_border(color = "#003399"))

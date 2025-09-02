@@ -1,6 +1,6 @@
 Package: visOmopResults
 Title: Graphs and Tables for OMOP Results
-Version: 1.1.1
+Version: 1.2.0
 Authors@R: c(
     person(
       "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -60,7 +60,8 @@ Suggests:
     plotly,
     reactable,
     rmarkdown,
-    testthat (>= 3.0.0)
+    testthat (>= 3.0.0),
+    tinytable (>= 0.13.0)
 VignetteBuilder: 
     knitr
 Depends: 

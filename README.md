@@ -92,7 +92,8 @@ result |>
     settingsColumn = NULL,
     groupColumn = c("cohort_name"),
     rename = c("Variable" = "variable_name", " " = "variable_level"),
-    hide = "cdm_name"
+    hide = "cdm_name",
+    style = "darwin"
   )
 ```
 
@@ -121,11 +122,13 @@ library(dplyr)
 result |>
   filter(variable_name == "number subjects") |>
   filterStrata(sex != "overall") |>
-  barPlot(x = "age_group", 
-          y = "count",
-          facet = "cohort_name", 
-          colour = "sex") +
-  themeVisOmop(fontsizeRef = 12)
+  barPlot(
+    x = "age_group", 
+    y = "count",
+    facet = "cohort_name", 
+    colour = "sex",
+    style = "darwin"
+  )
 ```
 
 <img src="man/figures/README-unnamed-chunk-6-1.png" width="100%" />

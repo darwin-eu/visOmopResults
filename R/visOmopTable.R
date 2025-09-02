@@ -17,8 +17,6 @@
 #' Generate a formatted table from a `<summarised_result>`
 #'
 #' @param result A `<summarised_result>` object.
-#' @param estimateName A named list of estimate names to join, sorted by
-#' computation order. Use `<...>` to indicate estimate names.
 #' @param header A vector specifying the elements to include in the header.
 #' The order of elements matters, with the first being the topmost header.
 #' Elements in header can be:
@@ -27,40 +25,10 @@
 #'  - Any other input to create an overall header.
 #' @param settingsColumn A character vector with the names of settings to
 #' include in the table. To see options use `settingsColumns(result)`.
-#' @param groupColumn Columns to use as group labels, to see options use
-#' `tableColumns(result)`. By default, the name of the new group will be the
-#' tidy* column names separated by ";". To specify a custom group name, use a
-#' named list such as:
-#' list("newGroupName" = c("variable_name", "variable_level")).
-#'
-#' *tidy: The tidy format applied to column names replaces "_" with a space and
-#' converts to sentence case. Use `rename` to customise specific column names.
-#'
-#' @param rename A named vector to customise column names, e.g.,
-#' c("Database name" = "cdm_name"). The function renames all column names
-#' not specified here into a tidy* format.
-#' @param type The desired format of the output table. See `tableType()` for
-#' allowed options.
 #' @param hide Columns to drop from the output table. By default, `result_id` and
 #' `estimate_type` are always dropped.
-#' @param columnOrder Character vector establishing the position of the columns
-#' in the formatted table. Columns in either header, groupColumn, or hide will
-#' be ignored.
-#' @param factor A named list where names refer to columns (see available columns
-#' in `tableColumns()`) and list elements are the level order of that column
-#' to arrange the results. The column order in the list will be used for
-#' arranging the result.
-#' @param style Named list that specifies how to style the different parts of
-#' the table generated. It can either be a pre-defined style ("default" or
-#' "darwin" - the latter just for gt and flextable), NULL to get the table
-#' default style, or custom.
-#' Keep in mind that styling code is different for all table styles. To see
-#' the different styles use `tableStyle()`.
-#' @param showMinCellCount If `TRUE`, suppressed estimates will be indicated with
-#' "<\{min_cell_count\}", otherwise, the default `na` defined in `.options` will be
-#' used.
-#' @param .options A named list with additional formatting options.
-#' `visOmopResults::tableOptions()` shows allowed arguments and their default values.
+#'
+#' @inheritParams tableDoc
 #'
 #' @return A tibble, gt, or flextable object.
 #'
@@ -78,7 +46,7 @@
 #'     estimateName = c("N%" = "<count> (<percentage>)",
 #'                      "N" = "<count>",
 #'                      "Mean (SD)" = "<mean> (<sd>)"),
-#'     header = c("group"),
+#'     header = c("cohort_name"),
 #'     rename = c("Database name" = "cdm_name"),
 #'     groupColumn = strataColumns(result)
 #'   )
@@ -87,7 +55,7 @@
 #'     estimateName = c("N%" = "<count> (<percentage>)",
 #'                      "N" = "<count>",
 #'                      "Mean (SD)" = "<mean> (<sd>)"),
-#'     header = c("group"),
+#'     header = c("cohort_name"),
 #'     rename = c("Database name" = "cdm_name"),
 #'     groupColumn = strataColumns(result),
 #'     type = "reactable
@@ -106,6 +74,15 @@ visOmopTable <- function(result,
                          style = "default",
                          showMinCellCount = TRUE,
                          .options = list()) {
+  # global options
+  if (missing(type)) {
+    type <- getOption("visOmopResults.tableType")
+    if (length(type) == 0) type <- "gt"
+  }
+  if (missing(style)) {
+    style <- getOption("visOmopResults.tableStyle")
+    if (length(style) == 0) style <- "default"
+  }
   # Tidy results
   result <- omopgenerics::validateResultArgument(result)
   showMinCellCount <- validateShowMinCellCount(showMinCellCount, settings(result))
@@ -132,10 +109,6 @@ visOmopTable <- function(result,
 
   # .options
   .options <- defaultTableOptions(.options)
-  if ("style" %in% names(.options)) {
-    cli::cli_inform("`style` in `.options` was deprecated in v1.0.1, use the argument `style`.")
-    style <- .options$style
-  }
 
   if ("variable_level" %in% header) {
     resultTidy <- resultTidy |>
@@ -257,13 +230,13 @@ correctColumnn <- function(col, cols) {
 getColumnOrder <- function(currentOrder, newOrder, header, group, hide) {
   # initial check
   if (any(!newOrder %in% currentOrder)) {
-    cli::cli_warn("Dropping the following from `columnOrder` as they are not part of the table: {newOrder[!newOrder %in% currentOrder]}")
+    cli::cli_inform("Dropping the following from `columnOrder` as they are not part of the table: {newOrder[!newOrder %in% currentOrder]}")
     newOrder <- base::intersect(newOrder, currentOrder)
   }
-  newOrder <- c(newOrder, "result_id", "estimate_type")
-  notIn <- base::setdiff(c(currentOrder, "estimate_value"), newOrder)
+  newOrder <- c(newOrder, "result_id", "estimate_type", "estimate_value")
+  notIn <- base::setdiff(currentOrder, newOrder)
   if (length(notIn) > 0) {
-    cli::cli_warn("{.strong {notIn}} {?is/are} missing in `columnOrder`, will be added last.")
+    cli::cli_inform("{.strong {notIn}} {?is/are} missing in `columnOrder`, will be added last.")
     newOrder <- c(newOrder, notIn)
   }
   return(newOrder)

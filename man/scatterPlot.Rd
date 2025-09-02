@@ -15,6 +15,7 @@ scatterPlot(
   ymax = NULL,
   facet = NULL,
   colour = NULL,
+  style = "default",
   group = colour,
   label = character()
 )
@@ -24,7 +25,7 @@ scatterPlot(
 
 \item{x}{Column or estimate name that is used as x variable.}
 
-\item{y}{Column or estimate name that is used as y variable}
+\item{y}{Column or estimate name that is used as y variable.}
 
 \item{line}{Whether to plot a line using \code{geom_line}.}
 
@@ -41,7 +42,11 @@ scatterPlot(
 \item{facet}{Variables to facet by, a formula can be provided to specify
 which variables should be used as rows and which ones as columns.}
 
-\item{colour}{Columns to use to determine the colors.}
+\item{colour}{Columns to use to determine the colours.}
+
+\item{style}{Which style to apply to the plot, options are:
+"default", "darwin" and NULL (default ggplot style).
+Customised styles can be achieved by modifying the returned ggplot object.}
 
 \item{group}{Columns to use to determine the group.}
 

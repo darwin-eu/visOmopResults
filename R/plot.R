@@ -16,22 +16,7 @@
 
 #' Create a scatter plot visualisation from a `<summarised_result>` object
 #'
-#' @param result A `<summarised_result>` object.
-#' @param x Column or estimate name that is used as x variable.
-#' @param y Column or estimate name that is used as y variable
-#' @param line Whether to plot a line using `geom_line`.
-#' @param point Whether to plot points using `geom_point`.
-#' @param ribbon Whether to plot a ribbon using `geom_ribbon`.
-#' @param ymin Lower limit of error bars, if provided is plot using
-#' `geom_errorbar`.
-#' @param ymax Upper limit of error bars, if provided is plot using
-#' `geom_errorbar`.
-#' @param facet Variables to facet by, a formula can be provided to specify
-#' which variables should be used as rows and which ones as columns.
-#' @param colour Columns to use to determine the colors.
-#' @param group Columns to use to determine the group.
-#' @param label Character vector with the columns to display interactively in
-#' `plotly`.
+#' @inheritParams plotDoc
 #'
 #' @return A plot object.
 #'
@@ -60,6 +45,7 @@ scatterPlot <- function(result,
                         ymax = NULL,
                         facet = NULL,
                         colour = NULL,
+                        style = "default",
                         group = colour,
                         label = character()) {
 
@@ -78,6 +64,11 @@ scatterPlot <- function(result,
   omopgenerics::assertCharacter(colour, null = TRUE)
   omopgenerics::assertCharacter(group, null = TRUE)
   omopgenerics::assertCharacter(label, null = TRUE)
+  if (missing(style)) {
+    style <- getOption("visOmopResults.plotStyle")
+    if (length(style) == 0) style <- "default"
+  }
+  omopgenerics::assertChoice(style, choices = c("darwin", "default"), null = TRUE, length = 1)
 
   # empty
   if (nrow(result) == 0) {
@@ -135,23 +126,22 @@ scatterPlot <- function(result,
     ) +
     ggplot2::theme(legend.position = hideLegend(colour))
 
+  if (length(style) != 0) {
+    if (style == "default") {
+      p <- p +
+        themeVisOmop()
+    } else if (style == "darwin") {
+      p <- p +
+        themeDarwin()
+    }
+  }
+
   return(p)
 }
 
 #' Create a box plot visualisation from a `<summarised_result>` object
 #'
-#' @param result A `<summarised_result>` object.
-#' @param x Columns to use as x axes.
-#' @param lower Estimate name for the lower quantile of the box.
-#' @param middle Estimate name for the middle line of the box.
-#' @param upper Estimate name for the upper quantile of the box.
-#' @param ymin Estimate name for the lower limit of the bars.
-#' @param ymax Estimate name for the upper limit of the bars.
-#' @param facet Variables to facet by, a formula can be provided to specify
-#' which variables should be used as rows and which ones as columns.
-#' @param colour Columns to use to determine the colors.
-#' @param label Character vector with the columns to display interactively in
-#' `plotly`.
+#' @inheritParams plotDoc
 #'
 #' @return A ggplot2 object.
 #' @export
@@ -169,6 +159,7 @@ boxPlot <- function(result,
                     ymax = "max",
                     facet = NULL,
                     colour = NULL,
+                    style = "default",
                     label = character()) {
 
   rlang::check_installed("ggplot2")
@@ -184,6 +175,11 @@ boxPlot <- function(result,
   validateFacet(facet)
   omopgenerics::assertCharacter(colour, null = TRUE)
   omopgenerics::assertCharacter(label, null = TRUE)
+  if (missing(style)) {
+    style <- getOption("visOmopResults.plotStyle")
+    if (length(style) == 0) style <- "default"
+  }
+  omopgenerics::assertChoice(style, choices = c("darwin", "default"), null = TRUE, length = 1)
 
   # empty
   if (nrow(result) == 0) {
@@ -237,22 +233,22 @@ boxPlot <- function(result,
     ) +
     ggplot2::theme(legend.position = hideLegend(colour))
 
+  if (length(style) != 0) {
+    if (style == "default") {
+      p <- p +
+        themeVisOmop()
+    } else if (style == "darwin") {
+      p <- p +
+        themeDarwin()
+    }
+  }
+
   return(p)
 }
 
 #' Create a bar plot visualisation from a `<summarised_result>` object
 #'
-#' @param result A `<summarised_result>` object.
-#' @param x Column or estimate name that is used as x variable.
-#' @param y Column or estimate name that is used as y variable.
-#' @param width Bar width, as in `geom_col()` of the `ggplot2` package.
-#' @param just Adjustment for column placement, as in `geom_col()` of the
-#' `ggplot2` package.
-#' @param facet Variables to facet by, a formula can be provided to specify
-#' which variables should be used as rows and which ones as columns.
-#' @param colour Columns to use to determine the colors.
-#' @param label Character vector with the columns to display interactively in
-#' `plotly`.
+#' @inheritParams plotDoc
 #'
 #' @return A plot object.
 #' @export
@@ -274,6 +270,7 @@ barPlot <- function(result,
                     just = 0.5,
                     facet = NULL,
                     colour = NULL,
+                    style = "default",
                     label = character()) {
 
   rlang::check_installed("ggplot2")
@@ -285,6 +282,11 @@ barPlot <- function(result,
   validateFacet(facet)
   omopgenerics::assertCharacter(colour, null = TRUE)
   omopgenerics::assertCharacter(label, null = TRUE)
+  if (missing(style)) {
+    style <- getOption("visOmopResults.plotStyle")
+    if (length(style) == 0) style <- "default"
+  }
+  omopgenerics::assertChoice(style, choices = c("darwin", "default"), null = TRUE, length = 1)
 
   # empty
   if (nrow(result) == 0) {
@@ -331,6 +333,16 @@ barPlot <- function(result,
       y = styleLabel(y)
     ) +
     ggplot2::theme(legend.position = hideLegend(colour))
+
+  if (length(style) != 0) {
+    if (style == "default") {
+      p <- p +
+        themeVisOmop()
+    } else if (style == "darwin") {
+      p <- p +
+        themeDarwin()
+    }
+  }
 
   return(p)
 }
@@ -498,3 +510,4 @@ addLabels <- function(cols, label) {
   }
   return(c(cols, listLabs))
 }
+

@@ -199,13 +199,13 @@ test_that("gtTable, test default styles and NULL", {
   # spanner styles
   expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level %in% c(1,3)]] |>
                  unlist() |> unique(),
-               c("#D9D9D9", "center", "bold", "left", "1px", "solid", "White", "right", "top", "bottom" ))
+               c("#D9D9D9", "center", "bold"))
   expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level == 2]] |>
                  unlist() |> unique(),
-               c("#E1E1E1", "center", "bold", "left", "1px", "solid", "White", "right", "top", "bottom"))
+               c("#E1E1E1", "center", "bold"))
   expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level == 4]] |>
                  unlist() |> unique(),
-               c("#C8C8C8", "center", "bold", "left", "1px", "solid", "White", "right", "top", "bottom"))
+               c("#C8C8C8", "center", "bold"))
   # title
   expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "title"] |> unlist() |> unique(),
                c("15", "center", "bold"))
@@ -213,9 +213,9 @@ test_that("gtTable, test default styles and NULL", {
                c("12", "center", "bold"))
   # column names
   expect_equal(unlist(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "columns_columns"])[1:27] |> unique(),
-               c("#E1E1E1", "center",  "bold", "left", "1px", "solid", "White", "right", "top", "bottom" ))
+               c("#E1E1E1", "center",  "bold"))
   expect_equal(unlist(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "columns_columns"])[28:43] |> unique(),
-               c("1px", "solid", "White", "top", "bottom", "#E1E1E1", "center",  "bold", "left" ))
+               c("center", "bold"))
   expect_false(lapply(gtTableInternal$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
 
   # Group labels

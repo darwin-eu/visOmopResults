@@ -36,23 +36,23 @@ test_that("fxTableInternal", {
   header_col_style <- fxResult$header$styles$cells$background.color$data[, "Study cohorts\ncohort1\nStudy strata\noverall\noverall"]
   expect_equal(header_col_style, c("#c8c8c8", "#c8c8c8", "#e1e1e1", "#c8c8c8", "#e1e1e1", "#e1e1e1"))
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2.0, 1.2))
-  expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2.0, 1.5, 0))
+  expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
   expect_equal(fxResult$header$styles$text$bold$data[, "cdm_name"] |> unique(), TRUE)
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"][1], "blue")
 
   # default fxTableInternal format
-  expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
-  expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
+  expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 0)
+  expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
   expect_equal(fxResult$body$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
 
   # caption
   expect_null(fxResult$caption$value)
 
   # Alignment
-  expect_equal(fxResult$body$styles$pars$text.align$data[1,9:26] |> unique(), "right")
-  expect_equal(fxResult$body$styles$pars$text.align$data[3,9:26] |> unique(), "right")
-  expect_equal(fxResult$body$styles$pars$text.align$data[5,9:26] |> unique(), "right")
+  expect_equal(fxResult$body$styles$pars$text.align$data[1,9:26] |> unique(), "left")
+  expect_equal(fxResult$body$styles$pars$text.align$data[3,9:26] |> unique(), "left")
+  expect_equal(fxResult$body$styles$pars$text.align$data[5,9:26] |> unique(), "left")
   expect_equal(fxResult$body$styles$pars$text.align$data[1,1:8] |> unique(), "left")
   expect_equal(fxResult$body$styles$pars$text.align$data[3,1:8] |> unique(), "left")
   expect_equal(fxResult$body$styles$pars$text.align$data[5,1:8] |> unique(), "left")
@@ -92,12 +92,12 @@ test_that("fxTableInternal", {
   header_col_style <- fxResult$header$styles$cells$background.color$data[, "strata_name\noverall\nstrata_level\noverall"]
   expect_equal(header_col_style, c("black", "black", "black", "transparent", "black", "transparent"))
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2, 1.2))
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2, 1.5, 0))
   expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
   expect_equal(fxResult$header$styles$text$bold$data[, "cdm_name"] |> unique(), TRUE)
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"], c("black", "blue", "black", "black", "black", "black"))
   expect_equal(fxResult$header$styles$text$color$data[, "strata_name\nage_group\nstrata_level\n>=40"],
-               c("black", "blue", "white", "black", "white", "black"))
+               c("white", "blue", "white", "black", "white", "black"))
 
   # body
   expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(0,1))
@@ -129,7 +129,7 @@ test_that("fxTableInternal", {
     style = list(
       "subtitle" = list("text" = officer::fp_text(bold = TRUE, font.size = 12, color = "blue")),
       "body" = list("text" = officer::fp_text(color = "red"), "cell" = officer::fp_cell(border = officer::fp_border())),
-      "group_label" = list("cell" = officer::fp_cell(background.color = "#e1e1e1")),
+      "group_label" = list("cell" = officer::fp_cell(background.color = "#e1e1e1", border = officer::fp_border(color = "black"))),
       "header_name" = list("cell" = officer::fp_cell(background.color = "black"), "text" = officer::fp_text(color = "white"))
     ),
     na = "-",
@@ -172,16 +172,16 @@ test_that("fxTableInternal, test default styles and NULL", {
                "transparent")
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
   expect_equal(fxResult$header$styles$cells$border.width.top$data[1,] |> unique(), 2)
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[2,] |> unique(), 1.2)
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[3,] |> unique(), 1.2)
-  expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
-  expect_equal(fxResult$header$styles$cells$border.color.left$data[2:6, "cdm_name"] |> unique(), "gray")
-  expect_true(fxResult$header$styles$text$bold$data[1, "cdm_name"] |> unique())
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[2,] |> unique(), 1.5)
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[3,] |> unique(), 0)
+  expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
+  expect_equal(fxResult$header$styles$cells$border.color.left$data[2:6, "cdm_name"] |> unique(), "black")
+  expect_false(fxResult$header$styles$text$bold$data[1, "cdm_name"] |> unique())
   expect_false(fxResult$header$styles$text$bold$data[2:6, "cdm_name"] |> unique())
 
   # default fxTableInternal format
-  expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
-  expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
+  expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 0)
+  expect_equal(fxResult$body$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
   expect_equal(fxResult$body$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
 
   # Input 2 ----
@@ -206,9 +206,9 @@ test_that("fxTableInternal, test default styles and NULL", {
 
   # Spanner styles
   header_col_style <- fxResult$header$styles$cells$background.color$data[, "Strata\nstrata_name\noverall\nstrata_level\noverall"]
-  expect_equal(header_col_style, c("#c8c8c8", "#c8c8c8", "#c8c8c8", "#d9d9d9", "#e1e1e1", "#d9d9d9", "#e1e1e1"))
+  expect_equal(header_col_style, c("transparent", "transparent", "#c8c8c8", "#d9d9d9", "#e1e1e1", "#d9d9d9", "#e1e1e1"))
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2.0, 1.2))
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2.0, 1))
   expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
   expect_true(fxResult$header$styles$text$bold$data[, "cdm_name"] |> unique())
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"] |> unique(), "black")
@@ -243,9 +243,9 @@ test_that("fxTableInternal, test merge", {
   )
 
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,1],
-               c('gray', 'gray', 'black', 'black', 'black', 'black', 'black', 'black', 'gray', 'gray', 'black', 'black', 'black', 'black', 'black', 'black'))
+               c('gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray'))
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,2],
-               c('gray', 'gray', 'black', 'black', 'black', 'black', 'black', 'black', 'gray', 'gray', 'black', 'black', 'black', 'black', 'black', 'black'))
+               c('gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray'))
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,5],
                c('gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray'))
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,16],
@@ -265,7 +265,7 @@ test_that("fxTableInternal, test merge", {
     merge = c("cdm_name", "variable_name")
   )
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,1],
-               c('gray', 'gray', 'black', 'black', 'black', 'black', 'black', 'black', 'gray', 'gray', 'black', 'black', 'black', 'black', 'black', 'black'))
+               c('gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray'))
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,2],
                c('gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray', 'gray'))
   expect_equal(fxResult$body$styles$cells$border.color.top$data[,4],
@@ -307,12 +307,12 @@ test_that("multiple groupColumn", {
   header_col_style <- fxResult$header$styles$cells$background.color$data[, "strata_name:overall:strata_level:overall"]
   expect_equal(header_col_style, c("black", "black", "black", "transparent", "black", "transparent"))
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2, 1.2))
-  expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
-  expect_equal(all(fxResult$header$styles$text$bold$data[, "cdm_name"] == c(TRUE, TRUE, FALSE, FALSE, FALSE, FALSE)), TRUE)
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2, 1.5, 0))
+  expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
+  expect_equal(all(fxResult$header$styles$text$bold$data[, "cdm_name"] == c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE)), TRUE)
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"], c("black", "blue", "black", "black", "black", "black"))
   expect_equal(fxResult$header$styles$text$color$data[, "strata_name:age_group:strata_level:>=40"],
-               c("black", "blue", "white", "black", "white", "black"))
+               c("white", "blue", "white", "black", "white", "black"))
 
   # body
   expect_equal(fxResult$body$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), 1)
