@@ -45,7 +45,7 @@ customiseText <- function(x,
                           custom = NULL,
                           keep = NULL) {
   # Checks
-  omopgenerics::assertCharacter(x, null = TRUE)
+  omopgenerics::assertCharacter(x, null = TRUE, na = TRUE)
   omopgenerics::assertCharacter(custom, named = TRUE, null = TRUE)
   omopgenerics::assertCharacter(keep, null = TRUE)
   if (!is.function(fun)) {

@@ -46,11 +46,9 @@ scatterPlot <- function(result,
                         facet = NULL,
                         colour = NULL,
                         style = "default",
+                        type = "ggplot",
                         group = colour,
                         label = character()) {
-
-  rlang::check_installed("ggplot2")
-
   # check and prepare input
   omopgenerics::assertTable(result)
   omopgenerics::assertLogical(line, length = 1, call = call)
@@ -68,7 +66,12 @@ scatterPlot <- function(result,
     style <- getOption("visOmopResults.plotStyle")
     if (length(style) == 0) style <- "default"
   }
-  omopgenerics::assertChoice(style, choices = c("darwin", "default"), null = TRUE, length = 1)
+  if (missing(type)) {
+    type <- getOption("visOmopResults.plotType")
+    if (length(type) == 0) type <- "ggplot"
+  }
+  omopgenerics::assertChoice(style, choices = plotStyle(), null = TRUE, length = 1)
+  validateType(type)
 
   # empty
   if (nrow(result) == 0) {
@@ -124,16 +127,11 @@ scatterPlot <- function(result,
       colour = styleLabel(colour),
       y = styleLabel(y)
     ) +
-    ggplot2::theme(legend.position = hideLegend(colour))
+    ggplot2::theme(legend.position = hideLegend(colour)) +
+    themeVisOmop(style = style)
 
-  if (length(style) != 0) {
-    if (style == "default") {
-      p <- p +
-        themeVisOmop()
-    } else if (style == "darwin") {
-      p <- p +
-        themeDarwin()
-    }
+  if (type == "plotly") {
+    p <- plotly::ggplotly(p)
   }
 
   return(p)
@@ -160,10 +158,8 @@ boxPlot <- function(result,
                     facet = NULL,
                     colour = NULL,
                     style = "default",
+                    type = "ggplot",
                     label = character()) {
-
-  rlang::check_installed("ggplot2")
-
   # initial checks
   omopgenerics::assertTable(result)
   omopgenerics::assertCharacter(x, minNumCharacter = 1)
@@ -179,7 +175,12 @@ boxPlot <- function(result,
     style <- getOption("visOmopResults.plotStyle")
     if (length(style) == 0) style <- "default"
   }
-  omopgenerics::assertChoice(style, choices = c("darwin", "default"), null = TRUE, length = 1)
+  if (missing(type)) {
+    type <- getOption("visOmopResults.plotType")
+    if (length(type) == 0) type <- "ggplot"
+  }
+  omopgenerics::assertChoice(style, choices = plotStyle(), null = TRUE, length = 1)
+  validateType(type)
 
   # empty
   if (nrow(result) == 0) {
@@ -231,16 +232,11 @@ boxPlot <- function(result,
       fill = styleLabel(colour),
       colour = styleLabel(colour)
     ) +
-    ggplot2::theme(legend.position = hideLegend(colour))
+    ggplot2::theme(legend.position = hideLegend(colour)) +
+    themeVisOmop(style = style)
 
-  if (length(style) != 0) {
-    if (style == "default") {
-      p <- p +
-        themeVisOmop()
-    } else if (style == "darwin") {
-      p <- p +
-        themeDarwin()
-    }
+  if (type == "plotly") {
+    p <- plotly::ggplotly(p)
   }
 
   return(p)
@@ -268,13 +264,12 @@ barPlot <- function(result,
                     y,
                     width = NULL,
                     just = 0.5,
+                    position = "dodge",
                     facet = NULL,
                     colour = NULL,
                     style = "default",
+                    type = "ggplot",
                     label = character()) {
-
-  rlang::check_installed("ggplot2")
-
   # initial checks
   omopgenerics::assertTable(result)
   omopgenerics::assertCharacter(x, minNumCharacter = 1)
@@ -282,11 +277,17 @@ barPlot <- function(result,
   validateFacet(facet)
   omopgenerics::assertCharacter(colour, null = TRUE)
   omopgenerics::assertCharacter(label, null = TRUE)
+  omopgenerics::assertChoice(position, c("stack", "dodge"))
   if (missing(style)) {
     style <- getOption("visOmopResults.plotStyle")
     if (length(style) == 0) style <- "default"
   }
-  omopgenerics::assertChoice(style, choices = c("darwin", "default"), null = TRUE, length = 1)
+  if (missing(type)) {
+    type <- getOption("visOmopResults.plotType")
+    if (length(type) == 0) type <- "ggplot"
+  }
+  omopgenerics::assertChoice(style, choices = plotStyle(), null = TRUE, length = 1)
+  validateType(type)
 
   # empty
   if (nrow(result) == 0) {
@@ -320,7 +321,7 @@ barPlot <- function(result,
 
   # create plot
   p <- ggplot2::ggplot(data = result, mapping = aes) +
-    ggplot2::geom_col(width = width, just = just, position = "dodge")
+    ggplot2::geom_col(width = width, just = just, position = position)
   if(length(facet) > 0){
     p <- plotFacet(p, facet)
   }
@@ -332,16 +333,11 @@ barPlot <- function(result,
       colour = styleLabel(colour),
       y = styleLabel(y)
     ) +
-    ggplot2::theme(legend.position = hideLegend(colour))
+    ggplot2::theme(legend.position = hideLegend(colour)) +
+    themeVisOmop(style = style)
 
-  if (length(style) != 0) {
-    if (style == "default") {
-      p <- p +
-        themeVisOmop()
-    } else if (style == "darwin") {
-      p <- p +
-        themeDarwin()
-    }
+  if (type == "plotly") {
+    p <- plotly::ggplotly(p)
   }
 
   return(p)
@@ -351,6 +347,8 @@ barPlot <- function(result,
 #'
 #' @param title Title to use in the empty plot.
 #' @param subtitle Subtitle to use in the empty plot.
+#' @inheritParams plotDoc
+#'
 #' @return An empty ggplot object
 #'
 #' @export
@@ -358,10 +356,20 @@ barPlot <- function(result,
 #' @examples
 #' emptyPlot()
 #'
-emptyPlot <- function(title = "No data to plot", subtitle = "") {
-  ggplot2::ggplot() +
+emptyPlot <- function(title = "No data to plot", subtitle = "", type = "ggplot") {
+  validateType(type)
+  omopgenerics::assertCharacter(title, length = 1)
+  omopgenerics::assertCharacter(subtitle, length = 1)
+
+  p <- ggplot2::ggplot() +
     ggplot2::theme_bw() +
     ggplot2::labs(title = title, subtitle = subtitle)
+
+  if (type == "plotly") {
+    p <- plotly::ggplotly(p)
+  }
+
+  return(p)
 }
 
 tidyResult <- function(result) {

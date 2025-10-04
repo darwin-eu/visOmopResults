@@ -12,19 +12,22 @@ reference:
   - matches("format")
 - subtitle: Helper table functions
 - contents:
-  - matches("tableType|tableOptions|tableStyle|emptyTable|tableColumns|setGlobalTableOptions")
+  - matches("tableType|tableOptions|tableStyleCode|emptyTable|tableColumns|setGlobalTableOptions|tableStyle")
 
 - title: Plot functions
 - contents:
   - ends_with("Plot")
 - subtitle: Helper plot functions
 - contents:
-  - matches("themeVisOmop|plotColumns|themeDarwin|setGlobalPlotOptions")
+  - matches("themeVisOmop|plotColumns|setGlobalPlotOptions|plotStyle|plotType")
 
 - title: Other functionalities
 - subtitle: To style text
 - contents:
   - contains("customiseText")
+- subtitle: To get extra fonts
+- contents:
+  - contains("requireExtrafont")
 - subtitle: Mock `<summarised_result>`
 - contents:
-  - matches("mock")
+  - matches("mockSummarisedResult|data")

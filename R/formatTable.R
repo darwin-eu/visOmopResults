@@ -17,18 +17,7 @@
 #' Creates a flextable or gt object from a dataframe
 #'
 #' @param x A dataframe.
-#' @param type The desired format of the output table. See `tableType()` for
-#' allowed options. If "tibble", no formatting will be applied.
-#' @param delim Delimiter.
-#' @param style Named list that specifies how to style the different parts of
-#' the gt or flextable table generated. Accepted style entries are: title,
-#' subtitle, header, header_name, header_level, column_name, group_label, and
-#' body.
-#' Alternatively, use "default" to get visOmopResults style, or NULL for
-#' gt/flextable style.
-#' Keep in mind that styling code is different for gt and flextable.
-#' Additionally, "datatable" and "reactable" have their own style functions.
-#' To see style options for each table type use `tableStyle()`.
+#' @param delim Delimiter to separate headers.
 #' @param na How to display missing values. Not used for "datatable" and
 #' "reactable".
 #' @param title Title of the table, or NULL for no title. Not used for
@@ -38,10 +27,6 @@
 #' @param caption Caption for the table, or NULL for no caption. Text in
 #' markdown formatting style (e.g. `*Your caption here*` for caption in
 #' italics). Not used for "reactable".
-#' @param groupColumn Specifies the columns to use for group labels.
-#' By default, the new group name will be a combination of the column names,
-#' joined by "_". To assign a custom group name, provide a named list such as:
-#' list(`newGroupName` = c("variable_name", "variable_level"))
 #' @param groupAsColumn Whether to display the group labels as a column
 #' (TRUE) or rows (FALSE). Not used for "datatable" and "reactable"
 #' @param groupOrder Order in which to display group labels. Not used for
@@ -50,8 +35,9 @@
 #' cells have identical values. Alternatively, use "all_columns" to apply this
 #' merging to all columns, or use NULL to indicate no merging. Not used for
 #' "datatable" and "reactable".
+#' @inheritParams tableDoc
 #'
-#' @return A flextable object.
+#' @return A formatted table of the class selected in "type" argument.
 #'
 #' @description
 #' Creates a flextable object from a dataframe using a delimiter to span
@@ -103,8 +89,6 @@
 #'     groupOrder = c("cohort1", "cohort2"),
 #'     merge = "all_columns"
 #'   )
-#'
-#' @return A flextable or gt object.
 #'
 #' @export
 #'

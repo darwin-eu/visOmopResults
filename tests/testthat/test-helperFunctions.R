@@ -8,7 +8,7 @@ test_that("helper table functions", {
     'subtitle', 'caption', 'groupAsColumn', 'groupOrder', 'merge'
   ))
   expect_equal(
-    tableStyle(type = "gt"),
+    tableStyleCode(type = "gt"),
     list(
       "header" = list(gt::cell_fill(color = "#c8c8c8"),
                       gt::cell_text(weight = "bold", align = "center")),
@@ -26,7 +26,7 @@ test_that("helper table functions", {
       rlang::expr()
   )
   expect_equal(
-    tableStyle(type = "flextable"),
+    tableStyleCode(type = "flextable"),
     list(
       "header" = list(
         "cell" = officer::fp_cell(background.color = "#c8c8c8"),
@@ -72,7 +72,7 @@ test_that("helper table functions", {
   )
 
   expect_equal(
-    tableStyle(type = "datatable"),
+    tableStyleCode(type = "datatable"),
     list(caption = "caption-side: bottom; text-align: center;", scrollX = TRUE,
          scrollY = 400, scroller = TRUE, deferRender = TRUE, scrollCollapse = TRUE,
          fixedColumns = list(leftColumns = 0, rightColumns = 0), fixedHeader = TRUE,
@@ -82,7 +82,7 @@ test_that("helper table functions", {
   )
 
   expect_equal(
-    tableStyle(type = "reactable"),
+    tableStyleCode(type = "reactable"),
     list(defaultColDef = reactable::colDef(sortable = TRUE, resizable = TRUE,
                                            filterable = TRUE, headerStyle = list(textAlign = "center")),
          defaultColGroup = reactable::colGroup(headerStyle = list(textAlign = "center")),
@@ -93,93 +93,97 @@ test_that("helper table functions", {
   )
 
   expect_equal(
-    tableStyle(type = "gt", style = "darwin"),
+    tableStyleCode(type = "gt", style = "darwin"),
     list(
       "header" = list(
         gt::cell_fill(color = "#003399"),
-        gt::cell_text(weight = "bold", color = "white", align = "center")
+        gt::cell_text(weight = "bold", color = "white", align = "center", font = "Calibri", size = 11)
       ),
       "header_name" = list(
         gt::cell_fill(color = "#003399"),
-        gt::cell_text(weight = "bold", color = "white", align = "center")
+        gt::cell_text(weight = "bold", color = "white", align = "center", font = "Calibri", size = 11)
       ),
       "header_level" = list(
         gt::cell_fill(color = "#003399"),
-        gt::cell_text(color = "white", weight = "bold", align = "center")
+        gt::cell_text(color = "white", weight = "bold", align = "center", font = "Calibri", size = 11)
       ),
       "column_name" = list(
         gt::cell_fill(color = "#003399"),
-        gt::cell_text(weight = "bold", color = "white", align = "center")
+        gt::cell_text(weight = "bold", color = "white", align = "center", font = "Calibri", size = 11)
       ),
       "group_label" = list(
-        gt::cell_fill(color = "#4a64bd"),
+        gt::cell_fill(color = "#003399"),
         gt::cell_borders(color = "#003399"),
-        gt::cell_text(weight = "bold", color = "white")
+        gt::cell_text(weight = "bold", color = "white", font = "Calibri", size = 9)
       ),
-      "title" = list(gt::cell_text(weight = "bold", size = 15, align = "center")),
+      "title" = list(gt::cell_text(weight = "bold", font = "Calibri", size = 15, align = "center")),
       "subtitle" = list(
-        gt::cell_text(weight = "bold", size = 12, align = "center")
+        gt::cell_text(weight = "bold", size = 12, font = "Calibri", align = "center")
       ),
-      body = list(gt::cell_borders(color = "#003399"))
-    ) |>
-      rlang::expr()
-  )
-
-  expect_equal(
-    tableStyle(type = "flextable", style = "darwin"),
-    list(
-      "header" = list(
-        "cell" = officer::fp_cell(
-          background.color = "#003399",
-          border = officer::fp_border(color = "white")
-        ),
-        "text" = officer::fp_text(bold = TRUE, color = "white")
-      ),
-      "header_name" = list(
-        "cell" = officer::fp_cell(
-          background.color = "#003399",
-          border = officer::fp_border(color = "white")
-        ),
-        "text" = officer::fp_text(bold = TRUE, color = "white")
-      ),
-      "header_level" = list(
-        "cell" = officer::fp_cell(
-          background.color = "#003399",
-          border = officer::fp_border(color = "white"),
-        ),
-        "text" = officer::fp_text(bold = TRUE, color = "white")
-      ),
-      "column_name" = list(
-        "cell" = officer::fp_cell(
-          background.color = "#003399",
-          border = officer::fp_border(color = "white"),
-        ),
-        "text" = officer::fp_text(bold = TRUE, color = "white")
-      ),
-      "group_label" = list(
-        "cell" = officer::fp_cell(
-          background.color = "#4a64bd",
-          border = officer::fp_border(color = "#003399")
-        ),
-        "text" = officer::fp_text(bold = TRUE, color = "white")
-      ),
-      "title" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 15),
-        "paragraph" = officer::fp_par(text.align = "center")
-      ),
-      "subtitle" = list(
-        "text" = officer::fp_text(bold = TRUE, font.size = 12),
-        "paragraph" = officer::fp_par(text.align = "center")
-      ),
-      "body" = list(
-        "cell" = officer::fp_cell(border = officer::fp_border(color = "#003399"))
+      body = list(
+        gt::cell_borders(color = "#003399", weight = 0.5),
+        gt::cell_text(font = "calibri", size = 9)
       )
     ) |>
       rlang::expr()
   )
 
-  expect_error(tableStyle(type = "datatable", style = "darwin"))
-  expect_error(tableStyle(type = "reactable", style = "darwin"))
+  expect_equal(
+    tableStyleCode(type = "flextable", style = "darwin"),
+    list(
+      "header" = list(
+        "cell" = officer::fp_cell(
+          background.color = "#003399",
+          border = officer::fp_border(color = "#003399")
+        ),
+        "text" = officer::fp_text(bold = TRUE, color = "white", font.size = 11)
+      ),
+      "header_name" = list(
+        "cell" = officer::fp_cell(
+          background.color = "#003399",
+          border = officer::fp_border(color = "#003399")
+        ),
+        "text" = officer::fp_text(bold = TRUE, color = "white", font.size = 11, font.family = "calibri")
+      ),
+      "header_level" = list(
+        "cell" = officer::fp_cell(
+          background.color = "#003399",
+          border = officer::fp_border(color = "#003399"),
+        ),
+        "text" = officer::fp_text(bold = TRUE, color = "white", font.size = 11, font.family = "calibri")
+      ),
+      "column_name" = list(
+        "cell" = officer::fp_cell(
+          background.color = "#003399",
+          border = officer::fp_border(color = "#003399"),
+        ),
+        "text" = officer::fp_text(bold = TRUE, color = "white", font.size = 11, font.family = "calibri")
+      ),
+      "group_label" = list(
+        "cell" = officer::fp_cell(
+          background.color = "#003399",
+          border = officer::fp_border(color = "#003399", width = 0.5)
+        ),
+        "text" = officer::fp_text(bold = TRUE, color = "white", font.size = 9, font.family = "calibri")
+      ),
+      "title" = list(
+        "text" = officer::fp_text(bold = TRUE, font.size = 15, font.family = "calibri"),
+        "paragraph" = officer::fp_par(text.align = "center")
+      ),
+      "subtitle" = list(
+        "text" = officer::fp_text(bold = TRUE, font.size = 12, font.family = "calibri"),
+        "paragraph" = officer::fp_par(text.align = "center")
+      ),
+      "body" = list(
+        "cell" = officer::fp_cell(border = officer::fp_border(color = "#003399", width = 0.5)),
+        "text" = officer::fp_text(font.size = 9, font.family = "calibri")
+      )
+    ) |>
+      rlang::expr()
+  )
+
+  expect_error(tableStyleCode(type = "datatable", style = "darwin"))
+  expect_error(tableStyleCode(type = "reactable", style = "darwin"))
 
   expect_true(all(c("tibble", "flextable", "gt") %in% tableType()))
 })

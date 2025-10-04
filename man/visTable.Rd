@@ -45,18 +45,20 @@ allowed options.}
 
 \item{hide}{Columns to drop from the output table.}
 
-\item{style}{Named list that specifies how to style the different parts of
-the table generated. It can either be a pre-defined style ("default" or
-"darwin" - the latter just for gt and flextable), NULL to get the table
-default style, or custom.
-Keep in mind that styling code is different for all table styles. To see
-the different styles use \code{tableStyle()}.}
+\item{style}{A character string or custom R code to define the visual
+formatting of the table. This argument can be provided in two ways:
+\enumerate{
+\item Pre-defined Styles (Character String): Use a name for a built-in style
+(e.g., "darwin"). See tableStyle() for available options.
+\item Custom Code (Advanced): Supply a block of custom R code. This code must be
+specific to the table type. See tableStyleCode() for structural examples.
+}}
 
 \item{.options}{A named list with additional formatting options.
 \code{visOmopResults::tableOptions()} shows allowed arguments and their default values.}
 }
 \value{
-A tibble, gt, flextable, reactable, or datatable object.
+A formatted table of the class selected in "type" argument.
 }
 \description{
 This function combines the functionalities of \code{formatEstimateValue()},

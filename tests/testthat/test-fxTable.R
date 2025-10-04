@@ -36,7 +36,7 @@ test_that("fxTableInternal", {
   header_col_style <- fxResult$header$styles$cells$background.color$data[, "Study cohorts\ncohort1\nStudy strata\noverall\noverall"]
   expect_equal(header_col_style, c("#c8c8c8", "#c8c8c8", "#e1e1e1", "#c8c8c8", "#e1e1e1", "#e1e1e1"))
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2.0, 1.5, 0))
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(0.8, 1.5, 0))
   expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
   expect_equal(fxResult$header$styles$text$bold$data[, "cdm_name"] |> unique(), TRUE)
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"][1], "blue")
@@ -92,7 +92,7 @@ test_that("fxTableInternal", {
   header_col_style <- fxResult$header$styles$cells$background.color$data[, "strata_name\noverall\nstrata_level\noverall"]
   expect_equal(header_col_style, c("black", "black", "black", "transparent", "black", "transparent"))
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2, 1.5, 0))
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(0.8, 1.5, 0))
   expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
   expect_equal(fxResult$header$styles$text$bold$data[, "cdm_name"] |> unique(), TRUE)
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"], c("black", "blue", "black", "black", "black", "black"))
@@ -171,7 +171,7 @@ test_that("fxTableInternal, test default styles and NULL", {
   expect_equal(unique(fxResult$header$styles$cells$background.color$data[, "Study cohorts\ncohort1\nStudy strata\noverall\noverall"]),
                "transparent")
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[1,] |> unique(), 2)
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[1,] |> unique(), 0.8)
   expect_equal(fxResult$header$styles$cells$border.width.top$data[2,] |> unique(), 1.5)
   expect_equal(fxResult$header$styles$cells$border.width.top$data[3,] |> unique(), 0)
   expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
@@ -191,7 +191,7 @@ test_that("fxTableInternal, test default styles and NULL", {
     formatHeader(header = c("Strata", "strata_name", "strata_level"),
                  includeHeaderName = TRUE) |>
     dplyr::select(-result_id)
-  style <- tableStyle(type = "flextable") |> rlang::eval_bare()
+  style <- tableStyleCode(type = "flextable") |> rlang::eval_bare()
   fxResult <- fxTableInternal(
     table_to_format,
     style = style,
@@ -208,7 +208,7 @@ test_that("fxTableInternal, test default styles and NULL", {
   header_col_style <- fxResult$header$styles$cells$background.color$data[, "Strata\nstrata_name\noverall\nstrata_level\noverall"]
   expect_equal(header_col_style, c("transparent", "transparent", "#c8c8c8", "#d9d9d9", "#e1e1e1", "#d9d9d9", "#e1e1e1"))
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2.0, 1))
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(0.8, 1))
   expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
   expect_true(fxResult$header$styles$text$bold$data[, "cdm_name"] |> unique())
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"] |> unique(), "black")
@@ -228,7 +228,7 @@ test_that("fxTableInternal, test merge", {
   table_to_format<- mockSummarisedResult() |>
     formatHeader(header = c("strata_name", "strata_level")) |>
     dplyr::select(-result_id)
-  style <- tableStyle(type = "flextable") |> rlang::eval_bare()
+  style <- tableStyleCode(type = "flextable") |> rlang::eval_bare()
   fxResult <- fxTableInternal(
     x = table_to_format,
     style = style,
@@ -307,7 +307,7 @@ test_that("multiple groupColumn", {
   header_col_style <- fxResult$header$styles$cells$background.color$data[, "strata_name:overall:strata_level:overall"]
   expect_equal(header_col_style, c("black", "black", "black", "transparent", "black", "transparent"))
   expect_equal(fxResult$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2, 1.5, 0))
+  expect_equal(fxResult$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(0.8, 1.5, 0))
   expect_equal(fxResult$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "black")
   expect_equal(all(fxResult$header$styles$text$bold$data[, "cdm_name"] == c(FALSE, TRUE, FALSE, FALSE, FALSE, FALSE)), TRUE)
   expect_equal(fxResult$header$styles$text$color$data[, "cdm_name"], c("black", "blue", "black", "black", "black", "black"))

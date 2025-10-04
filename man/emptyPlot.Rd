@@ -4,12 +4,15 @@
 \alias{emptyPlot}
 \title{Returns an empty plot}
 \usage{
-emptyPlot(title = "No data to plot", subtitle = "")
+emptyPlot(title = "No data to plot", subtitle = "", type = "ggplot")
 }
 \arguments{
 \item{title}{Title to use in the empty plot.}
 
 \item{subtitle}{Subtitle to use in the empty plot.}
+
+\item{type}{The desired format of the output plot. See \code{plotType()} for
+supported plot types.}
 }
 \value{
 An empty ggplot object

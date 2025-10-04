@@ -30,7 +30,7 @@
 #'
 #' @inheritParams tableDoc
 #'
-#' @return A tibble, gt, or flextable object.
+#' @return A formatted table of the class selected in "type" argument.
 #'
 #' @description
 #' This function combines the functionalities of `formatEstimateValue()`,
@@ -52,13 +52,15 @@
 #'   )
 #' result |>
 #'   visOmopTable(
-#'     estimateName = c("N%" = "<count> (<percentage>)",
-#'                      "N" = "<count>",
-#'                      "Mean (SD)" = "<mean> (<sd>)"),
+#'     estimateName = c(
+#'       "N%" = "<count> (<percentage>)",
+#'       "N" = "<count>",
+#'       "Mean (SD)" = "<mean> (<sd>)"
+#'     ),
 #'     header = c("cohort_name"),
 #'     rename = c("Database name" = "cdm_name"),
 #'     groupColumn = strataColumns(result),
-#'     type = "reactable
+#'     type = "reactable"
 #'   )
 #'
 visOmopTable <- function(result,

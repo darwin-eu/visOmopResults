@@ -8,10 +8,10 @@ test_that("multiplication works", {
   )
 
   dt <- datatableInternal(x)
-  expect_snapshot(dt$x)
+  expect_snapshot(dt)
 
   dt <- datatableInternal(x, caption = "hi there", groupColumn = list("group" = "group"))
-  expect_snapshot(dt$x)
+  expect_snapshot(dt)
 })
 
 test_that("Multi-level headers generate correct HTML", {
@@ -23,9 +23,9 @@ test_that("Multi-level headers generate correct HTML", {
     "cohort_name\ncohort2\nsex\nfemale" = NA
   )
   dt <- datatableInternal(x)
-  expect_snapshot(dt$x)
+  expect_snapshot(dt)
 
   dt <- datatableInternal(x, caption = "hi there", groupColumn = list("cdm_name" = "cdm_name"))
-  expect_snapshot(dt$x)
+  expect_snapshot(dt)
 })
 

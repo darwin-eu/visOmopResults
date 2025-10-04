@@ -25,9 +25,15 @@ which variables should be used as rows and which ones as columns.}
 \item{label}{Character vector with the columns to display interactively in
 \code{plotly}.}
 
-\item{style}{Which style to apply to the plot, options are:
-"default", "darwin" and NULL (default ggplot style).
-Customised styles can be achieved by modifying the returned ggplot object.}
+\item{style}{A character string defining the visual theme to apply to the plot.
+You can set this to NULL to apply the standard ggplot2 default style,
+or provide a name for one of the package's pre-defined styles. Refer to the
+\code{plotStyle()} function for all available style pre-defined themes.
+For further customization, you can always modify the returned ggplot object
+directly.}
+
+\item{type}{The desired format of the output plot. See \code{plotType()} for
+supported plot types.}
 
 \item{lower}{Estimate name for the lower quantile of the box.}
 
@@ -46,6 +52,8 @@ Customised styles can be achieved by modifying the returned ggplot object.}
 
 \item{ymax}{Upper limit of error bars, if provided is plot using
 \code{geom_errorbar}.}
+
+\item{position}{Position of bars, can be either \code{dodge} or \code{stack}}
 }
 \description{
 Helper for consistent documentation of \code{plots}.

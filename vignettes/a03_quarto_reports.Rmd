@@ -1,0 +1,272 @@
+---
+title: "Quarto reports"
+output: rmarkdown::html_vignette
+vignette: >
+  %\VignetteIndexEntry{a03_quarto_reports}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse   = TRUE,
+  comment    = "#>",
+  warning    = FALSE,
+  message    = FALSE,
+  out.width  = "95%",  # figures occupy ~95% of document width
+  out.height = "auto",
+  dpi        = 320,    # ensure figure quality
+  fig.width  = 6,      # default aspect ratio (can be overridden per-figure)
+  fig.height = 3
+)
+options(rmarkdown.html_vignette.check_title = FALSE)
+```
+
+**visOmopResults** supports table and plot creation functions that can be used to generate publication-ready figures and tables. As an example, in this vignette we show how to create tables and figures for a DARWIN-EU study report.
+
+# Quarto document settings
+
+In the header of the Quarto document, we can set a title to identify the study and the document. Additionally, we can point to a Word document containing the template styles for DARWIN reports. The DOCX template can be found [here](https://github.com/darwin-eu/visOmopResults/tree/main/inst), together with the Quarto script used to generate the report.
+
+A Quarto header for producing a Word report might look like this:
+
+```yaml
+---
+title: "DARWIN-EU PX-CY-Z: Tables and Figures"
+format:
+  docx:
+    reference-doc: inst/darwinReportRef.docx
+    fig-cap-location: top
+execute:
+  echo: false
+  message: false
+  warning: false
+lof: true
+---
+```
+
+Next, we use the first R chunk to load packages, load data, and set options/variables used across the script. The results we use are obtained from mock data created with the `IncidencePrevalence` and `CohortCharacteristics` packages, which we have stored in the *[inst]*(https://github.com/darwin-eu/visOmopResults/tree/main/inst) folder of the packge.
+
+```{r, setup, echo=TRUE, eval=FALSE}
+# Load necessary packages ----
+library(visOmopResults)
+library(IncidencePrevalence)
+library(CohortCharacteristics)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+# Load mock results stored in the package ----
+data <- visOmopResults::data
+
+# Global options ----
+knitr::opts_chunk$set(
+  out.width  = "95%",  # figures occupy ~95% of document width
+  out.height = "auto",
+  dpi        = 320,    # ensure figure quality
+  fig.width  = 6,      # default aspect ratio (can be overridden per-figure)
+  fig.height = 3,
+  results    = "asis"  # enable Markdown produced via cat() inside chunks
+)
+
+# DARWIN style for visOmopResults plots and tables.
+style <- "darwin"
+tableType <- "flextable"
+plotType  <- "ggplot"
+setGlobalPlotOptions(style = style, type = plotType) 
+setGlobalTableOptions(style = style, type = tableType)
+
+# Calibri font in ggplot figures (requires the extrafont package to be available)
+requireExtrafont()
+```
+
+```{r, echo=FALSE}
+# Load necessary packages ----
+library(visOmopResults)
+library(IncidencePrevalence)
+library(CohortCharacteristics)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+# Load mock results stored in the package ----
+reportData <- system.file("mockReportData.RData", package = "visOmopResults")
+load(reportData)  # loads an object named `data` containing mock results
+
+# DARWIN style for visOmopResults plots and tables.
+style <- "darwin"
+tableType <- "flextable"
+plotType  <- "ggplot"
+setGlobalPlotOptions(style = style, type = plotType) 
+setGlobalTableOptions(style = style, type = tableType)
+
+# Calibri font in ggplot figures (requires the extrafont package to be available)
+requireExtrafont()
+```
+
+For tables we choose the `"flextable"` type because it transfers best to Word documents.
+
+The function `requireExtrafont()` installs (if needed) the **extrafont** package and loads the Calibri font for use with ggplot2 when using the DARWIN style.
+
+# Characterisation results
+
+The report starts with a table showing baseline characteristics of the denominator cohort in our mock study.
+
+```{r}
+data$summarised_characteristics |>
+  dplyr::filter(variable_name != "Sex") |>
+  tableCharacteristics(
+    header = c("sex"),
+    hide   = c("cdm_name", "cohort_name", "table_name"),
+    type   = tableType,
+    .options = list(style = style)
+  )
+```
+
+If the default order of variable names provided by `tableCharacteristics()` does not match the study requirements, we can create a customised table with this package.
+
+```{r}
+data$summarised_characteristics |>
+  dplyr::filter(variable_name != "Sex") |>
+  dplyr::mutate(
+    variable_name = customiseText(
+      variable_name, 
+      custom = c(
+        "Comorbidities"  = "Comorbidities flag -inf to 0", 
+        "Comedications"  = "Comedications flag -180 to 0"
+      )
+    ),
+    variable_level = customiseText(
+      variable_level, 
+      custom = c("HIV" = "Hiv")
+    )
+  ) |>
+  visOmopTable(
+    header = c("sex"),
+    estimateName = c(
+      "N (%)"               = "<count> (<percentage>%)",
+      "N"                   = "<count>",
+      "Median [Q25 - Q75]"  = "<median> [<q25> - <q75>]",
+      "Mean (SD)"           = "<mean> (<sd>)",
+      "Range"               = "<min> to <max>"
+    ),
+    factor = list(
+      "sex" = c("overall", "Male", "Female"),
+      "variable_name" = c(
+        "Number records", "Number subjects", "Age", "Days in cohort", "Prior observation",
+        "Future observation", "Cohort start date", "Cohort end date",
+        "Comedications", "Comorbidities"
+      ),
+      "variable_level" = c(NA, "Asthma", "Depression", "HIV", "Opioids", "Antidiabetes")
+    ),
+    hide = c("cdm_name", "cohort_name")
+  )
+```
+
+Additionally, we can show the number of people in the overall cohort and stratified by sex. We use the `CohortCharacteristics` plotting function and then apply the DARWIN style and rotate the axis labels.
+
+```{r}
+data$summarised_characteristics |>
+  dplyr::filter(variable_name %in% c("Number records")) |>
+  plotCharacteristics(colour = "sex") +
+  themeVisOmop(style = style) +
+  coord_flip()
+```
+
+# Incidence results
+
+For the incidence results, we want to plot incidence over time by sex group. We can do that with the plotting functions in **IncidencePrevalence**. We add the `"darwin"` style and rotate x-axis labels for readability.
+
+```{r}
+data$incidence |>
+  dplyr::filter(strata_name == "sex") |>
+  plotIncidence(colour = "sex", facet = "sex", ribbon = TRUE) +
+  themeVisOmop(style = style) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+# Additional results
+
+Sometimes a study includes an analysis not yet supported by the OMOP Tidy R packages. In that case, we might or might not convert our result to a `summarised_result`, either way, there will be no package-specific table or plot function.
+
+For these cases, we can use **visOmopResults** to create styled tables and plots that match the rest of the report.
+
+As an example, we have mock results for a measurement change after an intervention. The tibble looks like this:
+
+```{r, message=TRUE}
+data$measurement_change
+```
+
+First, we display results in a table. We pivot to the standard columns `estimate_name`, `estimate_type`, and `estimate_value`; this lets us format estimates and use the `header` argument in the `visTable()` function.
+
+```{r}
+data$measurement_change |> 
+  tidyr::pivot_longer(
+    cols      = c("median", "min", "max", "q25", "q75"),
+    names_to  = "estimate_name",
+    values_to = "estimate_value"
+  ) |>
+  dplyr::mutate(
+    estimate_type = "numeric",
+    estimate_value = as.character(estimate_value),
+    variable_name  = customiseText(variable_name),
+    sex            = customiseText(sex)
+  ) |>
+  visTable(
+    header = "sex",
+    estimateName = c(
+      "Median [Q25 - Q75]" = "<median> [<q25> - <q75>]",
+      "Range"              = "<min> to <max>"
+    ),
+    hide   = c("cohort_name", "estimate_type"),
+    rename = c("Estimate" = "estimate_name", "Variable" = "variable_name")
+  )
+```
+
+Additionally, we can visualise values before and after in a boxplot:
+
+```{r}
+data$measurement_change |>  
+  dplyr::filter(variable_name %in% c("value_before", "value_after")) |>
+  dplyr::mutate(
+    variable_name = customiseText(variable_name),
+    sex           = customiseText(sex)
+  ) |>
+  boxPlot(x = "variable_name", facet = "sex", colour = "variable_name") +
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()) +
+  xlab("")
+```
+
+Note that we did not specify `type` or `style` in the **visOmopResults** functions above because we set these globally at the beginning of the document.
+
+# Captions and footers
+
+## In Markdown
+
+In the reference Word document, styles are defined for figure legends (`CaptionDarwin`) and footers (`FooterDarwin`). These can be used in Quarto as follows:
+
+```markdown
+:::{custom-style="CaptionDarwin"}
+**Table 1:** Baseline population characteristics.
+:::
+```
+
+## In an R code chunk
+
+We might want to create captions and footers inside an R code chunk (e.g., when generating multiple tables/figures in a loop, or when programmatically numbering them). In those cases, we can use `cat()` within a chunk:
+
+```{r, eval=FALSE}
+num_table <- 1
+cat(paste0(
+  ':::{custom-style="CaptionDarwin"}\n',
+  '**Table ', num_table, ':** Baseline population characteristics.\n',
+  ':::\n'
+))
+num_table <- num_table + 1
+```
+
+It’s important that we use the chunk option `results = 'asis'` so that the content produced by `cat()` is correctly interpreted by Quarto/Pandoc as Markdown.
+
+# Report example
+
+You can access an example Quarto script and the reference DOCX document [here](https://github.com/darwin-eu/visOmopResults/tree/main/inst).

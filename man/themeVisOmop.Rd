@@ -2,16 +2,19 @@
 % Please edit documentation in R/plottingThemes.R
 \name{themeVisOmop}
 \alias{themeVisOmop}
-\title{Apply visOmopResults default styling to a ggplot}
+\title{Apply a pre-defined visOmopResults theme to a ggplot}
 \usage{
-themeVisOmop(fontsizeRef = 10)
+themeVisOmop(style = "default", fontsizeRef = 11)
 }
 \arguments{
+\item{style}{Character indicating which pre-defined style to apply. Refer to
+the function \code{plotStyle()} to see the available styles.}
+
 \item{fontsizeRef}{An integer to use as reference when adjusting label
 fontsize.}
 }
 \description{
-Apply visOmopResults default styling to a ggplot
+Apply a pre-defined visOmopResults theme to a ggplot
 }
 \examples{
 result <- mockSummarisedResult() |> dplyr::filter(variable_name == "age")

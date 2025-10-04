@@ -12,9 +12,14 @@
 #' @param group Columns to use to determine the group.
 #' @param label Character vector with the columns to display interactively in
 #' `plotly`.
-#' @param style Which style to apply to the plot, options are:
-#' "default", "darwin" and NULL (default ggplot style).
-#' Customised styles can be achieved by modifying the returned ggplot object.
+#' @param style A character string defining the visual theme to apply to the plot.
+#' You can set this to NULL to apply the standard ggplot2 default style,
+#' or provide a name for one of the package's pre-defined styles. Refer to the
+#' `plotStyle()` function for all available style pre-defined themes.
+#' For further customization, you can always modify the returned ggplot object
+#' directly.
+#' @param type The desired format of the output plot. See `plotType()` for
+#' supported plot types.
 #' @param lower Estimate name for the lower quantile of the box.
 #' @param middle Estimate name for the middle line of the box.
 #' @param upper Estimate name for the upper quantile of the box.
@@ -27,6 +32,7 @@
 #' `geom_errorbar`.
 #' @param ymax Upper limit of error bars, if provided is plot using
 #' `geom_errorbar`.
+#' @param position Position of bars, can be either `dodge` or `stack`
 #'
 #' @name plotDoc
 #' @keywords internal
@@ -58,12 +64,12 @@ NULL
 #' in `tableColumns()`) and list elements are the level order of that column
 #' to arrange the results. The column order in the list will be used for
 #' arranging the result.
-#' @param style Named list that specifies how to style the different parts of
-#' the table generated. It can either be a pre-defined style ("default" or
-#' "darwin" - the latter just for gt and flextable), NULL to get the table
-#' default style, or custom.
-#' Keep in mind that styling code is different for all table styles. To see
-#' the different styles use `tableStyle()`.
+#' @param style A character string or custom R code to define the visual
+#' formatting of the table. This argument can be provided in two ways:
+#' 1. Pre-defined Styles (Character String): Use a name for a built-in style
+#' (e.g., "darwin"). See tableStyle() for available options.
+#' 2. Custom Code (Advanced): Supply a block of custom R code. This code must be
+#' specific to the table type. See tableStyleCode() for structural examples.
 #' @param showMinCellCount If `TRUE`, suppressed estimates will be indicated with
 #' "<\{min_cell_count\}", otherwise, the default `na` defined in `.options` will be
 #' used.

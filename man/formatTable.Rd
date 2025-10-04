@@ -23,19 +23,18 @@ formatTable(
 \item{x}{A dataframe.}
 
 \item{type}{The desired format of the output table. See \code{tableType()} for
-allowed options. If "tibble", no formatting will be applied.}
+allowed options.}
 
-\item{delim}{Delimiter.}
+\item{delim}{Delimiter to separate headers.}
 
-\item{style}{Named list that specifies how to style the different parts of
-the gt or flextable table generated. Accepted style entries are: title,
-subtitle, header, header_name, header_level, column_name, group_label, and
-body.
-Alternatively, use "default" to get visOmopResults style, or NULL for
-gt/flextable style.
-Keep in mind that styling code is different for gt and flextable.
-Additionally, "datatable" and "reactable" have their own style functions.
-To see style options for each table type use \code{tableStyle()}.}
+\item{style}{A character string or custom R code to define the visual
+formatting of the table. This argument can be provided in two ways:
+\enumerate{
+\item Pre-defined Styles (Character String): Use a name for a built-in style
+(e.g., "darwin"). See tableStyle() for available options.
+\item Custom Code (Advanced): Supply a block of custom R code. This code must be
+specific to the table type. See tableStyleCode() for structural examples.
+}}
 
 \item{na}{How to display missing values. Not used for "datatable" and
 "reactable".}
@@ -50,10 +49,14 @@ To see style options for each table type use \code{tableStyle()}.}
 markdown formatting style (e.g. \verb{*Your caption here*} for caption in
 italics). Not used for "reactable".}
 
-\item{groupColumn}{Specifies the columns to use for group labels.
-By default, the new group name will be a combination of the column names,
-joined by "_". To assign a custom group name, provide a named list such as:
-list(\code{newGroupName} = c("variable_name", "variable_level"))}
+\item{groupColumn}{Columns to use as group labels, to see options use
+\code{tableColumns(result)}. By default, the name of the new group will be the
+tidy* column names separated by ";". To specify a custom group name, use a
+named list such as:
+list("newGroupName" = c("variable_name", "variable_level")).
+
+*tidy: The tidy format applied to column names replaces "_" with a space and
+converts to sentence case. Use \code{rename} to customise specific column names.}
 
 \item{groupAsColumn}{Whether to display the group labels as a column
 (TRUE) or rows (FALSE). Not used for "datatable" and "reactable"}
@@ -67,9 +70,7 @@ merging to all columns, or use NULL to indicate no merging. Not used for
 "datatable" and "reactable".}
 }
 \value{
-A flextable object.
-
-A flextable or gt object.
+A formatted table of the class selected in "type" argument.
 }
 \description{
 Creates a flextable object from a dataframe using a delimiter to span

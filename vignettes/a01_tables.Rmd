@@ -166,10 +166,10 @@ Tables displayed in `visOmopResults()` follow a default style, but customisation
 
 By default, the visOmopResults default style is applied for all tables. At the moment, besides from the default style, the package also supports the "darwin" style.
 
-To inspect the code for the default styles of the different table types supported, you can use the `tableStyle()` function as showed next.
+To inspect the code for the default styles of the different table types supported, you can use the `tableStyleCode()` function as showed next.
 
 ```{r}
-tableStyle(type = "gt", style = "default")
+tableStyleCode(type = "gt", style = "default")
 ```
 
 If you want all your tables to use the same type and style, use `setGlobalTableOptions()`. This will apply the desired settings to all subsequent tables, unless you specify a different style in a specific function call.
@@ -218,7 +218,7 @@ bind_rows(
     Function = "formatTable()",
     Argument = c("style", "na", "title", "subtitle", "caption", "groupAsColumn", "groupOrder", "merge"),
     Description = c(
-      "Named list specifying styles for table components (e.g., title, subtitle, header, body). Use `'default'` for the default `visOmopResults` style or `NULL` for the package default (either `gt` or `flextable`). Use `gtStyle()` or `flextableStyle()` to preview the default styles.",
+      "Named list specifying styles for table components (e.g., title, subtitle, header, body). Use `'default'` for the default `visOmopResults` style or `NULL` for the package default (either `gt` or `flextable`). Use `tableStyleCode()` to preview the pre-defined styles.",
       "Value to display for missing data.",
       "Title of the table. Use `NULL` for no title.",
       "Subtitle of the table. Use `NULL` for no subtitle.",

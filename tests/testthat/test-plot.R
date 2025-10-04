@@ -25,6 +25,18 @@ test_that("Function returns a ggplot object", {
 
   expect_true(has_no_legend_labels(p))
 
+  #  test plotly
+  p <- scatterPlot(
+    result = result,
+    x = "cohort_name",
+    y = "mean",
+    line = TRUE,
+    point = TRUE,
+    ribbon = FALSE,
+    type = "plotly",
+    facet = c("age_group", "sex"))
+  expect_true(class(p)[1] == "plotly")
+
   result <- mockSummarisedResult() |>
     dplyr::filter(variable_name == "age") |>
     pivotEstimates() |>
@@ -55,7 +67,7 @@ test_that("Function returns a ggplot object", {
   expect_no_error(p_box)
 
   expect_false(has_no_legend_labels(p_box))
-  expect_true(p_box$theme$axis.title.y$size == 10)
+  expect_true(p_box$theme$axis.title.y$size == 11)
   expect_true(get_labs(p_box)$label1 == "min")
 
   expect_no_error(
@@ -182,7 +194,7 @@ test_that("Empty result object returns warning", {
       facet = "age_group"),
     "result object is empty, returning empty plot."
   )
-  expect_true(ggplot2::is.ggplot(output_plot))
+  expect_true(ggplot2::is_ggplot(output_plot))
 
   expect_warning(
     output_plot <- boxPlot(
@@ -191,7 +203,7 @@ test_that("Empty result object returns warning", {
     ),
     "result object is empty, returning empty plot."
   )
-  expect_true(ggplot2::is.ggplot(output_plot))
+  expect_true(ggplot2::is_ggplot(output_plot))
 
   expect_warning(
     output_plot <- barPlot(
@@ -201,7 +213,7 @@ test_that("Empty result object returns warning", {
     ),
     "result object is empty, returning empty plot."
   )
-  expect_true(ggplot2::is.ggplot(output_plot))
+  expect_true(ggplot2::is_ggplot(output_plot))
 })
 test_that("test global style", {
   setGlobalPlotOptions(style = "darwin")

@@ -26,7 +26,7 @@
 #'
 #' @inheritParams tableDoc
 #'
-#' @return A tibble, gt, flextable, reactable, or datatable object.
+#' @return A formatted table of the class selected in "type" argument.
 #'
 #' @description
 #' This function combines the functionalities of `formatEstimateValue()`,

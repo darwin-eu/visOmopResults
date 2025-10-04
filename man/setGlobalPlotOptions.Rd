@@ -4,30 +4,17 @@
 \alias{setGlobalPlotOptions}
 \title{Set format options for all subsequent plots}
 \usage{
-setGlobalPlotOptions(style = NULL)
+setGlobalPlotOptions(style = NULL, type = NULL)
 }
 \arguments{
-\item{style}{Which style to apply to the plot, options are:
-"default", "darwin" and NULL (default ggplot style).
-Customised styles can be achieved by modifying the returned ggplot object.}
+\item{style}{Character indicating which style to apply. Options are either
+NULL (default ggplot style), or one of our pre-defined styles (refer to the
+function \code{plotStyle()}).}
+
+\item{type}{The desired format of the output plot. See \code{plotType()} for
+supported plot types.}
 }
 \description{
 Set format options for all subsequent plots unless state a different style in
 a specific function
-}
-\examples{
-setGlobalPlotOptions(style = "darwin")
-
-result <- mockSummarisedResult() |>
-  dplyr::filter(variable_name == "age")
-
-scatterPlot(
-  result = result,
-  x = "cohort_name",
-  y = "mean",
-  line = TRUE,
-  point = TRUE,
-  ribbon = FALSE,
-  facet = age_group ~ sex)
-
 }
