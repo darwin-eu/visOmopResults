@@ -66,7 +66,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Shiny Apps</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/darwin-eu/visOmopResults/blob/v1.3.0/vignettes/a04_shiny_apps.Rmd" class="external-link"><code>vignettes/a04_shiny_apps.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/darwin-eu/visOmopResults/blob/main/vignettes/a04_shiny_apps.Rmd" class="external-link"><code>vignettes/a04_shiny_apps.Rmd</code></a></small>
       <div class="d-none name"><code>a04_shiny_apps.Rmd</code></div>
     </div>
 
@@ -332,20 +332,19 @@ format, as shown below:</p>
 <div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">data</span><span class="op">$</span><span class="va">large_scale_characteristics</span></span>
 <span><span class="co">#&gt; <span style="color: #949494;"># A tibble: 952 × 8</span></span></span>
-<span><span class="co">#&gt;    cdm_name      cohort_name sex   variable_name variable_level concept_id count</span></span>
-<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>         <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>          <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span></span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> my_duckdb_da… denominato… over… Acute allerg… -inf to -366   4084167      113</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> my_duckdb_da… denominato… over… Acute bacter… -inf to -366   4294548      607</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> my_duckdb_da… denominato… over… Acute bronch… -inf to -366   260139      <span style="text-decoration: underline;">2</span>303</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> my_duckdb_da… denominato… over… Acute cholec… -inf to -366   198809        29</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> my_duckdb_da… denominato… over… Acute viral … -inf to -366   4112343     <span style="text-decoration: underline;">2</span>388</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> my_duckdb_da… denominato… over… Alzheimer's … -inf to -366   378419        15</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> my_duckdb_da… denominato… over… Anemia        -inf to -366   439777        73</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> my_duckdb_da… denominato… over… Angiodysplas… -inf to -366   4310024      281</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> my_duckdb_da… denominato… over… Appendicitis  -inf to -366   440448       125</span></span>
-<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> my_duckdb_da… denominato… over… Atopic derma… -inf to -366   133834        54</span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 942 more rows</span></span></span>
-<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 1 more variable: percentage &lt;dbl&gt;</span></span></span></code></pre></div>
+<span><span class="co">#&gt;    cdm_name    cohort_name sex   concept_name window concept_id count percentage</span></span>
+<span><span class="co">#&gt;    <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>       <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span> <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>        <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>  <span style="color: #949494; font-style: italic;">&lt;chr&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;int&gt;</span>      <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span></span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 1</span> my_duckdb_… denominato… over… Acute aller… -inf … 4084167      113       4.41</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 2</span> my_duckdb_… denominato… over… Acute bacte… -inf … 4294548      607      23.7 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 3</span> my_duckdb_… denominato… over… Acute bronc… -inf … 260139      <span style="text-decoration: underline;">2</span>303      89.8 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 4</span> my_duckdb_… denominato… over… Acute chole… -inf … 198809        29       1.13</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 5</span> my_duckdb_… denominato… over… Acute viral… -inf … 4112343     <span style="text-decoration: underline;">2</span>388      93.1 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 6</span> my_duckdb_… denominato… over… Alzheimer's… -inf … 378419        15       0.59</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 7</span> my_duckdb_… denominato… over… Anemia       -inf … 439777        73       2.85</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 8</span> my_duckdb_… denominato… over… Angiodyspla… -inf … 4310024      281      11.0 </span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;"> 9</span> my_duckdb_… denominato… over… Appendicitis -inf … 440448       125       4.88</span></span>
+<span><span class="co">#&gt; <span style="color: #BCBCBC;">10</span> my_duckdb_… denominato… over… Atopic derm… -inf … 133834        54       2.11</span></span>
+<span><span class="co">#&gt; <span style="color: #949494;"># ℹ 942 more rows</span></span></span></code></pre></div>
 <p>In this case, we use <code><a href="../reference/visTable.html">visTable()</a></code> to generate tables as
 either a <code>datatable</code> or a <code>reactable</code>, depending
 on the user’s choice in the UI. The table type is specified with the
