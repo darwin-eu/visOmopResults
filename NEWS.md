@@ -1,3 +1,14 @@
+# visOmopResults 1.3.0
+
+* Support `plotly` for plots
+* Function `tableStyle()` renamed to `tableStyleCode()`
+* Added functions to get allowed pre-defined package styles: `tableStyle()` and `plotStyle()`
+* Added function to get allowed plot types: `plotType()`
+* Modified "darwin" style to be aligned with the style defined by DARWIN-EU®
+* Added vignettes on how to use the package for Quarto reports and Shiny Apps
+* Support for stack bar plots in `barPlot()`
+
+
 # visOmopResults 1.2.0
 
 * Support `tinytable`
