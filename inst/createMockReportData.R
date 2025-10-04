@@ -52,9 +52,9 @@ large_scale_characteristics <- cdm$denominator |>
     eventInWindow = c("condition_occurrence", "observation"),
     episodeInWindow = "drug_exposure"
   ) |>
-  tidy() |>
-  select(!c("analysis", "table_name", "type")) |>
-  rename("concept_name" = "variable_name", "window" = "variable_level")
+  omopgenerics::tidy() |>
+  dplyr::select(!c("analysis", "table_name", "type")) |>
+  dplyr::rename("concept_name" = "variable_name", "window" = "variable_level")
 measurement_change <- dplyr::tibble(
   cohort_name = c("denominator"),
   sex = c(rep("overall", 3), rep("male", 3), rep("female", 3)),
