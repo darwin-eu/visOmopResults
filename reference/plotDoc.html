@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visOmopResults</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,6 +20,8 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/a01_tables.html">Tables</a></li>
     <li><a class="dropdown-item" href="../articles/a02_plots.html">Plots</a></li>
+    <li><a class="dropdown-item" href="../articles/a03_quarto_reports.html">Quarto reports</a></li>
+    <li><a class="dropdown-item" href="../articles/a04_shiny_apps.html">Shiny Apps</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -33,7 +35,7 @@
 <div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
       <img src="../logo.png" class="logo" alt=""><h1>Helper for consistent documentation of <code>plots</code>.</h1>
-      <small class="dont-index">Source: <a href="https://github.com/darwin-eu/visOmopResults/blob/v1.2.0/R/documentationHelper.R" class="external-link"><code>R/documentationHelper.R</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/darwin-eu/visOmopResults/blob/main/R/documentationHelper.R" class="external-link"><code>R/documentationHelper.R</code></a></small>
       <div class="d-none name"><code>plotDoc.Rd</code></div>
     </div>
 
@@ -86,9 +88,17 @@ which variables should be used as rows and which ones as columns.</p></dd>
 
 
 <dt id="arg-style">style<a class="anchor" aria-label="anchor" href="#arg-style"></a></dt>
-<dd><p>Which style to apply to the plot, options are:
-"default", "darwin" and NULL (default ggplot style).
-Customised styles can be achieved by modifying the returned ggplot object.</p></dd>
+<dd><p>A character string defining the visual theme to apply to the plot.
+You can set this to NULL to apply the standard ggplot2 default style,
+or provide a name for one of the package's pre-defined styles. Refer to the
+<code><a href="plotStyle.html">plotStyle()</a></code> function for all available style pre-defined themes.
+For further customization, you can always modify the returned ggplot object
+directly.</p></dd>
+
+
+<dt id="arg-type">type<a class="anchor" aria-label="anchor" href="#arg-type"></a></dt>
+<dd><p>The desired format of the output plot. See <code><a href="plotType.html">plotType()</a></code> for
+supported plot types.</p></dd>
 
 
 <dt id="arg-lower">lower<a class="anchor" aria-label="anchor" href="#arg-lower"></a></dt>
@@ -123,6 +133,10 @@ Customised styles can be achieved by modifying the returned ggplot object.</p></
 <dt id="arg-ymax">ymax<a class="anchor" aria-label="anchor" href="#arg-ymax"></a></dt>
 <dd><p>Upper limit of error bars, if provided is plot using
 <code>geom_errorbar</code>.</p></dd>
+
+
+<dt id="arg-position">position<a class="anchor" aria-label="anchor" href="#arg-position"></a></dt>
+<dd><p>Position of bars, can be either <code>dodge</code> or <code>stack</code></p></dd>
 
 </dl></div>
 

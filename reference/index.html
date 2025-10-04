@@ -7,7 +7,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visOmopResults</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.2.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -20,6 +20,8 @@
   <button class="nav-link dropdown-toggle" type="button" id="dropdown-articles" data-bs-toggle="dropdown" aria-expanded="false" aria-haspopup="true">Articles</button>
   <ul class="dropdown-menu" aria-labelledby="dropdown-articles"><li><a class="dropdown-item" href="../articles/a01_tables.html">Tables</a></li>
     <li><a class="dropdown-item" href="../articles/a02_plots.html">Plots</a></li>
+    <li><a class="dropdown-item" href="../articles/a03_quarto_reports.html">Quarto reports</a></li>
+    <li><a class="dropdown-item" href="../articles/a04_shiny_apps.html">Shiny Apps</a></li>
   </ul></li>
 <li class="nav-item"><a class="nav-link" href="../news/index.html">Changelog</a></li>
       </ul><ul class="navbar-nav"><li class="nav-item"><form class="form-inline" role="search">
@@ -145,7 +147,13 @@
           <code><a href="tableStyle.html">tableStyle()</a></code>
 
         </dt>
-        <dd>Supported predefined styles for formatted tables</dd>
+        <dd>Pre-defined styles are available for tables</dd>
+      </dl><dl><dt>
+
+          <code><a href="tableStyleCode.html">tableStyleCode()</a></code>
+
+        </dt>
+        <dd>Supported predefined style codes for formatted tables</dd>
       </dl><dl><dt>
 
           <code><a href="tableType.html">tableType()</a></code>
@@ -206,22 +214,28 @@
         <dd>Columns for the plot functions</dd>
       </dl><dl><dt>
 
+          <code><a href="plotStyle.html">plotStyle()</a></code>
+
+        </dt>
+        <dd>Pre-defined styles are available for plots</dd>
+      </dl><dl><dt>
+
+          <code><a href="plotType.html">plotType()</a></code>
+
+        </dt>
+        <dd>Supported plot types</dd>
+      </dl><dl><dt>
+
           <code><a href="setGlobalPlotOptions.html">setGlobalPlotOptions()</a></code>
 
         </dt>
         <dd>Set format options for all subsequent plots</dd>
       </dl><dl><dt>
 
-          <code><a href="themeDarwin.html">themeDarwin()</a></code>
-
-        </dt>
-        <dd>Apply Darwin styling to a ggplot</dd>
-      </dl><dl><dt>
-
           <code><a href="themeVisOmop.html">themeVisOmop()</a></code>
 
         </dt>
-        <dd>Apply visOmopResults default styling to a ggplot</dd>
+        <dd>Apply a pre-defined visOmopResults theme to a ggplot</dd>
       </dl></div><div class="section level2">
       <h2 id="other-functionalities">Other functionalities<a class="anchor" aria-label="anchor" href="#other-functionalities"></a></h2>
 
@@ -247,6 +261,23 @@
         <dd>Apply styling to text or column names</dd>
       </dl></div><div class="section level2">
 
+      <h3 id="to-get-extra-fonts">To get extra fonts<a class="anchor" aria-label="anchor" href="#to-get-extra-fonts"></a></h3>
+
+
+
+    </div><div class="section level2">
+
+
+
+
+      <dl><dt>
+
+          <code><a href="requireExtrafont.html">requireExtrafont()</a></code>
+
+        </dt>
+        <dd>Get Calibri font for "darwin" plot style</dd>
+      </dl></div><div class="section level2">
+
       <h3 id="mock-">Mock <code>&lt;summarised_result&gt;</code><a class="anchor" aria-label="anchor" href="#mock-"></a></h3>
 
 
@@ -257,6 +288,12 @@
 
 
       <dl><dt>
+
+          <code><a href="data.html">data</a></code>
+
+        </dt>
+        <dd>List of mock results</dd>
+      </dl><dl><dt>
 
           <code><a href="mockSummarisedResult.html">mockSummarisedResult()</a></code>
 

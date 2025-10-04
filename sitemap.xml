@@ -3,6 +3,8 @@
 <url><loc>https://darwin-eu.github.io/visOmopResults/LICENSE.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/articles/a01_tables.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/articles/a02_plots.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/articles/a03_quarto_reports.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/articles/a04_shiny_apps.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/articles/index.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/authors.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/index.html</loc></url>
@@ -10,6 +12,7 @@
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/barPlot.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/boxPlot.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/customiseText.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/data.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/emptyPlot.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/emptyTable.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/formatEstimateName.html</loc></url>
@@ -21,7 +24,10 @@
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/mockSummarisedResult.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/plotColumns.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/plotDoc.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/plotStyle.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/plotType.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/reexports.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/requireExtrafont.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/scatterPlot.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/setGlobalPlotOptions.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/setGlobalTableOptions.html</loc></url>
@@ -29,8 +35,8 @@
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/tableDoc.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/tableOptions.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/tableStyle.html</loc></url>
+<url><loc>https://darwin-eu.github.io/visOmopResults/reference/tableStyleCode.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/tableType.html</loc></url>
-<url><loc>https://darwin-eu.github.io/visOmopResults/reference/themeDarwin.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/themeVisOmop.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/visOmopResults-package.html</loc></url>
 <url><loc>https://darwin-eu.github.io/visOmopResults/reference/visOmopTable.html</loc></url>
