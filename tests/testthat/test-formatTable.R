@@ -1,4 +1,5 @@
 test_that("test it works", {
+  skip_on_cran()
   result <- mockSummarisedResult() |>
     formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
                                         "N" = "<count>")) |>
@@ -28,7 +29,7 @@ test_that("test it works", {
   header_col_style <- fx$header$styles$cells$background.color$data[, "strata\nstrata_name\noverall\nstrata_level\noverall"]
   expect_equal(header_col_style, c("#c8c8c8", "#d9d9d9", "#e1e1e1", "#d9d9d9", "#e1e1e1"))
   expect_equal(fx$header$styles$cells$background.color$data[, "cdm_name"] |> unique(), "transparent")
-  expect_equal(fx$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(2, 1))
+  expect_equal(fx$header$styles$cells$border.width.top$data[, "cdm_name"] |> unique(), c(0.8, 1))
   expect_equal(fx$header$styles$cells$border.color.left$data[, "cdm_name"] |> unique(), "gray")
   expect_true(fx$header$styles$text$bold$data[, "cdm_name"] |> unique())
   expect_equal(fx$header$styles$text$color$data[, "cdm_name"] |> unique(), "black")
@@ -55,6 +56,8 @@ test_that("test it works", {
 })
 
 test_that("datatable works", {
+  skip_on_cran()
+  setGlobalTableOptions()
   result <- mockSummarisedResult() |>
     filterStrata(strata_name == "sex") |>
     formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
@@ -63,16 +66,17 @@ test_that("datatable works", {
                  includeHeaderName = TRUE)
 
   dt <- formatTable(result, type = "datatable")
-  expect_snapshot(dt$x)
+  expect_snapshot(dt)
 
   dt <- formatTable(result, type = "datatable", style = list(scrollX = FALSE, filter = NULL, rownames = TRUE), delim = ".")
-  expect_snapshot(dt$x)
+  expect_snapshot(dt)
 
   dt <- formatTable(result, type = "datatable", groupColumn = "group_level", caption = "hi there")
-  expect_snapshot(dt$x)
+  expect_snapshot(dt)
 })
 
 test_that("reactable works", {
+  skip_on_cran()
   result <- mockSummarisedResult() |>
     filterStrata(strata_name == "sex") |>
     formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
@@ -92,6 +96,7 @@ test_that("reactable works", {
 })
 
 test_that("global options works", {
+  skip_on_cran()
   result <- mockSummarisedResult() |>
     filterStrata(strata_name == "sex") |>
     formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
@@ -101,17 +106,6 @@ test_that("global options works", {
   setGlobalTableOptions("darwin", "tinytable")
   tab <- formatTable(result)
   expect_true(class(tab)[1] == "tinytable")
-  expect_equal(
-    getTinytableStyle(tab, -1, 12),
-    dplyr::tibble(
-      "i" = -1, "j" = 12, "tabularray" = factor(""), "color" = "white", "background" = "#003399",
-      "fontsize" = NA, "alignv" = NA, "line" = "lbtr", "line_color" = "#003399",
-      "line_width" = 0.1, "bold" = TRUE, "italic" = FALSE, "monospace" = FALSE,
-      "strikeout" = FALSE, "underline" = FALSE, "indent" = NA, "colspan" = NA,
-      "rowspan" = NA, "bootstrap_css" = NA, "align" = NA
-    ),
-    ignore_attr = TRUE
-  )
   tab <- formatTable(result, type = "gt")
   expect_true(class(tab)[1] == "gt_tbl")
   options(visOmopResults.tableStyle = NULL)

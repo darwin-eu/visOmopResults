@@ -16,41 +16,6 @@
 
 #' Creates a tinytable object from a dataframe
 #'
-#' @param x A dataframe.
-#' @param delim Delimiter.
-#' @param style  Named list that specifies how to style the different parts of
-#' the gt or tinytable table generated. Accepted style entries are: title,
-#' subtitle, header, header_name, header_level, column_name, group_label, and
-#' body.
-#' Alternatively, use "default" to get visOmopResults style, or NULL for
-#' gt/tinytable style.
-#' Keep in mind that styling code is different for gt and tinytable. To see
-#' the "deafult" gt style code use `tableStyle()`.
-#' @param na How to display missing values.
-#' @param title Title of the table, or NULL for no title.
-#' @param subtitle Subtitle of the table, or NULL for no subtitle.
-#' @param caption Caption for the table, or NULL for no caption. Text in
-#' markdown formatting style (e.g. `*Your caption here*` for caption in
-#' italics).
-#' @param groupColumn Specifies the columns to use for group labels.
-#' By default, the new group name will be a combination of the column names,
-#' joined by "_". To assign a custom group name, provide a named list such as:
-#' list(`newGroupName` = c("variable_name", "variable_level"))
-#' @param groupAsColumn Whether to display the group labels as a column
-#' (TRUE) or rows (FALSE).
-#' @param groupOrder Order in which to display group labels.
-#' @param merge Names of the columns to merge vertically
-#' when consecutive row cells have identical values. Alternatively, use
-#' "all_columns" to apply this merging to all columns, or use NULL to indicate
-#' no merging.
-#'
-#' @return A tinytable object.
-#'
-#' @description
-#' Creates a tinytable object from a dataframe using a delimiter to span
-#' the header, and allows to easily customise table style.
-#'
-#' @return A tinytable object.
 #' @noRd
 #'
 tinytableInternal <- function(x,
@@ -202,7 +167,7 @@ tinytableInternal <- function(x,
   bodyColStart <- 1
   if (groupAsColumn == TRUE & length(nameGroup) != 0)  bodyColStart <- 2
   tiny_x <- do.call(tinytable::style_tt, c(list(tiny_x, i = 0), style$column_name))
-  tiny_x <- do.call(tinytable::style_tt, c(list(tiny_x, i = 1:(nrow(tiny_x@data) + length(levels(tiny_x@group_index_i)) + 1), j = bodyColStart:ncol(tiny_x@data)), style$body))
+  tiny_x <- do.call(tinytable::style_tt, c(list(tiny_x, i = 1:(nrow(tiny_x@data) + length(tiny_x@group_index_i) + 1), j = bodyColStart:ncol(tiny_x@data)), style$body))
 }
 
 mergeColumnsTinytable <- function(tiny_x, x, delim, merge = "all_columns", group_i_index = NULL) {

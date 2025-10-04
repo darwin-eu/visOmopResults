@@ -10,9 +10,11 @@ barPlot(
   y,
   width = NULL,
   just = 0.5,
+  position = "dodge",
   facet = NULL,
   colour = NULL,
   style = "default",
+  type = "ggplot",
   label = character()
 )
 }
@@ -28,14 +30,22 @@ barPlot(
 \item{just}{Adjustment for column placement, as in \code{geom_col()} of the
 \code{ggplot2} package.}
 
+\item{position}{Position of bars, can be either \code{dodge} or \code{stack}}
+
 \item{facet}{Variables to facet by, a formula can be provided to specify
 which variables should be used as rows and which ones as columns.}
 
 \item{colour}{Columns to use to determine the colours.}
 
-\item{style}{Which style to apply to the plot, options are:
-"default", "darwin" and NULL (default ggplot style).
-Customised styles can be achieved by modifying the returned ggplot object.}
+\item{style}{A character string defining the visual theme to apply to the plot.
+You can set this to NULL to apply the standard ggplot2 default style,
+or provide a name for one of the package's pre-defined styles. Refer to the
+\code{plotStyle()} function for all available style pre-defined themes.
+For further customization, you can always modify the returned ggplot object
+directly.}
+
+\item{type}{The desired format of the output plot. See \code{plotType()} for
+supported plot types.}
 
 \item{label}{Character vector with the columns to display interactively in
 \code{plotly}.}

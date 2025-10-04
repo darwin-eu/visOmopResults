@@ -7,18 +7,17 @@
 setGlobalTableOptions(style = NULL, type = NULL)
 }
 \arguments{
-\item{style}{Named list that specifies how to style the different parts of
-the gt or flextable table generated. Accepted style entries are: title,
-subtitle, header, header_name, header_level, column_name, group_label, and
-body.
-Alternatively, use "default" to get visOmopResults style, or NULL for
-gt/flextable style.
-Keep in mind that styling code is different for gt and flextable.
-Additionally, "datatable" and "reactable" have their own style functions.
-To see style options for each table type use \code{tableStyle()}.}
+\item{style}{A character string or custom R code to define the visual
+formatting of the table. This argument can be provided in two ways:
+\enumerate{
+\item Pre-defined Styles (Character String): Use a name for a built-in style
+(e.g., "darwin"). See tableStyle() for available options.
+\item Custom Code (Advanced): Supply a block of custom R code. This code must be
+specific to the table type. See tableStyleCode() for structural examples.
+}}
 
 \item{type}{The desired format of the output table. See \code{tableType()} for
-allowed options. If "tibble", no formatting will be applied.}
+allowed options.}
 }
 \description{
 Set format options for all subsequent tables unless state a different style
@@ -36,5 +35,7 @@ result |>
     rename = c("Database name" = "cdm_name"),
     groupColumn = strataColumns(result)
   )
+ # drop global options:
+ setGlobalTableOptions(style = NULL, type = NULL)
 
 }

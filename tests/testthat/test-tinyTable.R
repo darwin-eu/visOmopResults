@@ -1,4 +1,6 @@
 test_that("tinytable", {
+  skip_on_cran()
+  setGlobalTableOptions()
   table_to_format <- mockSummarisedResult() |>
     formatHeader(header = c("Study cohorts", "group_level", "Study strata", "strata_name", "strata_level"),
                  includeHeaderName = FALSE) |>
@@ -24,55 +26,12 @@ test_that("tinytable", {
     groupOrder = NULL
   )
 
-  # Spanners and column names
-  expect_true(tinytableInternal@nhead == 5)
-  expect_equal(
-    tinytableInternal@names,
-    c('cdm_name', 'group_name', 'variable_name', 'variable_level', 'estimate_name',
-      'estimate_type', 'additional_name', 'additional_level', 'overall', '<40 &&& Male',
-      '>=40 &&& Male', '<40 &&& Female', '>=40 &&& Female', 'Male', 'Female', '<40',
-      '>=40', 'overall', '<40 &&& Male', '>=40 &&& Male', '<40 &&& Female',
-      '>=40 &&& Female', 'Male', 'Female', '<40', '>=40')
-  )
-  # spanner styles
-  expect_equal(
-    getTinytableStyle(tinytableInternal, -1, 9),
-    dplyr::tibble(
-      "i" = -1, "j" = 9, "tabularray" = factor(""), "color" = NA, "background" = "#e1e1e1",
-      "fontsize" = NA, "alignv" = NA, "line" = NA, "line_color" = NA,
-      "line_width" = NA, "bold" = TRUE, "italic" = FALSE, "monospace" = FALSE,
-      "strikeout" = FALSE, "underline" = FALSE, "indent" = NA, "colspan" = NA,
-      "rowspan" = NA, "bootstrap_css" = NA, "align" = NA
-    )
-  )
-  expect_equal(
-    getTinytableStyle(tinytableInternal, -2, 9),
-    dplyr::tibble(
-      "i" = -2, "j" = 9, "tabularray" = factor(""), "color" = NA, "background" = "#c8c8c8",
-      "fontsize" = NA, "alignv" = NA, "line" = NA, "line_color" = NA,
-      "line_width" = NA, "bold" = FALSE, "italic" = FALSE, "monospace" = FALSE,
-      "strikeout" = FALSE, "underline" = FALSE, "indent" = NA, "colspan" = NA,
-      "rowspan" = NA, "bootstrap_css" = NA, "align" = NA
-    )
-  )
-  # column names
-  expect_equal(
-    getTinytableStyle(tinytableInternal, 0, 2),
-    dplyr::tibble(
-      "i" = 0, "j" = 2, "tabularray" = factor(""), "color" = NA, "background" = NA_character_,
-      "fontsize" = NA, "alignv" = NA, "line" = NA, "line_color" = NA,
-      "line_width" = NA, "bold" = TRUE, "italic" = FALSE, "monospace" = FALSE,
-      "strikeout" = FALSE, "underline" = FALSE, "indent" = NA, "colspan" = NA,
-      "rowspan" = NA, "bootstrap_css" = NA, "align" = NA
-    )
-  )
-  # na
-  expect_true(is.na(tinytableInternal@data$variable_level[1]))
-  # Group labels
-  expect_true(length(tinytableInternal@group_data_i) == 0)
+  # Snapshot
+  expect_snapshot(tinytableInternal)
 
   # Input 2 ----
   table_to_format <- mockSummarisedResult() |>
+    dplyr::union_all(mockSummarisedResult() |> dplyr::mutate(group_level = dplyr::if_else(group_level == "cohort1", "cohort3", "cohort4"))) |>
     formatEstimateName(estimateName = c("N (%)" = "<count> (<percentage>%)",
                                         "N" = "<count>")) |>
     formatHeader(header = c("strata_name", "strata_level"),
@@ -108,56 +67,8 @@ test_that("tinytable", {
     merge = "all_columns"
   )
 
-  # Spanners and column names
-  expect_true(tinytableInternal@nhead == 4)
-  expect_equal(
-    tinytableInternal@names,
-    c('cdm_name', 'group_name', 'variable_name', 'variable_level', 'estimate_name',
-      'estimate_type', 'additional_name', 'additional_level', 'overall', '<40 &&& Male',
-      '>=40 &&& Male', '<40 &&& Female', '>=40 &&& Female', 'Male', 'Female', '<40', '>=40')
-  )
-  # spanner styles
-  expect_equal(
-    getTinytableStyle(tinytableInternal, -1, 9),
-    dplyr::tibble(
-      "i" = -1, "j" = 9, "tabularray" = factor(""), "color" = "white", "background" = "#003399",
-      "fontsize" = NA, "alignv" = NA, "line" = "bt", "line_color" = "white",
-      "line_width" = 0.1, "bold" = TRUE, "italic" = FALSE, "monospace" = FALSE,
-      "strikeout" = FALSE, "underline" = FALSE, "indent" = NA, "colspan" = NA_integer_,
-      "rowspan" = NA_integer_, "bootstrap_css" = NA, "align" = NA
-    ),
-    ignore_attr = TRUE
-  )
-  expect_equal(
-    getTinytableStyle(tinytableInternal, -2, 9),
-    dplyr::tibble(
-      "i" = -2, "j" = 9, "tabularray" = factor(""), "color" = "white", "background" = "#003399",
-      "fontsize" = NA, "alignv" = NA, "line" = "bt", "line_color" = "white",
-      "line_width" = 0.1, "bold" = TRUE, "italic" = FALSE, "monospace" = FALSE,
-      "strikeout" = FALSE, "underline" = FALSE, "indent" = NA, "colspan" = NA_integer_,
-      "rowspan" = NA_integer_, "bootstrap_css" = NA, "align" = NA
-    ),
-    ignore_attr = TRUE
-  )
-  # column names
-  expect_equal(
-    getTinytableStyle(tinytableInternal, 0, 2),
-    dplyr::tibble(
-      "i" = 0, "j" = 2, "tabularray" = factor(""), "color" = "white", "background" = "#003399",
-      "fontsize" = NA, "alignv" = NA, "line" = "lbtr", "line_color" = "#003399",
-      "line_width" = 0.1, "bold" = TRUE, "italic" = FALSE, "monospace" = FALSE,
-      "strikeout" = FALSE, "underline" = FALSE, "indent" = NA, "colspan" = NA_integer_,
-      "rowspan" = NA_integer_, "bootstrap_css" = NA, "align" = NA
-    ),
-    ignore_attr = TRUE
-  )
-  # na
-  expect_true(tinytableInternal@data$variable_level[1] == "-")
-  # Group labels
-  expect_equal(tinytableInternal@group_index_i, c(1, 7), ignore_attr = TRUE)
-
-  # caption
-  expect_true(tinytableInternal@caption == "*This* is the caption")
+  # Snapshot
+  expect_snapshot(tinytableInternal)
 
   # Input 3 ----
   table_to_format <- mockSummarisedResult() |>

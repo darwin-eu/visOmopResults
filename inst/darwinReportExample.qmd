@@ -1,0 +1,169 @@
+---
+title: "DARWIN-EU PX-CY-Z: Tables and Figures"
+format:
+  docx:
+    reference-doc: ../inst/darwinReportRef.docx
+    fig-cap-location: top
+execute:
+  echo: false
+  message: false 
+  warning: false 
+lof: TRUE
+---
+
+```{r, set-up}
+# Load necessary packages ----
+library(visOmopResults)
+library(IncidencePrevalence)
+library(CohortCharacteristics)
+library(dplyr)
+library(tidyr)
+library(ggplot2)
+
+# Load data ----
+reportData <- here::here("inst", "mockReportData.RData")
+load(reportData)
+
+# Global options ----
+knitr::opts_chunk$set(
+  out.width  = "95%",  # figures to occupy 95% of document width
+  out.height = "auto",
+  dpi        = 320,    # ensure figure quality
+  fig.width  = 6,      # fix width-height aspect ratio - can be modified for specific figures
+  fig.height = 3,
+  results    = "asis"  # to use markdown inside R chunks with cat()
+)
+# Darwin style for visOmopResults plots and tables, this will have to be manually set for other packages
+style <- "darwin"
+tableType <- "flextable"
+plotType <- "ggplot"
+setGlobalPlotOptions(style = style, type = plotType) 
+setGlobalTableOptions(style = style, type = tableType)
+# Require package "extrafont" to have calibri font in ggplot figures
+requireExtrafont()
+# Figure and table counts
+num_table <- 1
+num_fig <- 1
+```
+
+
+```{r}
+cat(paste0(
+  ':::{custom-style="CaptionDarwin"}\n',
+  '**Table ', num_table, ':** Baseline population characteristics.\n',
+  ':::\n'
+))
+num_table <- num_table + 1
+
+# Table code
+data$summarised_characteristics |>
+  filter(variable_name != "Sex") |>
+  mutate(
+    variable_name = customiseText(
+      variable_name, 
+      custom = c(
+        "Comorbidities" = "Comorbidities flag -inf to 0", 
+        "Comedications" = "Comedications flag -180 to 0"
+      )
+    ),
+    variable_level = customiseText(
+      variable_level, 
+      custom = c("HIV" = "Hiv")
+    )
+  ) |>
+  visOmopTable(
+    header = c("sex"),
+    estimateName = c(
+      "N (%)" = "<count> (<percentage>%)",
+      "N" = "<count>",
+      "Median [Q25 - Q75]" = "<median> [<q25> - <q75>]",
+      "Mean (SD)" = "<mean> (<sd>)",
+      "Range" = "<min> to <max>"
+    ),
+    factor = list(
+      "sex" = c("overall", "Male", "Female"),
+      "variable_name" = c(
+        "Number records", "Number subjects", "Age", "Days in cohort", "Prior observation",
+        "Future observation", "Cohort start date", "Cohort end date",
+        "Comedications", "Comorbidities"
+      ),
+      "variable_level" = c(NA, "Asthma", "Depression", "HIV", "Opioids", "Antidiabetes")
+    ),
+    hide = c("cdm_name", "cohort_name")
+  ) 
+```
+:::{custom-style="FooterDarwin"}
+HIV: Human Immunodeficiency Virus.
+:::
+
+
+```{r}
+# CaptionDarwin:
+cat(paste0(':::{custom-style="CaptionDarwin"}\n **Figure ', num_fig, ':** Number of records in cohorts.\n:::\n'))
+num_fig <- num_fig + 1
+
+data$summarised_characteristics |>
+  filter(variable_name %in% c("Number records")) |>
+  plotCharacteristics(colour = "sex") +
+  themeVisOmop(style = style) +
+  coord_flip()
+```
+
+
+```{r}
+# CaptionDarwin:
+cat(paste0(':::{custom-style="CaptionDarwin"}\n **Figure ', num_fig, ':** Incidence over time statified by sex.\n:::\n'))
+num_fig <- num_fig + 1
+
+data$incidence |>
+  filter(strata_name == "sex") |>
+  plotIncidence(colour = "sex", facet = "sex", ribbon = TRUE) +
+  themeVisOmop(style = style) +
+  theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))
+```
+
+
+```{r}
+# CaptionDarwin:
+cat(paste0(':::{custom-style="CaptionDarwin"}\n **Table ', num_table, ':** Measurement value change after intervention.\n:::\n'))
+num_table <- num_table + 1
+
+data$measurement_change |> 
+  pivot_longer(
+    cols = c("median", "min", "max", "q25", "q75"),
+    names_to = "estimate_name",
+    values_to = "estimate_value"
+  ) |>
+  mutate(
+    estimate_type = "numeric",
+    estimate_value = as.character(estimate_value),
+    variable_name = customiseText(variable_name),
+    sex = customiseText(sex)
+  ) |>
+  visTable(
+    header = "sex",
+    estimateName = c(
+      "Median [Q25- Q75]" = "<median> [<q25>, <q75>]",
+      "Range" = "<min> to <max>]"
+    ),
+    hide = c("cohort_name", "estimate_type"),
+    rename = c("Estimate" = "estimate_name", "Variable" = "variable_name")
+  )
+```
+
+
+```{r}
+# CaptionDarwin:
+cat(paste0(':::{custom-style="CaptionDarwin"}\n **Figure ', num_fig, ':** Measurement value change after intervention.\n:::\n'))
+num_fig <- num_fig + 1
+
+data$measurement_change |>  
+  filter(variable_name %in% c("value_before", "value_after")) |>
+  mutate(
+    variable_name = customiseText(variable_name),
+    sex = customiseText(sex)
+  ) |>
+  boxPlot(x = "variable_name", facet = "sex", colour = "variable_name") +
+  theme(axis.text.x = element_blank(), axis.ticks.x = element_blank()) +
+  xlab("")
+```

@@ -66,12 +66,14 @@ in \code{tableColumns()}) and list elements are the level order of that column
 to arrange the results. The column order in the list will be used for
 arranging the result.}
 
-\item{style}{Named list that specifies how to style the different parts of
-the table generated. It can either be a pre-defined style ("default" or
-"darwin" - the latter just for gt and flextable), NULL to get the table
-default style, or custom.
-Keep in mind that styling code is different for all table styles. To see
-the different styles use \code{tableStyle()}.}
+\item{style}{A character string or custom R code to define the visual
+formatting of the table. This argument can be provided in two ways:
+\enumerate{
+\item Pre-defined Styles (Character String): Use a name for a built-in style
+(e.g., "darwin"). See tableStyle() for available options.
+\item Custom Code (Advanced): Supply a block of custom R code. This code must be
+specific to the table type. See tableStyleCode() for structural examples.
+}}
 
 \item{showMinCellCount}{If \code{TRUE}, suppressed estimates will be indicated with
 "<\{min_cell_count\}", otherwise, the default \code{na} defined in \code{.options} will be
@@ -81,10 +83,35 @@ used.}
 \code{visOmopResults::tableOptions()} shows allowed arguments and their default values.}
 }
 \value{
-A tibble, gt, or flextable object.
+A formatted table of the class selected in "type" argument.
 }
 \description{
 This function combines the functionalities of \code{formatEstimateValue()},
 \code{estimateName()}, \code{formatHeader()}, and \code{formatTable()}
 into a single function specifically for \verb{<summarised_result>} objects.
+}
+\examples{
+result <- mockSummarisedResult()
+result |>
+  visOmopTable(
+    estimateName = c("N\%" = "<count> (<percentage>)",
+                     "N" = "<count>",
+                     "Mean (SD)" = "<mean> (<sd>)"),
+    header = c("cohort_name"),
+    rename = c("Database name" = "cdm_name"),
+    groupColumn = strataColumns(result)
+  )
+result |>
+  visOmopTable(
+    estimateName = c(
+      "N\%" = "<count> (<percentage>)",
+      "N" = "<count>",
+      "Mean (SD)" = "<mean> (<sd>)"
+    ),
+    header = c("cohort_name"),
+    rename = c("Database name" = "cdm_name"),
+    groupColumn = strataColumns(result),
+    type = "reactable"
+  )
+
 }

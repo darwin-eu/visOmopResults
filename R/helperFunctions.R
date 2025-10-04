@@ -31,21 +31,40 @@ tableOptions <- function() {
   return(defaultTableOptions(NULL))
 }
 
-#' Supported predefined styles for formatted tables
+#' Pre-defined styles are available for tables
 #'
-#' @param type Character string specifying the formatted table class.
-#' See `tableType()` for supported classes. Default is "gt".
-#' @param style Supported predefined styles. Currently: "default" and "darwin".
+#' @description
+#' This function provides a list of pre-defined styles for tables that can then
+#' be used in the `style` argument of the table functions.
 #'
-#' @return A code expression for the selected style and table type.
+#' @return A character vector indicating the style names.
 #'
 #' @export
 #'
 #' @examples
-#' tableStyle("gt")
-#' tableStyle("flextable")
+#' tableStyle()
 #'
-tableStyle <- function(type = "gt", style = "default") {
+tableStyle <- function() {
+  c("default", "darwin")
+}
+
+#' Supported predefined style codes for formatted tables
+#'
+#' @param type Character string specifying the formatted table class.
+#' See `tableType()` for supported classes. Default is "gt".
+#' @param style Supported predefined styles. Check which ones with the function
+#' `tableStyle()`.
+#'
+#' @return The code expression to style the table for as specific pre-defined
+#' style and table type.
+#'
+#' @export
+#'
+#' @examples
+#' tableStyleCode("gt")
+#' tableStyleCode("flextable")
+#'
+tableStyleCode <- function(type = "gt", style = "default") {
   omopgenerics::assertChoice(type, tableType(), length = 1)
   omopgenerics::assertChoice(style, c("default", "darwin"), length = 1)
   if (style == "darwin" & type %in% c("datatable", "reactable")) {
@@ -113,17 +132,7 @@ tableColumns <- function(result) {
 #' Set format options for all subsequent tables unless state a different style
 #' in a specific function
 #'
-#' @param style Named list that specifies how to style the different parts of
-#' the gt or flextable table generated. Accepted style entries are: title,
-#' subtitle, header, header_name, header_level, column_name, group_label, and
-#' body.
-#' Alternatively, use "default" to get visOmopResults style, or NULL for
-#' gt/flextable style.
-#' Keep in mind that styling code is different for gt and flextable.
-#' Additionally, "datatable" and "reactable" have their own style functions.
-#' To see style options for each table type use `tableStyle()`.
-#' @param type The desired format of the output table. See `tableType()` for
-#' allowed options. If "tibble", no formatting will be applied.
+#' @inheritParams tableDoc
 #'
 #' @export
 #'
@@ -139,6 +148,8 @@ tableColumns <- function(result) {
 #'     rename = c("Database name" = "cdm_name"),
 #'     groupColumn = strataColumns(result)
 #'   )
+#'  # drop global options:
+#'  setGlobalTableOptions(style = NULL, type = NULL)
 #'
 setGlobalTableOptions <- function(style = NULL, type = NULL) {
   options(visOmopResults.tableStyle = style)
@@ -167,33 +178,55 @@ plotColumns <- function(result) {
   return(c(tidyColumns(result)))
 }
 
+#' Pre-defined styles are available for plots
+#'
+#' @description
+#' This function provides a list of pre-defined styles for plots that can then
+#' be used in the `style` argument of the plot functions.
+#'
+#' @return A character vector indicating the style names.
+#'
+#' @export
+#'
+#' @examples
+#' plotStyle()
+#'
+plotStyle <- function() {
+  c("default", "darwin")
+}
+
+#' Supported plot types
+#'
+#' @description
+#' This function returns the supported plot types that can be used in the
+#' `type` argument of the plot functions.
+#'
+#' @return A character vector of supported plot types.
+#'
+#' @export
+#'
+#' @examples
+#' tableType()
+#'
+plotType <- function() {
+  c("ggplot", "plotly")
+}
+
 #' Set format options for all subsequent plots
 #'
 #' @description
 #' Set format options for all subsequent plots unless state a different style in
 #' a specific function
 #'
-#' @param style Which style to apply to the plot, options are:
-#' "default", "darwin" and NULL (default ggplot style).
-#' Customised styles can be achieved by modifying the returned ggplot object.
+#' @param style Character indicating which style to apply. Options are either
+#' NULL (default ggplot style), or one of our pre-defined styles (refer to the
+#' function `plotStyle()`).
+#' @param type The desired format of the output plot. See `plotType()` for
+#' supported plot types.
 #'
 #' @export
 #'
-#' @examples
-#' setGlobalPlotOptions(style = "darwin")
-#'
-#' result <- mockSummarisedResult() |>
-#'   dplyr::filter(variable_name == "age")
-#'
-#' scatterPlot(
-#'   result = result,
-#'   x = "cohort_name",
-#'   y = "mean",
-#'   line = TRUE,
-#'   point = TRUE,
-#'   ribbon = FALSE,
-#'   facet = age_group ~ sex)
-#'
-setGlobalPlotOptions <- function(style = NULL) {
+setGlobalPlotOptions <- function(style = NULL, type = NULL) {
   options(visOmopResults.plotStyle = style)
+  options(visOmopResults.plotType = type)
 }

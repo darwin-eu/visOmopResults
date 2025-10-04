@@ -100,7 +100,7 @@ validateStyle <- function(style, tableFormatType) {
       eval(parse(text = paste0("style <- ", tableFormatType, "StyleInternal(styleName = style)")))
     } else {
       cli::cli_abort(paste0("Style must be one of 1) a named list of ", tableFormatType, " styling functions,
-                   2) the string 'default' for visOmopResults default style, or 3) NULL to indicate no styling."))
+                   2) a pre-defined style (see options in tableStyle()), or 3) NULL."))
     }
   }
   return(style)
@@ -303,4 +303,14 @@ validateHeader <- function(x, header, hide, settingsColumn = NULL, summarisedRes
   }
 
   return(list(hide = hide, settingsColumn = settingsColumn))
+}
+
+validateType <- function(type) {
+  omopgenerics::assertChoice(type, choices = plotType(), length = 1)
+  if (type %in% c("ggplot", "plotly")) {
+    rlang::check_installed("ggplot2")
+  }
+  if (type == "plotly") {
+    rlang::check_installed("plotly")
+  }
 }

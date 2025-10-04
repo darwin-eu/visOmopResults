@@ -191,3 +191,8 @@ mockSummarisedResult <- function() {
   set.seed(NULL)
   return(result)
 }
+
+#' List of mock results
+#'
+#' @format A list of mock results for quarto and shiny vignette examples
+"data"
