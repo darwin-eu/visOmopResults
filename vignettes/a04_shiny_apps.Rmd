@@ -366,4 +366,4 @@ shinyApp(ui, server)
 ```
 
 
-You can find the complete code run the ShinyApp [here](https://github.com/darwin-eu/visOmopResults/tree/main/inst/app.R). 
+You can find the complete code run the ShinyApp [here](https://github.com/darwin-eu/visOmopResults/blob/main/inst/app.R). 

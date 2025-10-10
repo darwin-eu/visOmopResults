@@ -135,13 +135,7 @@ themeDarwin <- function(fontsizeRef) {
 #' @return Invisibly returns TRUE on successful registration.
 #' @export
 requireExtrafont <- function(device = "win") {
-  if (!requireNamespace("extrafont", quietly = TRUE)) {
-    cli::cli_inform("Installing 'extrafont' package.")
-    utils::install.packages("extrafont")
-    if (!requireNamespace("extrafont", quietly = TRUE)) {
-      cli::cli_abort("Could not install 'extrafont'. Please install it manually.")
-    }
-  }
+  rlang::check_installed("extrafont")
 
   # font_import() only if it hasn't been done before
   if (!("Calibri" %in% extrafont::fonts())) {
