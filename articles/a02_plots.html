@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visOmopResults</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.3.1</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -180,13 +180,11 @@ lead to NA values in the tidy format, which can affect your plots.</p>
 <p>We can use the argument <code>style</code> to update the theme of the
 plot to either the visOmopResults <em>default</em> style, or our
 <em>darwin</em> style. For <em>darwin</em> style, if we want to use the
-official “Calibri” font, we will need first the packafe
-<code>extrafont</code>. We can install and load it as follows before the
-plot:</p>
+official “Calibri” font, we will need first the package
+<code>extrafont</code>. We can get the package and load the font using
+the function <code>requireExtrafont</code>.</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu"><a href="../reference/requireExtrafont.html">requireExtrafont</a></span><span class="op">(</span><span class="op">)</span></span>
-<span></span>
-<span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"bill_length_mm"</span>, <span class="st">"bill_depth_mm"</span><span class="op">)</span><span class="op">)</span><span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterStrata.html" class="external-link">filterStrata</a></span><span class="op">(</span><span class="va">year</span> <span class="op">==</span> <span class="st">"overall"</span>, <span class="va">sex</span> <span class="op">==</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://darwin-eu.github.io/omopgenerics/reference/filterGroup.html" class="external-link">filterGroup</a></span><span class="op">(</span><span class="va">species</span> <span class="op">!=</span> <span class="st">"overall"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
