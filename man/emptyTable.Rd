@@ -4,11 +4,29 @@
 \alias{emptyTable}
 \title{Returns an empty table}
 \usage{
-emptyTable(type = "gt")
+emptyTable(type = NULL, style = NULL)
 }
 \arguments{
-\item{type}{The desired format of the output table. See \code{tableType()} for
-allowed options.}
+\item{type}{Character string specifying the desired output table format.
+See \code{tableType()} for supported table types. If \code{type = NULL}, global
+options (set via \code{setGlobalTableOptions()}) will be used if available;
+otherwise, a default \code{'gt'} table is created.}
+
+\item{style}{Defines the visual formatting of the table.
+This argument can be provided in one of the following ways:
+\enumerate{
+\item \strong{Pre-defined style:} Use the name of a built-in style (e.g., \code{"darwin"}).
+See \code{tableStyle()} for available options.
+\item \strong{YAML file path:} Provide the path to an existing \code{.yml} file defining
+a new style.
+\item \strong{List of custome R code:} Supply a block of custom R code or a named list
+describing styles for each table section. This code must be specific to
+the selected table type.
+If \code{style = NULL}, the function will use global options
+(see \code{setGlobalTableOptions()}) or an existing \verb{_brand.yml} file (if found);
+otherwise, the default style is applied.
+For more details, see the \emph{Styles} vignette on the package website.
+}}
 }
 \value{
 An empty table of the class specified in \code{type}

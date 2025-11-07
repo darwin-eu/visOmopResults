@@ -21,9 +21,7 @@
 tinytableInternal <- function(x,
                               delim = "\n",
                               style = "default",
-                              na = "-",
-                              title = NULL,
-                              subtitle = NULL,
+                              na = "\u2013",
                               caption = NULL,
                               groupColumn = NULL,
                               groupAsColumn = FALSE,
@@ -32,11 +30,6 @@ tinytableInternal <- function(x,
 
   # Package checks
   rlang::check_installed("tinytable")
-
-  # checks
-  if (length(title) != 0 | length(subtitle) != 0) {
-    cli::cli_inform("`title` and `subtitle` are not supported for tinytable.")
-  }
 
   # na
   if (!is.null(na)) {

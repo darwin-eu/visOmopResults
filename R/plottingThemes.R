@@ -16,8 +16,7 @@
 
 #' Apply a pre-defined visOmopResults theme to a ggplot
 #'
-#' @param style Character indicating which pre-defined style to apply. Refer to
-#' the function `plotStyle()` to see the available styles.
+#' @inheritParams plotDoc
 #' @param fontsizeRef An integer to use as reference when adjusting label
 #' fontsize.
 #'
@@ -33,95 +32,9 @@
 #'   facet = c("age_group", "sex"),
 #'   colour = "sex") +
 #'  themeVisOmop()
-
-themeVisOmop <- function(style = "default", fontsizeRef = 11) {
-  omopgenerics::assertChoice(x = style, choices = plotStyle(), null = TRUE)
-  if (length(style) != 0) {
-    if (style == "default") {
-      themeDefault(fontsizeRef = fontsizeRef)
-    }
-    else if (style == "darwin") {
-      themeDarwin(fontsizeRef = fontsizeRef)
-    }
-  }
-}
-
-#' Apply visOmopResults default styling to a ggplot
-#' @noRd
-themeDefault <- function(fontsizeRef) {
-  omopgenerics::assertNumeric(fontsizeRef)
-  color.background <- "#ffffff"
-  color.grid.major <- "#d9d9d9"
-  color.axis.text <- "#252525"
-  color.axis.title <- "#252525"
-  color.border <- "#595959"
-  ggplot2::theme_bw() +
-    ggplot2::theme(
-      # facet
-      strip.text = ggplot2::element_text(face = "bold", size = fontsizeRef),
-      strip.background = ggplot2::element_rect(fill = "#e5e6e4", colour = color.border),
-      strip.text.y.left = ggplot2::element_text(angle = 0),
-      strip.text.y.right = ggplot2::element_text(angle = 0),
-      # title
-      plot.title = ggplot2::element_text(face = "bold", size = fontsizeRef+2),
-      # axis
-      axis.text.y = ggplot2::element_text(size = fontsizeRef-1, color = color.axis.text),
-      axis.text.x = ggplot2::element_text(size = fontsizeRef-1, color = color.axis.text),
-      axis.title.x = ggplot2::element_text(size = fontsizeRef, vjust = 0, color = color.axis.title),
-      axis.title.y = ggplot2::element_text(size = fontsizeRef, vjust = 1.25, color = color.axis.title),
-      # legend
-      legend.text = ggplot2::element_text(size = fontsizeRef-1),
-      legend.title = ggplot2::element_text(size = fontsizeRef),
-      legend.position = "right",
-      # background
-      panel.background = ggplot2::element_rect(fill = color.background, colour = color.background),
-      plot.background = ggplot2::element_rect(fill = color.background, colour = color.background),
-      panel.border = ggplot2::element_rect(colour = color.border),
-      # grid
-      panel.grid.major = ggplot2::element_line(color = color.grid.major, linewidth = .25),
-      # margin
-      plot.margin = grid::unit(c(0.35, 0.2, 0.3, 0.35), "cm")
-    )
-}
-
-#' Apply Darwin styling to a ggplot
-#' @noRd
-themeDarwin <- function(fontsizeRef) {
-  omopgenerics::assertNumeric(fontsizeRef)
-  color.background <- "#ffffff"
-  color.grid.major <- "#d9d9d9"
-  color.axis.text <- "#252525"
-  color.axis.title <- "#252525"
-  color.border <- "#d2d2d2"
-  ggplot2::theme_bw() +
-    ggplot2::theme(
-      # facet
-      strip.text = ggplot2::element_text(face = "bold", size = fontsizeRef, colour = "#FFFFFF", family = "Calibri"),
-      strip.background = ggplot2::element_rect(fill = "#003399", colour = color.border),
-      strip.text.y.left = ggplot2::element_text(angle = 0, family = "Calibri"),
-      strip.text.y.right = ggplot2::element_text(angle = 0, family = "Calibri"),
-      strip.background.x = ggplot2::element_rect(colour = "#ffffff"),
-      strip.background.y = ggplot2::element_rect(colour = "#003399"),
-      # title
-      plot.title = ggplot2::element_text(face = "bold", size = fontsizeRef+2),
-      # axis
-      axis.text.y = ggplot2::element_text(size = fontsizeRef-1, color = color.axis.text, family = "Calibri"),
-      axis.text.x = ggplot2::element_text(size = fontsizeRef-1, color = color.axis.text, family = "Calibri"),
-      axis.title.x = ggplot2::element_text(size = fontsizeRef, vjust = 0, color = color.axis.title, family = "Calibri"),
-      axis.title.y = ggplot2::element_text(size = fontsizeRef, vjust = 1.25, color = color.axis.title, family = "Calibri"),
-      # legend
-      legend.text = ggplot2::element_text(size = fontsizeRef-1, family = "Calibri"),
-      legend.title = ggplot2::element_text(size = fontsizeRef, family = "Calibri"),
-      legend.position = "right",
-      # background
-      panel.background = ggplot2::element_rect(fill = color.background, colour = color.background),
-      plot.background = ggplot2::element_rect(fill = color.background, colour = color.background),
-      panel.border = ggplot2::element_rect(colour = color.border),
-      # grid
-      panel.grid.major = ggplot2::element_line(color = color.grid.major, linewidth = .25),
-      # margin
-      plot.margin = grid::unit(c(0.35, 0.2, 0.3, 0.35), "cm")
-    )
+themeVisOmop <- function(style = NULL, fontsizeRef = NULL) {
+  omopgenerics::assertNumeric(fontsizeRef, length = 1, null = TRUE)
+  validateStyle(style = style, obj = "plot", type = "ggplot", fontsizeRef = fontsizeRef)
 }
 
 #' Get Calibri font for "darwin" plot style

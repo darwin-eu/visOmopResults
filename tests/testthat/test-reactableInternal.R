@@ -12,6 +12,10 @@ test_that("multiplication works", {
 
   dt <- reactableInternal(x, groupColumn = list("group" = "group"))
   expect_snapshot(dt$x)
+
+
+  dt <- reactableInternal(x, groupColumn = list("group" = "group"), groupOrder = c("B", "A", "C"))
+  expect_snapshot(dt$x)
 })
 
 test_that("Multi-level headers generate correct HTML", {

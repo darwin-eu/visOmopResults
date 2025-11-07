@@ -1,0 +1,324 @@
+---
+title: "Styles"
+format: html
+execute:
+  echo: true
+  warning: false
+  message: false
+  cache: false
+vignette: >
+  %\VignetteIndexEntry{a05_style}
+  %\VignetteEngine{knitr::rmarkdown}
+  %\VignetteEncoding{UTF-8}
+---
+
+```{r, echo=FALSE}
+# Setup chunk
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  warning = FALSE,
+  message = FALSE,
+  fig.width = 7.2,
+  fig.height = 5
+)
+options(rmarkdown.html_vignette.check_title = FALSE)
+```
+
+# Introduction
+
+In this vignette, we explain how to customise the visualisation of tables and plots. The vignette reviews the structure of the `.yml` files that define styles, and demonstrates how to create and apply custom styles. It also shows how to style tables and plots programmatically, without the need to create a `.yml` file.
+
+```{r, message=FALSE, warning=FALSE}
+library(visOmopResults)
+library(here)
+library(gt)
+library(ggplot2)
+library(dplyr)
+library(officer)
+```
+
+The package currently includes two built-in styles for tables and plots. Styles are defined using `.yml` files. To list the available styles, use:
+
+```{r}
+tableStyle()
+plotStyle()
+```
+
+# Branding styles using `.yml`
+
+The package contains two built-in styles: `"default"` and `"darwin"`. The `.yml` files for these styles can be found [here](https://github.com/darwin-eu/visOmopResults/tree/main/inst/brand).
+
+## `.yml` structure 
+
+We use the `"darwin"` style as an example. The code chunk below shows the structure of its `.yml` file:
+
+```{r, echo=FALSE, results='asis'}
+library(yaml)
+theme <- read_yaml(file = here("inst/brand/darwin.yml"))
+cat("```yaml\n", as.yaml(theme), "```", sep = "")
+```
+
+The `.yml` structure can be divided into four main sections:
+
+- **Color:** Defines the color palette and the default `background` and `foreground` colors used when a plot/table section does not override them.
+- **Typography:** Defines default font families and sizes for base text, plots, and tables (these can be overridden in the plot/table sections).
+- **Plot:** Plot-specific settings such as background color, facet header color, header text color, grid color, axis color, border color, and legend position. Font settings are taken from the typography section unless overridden here.
+- **Table:** Table-specific settings. You can set an overall `border-color` and `border-width`, or override settings per table section. Table sections include: `header`, `header-name`, `header-level`, `column-name`, `group-label`, `title`, `subtitle`, and `body`. For each section you can set properties such as `background-color`, `text-color`, `text-bold`, `align`, `font-size`, `border-color`, and `border-width`.
+
+## Style hierarchy
+
+Each plot and table element follows a style hierarchy. If a value isn’t specified at the most specific level, it inherits from higher-level entries; if none are defined, the default `ggplot2` (for plots) or the default for the specific table type is used. The table below shows the priority order for common plot and table options.
+
+```{r, echo=FALSE}
+tibble(
+  "type" = "Plot",
+  "Part" = c("Background color", "Header (facet) color", "Header (facet) text color", "Border color", "Grid color", "Axis color", "Legend position", "Font family", "Font size"),
+  "Option 1" = c("plot:background-color", "plot:header-color", "plot:header-text-color", "plot:border-color", "plot:grid-major-color", "plot:axis-color", "plot:legend-position", "typography:plot", "plot:font-size"),
+  "Option 2" = c("color:background", "color:foreground", "-", "color:foreground", "color:foreground", "-", "-",  "typography:base", "typography:plot-font-size"),
+  "Option 3" = c(rep("-", 8), "typography:base-font-size")
+) |> 
+  bind_rows(
+    tibble(
+      "type" = "Table section",
+      "Part" = c("Background color", "Text bold", "Text color", "Text align", "Font size", "Font family", "Border color", "Border width"),
+      "Option 1" = c("table:[section_name]:background-color", "table:[section_name]:text-bold", "table:[section_name]:text-color", "table:[section_name]:align", "table:[section_name]:font-size", "table:[section_name]:font-family", "table:[section_name]:border-color", "table:[section_name]:border-width"),
+      "Option 2" = c("color:background", "-", "-", "-", "typography:table-font-size", "typography:table", "table:border-color", "table:border-width"),
+      "Option 3" = c("-", "-", "-", "-", "typography:base-font-size", "typography:base", "-", "-")
+    )
+  ) |>
+  visTable(groupColumn = "type")
+```
+
+In the examples above the YML path is represented with colon separators. For example, `plot:background-color` refers to the `background-color` key inside the `plot` section.
+
+## Applying styles to tables and plots
+
+The table-formatting functions (`visTable()`, `visOmopTable()`, and `formatTable()`) and plot functions accept a `style` argument. The `style` argument can be:
+
+- the name of a built-in style (e.g. `"darwin"`), or  
+- the path to a user `.yml` file that defines a custom style, or  
+- a programmatic list that mirrors the `.yml` structure (only tables - see next section).
+
+Example: apply the built-in `"darwin"` style to a plot:
+
+```{r}
+result <- mockSummarisedResult() |> 
+  filter(variable_name == "age")
+
+barPlot(
+  result = result,
+  x = "cohort_name",
+  y = "mean",
+  facet = c("age_group", "sex"),
+  colour = "sex",
+  style = "darwin"
+)
+```
+
+Example: use a custom `.yml` file (path provided):
+
+```{r, eval=FALSE}
+barPlot(
+  result = result,
+  x = "cohort_name",
+  y = "mean",
+  facet = c("age_group", "sex"),
+  colour = "sex",
+  style = here("MyStyleFolder", "MyStyle.yml")
+)
+```
+
+## Use of `_brand.yml`
+
+If `style = NULL` and no global options are provided (via `setGlobalPlotOptions()` or `setGlobalTableOptions()`), the built-in "default" style is used. However, if a `_brand.yml` file is present in the project directory, that file’s style will be used.
+
+# Alternative style customisation
+
+You can customise styles programmatically without creating a `.yml` file by passing a named list to the `style` argument. The list should follow the same table section structure as the `.yml`.
+
+## Tables 
+
+Below is an example that sets table section styles for `gt`. 
+
+```{r}
+result |>
+  visOmopTable(
+    estimateName = c("Mean (SD)" = "<mean> (<sd>)"),
+    groupColumn = "cohort_name",
+    header = c("This is an overall header", "sex"),
+    type = "gt",
+    style = list(
+      header = list(
+        cell_text(weight = "bold"), 
+        cell_fill(color = "red")
+      ),
+      header_name = list(
+        cell_text(weight = "bold"), 
+        cell_fill(color = "orange")
+      ),
+      header_level = list(
+        cell_text(weight = "bold"), 
+        cell_fill(color = "yellow")
+      ),
+      column_name = list(
+        cell_text(weight = "bold")
+      ),
+      group_label = list(
+        cell_fill(color = "blue"),
+        cell_text(color = "white", weight = "bold")
+      ),
+      title = list(
+        cell_text(size = 20, weight = "bold")
+      ),
+      subtitle = list(
+        cell_text(size = 15)
+      ),
+      body = list(
+        cell_text(color = "red")
+      )
+    ),
+    .options = list(
+      title = "My formatted table!",
+      subtitle = "Created with the `visOmopResults` R package.",
+      groupAsColumn = FALSE,
+      groupOrder = c("cohort2", "cohort1")
+    )
+  )
+```
+
+
+Note that style objects differ across table engines, so the code must be adapted to the engine you use.
+
+For `flextable`, styling objects come from the `officer` package. The structure is similar, but the style objects differ:
+
+```{r}
+result |>
+  visOmopTable(
+    estimateName = c("Mean (SD)" = "<mean> (<sd>)"),
+    groupColumn = "cohort_name",
+    header = c("This is an overall header", "sex"),
+    type = "flextable",
+    style = list(
+      header = list(
+        cell = fp_cell(background.color = "red"),
+        text = fp_text(bold = TRUE)
+      ),
+      header_level = list(
+        cell = fp_cell(background.color = "orange"),
+        text = fp_text(bold = TRUE)
+      ),
+      header_name = list(
+        cell = fp_cell(background.color = "yellow"),
+        text = fp_text(bold = TRUE)
+      ),
+      column_name = list(
+        text = fp_text(bold = TRUE)
+      ),
+      group_label = list(
+        cell = fp_cell(background.color = "blue"),
+        text = fp_text(bold = TRUE, color = "white")
+      ),
+      title = list(
+        text = fp_text(bold = TRUE, font.size = 20)
+      ),
+      subtitle = list(
+        text = fp_text(font.size = 15)
+      ),
+      body = list(
+        text = fp_text(color = "red")
+      )
+    ),
+    .options = list(
+      title = "My formatted table!",
+      subtitle = "Created with the `visOmopResults` R package.",
+      groupAsColumn = FALSE,
+      groupOrder = c("cohort2", "cohort1")
+    )
+  )
+```
+
+## Plots
+
+Plot helpers return `ggplot2` objects, so you can further modify them using `+` and regular `ggplot2` calls:
+
+```{r}
+library(ggplot2)
+
+barPlot(
+  result = result,
+  x = "cohort_name",
+  y = "mean",
+  facet = c("age_group", "sex"),
+  colour = "sex"
+) +
+  theme(
+    strip.background = element_rect(fill = "#ffeb99", colour = "#ffcc00"),
+    legend.position = "top",
+    panel.grid.major = element_line(color = "transparent", linewidth = 0.25)
+  ) +
+  scale_color_manual(values = c("black", "black", "black")) +
+  scale_fill_manual(values = c("#999999", "#E69F00", "#56B4E9"))
+```
+
+# Using non-supported font families for `ggplot`
+
+If you want to use a font that is not already installed on your system, follow these steps:
+
+## 1. Download and install the font (system-level)
+- **macOS:** double-click the `.ttf` file and click *Install Font*. Example Calibri TTF (if not available on your system): https://www.freefontdownload.org/en/calibri.font
+- **Windows:** right-click the `.ttf` file and choose *Install* (or *Install for all users*).
+
+
+After installing, **restart RStudio** so the system font registry is updated.
+
+## 2. Register the font with the `extrafont` package (R)
+
+```{r, eval=FALSE}
+library(extrafont)
+
+# import system fonts (may take several minutes) - just needs to be done when 
+# a new font is installed 
+font_import(paths = NULL, prompt = FALSE)
+
+# make fonts available for graphic devices using R
+loadfonts(device = "win")  
+```
+
+```{r, echo=FALSE}
+extrafont::loadfonts(device = "win")  
+```
+
+The previous process is embeded in the function `requireExtrafont()` from visOmopResults, so the user could run that single function instead.
+
+Notes:
+- `font_import()` scans system font directories. If you want to import fonts from a custom folder, pass `paths = "path/to/folder"`.
+
+- `font_import()` can take a long time the first time it runs. 
+
+- `extrafont::loadfonts()` makes fonts available to R's graphics devices. For PDFs, call `loadfonts(device = "pdf")` before saving plots.
+
+## 3. Create plots with styles that use the font
+
+Set the font family in the `.yml` file, or in `element_text()` calls within `theme`. As an example we run with "darwin" style, which if "Calibri" is loaded will use it (otherwise it defaults to "sans").
+
+```{r}
+barPlot(
+  result = result,
+  x = "cohort_name",
+  y = "mean",
+  facet = c("age_group", "sex"),
+  colour = "sex",
+  style = "darwin"
+)
+```
+
+Remember the following:
+
+- After installing system fonts, restart R/RStudio so R sees the new fonts.
+
+- Use `extrafont::font_import()` once (or when you add new fonts) — it populates the extrafont database.
+
+# Final remarks
+
+The `.yml` customisation system allows you to control most aspects of the visual appearance of your tables and plots. To learn more about `brand.yml` and how it interacts with other elements such as Shiny apps and Quarto/R Markdown documents, refer to <https://posit-dev.github.io/brand-yml/>.

@@ -55,22 +55,12 @@ visTable <- function(result,
                      header = character(),
                      groupColumn = character(),
                      rename = character(),
-                     type = "gt",
+                     type = NULL,
                      hide = character(),
-                     style = "default",
+                     style = NULL,
                      .options = list()) {
-  # global options
-  if (missing(type)) {
-    type <- getOption("visOmopResults.tableType")
-    if (length(type) == 0) type <- "gt"
-  }
-  if (missing(style)) {
-    style <- getOption("visOmopResults.tableStyle")
-    if (length(style) == 0) style <- "default"
-  }
   # initial checks
   omopgenerics::assertTable(result)
-  omopgenerics::assertChoice(type, choices = tableType(), length = 1)
   omopgenerics::assertCharacter(hide, null = TRUE)
   omopgenerics::assertCharacter(header, null = TRUE)
   rename <- validateRename(rename, result)
@@ -83,12 +73,8 @@ visTable <- function(result,
     hide <- neededCols$hide
   }
   checkVisTableInputs(header, groupColumn, hide)
-  if (missing(style)) {
-    style <- getOption("visOmopResults.tableStyle")
-    if (length(style) == 0) style <- "default"
-  }
 
-  if (nrow(result) == 0) return(emptyTable(type = type))
+  if (nrow(result) == 0) return(emptyTable(type = type, style = style))
 
   # format estimate values and names
   if ("estimate_value" %in% colnames(result)) {
@@ -149,24 +135,21 @@ visTable <- function(result,
     result <- result |> dplyr::rename(!!estimateValue := "estimate_value")
   }
 
-  if (type == "tibble") {
-    class(result) <- class(result)[!class(result) %in% c("summarised_result", "omop_result")]
-  } else {
-    result <- result |>
-      formatTable(
-        type = type,
-        delim = .options$delim,
-        style = style,
-        na = .options$na,
-        title = .options$title,
-        subtitle = .options$subtitle,
-        caption = .options$caption,
-        groupColumn = groupColumn,
-        groupAsColumn = .options$groupAsColumn,
-        groupOrder = .options$groupOrder,
-        merge = .options$merge
-      )
-  }
+  result <- result |>
+    formatTable(
+      type = type,
+      delim = .options$delim,
+      style = style,
+      na = .options$na,
+      title = .options$title,
+      subtitle = .options$subtitle,
+      caption = .options$caption,
+      groupColumn = groupColumn,
+      groupAsColumn = .options$groupAsColumn,
+      groupOrder = .options$groupOrder,
+      merge = .options$merge
+    )
+
   return(result)
 }
 
@@ -176,8 +159,7 @@ formatToSentence <- function(x) {
 
 #' Returns an empty table
 #'
-#' @param type The desired format of the output table. See `tableType()` for
-#' allowed options.
+#' @inheritParams tableDoc
 #'
 #' @return An empty table of the class specified in `type`
 #'
@@ -186,13 +168,18 @@ formatToSentence <- function(x) {
 #' @examples
 #' emptyTable(type = "flextable")
 #'
-emptyTable <- function(type = "gt") {
-  omopgenerics::assertChoice(type, choices = tableType())
+emptyTable <- function(type = NULL, style = NULL) {
+  # input check
+  type <- validateType(type = type, obj = "table")
+  style <- validateStyle(style = style, obj = "table", type = type)
+
   empty <- dplyr::tibble()
   switch (type,
-    "gt" = empty |> gt::gt(),
-    "flextable" = empty |> dplyr::mutate("Table has no data" = NA) |> flextable::flextable(cwidth = 1.5),
-    "tibble" = empty
-  )
+          "gt" = empty |> gt::gt(),
+          "flextable" = empty |> dplyr::mutate("Table has no data" = NA) |> flextable::flextable(cwidth = 1.5),
+          "tibble" = empty,
+          "tinytable" = dplyr::tibble("Table has no data" = "-") |> tinytable::tt(),
+          "reactable" = empty |> dplyr::mutate("Table has no data" = NA) |> reactable::reactable(),
+          "datatable" = empty |> dplyr::mutate("Table has no data" = NA) |> DT::datatable())
 }
 

@@ -69,22 +69,13 @@ visOmopTable <- function(result,
                          settingsColumn = character(),
                          groupColumn = character(),
                          rename = character(),
-                         type = "gt",
+                         type = NULL,
                          hide = character(),
                          columnOrder = character(),
                          factor = list(),
-                         style = "default",
+                         style = NULL,
                          showMinCellCount = TRUE,
                          .options = list()) {
-  # global options
-  if (missing(type)) {
-    type <- getOption("visOmopResults.tableType")
-    if (length(type) == 0) type <- "gt"
-  }
-  if (missing(style)) {
-    style <- getOption("visOmopResults.tableStyle")
-    if (length(style) == 0) style <- "default"
-  }
   # Tidy results
   result <- omopgenerics::validateResultArgument(result)
   showMinCellCount <- validateShowMinCellCount(showMinCellCount, settings(result))
@@ -173,7 +164,7 @@ defaultTableOptions <- function(userOptions) {
     delim = "\n",
     includeHeaderName = TRUE,
     includeHeaderKey = TRUE,
-    na = "-",
+    na = "\u2013",
     title = NULL,
     subtitle = NULL,
     caption = NULL,

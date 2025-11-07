@@ -21,7 +21,7 @@
 fxTableInternal <- function(x,
                             delim = "\n",
                             style = "default",
-                            na = "-",
+                            na = "\u2013",
                             title = NULL,
                             subtitle = NULL,
                             caption = NULL,
@@ -230,10 +230,7 @@ fxTableInternal <- function(x,
   }
 
   flex_x <- flex_x |>
-    flextable::border_outer(
-      part = "all",
-      border = officer::fp_border(color = flex_x$body$styles$cells$border.color.top$data[1,1], width = 0.8)
-    )
+    flextable::padding(padding = 3, part = "all")
 
   return(flex_x)
 }

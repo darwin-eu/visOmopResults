@@ -4,11 +4,17 @@
 \alias{themeVisOmop}
 \title{Apply a pre-defined visOmopResults theme to a ggplot}
 \usage{
-themeVisOmop(style = "default", fontsizeRef = 11)
+themeVisOmop(style = NULL, fontsizeRef = NULL)
 }
 \arguments{
-\item{style}{Character indicating which pre-defined style to apply. Refer to
-the function \code{plotStyle()} to see the available styles.}
+\item{style}{Visual theme to apply. Character, or \code{NULL}.
+If a character, this may be either the name of a built-in style
+(see \code{plotStyle()}), or a path to a \code{.yml} file that
+defines a custom style. If \code{NULL}, the function will use the
+explicit default style, unless a global style option is
+set (see \code{setGlobalPlotOptions()}), or a \verb{_brand.yml} file is present
+(in that order).
+Refer to the package vignette on styles to learn more.}
 
 \item{fontsizeRef}{An integer to use as reference when adjusting label
 fontsize.}

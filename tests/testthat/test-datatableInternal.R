@@ -12,6 +12,9 @@ test_that("multiplication works", {
 
   dt <- datatableInternal(x, caption = "hi there", groupColumn = list("group" = "group"))
   expect_snapshot(dt)
+
+  dt <- datatableInternal(x, caption = "hi there", groupColumn = list("group" = "group"), groupOrder = c("B", "C", "A"))
+  expect_snapshot(dt)
 })
 
 test_that("Multi-level headers generate correct HTML", {

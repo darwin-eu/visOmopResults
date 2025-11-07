@@ -1,6 +1,6 @@
 Package: visOmopResults
 Title: Graphs and Tables for OMOP Results
-Version: 1.3.1
+Version: 1.4.0
 Authors@R: c(
     person(
       "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -44,7 +44,8 @@ Imports:
     purrr,
     rlang,
     stringr,
-    tidyr
+    tidyr,
+    yaml
 Suggests: 
     bslib,
     CohortCharacteristics,

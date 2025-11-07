@@ -45,42 +45,8 @@ tableOptions <- function() {
 #' tableStyle()
 #'
 tableStyle <- function() {
-  c("default", "darwin")
+  defaultStyles()
 }
-
-#' Supported predefined style codes for formatted tables
-#'
-#' @param type Character string specifying the formatted table class.
-#' See `tableType()` for supported classes. Default is "gt".
-#' @param style Supported predefined styles. Check which ones with the function
-#' `tableStyle()`.
-#'
-#' @return The code expression to style the table for as specific pre-defined
-#' style and table type.
-#'
-#' @export
-#'
-#' @examples
-#' tableStyleCode("gt")
-#' tableStyleCode("flextable")
-#'
-tableStyleCode <- function(type = "gt", style = "default") {
-  omopgenerics::assertChoice(type, tableType(), length = 1)
-  omopgenerics::assertChoice(style, c("default", "darwin"), length = 1)
-  if (style == "darwin" & type %in% c("datatable", "reactable")) {
-    cli::cli_abort("`darwin` style is not currently available for `datatable` and `reactable`.")
-  }
-
-  switch (type,
-    "gt" = gtStyleInternal(style, asExpr = TRUE),
-    "flextable" = flextableStyleInternal(style, asExpr = TRUE),
-    "tibble" = NULL,
-    "datatable" = datatableStyleInternal(style, asExpr = TRUE),
-    "reactable" = reactableStyleInternal(style, asExpr = TRUE),
-    "tinytable" = tinytableStyleInternal(style, asExpr = TRUE)
-  )
-}
-
 
 #' Supported table classes
 #'
@@ -192,7 +158,7 @@ plotColumns <- function(result) {
 #' plotStyle()
 #'
 plotStyle <- function() {
-  c("default", "darwin")
+  defaultStyles()
 }
 
 #' Supported plot types
@@ -218,11 +184,7 @@ plotType <- function() {
 #' Set format options for all subsequent plots unless state a different style in
 #' a specific function
 #'
-#' @param style Character indicating which style to apply. Options are either
-#' NULL (default ggplot style), or one of our pre-defined styles (refer to the
-#' function `plotStyle()`).
-#' @param type The desired format of the output plot. See `plotType()` for
-#' supported plot types.
+#' @inheritParams plotDoc
 #'
 #' @export
 #'

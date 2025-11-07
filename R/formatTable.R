@@ -93,28 +93,20 @@
 #' @export
 #'
 formatTable <- function(x,
-                        type = "gt",
+                        type = NULL,
                         delim = "\n",
-                        style = "default",
-                        na = "-",
+                        style = NULL,
+                        na = "\u2013",
                         title = NULL,
                         subtitle = NULL,
                         caption = NULL,
                         groupColumn = NULL,
                         groupAsColumn = FALSE,
                         groupOrder = NULL,
-                        merge = NULL
-) {
+                        merge = "all_columns") {
   # Input checks
-  if (missing(type)) {
-    type <- getOption("visOmopResults.tableType")
-    if (length(type) == 0) type <- "gt"
-  }
-  if (missing(style)) {
-    style <- getOption("visOmopResults.tableStyle")
-    if (length(style) == 0) style <- "default"
-  }
-  omopgenerics::assertChoice(type, choices = tableType(), length = 1)
+  type <- validateType(type = type, obj = "table")
+  style <- validateStyle(style = style, obj = "table", type = type)
   omopgenerics::assertTable(x)
   omopgenerics::assertCharacter(na, length = 1, null = TRUE)
   omopgenerics::assertCharacter(title, length = 1, null = TRUE)
@@ -125,7 +117,6 @@ formatTable <- function(x,
   delim <- validateDelim(delim)
   groupColumn <- validateGroupColumn(groupColumn, colnames(x))
   merge <- validateMerge(x, merge, groupColumn[[1]])
-  style <- validateStyle(style, type)
   if (is.null(title) & !is.null(subtitle)) {
     cli::cli_abort("There must be a title for a subtitle.")
   }
@@ -133,6 +124,7 @@ formatTable <- function(x,
     x <- x |> dplyr::ungroup()
     cli::cli_inform("`x` will be ungrouped.")
   }
+  tableTypeWarnings(type, delim, na, title, subtitle, caption, groupColumn, groupAsColumn, groupOrder, merge)
 
   # format
   if (type == "gt") {
@@ -169,14 +161,16 @@ formatTable <- function(x,
         delim = delim,
         style = style,
         caption = caption,
-        groupColumn = groupColumn
+        groupColumn = groupColumn,
+        groupOrder = groupOrder
       )
   } else if (type == "reactable") {
     x <- x |>
       reactableInternal(
         delim = delim,
         style = style,
-        groupColumn = groupColumn
+        groupColumn = groupColumn,
+        groupOrder = groupOrder
       )
   } else if (type == "tinytable") {
     x <- x |>
@@ -184,14 +178,41 @@ formatTable <- function(x,
         delim = delim,
         style = style,
         na = na,
-        title = title,
-        subtitle = subtitle,
         caption = caption,
         groupColumn = groupColumn,
         groupAsColumn = groupAsColumn,
         groupOrder = groupOrder,
         merge = merge
       )
+  } else if (type == "tibble") {
+    if (!is.null(na)) {
+      x <- x |>
+        dplyr::mutate(
+          dplyr::across(dplyr::where(~ is.numeric(.x)), ~ as.character(.x)),
+          dplyr::across(colnames(x), ~ dplyr::if_else(is.na(.x), na, .x))
+        )
+    }
+    class(x) <- class(x)[!class(x) %in% c("summarised_result", "omop_result")]
   }
   return(x)
+}
+
+tableTypeWarnings <- function(type, delim, na, title, subtitle, caption, groupColumn, groupAsColumn, groupOrder, merge) {
+  if (type == "datatable") {
+    if (na != "\u2013" | !is.null(title) | !is.null(subtitle) | merge != "all_columns" | !isFALSE(groupAsColumn)) {
+      cli::cli_inform("`datatable` does not support arguments `title`, `subtitle`, `groupAsColumn` and `merge`.")
+    }
+  } else if (type == "reactable") {
+    if (na != "\u2013" | !is.null(title) | !is.null(subtitle) | !is.null(caption) | merge != "all_columns" | !isFALSE(groupAsColumn)) {
+      cli::cli_inform("`reactable` does not support arguments `title`, `subtitle`, `caption`, `groupAsColumn` and `merge`.")
+    }
+  } else if (type == "tinytable") {
+    if (!is.null(title) | !is.null(subtitle)) {
+      cli::cli_inform("`tinytable` does not support arguments `title` and `subtitle`.")
+    }
+  } else if (type == "tibble") {
+    if (delim != "\n" | na != "\u2013" | !is.null(title) | !is.null(subtitle) | !is.null(caption) | length(groupColumn[[1]]) != 0 | !is.null(groupOrder) | merge != "all_columns" | !isFALSE(groupAsColumn)) {
+      cli::cli_inform("`tibble` does not support any formatting arguments: `delim`, `style`, `title`, `subtitle`, `caption`, `groupColumn`, `groupAsColumn`, `groupOrder`, and `merge`.")
+    }
+   }
 }

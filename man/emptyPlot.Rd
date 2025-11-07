@@ -4,15 +4,26 @@
 \alias{emptyPlot}
 \title{Returns an empty plot}
 \usage{
-emptyPlot(title = "No data to plot", subtitle = "", type = "ggplot")
+emptyPlot(title = "No data to plot", subtitle = "", type = NULL, style = NULL)
 }
 \arguments{
 \item{title}{Title to use in the empty plot.}
 
 \item{subtitle}{Subtitle to use in the empty plot.}
 
-\item{type}{The desired format of the output plot. See \code{plotType()} for
-supported plot types.}
+\item{type}{Character string indicating the output plot format.
+See \code{plotType()} for the list of supported plot types. If \code{type = NULL},
+the function will use the global setting defined via \code{setGlobalPlotOptions()}
+(if available); otherwise, a standard \code{ggplot2} plot is produced by default.}
+
+\item{style}{Visual theme to apply. Character, or \code{NULL}.
+If a character, this may be either the name of a built-in style
+(see \code{plotStyle()}), or a path to a \code{.yml} file that
+defines a custom style. If \code{NULL}, the function will use the
+explicit default style, unless a global style option is
+set (see \code{setGlobalPlotOptions()}), or a \verb{_brand.yml} file is present
+(in that order).
+Refer to the package vignette on styles to learn more.}
 }
 \value{
 An empty ggplot object
