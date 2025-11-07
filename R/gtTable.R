@@ -21,7 +21,7 @@
 gtTableInternal <- function(x,
                             delim = "\n",
                             style = "default",
-                            na = "-",
+                            na = "\u2013",
                             title = NULL,
                             subtitle = NULL,
                             caption = NULL,
@@ -170,11 +170,6 @@ gtTableInternal <- function(x,
       locations = list(gt::cells_body(columns = 2:(ncol(x)-1)))
     )
 
-  # Merge rows
-  if (!is.null(merge)) {
-    gtResult <- gtMergeRows(gtResult, merge, names(groupColumn), groupOrder)
-  }
-
   # Other options:
   ## na
   # if (!is.null(na)){
@@ -232,6 +227,12 @@ gtTableInternal <- function(x,
         locations = gt::cells_body()
       )
   }
+
+  # Merge rows
+  if (!is.null(merge)) {
+    gtResult <- gtMergeRows(gtResult, merge, names(groupColumn), groupOrder)
+  }
+
   ## group_label
   if ("group_label" %in% names(style)) {
     gtResult <- gtResult |>

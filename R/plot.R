@@ -45,11 +45,13 @@ scatterPlot <- function(result,
                         ymax = NULL,
                         facet = NULL,
                         colour = NULL,
-                        style = "default",
-                        type = "ggplot",
+                        style = NULL,
+                        type = NULL,
                         group = colour,
                         label = character()) {
   # check and prepare input
+  type <- validateType(type = type, obj = "plot")
+  style <- validateStyle(style = style, obj = "plot", type = type)
   omopgenerics::assertTable(result)
   omopgenerics::assertLogical(line, length = 1, call = call)
   omopgenerics::assertLogical(point, length = 1, call = call)
@@ -62,16 +64,6 @@ scatterPlot <- function(result,
   omopgenerics::assertCharacter(colour, null = TRUE)
   omopgenerics::assertCharacter(group, null = TRUE)
   omopgenerics::assertCharacter(label, null = TRUE)
-  if (missing(style)) {
-    style <- getOption("visOmopResults.plotStyle")
-    if (length(style) == 0) style <- "default"
-  }
-  if (missing(type)) {
-    type <- getOption("visOmopResults.plotType")
-    if (length(type) == 0) type <- "ggplot"
-  }
-  omopgenerics::assertChoice(style, choices = plotStyle(), null = TRUE, length = 1)
-  validateType(type)
 
   # empty
   if (nrow(result) == 0) {
@@ -157,10 +149,12 @@ boxPlot <- function(result,
                     ymax = "max",
                     facet = NULL,
                     colour = NULL,
-                    style = "default",
-                    type = "ggplot",
+                    style = NULL,
+                    type = NULL,
                     label = character()) {
   # initial checks
+  type <- validateType(type = type, obj = "plot")
+  style <- validateStyle(style = style, obj = "plot", type = type)
   omopgenerics::assertTable(result)
   omopgenerics::assertCharacter(x, minNumCharacter = 1)
   omopgenerics::assertCharacter(lower, length = 1)
@@ -171,16 +165,6 @@ boxPlot <- function(result,
   validateFacet(facet)
   omopgenerics::assertCharacter(colour, null = TRUE)
   omopgenerics::assertCharacter(label, null = TRUE)
-  if (missing(style)) {
-    style <- getOption("visOmopResults.plotStyle")
-    if (length(style) == 0) style <- "default"
-  }
-  if (missing(type)) {
-    type <- getOption("visOmopResults.plotType")
-    if (length(type) == 0) type <- "ggplot"
-  }
-  omopgenerics::assertChoice(style, choices = plotStyle(), null = TRUE, length = 1)
-  validateType(type)
 
   # empty
   if (nrow(result) == 0) {
@@ -267,10 +251,12 @@ barPlot <- function(result,
                     position = "dodge",
                     facet = NULL,
                     colour = NULL,
-                    style = "default",
-                    type = "ggplot",
+                    style = NULL,
+                    type = NULL,
                     label = character()) {
   # initial checks
+  type <- validateType(type = type, obj = "plot")
+  style <- validateStyle(style = style, obj = "plot", type = type)
   omopgenerics::assertTable(result)
   omopgenerics::assertCharacter(x, minNumCharacter = 1)
   omopgenerics::assertCharacter(y, minNumCharacter = 1)
@@ -278,16 +264,6 @@ barPlot <- function(result,
   omopgenerics::assertCharacter(colour, null = TRUE)
   omopgenerics::assertCharacter(label, null = TRUE)
   omopgenerics::assertChoice(position, c("stack", "dodge"))
-  if (missing(style)) {
-    style <- getOption("visOmopResults.plotStyle")
-    if (length(style) == 0) style <- "default"
-  }
-  if (missing(type)) {
-    type <- getOption("visOmopResults.plotType")
-    if (length(type) == 0) type <- "ggplot"
-  }
-  omopgenerics::assertChoice(style, choices = plotStyle(), null = TRUE, length = 1)
-  validateType(type)
 
   # empty
   if (nrow(result) == 0) {
@@ -320,8 +296,11 @@ barPlot <- function(result,
   aes <- getAes(cols)
 
   # create plot
+  args <- list(width = width, just = just, position = position) |>
+    # eliminate warning about nulls
+    purrr::compact()
   p <- ggplot2::ggplot(data = result, mapping = aes) +
-    ggplot2::geom_col(width = width, just = just, position = position)
+    do.call(what = ggplot2::geom_col, args = args)
   if(length(facet) > 0){
     p <- plotFacet(p, facet)
   }
@@ -356,14 +335,17 @@ barPlot <- function(result,
 #' @examples
 #' emptyPlot()
 #'
-emptyPlot <- function(title = "No data to plot", subtitle = "", type = "ggplot") {
-  validateType(type)
+emptyPlot <- function(title = "No data to plot", subtitle = "", type = NULL, style = NULL) {
+  # input check
+  type <- validateType(type = type, obj = "plot")
+  style <- validateStyle(style = style, obj = "plot", type = type)
   omopgenerics::assertCharacter(title, length = 1)
   omopgenerics::assertCharacter(subtitle, length = 1)
 
   p <- ggplot2::ggplot() +
     ggplot2::theme_bw() +
-    ggplot2::labs(title = title, subtitle = subtitle)
+    ggplot2::labs(title = title, subtitle = subtitle) +
+    themeVisOmop(style = style)
 
   if (type == "plotly") {
     p <- plotly::ggplotly(p)

@@ -186,7 +186,7 @@ test_that("gtTable, test default styles and NULL", {
     dplyr::select(-result_id)
   gtTableInternal <- gtTableInternal(
     table_to_format,
-    style = gtStyleInternal("default"),
+    style = validateStyle(style = "default", obj = "table", type = "gt"),
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
@@ -197,30 +197,139 @@ test_that("gtTable, test default styles and NULL", {
   )
 
   # spanner styles
-  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level %in% c(1,3)]] |>
-                 unlist() |> unique(),
-               c("#D9D9D9", "center", "bold"))
-  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level == 2]] |>
-                 unlist() |> unique(),
-               c("#E1E1E1", "center", "bold"))
-  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level == 4]] |>
-                 unlist() |> unique(),
-               c("#C8C8C8", "center", "bold"))
+
+  # spanner 1 3
+  styleSpanner13 <- gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level %in% c(1,3)]]
+  # background color
+  backgroundColor <- styleSpanner13 |>
+    purrr::map_chr(\(x) x$cell_fill$color) |>
+    unique()
+  expect_identical("#D9D9D9", backgroundColor)
+  # align
+  align <- styleSpanner13 |>
+    purrr::map_chr(\(x) x$cell_text$align) |>
+    unique()
+  expect_identical("center", align)
+  # weight
+  weight <- styleSpanner13 |>
+    purrr::map_chr(\(x) x$cell_text$weight) |>
+    unique()
+  expect_identical("bold", weight)
+
+  # spanner 2
+  styleSpanner2 <- gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level == 2]]
+  # background color
+  backgroundColor <- styleSpanner2 |>
+    purrr::map_chr(\(x) x$cell_fill$color) |>
+    unique()
+  expect_identical("#E1E1E1", backgroundColor)
+  # align
+  align <- styleSpanner2 |>
+    purrr::map_chr(\(x) x$cell_text$align) |>
+    unique()
+  expect_identical("center", align)
+  # weight
+  weight <- styleSpanner2 |>
+    purrr::map_chr(\(x) x$cell_text$weight) |>
+    unique()
+  expect_identical("bold", weight)
+
+  # spanner 4
+  styleSpanner4 <- gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$grpname %in% gtTableInternal$`_spanners`$spanner_id[gtTableInternal$`_spanners`$spanner_level == 4]]
+  # background color
+  backgroundColor <- styleSpanner4 |>
+    purrr::map_chr(\(x) x$cell_fill$color) |>
+    unique()
+  expect_identical("#C8C8C8", backgroundColor)
+  # align
+  align <- styleSpanner4 |>
+    purrr::map_chr(\(x) x$cell_text$align) |>
+    unique()
+  expect_identical("center", align)
+  # weight
+  weight <- styleSpanner4 |>
+    purrr::map_chr(\(x) x$cell_text$weight) |>
+    unique()
+  expect_identical("bold", weight)
+
   # title
-  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "title"] |> unlist() |> unique(),
-               c("15", "center", "bold"))
-  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "subtitle"] |> unlist() |> unique(),
-               c("12", "center", "bold"))
+  styleTitle <- gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "title"]
+  # font size
+  fontSize <- styleTitle |>
+    purrr::map_dbl(\(x) x$cell_text$size) |>
+    unique()
+  expect_identical(15, fontSize)
+  # align
+  align <- styleTitle |>
+    purrr::map_chr(\(x) x$cell_text$align) |>
+    unique()
+  expect_identical("center", align)
+  # weight
+  weight <- styleTitle |>
+    purrr::map_chr(\(x) x$cell_text$weight) |>
+    unique()
+  expect_identical("bold", weight)
+
+  # subtitle
+  styleSubtitle <- gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "subtitle"]
+  # font size
+  fontSize <- styleSubtitle |>
+    purrr::map_dbl(\(x) x$cell_text$size) |>
+    unique()
+  expect_identical(12, fontSize)
+  # align
+  align <- styleSubtitle |>
+    purrr::map_chr(\(x) x$cell_text$align) |>
+    unique()
+  expect_identical("center", align)
+  # weight
+  weight <- styleSubtitle |>
+    purrr::map_chr(\(x) x$cell_text$weight) |>
+    unique()
+  expect_identical("bold", weight)
+
   # column names
-  expect_equal(unlist(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "columns_columns"])[1:27] |> unique(),
-               c("#E1E1E1", "center",  "bold"))
-  expect_equal(unlist(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "columns_columns"])[28:43] |> unique(),
-               c("center", "bold"))
+  styleColumns <- gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "columns_columns"]
+  # background last 9 columns
+  backgroundColor <- styleColumns[1:9] |>
+    purrr::map_chr(\(x) x$cell_fill$color) |>
+    unique()
+  expect_identical("#E1E1E1", backgroundColor)
+  # align last 9 columns
+  align <- styleColumns[1:9] |>
+    purrr::map_chr(\(x) x$cell_text$align) |>
+    unique()
+  expect_identical("center", align)
+  # weight last 9 columns
+  weight <- styleColumns[1:9] |>
+    purrr::map_chr(\(x) x$cell_text$weight) |>
+    unique()
+  expect_identical("bold", weight)
+  # align first 8 columns
+  align <- styleColumns[10:17] |>
+    purrr::map_chr(\(x) x$cell_text$align) |>
+    unique()
+  expect_identical("center", align)
+  # weight first 8 columns
+  weight <- styleColumns[10:17] |>
+    purrr::map_chr(\(x) x$cell_text$weight) |>
+    unique()
+  expect_identical("bold", weight)
+
   expect_false(lapply(gtTableInternal$`_boxhead`$column_label, function(x){grepl("\\[header_level\\]", x)}) |> unlist() |> unique())
 
   # Group labels
-  expect_equal(gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "row_groups"] |> unlist() |> unique(),
-               c("#E9E9E9", "bold"))
+  styleGroupLabel <- gtTableInternal$`_styles`$styles[gtTableInternal$`_styles`$locname == "row_groups"]
+  # background
+  backgroundColor <- styleGroupLabel |>
+    purrr::map_chr(\(x) x$cell_fill$color) |>
+    unique()
+  expect_identical("#E9E9E9", backgroundColor)
+  # weight
+  weight <- styleGroupLabel |>
+    purrr::map_chr(\(x) x$cell_text$weight) |>
+    unique()
+  expect_identical("bold", weight)
 })
 
 test_that("gtTable, test merge", {
@@ -230,7 +339,7 @@ test_that("gtTable, test merge", {
   # merge = "all"
   gtTableInternal <- gtTableInternal(
     table_to_format,
-    style = gtStyleInternal("default"),
+    style = validateStyle(style = "default", obj = "table", type = "gt"),
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
@@ -251,7 +360,7 @@ test_that("gtTable, test merge", {
   # merge = c("cdm_name", "variable_name")
   gtTableInternal <- gtTableInternal(
     table_to_format,
-    style = gtStyleInternal("default"),
+    style = validateStyle(style = "default", obj = "table", type = "gt"),
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
@@ -272,7 +381,7 @@ test_that("gtTable, test merge", {
   # no groupColumn
   gtTableInternal <- gtTableInternal(
     table_to_format,
-    style = gtStyleInternal("default"),
+    style = validateStyle(style = "default", obj = "table", type = "gt"),
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
@@ -298,7 +407,7 @@ test_that("groupColumn",{
 
   gtTableInternal <- gtTableInternal(
     table_to_format,
-    style = gtStyleInternal("default"),
+    style = validateStyle(style = "default", obj = "table", type = "gt"),
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
@@ -319,7 +428,7 @@ test_that("groupColumn",{
 
   gtTableInternal <- gtTableInternal(
     table_to_format,
-    style = gtStyleInternal("default"),
+    style = validateStyle(style = "default", obj = "table", type = "gt"),
     na = "-",
     title = "Title test 2",
     subtitle = "Subtitle for test 2",
@@ -332,3 +441,4 @@ test_that("groupColumn",{
   expect_equal(gtTableInternal$`_data`$hi_there |> levels(),
                c('cohort_name; cohort1', 'cohort_name; cohort2'))
 })
+

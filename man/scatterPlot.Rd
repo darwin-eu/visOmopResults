@@ -15,8 +15,8 @@ scatterPlot(
   ymax = NULL,
   facet = NULL,
   colour = NULL,
-  style = "default",
-  type = "ggplot",
+  style = NULL,
+  type = NULL,
   group = colour,
   label = character()
 )
@@ -45,15 +45,19 @@ which variables should be used as rows and which ones as columns.}
 
 \item{colour}{Columns to use to determine the colours.}
 
-\item{style}{A character string defining the visual theme to apply to the plot.
-You can set this to NULL to apply the standard ggplot2 default style,
-or provide a name for one of the package's pre-defined styles. Refer to the
-\code{plotStyle()} function for all available style pre-defined themes.
-For further customization, you can always modify the returned ggplot object
-directly.}
+\item{style}{Visual theme to apply. Character, or \code{NULL}.
+If a character, this may be either the name of a built-in style
+(see \code{plotStyle()}), or a path to a \code{.yml} file that
+defines a custom style. If \code{NULL}, the function will use the
+explicit default style, unless a global style option is
+set (see \code{setGlobalPlotOptions()}), or a \verb{_brand.yml} file is present
+(in that order).
+Refer to the package vignette on styles to learn more.}
 
-\item{type}{The desired format of the output plot. See \code{plotType()} for
-supported plot types.}
+\item{type}{Character string indicating the output plot format.
+See \code{plotType()} for the list of supported plot types. If \code{type = NULL},
+the function will use the global setting defined via \code{setGlobalPlotOptions()}
+(if available); otherwise, a standard \code{ggplot2} plot is produced by default.}
 
 \item{group}{Columns to use to determine the group.}
 

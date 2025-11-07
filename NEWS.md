@@ -1,3 +1,14 @@
+# visOmopResults 1.4.0
+
+* Added option to define styles with `.yml` files using the `brand.yml` framework
+* Dropped `tableStyleCode()` 
+* Added vignette on styles
+* Changed default argument `type` and `style` to NULL to use global options in higher level functions
+
+# visOmopResults 1.3.1
+
+* Improve and fix documentation
+
 # visOmopResults 1.3.0
 
 * Support `plotly` for plots

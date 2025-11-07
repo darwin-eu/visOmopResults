@@ -237,6 +237,6 @@ test_that("test global style", {
     ribbon = FALSE,
     facet = c("age_group", "sex"),
     style = "default")
-  expect_true("#e5e6e4" == p$theme$strip.background$fill)
+  expect_true("#e1e1e1" == p$theme$strip.background$fill)
   options(visOmopResults.plotStyle = NULL)
 })

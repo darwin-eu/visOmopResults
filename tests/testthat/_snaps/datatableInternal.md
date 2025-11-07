@@ -8,6 +8,11 @@
     Code
       dt
 
+---
+
+    Code
+      dt
+
 # Multi-level headers generate correct HTML
 
     Code

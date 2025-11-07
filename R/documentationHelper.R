@@ -12,14 +12,18 @@
 #' @param group Columns to use to determine the group.
 #' @param label Character vector with the columns to display interactively in
 #' `plotly`.
-#' @param style A character string defining the visual theme to apply to the plot.
-#' You can set this to NULL to apply the standard ggplot2 default style,
-#' or provide a name for one of the package's pre-defined styles. Refer to the
-#' `plotStyle()` function for all available style pre-defined themes.
-#' For further customization, you can always modify the returned ggplot object
-#' directly.
-#' @param type The desired format of the output plot. See `plotType()` for
-#' supported plot types.
+#' @param style Visual theme to apply. Character, or `NULL`.
+#' If a character, this may be either the name of a built-in style
+#' (see `plotStyle()`), or a path to a `.yml` file that
+#' defines a custom style. If `NULL`, the function will use the
+#' explicit default style, unless a global style option is
+#' set (see `setGlobalPlotOptions()`), or a `_brand.yml` file is present
+#' (in that order).
+#' Refer to the package vignette on styles to learn more.
+#' @param type Character string indicating the output plot format.
+#' See `plotType()` for the list of supported plot types. If `type = NULL`,
+#' the function will use the global setting defined via `setGlobalPlotOptions()`
+#' (if available); otherwise, a standard `ggplot2` plot is produced by default.
 #' @param lower Estimate name for the lower quantile of the box.
 #' @param middle Estimate name for the middle line of the box.
 #' @param upper Estimate name for the upper quantile of the box.
@@ -55,8 +59,10 @@ NULL
 #' @param rename A named vector to customise column names, e.g.,
 #' c("Database name" = "cdm_name"). The function renames all column names
 #' not specified here into a tidy* format.
-#' @param type The desired format of the output table. See `tableType()` for
-#' allowed options.
+#' @param type Character string specifying the desired output table format.
+#' See `tableType()` for supported table types. If `type = NULL`, global
+#' options (set via `setGlobalTableOptions()`) will be used if available;
+#' otherwise, a default `'gt'` table is created.
 #' @param columnOrder Character vector establishing the position of the columns
 #' in the formatted table. Columns in either header, groupColumn, or hide will
 #' be ignored.
@@ -64,12 +70,19 @@ NULL
 #' in `tableColumns()`) and list elements are the level order of that column
 #' to arrange the results. The column order in the list will be used for
 #' arranging the result.
-#' @param style A character string or custom R code to define the visual
-#' formatting of the table. This argument can be provided in two ways:
-#' 1. Pre-defined Styles (Character String): Use a name for a built-in style
-#' (e.g., "darwin"). See tableStyle() for available options.
-#' 2. Custom Code (Advanced): Supply a block of custom R code. This code must be
-#' specific to the table type. See tableStyleCode() for structural examples.
+#' @param style Defines the visual formatting of the table.
+#' This argument can be provided in one of the following ways:
+#' 1. **Pre-defined style:** Use the name of a built-in style (e.g., `"darwin"`).
+#' See `tableStyle()` for available options.
+#' 2. **YAML file path:** Provide the path to an existing `.yml` file defining
+#' a new style.
+#' 3. **List of custome R code:** Supply a block of custom R code or a named list
+#' describing styles for each table section. This code must be specific to
+#' the selected table type.
+#' If `style = NULL`, the function will use global options
+#' (see `setGlobalTableOptions()`) or an existing `_brand.yml` file (if found);
+#' otherwise, the default style is applied.
+#' For more details, see the *Styles* vignette on the package website.
 #' @param showMinCellCount If `TRUE`, suppressed estimates will be indicated with
 #' "<\{min_cell_count\}", otherwise, the default `na` defined in `.options` will be
 #' used.

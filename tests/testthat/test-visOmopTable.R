@@ -68,8 +68,8 @@ test_that("visOmopTable", {
   )
   expect_true("flextable" == class(fx2))
   expect_true(all(c(
-    'Cohort name', 'Age group', 'Sex', 'Variable name\nnumber subjects\nVariable level\n-\nEstimate name\nN',
-    'Variable name\nage\nVariable level\n-\nEstimate name\nmean, sd',
+    'Cohort name', 'Age group', 'Sex', 'Variable name\nnumber subjects\nVariable level\n–\nEstimate name\nN',
+    'Variable name\nage\nVariable level\n–\nEstimate name\nmean, sd',
     'Variable name\nMedications\nVariable level\nAmoxiciline\nEstimate name\nN%',
     'Variable name\nMedications\nVariable level\nIbuprofen\nEstimate name\nN%'
   ) %in% colnames(fx2$body$dataset)))
@@ -140,7 +140,7 @@ test_that("visOmopTable", {
   result$estimate_value[1:3] <- NA_character_
 
   expect_equal(visOmopTable(result, type = "tibble")$`Estimate value`[1:6],c(
-    NA_character_, NA_character_, NA_character_, "<10,000,000", "<10,000,000", "<10,000,000"
+    "–", "–", "–", "<10,000,000", "<10,000,000", "<10,000,000"
   ))
 
   # woring group column
@@ -329,7 +329,6 @@ test_that("columnOrder and factor", {
   )
 })
 
-
 test_that("empty table", {
   gt <- visOmopTable(omopgenerics::emptySummarisedResult(), type = "gt")
   fx <- visOmopTable(omopgenerics::emptySummarisedResult(), type = "flextable")
@@ -394,18 +393,23 @@ test_that("test styles", {
   skip_on_cran()
   # VISUAL STYLE INSPECTION IN DIFFERENT SCENARIOS
   res <- mockSummarisedResult()
-  visOmopTable(res, header = c("HEADER", "strata"), .options = list(style = "default"))
-  visOmopTable(res, .options = list(style = "default"), groupColumn = "cohort_name")
-  visOmopTable(res, .options = list(style = "default"))
-  visOmopTable(res, header = c("HEADER", "strata"), .options = list(style = "darwin"))
-  visOmopTable(res, .options = list(style = "darwin"), groupColumn = "cohort_name")
-  visOmopTable(res, .options = list(style = "darwin"))
-  visOmopTable(res, header = c("HEADER", "strata"), .options = list(style = "default"), type = "flextable")
-  visOmopTable(res, .options = list(style = "default"), groupColumn = "cohort_name", type = "flextable")
-  visOmopTable(res, .options = list(style = "default"), type = "flextable")
-  visOmopTable(res, header = c("HEADER", "strata"), .options = list(style = "darwin"), type = "flextable")
-  visOmopTable(res, .options = list(style = "darwin"), groupColumn = "cohort_name", type = "flextable")
-  visOmopTable(res, .options = list(style = "darwin"), type = "flextable")
+  visOmopTable(res, header = c("HEADER", "strata"), style = "default")
+  visOmopTable(res, style = "default", groupColumn = "cohort_name")
+  visOmopTable(res, style = "default")
+  visOmopTable(res, header = c("HEADER", "strata"), style = "darwin")
+  visOmopTable(res, style = "darwin", groupColumn = "cohort_name")
+  visOmopTable(res, style = "darwin")
+  visOmopTable(res, header = c("HEADER", "strata"), style = "default", type = "flextable")
+  visOmopTable(res, style = "default", groupColumn = "cohort_name", type = "flextable")
+  visOmopTable(res, style = "default", type = "flextable")
+  visOmopTable(res, header = c("HEADER", "strata"), style = "darwin", type = "flextable")
+  visOmopTable(res, style = "darwin", groupColumn = "cohort_name", type = "flextable")
+  visOmopTable(res, header = c("HEADER", "strata"), style = "default", type = "tinytable")
+  visOmopTable(res, style = "default", groupColumn = "cohort_name", type = "tinytable")
+  visOmopTable(res, style = "default", type = "tinytable")
+  visOmopTable(res, header = c("HEADER", "strata"), style = "darwin", type = "tinytable")
+  visOmopTable(res, style = "darwin", groupColumn = "cohort_name", type = "tinytable")
+  visOmopTable(res, style = "darwin", type = "tinytable")
 })
 
 test_that("global options works", {

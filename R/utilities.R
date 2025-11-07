@@ -70,38 +70,29 @@ validateEstimateName <- function(format, call = parent.frame()) {
   return(invisible(format))
 }
 
-validateStyle <- function(style, tableFormatType) {
-  if (tableFormatType != "tibble") {
-    if (is.list(style) | is.null(style)) {
-      omopgenerics::assertList(style, null = TRUE, named = TRUE)
-      if (is.list(style)) {
-        notIn <- switch (tableFormatType,
-          "datatable" = !names(style) %in% names(datatableStyleInternal("default")),
-          "reactable" = !names(style) %in% names(reactableStyleInternal("default")),
-          "gt" = !names(style) %in% names(gtStyleInternal("default")),
-          "flextable" = !names(style) %in% names(flextableStyleInternal("default"))
-        )
-        if (sum(notIn) > 0 & tableFormatType == "datatable") {
-          cli::cli_abort(c("`style` can only be defined for the following table parts in `datatable`: {datatableStyleInternal('default') |> names()}.",
-                           "x" =  "{.strong {names(style)[notIn]}} {?is/are} not one of them."))
-        }
-        if (sum(notIn) > 0 & tableFormatType == "reactable") {
-          cli::cli_abort(c("`style` can only be defined for the following table parts in `reactable`: {datatableStyleInternal('default') |> names()}.",
-                           "x" =  "{.strong {names(style)[notIn]}} {?is/are} not one of them."))
-        }
-        if (sum(notIn) > 0 & !tableFormatType %in% c("datatable", "reactable")) {
-          names <- c("header", "header_name", "header_level", "column_name", "group_label", "title", "subtitle", "body")
-          cli::cli_abort(c("`style` can only be defined for the following table parts in `gt` and `flextable`: {names}.",
-                           "x" =  "{.strong {names(style)[notIn]}} {?is/are} not one of them."))
-        }
-      }
-    } else if (is.character(style)) {
-      omopgenerics::assertCharacter(style, null = TRUE)
-      eval(parse(text = paste0("style <- ", tableFormatType, "StyleInternal(styleName = style)")))
-    } else {
-      cli::cli_abort(paste0("Style must be one of 1) a named list of ", tableFormatType, " styling functions,
-                   2) a pre-defined style (see options in tableStyle()), or 3) NULL."))
-    }
+validateCustomStyle <- function(style, tableFormatType) {
+  if (tableFormatType == "tibble") {
+    return(style)
+  }
+  notIn <- switch (tableFormatType,
+                   "datatable" = !names(style) %in% names(defaultDatatable()),
+                   "reactable" = !names(style) %in% names(defaultReactable()),
+                   "gt" = !names(style) %in% labelsGt(),
+                   "flextable" = !names(style) %in% labelsFlextable(),
+                   "tinytable" = !names(style) %in% labelsTinytable()
+  )
+  if (sum(notIn) > 0 & tableFormatType == "datatable") {
+    cli::cli_abort(c("`style` can only be defined for the following table parts in `datatable`: {datatableStyleInternal('default') |> names()}.",
+                     "x" =  "{.strong {names(style)[notIn]}} {?is/are} not one of them."))
+  }
+  if (sum(notIn) > 0 & tableFormatType == "reactable") {
+    cli::cli_abort(c("`style` can only be defined for the following table parts in `reactable`: {datatableStyleInternal('default') |> names()}.",
+                     "x" =  "{.strong {names(style)[notIn]}} {?is/are} not one of them."))
+  }
+  if (sum(notIn) > 0 & !tableFormatType %in% c("datatable", "reactable")) {
+    names <- c("header", "header_name", "header_level", "column_name", "group_label", "title", "subtitle", "body")
+    cli::cli_abort(c("`style` can only be defined for the following table parts in `gt` and `flextable`: {names}.",
+                     "x" =  "{.strong {names(style)[notIn]}} {?is/are} not one of them."))
   }
   return(style)
 }
@@ -227,17 +218,6 @@ validateShowMinCellCount <- function(showMinCellCount, set) {
   return(invisible(showMinCellCount))
 }
 
-validateSettingsAttribute <- function(result, call = parent.frame()) {
-  set <- attr(result, "settings")
-  if (is.null(set)) {
-    cli::cli_abort("`result` does not have attribute settings", call = call)
-  }
-  if (!"result_id" %in% colnames(set) | !"result_id" %in% colnames(result)) {
-    cli::cli_abort("'result_id' must be part of both `result` and its settings attribute.", call = call)
-  }
-  return(invisible(set))
-}
-
 checkVisTableInputs <- function(header, groupColumn, hide, call = parent.frame()) {
   int1 <- dplyr::intersect(header, groupColumn[[1]])
   int2 <- dplyr::intersect(header, hide)
@@ -305,12 +285,59 @@ validateHeader <- function(x, header, hide, settingsColumn = NULL, summarisedRes
   return(list(hide = hide, settingsColumn = settingsColumn))
 }
 
-validateType <- function(type) {
-  omopgenerics::assertChoice(type, choices = plotType(), length = 1)
+validateType <- function(type, obj, call = parent.frame()) {
+  # check if type is NULL
+  if (is.null(type)) {
+    key <- paste0("visOmopResults.", obj, "Type")
+    default <- switch(obj, "table" = "gt", "plot" = "ggplot")
+    type <- getOption(x = key, default = default)
+  }
+
+  # assert choice
+  choices <- switch(obj, "table" = tableType(), "plot" = plotType())
+  omopgenerics::assertChoice(type, choices = choices, length = 1, call = call)
+
+  # check installed for plots
   if (type %in% c("ggplot", "plotly")) {
     rlang::check_installed("ggplot2")
   }
   if (type == "plotly") {
     rlang::check_installed("plotly")
   }
+
+  return(type)
+}
+
+validateStyle <- function(style, obj, type, fontsizeRef = NULL, call = parent.frame()) {
+  # check if style is NULL
+  if (is.null(style)) {
+    key <- paste0("visOmopResults.", obj, "Style")
+    style <- getOption(x = key, default = "")
+    if (style == "") {
+      if (file.exists("_brand.yml")) {
+        style <- "_brand.yml"
+      } else {
+        style <- "default"
+      }
+    }
+  }
+
+  # correctly format style
+  if (!is.list(style)) {
+    styleFile <- checkStyle(style = style, call = call)
+    content <- yaml::read_yaml(file = styleFile)
+    if ("brand" %in% names(content)) {
+      content <- content$brand
+    }
+    internalStyle <- brandToList(content = content)
+    if (obj == "table") {
+      style <- formatTableStyle(x = internalStyle, type = type)
+    } else if (obj == "plot") {
+      style <- formatPlotStyle(x = internalStyle, fontsizeRef = fontsizeRef)
+    }
+  } else {
+    style <- validateCustomStyle(style = style, tableFormatType = type)
+  }
+
+  return(style)
 }

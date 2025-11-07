@@ -18,8 +18,6 @@ test_that("tinytable", {
       "title" = list(gt::cell_text(weight = "bold", color = "blue"))
     ),
     na = NULL,
-    title = "Test 1",
-    subtitle = NULL,
     caption = NULL,
     groupColumn = NULL,
     groupAsColumn = FALSE,
@@ -58,8 +56,6 @@ test_that("tinytable", {
       "body" = list(line = "lbtr", line_color = "#003399")
     ),
     na = "-",
-    title = "Title test 2",
-    subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
     groupColumn = list("group_level" = "group_level"),
     groupAsColumn = FALSE,
@@ -87,8 +83,6 @@ test_that("tinytable", {
       "header_name" = list(background = "black", color = "white")
     ),
     na = "-",
-    title = "Title test 2",
-    subtitle = "Subtitle for test 2",
     caption = "*This* is the caption",
     groupColumn = list("group_level" = "group_level"),
     groupAsColumn = TRUE,

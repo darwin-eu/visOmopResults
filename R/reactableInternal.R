@@ -16,33 +16,53 @@
 
 reactableInternal <- function(x,
                               delim = "\n",
-                              style = "default",
-                              groupColumn = NULL) {
-
+                              style = styleRT(),
+                              groupColumn = NULL,
+                              groupOrder = NULL) {
   # Package checks
   rlang::check_installed("reactable")
-
-  styleUser <- validateStyle(style, "reactable")
-  style <- reactableStyleInternal(styleName = "default")
-  style[names(styleUser)] <- styleUser
 
   # Eliminate prefixes
   colnames(x) <- gsub("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", "", colnames(x))
 
   # groupColumn
-  if (length(groupColumn) > 0) {
+  if (length(groupColumn[[1]]) != 0) {
     nameGroup <- names(groupColumn)
     x <- x |>
       tidyr::unite(
         !!nameGroup, groupColumn[[1]], sep = "; ", remove = TRUE, na.rm = TRUE
-      ) |>
-      dplyr::relocate(!!nameGroup)
+      )
+    groupLevel <- unique(x[[nameGroup]])
+    if (!is.null(groupOrder)) {
+      if (any(!groupLevel %in% groupOrder)) {
+        cli::cli_abort(c(
+          "x" = "`groupOrder` supplied does not macth the group variable created based on `groupName`.",
+          "i" = "Group variables to use in `groupOrder` are the following: {groupLevel}"
+        ))
+      } else {
+        groupLevel <- groupOrder
+      }
+    }
+    x <- x |>
+      dplyr::mutate(!!nameGroup := factor(.data[[nameGroup]], levels = groupLevel)) |>
+      dplyr::arrange_at(nameGroup) |>
+      dplyr::relocate(dplyr::all_of(nameGroup))
   } else {
     nameGroup <- NULL
   }
 
   # get headers
   out <- getReactableHeaders(x, delim)
+
+  # add defaults
+  style <- defaultReactable() |>
+    purrr::imap(\(x, nm) {
+      if (nm %in% names(style)) {
+        style[[nm]]
+      } else {
+        x
+      }
+    })
 
   # reactable
   reactable::reactable(

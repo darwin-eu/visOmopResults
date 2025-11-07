@@ -12,7 +12,7 @@ reference:
   - matches("format")
 - subtitle: Helper table functions
 - contents:
-  - matches("tableType|tableOptions|tableStyleCode|emptyTable|tableColumns|setGlobalTableOptions|tableStyle")
+  - matches("tableType|tableOptions|emptyTable|tableColumns|setGlobalTableOptions|tableStyle")
 
 - title: Plot functions
 - contents:
