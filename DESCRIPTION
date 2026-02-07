@@ -1,6 +1,6 @@
 Package: visOmopResults
 Title: Graphs and Tables for OMOP Results
-Version: 1.4.0
+Version: 1.4.2.09
 Authors@R: c(
     person(
       "Martí", "Català", , "marti.catalasabate@ndorms.ox.ac.uk", 
@@ -36,6 +36,7 @@ License: Apache License (>= 2)
 URL: https://darwin-eu.github.io/visOmopResults/, https://github.com/darwin-eu/visOmopResults
 BugReports: https://github.com/darwin-eu/visOmopResults/issues
 Imports: 
+    brand.yml,
     cli,
     dplyr,
     generics,
@@ -44,14 +45,13 @@ Imports:
     purrr,
     rlang,
     stringr,
-    tidyr,
-    yaml
+    systemfonts,
+    tidyr
 Suggests: 
     bslib,
     CohortCharacteristics,
     covr,
     DT,
-    extrafont,
     flextable (>= 0.9.5),
     ggplot2,
     gt,
@@ -71,7 +71,8 @@ Suggests:
     shinyWidgets,
     sortable,
     testthat (>= 3.0.0),
-    tinytable (>= 0.14.0)
+    tinytable (>= 0.14.0),
+    yaml
 VignetteBuilder: 
     knitr
 Depends: 

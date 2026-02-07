@@ -26,7 +26,8 @@ test_that("Multi-level headers generate correct HTML", {
     "cohort_name\ncohort2\nsex\nmale" = NA,
     "cohort_name\ncohort2\nsex\nfemale" = NA
   )
-  expect_error(reactableInternal(x))
+  expect_warning(dt <- reactableInternal(x))
+  expect_snapshot(dt$x)
 
   x <- dplyr::tibble(
     "cdm_name" = c("A", "A", "B", "B", "C", "C"),

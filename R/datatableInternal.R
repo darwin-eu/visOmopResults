@@ -21,10 +21,6 @@ datatableInternal <- function(x,
                               groupColumn = NULL,
                               groupOrder = NULL) {
 
-  # Package checks
-  rlang::check_installed("DT")
-  rlang::check_installed("htmltools")
-
   options <- style[c(
     "scrollX", "scrollY", "scrollCollapse", "pageLength", "lengthMenu",
     "searchHighlight", "scroller", "deferRender", "fixedColumns",

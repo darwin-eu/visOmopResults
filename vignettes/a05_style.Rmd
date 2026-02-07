@@ -63,7 +63,7 @@ The `.yml` structure can be divided into four main sections:
 
 - **Color:** Defines the color palette and the default `background` and `foreground` colors used when a plot/table section does not override them.
 - **Typography:** Defines default font families and sizes for base text, plots, and tables (these can be overridden in the plot/table sections).
-- **Plot:** Plot-specific settings such as background color, facet header color, header text color, grid color, axis color, border color, and legend position. Font settings are taken from the typography section unless overridden here.
+- **Plot:** Plot-specific settings such as background color, facet header color, header text color and bold, grid color, axis color, border color, and legend position. Font settings are taken from the typography section unless overridden here.
 - **Table:** Table-specific settings. You can set an overall `border-color` and `border-width`, or override settings per table section. Table sections include: `header`, `header-name`, `header-level`, `column-name`, `group-label`, `title`, `subtitle`, and `body`. For each section you can set properties such as `background-color`, `text-color`, `text-bold`, `align`, `font-size`, `border-color`, and `border-width`.
 
 ## Style hierarchy
@@ -73,18 +73,18 @@ Each plot and table element follows a style hierarchy. If a value isn’t specif
 ```{r, echo=FALSE}
 tibble(
   "type" = "Plot",
-  "Part" = c("Background color", "Header (facet) color", "Header (facet) text color", "Border color", "Grid color", "Axis color", "Legend position", "Font family", "Font size"),
-  "Option 1" = c("plot:background-color", "plot:header-color", "plot:header-text-color", "plot:border-color", "plot:grid-major-color", "plot:axis-color", "plot:legend-position", "typography:plot", "plot:font-size"),
-  "Option 2" = c("color:background", "color:foreground", "-", "color:foreground", "color:foreground", "-", "-",  "typography:base", "typography:plot-font-size"),
-  "Option 3" = c(rep("-", 8), "typography:base-font-size")
+  "Part" = c("Background color", "Header (facet) color", "Header (facet) text color", "Header (facet) text bold", "Border color", "Grid color", "Axis color", "Legend position", "Font family", "Font size"),
+  "Option 1" = c("defaults:visOmopResults:plot:background-color", "defaults:visOmopResults:plot:header-color", "defaults:visOmopResults:plot:header-text-color", "defaults:visOmopResults:plot:header-text-bold", "defaults:visOmopResults:plot:border-color", "defaults:visOmopResults:plot:grid-major-color", "defaults:visOmopResults:plot:axis-color", "defaults:visOmopResults:plot:legend-position", "defaults:visOmopResults:plot:font_family", "defaults:visOmopResults:plot:font_size"),
+  "Option 2" = c("color:background", "color:foreground", "-", "color:foreground", "-", "color:foreground", "-", "-",  "typography:base:family", "defaults:visOmopResults:plot:font_size"),
+  "Option 3" = c(rep("-", 9), "typography:base:size")
 ) |> 
   bind_rows(
     tibble(
       "type" = "Table section",
       "Part" = c("Background color", "Text bold", "Text color", "Text align", "Font size", "Font family", "Border color", "Border width"),
-      "Option 1" = c("table:[section_name]:background-color", "table:[section_name]:text-bold", "table:[section_name]:text-color", "table:[section_name]:align", "table:[section_name]:font-size", "table:[section_name]:font-family", "table:[section_name]:border-color", "table:[section_name]:border-width"),
-      "Option 2" = c("color:background", "-", "-", "-", "typography:table-font-size", "typography:table", "table:border-color", "table:border-width"),
-      "Option 3" = c("-", "-", "-", "-", "typography:base-font-size", "typography:base", "-", "-")
+      "Option 1" = c("defaults:visOmopResults:table:[section_name]:background-color", "defaults:visOmopResults:table:[section_name]:text-bold", "defaults:visOmopResults:table:[section_name]:text-color", "defaults:visOmopResults:table:[section_name]:align", "defaults:visOmopResults:table:[section_name]:font-size", "defaults:visOmopResults:table:[section_name]:font-family", "defaults:visOmopResults:table:[section_name]:border-color", "defaults:visOmopResults:table:[section_name]:border-width"),
+      "Option 2" = c("color:background", "-", "-", "-", "defaults:visOmopResults:table:font-size", "defaults:visOmopResults:table:font_family", "defaults:visOmopResults:table:border-color", "defaults:visOmopResults:table:border-width"),
+      "Option 3" = c("-", "-", "-", "-", "defaults:visOmopResults:typography:base:size", "typography:base:family", "-", "-")
     )
   ) |>
   visTable(groupColumn = "type")
@@ -261,46 +261,41 @@ barPlot(
   scale_fill_manual(values = c("#999999", "#E69F00", "#56B4E9"))
 ```
 
-# Using non-supported font families for `ggplot`
+# Using non-registered font families in ggplot2
 
-If you want to use a font that is not already installed on your system, follow these steps:
+To use a specific font family in ggplot2, the font must be:
 
-## 1. Download and install the font (system-level)
-- **macOS:** double-click the `.ttf` file and click *Install Font*. Example Calibri TTF (if not available on your system): https://www.freefontdownload.org/en/calibri.font
-- **Windows:** right-click the `.ttf` file and choose *Install* (or *Install for all users*).
+1. **Installed** in the operating system, and
 
+2. **Available** to R’s graphics device (registered, in the case of Windows).
 
-After installing, **restart RStudio** so the system font registry is updated.
+Below is an example using the Calibri font.
 
-## 2. Register the font with the `extrafont` package (R)
+## 1. Install the font in the system
+
+On both **macOS** and **Windows**, install the .ttf file by double-clicking it and clicking Install.
+
+Example source: https://www.freefontdownload.org/en/calibri.font
+
+After installing new system fonts, **restart R** or **RStudio** so the font registry is refreshed.
+
+## 2. Register the font 
+
+On **macOS**, most system fonts are automatically available to R’s Quartz graphics device (no need to register).
+
+On **Windows**, however, the base graphics device does not automatically expose all installed system fonts.
+You must register a font before ggplot2 can use it. This can be done as follows:
 
 ```{r, eval=FALSE}
-library(extrafont)
-
-# import system fonts (may take several minutes) - just needs to be done when 
-# a new font is installed 
-font_import(paths = NULL, prompt = FALSE)
-
-# make fonts available for graphic devices using R
-loadfonts(device = "win")  
+windowsFonts(Calibri = windowsFont("Calibri"))
 ```
 
-```{r, echo=FALSE}
-extrafont::loadfonts(device = "win")  
-```
-
-The previous process is embeded in the function `requireExtrafont()` from visOmopResults, so the user could run that single function instead.
-
-Notes:
-- `font_import()` scans system font directories. If you want to import fonts from a custom folder, pass `paths = "path/to/folder"`.
-
-- `font_import()` can take a long time the first time it runs. 
-
-- `extrafont::loadfonts()` makes fonts available to R's graphics devices. For PDFs, call `loadfonts(device = "pdf")` before saving plots.
+* The `visOmopResults` package automatically registers any installed font when needed, so users generally do not have to run this manually.
 
 ## 3. Create plots with styles that use the font
 
-Set the font family in the `.yml` file, or in `element_text()` calls within `theme`. As an example we run with "darwin" style, which if "Calibri" is loaded will use it (otherwise it defaults to "sans").
+You can specify the font family in your YAML configuration, or directly in `theme()` using `element_text()`.
+Below is an example using the "darwin" plot style, which will use "Calibri" when available, otherwise falling back to "sans":
 
 ```{r}
 barPlot(
@@ -313,11 +308,12 @@ barPlot(
 )
 ```
 
-Remember the following:
+## Important notes
+- After installing system fonts, restart R/RStudio so R can detect them.
 
-- After installing system fonts, restart R/RStudio so R sees the new fonts.
+- On Windows, font registrations done with `windowsFonts()` last only for the current R session and revert after restarting.
 
-- Use `extrafont::font_import()` once (or when you add new fonts) — it populates the extrafont database.
+- For font detection across platforms, `visOmopResults` uses the `systemfonts` package and registers fonts on Windows when needed.
 
 # Final remarks
 

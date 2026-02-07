@@ -30,10 +30,6 @@ fxTableInternal <- function(x,
                             groupOrder = NULL,
                             merge = NULL) {
 
-  # Package checks
-  rlang::check_installed("flextable")
-  rlang::check_installed("officer")
-
   flextable::set_flextable_defaults(table.layout = "autofit")
 
   # na

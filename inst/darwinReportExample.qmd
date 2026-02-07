@@ -8,7 +8,6 @@ execute:
   echo: false
   message: false 
   warning: false 
-lof: TRUE
 ---
 
 ```{r, set-up}
@@ -39,8 +38,6 @@ tableType <- "flextable"
 plotType <- "ggplot"
 setGlobalPlotOptions(style = style, type = plotType) 
 setGlobalTableOptions(style = style, type = tableType)
-# Require package "extrafont" to have calibri font in ggplot figures
-requireExtrafont()
 # Figure and table counts
 num_table <- 1
 num_fig <- 1
@@ -49,7 +46,7 @@ num_fig <- 1
 
 ```{r}
 cat(paste0(
-  ':::{custom-style="CaptionDarwin"}\n',
+  ':::{custom-style="Caption"}\n',
   '**Table ', num_table, ':** Baseline population characteristics.\n',
   ':::\n'
 ))
@@ -92,14 +89,14 @@ data$summarised_characteristics |>
     hide = c("cdm_name", "cohort_name")
   ) 
 ```
-:::{custom-style="FooterDarwin"}
+:::{custom-style="FigureFooter"}
 HIV: Human Immunodeficiency Virus.
 :::
 
 
 ```{r}
-# CaptionDarwin:
-cat(paste0(':::{custom-style="CaptionDarwin"}\n **Figure ', num_fig, ':** Number of records in cohorts.\n:::\n'))
+# Caption:
+cat(paste0(':::{custom-style="Caption"}\n **Figure ', num_fig, ':** Number of records in cohorts.\n:::\n'))
 num_fig <- num_fig + 1
 
 data$summarised_characteristics |>
@@ -111,8 +108,8 @@ data$summarised_characteristics |>
 
 
 ```{r}
-# CaptionDarwin:
-cat(paste0(':::{custom-style="CaptionDarwin"}\n **Figure ', num_fig, ':** Incidence over time statified by sex.\n:::\n'))
+# Caption:
+cat(paste0(':::{custom-style="Caption"}\n **Figure ', num_fig, ':** Incidence over time statified by sex.\n:::\n'))
 num_fig <- num_fig + 1
 
 data$incidence |>
@@ -124,8 +121,8 @@ data$incidence |>
 
 
 ```{r}
-# CaptionDarwin:
-cat(paste0(':::{custom-style="CaptionDarwin"}\n **Table ', num_table, ':** Measurement value change after intervention.\n:::\n'))
+# Caption:
+cat(paste0(':::{custom-style="Caption"}\n **Table ', num_table, ':** Measurement value change after intervention.\n:::\n'))
 num_table <- num_table + 1
 
 data$measurement_change |> 
@@ -153,8 +150,8 @@ data$measurement_change |>
 
 
 ```{r}
-# CaptionDarwin:
-cat(paste0(':::{custom-style="CaptionDarwin"}\n **Figure ', num_fig, ':** Measurement value change after intervention.\n:::\n'))
+# Caption:
+cat(paste0(':::{custom-style="Caption"}\n **Figure ', num_fig, ':** Measurement value change after intervention.\n:::\n'))
 num_fig <- num_fig + 1
 
 data$measurement_change |>  

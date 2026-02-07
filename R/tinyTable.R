@@ -28,9 +28,6 @@ tinytableInternal <- function(x,
                               groupOrder = NULL,
                               merge = NULL) {
 
-  # Package checks
-  rlang::check_installed("tinytable")
-
   # na
   if (!is.null(na)) {
     x <- x |>

@@ -60,6 +60,7 @@ visTable <- function(result,
                      style = NULL,
                      .options = list()) {
   # initial checks
+  type <- validateType(type = type, obj = "table")
   omopgenerics::assertTable(result)
   omopgenerics::assertCharacter(hide, null = TRUE)
   omopgenerics::assertCharacter(header, null = TRUE)
@@ -78,7 +79,10 @@ visTable <- function(result,
 
   # format estimate values and names
   if ("estimate_value" %in% colnames(result)) {
-    if (!any(c("estimate_name", "estimate_type") %in% colnames(result))) {
+    if (type %in% c("reactable", "datatable") & length(estimateName) == 0) {
+      result <- result |>
+        dplyr::mutate(estimate_value = as.numeric(.data$estimate_value))
+    } else if (!any(c("estimate_name", "estimate_type") %in% colnames(result))) {
       cli::cli_inform("`estimate_name` and `estimate_type` must be present in `result` to apply `formatEstimateValue()`.")
     } else {
       result <- result |>

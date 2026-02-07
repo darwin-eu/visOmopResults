@@ -1,71 +1,79 @@
-brand:
-  color:
-    palette:
-      white: "#ffffff"
-      grey233: "#e9e9e9"
-      grey217: "#d9d9d9"
-      grey200: "#c8c8c8"
-      grey225: "#e1e1e1"
-      grey37: "#252525"
-      black: "#000000"
-    background: white
-    foreground: grey225
-    primary: grey225
+color:
+  palette:
+    white: "#ffffff"
+    grey233: "#e9e9e9"
+    grey217: "#d9d9d9"
+    grey200: "#c8c8c8"
+    grey225: "#e1e1e1"
+    grey37: "#252525"
+    black: "#000000"
+  foreground: #212529
+  background: white
+  primary: #2c3e50
 
-  typography:
-    base: Arial
-    base-font-size: 11
-    table: Arial
-    table-font-size: 10
-    plot: sans
-    plot-font-size: 11
+logo:
+  path: ohdsi
 
-  plot:
-    background-color: white
-    header-color: grey225
-    header-text-color: black
-    grid-major-color: grey217
-    axis-color: grey37
-    border-color: grey225
-    legend-position: "right"
+typography:
+  base:
+    family: Arial
+    size: "11"
 
-  table:
-    header:
-      background-color: grey200
-      text-bold: TRUE
-      border-color: grey200
-      align: center
-    header-name:
-      background-color: grey217
-      text-bold: TRUE
-      border-color: grey200
-      align: center
-    header-level:
-      background-color: grey225
-      text-bold: TRUE
-      border-color: grey200
-      align: center
-    column-name:
-      background-color: grey225
-      text-bold: TRUE
-      border-color: grey200
-      align: center
-    group-label:
-      background-color: grey233
-      text-bold: TRUE
-      border-color: grey200
-    title:
-      background-color: transparent
-      border-color: grey225
-      font-size: 15
-      align: center
-      text-bold: TRUE
-    subtitle:
-      background-color: transparent
-      align: center
-      border-color: grey225
-      font-size: 12
-      text-bold: TRUE
-    body:
-      background-color: transparent
-      border-color: grey200
+defaults:
+  shiny:
+    theme:
+      preset: flatly
+  visOmopResults:
+    plot:
+      font_family: sans
+      font_size: "11"
+      background_color: white
+      header_color: grey225
+      header_text_color: black
+      header_text_bold: TRUE
+      grid_major_color: grey217
+      axis_color: grey37
+      border_color: grey225
+      legend_position: "right"
+    table:
+      font_family: Arial
+      font_size: "10"
+      header:
+        background_color: grey200
+        text_bold: TRUE
+        border_color: grey200
+        align: center
+      header_name:
+        background_color: grey217
+        text_bold: TRUE
+        border_color: grey200
+        align: center
+      header_level:
+        background_color: grey225
+        text_bold: TRUE
+        border_color: grey200
+        align: center
+      column_name:
+        background_color: grey225
+        text_bold: TRUE
+        border_color: grey200
+        align: center
+      group_label:
+        background_color: grey233
+        text_bold: TRUE
+        border_color: grey200
+      title:
+        background_color: transparent
+        border_color: grey225
+        font_size: 15
+        align: center
+        text_bold: TRUE
+      subtitle:
+        background_color: transparent
+        align: center
+        border_color: grey225
+        font_size: 12
+        text_bold: TRUE
+      body:
+        background_color: transparent
+        border_color: grey200

@@ -1,3 +1,9 @@
+# visOmopResults 1.4.1
+
+* Handling not registered fonts for `ggplot2` without `extrafont` package
+* Numeric `estimate_value` column for `reactable` and `datatable`
+* Update style format for compatibility with `brand.yml`
+
 # visOmopResults 1.4.0
 
 * Added option to define styles with `.yml` files using the `brand.yml` framework

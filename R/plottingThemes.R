@@ -36,28 +36,3 @@ themeVisOmop <- function(style = NULL, fontsizeRef = NULL) {
   omopgenerics::assertNumeric(fontsizeRef, length = 1, null = TRUE)
   validateStyle(style = style, obj = "plot", type = "ggplot", fontsizeRef = fontsizeRef)
 }
-
-#' Get Calibri font for "darwin" plot style
-#' @description Imports and registers the Calibri font for use in ggplot2 plots
-#'   when using the themeDarwin.
-#' @details This function is required only once per R installation or after
-#'   installing a new font. It uses the extrafont package to map system fonts
-#'   to R's graphics devices.
-#' @param device Character string indicating the graphics device to load the
-#'   fonts into (e.g., "win", "pdf", "postscript"). Defaults to "win" (Windows).
-#' @return Invisibly returns TRUE on successful registration.
-#' @export
-requireExtrafont <- function(device = "win") {
-  rlang::check_installed("extrafont")
-
-  # font_import() only if it hasn't been done before
-  if (!("Calibri" %in% extrafont::fonts())) {
-    cli::cli_inform("Importing system fonts (required once). This may take several minutes.")
-    extrafont::font_import(prompt = FALSE)
-  }
-
-  cli::cli_inform("Loading Calibri font for the '{device}' graphics device.")
-  extrafont::loadfonts(device = device, quiet = TRUE)
-
-  return(invisible(TRUE))
-}

@@ -97,7 +97,7 @@ penguinsSummary |>
   )
 ```
 
-We can use the argument `style` to update the theme of the plot to either the visOmopResults *default* style, or our *darwin* style. For *darwin* style, if we want to use the official "Calibri" font, we will need first the package `extrafont`. We can get the package and load the font using the function `requireExtrafont`.
+We can use the argument `style` to update the theme of the plot to either the visOmopResults *default* style, or our *darwin* style. To use the Calibri font family for plots you will need to have the font installed, and for **Windows** registered in R graphics. See vignette on styles.
 
 ```{r}
 penguinsSummary |>
