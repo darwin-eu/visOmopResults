@@ -1,4 +1,4 @@
-# visOmopResults 1.4.1
+# visOmopResults 1.4.2
 
 * Handling not registered fonts for `ggplot2` without `extrafont` package
 * Numeric `estimate_value` column for `reactable` and `datatable`
