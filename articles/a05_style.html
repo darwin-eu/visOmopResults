@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visOmopResults</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.0</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2.09</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -67,7 +67,7 @@
       <img src="../logo.png" class="logo" alt=""><h1>Styles</h1>
             
       
-      <small class="dont-index">Source: <a href="https://github.com/darwin-eu/visOmopResults/blob/v.1.4.0/vignettes/a05_style.Rmd" class="external-link"><code>vignettes/a05_style.Rmd</code></a></small>
+      <small class="dont-index">Source: <a href="https://github.com/darwin-eu/visOmopResults/blob/main/vignettes/a05_style.Rmd" class="external-link"><code>vignettes/a05_style.Rmd</code></a></small>
       <div class="d-none name"><code>a05_style.Rmd</code></div>
     </div>
 
@@ -110,75 +110,85 @@ be found <a href="https://github.com/darwin-eu/visOmopResults/tree/main/inst/bra
 </h3>
 <p>We use the <code>"darwin"</code> style as an example. The code chunk
 below shows the structure of its <code>.yml</code> file:</p>
-<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">brand</span><span class="kw">:</span></span>
-<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="at">  </span><span class="fu">color</span><span class="kw">:</span></span>
-<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="at">    </span><span class="fu">palette</span><span class="kw">:</span></span>
-<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="at">      </span><span class="fu">white</span><span class="kw">:</span><span class="at"> </span><span class="st">'#ffffff'</span></span>
-<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="at">      </span><span class="fu">darwin-blue</span><span class="kw">:</span><span class="at"> </span><span class="st">'#003399'</span></span>
-<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="at">    </span><span class="fu">background</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="at">    </span><span class="fu">foreground</span><span class="kw">:</span><span class="at"> darwin-blue</span></span>
-<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="at">  </span><span class="fu">typography</span><span class="kw">:</span></span>
-<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="at">    </span><span class="fu">base</span><span class="kw">:</span><span class="at"> Calibri</span></span>
-<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="at">    </span><span class="fu">base-font-size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
-<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="at">    </span><span class="fu">plot</span><span class="kw">:</span><span class="at"> Calibri</span></span>
-<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="at">    </span><span class="fu">plot-font-size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="at">    </span><span class="fu">table</span><span class="kw">:</span><span class="at"> Calibri</span></span>
-<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="at">    </span><span class="fu">table-font-size</span><span class="kw">:</span><span class="at"> </span><span class="dv">9</span></span>
-<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="at">  </span><span class="fu">plot</span><span class="kw">:</span></span>
-<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="at">    </span><span class="fu">background-color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="at">    </span><span class="fu">header-color</span><span class="kw">:</span><span class="at"> darwin-blue</span></span>
-<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="at">    </span><span class="fu">header-text-color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="at">    </span><span class="fu">grid-major-color</span><span class="kw">:</span><span class="at"> </span><span class="st">'#d9d9d9'</span></span>
-<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="at">    </span><span class="fu">axis-color</span><span class="kw">:</span><span class="at"> </span><span class="st">'#252525'</span></span>
-<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="at">    </span><span class="fu">border-color</span><span class="kw">:</span><span class="at"> </span><span class="st">'#595959'</span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="at">    </span><span class="fu">legend-position</span><span class="kw">:</span><span class="at"> right</span></span>
-<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="at">  </span><span class="fu">table</span><span class="kw">:</span></span>
-<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="at">    </span><span class="fu">border-color</span><span class="kw">:</span><span class="at"> darwin-blue</span></span>
-<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="at">    </span><span class="fu">border-width</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="at">    </span><span class="fu">header</span><span class="kw">:</span></span>
-<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="at">      </span><span class="fu">background-color</span><span class="kw">:</span><span class="at"> darwin-blue</span></span>
-<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="at">      </span><span class="fu">text-bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="at">      </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
-<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="at">      </span><span class="fu">text-color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="at">      </span><span class="fu">border-color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="at">      </span><span class="fu">font-size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="at">    </span><span class="fu">header-name</span><span class="kw">:</span></span>
-<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="at">      </span><span class="fu">background-color</span><span class="kw">:</span><span class="at"> darwin-blue</span></span>
-<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="at">      </span><span class="fu">text-bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="at">      </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
-<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="at">      </span><span class="fu">text-color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="at">      </span><span class="fu">border-color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="at">      </span><span class="fu">font-size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
-<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="at">    </span><span class="fu">header-level</span><span class="kw">:</span></span>
-<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="at">      </span><span class="fu">background-color</span><span class="kw">:</span><span class="at"> darwin-blue</span></span>
-<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="at">      </span><span class="fu">text-bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="at">      </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
-<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="at">      </span><span class="fu">text-color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a><span class="at">      </span><span class="fu">border-color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a><span class="at">      </span><span class="fu">font-size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
-<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a><span class="at">    </span><span class="fu">column-name</span><span class="kw">:</span></span>
-<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a><span class="at">      </span><span class="fu">background-color</span><span class="kw">:</span><span class="at"> darwin-blue</span></span>
-<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="at">      </span><span class="fu">text-bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a><span class="at">      </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
-<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a><span class="at">      </span><span class="fu">text-color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a><span class="at">      </span><span class="fu">border-color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a><span class="at">      </span><span class="fu">font-size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
-<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a><span class="at">    </span><span class="fu">group-label</span><span class="kw">:</span></span>
-<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a><span class="at">      </span><span class="fu">background-color</span><span class="kw">:</span><span class="at"> darwin-blue</span></span>
-<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a><span class="at">      </span><span class="fu">text-bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a><span class="at">      </span><span class="fu">text-color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a><span class="at">      </span><span class="fu">border-color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a><span class="at">    </span><span class="fu">title</span><span class="kw">:</span></span>
-<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a><span class="at">      </span><span class="fu">text-bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a><span class="at">      </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
-<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a><span class="at">      </span><span class="fu">font-size</span><span class="kw">:</span><span class="at"> </span><span class="dv">15</span></span>
-<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a><span class="at">    </span><span class="fu">subtitle</span><span class="kw">:</span></span>
-<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a><span class="at">      </span><span class="fu">text-bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a><span class="at">      </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
-<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a><span class="at">      </span><span class="fu">font-size</span><span class="kw">:</span><span class="at"> </span><span class="dv">12</span></span>
-<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a><span class="at">    </span><span class="fu">body</span><span class="kw">:</span></span>
-<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a><span class="at">      </span><span class="fu">border-width</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.5</span></span>
-<span id="cb3-69"><a href="#cb3-69" tabindex="-1"></a><span class="at">      </span><span class="fu">border-color</span><span class="kw">:</span><span class="at"> darwin-blue</span></span></code></pre></div>
+<div class="sourceCode" id="cb3"><pre class="sourceCode yaml"><code class="sourceCode yaml"><span id="cb3-1"><a href="#cb3-1" tabindex="-1"></a><span class="fu">color</span><span class="kw">:</span></span>
+<span id="cb3-2"><a href="#cb3-2" tabindex="-1"></a><span class="at">  </span><span class="fu">palette</span><span class="kw">:</span></span>
+<span id="cb3-3"><a href="#cb3-3" tabindex="-1"></a><span class="at">    </span><span class="fu">white</span><span class="kw">:</span><span class="at"> </span><span class="st">'#ffffff'</span></span>
+<span id="cb3-4"><a href="#cb3-4" tabindex="-1"></a><span class="at">    </span><span class="fu">darwin_blue</span><span class="kw">:</span><span class="at"> </span><span class="st">'#003399'</span></span>
+<span id="cb3-5"><a href="#cb3-5" tabindex="-1"></a><span class="at">  </span><span class="fu">foreground</span><span class="kw">:</span><span class="at"> black</span></span>
+<span id="cb3-6"><a href="#cb3-6" tabindex="-1"></a><span class="at">  </span><span class="fu">background</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-7"><a href="#cb3-7" tabindex="-1"></a><span class="at">  </span><span class="fu">primary</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-8"><a href="#cb3-8" tabindex="-1"></a><span class="fu">logo</span><span class="kw">:</span></span>
+<span id="cb3-9"><a href="#cb3-9" tabindex="-1"></a><span class="at">  </span><span class="fu">path</span><span class="kw">:</span><span class="at"> https://www.ema.europa.eu/sites/default/files/styles/oe_bootstrap_theme_medium_no_crop/public/2024-07/DARWINEU_logo_LARGE.png?itok=NtwlLhSX</span></span>
+<span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="fu">typography</span><span class="kw">:</span></span>
+<span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="at">  </span><span class="fu">base</span><span class="kw">:</span></span>
+<span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="at">    </span><span class="fu">family</span><span class="kw">:</span><span class="at"> Calibri</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="at">    </span><span class="fu">size</span><span class="kw">:</span><span class="at"> </span><span class="st">'11'</span></span>
+<span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="fu">defaults</span><span class="kw">:</span></span>
+<span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="at">  </span><span class="fu">shiny</span><span class="kw">:</span></span>
+<span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span></span>
+<span id="cb3-17"><a href="#cb3-17" tabindex="-1"></a><span class="at">      </span><span class="fu">preset</span><span class="kw">:</span><span class="at"> flatly</span></span>
+<span id="cb3-18"><a href="#cb3-18" tabindex="-1"></a><span class="at">  </span><span class="fu">visOmopResults</span><span class="kw">:</span></span>
+<span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="at">    </span><span class="fu">template</span><span class="kw">:</span><span class="at"> system.file("darwinReportRef.docx", package = "visOmopResults")</span></span>
+<span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="at">    </span><span class="fu">plot</span><span class="kw">:</span></span>
+<span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="at">      </span><span class="fu">font_family</span><span class="kw">:</span><span class="at"> Calibri</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="at">      </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="st">'11'</span></span>
+<span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="at">      </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="at">      </span><span class="fu">header_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="at">      </span><span class="fu">header_text_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-26"><a href="#cb3-26" tabindex="-1"></a><span class="at">      </span><span class="fu">header_text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-27"><a href="#cb3-27" tabindex="-1"></a><span class="at">      </span><span class="fu">grid_major_color</span><span class="kw">:</span><span class="at"> </span><span class="st">'#d9d9d9'</span></span>
+<span id="cb3-28"><a href="#cb3-28" tabindex="-1"></a><span class="at">      </span><span class="fu">axis_color</span><span class="kw">:</span><span class="at"> </span><span class="st">'#252525'</span></span>
+<span id="cb3-29"><a href="#cb3-29" tabindex="-1"></a><span class="at">      </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> </span><span class="st">'#595959'</span></span>
+<span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="at">      </span><span class="fu">legend_position</span><span class="kw">:</span><span class="at"> right</span></span>
+<span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="at">    </span><span class="fu">table</span><span class="kw">:</span></span>
+<span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="at">      </span><span class="fu">font_family</span><span class="kw">:</span><span class="at"> Calibri</span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="at">      </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="st">'9'</span></span>
+<span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="at">      </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="at">      </span><span class="fu">border_width</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="at">      </span><span class="fu">header</span><span class="kw">:</span></span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="at">      </span><span class="fu">header_name</span><span class="kw">:</span></span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a><span class="at">      </span><span class="fu">header_level</span><span class="kw">:</span></span>
+<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
+<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
+<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a><span class="at">      </span><span class="fu">column_name</span><span class="kw">:</span></span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
+<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
+<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a><span class="at">      </span><span class="fu">group_label</span><span class="kw">:</span></span>
+<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-69"><a href="#cb3-69" tabindex="-1"></a><span class="at">      </span><span class="fu">title</span><span class="kw">:</span></span>
+<span id="cb3-70"><a href="#cb3-70" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-71"><a href="#cb3-71" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
+<span id="cb3-72"><a href="#cb3-72" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">15</span></span>
+<span id="cb3-73"><a href="#cb3-73" tabindex="-1"></a><span class="at">      </span><span class="fu">subtitle</span><span class="kw">:</span></span>
+<span id="cb3-74"><a href="#cb3-74" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-75"><a href="#cb3-75" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
+<span id="cb3-76"><a href="#cb3-76" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">12</span></span>
+<span id="cb3-77"><a href="#cb3-77" tabindex="-1"></a><span class="at">      </span><span class="fu">body</span><span class="kw">:</span></span>
+<span id="cb3-78"><a href="#cb3-78" tabindex="-1"></a><span class="at">        </span><span class="fu">border_width</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.5</span></span>
+<span id="cb3-79"><a href="#cb3-79" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span></code></pre></div>
 <p>The <code>.yml</code> structure can be divided into four main
 sections:</p>
 <ul>
@@ -192,9 +202,9 @@ for base text, plots, and tables (these can be overridden in the
 plot/table sections).</li>
 <li>
 <strong>Plot:</strong> Plot-specific settings such as background
-color, facet header color, header text color, grid color, axis color,
-border color, and legend position. Font settings are taken from the
-typography section unless overridden here.</li>
+color, facet header color, header text color and bold, grid color, axis
+color, border color, and legend position. Font settings are taken from
+the typography section unless overridden here.</li>
 <li>
 <strong>Table:</strong> Table-specific settings. You can set an
 overall <code>border-color</code> and <code>border-width</code>, or
@@ -679,107 +689,113 @@ and table options.</p>
     </tr>
 <tr class="gt_row_group_first">
 <td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Background color</td>
-<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">plot:background-color</td>
+<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:background-color</td>
 <td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">color:background</td>
 <td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
 <td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Header (facet) color</td>
-<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">plot:header-color</td>
+<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:header-color</td>
 <td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">color:foreground</td>
 <td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
 <td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Header (facet) text color</td>
-<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">plot:header-text-color</td>
+<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:header-text-color</td>
 <td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">-</td>
 <td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
-<td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Border color</td>
-<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">plot:border-color</td>
+<td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Header (facet) text bold</td>
+<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:header-text-bold</td>
 <td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">color:foreground</td>
 <td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
+<td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Border color</td>
+<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:border-color</td>
+<td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">-</td>
+<td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
+</tr>
+<tr>
 <td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Grid color</td>
-<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">plot:grid-major-color</td>
+<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:grid-major-color</td>
 <td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">color:foreground</td>
 <td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
 <td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Axis color</td>
-<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">plot:axis-color</td>
+<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:axis-color</td>
 <td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">-</td>
 <td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
 <td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Legend position</td>
-<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">plot:legend-position</td>
+<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:legend-position</td>
 <td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">-</td>
 <td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
 <td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Font family</td>
-<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">typography:plot</td>
-<td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">typography:base</td>
+<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:font_family</td>
+<td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">typography:base:family</td>
 <td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
 <td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Font size</td>
-<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">plot:font-size</td>
-<td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">typography:plot-font-size</td>
-<td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">typography:base-font-size</td>
+<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:font_size</td>
+<td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:font_size</td>
+<td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">typography:base:size</td>
 </tr>
 <tr class="gt_group_heading_row">
 <th colspan="4" class="gt_group_heading" style="background-color: #E9E9E9; font-family: Arial; font-size: 10; font-weight: bold; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;" scope="colgroup" id="Table section">Table section</th>
     </tr>
 <tr class="gt_row_group_first">
 <td headers="Table section  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Background color</td>
-<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">table:[section_name]:background-color</td>
+<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:[section_name]:background-color</td>
 <td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">color:background</td>
 <td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
 <td headers="Table section  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Text bold</td>
-<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">table:[section_name]:text-bold</td>
+<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:[section_name]:text-bold</td>
 <td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">-</td>
 <td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
 <td headers="Table section  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Text color</td>
-<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">table:[section_name]:text-color</td>
+<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:[section_name]:text-color</td>
 <td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">-</td>
 <td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
 <td headers="Table section  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Text align</td>
-<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">table:[section_name]:align</td>
+<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:[section_name]:align</td>
 <td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">-</td>
 <td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
 <td headers="Table section  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Font size</td>
-<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">table:[section_name]:font-size</td>
-<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">typography:table-font-size</td>
-<td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">typography:base-font-size</td>
+<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:[section_name]:font-size</td>
+<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:font-size</td>
+<td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">defaults:visOmopResults:typography:base:size</td>
 </tr>
 <tr>
 <td headers="Table section  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Font family</td>
-<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">table:[section_name]:font-family</td>
-<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">typography:table</td>
-<td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">typography:base</td>
+<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:[section_name]:font-family</td>
+<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:font_family</td>
+<td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">typography:base:family</td>
 </tr>
 <tr>
 <td headers="Table section  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Border color</td>
-<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">table:[section_name]:border-color</td>
-<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">table:border-color</td>
+<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:[section_name]:border-color</td>
+<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:border-color</td>
 <td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
 <td headers="Table section  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Border width</td>
-<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">table:[section_name]:border-width</td>
-<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">table:border-width</td>
+<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:[section_name]:border-width</td>
+<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:border-width</td>
 <td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 </tbody>
@@ -820,7 +836,7 @@ plot:</p>
 <span>  colour <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>  style <span class="op">=</span> <span class="st">"darwin"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="a05_style_files/figure-html/unnamed-chunk-6-1.png" width="691.2"></p>
+<p><img src="a05_style_files/figure-html/unnamed-chunk-6-1.png" class="r-plt" alt="" width="691.2"></p>
 <p>Example: use a custom <code>.yml</code> file (path provided):</p>
 <div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/barPlot.html">barPlot</a></span><span class="op">(</span></span>
@@ -898,23 +914,23 @@ argument. The list should follow the same table section structure as the
 <span>      groupOrder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cohort2"</span>, <span class="st">"cohort1"</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<div id="shqnoohnjw" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#shqnoohnjw table {
+<div id="nrukpypjcr" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#nrukpypjcr table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#shqnoohnjw thead, #shqnoohnjw tbody, #shqnoohnjw tfoot, #shqnoohnjw tr, #shqnoohnjw td, #shqnoohnjw th {
+#nrukpypjcr thead, #nrukpypjcr tbody, #nrukpypjcr tfoot, #nrukpypjcr tr, #nrukpypjcr td, #nrukpypjcr th {
   border-style: none;
 }
 
-#shqnoohnjw p {
+#nrukpypjcr p {
   margin: 0;
   padding: 0;
 }
 
-#shqnoohnjw .gt_table {
+#nrukpypjcr .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -940,12 +956,12 @@ argument. The list should follow the same table section structure as the
   border-left-color: #FF0000;
 }
 
-#shqnoohnjw .gt_caption {
+#nrukpypjcr .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#shqnoohnjw .gt_title {
+#nrukpypjcr .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -957,7 +973,7 @@ argument. The list should follow the same table section structure as the
   border-bottom-width: 0;
 }
 
-#shqnoohnjw .gt_subtitle {
+#nrukpypjcr .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -969,7 +985,7 @@ argument. The list should follow the same table section structure as the
   border-top-width: 0;
 }
 
-#shqnoohnjw .gt_heading {
+#nrukpypjcr .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -981,13 +997,13 @@ argument. The list should follow the same table section structure as the
   border-right-color: #D3D3D3;
 }
 
-#shqnoohnjw .gt_bottom_border {
+#nrukpypjcr .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#shqnoohnjw .gt_col_headings {
+#nrukpypjcr .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1002,7 +1018,7 @@ argument. The list should follow the same table section structure as the
   border-right-color: #D3D3D3;
 }
 
-#shqnoohnjw .gt_col_heading {
+#nrukpypjcr .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1022,7 +1038,7 @@ argument. The list should follow the same table section structure as the
   overflow-x: hidden;
 }
 
-#shqnoohnjw .gt_column_spanner_outer {
+#nrukpypjcr .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1034,15 +1050,15 @@ argument. The list should follow the same table section structure as the
   padding-right: 4px;
 }
 
-#shqnoohnjw .gt_column_spanner_outer:first-child {
+#nrukpypjcr .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#shqnoohnjw .gt_column_spanner_outer:last-child {
+#nrukpypjcr .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#shqnoohnjw .gt_column_spanner {
+#nrukpypjcr .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1054,11 +1070,11 @@ argument. The list should follow the same table section structure as the
   width: 100%;
 }
 
-#shqnoohnjw .gt_spanner_row {
+#nrukpypjcr .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#shqnoohnjw .gt_group_heading {
+#nrukpypjcr .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1084,7 +1100,7 @@ argument. The list should follow the same table section structure as the
   text-align: left;
 }
 
-#shqnoohnjw .gt_empty_group_heading {
+#nrukpypjcr .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1099,15 +1115,15 @@ argument. The list should follow the same table section structure as the
   vertical-align: middle;
 }
 
-#shqnoohnjw .gt_from_md > :first-child {
+#nrukpypjcr .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#shqnoohnjw .gt_from_md > :last-child {
+#nrukpypjcr .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#shqnoohnjw .gt_row {
+#nrukpypjcr .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1126,7 +1142,7 @@ argument. The list should follow the same table section structure as the
   overflow-x: hidden;
 }
 
-#shqnoohnjw .gt_stub {
+#nrukpypjcr .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1139,7 +1155,7 @@ argument. The list should follow the same table section structure as the
   padding-right: 5px;
 }
 
-#shqnoohnjw .gt_stub_row_group {
+#nrukpypjcr .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1153,15 +1169,15 @@ argument. The list should follow the same table section structure as the
   vertical-align: top;
 }
 
-#shqnoohnjw .gt_row_group_first td {
+#nrukpypjcr .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#shqnoohnjw .gt_row_group_first th {
+#nrukpypjcr .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#shqnoohnjw .gt_summary_row {
+#nrukpypjcr .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1171,16 +1187,16 @@ argument. The list should follow the same table section structure as the
   padding-right: 5px;
 }
 
-#shqnoohnjw .gt_first_summary_row {
+#nrukpypjcr .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#shqnoohnjw .gt_first_summary_row.thick {
+#nrukpypjcr .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#shqnoohnjw .gt_last_summary_row {
+#nrukpypjcr .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1190,7 +1206,7 @@ argument. The list should follow the same table section structure as the
   border-bottom-color: #D3D3D3;
 }
 
-#shqnoohnjw .gt_grand_summary_row {
+#nrukpypjcr .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1200,7 +1216,7 @@ argument. The list should follow the same table section structure as the
   padding-right: 5px;
 }
 
-#shqnoohnjw .gt_first_grand_summary_row {
+#nrukpypjcr .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1210,7 +1226,7 @@ argument. The list should follow the same table section structure as the
   border-top-color: #D3D3D3;
 }
 
-#shqnoohnjw .gt_last_grand_summary_row_top {
+#nrukpypjcr .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1220,11 +1236,11 @@ argument. The list should follow the same table section structure as the
   border-bottom-color: #D3D3D3;
 }
 
-#shqnoohnjw .gt_striped {
+#nrukpypjcr .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#shqnoohnjw .gt_table_body {
+#nrukpypjcr .gt_table_body {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #FF0000;
@@ -1233,7 +1249,7 @@ argument. The list should follow the same table section structure as the
   border-bottom-color: #D3D3D3;
 }
 
-#shqnoohnjw .gt_footnotes {
+#nrukpypjcr .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1247,7 +1263,7 @@ argument. The list should follow the same table section structure as the
   border-right-color: #D3D3D3;
 }
 
-#shqnoohnjw .gt_footnote {
+#nrukpypjcr .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1256,7 +1272,7 @@ argument. The list should follow the same table section structure as the
   padding-right: 5px;
 }
 
-#shqnoohnjw .gt_sourcenotes {
+#nrukpypjcr .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1270,7 +1286,7 @@ argument. The list should follow the same table section structure as the
   border-right-color: #D3D3D3;
 }
 
-#shqnoohnjw .gt_sourcenote {
+#nrukpypjcr .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1278,72 +1294,72 @@ argument. The list should follow the same table section structure as the
   padding-right: 5px;
 }
 
-#shqnoohnjw .gt_left {
+#nrukpypjcr .gt_left {
   text-align: left;
 }
 
-#shqnoohnjw .gt_center {
+#nrukpypjcr .gt_center {
   text-align: center;
 }
 
-#shqnoohnjw .gt_right {
+#nrukpypjcr .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#shqnoohnjw .gt_font_normal {
+#nrukpypjcr .gt_font_normal {
   font-weight: normal;
 }
 
-#shqnoohnjw .gt_font_bold {
+#nrukpypjcr .gt_font_bold {
   font-weight: bold;
 }
 
-#shqnoohnjw .gt_font_italic {
+#nrukpypjcr .gt_font_italic {
   font-style: italic;
 }
 
-#shqnoohnjw .gt_super {
+#nrukpypjcr .gt_super {
   font-size: 65%;
 }
 
-#shqnoohnjw .gt_footnote_marks {
+#nrukpypjcr .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#shqnoohnjw .gt_asterisk {
+#nrukpypjcr .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#shqnoohnjw .gt_indent_1 {
+#nrukpypjcr .gt_indent_1 {
   text-indent: 5px;
 }
 
-#shqnoohnjw .gt_indent_2 {
+#nrukpypjcr .gt_indent_2 {
   text-indent: 10px;
 }
 
-#shqnoohnjw .gt_indent_3 {
+#nrukpypjcr .gt_indent_3 {
   text-indent: 15px;
 }
 
-#shqnoohnjw .gt_indent_4 {
+#nrukpypjcr .gt_indent_4 {
   text-indent: 20px;
 }
 
-#shqnoohnjw .gt_indent_5 {
+#nrukpypjcr .gt_indent_5 {
   text-indent: 25px;
 }
 
-#shqnoohnjw .katex-display {
+#nrukpypjcr .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#shqnoohnjw div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#nrukpypjcr div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1536,88 +1552,88 @@ objects differ:</p>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-6c1481a2{table-layout:auto;}.cl-6c0d1296{font-family:'Arial';font-size:20pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-6c0d12a0{font-family:'Arial';font-size:15pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-6c0d12a1{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-6c0d12aa{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-6c0d12ab{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-6c10244a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-6c102454{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-6c10245e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-6c1045a6{background-color:transparent;vertical-align: bottom;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045b0{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045b1{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045ba{background-color:transparent;vertical-align: bottom;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045bb{background-color:rgba(255, 255, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045bc{background-color:rgba(255, 255, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045c4{background-color:transparent;vertical-align: bottom;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045c5{background-color:rgba(255, 165, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045c6{background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045ce{background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045cf{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 0.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045d0{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045d1{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045d8{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045d9{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-6c1045da{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-6c1481a2">
+<style>.cl-740f3780{table-layout:auto;}.cl-7405ae4a{font-family:'Arial';font-size:20pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7405ae54{font-family:'Arial';font-size:15pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7405ae5e{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-7405ae5f{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-7405ae68{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-740a0986{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-740a099a{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-740a099b{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-740a3578{background-color:transparent;vertical-align: bottom;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a3582{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a3583{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a358c{background-color:transparent;vertical-align: bottom;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a358d{background-color:rgba(255, 255, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a3596{background-color:rgba(255, 255, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a3597{background-color:transparent;vertical-align: bottom;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a3598{background-color:rgba(255, 165, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a35a0{background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a35a1{background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a35aa{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 0.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a35ab{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a35ac{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a35b4{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a35b5{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-740a35b6{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-740f3780">
 <thead>
-<tr style="overflow-wrap:break-word;"><th colspan="8" class="cl-6c1045a6"><p class="cl-6c10244a"><span class="cl-6c0d1296">My formatted table!</span></p></th></tr>
-<tr style="overflow-wrap:break-word;"><th colspan="8" class="cl-6c1045a6"><p class="cl-6c10244a"><span class="cl-6c0d12a0">Created with the `visOmopResults` R package.</span></p></th></tr>
+<tr style="overflow-wrap:break-word;"><th colspan="8" class="cl-740a3578"><p class="cl-740a0986"><span class="cl-7405ae4a">My formatted table!</span></p></th></tr>
+<tr style="overflow-wrap:break-word;"><th colspan="8" class="cl-740a3578"><p class="cl-740a0986"><span class="cl-7405ae54">Created with the `visOmopResults` R package.</span></p></th></tr>
 <tr style="overflow-wrap:break-word;">
-<th rowspan="3" class="cl-6c1045a6"><p class="cl-6c10244a"><span class="cl-6c0d12a1">CDM name</span></p></th>
-<th rowspan="3" class="cl-6c1045a6"><p class="cl-6c10244a"><span class="cl-6c0d12a1">Age group</span></p></th>
-<th rowspan="3" class="cl-6c1045a6"><p class="cl-6c10244a"><span class="cl-6c0d12a1">Variable name</span></p></th>
-<th rowspan="3" class="cl-6c1045a6"><p class="cl-6c10244a"><span class="cl-6c0d12a1">Variable level</span></p></th>
-<th rowspan="3" class="cl-6c1045a6"><p class="cl-6c10244a"><span class="cl-6c0d12a1">Estimate name</span></p></th>
-<th colspan="3" class="cl-6c1045b0"><p class="cl-6c102454"><span class="cl-6c0d12a1">This is an overall header</span></p></th>
+<th rowspan="3" class="cl-740a3578"><p class="cl-740a0986"><span class="cl-7405ae5e">CDM name</span></p></th>
+<th rowspan="3" class="cl-740a3578"><p class="cl-740a0986"><span class="cl-7405ae5e">Age group</span></p></th>
+<th rowspan="3" class="cl-740a3578"><p class="cl-740a0986"><span class="cl-7405ae5e">Variable name</span></p></th>
+<th rowspan="3" class="cl-740a3578"><p class="cl-740a0986"><span class="cl-7405ae5e">Variable level</span></p></th>
+<th rowspan="3" class="cl-740a3578"><p class="cl-740a0986"><span class="cl-7405ae5e">Estimate name</span></p></th>
+<th colspan="3" class="cl-740a3582"><p class="cl-740a099a"><span class="cl-7405ae5e">This is an overall header</span></p></th>
 </tr>
-<tr style="overflow-wrap:break-word;"><th colspan="3" class="cl-6c1045bb"><p class="cl-6c102454"><span class="cl-6c0d12a1">Sex</span></p></th></tr>
+<tr style="overflow-wrap:break-word;"><th colspan="3" class="cl-740a358d"><p class="cl-740a099a"><span class="cl-7405ae5e">Sex</span></p></th></tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-6c1045c5"><p class="cl-6c10245e"><span class="cl-6c0d12a1">overall</span></p></th>
-<th class="cl-6c1045c5"><p class="cl-6c10245e"><span class="cl-6c0d12a1">Male</span></p></th>
-<th class="cl-6c1045c5"><p class="cl-6c10245e"><span class="cl-6c0d12a1">Female</span></p></th>
+<th class="cl-740a3598"><p class="cl-740a099b"><span class="cl-7405ae5e">overall</span></p></th>
+<th class="cl-740a3598"><p class="cl-740a099b"><span class="cl-7405ae5e">Male</span></p></th>
+<th class="cl-740a3598"><p class="cl-740a099b"><span class="cl-7405ae5e">Female</span></p></th>
 </tr>
 </thead>
 <tbody>
-<tr style="overflow-wrap:break-word;"><td colspan="8" class="cl-6c1045c6"><p class="cl-6c10245e"><span class="cl-6c0d12aa">cohort2</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="8" class="cl-740a35a0"><p class="cl-740a099b"><span class="cl-7405ae5f">cohort2</span></p></td></tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6c1045cf"><p class="cl-6c10245e"><span class="cl-6c0d12ab">mock</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">overall</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">age</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">–</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">Mean (SD)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">38.24 (7.89)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">49.35 (4.78)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">18.62 (8.61)</span></p></td>
+<td class="cl-740a35aa"><p class="cl-740a099b"><span class="cl-7405ae68">mock</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">overall</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">age</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">–</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">Mean (SD)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">38.24 (7.89)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">49.35 (4.78)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">18.62 (8.61)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6c1045d1"><p class="cl-6c10245e"><span class="cl-6c0d12ab"></span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">&lt;40</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">age</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">–</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">Mean (SD)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">82.74 (4.38)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">86.97 (0.23)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">48.21 (7.32)</span></p></td>
+<td class="cl-740a35ac"><p class="cl-740a099b"><span class="cl-7405ae68"></span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">&lt;40</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">age</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">–</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">Mean (SD)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">82.74 (4.38)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">86.97 (0.23)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">48.21 (7.32)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6c1045d8"><p class="cl-6c10245e"><span class="cl-6c0d12ab"></span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">&gt;=40</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">age</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">–</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">Mean (SD)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">66.85 (2.45)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">34.03 (4.77)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">59.96 (6.93)</span></p></td>
+<td class="cl-740a35b4"><p class="cl-740a099b"><span class="cl-7405ae68"></span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">&gt;=40</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">age</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">–</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">Mean (SD)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">66.85 (2.45)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">34.03 (4.77)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">59.96 (6.93)</span></p></td>
 </tr>
-<tr style="overflow-wrap:break-word;"><td colspan="8" class="cl-6c1045c6"><p class="cl-6c10245e"><span class="cl-6c0d12aa">cohort1</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="8" class="cl-740a35a0"><p class="cl-740a099b"><span class="cl-7405ae5f">cohort1</span></p></td></tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6c1045cf"><p class="cl-6c10245e"><span class="cl-6c0d12ab">mock</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">overall</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">age</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">–</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">Mean (SD)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">38.00 (7.94)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">12.56 (6.47)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">26.72 (7.83)</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-6c1045d1"><p class="cl-6c10245e"><span class="cl-6c0d12ab"></span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">&lt;40</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">age</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">–</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">Mean (SD)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">38.61 (5.53)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">77.74 (1.08)</span></p></td>
-<td class="cl-6c1045d0"><p class="cl-6c10245e"><span class="cl-6c0d12ab">21.21 (4.11)</span></p></td>
+<td class="cl-740a35aa"><p class="cl-740a099b"><span class="cl-7405ae68">mock</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">overall</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">age</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">–</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">Mean (SD)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">38.00 (7.94)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">12.56 (6.47)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">26.72 (7.83)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-6c1045d9"><p class="cl-6c10245e"><span class="cl-6c0d12ab"></span></p></td>
-<td class="cl-6c1045da"><p class="cl-6c10245e"><span class="cl-6c0d12ab">&gt;=40</span></p></td>
-<td class="cl-6c1045da"><p class="cl-6c10245e"><span class="cl-6c0d12ab">age</span></p></td>
-<td class="cl-6c1045da"><p class="cl-6c10245e"><span class="cl-6c0d12ab">–</span></p></td>
-<td class="cl-6c1045da"><p class="cl-6c10245e"><span class="cl-6c0d12ab">Mean (SD)</span></p></td>
-<td class="cl-6c1045da"><p class="cl-6c10245e"><span class="cl-6c0d12ab">1.34 (5.30)</span></p></td>
-<td class="cl-6c1045da"><p class="cl-6c10245e"><span class="cl-6c0d12ab">93.47 (7.24)</span></p></td>
-<td class="cl-6c1045da"><p class="cl-6c10245e"><span class="cl-6c0d12ab">65.17 (8.21)</span></p></td>
+<td class="cl-740a35ac"><p class="cl-740a099b"><span class="cl-7405ae68"></span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">&lt;40</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">age</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">–</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">Mean (SD)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">38.61 (5.53)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">77.74 (1.08)</span></p></td>
+<td class="cl-740a35ab"><p class="cl-740a099b"><span class="cl-7405ae68">21.21 (4.11)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-740a35b5"><p class="cl-740a099b"><span class="cl-7405ae68"></span></p></td>
+<td class="cl-740a35b6"><p class="cl-740a099b"><span class="cl-7405ae68">&gt;=40</span></p></td>
+<td class="cl-740a35b6"><p class="cl-740a099b"><span class="cl-7405ae68">age</span></p></td>
+<td class="cl-740a35b6"><p class="cl-740a099b"><span class="cl-7405ae68">–</span></p></td>
+<td class="cl-740a35b6"><p class="cl-740a099b"><span class="cl-7405ae68">Mean (SD)</span></p></td>
+<td class="cl-740a35b6"><p class="cl-740a099b"><span class="cl-7405ae68">1.34 (5.30)</span></p></td>
+<td class="cl-740a35b6"><p class="cl-740a099b"><span class="cl-7405ae68">93.47 (7.24)</span></p></td>
+<td class="cl-740a35b6"><p class="cl-740a099b"><span class="cl-7405ae68">65.17 (8.21)</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -1646,64 +1662,51 @@ calls:</p>
 <span>  <span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_color_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"black"</span>, <span class="st">"black"</span>, <span class="st">"black"</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/scale_manual.html" class="external-link">scale_fill_manual</a></span><span class="op">(</span>values <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"#999999"</span>, <span class="st">"#E69F00"</span>, <span class="st">"#56B4E9"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="a05_style_files/figure-html/unnamed-chunk-10-1.png" width="691.2"></p>
+<p><img src="a05_style_files/figure-html/unnamed-chunk-10-1.png" class="r-plt" alt="" width="691.2"></p>
 </div>
 </div>
 <div class="section level2">
-<h2 id="using-non-supported-font-families-for-ggplot">Using non-supported font families for <code>ggplot</code><a class="anchor" aria-label="anchor" href="#using-non-supported-font-families-for-ggplot"></a>
+<h2 id="using-non-registered-font-families-in-ggplot2">Using non-registered font families in ggplot2<a class="anchor" aria-label="anchor" href="#using-non-registered-font-families-in-ggplot2"></a>
 </h2>
-<p>If you want to use a font that is not already installed on your
-system, follow these steps:</p>
+<p>To use a specific font family in ggplot2, the font must be:</p>
+<ol style="list-style-type: decimal">
+<li><p><strong>Installed</strong> in the operating system, and</p></li>
+<li><p><strong>Available</strong> to R’s graphics device (registered, in
+the case of Windows).</p></li>
+</ol>
+<p>Below is an example using the Calibri font.</p>
 <div class="section level3">
-<h3 id="download-and-install-the-font-system-level">1. Download and install the font (system-level)<a class="anchor" aria-label="anchor" href="#download-and-install-the-font-system-level"></a>
+<h3 id="install-the-font-in-the-system">1. Install the font in the system<a class="anchor" aria-label="anchor" href="#install-the-font-in-the-system"></a>
 </h3>
-<ul>
-<li>
-<strong>macOS:</strong> double-click the <code>.ttf</code> file and
-click <em>Install Font</em>. Example Calibri TTF (if not available on
-your system): <a href="https://www.freefontdownload.org/en/calibri.font" class="external-link uri">https://www.freefontdownload.org/en/calibri.font</a>
-</li>
-<li>
-<strong>Windows:</strong> right-click the <code>.ttf</code> file and
-choose <em>Install</em> (or <em>Install for all users</em>).</li>
-</ul>
-<p>After installing, <strong>restart RStudio</strong> so the system font
-registry is updated.</p>
+<p>On both <strong>macOS</strong> and <strong>Windows</strong>, install
+the .ttf file by double-clicking it and clicking Install.</p>
+<p>Example source: <a href="https://www.freefontdownload.org/en/calibri.font" class="external-link uri">https://www.freefontdownload.org/en/calibri.font</a></p>
+<p>After installing new system fonts, <strong>restart R</strong> or
+<strong>RStudio</strong> so the font registry is refreshed.</p>
 </div>
 <div class="section level3">
-<h3 id="register-the-font-with-the-extrafont-package-r">2. Register the font with the <code>extrafont</code> package
-(R)<a class="anchor" aria-label="anchor" href="#register-the-font-with-the-extrafont-package-r"></a>
+<h3 id="register-the-font">2. Register the font<a class="anchor" aria-label="anchor" href="#register-the-font"></a>
 </h3>
+<p>On <strong>macOS</strong>, most system fonts are automatically
+available to R’s Quartz graphics device (no need to register).</p>
+<p>On <strong>Windows</strong>, however, the base graphics device does
+not automatically expose all installed system fonts. You must register a
+font before ggplot2 can use it. This can be done as follows:</p>
 <div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://github.com/fbertran/extrafont" class="external-link">extrafont</a></span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># import system fonts (may take several minutes) - just needs to be done when </span></span>
-<span><span class="co"># a new font is installed </span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/extrafont/man/font_import.html" class="external-link">font_import</a></span><span class="op">(</span>paths <span class="op">=</span> <span class="cn">NULL</span>, prompt <span class="op">=</span> <span class="cn">FALSE</span><span class="op">)</span></span>
-<span></span>
-<span><span class="co"># make fonts available for graphic devices using R</span></span>
-<span><span class="fu"><a href="https://rdrr.io/pkg/extrafont/man/loadfonts.html" class="external-link">loadfonts</a></span><span class="op">(</span>device <span class="op">=</span> <span class="st">"win"</span><span class="op">)</span>  </span></code></pre></div>
-<p>The previous process is embeded in the function
-<code><a href="../reference/requireExtrafont.html">requireExtrafont()</a></code> from visOmopResults, so the user could
-run that single function instead.</p>
-<p>Notes: - <code><a href="https://rdrr.io/pkg/extrafont/man/font_import.html" class="external-link">font_import()</a></code> scans system font directories. If
-you want to import fonts from a custom folder, pass
-<code>paths = "path/to/folder"</code>.</p>
+<code class="sourceCode R"><span><span class="fu">windowsFonts</span><span class="op">(</span>Calibri <span class="op">=</span> <span class="fu">windowsFont</span><span class="op">(</span><span class="st">"Calibri"</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
 <ul>
-<li><p><code><a href="https://rdrr.io/pkg/extrafont/man/font_import.html" class="external-link">font_import()</a></code> can take a long time the first time it
-runs.</p></li>
-<li><p><code><a href="https://rdrr.io/pkg/extrafont/man/loadfonts.html" class="external-link">extrafont::loadfonts()</a></code> makes fonts available to R’s
-graphics devices. For PDFs, call <code>loadfonts(device = "pdf")</code>
-before saving plots.</p></li>
+<li>The <code>visOmopResults</code> package automatically registers any
+installed font when needed, so users generally do not have to run this
+manually.</li>
 </ul>
 </div>
 <div class="section level3">
 <h3 id="create-plots-with-styles-that-use-the-font">3. Create plots with styles that use the font<a class="anchor" aria-label="anchor" href="#create-plots-with-styles-that-use-the-font"></a>
 </h3>
-<p>Set the font family in the <code>.yml</code> file, or in
-<code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text()</a></code> calls within <code>theme</code>. As an
-example we run with “darwin” style, which if “Calibri” is loaded will
-use it (otherwise it defaults to “sans”).</p>
+<p>You can specify the font family in your YAML configuration, or
+directly in <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme()</a></code> using <code><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text()</a></code>.
+Below is an example using the “darwin” plot style, which will use
+“Calibri” when available, otherwise falling back to “sans”:</p>
 <div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/barPlot.html">barPlot</a></span><span class="op">(</span></span>
 <span>  result <span class="op">=</span> <span class="va">result</span>,</span>
@@ -1713,13 +1716,20 @@ use it (otherwise it defaults to “sans”).</p>
 <span>  colour <span class="op">=</span> <span class="st">"sex"</span>,</span>
 <span>  style <span class="op">=</span> <span class="st">"darwin"</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p><img src="a05_style_files/figure-html/unnamed-chunk-13-1.png" width="691.2"></p>
-<p>Remember the following:</p>
+<p><img src="a05_style_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="691.2"></p>
+</div>
+<div class="section level3">
+<h3 id="important-notes">Important notes<a class="anchor" aria-label="anchor" href="#important-notes"></a>
+</h3>
 <ul>
-<li><p>After installing system fonts, restart R/RStudio so R sees the
-new fonts.</p></li>
-<li><p>Use <code><a href="https://rdrr.io/pkg/extrafont/man/font_import.html" class="external-link">extrafont::font_import()</a></code> once (or when you add
-new fonts) — it populates the extrafont database.</p></li>
+<li><p>After installing system fonts, restart R/RStudio so R can detect
+them.</p></li>
+<li><p>On Windows, font registrations done with
+<code>windowsFonts()</code> last only for the current R session and
+revert after restarting.</p></li>
+<li><p>For font detection across platforms, <code>visOmopResults</code>
+uses the <code>systemfonts</code> package and registers fonts on Windows
+when needed.</p></li>
 </ul>
 </div>
 </div>
@@ -1742,7 +1752,7 @@ such as Shiny apps and Quarto/R Markdown documents, refer to <a href="https://po
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.1.3.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
 </div>
 
     </footer>

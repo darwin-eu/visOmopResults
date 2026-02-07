@@ -1,0 +1,560 @@
+# Generate a formatted table from a `<summarised_result>`
+
+This function combines the functionalities of
+[`formatEstimateValue()`](https://darwin-eu.github.io/visOmopResults/reference/formatEstimateValue.md),
+`estimateName()`,
+[`formatHeader()`](https://darwin-eu.github.io/visOmopResults/reference/formatHeader.md),
+and
+[`formatTable()`](https://darwin-eu.github.io/visOmopResults/reference/formatTable.md)
+into a single function specifically for `<summarised_result>` objects.
+
+## Usage
+
+``` r
+visOmopTable(
+  result,
+  estimateName = character(),
+  header = character(),
+  settingsColumn = character(),
+  groupColumn = character(),
+  rename = character(),
+  type = NULL,
+  hide = character(),
+  columnOrder = character(),
+  factor = list(),
+  style = NULL,
+  showMinCellCount = TRUE,
+  .options = list()
+)
+```
+
+## Arguments
+
+- result:
+
+  A `<summarised_result>` object.
+
+- estimateName:
+
+  A named list of estimate names to join, sorted by computation order.
+  Use `<...>` to indicate estimate names.
+
+- header:
+
+  A vector specifying the elements to include in the header. The order
+  of elements matters, with the first being the topmost header. Elements
+  in header can be:
+
+  - Any of the columns returned by `tableColumns(result)` to create a
+    header for these columns.
+
+  - Any other input to create an overall header.
+
+- settingsColumn:
+
+  A character vector with the names of settings to include in the table.
+  To see options use `settingsColumns(result)`.
+
+- groupColumn:
+
+  Columns to use as group labels, to see options use
+  `tableColumns(result)`. By default, the name of the new group will be
+  the tidy\* column names separated by ";". To specify a custom group
+  name, use a named list such as: list("newGroupName" =
+  c("variable_name", "variable_level")).
+
+  \*tidy: The tidy format applied to column names replaces "\_" with a
+  space and converts to sentence case. Use `rename` to customise
+  specific column names.
+
+- rename:
+
+  A named vector to customise column names, e.g., c("Database name" =
+  "cdm_name"). The function renames all column names not specified here
+  into a tidy\* format.
+
+- type:
+
+  Character string specifying the desired output table format. See
+  [`tableType()`](https://darwin-eu.github.io/visOmopResults/reference/tableType.md)
+  for supported table types. If `type = NULL`, global options (set via
+  [`setGlobalTableOptions()`](https://darwin-eu.github.io/visOmopResults/reference/setGlobalTableOptions.md))
+  will be used if available; otherwise, a default `'gt'` table is
+  created.
+
+- hide:
+
+  Columns to drop from the output table. By default, `result_id` and
+  `estimate_type` are always dropped.
+
+- columnOrder:
+
+  Character vector establishing the position of the columns in the
+  formatted table. Columns in either header, groupColumn, or hide will
+  be ignored.
+
+- factor:
+
+  A named list where names refer to columns (see available columns in
+  [`tableColumns()`](https://darwin-eu.github.io/visOmopResults/reference/tableColumns.md))
+  and list elements are the level order of that column to arrange the
+  results. The column order in the list will be used for arranging the
+  result.
+
+- style:
+
+  Defines the visual formatting of the table. This argument can be
+  provided in one of the following ways:
+
+  1.  **Pre-defined style:** Use the name of a built-in style (e.g.,
+      `"darwin"`). See
+      [`tableStyle()`](https://darwin-eu.github.io/visOmopResults/reference/tableStyle.md)
+      for available options.
+
+  2.  **YAML file path:** Provide the path to an existing `.yml` file
+      defining a new style.
+
+  3.  **List of custome R code:** Supply a block of custom R code or a
+      named list describing styles for each table section. This code
+      must be specific to the selected table type. If `style = NULL`,
+      the function will use global options (see
+      [`setGlobalTableOptions()`](https://darwin-eu.github.io/visOmopResults/reference/setGlobalTableOptions.md))
+      or an existing `_brand.yml` file (if found); otherwise, the
+      default style is applied. For more details, see the *Styles*
+      vignette on the package website.
+
+- showMinCellCount:
+
+  If `TRUE`, suppressed estimates will be indicated with
+  "\<{min_cell_count}", otherwise, the default `na` defined in
+  `.options` will be used.
+
+- .options:
+
+  A named list with additional formatting options.
+  [`visOmopResults::tableOptions()`](https://darwin-eu.github.io/visOmopResults/reference/tableOptions.md)
+  shows allowed arguments and their default values.
+
+## Value
+
+A formatted table of the class selected in "type" argument.
+
+## Examples
+
+``` r
+result <- mockSummarisedResult()
+result |>
+  visOmopTable(
+    estimateName = c("N%" = "<count> (<percentage>)",
+                     "N" = "<count>",
+                     "Mean (SD)" = "<mean> (<sd>)"),
+    header = c("cohort_name"),
+    rename = c("Database name" = "cdm_name"),
+    groupColumn = strataColumns(result)
+  )
+
+
+  
+
+
+Database name
+```
+
+Variable name
+
+Variable level
+
+Estimate name
+
+Cohort name
+
+cohort1
+
+cohort2
+
+overall; overall
+
+mock
+
+number subjects
+
+–
+
+N
+
+2,655,087
+
+617,863
+
+age
+
+–
+
+Mean (SD)
+
+38.00 (7.94)
+
+38.24 (7.89)
+
+Medications
+
+Amoxiciline
+
+N%
+
+7,068 (34.67)
+
+33,239 (71.25)
+
+Ibuprofen
+
+N%
+
+23,963 (92.41)
+
+60,493 (10.32)
+
+\<40; Male
+
+mock
+
+number subjects
+
+–
+
+N
+
+3,721,239
+
+2,059,746
+
+age
+
+–
+
+Mean (SD)
+
+77.74 (1.08)
+
+86.97 (0.23)
+
+Medications
+
+Amoxiciline
+
+N%
+
+9,947 (33.38)
+
+65,087 (40.00)
+
+Ibuprofen
+
+N%
+
+5,893 (59.88)
+
+65,472 (44.63)
+
+\>=40; Male
+
+mock
+
+number subjects
+
+–
+
+N
+
+5,728,534
+
+1,765,568
+
+age
+
+–
+
+Mean (SD)
+
+93.47 (7.24)
+
+34.03 (4.77)
+
+Medications
+
+Amoxiciline
+
+N%
+
+31,627 (47.64)
+
+25,802 (32.54)
+
+Ibuprofen
+
+N%
+
+64,229 (97.62)
+
+35,320 (64.01)
+
+\<40; Female
+
+mock
+
+number subjects
+
+–
+
+N
+
+9,082,078
+
+6,870,228
+
+age
+
+–
+
+Mean (SD)
+
+21.21 (4.11)
+
+48.21 (7.32)
+
+Medications
+
+Amoxiciline
+
+N%
+
+51,863 (89.22)
+
+47,855 (75.71)
+
+Ibuprofen
+
+N%
+
+87,627 (73.18)
+
+27,026 (99.18)
+
+\>=40; Female
+
+mock
+
+number subjects
+
+–
+
+N
+
+2,016,819
+
+3,841,037
+
+age
+
+–
+
+Mean (SD)
+
+65.17 (8.21)
+
+59.96 (6.93)
+
+Medications
+
+Amoxiciline
+
+N%
+
+66,201 (86.43)
+
+76,631 (20.27)
+
+Ibuprofen
+
+N%
+
+77,891 (35.67)
+
+99,268 (49.56)
+
+overall; Male
+
+mock
+
+number subjects
+
+–
+
+N
+
+8,983,897
+
+7,698,414
+
+age
+
+–
+
+Mean (SD)
+
+12.56 (6.47)
+
+49.35 (4.78)
+
+Medications
+
+Amoxiciline
+
+N%
+
+40,683 (39.00)
+
+8,425 (71.11)
+
+Ibuprofen
+
+N%
+
+79,731 (43.15)
+
+63,349 (48.43)
+
+overall; Female
+
+mock
+
+number subjects
+
+–
+
+N
+
+9,446,753
+
+4,976,992
+
+age
+
+–
+
+Mean (SD)
+
+26.72 (7.83)
+
+18.62 (8.61)
+
+Medications
+
+Amoxiciline
+
+N%
+
+91,288 (77.73)
+
+87,532 (12.17)
+
+Ibuprofen
+
+N%
+
+45,527 (14.82)
+
+21,321 (17.34)
+
+\<40; overall
+
+mock
+
+number subjects
+
+–
+
+N
+
+6,607,978
+
+7,176,185
+
+age
+
+–
+
+Mean (SD)
+
+38.61 (5.53)
+
+82.74 (4.38)
+
+Medications
+
+Amoxiciline
+
+N%
+
+29,360 (96.06)
+
+33,907 (24.55)
+
+Ibuprofen
+
+N%
+
+41,008 (1.31)
+
+12,937 (75.48)
+
+\>=40; overall
+
+mock
+
+number subjects
+
+–
+
+N
+
+6,291,140
+
+9,919,061
+
+age
+
+–
+
+Mean (SD)
+
+1.34 (5.30)
+
+66.85 (2.45)
+
+Medications
+
+Amoxiciline
+
+N%
+
+45,907 (43.47)
+
+83,944 (14.33)
+
+Ibuprofen
+
+N%
+
+81,087 (71.56)
+
+47,812 (45.39)
+
+result \|\> visOmopTable( estimateName =
+[c](https://rdrr.io/r/base/c.html)( "N%" = "\<count\> (\<percentage\>)",
+"N" = "\<count\>", "Mean (SD)" = "\<mean\> (\<sd\>)" ), header =
+[c](https://rdrr.io/r/base/c.html)("cohort_name"), rename =
+[c](https://rdrr.io/r/base/c.html)("Database name" = "cdm_name"),
+groupColumn =
+[strataColumns](https://darwin-eu.github.io/omopgenerics/reference/strataColumns.html)(result),
+type = "reactable" )
