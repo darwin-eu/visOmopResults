@@ -1,8 +1,8 @@
 # Changelog
 
-## visOmopResults 1.4.1
+## visOmopResults 1.4.2
 
-CRAN release: 2026-02-02
+CRAN release: 2026-02-04
 
 - Handling not registered fonts for `ggplot2` without `extrafont`
   package
