@@ -24,6 +24,8 @@ checkStyle <- function(style, call = parent.frame()) {
       } else {
         cli::cli_abort(message = c("!" = "File {.path {style}} does not exist.", errorMessage), call = call)
       }
+    } else {
+      cli::cli_abort(message = errorMessage, call = call)
     }
   }
 
@@ -84,105 +86,111 @@ collapseContent <- function(content) {
 labels <- function() {
   list(
     # plot parameters
-    plot_background_color = c("plot:background-color", "color:background"),
-    plot_header_color = c("plot:header-color", "color:foreground"),
-    plot_header_text_color = c("plot:header-text-color"),
-    plot_font_size = c("plot:font-size", "typography:plot-font-size", "typography:base-font-size"),
-    plot_border_color = c("plot:border-color", "color:foreground"),
-    plot_grid_color = c("plot:grid-major-color", "color:foreground"),
-    plot_axis_color = c("plot:axis-color"),
-    plot_legend_position = c("plot:legend-position"),
-    plot_font_family = c("typography:plot", "typography:base"),
+    plot_background_color = c("defaults:visOmopResults:plot:background_color", "color:background"),
+    plot_header_color = c("defaults:visOmopResults:plot:header_color", "color:foreground"),
+    plot_header_text_color = c("defaults:visOmopResults:plot:header_text_color"),
+    plot_header_text_bold = c("defaults:visOmopResults:plot:header_text_bold"),
+    plot_font_size = c("defaults:visOmopResults:plot:font_size", "defaults:visOmopResults:plot:font_size", "typography:base:size"),
+    plot_border_color = c("defaults:visOmopResults:plot:border_color", "color:foreground"),
+    plot_grid_color = c("defaults:visOmopResults:plot:grid_major_color", "color:foreground"),
+    plot_axis_color = c("defaults:visOmopResults:plot:axis_color"),
+    plot_legend_position = c("defaults:visOmopResults:plot:legend_position"),
+    plot_font_family = c("defaults:visOmopResults:plot:font_family", "typography:base:family"),
 
     # table parameters
     # header
-    table_header_background_color = c("table:header:background-color", "color:background"),
-    table_header_text_bold = c("table:header:text-bold"),
-    table_header_text_color = c("table:header:text-color"),
-    table_header_font_size = c("table:header:font-size", "typography:table-font-size", "typography:base-font-size"),
-    table_header_font_family = c("table:header:font-family", "typography:table", "typography:base"),
-    table_header_align = c("table:header:align"),
-    table_header_border_color = c("table:header:border-color", "table:border-color"),
-    table_header_border_width = c("table:header:border-width", "table:border-width"),
+    table_header_background_color = c("defaults:visOmopResults:table:header:background_color", "color:background"),
+    table_header_text_bold = c("defaults:visOmopResults:table:header:text_bold"),
+    table_header_text_color = c("defaults:visOmopResults:table:header:text_color"),
+    table_header_font_size = c("defaults:visOmopResults:table:header:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
+    table_header_font_family = c("defaults:visOmopResults:table:header:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
+    table_header_align = c("defaults:visOmopResults:table:header:align"),
+    table_header_border_color = c("defaults:visOmopResults:table:header:border_color", "defaults:visOmopResults:table:border_color"),
+    table_header_border_width = c("defaults:visOmopResults:table:header:border_width", "defaults:visOmopResults:table:border_width"),
     # header name
-    table_header_name_background_color = c("table:header-name:background-color", "color:background"),
-    table_header_name_text_bold = c("table:header-name:text-bold"),
-    table_header_name_text_color = c("table:header-name:text-color"),
-    table_header_name_font_size = c("table:header-name:font-size", "typography:table-font-size", "typography:base-font-size"),
-    table_header_name_font_family = c("table:header-name:font-family", "typography:table", "typography:base"),
-    table_header_name_align = c("table:header-name:align"),
-    table_header_name_border_color = c("table:header-name:border-color", "table:border-color"),
-    table_header_name_border_width = c("table:header-name:border-width", "table:border-width"),
+    table_header_name_background_color = c("defaults:visOmopResults:table:header_name:background_color", "color:background"),
+    table_header_name_text_bold = c("defaults:visOmopResults:table:header_name:text_bold"),
+    table_header_name_text_color = c("defaults:visOmopResults:table:header_name:text_color"),
+    table_header_name_font_size = c("defaults:visOmopResults:table:header_name:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
+    table_header_name_font_family = c("defaults:visOmopResults:table:header_name:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
+    table_header_name_align = c("defaults:visOmopResults:table:header_name:align"),
+    table_header_name_border_color = c("defaults:visOmopResults:table:header_name:border_color", "defaults:visOmopResults:table:border_color"),
+    table_header_name_border_width = c("defaults:visOmopResults:table:header_name:border_width", "defaults:visOmopResults:table:border_width"),
     # header_level
-    table_header_level_background_color = c("table:header-level:background-color", "color:background"),
-    table_header_level_text_bold = c("table:header-level:text-bold"),
-    table_header_level_text_color = c("table:header-level:text-color"),
-    table_header_level_font_size = c("table:header-level:font-size", "typography:table-font-size", "typography:base-font-size"),
-    table_header_level_font_family = c("table:header-level:font-family", "typography:table", "typography:base"),
-    table_header_level_align = c("table:header-level:align"),
-    table_header_level_border_color = c("table:header-level:border-color", "table:border-color"),
-    table_header_level_border_width = c("table:header-level:border-width", "table:border-width"),
+    table_header_level_background_color = c("defaults:visOmopResults:table:header_level:background_color", "color:background"),
+    table_header_level_text_bold = c("defaults:visOmopResults:table:header_level:text_bold"),
+    table_header_level_text_color = c("defaults:visOmopResults:table:header_level:text_color"),
+    table_header_level_font_size = c("defaults:visOmopResults:table:header_level:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
+    table_header_level_font_family = c("defaults:visOmopResults:table:header_level:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
+    table_header_level_align = c("defaults:visOmopResults:table:header_level:align"),
+    table_header_level_border_color = c("defaults:visOmopResults:table:header_level:border_color", "defaults:visOmopResults:table:border_color"),
+    table_header_level_border_width = c("defaults:visOmopResults:table:header_level:border_width", "defaults:visOmopResults:table:border_width"),
     # column_name
-    table_column_name_background_color = c("table:column-name:background-color", "color:background"),
-    table_column_name_text_bold = c("table:column-name:text-bold"),
-    table_column_name_text_color = c("table:column-name:text-color"),
-    table_column_name_font_size = c("table:column-name:font-size", "typography:table-font-size", "typography:base-font-size"),
-    table_column_name_font_family = c("table:column-name:font-family", "typography:table", "typography:base"),
-    table_column_name_align = c("table:column-name:align"),
-    table_column_name_border_color = c("table:column-name:border-color", "table:border-color"),
-    table_column_name_border_width = c("table:column-name:border-width", "table:border-width"),
+    table_column_name_background_color = c("defaults:visOmopResults:table:column_name:background_color", "color:background"),
+    table_column_name_text_bold = c("defaults:visOmopResults:table:column_name:text_bold"),
+    table_column_name_text_color = c("defaults:visOmopResults:table:column_name:text_color"),
+    table_column_name_font_size = c("defaults:visOmopResults:table:column_name:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
+    table_column_name_font_family = c("defaults:visOmopResults:table:column_name:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
+    table_column_name_align = c("defaults:visOmopResults:table:column_name:align"),
+    table_column_name_border_color = c("defaults:visOmopResults:table:column_name:border_color", "defaults:visOmopResults:table:border_color"),
+    table_column_name_border_width = c("defaults:visOmopResults:table:column_name:border_width", "defaults:visOmopResults:table:border_width"),
     # group_label
-    table_group_label_background_color = c("table:group-label:background-color", "color:background"),
-    table_group_label_text_bold = c("table:group-label:text-bold"),
-    table_group_label_text_color = c("table:group-label:text-color"),
-    table_group_label_font_size = c("table:group-label:font-size", "typography:table-font-size", "typography:base-font-size"),
-    table_group_label_font_family = c("table:group-label:font-family", "typography:table", "typography:base"),
-    table_group_label_align = c("table:group-label:align"),
-    table_group_label_border_color = c("table:group-label:border-color", "table:border-color"),
-    table_group_label_border_width = c("table:group-label:border-width", "table:border-width"),
+    table_group_label_background_color = c("defaults:visOmopResults:table:group_label:background_color", "color:background"),
+    table_group_label_text_bold = c("defaults:visOmopResults:table:group_label:text_bold"),
+    table_group_label_text_color = c("defaults:visOmopResults:table:group_label:text_color"),
+    table_group_label_font_size = c("defaults:visOmopResults:table:group_label:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
+    table_group_label_font_family = c("defaults:visOmopResults:table:group_label:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
+    table_group_label_align = c("defaults:visOmopResults:table:group_label:align"),
+    table_group_label_border_color = c("defaults:visOmopResults:table:group_label:border_color", "defaults:visOmopResults:table:border_color"),
+    table_group_label_border_width = c("defaults:visOmopResults:table:group_label:border_width", "defaults:visOmopResults:table:border_width"),
     # title
-    table_title_background_color = c("table:title:background-color", "color:background"),
-    table_title_text_bold = c("table:title:text-bold"),
-    table_title_text_color = c("table:title:text-color"),
-    table_title_font_size = c("table:title:font-size", "typography:table-font-size", "typography:base-font-size"),
-    table_title_font_family = c("table:title:font-family", "typography:table", "typography:base"),
-    table_title_align = c("table:title:align"),
-    table_title_border_color = c("table:title:border-color", "table:border-color"),
-    table_title_border_width = c("table:title:border-width", "table:border-width"),
+    table_title_background_color = c("defaults:visOmopResults:table:title:background_color", "color:background"),
+    table_title_text_bold = c("defaults:visOmopResults:table:title:text_bold"),
+    table_title_text_color = c("defaults:visOmopResults:table:title:text_color"),
+    table_title_font_size = c("defaults:visOmopResults:table:title:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
+    table_title_font_family = c("defaults:visOmopResults:table:title:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
+    table_title_align = c("defaults:visOmopResults:table:title:align"),
+    table_title_border_color = c("defaults:visOmopResults:table:title:border_color", "defaults:visOmopResults:table:border_color"),
+    table_title_border_width = c("defaults:visOmopResults:table:title:border_width", "defaults:visOmopResults:table:border_width"),
     # subtitle
-    table_subtitle_background_color = c("table:subtitle:background-color", "color:background"),
-    table_subtitle_text_bold = c("table:subtitle:text-bold"),
-    table_subtitle_text_color = c("table:subtitle:text-color"),
-    table_subtitle_font_size = c("table:subtitle:font-size", "typography:table-font-size", "typography:base-font-size"),
-    table_subtitle_font_family = c("table:subtitle:font-family", "typography:table", "typography:base"),
-    table_subtitle_align = c("table:subtitle:align"),
-    table_subtitle_border_color = c("table:subtitle:border-color", "table:border-color"),
-    table_subtitle_border_width = c("table:subtitle:border-width", "table:border-width"),
+    table_subtitle_background_color = c("defaults:visOmopResults:table:subtitle:background_color", "color:background"),
+    table_subtitle_text_bold = c("defaults:visOmopResults:table:subtitle:text_bold"),
+    table_subtitle_text_color = c("defaults:visOmopResults:table:subtitle:text_color"),
+    table_subtitle_font_size = c("defaults:visOmopResults:table:subtitle:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
+    table_subtitle_font_family = c("defaults:visOmopResults:table:subtitle:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
+    table_subtitle_align = c("defaults:visOmopResults:table:subtitle:align"),
+    table_subtitle_border_color = c("defaults:visOmopResults:table:subtitle:border_color", "defaults:visOmopResults:table:border_color"),
+    table_subtitle_border_width = c("defaults:visOmopResults:table:subtitle:border_width", "defaults:visOmopResults:table:border_width"),
     # body
-    table_body_background_color = c("table:body:background-color", "color:background"),
-    table_body_text_bold = c("table:body:text-bold"),
-    table_body_text_color = c("table:body:text-color"),
-    table_body_font_size = c("table:body:font-size", "typography:table-font-size", "typography:base-font-size"),
-    table_body_font_family = c("table:body:font-family", "typography:table", "typography:base"),
-    table_body_align = c("table:body:align"),
-    table_body_border_color = c("table:body:border-color", "table:border-color"),
-    table_body_border_width = c("table:body:border-width", "table:border-width")
+    table_body_background_color = c("defaults:visOmopResults:table:body:background_color", "color:background"),
+    table_body_text_bold = c("defaults:visOmopResults:table:body:text_bold"),
+    table_body_text_color = c("defaults:visOmopResults:table:body:text_color"),
+    table_body_font_size = c("defaults:visOmopResults:table:body:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
+    table_body_font_family = c("defaults:visOmopResults:table:body:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
+    table_body_align = c("defaults:visOmopResults:table:body:align"),
+    table_body_border_color = c("defaults:visOmopResults:table:body:border_color", "defaults:visOmopResults:table:border_color"),
+    table_body_border_width = c("defaults:visOmopResults:table:body:border_width", "defaults:visOmopResults:table:border_width")
   )
 }
 
 # format table style in the specific type
 formatTableStyle <- function(x, type) {
   if (type == "gt") {
+    rlang::check_installed("gt")
     style <- styleGt(x = x)
   } else if (type == "flextable") {
+    rlang::check_installed(c("flextable", "officer"))
     style <- styleFx(x = x)
   } else if (type == "tibble") {
     style <- list()
   } else if (type == "datatable") {
+    rlang::check_installed(c("DT", "htmltools"))
     style <- styleDT(x = x)
   } else if (type == "reactable") {
+    rlang::check_installed("reactable")
     style <- styleRT(x = x)
   } else if (type == "tinytable") {
+    rlang::check_installed("tinytable")
     style <- styleTT(x = x)
   } else {
     cli::cli_abort(c(x = "Not supported type ('{type}')"))
@@ -190,6 +198,12 @@ formatTableStyle <- function(x, type) {
   return(style)
 }
 styleGt <- function(x) {
+
+  fontFamily <- x[grepl("font_family", names(x)) & grepl("table", names(x))] |> unlist() |> unique()
+  for (font in fontFamily) {
+    x[x == font] <- safeFontFamily(family = font, ggDefaultFont = "system-ui")
+  }
+
   correctGtColor <-
     labelsGt() |>
     rlang::set_names() |>
@@ -246,7 +260,14 @@ styleGt <- function(x) {
       res
     })
 }
+
 styleFx <- function(x) {
+
+  fontFamily <- x[grepl("font_family", names(x)) & grepl("table", names(x))] |> unlist() |> unique()
+  for (font in fontFamily) {
+    x[x == font] <- safeFontFamily(family = font, ggDefaultFont = "Helvetica")
+  }
+
   labelsFlextable() |>
     rlang::set_names() |>
     purrr::map(\(lab) {
@@ -312,6 +333,12 @@ styleRT <- function(x) {
   defaultReactable()
 }
 styleTT <- function(x) {
+
+  fontFamily <- x[grepl("font_family", names(x)) & grepl("table", names(x))] |> unlist() |> unique()
+  if (length(fontFamily) > 0) {
+    cli::cli_warn("Font family is not currently available for customisation in `tinytable`")
+  }
+
   labelsTinytable() |>
     rlang::set_names() |>
     purrr::map(\(lab) {
@@ -320,7 +347,7 @@ styleTT <- function(x) {
       nm3 <- paste0("table_", lab, "_align")
       nm4 <- paste0("table_", lab, "_font_size")
       nm5 <- paste0("table_", lab, "_border_color")
-      nm6 <- paste0("table_", lab, "_font_family") # dont know how to edit font family in tinytable
+      nm6 <- paste0("table_", lab, "_font_family")
       nm7 <- paste0("table_", lab, "_text_color")
       nm8 <- paste0("table_", lab, "_border_width")
 
@@ -341,6 +368,7 @@ styleTT <- function(x) {
       if (nm5 %in% names(x)) {
         res$line_color <- x[[nm5]]
       }
+
       if (nm7 %in% names(x)) {
         res$color <- x[[nm7]]
       }
@@ -419,14 +447,20 @@ formatPlotStyle <- function(x, fontsizeRef = NULL) {
   legendPosition <- x$plot_legend_position
   fontFamily <- x$plot_font_family
   headerTextColour <- x$plot_header_text_color
+  headerTextBold <- NULL
+  if (!is.null(x$plot_header_text_bold)) {
+    if (x$plot_header_text_bold) {
+      headerTextBold <- "bold"
+    }
+  }
 
   # check font
-  fontFamily <- safeFontFamily(fontFamily)
+  fontFamily <- safeFontFamily(fontFamily, registerFont = TRUE)
 
   ggplot2::theme_bw() +
     ggplot2::theme(
       # facet
-      strip.text = ggplot2::element_text(face = "bold", size = fontSize, colour = headerTextColour, family = fontFamily),
+      strip.text = ggplot2::element_text(face = headerTextBold, size = fontSize, colour = headerTextColour, family = fontFamily),
       strip.background = ggplot2::element_rect(fill = colorHeader, colour = colorBorder),
       strip.text.y.left = ggplot2::element_text(angle = 0, family = fontFamily),
       strip.text.y.right = ggplot2::element_text(angle = 0, family = fontFamily),
@@ -453,29 +487,64 @@ formatPlotStyle <- function(x, fontsizeRef = NULL) {
 }
 
 # helper function: check fontFamily is installed and loaded
-safeFontFamily <- function(family, ggDefaultFont = "sans", call = parent.frame()) {
-  # checks
-  omopgenerics::assertCharacter(family, length = 1, na = FALSE, null = TRUE)
+safeFontFamily <- function(family, ggDefaultFont = "sans", registerFont = FALSE, call = parent.frame()) {
+
+  rlang::check_installed("systemfonts")
+
+  # Basic validation
   if (is.null(family)) return(family)
-  if (family == ggDefaultFont) return(family)
-  rlang::check_installed("extrafont")
-
-  # Register extrafont fonts for this session/device
-  device <- if (.Platform$OS.type == "windows") "win" else "pdf"
-  extrafont::loadfonts(device = device, quiet = TRUE)
-
-  available <- tolower(family) %in% tolower(extrafont::fonts())
-
-  if (!available) {
-    cli::cli_warn(
-      c(
-        "Requested font '{family}' is not available on this system or not imported for use with R (if it's the latter, run `extrafont::font_import()` once).",
-        "i" = "Falling back to '{ggDefaultFont}'.",
-        "v" = "See the package vignette for guidance on installing/importing fonts for plotting."
-      ),
-      .call = call
-    )
-    return(ggDefaultFont)
+  if (!is.character(family) || length(family) != 1 || is.na(family) || nchar(family) == 0) {
+    stop("`family` must be a non-empty single character string.", call. = FALSE)
   }
-  return(family)
+  if (identical(family, ggDefaultFont)) return(family)
+
+  # Get authoritative OS-installed font families via systemfonts
+  sysFonts <- systemfonts::system_fonts()
+  osFamilies <- unique(as.character(sysFonts$family))
+
+  if (.Platform$OS.type == "windows") {
+    registeredFamilies <- names(grDevices::windowsFonts())
+    # Check case-insensitive: is requested font already registered?
+    if (!tolower(family) %in% tolower(registeredFamilies)) {
+      # If font exists in OS fonts, attempt registration
+      if (tolower(family) %in% tolower(osFamilies) & registerFont) {
+        tryCatch({
+          newEntry <- stats::setNames(list(grDevices::windowsFont(family)), family)
+          do.call(grDevices::windowsFonts, newEntry)
+        }, error = function(e) invisible(NULL))
+      }
+    }
+  }
+
+  availableFamilies <- character(0)
+
+  if (.Platform$OS.type == "windows") {
+    availableFamilies <- names(grDevices::windowsFonts())
+  } else {
+    sysName <- tolower(Sys.info()[["sysname"]])
+    if (grepl("darwin|mac", sysName)) {
+      availableFamilies <- names(grDevices::quartzFonts())
+    } else {
+      availableFamilies <- names(grDevices::X11Fonts())
+    }
+  }
+
+  # Combine device-registered + system-installed families
+  availableFamilies <- unique(c(availableFamilies, osFamilies))
+
+  # Final availability check
+  if (tolower(family) %in% tolower(availableFamilies)) {
+    return(family)
+  }
+
+  # Not available: warn + fallback
+  cli::cli_warn(c(
+    "Requested font '{family}' is not available on this system or graphics device.",
+    "i" = "Falling back to '{ggDefaultFont}'.",
+    "v" = "See vingette on styles for more information."
+  ),
+  .call = call
+  )
+
+  return(ggDefaultFont)
 }

@@ -31,9 +31,6 @@ gtTableInternal <- function(x,
                             merge = NULL
 ) {
 
-  # Package checks
-  rlang::check_installed("gt")
-
   # na
   if (!is.null(na)){
     x <- x |>

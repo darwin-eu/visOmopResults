@@ -152,8 +152,32 @@ test_that("visOmopTable", {
       groupColumn = "hola",
       type = "tibble",
       hide = c("result_id", "estimate_type", "cdm_name"),
-      .options = list())
+      .options = list()
+    )
   )
+
+  # not defined style
+  expect_error(
+    visOmopTable(
+      result = result,
+      estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
+      header = c("group", "settings"),
+      hide = c("result_id", "estimate_type", "cdm_name"),
+      style = "HAHA"
+    )
+  )
+
+  # no path for .yml
+  expect_error(
+    visOmopTable(
+      result = result,
+      estimateName = c("N%" = "<count> (<percentage>)", "N" = "<count>", "<mean>, <sd>"),
+      header = c("group", "settings"),
+      hide = c("result_id", "estimate_type", "cdm_name"),
+      style = "HAHA.yml"
+    )
+  )
+
 })
 
 test_that("renameColumn works", {
@@ -410,6 +434,12 @@ test_that("test styles", {
   visOmopTable(res, header = c("HEADER", "strata"), style = "darwin", type = "tinytable")
   visOmopTable(res, style = "darwin", groupColumn = "cohort_name", type = "tinytable")
   visOmopTable(res, style = "darwin", type = "tinytable")
+
+  # numeric estimates for datatable and reactable
+  dt <- visOmopTable(res, type = "datatable")
+  expect_true( dt$x$data$`Estimate value` |> class() == "numeric")
+  rt <- visOmopTable(res, type = "reactable")
+  expect_true(rt$x$tag$attribs$columns[[8]]$type == "numeric")
 })
 
 test_that("global options works", {

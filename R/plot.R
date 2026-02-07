@@ -213,7 +213,6 @@ boxPlot <- function(result,
   p <- p +
     ggplot2::labs(
       x = styleLabel(x),
-      fill = styleLabel(colour),
       colour = styleLabel(colour)
     ) +
     ggplot2::theme(legend.position = hideLegend(colour)) +

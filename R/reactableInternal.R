@@ -19,8 +19,6 @@ reactableInternal <- function(x,
                               style = styleRT(),
                               groupColumn = NULL,
                               groupOrder = NULL) {
-  # Package checks
-  rlang::check_installed("reactable")
 
   # Eliminate prefixes
   colnames(x) <- gsub("\\[header\\]|\\[header_level\\]|\\[header_name\\]|\\[column_name\\]", "", colnames(x))
@@ -91,7 +89,11 @@ getReactableHeaders <- function(x, delim) {
   headers <- strsplit(colnames(x), delim, fixed = TRUE)
   len <- purrr::map(headers, \(x){length(x)}) |> unlist()
   if (any(len > 2)) {
-    cli::cli_abort("Only 1-level headers (only separated by one delimiter) allowed in `reactable`.")
+    cli::cli_warn(c(
+      "x" = "Only 1-level headers (that is, separated by one delimiter) allowed for `reactable`.",
+      "i" = "Returnning a table without splitted headers."
+    ))
+    delim <- NULL
   }
   if (all(len == 1)) {
     colGroups <- NULL

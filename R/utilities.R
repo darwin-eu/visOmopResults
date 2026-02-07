@@ -325,9 +325,9 @@ validateStyle <- function(style, obj, type, fontsizeRef = NULL, call = parent.fr
   # correctly format style
   if (!is.list(style)) {
     styleFile <- checkStyle(style = style, call = call)
-    content <- yaml::read_yaml(file = styleFile)
+    content <- brand.yml::read_brand_yml(path = styleFile)
     if ("brand" %in% names(content)) {
-      content <- content$brand
+      content <- brand.yml::as_brand_yml(content$brand)
     }
     internalStyle <- brandToList(content = content)
     if (obj == "table") {

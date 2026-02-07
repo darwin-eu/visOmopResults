@@ -41,7 +41,6 @@ execute:
   echo: false
   message: false
   warning: false
-lof: true
 ---
 ```
 
@@ -75,11 +74,9 @@ tableType <- "flextable"
 plotType  <- "ggplot"
 setGlobalPlotOptions(style = style, type = plotType) 
 setGlobalTableOptions(style = style, type = tableType)
-
-# Calibri font in ggplot figures (requires the extrafont package to be available)
-# Read vignette on styles to learn more
-requireExtrafont()
 ```
+
+To use the Calibri font family for plots you will need to have the font installed, and for **Windows** registered in R graphics. See vignette on styles.
 
 ```{r, echo=FALSE}
 # Load necessary packages ----
@@ -103,8 +100,7 @@ setGlobalTableOptions(style = style, type = tableType)
 ```
 
 For tables we choose the `"flextable"` type because it transfers best to Word documents.
-
-The function `requireExtrafont()` installs (if needed) the **extrafont** package and loads the Calibri font for use with ggplot2 when using the DARWIN style.
+To use the Calibri font family for plots you will need to have the font installed. See vignette on styles.
 
 # Characterisation results
 
@@ -117,7 +113,7 @@ data$summarised_characteristics |>
     header = c("sex"),
     hide   = c("cdm_name", "cohort_name", "table_name"),
     type   = tableType,
-    .options = list(style = style)
+    style = style
   )
 ```
 
@@ -241,10 +237,10 @@ Note that we did not specify `type` or `style` in the **visOmopResults** functio
 
 ## In Markdown
 
-In the reference Word document, styles are defined for figure legends (`CaptionDarwin`) and footers (`FooterDarwin`). These can be used in Quarto as follows:
+In the reference Word document, styles are defined for figure legends (`Caption`) and footers (`FigureFooter`). These can be used in Quarto as follows:
 
 ```markdown
-:::{custom-style="CaptionDarwin"}
+:::{custom-style="Caption"}
 **Table 1:** Baseline population characteristics.
 :::
 ```
@@ -256,7 +252,7 @@ We might want to create captions and footers inside an R code chunk (e.g., when 
 ```{r, eval=FALSE}
 num_table <- 1
 cat(paste0(
-  ':::{custom-style="CaptionDarwin"}\n',
+  ':::{custom-style="Caption"}\n',
   '**Table ', num_table, ':** Baseline population characteristics.\n',
   ':::\n'
 ))
