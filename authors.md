@@ -21,7 +21,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/darwin-eu/visOmopResults/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/darwin-eu/visOmopResults/blob/v.1.5.0/DESCRIPTION)
 
 Català M, Mercadé-Besora N (2026). *visOmopResults: Graphs and Tables
 for OMOP Results*. R package version 1.5.0,
