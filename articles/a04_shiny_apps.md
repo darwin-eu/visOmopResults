@@ -19,6 +19,7 @@ build on it. Specifically, we will demonstrate:
 Load packages and mock data.
 
 ``` r
+
 library(shiny)
 library(bslib)
 library(sortable)
@@ -68,6 +69,7 @@ plot, with options for colouring, faceting, and ribbons.
 ### Example UI Code
 
 ``` r
+
 ui <- bslib::page_navbar(
   title = "visOmopResults for Shiny",
   window_title = "visOmopResults • Shiny",
@@ -252,6 +254,7 @@ and configure header, group, and hidden column options in a similar way.
 These results are not in `<summarised_result>` format, as shown below:
 
 ``` r
+
 data$large_scale_characteristics
 #> # A tibble: 952 × 8
 #>    cdm_name    cohort_name sex   concept_name window concept_id count percentage
@@ -311,6 +314,7 @@ available in `visOmopResults.`
 > they share a consistent interface and style.
 
 ``` r
+
 server <- function(input, output, session) {
   # Baseline (GT)
   output$summarise_characteristics_table <- gt::render_gt({
@@ -384,6 +388,7 @@ To run the Shiny app, copy the code chunks provided in this vignette
 into a script named **`app.R`**, and add the following line at the end:
 
 ``` r
+
 shinyApp(ui, server)
 ```
 

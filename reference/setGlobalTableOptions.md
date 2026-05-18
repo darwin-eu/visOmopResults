@@ -55,6 +55,18 @@ result |>
     groupColumn = strataColumns(result)
   )
 #> Warning: Font family is not currently available for customisation in `tinytable`
+#> `text_line_space`, `text_space_before`, and `text_space_after` not supported
+#> for `gt`
+#> `text_line_space`, `text_space_before`, and `text_space_after` not supported
+#> for `gt`
+#> `text_line_space`, `text_space_before`, and `text_space_after` not supported
+#> for `gt`
+#> `text_line_space`, `text_space_before`, and `text_space_after` not supported
+#> for `gt`
+#> `text_line_space`, `text_space_before`, and `text_space_after` not supported
+#> for `gt`
+#> `text_line_space`, `text_space_before`, and `text_space_after` not supported
+#> for `gt`
 #> +-------------------+-------------------+--------------------+-------------------+----------------+----------------+
 #> |                                                                                | **Cohort name**                 |
 #> +-------------------+-------------------+--------------------+-------------------+----------------+----------------+

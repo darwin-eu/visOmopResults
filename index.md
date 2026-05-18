@@ -17,6 +17,7 @@ various output formats such as HTML, PNG, Word, and PDF.
 You can install the latest version of **visOmopResults** from CRAN:
 
 ``` r
+
 install.packages("visOmopResults")
 ```
 
@@ -24,6 +25,7 @@ Or you can install the development version from
 [GitHub](https://github.com/darwin-eu/visOmopResults) with:
 
 ``` r
+
 # install.packages("pak")
 pak::pkg_install("darwin-eu/visOmopResults")
 ```
@@ -45,6 +47,7 @@ this process. To demonstrate the package’s functionality, let’s start by
 using some mock results:
 
 ``` r
+
 library(visOmopResults)
 result <- mockSummarisedResult()
 ```
@@ -68,6 +71,7 @@ There are two main functions:
 Let’s see a simple example:
 
 ``` r
+
 result |>
   filterStrata(sex != "overall" & age_group != "overall") |>
   visOmopTable(
@@ -108,6 +112,7 @@ the package’s visual design.
 Let’s see how we can create a simple boxplot for age:
 
 ``` r
+
 library(dplyr)
 result |>
   filter(variable_name == "number subjects") |>

@@ -36,6 +36,8 @@ barPlot(
   x = "cohort_name",
   y = "mean",
   facet = c("age_group", "sex"),
-  colour = "sex") +
- themeVisOmop()
+  colour = "sex"
+) +
+  themeVisOmop()
+
 ```

@@ -24,13 +24,13 @@ Source:
 [`DESCRIPTION`](https://github.com/darwin-eu/visOmopResults/blob/main/DESCRIPTION)
 
 Català M, Mercadé-Besora N (2026). *visOmopResults: Graphs and Tables
-for OMOP Results*. R package version 1.4.2.09,
+for OMOP Results*. R package version 1.5.0,
 <https://darwin-eu.github.io/visOmopResults/>.
 
     @Manual{,
       title = {visOmopResults: Graphs and Tables for OMOP Results},
       author = {Martí Català and Núria Mercadé-Besora},
       year = {2026},
-      note = {R package version 1.4.2.09},
+      note = {R package version 1.5.0},
       url = {https://darwin-eu.github.io/visOmopResults/},
     }

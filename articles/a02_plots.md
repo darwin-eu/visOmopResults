@@ -5,6 +5,7 @@ data in `<summarised_result>` format while also being compatible with
 other formats.
 
 ``` r
+
 library(visOmopResults)
 ```
 
@@ -17,6 +18,7 @@ function, which aggregates the data into the `<summarised_result>`
 format:
 
 ``` r
+
 library(PatientProfiles)
 library(palmerpenguins)
 library(dplyr)
@@ -81,6 +83,7 @@ To identify the available tidy columns, use the
 function:
 
 ``` r
+
 tidyColumns(penguinsSummary)
 #>  [1] "cdm_name"       "species"        "year"           "sex"           
 #>  [5] "variable_name"  "variable_level" "count"          "median"        
@@ -100,6 +103,7 @@ We can create simple scatter plots using the `plotScatter()` let’s see
 some examples:
 
 ``` r
+
 penguinsSummary |>
   filter(variable_name == "bill_depth_mm") |>
   filterStrata(year != "overall", sex == "overall") |>
@@ -123,6 +127,7 @@ installed, and for **Windows** registered in R graphics. See vignette on
 styles.
 
 ``` r
+
 penguinsSummary |>
   filter(variable_name %in% c("bill_length_mm", "bill_depth_mm"))|>
   filterStrata(year == "overall", sex == "overall") |>
@@ -146,6 +151,7 @@ Otherwise, the style can be applied afterwards with the function
 customised with the usual ggplot2 functionalities:
 
 ``` r
+
 penguinsSummary |>
   filter(variable_name == "flipper_length_mm") |>
   filterStrata(year != "overall", sex %in% c("female", "male")) |>
@@ -170,6 +176,7 @@ penguinsSummary |>
 ![](a02_plots_files/figure-html/unnamed-chunk-6-1.png)
 
 ``` r
+
 penguinsSummary |>
   filter(
     variable_name %in% c("flipper_length_mm", "bill_length_mm", "bill_depth_mm")
@@ -198,6 +205,7 @@ penguinsSummary |>
 Let’s create a bar plots:
 
 ``` r
+
 penguinsSummary |>
   filter(variable_name == "number records") |>
   filterGroup(species != "overall") |>
@@ -218,6 +226,7 @@ penguinsSummary |>
 Let’s create some box plots of their body mass:
 
 ``` r
+
 penguinsSummary |>
   filter(variable_name == "body_mass_g") |>
   boxPlot(x = "year", facet = species ~ cdm_name, colour = "sex", style = "default")
@@ -226,6 +235,7 @@ penguinsSummary |>
 ![](a02_plots_files/figure-html/unnamed-chunk-9-1.png)
 
 ``` r
+
 penguinsSummary |>
   filter(variable_name == "body_mass_g") |>
   filterGroup(species != "overall") |>
@@ -238,6 +248,58 @@ penguinsSummary |>
 
 Note that as we didnt specify x there is no levels in the x axis, but
 box plots are produced anyway.
+
+### Alluvial plot
+
+Alluvial plots display how observations are distributed across multiple
+categorical axes and how they transition between categories. For this
+type of plot, each row of data in `results` represents a unique
+combination pattern of categories and their frequency.
+
+Let’s create a simple example showing how penguins transition across
+species, island, and sex categories:
+
+``` r
+
+alluvialData <- penguins |>
+  filter(!is.na(sex)) |>
+  count(species, island, sex, name = "count") 
+alluvialData |> glimpse()
+#> Rows: 10
+#> Columns: 4
+#> $ species <fct> Adelie, Adelie, Adelie, Adelie, Adelie, Adelie, Chinstrap, Chi…
+#> $ island  <fct> Biscoe, Biscoe, Dream, Dream, Torgersen, Torgersen, Dream, Dre…
+#> $ sex     <fct> female, male, female, male, female, male, female, male, female…
+#> $ count   <int> 22, 22, 27, 28, 24, 23, 34, 34, 58, 61
+
+alluvialData |>
+  alluvialPlot(
+    x = c("species", "island", "sex"),
+    y = "count"
+  )
+```
+
+![](a02_plots_files/figure-html/unnamed-chunk-11-1.png)
+
+As with the other plot functions, `facet` and `style` arguments are
+supported:
+
+``` r
+
+penguins |>
+  filter(!is.na(sex)) |>
+  mutate(year = as.character(year)) |>
+  count(species, island, sex, year, name = "count") |>
+  alluvialPlot(
+    x = c("species", "island", "sex"),
+    y = "count",
+    colour = "species",
+    facet = "year",
+    style = "darwin"
+  )
+```
+
+![](a02_plots_files/figure-html/unnamed-chunk-12-1.png)
 
 ## Plotting style
 
@@ -259,6 +321,7 @@ Plotting functions can also be used with the usual `<data.frame>`. In
 this case we will use the tidy format of `penguinsSummary`.
 
 ``` r
+
 penguinsTidy <- penguinsSummary |>
   filter(!estimate_name %in% c("density_x", "density_y")) |> # remove density for simplicity
   tidy()
@@ -285,6 +348,7 @@ Using this tidy format, we can replicate plots. For instance, we
 recreate the previous example:
 
 ``` r
+
 penguinsTidy |>
   filter(
     variable_name == "body_mass_g",
@@ -295,7 +359,7 @@ penguinsTidy |>
   boxPlot(x = "cdm_name", facet = sex ~ species, colour = "year", style = "darwin")
 ```
 
-![](a02_plots_files/figure-html/unnamed-chunk-12-1.png)
+![](a02_plots_files/figure-html/unnamed-chunk-16-1.png)
 
 ## Custom plotting
 
@@ -303,6 +367,7 @@ The tidy format is very useful to apply any other custom ggplot2
 function that we may be interested on:
 
 ``` r
+
 library(ggplot2)
 penguinsSummary |>
   filter(variable_name == "number records") |>
@@ -316,7 +381,7 @@ penguinsSummary |>
   ggplot2::theme(axis.text.x = ggplot2::element_text(angle = 90, vjust = 0.5, hjust=1))
 ```
 
-![](a02_plots_files/figure-html/unnamed-chunk-13-1.png)
+![](a02_plots_files/figure-html/unnamed-chunk-17-1.png)
 
 ## Combine with `ggplot2`
 
@@ -329,6 +394,7 @@ to change the labels and
 to move the location of the legend.
 
 ``` r
+
 penguinsSummary |>
   filter(
     group_level != "overall",
@@ -341,13 +407,14 @@ penguinsSummary |>
   labs(x = "My custom x label")
 ```
 
-![](a02_plots_files/figure-html/unnamed-chunk-14-1.png)
+![](a02_plots_files/figure-html/unnamed-chunk-18-1.png)
 
 You can also use
 [`ggplot2::ggsave()`](https://ggplot2.tidyverse.org/reference/ggsave.html)
 to later save one of this plots into ‘.png’ file.
 
 ``` r
+
 ggsave(
   "figure8.png", plot = last_plot(), device = "png", width = 15, height = 12, 
   units = "cm", dpi = 300)
@@ -359,6 +426,7 @@ To make a plot interactive, the package can convernt ggplots to
 `<plotly>` by changing the plot type argument
 
 ``` r
+
 penguinsSummary |>
   filter(
     group_level != "overall",

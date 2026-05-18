@@ -1,6 +1,7 @@
-# Create a box plot visualisation from a `<summarised_result>` object
+# Create a box plot visualisation from a data frame or a `<summarised_result>` object.
 
-Create a box plot visualisation from a `<summarised_result>` object
+Create a box plot visualisation from a data frame or a
+`<summarised_result>` object.
 
 ## Usage
 

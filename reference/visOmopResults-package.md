@@ -23,6 +23,9 @@ Useful links:
 
 Authors:
 
+- Núria Mercadé-Besora <nuria.mercadebesora@ndorms.ox.ac.uk>
+  ([ORCID](https://orcid.org/0009-0006-7948-3747))
+
 - Martí Català <marti.catalasabate@ndorms.ox.ac.uk>
   ([ORCID](https://orcid.org/0000-0003-3308-9905))
 

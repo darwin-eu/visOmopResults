@@ -9,6 +9,7 @@ styles. It also shows how to style tables and plots programmatically,
 without the need to create a `.yml` file.
 
 ``` r
+
 library(visOmopResults)
 library(here)
 library(gt)
@@ -22,6 +23,7 @@ Styles are defined using `.yml` files. To list the available styles,
 use:
 
 ``` r
+
 tableStyle()
 #> [1] "darwin"  "default"
 plotStyle()
@@ -52,7 +54,7 @@ logo:
 typography:
   base:
     family: Calibri
-    size: '11'
+    size: 11pt
 defaults:
   shiny:
     theme:
@@ -61,7 +63,7 @@ defaults:
     template: system.file("darwinReportRef.docx", package = "visOmopResults")
     plot:
       font_family: Calibri
-      font_size: '11'
+      font_size: 11pt
       background_color: white
       header_color: darwin_blue
       header_text_color: white
@@ -72,50 +74,54 @@ defaults:
       legend_position: right
     table:
       font_family: Calibri
-      font_size: '9'
+      font_size: 9pt
       border_color: darwin_blue
-      border_width: 1
+      border_width: 0.5
+      text_line_space: 1
+      text_space_before: 0
+      text_space_after: 6
       header:
         background_color: darwin_blue
         text_bold: yes
         align: center
         text_color: white
         border_color: white
-        font_size: 11
+        font_size: 9pt
       header_name:
         background_color: darwin_blue
         text_bold: yes
         align: center
         text_color: white
         border_color: white
-        font_size: 11
+        font_size: 9pt
       header_level:
         background_color: darwin_blue
         text_bold: yes
         align: center
         text_color: white
         border_color: white
-        font_size: 11
+        font_size: 9pt
       column_name:
         background_color: darwin_blue
         text_bold: yes
         align: center
         text_color: white
         border_color: white
-        font_size: 11
+        font_size: 9pt
       group_label:
         background_color: darwin_blue
         text_bold: yes
         text_color: white
         border_color: white
+        font_size: 9pt
       title:
         text_bold: yes
         align: center
-        font_size: 15
+        font_size: 15pt
       subtitle:
         text_bold: yes
         align: center
-        font_size: 12
+        font_size: 12pt
       body:
         border_width: 0.5
         border_color: darwin_blue
@@ -130,9 +136,9 @@ The `.yml` structure can be divided into four main sections:
   plots, and tables (these can be overridden in the plot/table
   sections).
 - **Plot:** Plot-specific settings such as background color, facet
-  header color, header text color and bold, grid color, axis color,
-  border color, and legend position. Font settings are taken from the
-  typography section unless overridden here.
+  header color and text, grid color, axis color, border color, plot
+  colour and fill palettes, and legend position. Font settings are taken
+  from the typography section unless overridden here.
 - **Table:** Table-specific settings. You can set an overall
   `border-color` and `border-width`, or override settings per table
   section. Table sections include: `header`, `header-name`,
@@ -149,28 +155,33 @@ entries; if none are defined, the default `ggplot2` (for plots) or the
 default for the specific table type is used. The table below shows the
 priority order for common plot and table options.
 
-| Part                      | Option 1                                                        | Option 2                                   | Option 3                                     |
-|---------------------------|-----------------------------------------------------------------|--------------------------------------------|----------------------------------------------|
-| Plot                      |                                                                 |                                            |                                              |
-| Background color          | defaults:visOmopResults:plot:background-color                   | color:background                           | \-                                           |
-| Header (facet) color      | defaults:visOmopResults:plot:header-color                       | color:foreground                           | \-                                           |
-| Header (facet) text color | defaults:visOmopResults:plot:header-text-color                  | \-                                         | \-                                           |
-| Header (facet) text bold  | defaults:visOmopResults:plot:header-text-bold                   | color:foreground                           | \-                                           |
-| Border color              | defaults:visOmopResults:plot:border-color                       | \-                                         | \-                                           |
-| Grid color                | defaults:visOmopResults:plot:grid-major-color                   | color:foreground                           | \-                                           |
-| Axis color                | defaults:visOmopResults:plot:axis-color                         | \-                                         | \-                                           |
-| Legend position           | defaults:visOmopResults:plot:legend-position                    | \-                                         | \-                                           |
-| Font family               | defaults:visOmopResults:plot:font_family                        | typography:base:family                     | \-                                           |
-| Font size                 | defaults:visOmopResults:plot:font_size                          | defaults:visOmopResults:plot:font_size     | typography:base:size                         |
-| Table section             |                                                                 |                                            |                                              |
-| Background color          | defaults:visOmopResults:table:\[section_name\]:background-color | color:background                           | \-                                           |
-| Text bold                 | defaults:visOmopResults:table:\[section_name\]:text-bold        | \-                                         | \-                                           |
-| Text color                | defaults:visOmopResults:table:\[section_name\]:text-color       | \-                                         | \-                                           |
-| Text align                | defaults:visOmopResults:table:\[section_name\]:align            | \-                                         | \-                                           |
-| Font size                 | defaults:visOmopResults:table:\[section_name\]:font-size        | defaults:visOmopResults:table:font-size    | defaults:visOmopResults:typography:base:size |
-| Font family               | defaults:visOmopResults:table:\[section_name\]:font-family      | defaults:visOmopResults:table:font_family  | typography:base:family                       |
-| Border color              | defaults:visOmopResults:table:\[section_name\]:border-color     | defaults:visOmopResults:table:border-color | \-                                           |
-| Border width              | defaults:visOmopResults:table:\[section_name\]:border-width     | defaults:visOmopResults:table:border-width | \-                                           |
+| Part | Option 1 | Option 2 | Option 3 |
+|----|----|----|----|
+| Plot |  |  |  |
+| Background color | defaults:visOmopResults:plot:background-color | color:background | \- |
+| Header (facet) color | defaults:visOmopResults:plot:header-color | color:foreground | \- |
+| Header (facet) text color | defaults:visOmopResults:plot:header-text-color | \- | \- |
+| Header (facet) text bold | defaults:visOmopResults:plot:header-text-bold | color:foreground | \- |
+| Border color | defaults:visOmopResults:plot:border-color | \- | \- |
+| Grid color | defaults:visOmopResults:plot:grid-major-color | color:foreground | \- |
+| Axis color | defaults:visOmopResults:plot:axis-color | \- | \- |
+| Legend position | defaults:visOmopResults:plot:legend-position | \- | \- |
+| Font family | defaults:visOmopResults:plot:font_family | typography:base:family | \- |
+| Font size | defaults:visOmopResults:plot:font_size | defaults:visOmopResults:plot:font_size | typography:base:size |
+| Colour palette | defaults:visOmopResults:plot:color_palette | \- | \- |
+| Fill palette | defaults:visOmopResults:plot:fill_palette | defaults:visOmopResults:plot:color_palette | \- |
+| Table section |  |  |  |
+| Background color | defaults:visOmopResults:table:\[section_name\]:background-color | color:background | \- |
+| Text bold | defaults:visOmopResults:table:\[section_name\]:text-bold | \- | \- |
+| Text color | defaults:visOmopResults:table:\[section_name\]:text-color | \- | \- |
+| Text align | defaults:visOmopResults:table:\[section_name\]:align | defaults:visOmopResults:table:align | \- |
+| Text line space | defaults:visOmopResults:table:\[section_name\]:text_line_space | defaults:visOmopResults:table:text_line_space | \- |
+| Text space before | defaults:visOmopResults:table:\[section_name\]:text_space_before | defaults:visOmopResults:table:text_space_before | \- |
+| Text space after | defaults:visOmopResults:table:\[section_name\]:text_space_after | defaults:visOmopResults:table:text_space_after | \- |
+| Font size | defaults:visOmopResults:table:\[section_name\]:font-size | defaults:visOmopResults:table:font-size | defaults:visOmopResults:typography:base:size |
+| Font family | defaults:visOmopResults:table:\[section_name\]:font-family | defaults:visOmopResults:table:font_family | typography:base:family |
+| Border color | defaults:visOmopResults:table:\[section_name\]:border-color | defaults:visOmopResults:table:border-color | \- |
+| Border width | defaults:visOmopResults:table:\[section_name\]:border-width | defaults:visOmopResults:table:border-width | \- |
 
 In the examples above the YML path is represented with colon separators.
 For example, `plot:background-color` refers to the `background-color`
@@ -194,6 +205,7 @@ be:
 Example: apply the built-in `"darwin"` style to a plot:
 
 ``` r
+
 result <- mockSummarisedResult() |> 
   filter(variable_name == "age")
 
@@ -212,6 +224,7 @@ barPlot(
 Example: use a custom `.yml` file (path provided):
 
 ``` r
+
 barPlot(
   result = result,
   x = "cohort_name",
@@ -242,6 +255,7 @@ the same table section structure as the `.yml`.
 Below is an example that sets table section styles for `gt`.
 
 ``` r
+
 result |>
   visOmopTable(
     estimateName = c("Mean (SD)" = "<mean> (<sd>)"),
@@ -296,6 +310,7 @@ For `flextable`, styling objects come from the `officer` package. The
 structure is similar, but the style objects differ:
 
 ``` r
+
 result |>
   visOmopTable(
     estimateName = c("Mean (SD)" = "<mean> (<sd>)"),
@@ -341,20 +356,20 @@ result |>
   )
 ```
 
-| My formatted table!                            |           |               |                |               |                           |              |              |
-|------------------------------------------------|-----------|---------------|----------------|---------------|---------------------------|--------------|--------------|
-| Created with the \`visOmopResults\` R package. |           |               |                |               |                           |              |              |
-| CDM name                                       | Age group | Variable name | Variable level | Estimate name | This is an overall header |              |              |
-|                                                |           |               |                |               | Sex                       |              |              |
-|                                                |           |               |                |               | overall                   | Male         | Female       |
-| cohort2                                        |           |               |                |               |                           |              |              |
-| mock                                           | overall   | age           | –              | Mean (SD)     | 38.24 (7.89)              | 49.35 (4.78) | 18.62 (8.61) |
-|                                                | \<40      | age           | –              | Mean (SD)     | 82.74 (4.38)              | 86.97 (0.23) | 48.21 (7.32) |
-|                                                | \>=40     | age           | –              | Mean (SD)     | 66.85 (2.45)              | 34.03 (4.77) | 59.96 (6.93) |
-| cohort1                                        |           |               |                |               |                           |              |              |
-| mock                                           | overall   | age           | –              | Mean (SD)     | 38.00 (7.94)              | 12.56 (6.47) | 26.72 (7.83) |
-|                                                | \<40      | age           | –              | Mean (SD)     | 38.61 (5.53)              | 77.74 (1.08) | 21.21 (4.11) |
-|                                                | \>=40     | age           | –              | Mean (SD)     | 1.34 (5.30)               | 93.47 (7.24) | 65.17 (8.21) |
+| My formatted table! |  |  |  |  |  |  |  |
+|----|----|----|----|----|----|----|----|
+| Created with the \`visOmopResults\` R package. |  |  |  |  |  |  |  |
+| Data source | Age group | Variable name | Variable level | Estimate name | This is an overall header |  |  |
+|  |  |  |  |  | Sex |  |  |
+|  |  |  |  |  | overall | Male | Female |
+| cohort2 |  |  |  |  |  |  |  |
+| mock | overall | age | – | Mean (SD) | 38.24 (7.89) | 49.35 (4.78) | 18.62 (8.61) |
+|  | \<40 | age | – | Mean (SD) | 82.74 (4.38) | 86.97 (0.23) | 48.21 (7.32) |
+|  | \>=40 | age | – | Mean (SD) | 66.85 (2.45) | 34.03 (4.77) | 59.96 (6.93) |
+| cohort1 |  |  |  |  |  |  |  |
+| mock | overall | age | – | Mean (SD) | 38.00 (7.94) | 12.56 (6.47) | 26.72 (7.83) |
+|  | \<40 | age | – | Mean (SD) | 38.61 (5.53) | 77.74 (1.08) | 21.21 (4.11) |
+|  | \>=40 | age | – | Mean (SD) | 1.34 (5.30) | 93.47 (7.24) | 65.17 (8.21) |
 
 ### Plots
 
@@ -362,6 +377,7 @@ Plot helpers return `ggplot2` objects, so you can further modify them
 using `+` and regular `ggplot2` calls:
 
 ``` r
+
 library(ggplot2)
 
 barPlot(
@@ -413,6 +429,7 @@ expose all installed system fonts. You must register a font before
 ggplot2 can use it. This can be done as follows:
 
 ``` r
+
 windowsFonts(Calibri = windowsFont("Calibri"))
 ```
 
@@ -428,6 +445,7 @@ Below is an example using the “darwin” plot style, which will use
 “Calibri” when available, otherwise falling back to “sans”:
 
 ``` r
+
 barPlot(
   result = result,
   x = "cohort_name",

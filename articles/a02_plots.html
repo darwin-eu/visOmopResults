@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Plots">
 </head>
@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visOmopResults</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2.09</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -283,6 +283,72 @@ futher customised with the usual ggplot2 functionalities:</p>
 <p>Note that as we didnt specify x there is no levels in the x axis, but
 box plots are produced anyway.</p>
 </div>
+<div class="section level3">
+<h3 id="alluvial-plot">Alluvial plot<a class="anchor" aria-label="anchor" href="#alluvial-plot"></a>
+</h3>
+<p>Alluvial plots display how observations are distributed across
+multiple categorical axes and how they transition between categories.
+For this type of plot, each row of data in <code>results</code>
+represents a unique combination pattern of categories and their
+frequency.</p>
+<p>Let’s create a simple example showing how penguins transition across
+species, island, and sex categories:</p>
+<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">alluvialData</span> <span class="op">&lt;-</span> <span class="va">penguins</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">species</span>, <span class="va">island</span>, <span class="va">sex</span>, name <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> </span>
+<span><span class="va">alluvialData</span> <span class="op">|&gt;</span> <span class="fu"><a href="https://pillar.r-lib.org/reference/glimpse.html" class="external-link">glimpse</a></span><span class="op">(</span><span class="op">)</span></span>
+<span><span class="co">#&gt; Rows: 10</span></span>
+<span><span class="co">#&gt; Columns: 4</span></span>
+<span><span class="co">#&gt; $ species <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> Adelie<span style="color: #949494;">, </span>Adelie<span style="color: #949494;">, </span>Adelie<span style="color: #949494;">, </span>Adelie<span style="color: #949494;">, </span>Adelie<span style="color: #949494;">, </span>Adelie<span style="color: #949494;">, </span>Chinstrap<span style="color: #949494;">, </span>Chi…</span></span>
+<span><span class="co">#&gt; $ island  <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> Biscoe<span style="color: #949494;">, </span>Biscoe<span style="color: #949494;">, </span>Dream<span style="color: #949494;">, </span>Dream<span style="color: #949494;">, </span>Torgersen<span style="color: #949494;">, </span>Torgersen<span style="color: #949494;">, </span>Dream<span style="color: #949494;">, </span>Dre…</span></span>
+<span><span class="co">#&gt; $ sex     <span style="color: #949494; font-style: italic;">&lt;fct&gt;</span> female<span style="color: #949494;">, </span>male<span style="color: #949494;">, </span>female<span style="color: #949494;">, </span>male<span style="color: #949494;">, </span>female<span style="color: #949494;">, </span>male<span style="color: #949494;">, </span>female<span style="color: #949494;">, </span>male<span style="color: #949494;">, </span>female…</span></span>
+<span><span class="co">#&gt; $ count   <span style="color: #949494; font-style: italic;">&lt;int&gt;</span> 22<span style="color: #949494;">, </span>22<span style="color: #949494;">, </span>27<span style="color: #949494;">, </span>28<span style="color: #949494;">, </span>24<span style="color: #949494;">, </span>23<span style="color: #949494;">, </span>34<span style="color: #949494;">, </span>34<span style="color: #949494;">, </span>58<span style="color: #949494;">, </span>61</span></span>
+<span></span>
+<span><span class="va">alluvialData</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/alluvialPlot.html">alluvialPlot</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="st">"island"</span>, <span class="st">"sex"</span><span class="op">)</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"count"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><img src="a02_plots_files/figure-html/unnamed-chunk-11-1.png" class="r-plt" alt="" width="691.2"></p>
+<p>As with the other plot functions, <code>facet</code> and
+<code>style</code> arguments are supported:</p>
+<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">penguins</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="fu"><a href="https://rdrr.io/r/base/NA.html" class="external-link">is.na</a></span><span class="op">(</span><span class="va">sex</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/mutate.html" class="external-link">mutate</a></span><span class="op">(</span>year <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/character.html" class="external-link">as.character</a></span><span class="op">(</span><span class="va">year</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/count.html" class="external-link">count</a></span><span class="op">(</span><span class="va">species</span>, <span class="va">island</span>, <span class="va">sex</span>, <span class="va">year</span>, name <span class="op">=</span> <span class="st">"count"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/alluvialPlot.html">alluvialPlot</a></span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"species"</span>, <span class="st">"island"</span>, <span class="st">"sex"</span><span class="op">)</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"count"</span>,</span>
+<span>    colour <span class="op">=</span> <span class="st">"species"</span>,</span>
+<span>    facet <span class="op">=</span> <span class="st">"year"</span>,</span>
+<span>    style <span class="op">=</span> <span class="st">"darwin"</span></span>
+<span>  <span class="op">)</span></span></code></pre></div>
+<p><img src="a02_plots_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="691.2"></p>
+<!--
+### Sankey plot
+
+Sankey plots visualise directed flows between states (nodes). Unlike alluvial plots, which track observations across multiple categorical axes simultaneously, Sankey plots are defined by explicit `from` and `to` columns representing the 
+source and destination of each flow. Multiple transitions can be chained using the `transition` argument.
+
+In this example, we visualise the flow of penguins from their native island to their sex:
+
+
+
+When you have multiple sequential transitions, use the `transition` argument to
+identify which step each row belongs to. Note that flows must be conserved at 
+intermediate nodes: the total arriving at a node must equal the total leaving 
+it:
+
+
+
+Note that if you want to visualise how observations are distributed across 
+multiple categorical axes simultaneously — without explicit directed transitions 
+— use `alluvialPlot()` instead.
+
+-->
+</div>
 </div>
 <div class="section level2">
 <h2 id="plotting-style">Plotting style<a class="anchor" aria-label="anchor" href="#plotting-style"></a>
@@ -303,7 +369,7 @@ function call.</p>
 <p>Plotting functions can also be used with the usual
 <code>&lt;data.frame&gt;</code>. In this case we will use the tidy
 format of <code>penguinsSummary</code>.</p>
-<div class="sourceCode" id="cb11"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsTidy</span> <span class="op">&lt;-</span> <span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="op">!</span><span class="va">estimate_name</span> <span class="op"><a href="https://rdrr.io/r/base/match.html" class="external-link">%in%</a></span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"density_x"</span>, <span class="st">"density_y"</span><span class="op">)</span><span class="op">)</span> <span class="op">|&gt;</span> <span class="co"># remove density for simplicity</span></span>
 <span>  <span class="fu"><a href="https://generics.r-lib.org/reference/tidy.html" class="external-link">tidy</a></span><span class="op">(</span><span class="op">)</span></span>
@@ -326,7 +392,7 @@ format of <code>penguinsSummary</code>.</p>
 <span><span class="co">#&gt; $ percentage     <span style="color: #949494; font-style: italic;">&lt;dbl&gt;</span> <span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span>46.15385<span style="color: #949494;">, </span>44.23077<span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">, </span><span style="color: #BB0000;">NA</span><span style="color: #949494;">,</span>…</span></span></code></pre></div>
 <p>Using this tidy format, we can replicate plots. For instance, we
 recreate the previous example:</p>
-<div class="sourceCode" id="cb12"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsTidy</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
 <span>    <span class="va">variable_name</span> <span class="op">==</span> <span class="st">"body_mass_g"</span>,</span>
@@ -335,14 +401,14 @@ recreate the previous example:</p>
 <span>    <span class="va">year</span> <span class="op">!=</span> <span class="st">"overall"</span></span>
 <span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/boxPlot.html">boxPlot</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"cdm_name"</span>, facet <span class="op">=</span> <span class="va">sex</span> <span class="op">~</span> <span class="va">species</span>, colour <span class="op">=</span> <span class="st">"year"</span>, style <span class="op">=</span> <span class="st">"darwin"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="a02_plots_files/figure-html/unnamed-chunk-12-1.png" class="r-plt" alt="" width="691.2"></p>
+<p><img src="a02_plots_files/figure-html/unnamed-chunk-16-1.png" class="r-plt" alt="" width="691.2"></p>
 </div>
 <div class="section level2">
 <h2 id="custom-plotting">Custom plotting<a class="anchor" aria-label="anchor" href="#custom-plotting"></a>
 </h2>
 <p>The tidy format is very useful to apply any other custom ggplot2
 function that we may be interested on:</p>
-<div class="sourceCode" id="cb13"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://ggplot2.tidyverse.org" class="external-link">ggplot2</a></span><span class="op">)</span></span>
 <span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span><span class="va">variable_name</span> <span class="op">==</span> <span class="st">"number records"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
@@ -354,7 +420,7 @@ function that we may be interested on:</p>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/geom_text.html" class="external-link">geom_text</a></span><span class="op">(</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/facet_grid.html" class="external-link">facet_grid</a></span><span class="op">(</span><span class="va">cdm_name</span> <span class="op">~</span> <span class="va">species</span><span class="op">)</span> <span class="op">+</span> </span>
 <span>  <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">theme</a></span><span class="op">(</span>axis.text.x <span class="op">=</span> <span class="fu">ggplot2</span><span class="fu">::</span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/element.html" class="external-link">element_text</a></span><span class="op">(</span>angle <span class="op">=</span> <span class="fl">90</span>, vjust <span class="op">=</span> <span class="fl">0.5</span>, hjust<span class="op">=</span><span class="fl">1</span><span class="op">)</span><span class="op">)</span></span></code></pre></div>
-<p><img src="a02_plots_files/figure-html/unnamed-chunk-13-1.png" class="r-plt" alt="" width="691.2"></p>
+<p><img src="a02_plots_files/figure-html/unnamed-chunk-17-1.png" class="r-plt" alt="" width="691.2"></p>
 </div>
 <div class="section level2">
 <h2 id="combine-with-ggplot2">Combine with <code>ggplot2</code><a class="anchor" aria-label="anchor" href="#combine-with-ggplot2"></a>
@@ -364,7 +430,7 @@ outputs of the plotting functions can be later customised with ggplot2
 and similar tools. For example we can use <code><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">ggplot2::labs()</a></code>
 to change the labels and <code><a href="https://ggplot2.tidyverse.org/reference/theme.html" class="external-link">ggplot2::theme()</a></code> to move the
 location of the legend.</p>
-<div class="sourceCode" id="cb14"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
 <span>    <span class="va">group_level</span> <span class="op">!=</span> <span class="st">"overall"</span>,</span>
@@ -375,10 +441,10 @@ location of the legend.</p>
 <span>  <span class="fu"><a href="../reference/themeVisOmop.html">themeVisOmop</a></span><span class="op">(</span>fontsizeRef <span class="op">=</span> <span class="fl">12</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/lims.html" class="external-link">ylim</a></span><span class="op">(</span><span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">6500</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/labs.html" class="external-link">labs</a></span><span class="op">(</span>x <span class="op">=</span> <span class="st">"My custom x label"</span><span class="op">)</span></span></code></pre></div>
-<p><img src="a02_plots_files/figure-html/unnamed-chunk-14-1.png" class="r-plt" alt="" width="691.2"></p>
+<p><img src="a02_plots_files/figure-html/unnamed-chunk-18-1.png" class="r-plt" alt="" width="691.2"></p>
 <p>You can also use <code><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggplot2::ggsave()</a></code> to later save one of
 this plots into ‘.png’ file.</p>
-<div class="sourceCode" id="cb15"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb17"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="https://ggplot2.tidyverse.org/reference/ggsave.html" class="external-link">ggsave</a></span><span class="op">(</span></span>
 <span>  <span class="st">"figure8.png"</span>, plot <span class="op">=</span> <span class="fu"><a href="https://ggplot2.tidyverse.org/reference/get_last_plot.html" class="external-link">last_plot</a></span><span class="op">(</span><span class="op">)</span>, device <span class="op">=</span> <span class="st">"png"</span>, width <span class="op">=</span> <span class="fl">15</span>, height <span class="op">=</span> <span class="fl">12</span>, </span>
 <span>  units <span class="op">=</span> <span class="st">"cm"</span>, dpi <span class="op">=</span> <span class="fl">300</span><span class="op">)</span></span></code></pre></div>
@@ -388,7 +454,7 @@ this plots into ‘.png’ file.</p>
 </h2>
 <p>To make a plot interactive, the package can convernt ggplots to
 <code>&lt;plotly&gt;</code> by changing the plot type argument</p>
-<div class="sourceCode" id="cb16"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb18"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">penguinsSummary</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="https://dplyr.tidyverse.org/reference/filter.html" class="external-link">filter</a></span><span class="op">(</span></span>
 <span>    <span class="va">group_level</span> <span class="op">!=</span> <span class="st">"overall"</span>,</span>

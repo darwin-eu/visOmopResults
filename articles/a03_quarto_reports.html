@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Quarto reports">
 </head>
@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visOmopResults</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2.09</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -101,7 +101,7 @@ together with the Quarto script used to generate the report.</p>
 options/variables used across the script. The results we use are
 obtained from mock data created with the
 <code>IncidencePrevalence</code> and <code>CohortCharacteristics</code>
-packages, which we have stored in the <em>[inst]</em>(<a href="https://github.com/darwin-eu/visOmopResults/tree/main/inst" class="external-link uri">https://github.com/darwin-eu/visOmopResults/tree/main/inst</a>)
+packages, which we have stored in the <a href="https://github.com/darwin-eu/visOmopResults/tree/main/inst" class="external-link">inst</a>
 folder of the packge.</p>
 <div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Load necessary packages ----</span></span>
@@ -154,205 +154,182 @@ the denominator cohort in our mock study.</p>
 <span>    style <span class="op">=</span> <span class="va">style</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-d46bcecc{table-layout:auto;}.cl-d461d25a{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-d461d264{font-family:'Helvetica';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d4667c10{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-d4667c1a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-d466a8f2{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 1.00);border-top: 1pt solid rgba(255, 255, 255, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d466a8fc{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 1pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d466a8fd{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 1.00);border-top: 1pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d466a906{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d466a907{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-d46bcecc">
+<style>.cl-84405cfe{table-layout:auto;width:100%;}.cl-8437254e{font-family:'Helvetica';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-84372562{font-family:'Helvetica';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-843acd0c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-843acd20{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-843b0754{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-843b075e{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-843b075f{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(255, 255, 255, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-843b0760{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(255, 255, 255, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-843b0768{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(255, 255, 255, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-843b0769{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(255, 255, 255, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-843b0772{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(255, 255, 255, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-843b077c{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(255, 255, 255, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-843b077d{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-84405cfe">
 <thead>
 <tr style="overflow-wrap:break-word;">
-<th rowspan="2" class="cl-d466a8f2"><p class="cl-d4667c10"><span class="cl-d461d25a">Variable name</span></p></th>
-<th rowspan="2" class="cl-d466a8f2"><p class="cl-d4667c10"><span class="cl-d461d25a">Variable level</span></p></th>
-<th rowspan="2" class="cl-d466a8f2"><p class="cl-d4667c10"><span class="cl-d461d25a">Estimate name</span></p></th>
-<th colspan="3" class="cl-d466a8f2"><p class="cl-d4667c10"><span class="cl-d461d25a">Sex</span></p></th>
+<th rowspan="2" class="cl-843b0754"><p class="cl-843acd0c"><span class="cl-8437254e">Variable name</span></p></th>
+<th rowspan="2" class="cl-843b075e"><p class="cl-843acd0c"><span class="cl-8437254e">Variable level</span></p></th>
+<th rowspan="2" class="cl-843b075e"><p class="cl-843acd0c"><span class="cl-8437254e">Estimate name</span></p></th>
+<th colspan="3" class="cl-843b075f"><p class="cl-843acd20"><span class="cl-8437254e">Sex</span></p></th>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-d466a8f2"><p class="cl-d4667c10"><span class="cl-d461d25a">overall</span></p></th>
-<th class="cl-d466a8f2"><p class="cl-d4667c10"><span class="cl-d461d25a">Female</span></p></th>
-<th class="cl-d466a8f2"><p class="cl-d4667c10"><span class="cl-d461d25a">Male</span></p></th>
+<th class="cl-843b0772"><p class="cl-843acd0c"><span class="cl-8437254e">overall</span></p></th>
+<th class="cl-843b0772"><p class="cl-843acd0c"><span class="cl-8437254e">Female</span></p></th>
+<th class="cl-843b077c"><p class="cl-843acd0c"><span class="cl-8437254e">Male</span></p></th>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Number records</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">–</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">N</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2,564</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">1,302</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">1,262</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Number records</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">–</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">N</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2,564</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">1,302</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">1,262</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Number subjects</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">–</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">N</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2,564</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">1,302</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">1,262</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Number subjects</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">–</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">N</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2,564</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">1,302</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">1,262</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">Cohort start date</span></p></td>
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">–</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2008-01-01 [2008-01-01 - 2008-01-01]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2008-01-01 [2008-01-01 - 2008-01-01]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2008-01-01 [2008-01-01 - 2008-01-01]</span></p></td>
+<td rowspan="2" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Cohort start date</span></p></td>
+<td rowspan="2" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">–</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Median [Q25 – Q75]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2008–01–01 [2008–01–01 – 2008–01–01]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2008–01–01 [2008–01–01 – 2008–01–01]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2008–01–01 [2008–01–01 – 2008–01–01]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Range</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2008-01-01 to 2008-01-01</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2008-01-01 to 2008-01-01</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2008-01-01 to 2008-01-01</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Range</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2008–01–01 to 2008–01–01</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2008–01–01 to 2008–01–01</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2008–01–01 to 2008–01–01</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">Cohort end date</span></p></td>
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">–</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2018-01-01 [2018-01-01 - 2018-01-01]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2018-01-01 [2018-01-01 - 2018-01-01]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2018-01-01 [2018-01-01 - 2018-01-01]</span></p></td>
+<td rowspan="2" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Cohort end date</span></p></td>
+<td rowspan="2" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">–</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Median [Q25 – Q75]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2018–01–01 [2018–01–01 – 2018–01–01]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2018–01–01 [2018–01–01 – 2018–01–01]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2018–01–01 [2018–01–01 – 2018–01–01]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Range</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2008-01-17 to 2018-01-01</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2008-01-17 to 2018-01-01</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2009-03-24 to 2018-01-01</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Range</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2008–01–17 to 2018–01–01</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2008–01–17 to 2018–01–01</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2009–03–24 to 2018–01–01</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">Age</span></p></td>
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">–</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">46 [36 - 56]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">45 [36 - 55]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">46 [37 - 56]</span></p></td>
+<td rowspan="3" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Age</span></p></td>
+<td rowspan="3" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">–</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Median [Q25 – Q75]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">46 [36 – 56]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">45 [36 – 55]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">46 [37 – 56]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a907"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a907"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Mean (SD)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">47.54 (14.81)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">47.52 (15.21)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">47.57 (14.40)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Mean (SD)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">47.54 (14.81)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">47.52 (15.21)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">47.57 (14.40)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Range</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">21 to 99</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">21 to 99</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">21 to 98</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Range</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">21 to 99</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">21 to 99</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">21 to 98</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">Prior observation</span></p></td>
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">–</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">16,834 [13,477 - 20,588]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">16,734 [13,320 - 20,410]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">16,932 [13,636 - 20,634]</span></p></td>
+<td rowspan="3" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Prior observation</span></p></td>
+<td rowspan="3" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">–</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Median [Q25 – Q75]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">16,834 [13,477 – 20,588]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">16,734 [13,320 – 20,410]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">16,932 [13,636 – 20,634]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a907"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a907"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Mean (SD)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">17,545.28 (5,406.72)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">17,535.78 (5,551.58)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">17,555.07 (5,255.26)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Mean (SD)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">17,545.28 (5,406.72)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">17,535.78 (5,551.58)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">17,555.07 (5,255.26)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Range</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">7,729 to 36,260</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">7,929 to 36,260</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">7,729 to 36,115</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Range</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">7,729 to 36,260</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">7,929 to 36,260</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">7,729 to 36,115</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">Future observation</span></p></td>
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">–</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">4,010 [3,891 - 4,117]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">4,018 [3,900 - 4,118]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">4,005 [3,878 - 4,116]</span></p></td>
+<td rowspan="3" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Future observation</span></p></td>
+<td rowspan="3" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">–</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Median [Q25 – Q75]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">4,010 [3,891 – 4,117]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">4,018 [3,900 – 4,118]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">4,005 [3,878 – 4,116]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a907"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a907"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Mean (SD)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">3,924.53 (418.47)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">3,937.65 (405.74)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">3,910.98 (430.96)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Mean (SD)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">3,924.53 (418.47)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">3,937.65 (405.74)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">3,910.98 (430.96)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Range</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">16 to 4,201</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">16 to 4,199</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">448 to 4,201</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Range</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">16 to 4,201</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">16 to 4,199</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">448 to 4,201</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">Days in cohort</span></p></td>
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">–</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">3,654 [3,654 - 3,654]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">3,654 [3,654 - 3,654]</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">3,654 [3,654 - 3,654]</span></p></td>
+<td rowspan="3" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Days in cohort</span></p></td>
+<td rowspan="3" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">–</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Median [Q25 – Q75]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">3,654 [3,654 – 3,654]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">3,654 [3,654 – 3,654]</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">3,654 [3,654 – 3,654]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a907"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a907"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Mean (SD)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">3,594.61 (332.90)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">3,601.79 (324.60)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">3,587.20 (341.22)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Mean (SD)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">3,594.61 (332.90)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">3,601.79 (324.60)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">3,587.20 (341.22)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Range</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">17 to 3,654</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">17 to 3,654</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">449 to 3,654</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Range</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">17 to 3,654</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">17 to 3,654</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">449 to 3,654</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">Comorbidities flag -inf to 0</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Hiv</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">N (%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">475 (18.53%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">245 (18.82%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">230 (18.23%)</span></p></td>
+<td rowspan="3" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Comorbidities flag –inf to 0</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Hiv</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">N (%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">475 (18.53%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">245 (18.82%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">230 (18.23%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a907"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Depression</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">N (%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">2,531 (98.71%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">1,285 (98.69%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">1,246 (98.73%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Depression</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">N (%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">2,531 (98.71%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">1,285 (98.69%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">1,246 (98.73%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Asthma</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">N (%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">1,234 (48.13%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">623 (47.85%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">611 (48.42%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Asthma</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">N (%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">1,234 (48.13%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">623 (47.85%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">611 (48.42%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a8fd"><p class="cl-d4667c1a"><span class="cl-d461d264">Comedications flag -180 to 0</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Antidiabetes</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">N (%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">26 (1.01%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">11 (0.84%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">15 (1.19%)</span></p></td>
+<td rowspan="2" class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Comedications flag –180 to 0</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Antidiabetes</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">N (%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">26 (1.01%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">11 (0.84%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">15 (1.19%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d466a906"><p class="cl-d4667c1a"><span class="cl-d461d264"></span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">Opioids</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">N (%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">49 (1.91%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">27 (2.07%)</span></p></td>
-<td class="cl-d466a8fc"><p class="cl-d4667c1a"><span class="cl-d461d264">22 (1.74%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">Opioids</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">N (%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">49 (1.91%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">27 (2.07%)</span></p></td>
+<td class="cl-843b077d"><p class="cl-843acd0c"><span class="cl-84372562">22 (1.74%)</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -397,205 +374,182 @@ requirements, we can create a customised table with this package.</p>
 <span>    hide <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cdm_name"</span>, <span class="st">"cohort_name"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-d4f528f2{table-layout:auto;}.cl-d4e929da{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-d4e929ee{font-family:'Helvetica';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d4f05052{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-d4f0505c{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-d4f07d52{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 1.00);border-top: 1pt solid rgba(255, 255, 255, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4f07d53{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 1pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4f07d5c{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 1.00);border-top: 1pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4f07d5d{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d4f07d66{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-d4f528f2">
+<style>.cl-84c2d418{table-layout:auto;width:100%;}.cl-84baa4e6{font-family:'Helvetica';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-84baa4fa{font-family:'Helvetica';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-84bdeb7e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-84bdeb88{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-84be19f0{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-84be1a04{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-84be1a05{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(255, 255, 255, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-84be1a0e{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(255, 255, 255, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-84be1a0f{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(255, 255, 255, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-84be1a18{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(255, 255, 255, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-84be1a19{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(255, 255, 255, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-84be1a22{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(255, 255, 255, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-84be1a23{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-84c2d418">
 <thead>
 <tr style="overflow-wrap:break-word;">
-<th rowspan="2" class="cl-d4f07d52"><p class="cl-d4f05052"><span class="cl-d4e929da">Variable name</span></p></th>
-<th rowspan="2" class="cl-d4f07d52"><p class="cl-d4f05052"><span class="cl-d4e929da">Variable level</span></p></th>
-<th rowspan="2" class="cl-d4f07d52"><p class="cl-d4f05052"><span class="cl-d4e929da">Estimate name</span></p></th>
-<th colspan="3" class="cl-d4f07d52"><p class="cl-d4f05052"><span class="cl-d4e929da">Sex</span></p></th>
+<th rowspan="2" class="cl-84be19f0"><p class="cl-84bdeb7e"><span class="cl-84baa4e6">Variable name</span></p></th>
+<th rowspan="2" class="cl-84be1a04"><p class="cl-84bdeb7e"><span class="cl-84baa4e6">Variable level</span></p></th>
+<th rowspan="2" class="cl-84be1a04"><p class="cl-84bdeb7e"><span class="cl-84baa4e6">Estimate name</span></p></th>
+<th colspan="3" class="cl-84be1a05"><p class="cl-84bdeb88"><span class="cl-84baa4e6">Sex</span></p></th>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-d4f07d52"><p class="cl-d4f05052"><span class="cl-d4e929da">overall</span></p></th>
-<th class="cl-d4f07d52"><p class="cl-d4f05052"><span class="cl-d4e929da">Male</span></p></th>
-<th class="cl-d4f07d52"><p class="cl-d4f05052"><span class="cl-d4e929da">Female</span></p></th>
+<th class="cl-84be1a19"><p class="cl-84bdeb7e"><span class="cl-84baa4e6">overall</span></p></th>
+<th class="cl-84be1a19"><p class="cl-84bdeb7e"><span class="cl-84baa4e6">Male</span></p></th>
+<th class="cl-84be1a22"><p class="cl-84bdeb7e"><span class="cl-84baa4e6">Female</span></p></th>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Number records</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">–</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">N</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2,564</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">1,262</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">1,302</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Number records</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">–</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">N</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2,564</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">1,262</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">1,302</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Number subjects</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">–</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">N</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2,564</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">1,262</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">1,302</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Number subjects</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">–</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">N</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2,564</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">1,262</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">1,302</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Age</span></p></td>
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">–</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">46 [36 - 56]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">46 [37 - 56]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">45 [36 - 55]</span></p></td>
+<td rowspan="3" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Age</span></p></td>
+<td rowspan="3" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">–</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Median [Q25 - Q75]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">46 [36 - 56]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">46 [37 - 56]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">45 [36 - 55]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5d"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d5d"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Mean (SD)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">47.54 (14.81)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">47.57 (14.40)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">47.52 (15.21)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Mean (SD)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">47.54 (14.81)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">47.57 (14.40)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">47.52 (15.21)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Range</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">21 to 99</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">21 to 98</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">21 to 99</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Range</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">21 to 99</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">21 to 98</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">21 to 99</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Days in cohort</span></p></td>
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">–</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">3,654 [3,654 - 3,654]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">3,654 [3,654 - 3,654]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">3,654 [3,654 - 3,654]</span></p></td>
+<td rowspan="3" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Days in cohort</span></p></td>
+<td rowspan="3" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">–</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Median [Q25 - Q75]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">3,654 [3,654 - 3,654]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">3,654 [3,654 - 3,654]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">3,654 [3,654 - 3,654]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5d"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d5d"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Mean (SD)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">3,594.61 (332.90)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">3,587.20 (341.22)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">3,601.79 (324.60)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Mean (SD)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">3,594.61 (332.90)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">3,587.20 (341.22)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">3,601.79 (324.60)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Range</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">17 to 3,654</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">449 to 3,654</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">17 to 3,654</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Range</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">17 to 3,654</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">449 to 3,654</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">17 to 3,654</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Prior observation</span></p></td>
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">–</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">16,834 [13,477 - 20,588]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">16,932 [13,636 - 20,634]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">16,734 [13,320 - 20,410]</span></p></td>
+<td rowspan="3" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Prior observation</span></p></td>
+<td rowspan="3" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">–</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Median [Q25 - Q75]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">16,834 [13,477 - 20,588]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">16,932 [13,636 - 20,634]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">16,734 [13,320 - 20,410]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5d"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d5d"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Mean (SD)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">17,545.28 (5,406.72)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">17,555.07 (5,255.26)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">17,535.78 (5,551.58)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Mean (SD)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">17,545.28 (5,406.72)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">17,555.07 (5,255.26)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">17,535.78 (5,551.58)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Range</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">7,729 to 36,260</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">7,729 to 36,115</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">7,929 to 36,260</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Range</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">7,729 to 36,260</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">7,729 to 36,115</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">7,929 to 36,260</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Future observation</span></p></td>
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">–</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">4,010 [3,891 - 4,117]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">4,005 [3,878 - 4,116]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">4,018 [3,900 - 4,118]</span></p></td>
+<td rowspan="3" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Future observation</span></p></td>
+<td rowspan="3" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">–</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Median [Q25 - Q75]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">4,010 [3,891 - 4,117]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">4,005 [3,878 - 4,116]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">4,018 [3,900 - 4,118]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5d"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d5d"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Mean (SD)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">3,924.53 (418.47)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">3,910.98 (430.96)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">3,937.65 (405.74)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Mean (SD)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">3,924.53 (418.47)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">3,910.98 (430.96)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">3,937.65 (405.74)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Range</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">16 to 4,201</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">448 to 4,201</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">16 to 4,199</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Range</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">16 to 4,201</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">448 to 4,201</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">16 to 4,199</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Cohort start date</span></p></td>
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">–</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2008-01-01 [2008-01-01 - 2008-01-01]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2008-01-01 [2008-01-01 - 2008-01-01]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2008-01-01 [2008-01-01 - 2008-01-01]</span></p></td>
+<td rowspan="2" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Cohort start date</span></p></td>
+<td rowspan="2" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">–</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Median [Q25 - Q75]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2008-01-01 [2008-01-01 - 2008-01-01]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2008-01-01 [2008-01-01 - 2008-01-01]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2008-01-01 [2008-01-01 - 2008-01-01]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Range</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2008-01-01 to 2008-01-01</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2008-01-01 to 2008-01-01</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2008-01-01 to 2008-01-01</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Range</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2008-01-01 to 2008-01-01</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2008-01-01 to 2008-01-01</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2008-01-01 to 2008-01-01</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Cohort end date</span></p></td>
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">–</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2018-01-01 [2018-01-01 - 2018-01-01]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2018-01-01 [2018-01-01 - 2018-01-01]</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2018-01-01 [2018-01-01 - 2018-01-01]</span></p></td>
+<td rowspan="2" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Cohort end date</span></p></td>
+<td rowspan="2" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">–</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Median [Q25 - Q75]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2018-01-01 [2018-01-01 - 2018-01-01]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2018-01-01 [2018-01-01 - 2018-01-01]</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2018-01-01 [2018-01-01 - 2018-01-01]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Range</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2008-01-17 to 2018-01-01</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2009-03-24 to 2018-01-01</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2008-01-17 to 2018-01-01</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Range</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2008-01-17 to 2018-01-01</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2009-03-24 to 2018-01-01</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2008-01-17 to 2018-01-01</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Comedications</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Opioids</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">N (%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">49 (1.91%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">22 (1.74%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">27 (2.07%)</span></p></td>
+<td rowspan="2" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Comedications</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Opioids</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">N (%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">49 (1.91%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">22 (1.74%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">27 (2.07%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Antidiabetes</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">N (%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">26 (1.01%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">15 (1.19%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">11 (0.84%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Antidiabetes</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">N (%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">26 (1.01%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">15 (1.19%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">11 (0.84%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5c"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Comorbidities</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Asthma</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">N (%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">1,234 (48.13%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">611 (48.42%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">623 (47.85%)</span></p></td>
+<td rowspan="3" class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Comorbidities</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Asthma</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">N (%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">1,234 (48.13%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">611 (48.42%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">623 (47.85%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d5d"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">Depression</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">N (%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">2,531 (98.71%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">1,246 (98.73%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">1,285 (98.69%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">Depression</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">N (%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">2,531 (98.71%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">1,246 (98.73%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">1,285 (98.69%)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d4f07d66"><p class="cl-d4f0505c"><span class="cl-d4e929ee"></span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">HIV</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">N (%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">475 (18.53%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">230 (18.23%)</span></p></td>
-<td class="cl-d4f07d53"><p class="cl-d4f0505c"><span class="cl-d4e929ee">245 (18.82%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">HIV</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">N (%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">475 (18.53%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">230 (18.23%)</span></p></td>
+<td class="cl-84be1a23"><p class="cl-84bdeb7e"><span class="cl-84baa4fa">245 (18.82%)</span></p></td>
 </tr>
 </tbody>
 </table>
@@ -680,62 +634,59 @@ function.</p>
 <span>    rename <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"Estimate"</span> <span class="op">=</span> <span class="st">"estimate_name"</span>, <span class="st">"Variable"</span> <span class="op">=</span> <span class="st">"variable_name"</span><span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-d756e130{table-layout:auto;}.cl-d74facda{font-family:'Helvetica';font-size:11pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-d74face4{font-family:'Helvetica';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-d752d676{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-d752d68a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-d752f96c{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 1.00);border-top: 1pt solid rgba(255, 255, 255, 1.00);border-left: 1pt solid rgba(255, 255, 255, 1.00);border-right: 1pt solid rgba(255, 255, 255, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d752f976{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 1.00);border-top: 1pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d752f977{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 1pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-d752f980{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-d756e130">
+<style>.cl-86f7f984{table-layout:auto;width:100%;}.cl-86efdf6a{font-family:'Helvetica';font-size:9pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-86efdf7e{font-family:'Helvetica';font-size:9pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-86f3d07a{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-86f3d08e{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-86f3fba4{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-86f3fbae{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-86f3fbaf{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(255, 255, 255, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-86f3fbb8{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(255, 255, 255, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-86f3fbc2{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(255, 255, 255, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-86f3fbc3{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(255, 255, 255, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-86f3fbcc{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(255, 255, 255, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(255, 255, 255, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-86f3fbcd{background-color:rgba(0, 51, 153, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(255, 255, 255, 1.00);border-left: 0.5pt solid rgba(255, 255, 255, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}.cl-86f3fbce{background-color:rgba(255, 255, 255, 1.00);vertical-align: middle;border-bottom: 0.5pt solid rgba(0, 51, 153, 1.00);border-top: 0.5pt solid rgba(0, 51, 153, 1.00);border-left: 0.5pt solid rgba(0, 51, 153, 1.00);border-right: 0.5pt solid rgba(0, 51, 153, 1.00);margin-bottom:6pt;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-86f7f984">
 <thead>
 <tr style="overflow-wrap:break-word;">
-<th rowspan="2" class="cl-d752f96c"><p class="cl-d752d676"><span class="cl-d74facda">Variable</span></p></th>
-<th rowspan="2" class="cl-d752f96c"><p class="cl-d752d676"><span class="cl-d74facda">Estimate</span></p></th>
-<th colspan="3" class="cl-d752f96c"><p class="cl-d752d676"><span class="cl-d74facda">Sex</span></p></th>
+<th rowspan="2" class="cl-86f3fba4"><p class="cl-86f3d07a"><span class="cl-86efdf6a">Variable</span></p></th>
+<th rowspan="2" class="cl-86f3fbae"><p class="cl-86f3d07a"><span class="cl-86efdf6a">Estimate</span></p></th>
+<th colspan="3" class="cl-86f3fbaf"><p class="cl-86f3d08e"><span class="cl-86efdf6a">Sex</span></p></th>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-d752f96c"><p class="cl-d752d676"><span class="cl-d74facda">Overall</span></p></th>
-<th class="cl-d752f96c"><p class="cl-d752d676"><span class="cl-d74facda">Male</span></p></th>
-<th class="cl-d752f96c"><p class="cl-d752d676"><span class="cl-d74facda">Female</span></p></th>
+<th class="cl-86f3fbcc"><p class="cl-86f3d07a"><span class="cl-86efdf6a">Overall</span></p></th>
+<th class="cl-86f3fbcc"><p class="cl-86f3d07a"><span class="cl-86efdf6a">Male</span></p></th>
+<th class="cl-86f3fbcd"><p class="cl-86f3d07a"><span class="cl-86efdf6a">Female</span></p></th>
 </tr>
 </thead>
 <tbody>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d752f976"><p class="cl-d752d68a"><span class="cl-d74face4">Value before</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">60.00 [55.00 - 77.25]</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">65.00 [61.00 - 80.00]</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">53.00 [48.00 - 59.00]</span></p></td>
+<td rowspan="2" class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">Value before</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">Median [Q25 - Q75]</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">60.00 [55.00 - 77.25]</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">65.00 [61.00 - 80.00]</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">53.00 [48.00 - 59.00]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d752f980"><p class="cl-d752d68a"><span class="cl-d74face4"></span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">Range</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">24.00 to 117.00</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">30.00 to 120.00</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">20.00 to 100.00</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">Range</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">24.00 to 117.00</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">30.00 to 120.00</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">20.00 to 100.00</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d752f976"><p class="cl-d752d68a"><span class="cl-d74face4">Value after</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">58.00 [55.00 - 72.00]</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">66.00 [62.00 - 79.00]</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">50.00 [47.00 - 60.00]</span></p></td>
+<td rowspan="2" class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">Value after</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">Median [Q25 - Q75]</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">58.00 [55.00 - 72.00]</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">66.00 [62.00 - 79.00]</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">50.00 [47.00 - 60.00]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d752f980"><p class="cl-d752d68a"><span class="cl-d74face4"></span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">Range</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">22.00 to 108.00</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">33.00 to 117.00</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">19.00 to 100.00</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">Range</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">22.00 to 108.00</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">33.00 to 117.00</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">19.00 to 100.00</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d752f976"><p class="cl-d752d68a"><span class="cl-d74face4">Change in value</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">Median [Q25 - Q75]</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">-2.00 [0.00 - -5.25]</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">1.00 [1.00 - -1.00]</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">-3.00 [-1.00 - 1.00]</span></p></td>
+<td rowspan="2" class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">Change in value</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">Median [Q25 - Q75]</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">-2.00 [0.00 - -5.25]</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">1.00 [1.00 - -1.00]</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">-3.00 [-1.00 - 1.00]</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-d752f980"><p class="cl-d752d68a"><span class="cl-d74face4"></span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">Range</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">-2.00 to -9.00</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">3.00 to -3.00</span></p></td>
-<td class="cl-d752f977"><p class="cl-d752d68a"><span class="cl-d74face4">-1.00 to 0.00</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">Range</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">-2.00 to -9.00</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">3.00 to -3.00</span></p></td>
+<td class="cl-86f3fbce"><p class="cl-86f3d07a"><span class="cl-86efdf7e">-1.00 to 0.00</span></p></td>
 </tr>
 </tbody>
 </table>

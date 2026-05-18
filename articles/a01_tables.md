@@ -14,6 +14,7 @@ work in R Markdown, Quarto, Shiny, and other contexts.
 To list supported table types by the package use the following function:
 
 ``` r
+
 tableType()
 #> [1] "gt"        "flextable" "tibble"    "datatable" "reactable" "tinytable"
 ```
@@ -55,6 +56,7 @@ type via `type`.
 Tow show an example we’ll use the pengun dataset from `palmerpenguins`.
 
 ``` r
+
 library(visOmopResults)
 library(palmerpenguins)
 library(dplyr)
@@ -81,6 +83,7 @@ is used to quickly produce a `gt` table, where sex column is used for
 groupping, column names are nicely renamed, and the year column hided:
 
 ``` r
+
 visTable(
   result = x,
   groupColumn = c("sex"),
@@ -116,6 +119,7 @@ estimate combination with `estimateName`, and finally, allowing to
 create headers with `header`:
 
 ``` r
+
 # Transforming to estimate columns
 x <- x |>
   pivot_longer(
@@ -145,6 +149,7 @@ We can obtain the same table with `flextable` or `tinytable`, the former
 seen below:
 
 ``` r
+
 visTable(
   result = x,
   estimateName = c(
@@ -158,21 +163,22 @@ visTable(
 )
 ```
 
-| Estimate name                 | Species       |               |               |               |               |
-|-------------------------------|---------------|---------------|---------------|---------------|---------------|
-|                               | Adelie        |               |               | Gentoo        | Chinstrap     |
-|                               | Island        |               |               |               |               |
-|                               | Biscoe        | Torgersen     | Dream         | Biscoe        | Dream         |
-| female                        |               |               |               |               |               |
+| Estimate name | Species |  |  |  |  |
+|----|----|----|----|----|----|
+|  | Adelie |  |  | Gentoo | Chinstrap |
+|  | Island |  |  |  |  |
+|  | Biscoe | Torgersen | Dream | Biscoe | Dream |
+| female |  |  |  |  |  |
 | Bill length - Bill depth (mm) | 36.64 - 17.22 | 36.61 - 17.40 | 36.27 - 17.79 | 45.30 - 14.13 | 46.00 - 17.30 |
-| Flipper length (mm)           | 186.56        | 190.00        | 189.00        | 213.00        | 192.67        |
-| male                          |               |               |               |               |               |
+| Flipper length (mm) | 186.56 | 190.00 | 189.00 | 213.00 | 192.67 |
+| male |  |  |  |  |  |
 | Bill length - Bill depth (mm) | 40.76 - 19.03 | 40.92 - 18.84 | 40.11 - 18.89 | 48.54 - 15.70 | 51.40 - 19.60 |
-| Flipper length (mm)           | 192.56        | 193.50        | 195.00        | 222.09        | 202.78        |
+| Flipper length (mm) | 192.56 | 193.50 | 195.00 | 222.09 | 202.78 |
 
 We can also have a similar interactive table using `datatable`:
 
 ``` r
+
 visTable(
   result = x,
   estimateName = c(
@@ -191,6 +197,7 @@ Thereby to use this type we have to reduce to one header. Instead of
 having a two-level header, we can group by two columns:
 
 ``` r
+
 visTable(
   result = x,
   estimateName = c(
@@ -229,6 +236,7 @@ with behavior tuned to `<summarised_result>` objects:
 Example using a mock `<summarised_result>`:
 
 ``` r
+
 result <- mockSummarisedResult() |>
   filter(strata_name == "age_group &&& sex")
 
@@ -247,37 +255,38 @@ visOmopTable(
 )
 ```
 
-| CDM name        | Variable name   | Variable level | Estimate name | Package name    |                 |
-|-----------------|-----------------|----------------|---------------|-----------------|-----------------|
-|                 |                 |                |               | visOmopResults  |                 |
-|                 |                 |                |               | Age group       |                 |
-|                 |                 |                |               | \<40            | \>=40           |
-| cohort1; Male   |                 |                |               |                 |                 |
-| mock            | number subjects | –              | N             | 3,721,239       | 5,728,534       |
-|                 | age             | –              | Mean (SD)     | 77.74 (1.08)    | 93.47 (7.24)    |
-|                 | Medications     | Amoxiciline    | N (%)         | 9,947 (33.38%)  | 31,627 (47.64%) |
-|                 |                 | Ibuprofen      | N (%)         | 5,893 (59.88%)  | 64,229 (97.62%) |
-| cohort1; Female |                 |                |               |                 |                 |
-| mock            | number subjects | –              | N             | 9,082,078       | 2,016,819       |
-|                 | age             | –              | Mean (SD)     | 21.21 (4.11)    | 65.17 (8.21)    |
-|                 | Medications     | Amoxiciline    | N (%)         | 51,863 (89.22%) | 66,201 (86.43%) |
-|                 |                 | Ibuprofen      | N (%)         | 87,627 (73.18%) | 77,891 (35.67%) |
-| cohort2; Male   |                 |                |               |                 |                 |
-| mock            | number subjects | –              | N             | 2,059,746       | 1,765,568       |
-|                 | age             | –              | Mean (SD)     | 86.97 (0.23)    | 34.03 (4.77)    |
-|                 | Medications     | Amoxiciline    | N (%)         | 65,087 (40.00%) | 25,802 (32.54%) |
-|                 |                 | Ibuprofen      | N (%)         | 65,472 (44.63%) | 35,320 (64.01%) |
-| cohort2; Female |                 |                |               |                 |                 |
-| mock            | number subjects | –              | N             | 6,870,228       | 3,841,037       |
-|                 | age             | –              | Mean (SD)     | 48.21 (7.32)    | 59.96 (6.93)    |
-|                 | Medications     | Amoxiciline    | N (%)         | 47,855 (75.71%) | 76,631 (20.27%) |
-|                 |                 | Ibuprofen      | N (%)         | 27,026 (99.18%) | 99,268 (49.56%) |
+| Data source | Variable name | Variable level | Estimate name | Package name |  |
+|----|----|----|----|----|----|
+|  |  |  |  | visOmopResults |  |
+|  |  |  |  | Age group |  |
+|  |  |  |  | \<40 | \>=40 |
+| cohort1; Male |  |  |  |  |  |
+| mock | number subjects | – | N | 3,721,239 | 5,728,534 |
+|  | age | – | Mean (SD) | 77.74 (1.08) | 93.47 (7.24) |
+|  | Medications | Amoxiciline | N (%) | 9,947 (33.38%) | 31,627 (47.64%) |
+|  |  | Ibuprofen | N (%) | 5,893 (59.88%) | 64,229 (97.62%) |
+| cohort1; Female |  |  |  |  |  |
+| mock | number subjects | – | N | 9,082,078 | 2,016,819 |
+|  | age | – | Mean (SD) | 21.21 (4.11) | 65.17 (8.21) |
+|  | Medications | Amoxiciline | N (%) | 51,863 (89.22%) | 66,201 (86.43%) |
+|  |  | Ibuprofen | N (%) | 87,627 (73.18%) | 77,891 (35.67%) |
+| cohort2; Male |  |  |  |  |  |
+| mock | number subjects | – | N | 2,059,746 | 1,765,568 |
+|  | age | – | Mean (SD) | 86.97 (0.23) | 34.03 (4.77) |
+|  | Medications | Amoxiciline | N (%) | 65,087 (40.00%) | 25,802 (32.54%) |
+|  |  | Ibuprofen | N (%) | 65,472 (44.63%) | 35,320 (64.01%) |
+| cohort2; Female |  |  |  |  |  |
+| mock | number subjects | – | N | 6,870,228 | 3,841,037 |
+|  | age | – | Mean (SD) | 48.21 (7.32) | 59.96 (6.93) |
+|  | Medications | Amoxiciline | N (%) | 47,855 (75.71%) | 76,631 (20.27%) |
+|  |  | Ibuprofen | N (%) | 27,026 (99.18%) | 99,268 (49.56%) |
 
 Example showing suppressed values (treat input with
 [`suppress()`](https://darwin-eu.github.io/omopgenerics/reference/suppress.html)
 then display them with `showMinCellCount = TRUE`):
 
 ``` r
+
 result |>
   suppress(minCellCount = 1000000) |>
   visOmopTable(
@@ -326,6 +335,7 @@ customisation through the `.options` list. To inspect available options
 and defaults:
 
 ``` r
+
 tableOptions()
 #> $decimals
 #>    integer percentage    numeric proportion 
@@ -417,6 +427,7 @@ to mark which cells were suppressed (the function differentiates
 suppressed cells from `NA`).
 
 ``` r
+
 result <- result |> formatMinCellCount()
 ```
 
@@ -429,6 +440,7 @@ name in your results).
 In the example we distinguish by `estimate_type`:
 
 ``` r
+
 result <- result |>
   formatEstimateValue(
     decimals = c(integer = 0, numeric = 4, percentage = 2),
@@ -443,6 +455,7 @@ Create composite estimate displays (e.g. “N (%)”) and control
 ordering/retention of unformatted rows:
 
 ``` r
+
 result <- result |>
   formatEstimateName(
     estimateName = c(
@@ -469,6 +482,7 @@ Create multi-level column headers using up to three levels: custom
 delimiter for multi-line headers.
 
 ``` r
+
 result <- result |>
   mutate(across(c("strata_name", "strata_level"), ~ gsub("&&&", "and", .x))) |>
   formatHeader(
@@ -494,6 +508,7 @@ as `na`, `title`, `subtitle`, `caption`, `groupColumn`, `groupAsColumn`,
 Example pipeline:
 
 ``` r
+
 result <- result |>
   splitGroup() |>
   splitAdditional() |>

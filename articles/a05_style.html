@@ -12,8 +12,8 @@
 <link rel="icon" sizes="any" href="../favicon.ico">
 <link rel="manifest" href="../site.webmanifest">
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Styles">
 </head>
@@ -25,7 +25,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">visOmopResults</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.4.2.09</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.5.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -122,7 +122,7 @@ below shows the structure of its <code>.yml</code> file:</p>
 <span id="cb3-10"><a href="#cb3-10" tabindex="-1"></a><span class="fu">typography</span><span class="kw">:</span></span>
 <span id="cb3-11"><a href="#cb3-11" tabindex="-1"></a><span class="at">  </span><span class="fu">base</span><span class="kw">:</span></span>
 <span id="cb3-12"><a href="#cb3-12" tabindex="-1"></a><span class="at">    </span><span class="fu">family</span><span class="kw">:</span><span class="at"> Calibri</span></span>
-<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="at">    </span><span class="fu">size</span><span class="kw">:</span><span class="at"> </span><span class="st">'11'</span></span>
+<span id="cb3-13"><a href="#cb3-13" tabindex="-1"></a><span class="at">    </span><span class="fu">size</span><span class="kw">:</span><span class="at"> 11pt</span></span>
 <span id="cb3-14"><a href="#cb3-14" tabindex="-1"></a><span class="fu">defaults</span><span class="kw">:</span></span>
 <span id="cb3-15"><a href="#cb3-15" tabindex="-1"></a><span class="at">  </span><span class="fu">shiny</span><span class="kw">:</span></span>
 <span id="cb3-16"><a href="#cb3-16" tabindex="-1"></a><span class="at">    </span><span class="fu">theme</span><span class="kw">:</span></span>
@@ -131,7 +131,7 @@ below shows the structure of its <code>.yml</code> file:</p>
 <span id="cb3-19"><a href="#cb3-19" tabindex="-1"></a><span class="at">    </span><span class="fu">template</span><span class="kw">:</span><span class="at"> system.file("darwinReportRef.docx", package = "visOmopResults")</span></span>
 <span id="cb3-20"><a href="#cb3-20" tabindex="-1"></a><span class="at">    </span><span class="fu">plot</span><span class="kw">:</span></span>
 <span id="cb3-21"><a href="#cb3-21" tabindex="-1"></a><span class="at">      </span><span class="fu">font_family</span><span class="kw">:</span><span class="at"> Calibri</span></span>
-<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="at">      </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="st">'11'</span></span>
+<span id="cb3-22"><a href="#cb3-22" tabindex="-1"></a><span class="at">      </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> 11pt</span></span>
 <span id="cb3-23"><a href="#cb3-23" tabindex="-1"></a><span class="at">      </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> white</span></span>
 <span id="cb3-24"><a href="#cb3-24" tabindex="-1"></a><span class="at">      </span><span class="fu">header_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
 <span id="cb3-25"><a href="#cb3-25" tabindex="-1"></a><span class="at">      </span><span class="fu">header_text_color</span><span class="kw">:</span><span class="at"> white</span></span>
@@ -142,53 +142,57 @@ below shows the structure of its <code>.yml</code> file:</p>
 <span id="cb3-30"><a href="#cb3-30" tabindex="-1"></a><span class="at">      </span><span class="fu">legend_position</span><span class="kw">:</span><span class="at"> right</span></span>
 <span id="cb3-31"><a href="#cb3-31" tabindex="-1"></a><span class="at">    </span><span class="fu">table</span><span class="kw">:</span></span>
 <span id="cb3-32"><a href="#cb3-32" tabindex="-1"></a><span class="at">      </span><span class="fu">font_family</span><span class="kw">:</span><span class="at"> Calibri</span></span>
-<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="at">      </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="st">'9'</span></span>
+<span id="cb3-33"><a href="#cb3-33" tabindex="-1"></a><span class="at">      </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> 9pt</span></span>
 <span id="cb3-34"><a href="#cb3-34" tabindex="-1"></a><span class="at">      </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
-<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="at">      </span><span class="fu">border_width</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
-<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="at">      </span><span class="fu">header</span><span class="kw">:</span></span>
-<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
-<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
-<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
-<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="at">      </span><span class="fu">header_name</span><span class="kw">:</span></span>
-<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
-<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
-<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
-<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a><span class="at">      </span><span class="fu">header_level</span><span class="kw">:</span></span>
-<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
-<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
-<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
-<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a><span class="at">      </span><span class="fu">column_name</span><span class="kw">:</span></span>
-<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
-<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
-<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">11</span></span>
-<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a><span class="at">      </span><span class="fu">group_label</span><span class="kw">:</span></span>
-<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
-<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
-<span id="cb3-69"><a href="#cb3-69" tabindex="-1"></a><span class="at">      </span><span class="fu">title</span><span class="kw">:</span></span>
-<span id="cb3-70"><a href="#cb3-70" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
-<span id="cb3-71"><a href="#cb3-71" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
-<span id="cb3-72"><a href="#cb3-72" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">15</span></span>
-<span id="cb3-73"><a href="#cb3-73" tabindex="-1"></a><span class="at">      </span><span class="fu">subtitle</span><span class="kw">:</span></span>
+<span id="cb3-35"><a href="#cb3-35" tabindex="-1"></a><span class="at">      </span><span class="fu">border_width</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.5</span></span>
+<span id="cb3-36"><a href="#cb3-36" tabindex="-1"></a><span class="at">      </span><span class="fu">text_line_space</span><span class="kw">:</span><span class="at"> </span><span class="dv">1</span></span>
+<span id="cb3-37"><a href="#cb3-37" tabindex="-1"></a><span class="at">      </span><span class="fu">text_space_before</span><span class="kw">:</span><span class="at"> </span><span class="dv">0</span></span>
+<span id="cb3-38"><a href="#cb3-38" tabindex="-1"></a><span class="at">      </span><span class="fu">text_space_after</span><span class="kw">:</span><span class="at"> </span><span class="dv">6</span></span>
+<span id="cb3-39"><a href="#cb3-39" tabindex="-1"></a><span class="at">      </span><span class="fu">header</span><span class="kw">:</span></span>
+<span id="cb3-40"><a href="#cb3-40" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-41"><a href="#cb3-41" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-42"><a href="#cb3-42" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
+<span id="cb3-43"><a href="#cb3-43" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-44"><a href="#cb3-44" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-45"><a href="#cb3-45" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> 9pt</span></span>
+<span id="cb3-46"><a href="#cb3-46" tabindex="-1"></a><span class="at">      </span><span class="fu">header_name</span><span class="kw">:</span></span>
+<span id="cb3-47"><a href="#cb3-47" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-48"><a href="#cb3-48" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-49"><a href="#cb3-49" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
+<span id="cb3-50"><a href="#cb3-50" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-51"><a href="#cb3-51" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-52"><a href="#cb3-52" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> 9pt</span></span>
+<span id="cb3-53"><a href="#cb3-53" tabindex="-1"></a><span class="at">      </span><span class="fu">header_level</span><span class="kw">:</span></span>
+<span id="cb3-54"><a href="#cb3-54" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-55"><a href="#cb3-55" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-56"><a href="#cb3-56" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
+<span id="cb3-57"><a href="#cb3-57" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-58"><a href="#cb3-58" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-59"><a href="#cb3-59" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> 9pt</span></span>
+<span id="cb3-60"><a href="#cb3-60" tabindex="-1"></a><span class="at">      </span><span class="fu">column_name</span><span class="kw">:</span></span>
+<span id="cb3-61"><a href="#cb3-61" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-62"><a href="#cb3-62" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-63"><a href="#cb3-63" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
+<span id="cb3-64"><a href="#cb3-64" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-65"><a href="#cb3-65" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-66"><a href="#cb3-66" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> 9pt</span></span>
+<span id="cb3-67"><a href="#cb3-67" tabindex="-1"></a><span class="at">      </span><span class="fu">group_label</span><span class="kw">:</span></span>
+<span id="cb3-68"><a href="#cb3-68" tabindex="-1"></a><span class="at">        </span><span class="fu">background_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span>
+<span id="cb3-69"><a href="#cb3-69" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-70"><a href="#cb3-70" tabindex="-1"></a><span class="at">        </span><span class="fu">text_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-71"><a href="#cb3-71" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> white</span></span>
+<span id="cb3-72"><a href="#cb3-72" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> 9pt</span></span>
+<span id="cb3-73"><a href="#cb3-73" tabindex="-1"></a><span class="at">      </span><span class="fu">title</span><span class="kw">:</span></span>
 <span id="cb3-74"><a href="#cb3-74" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
 <span id="cb3-75"><a href="#cb3-75" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
-<span id="cb3-76"><a href="#cb3-76" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> </span><span class="dv">12</span></span>
-<span id="cb3-77"><a href="#cb3-77" tabindex="-1"></a><span class="at">      </span><span class="fu">body</span><span class="kw">:</span></span>
-<span id="cb3-78"><a href="#cb3-78" tabindex="-1"></a><span class="at">        </span><span class="fu">border_width</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.5</span></span>
-<span id="cb3-79"><a href="#cb3-79" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span></code></pre></div>
+<span id="cb3-76"><a href="#cb3-76" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> 15pt</span></span>
+<span id="cb3-77"><a href="#cb3-77" tabindex="-1"></a><span class="at">      </span><span class="fu">subtitle</span><span class="kw">:</span></span>
+<span id="cb3-78"><a href="#cb3-78" tabindex="-1"></a><span class="at">        </span><span class="fu">text_bold</span><span class="kw">:</span><span class="at"> </span><span class="ch">yes</span></span>
+<span id="cb3-79"><a href="#cb3-79" tabindex="-1"></a><span class="at">        </span><span class="fu">align</span><span class="kw">:</span><span class="at"> center</span></span>
+<span id="cb3-80"><a href="#cb3-80" tabindex="-1"></a><span class="at">        </span><span class="fu">font_size</span><span class="kw">:</span><span class="at"> 12pt</span></span>
+<span id="cb3-81"><a href="#cb3-81" tabindex="-1"></a><span class="at">      </span><span class="fu">body</span><span class="kw">:</span></span>
+<span id="cb3-82"><a href="#cb3-82" tabindex="-1"></a><span class="at">        </span><span class="fu">border_width</span><span class="kw">:</span><span class="at"> </span><span class="fl">0.5</span></span>
+<span id="cb3-83"><a href="#cb3-83" tabindex="-1"></a><span class="at">        </span><span class="fu">border_color</span><span class="kw">:</span><span class="at"> darwin_blue</span></span></code></pre></div>
 <p>The <code>.yml</code> structure can be divided into four main
 sections:</p>
 <ul>
@@ -202,9 +206,9 @@ for base text, plots, and tables (these can be overridden in the
 plot/table sections).</li>
 <li>
 <strong>Plot:</strong> Plot-specific settings such as background
-color, facet header color, header text color and bold, grid color, axis
-color, border color, and legend position. Font settings are taken from
-the typography section unless overridden here.</li>
+color, facet header color and text, grid color, axis color, border
+color, plot colour and fill palettes, and legend position. Font settings
+are taken from the typography section unless overridden here.</li>
 <li>
 <strong>Table:</strong> Table-specific settings. You can set an
 overall <code>border-color</code> and <code>border-width</code>, or
@@ -747,6 +751,18 @@ and table options.</p>
 <td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:font_size</td>
 <td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">typography:base:size</td>
 </tr>
+<tr>
+<td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Colour palette</td>
+<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:color_palette</td>
+<td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">-</td>
+<td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
+</tr>
+<tr>
+<td headers="Plot  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Fill palette</td>
+<td headers="Plot  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:fill_palette</td>
+<td headers="Plot  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:plot:color_palette</td>
+<td headers="Plot  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
+</tr>
 <tr class="gt_group_heading_row">
 <th colspan="4" class="gt_group_heading" style="background-color: #E9E9E9; font-family: Arial; font-size: 10; font-weight: bold; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;" scope="colgroup" id="Table section">Table section</th>
     </tr>
@@ -771,7 +787,25 @@ and table options.</p>
 <tr>
 <td headers="Table section  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Text align</td>
 <td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:[section_name]:align</td>
-<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">-</td>
+<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:align</td>
+<td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
+</tr>
+<tr>
+<td headers="Table section  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Text line space</td>
+<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:[section_name]:text_line_space</td>
+<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:text_line_space</td>
+<td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
+</tr>
+<tr>
+<td headers="Table section  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Text space before</td>
+<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:[section_name]:text_space_before</td>
+<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:text_space_before</td>
+<td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
+</tr>
+<tr>
+<td headers="Table section  Part" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">Text space after</td>
+<td headers="Table section  Option 1" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:[section_name]:text_space_after</td>
+<td headers="Table section  Option 2" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8; background-color: rgba(255,255,255,0);">defaults:visOmopResults:table:text_space_after</td>
 <td headers="Table section  Option 3" class="gt_row gt_left" style="text-align: left; font-family: Arial; font-size: 10; background-color: rgba(255,255,255,0); border-left-width: 1px; border-left-style: solid; border-left-color: #c8c8c8; border-right-width: 1px; border-right-style: solid; border-right-color: #c8c8c8; border-top-width: 1px; border-top-style: solid; border-top-color: #c8c8c8; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #c8c8c8;">-</td>
 </tr>
 <tr>
@@ -914,23 +948,23 @@ argument. The list should follow the same table section structure as the
 <span>      groupOrder <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/c.html" class="external-link">c</a></span><span class="op">(</span><span class="st">"cohort2"</span>, <span class="st">"cohort1"</span><span class="op">)</span></span>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
-<div id="bdicrmljlq" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
-<style>#bdicrmljlq table {
+<div id="tognguwosz" style="padding-left:0px;padding-right:0px;padding-top:10px;padding-bottom:10px;overflow-x:auto;overflow-y:auto;width:auto;height:auto;">
+<style>#tognguwosz table {
   font-family: system-ui, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
 
-#bdicrmljlq thead, #bdicrmljlq tbody, #bdicrmljlq tfoot, #bdicrmljlq tr, #bdicrmljlq td, #bdicrmljlq th {
+#tognguwosz thead, #tognguwosz tbody, #tognguwosz tfoot, #tognguwosz tr, #tognguwosz td, #tognguwosz th {
   border-style: none;
 }
 
-#bdicrmljlq p {
+#tognguwosz p {
   margin: 0;
   padding: 0;
 }
 
-#bdicrmljlq .gt_table {
+#tognguwosz .gt_table {
   display: table;
   border-collapse: collapse;
   line-height: normal;
@@ -956,12 +990,12 @@ argument. The list should follow the same table section structure as the
   border-left-color: #FF0000;
 }
 
-#bdicrmljlq .gt_caption {
+#tognguwosz .gt_caption {
   padding-top: 4px;
   padding-bottom: 4px;
 }
 
-#bdicrmljlq .gt_title {
+#tognguwosz .gt_title {
   color: #333333;
   font-size: 125%;
   font-weight: initial;
@@ -973,7 +1007,7 @@ argument. The list should follow the same table section structure as the
   border-bottom-width: 0;
 }
 
-#bdicrmljlq .gt_subtitle {
+#tognguwosz .gt_subtitle {
   color: #333333;
   font-size: 85%;
   font-weight: initial;
@@ -985,7 +1019,7 @@ argument. The list should follow the same table section structure as the
   border-top-width: 0;
 }
 
-#bdicrmljlq .gt_heading {
+#tognguwosz .gt_heading {
   background-color: #FFFFFF;
   text-align: center;
   border-bottom-color: #FFFFFF;
@@ -997,13 +1031,13 @@ argument. The list should follow the same table section structure as the
   border-right-color: #D3D3D3;
 }
 
-#bdicrmljlq .gt_bottom_border {
+#tognguwosz .gt_bottom_border {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
 }
 
-#bdicrmljlq .gt_col_headings {
+#tognguwosz .gt_col_headings {
   border-top-style: solid;
   border-top-width: 2px;
   border-top-color: #D3D3D3;
@@ -1018,7 +1052,7 @@ argument. The list should follow the same table section structure as the
   border-right-color: #D3D3D3;
 }
 
-#bdicrmljlq .gt_col_heading {
+#tognguwosz .gt_col_heading {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1038,7 +1072,7 @@ argument. The list should follow the same table section structure as the
   overflow-x: hidden;
 }
 
-#bdicrmljlq .gt_column_spanner_outer {
+#tognguwosz .gt_column_spanner_outer {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1050,15 +1084,15 @@ argument. The list should follow the same table section structure as the
   padding-right: 4px;
 }
 
-#bdicrmljlq .gt_column_spanner_outer:first-child {
+#tognguwosz .gt_column_spanner_outer:first-child {
   padding-left: 0;
 }
 
-#bdicrmljlq .gt_column_spanner_outer:last-child {
+#tognguwosz .gt_column_spanner_outer:last-child {
   padding-right: 0;
 }
 
-#bdicrmljlq .gt_column_spanner {
+#tognguwosz .gt_column_spanner {
   border-bottom-style: solid;
   border-bottom-width: 2px;
   border-bottom-color: #D3D3D3;
@@ -1070,11 +1104,11 @@ argument. The list should follow the same table section structure as the
   width: 100%;
 }
 
-#bdicrmljlq .gt_spanner_row {
+#tognguwosz .gt_spanner_row {
   border-bottom-style: hidden;
 }
 
-#bdicrmljlq .gt_group_heading {
+#tognguwosz .gt_group_heading {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1100,7 +1134,7 @@ argument. The list should follow the same table section structure as the
   text-align: left;
 }
 
-#bdicrmljlq .gt_empty_group_heading {
+#tognguwosz .gt_empty_group_heading {
   padding: 0.5px;
   color: #333333;
   background-color: #FFFFFF;
@@ -1115,15 +1149,15 @@ argument. The list should follow the same table section structure as the
   vertical-align: middle;
 }
 
-#bdicrmljlq .gt_from_md > :first-child {
+#tognguwosz .gt_from_md > :first-child {
   margin-top: 0;
 }
 
-#bdicrmljlq .gt_from_md > :last-child {
+#tognguwosz .gt_from_md > :last-child {
   margin-bottom: 0;
 }
 
-#bdicrmljlq .gt_row {
+#tognguwosz .gt_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1142,7 +1176,7 @@ argument. The list should follow the same table section structure as the
   overflow-x: hidden;
 }
 
-#bdicrmljlq .gt_stub {
+#tognguwosz .gt_stub {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1155,7 +1189,7 @@ argument. The list should follow the same table section structure as the
   padding-right: 5px;
 }
 
-#bdicrmljlq .gt_stub_row_group {
+#tognguwosz .gt_stub_row_group {
   color: #333333;
   background-color: #FFFFFF;
   font-size: 100%;
@@ -1169,15 +1203,15 @@ argument. The list should follow the same table section structure as the
   vertical-align: top;
 }
 
-#bdicrmljlq .gt_row_group_first td {
+#tognguwosz .gt_row_group_first td {
   border-top-width: 2px;
 }
 
-#bdicrmljlq .gt_row_group_first th {
+#tognguwosz .gt_row_group_first th {
   border-top-width: 2px;
 }
 
-#bdicrmljlq .gt_summary_row {
+#tognguwosz .gt_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1187,16 +1221,16 @@ argument. The list should follow the same table section structure as the
   padding-right: 5px;
 }
 
-#bdicrmljlq .gt_first_summary_row {
+#tognguwosz .gt_first_summary_row {
   border-top-style: solid;
   border-top-color: #D3D3D3;
 }
 
-#bdicrmljlq .gt_first_summary_row.thick {
+#tognguwosz .gt_first_summary_row.thick {
   border-top-width: 2px;
 }
 
-#bdicrmljlq .gt_last_summary_row {
+#tognguwosz .gt_last_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1206,7 +1240,7 @@ argument. The list should follow the same table section structure as the
   border-bottom-color: #D3D3D3;
 }
 
-#bdicrmljlq .gt_grand_summary_row {
+#tognguwosz .gt_grand_summary_row {
   color: #333333;
   background-color: #FFFFFF;
   text-transform: inherit;
@@ -1216,7 +1250,7 @@ argument. The list should follow the same table section structure as the
   padding-right: 5px;
 }
 
-#bdicrmljlq .gt_first_grand_summary_row {
+#tognguwosz .gt_first_grand_summary_row {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1226,7 +1260,7 @@ argument. The list should follow the same table section structure as the
   border-top-color: #D3D3D3;
 }
 
-#bdicrmljlq .gt_last_grand_summary_row_top {
+#tognguwosz .gt_last_grand_summary_row_top {
   padding-top: 8px;
   padding-bottom: 8px;
   padding-left: 5px;
@@ -1236,11 +1270,11 @@ argument. The list should follow the same table section structure as the
   border-bottom-color: #D3D3D3;
 }
 
-#bdicrmljlq .gt_striped {
+#tognguwosz .gt_striped {
   background-color: rgba(128, 128, 128, 0.05);
 }
 
-#bdicrmljlq .gt_table_body {
+#tognguwosz .gt_table_body {
   border-top-style: solid;
   border-top-width: 3px;
   border-top-color: #FF0000;
@@ -1249,7 +1283,7 @@ argument. The list should follow the same table section structure as the
   border-bottom-color: #D3D3D3;
 }
 
-#bdicrmljlq .gt_footnotes {
+#tognguwosz .gt_footnotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1263,7 +1297,7 @@ argument. The list should follow the same table section structure as the
   border-right-color: #D3D3D3;
 }
 
-#bdicrmljlq .gt_footnote {
+#tognguwosz .gt_footnote {
   margin: 0px;
   font-size: 90%;
   padding-top: 4px;
@@ -1272,7 +1306,7 @@ argument. The list should follow the same table section structure as the
   padding-right: 5px;
 }
 
-#bdicrmljlq .gt_sourcenotes {
+#tognguwosz .gt_sourcenotes {
   color: #333333;
   background-color: #FFFFFF;
   border-bottom-style: none;
@@ -1286,7 +1320,7 @@ argument. The list should follow the same table section structure as the
   border-right-color: #D3D3D3;
 }
 
-#bdicrmljlq .gt_sourcenote {
+#tognguwosz .gt_sourcenote {
   font-size: 90%;
   padding-top: 4px;
   padding-bottom: 4px;
@@ -1294,72 +1328,72 @@ argument. The list should follow the same table section structure as the
   padding-right: 5px;
 }
 
-#bdicrmljlq .gt_left {
+#tognguwosz .gt_left {
   text-align: left;
 }
 
-#bdicrmljlq .gt_center {
+#tognguwosz .gt_center {
   text-align: center;
 }
 
-#bdicrmljlq .gt_right {
+#tognguwosz .gt_right {
   text-align: right;
   font-variant-numeric: tabular-nums;
 }
 
-#bdicrmljlq .gt_font_normal {
+#tognguwosz .gt_font_normal {
   font-weight: normal;
 }
 
-#bdicrmljlq .gt_font_bold {
+#tognguwosz .gt_font_bold {
   font-weight: bold;
 }
 
-#bdicrmljlq .gt_font_italic {
+#tognguwosz .gt_font_italic {
   font-style: italic;
 }
 
-#bdicrmljlq .gt_super {
+#tognguwosz .gt_super {
   font-size: 65%;
 }
 
-#bdicrmljlq .gt_footnote_marks {
+#tognguwosz .gt_footnote_marks {
   font-size: 75%;
   vertical-align: 0.4em;
   position: initial;
 }
 
-#bdicrmljlq .gt_asterisk {
+#tognguwosz .gt_asterisk {
   font-size: 100%;
   vertical-align: 0;
 }
 
-#bdicrmljlq .gt_indent_1 {
+#tognguwosz .gt_indent_1 {
   text-indent: 5px;
 }
 
-#bdicrmljlq .gt_indent_2 {
+#tognguwosz .gt_indent_2 {
   text-indent: 10px;
 }
 
-#bdicrmljlq .gt_indent_3 {
+#tognguwosz .gt_indent_3 {
   text-indent: 15px;
 }
 
-#bdicrmljlq .gt_indent_4 {
+#tognguwosz .gt_indent_4 {
   text-indent: 20px;
 }
 
-#bdicrmljlq .gt_indent_5 {
+#tognguwosz .gt_indent_5 {
   text-indent: 25px;
 }
 
-#bdicrmljlq .katex-display {
+#tognguwosz .katex-display {
   display: inline-flex !important;
   margin-bottom: 0.75em !important;
 }
 
-#bdicrmljlq div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
+#tognguwosz div.Reactable > div.rt-table > div.rt-thead > div.rt-tr.rt-tr-group-header > div.rt-th-group:after {
   height: 0px !important;
 }
 </style>
@@ -1380,7 +1414,7 @@ argument. The list should follow the same table section structure as the
       </th>
     </tr>
 <tr class="gt_col_headings gt_spanner_row">
-<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" style="font-weight: bold;" scope="col" id="CDM-name">CDM name</th>
+<th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" style="font-weight: bold;" scope="col" id="Data-source">Data source</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" style="font-weight: bold;" scope="col" id="Age-group">Age group</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" style="font-weight: bold;" scope="col" id="Variable-name">Variable name</th>
       <th class="gt_col_heading gt_columns_bottom_border gt_left" rowspan="2" colspan="1" style="font-weight: bold;" scope="col" id="Variable-level">Variable level</th>
@@ -1401,7 +1435,7 @@ argument. The list should follow the same table section structure as the
 <th colspan="8" class="gt_group_heading" style="background-color: #0000FF; color: #FFFFFF; font-weight: bold;" scope="colgroup" id="cohort2">cohort2</th>
     </tr>
 <tr class="gt_row_group_first">
-<td headers="cohort2  CDM name" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">mock</td>
+<td headers="cohort2  Data source" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">mock</td>
 <td headers="cohort2  Age group" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">overall</td>
 <td headers="cohort2  Variable name" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">age</td>
 <td headers="cohort2  Variable level" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">–</td>
@@ -1417,7 +1451,7 @@ argument. The list should follow the same table section structure as the
 [header_level]Female" class="gt_row gt_right" style="text-align: right; color: #FF0000;">18.62 (8.61)</td>
 </tr>
 <tr>
-<td headers="cohort2  CDM name" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
+<td headers="cohort2  Data source" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
 <td headers="cohort2  Age group" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">&lt;40</td>
 <td headers="cohort2  Variable name" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">age</td>
 <td headers="cohort2  Variable level" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">–</td>
@@ -1433,7 +1467,7 @@ argument. The list should follow the same table section structure as the
 [header_level]Female" class="gt_row gt_right" style="text-align: right; color: #FF0000;">48.21 (7.32)</td>
 </tr>
 <tr>
-<td headers="cohort2  CDM name" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
+<td headers="cohort2  Data source" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
 <td headers="cohort2  Age group" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">&gt;=40</td>
 <td headers="cohort2  Variable name" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">age</td>
 <td headers="cohort2  Variable level" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">–</td>
@@ -1452,7 +1486,7 @@ argument. The list should follow the same table section structure as the
 <th colspan="8" class="gt_group_heading" style="background-color: #0000FF; color: #FFFFFF; font-weight: bold;" scope="colgroup" id="cohort1">cohort1</th>
     </tr>
 <tr class="gt_row_group_first">
-<td headers="cohort1  CDM name" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">mock</td>
+<td headers="cohort1  Data source" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">mock</td>
 <td headers="cohort1  Age group" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">overall</td>
 <td headers="cohort1  Variable name" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">age</td>
 <td headers="cohort1  Variable level" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">–</td>
@@ -1468,7 +1502,7 @@ argument. The list should follow the same table section structure as the
 [header_level]Female" class="gt_row gt_right" style="text-align: right; color: #FF0000;">26.72 (7.83)</td>
 </tr>
 <tr>
-<td headers="cohort1  CDM name" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
+<td headers="cohort1  Data source" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
 <td headers="cohort1  Age group" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">&lt;40</td>
 <td headers="cohort1  Variable name" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">age</td>
 <td headers="cohort1  Variable level" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">–</td>
@@ -1484,7 +1518,7 @@ argument. The list should follow the same table section structure as the
 [header_level]Female" class="gt_row gt_right" style="text-align: right; color: #FF0000;">21.21 (4.11)</td>
 </tr>
 <tr>
-<td headers="cohort1  CDM name" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
+<td headers="cohort1  Data source" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: hidden; border-top-color: #000000; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;"></td>
 <td headers="cohort1  Age group" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">&gt;=40</td>
 <td headers="cohort1  Variable name" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">age</td>
 <td headers="cohort1  Variable level" class="gt_row gt_left" style="text-align: left; color: #FF0000; border-left-width: 1px; border-left-style: solid; border-left-color: #D3D3D3; border-right-width: 1px; border-right-style: solid; border-right-color: #D3D3D3; border-top-width: 1px; border-top-style: solid; border-top-color: #D3D3D3; border-bottom-width: 1px; border-bottom-style: solid; border-bottom-color: #D3D3D3;">–</td>
@@ -1552,88 +1586,84 @@ objects differ:</p>
 <span>    <span class="op">)</span></span>
 <span>  <span class="op">)</span></span></code></pre></div>
 <div class="tabwid">
-<style>.cl-e2bfe72e{table-layout:auto;}.cl-e2b63dd2{font-family:'Arial';font-size:20pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-e2b63de6{font-family:'Arial';font-size:15pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-e2b63de7{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-e2b63df0{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-e2b63df1{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-e2bab218{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-e2bab22c{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-e2bab236{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-e2baddb0{background-color:transparent;vertical-align: bottom;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2baddba{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2baddbb{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2baddc4{background-color:transparent;vertical-align: bottom;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2baddc5{background-color:rgba(255, 255, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2baddce{background-color:rgba(255, 255, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2baddcf{background-color:transparent;vertical-align: bottom;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2baddd8{background-color:rgba(255, 165, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2baddd9{background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2baddda{background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2badde2{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 0.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2badde3{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2baddec{background-color:transparent;vertical-align: middle;border-bottom: 1pt solid rgba(255, 255, 255, 0.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2badded{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2baddf6{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-e2baddf7{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
-<table data-quarto-disable-processing="true" class="table cl-e2bfe72e">
+<style>.cl-8faa7458{table-layout:auto;width:100%;}.cl-8fa01f80{font-family:'Arial';font-size:20pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8fa01f94{font-family:'Arial';font-size:15pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8fa01f9e{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(0, 0, 0, 1.00);background-color:transparent;}.cl-8fa01f9f{font-family:'Arial';font-size:10pt;font-weight:bold;font-style:normal;text-decoration:none;color:rgba(255, 255, 255, 1.00);background-color:transparent;}.cl-8fa01fa8{font-family:'Arial';font-size:10pt;font-weight:normal;font-style:normal;text-decoration:none;color:rgba(255, 0, 0, 1.00);background-color:transparent;}.cl-8fa3f89e{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-8fa3f8a8{margin:0;text-align:center;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-8fa3f8b2{margin:0;text-align:left;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);padding-bottom:3pt;padding-top:3pt;padding-left:3pt;padding-right:3pt;line-height: 1;background-color:transparent;}.cl-8fa437e6{background-color:transparent;vertical-align: bottom;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 1pt solid rgba(102, 102, 102, 1.00);border-right: 1pt solid rgba(102, 102, 102, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa437f0{background-color:transparent;vertical-align: bottom;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa437fa{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa437fb{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43804{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 1pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(102, 102, 102, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43805{background-color:transparent;vertical-align: bottom;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 1pt solid rgba(102, 102, 102, 1.00);border-right: 1pt solid rgba(102, 102, 102, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43806{background-color:transparent;vertical-align: bottom;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa4380e{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa4380f{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43818{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(102, 102, 102, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43819{background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 1pt solid rgba(102, 102, 102, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43822{background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 1.5pt solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43823{background-color:rgba(255, 0, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(102, 102, 102, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa4382c{background-color:transparent;vertical-align: bottom;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 1pt solid rgba(102, 102, 102, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa4382d{background-color:transparent;vertical-align: bottom;border-bottom: 0 solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43836{background-color:rgba(255, 255, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(102, 102, 102, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43837{background-color:rgba(255, 255, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43838{background-color:rgba(255, 255, 0, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(102, 102, 102, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43839{background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 1pt solid rgba(102, 102, 102, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43840{background-color:transparent;vertical-align: bottom;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(102, 102, 102, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43841{background-color:rgba(255, 165, 0, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa4384a{background-color:rgba(255, 165, 0, 1.00);vertical-align: middle;border-bottom: 1pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(102, 102, 102, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa4384b{background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(102, 102, 102, 1.00);border-right: 1pt solid rgba(102, 102, 102, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43854{background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(255, 255, 255, 0.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa4385e{background-color:rgba(0, 0, 255, 1.00);vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(102, 102, 102, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43868{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(102, 102, 102, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43869{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa4386a{background-color:transparent;vertical-align: middle;border-bottom: 0 solid rgba(0, 0, 0, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(102, 102, 102, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43872{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 1pt solid rgba(102, 102, 102, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa43873{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 0 solid rgba(0, 0, 0, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}.cl-8fa4387c{background-color:transparent;vertical-align: middle;border-bottom: 1.5pt solid rgba(102, 102, 102, 1.00);border-top: 0 solid rgba(0, 0, 0, 1.00);border-left: 0 solid rgba(0, 0, 0, 1.00);border-right: 1pt solid rgba(102, 102, 102, 1.00);margin-bottom:0;margin-top:0;margin-left:0;margin-right:0;}</style>
+<table data-quarto-disable-processing="true" class="table cl-8faa7458">
 <thead>
-<tr style="overflow-wrap:break-word;"><th colspan="8" class="cl-e2baddb0"><p class="cl-e2bab218"><span class="cl-e2b63dd2">My formatted table!</span></p></th></tr>
-<tr style="overflow-wrap:break-word;"><th colspan="8" class="cl-e2baddb0"><p class="cl-e2bab218"><span class="cl-e2b63de6">Created with the `visOmopResults` R package.</span></p></th></tr>
+<tr style="overflow-wrap:break-word;"><th colspan="8" class="cl-8fa437e6"><p class="cl-8fa3f89e"><span class="cl-8fa01f80">My formatted table!</span></p></th></tr>
+<tr style="overflow-wrap:break-word;"><th colspan="8" class="cl-8fa43805"><p class="cl-8fa3f89e"><span class="cl-8fa01f94">Created with the `visOmopResults` R package.</span></p></th></tr>
 <tr style="overflow-wrap:break-word;">
-<th rowspan="3" class="cl-e2baddb0"><p class="cl-e2bab218"><span class="cl-e2b63de7">CDM name</span></p></th>
-<th rowspan="3" class="cl-e2baddb0"><p class="cl-e2bab218"><span class="cl-e2b63de7">Age group</span></p></th>
-<th rowspan="3" class="cl-e2baddb0"><p class="cl-e2bab218"><span class="cl-e2b63de7">Variable name</span></p></th>
-<th rowspan="3" class="cl-e2baddb0"><p class="cl-e2bab218"><span class="cl-e2b63de7">Variable level</span></p></th>
-<th rowspan="3" class="cl-e2baddb0"><p class="cl-e2bab218"><span class="cl-e2b63de7">Estimate name</span></p></th>
-<th colspan="3" class="cl-e2baddba"><p class="cl-e2bab22c"><span class="cl-e2b63de7">This is an overall header</span></p></th>
+<th rowspan="3" class="cl-8fa43819"><p class="cl-8fa3f89e"><span class="cl-8fa01f9e">Data source</span></p></th>
+<th rowspan="3" class="cl-8fa43822"><p class="cl-8fa3f89e"><span class="cl-8fa01f9e">Age group</span></p></th>
+<th rowspan="3" class="cl-8fa43822"><p class="cl-8fa3f89e"><span class="cl-8fa01f9e">Variable name</span></p></th>
+<th rowspan="3" class="cl-8fa43822"><p class="cl-8fa3f89e"><span class="cl-8fa01f9e">Variable level</span></p></th>
+<th rowspan="3" class="cl-8fa43822"><p class="cl-8fa3f89e"><span class="cl-8fa01f9e">Estimate name</span></p></th>
+<th colspan="3" class="cl-8fa43823"><p class="cl-8fa3f8a8"><span class="cl-8fa01f9e">This is an overall header</span></p></th>
 </tr>
-<tr style="overflow-wrap:break-word;"><th colspan="3" class="cl-e2baddc5"><p class="cl-e2bab22c"><span class="cl-e2b63de7">Sex</span></p></th></tr>
+<tr style="overflow-wrap:break-word;"><th colspan="3" class="cl-8fa43836"><p class="cl-8fa3f8a8"><span class="cl-8fa01f9e">Sex</span></p></th></tr>
 <tr style="overflow-wrap:break-word;">
-<th class="cl-e2baddd8"><p class="cl-e2bab236"><span class="cl-e2b63de7">overall</span></p></th>
-<th class="cl-e2baddd8"><p class="cl-e2bab236"><span class="cl-e2b63de7">Male</span></p></th>
-<th class="cl-e2baddd8"><p class="cl-e2bab236"><span class="cl-e2b63de7">Female</span></p></th>
+<th class="cl-8fa43841"><p class="cl-8fa3f8b2"><span class="cl-8fa01f9e">overall</span></p></th>
+<th class="cl-8fa43841"><p class="cl-8fa3f8b2"><span class="cl-8fa01f9e">Male</span></p></th>
+<th class="cl-8fa4384a"><p class="cl-8fa3f8b2"><span class="cl-8fa01f9e">Female</span></p></th>
 </tr>
 </thead>
 <tbody>
-<tr style="overflow-wrap:break-word;"><td colspan="8" class="cl-e2baddd9"><p class="cl-e2bab236"><span class="cl-e2b63df0">cohort2</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="8" class="cl-8fa4384b"><p class="cl-8fa3f8b2"><span class="cl-8fa01f9f">cohort2</span></p></td></tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e2badde2"><p class="cl-e2bab236"><span class="cl-e2b63df1">mock</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">overall</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">age</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">–</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">Mean (SD)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">38.24 (7.89)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">49.35 (4.78)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">18.62 (8.61)</span></p></td>
+<td rowspan="3" class="cl-8fa43868"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">mock</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">overall</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">age</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">–</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">Mean (SD)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">38.24 (7.89)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">49.35 (4.78)</span></p></td>
+<td class="cl-8fa4386a"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">18.62 (8.61)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e2baddec"><p class="cl-e2bab236"><span class="cl-e2b63df1"></span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">&lt;40</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">age</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">–</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">Mean (SD)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">82.74 (4.38)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">86.97 (0.23)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">48.21 (7.32)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">&lt;40</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">age</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">–</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">Mean (SD)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">82.74 (4.38)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">86.97 (0.23)</span></p></td>
+<td class="cl-8fa4386a"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">48.21 (7.32)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e2badded"><p class="cl-e2bab236"><span class="cl-e2b63df1"></span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">&gt;=40</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">age</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">–</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">Mean (SD)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">66.85 (2.45)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">34.03 (4.77)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">59.96 (6.93)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">&gt;=40</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">age</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">–</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">Mean (SD)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">66.85 (2.45)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">34.03 (4.77)</span></p></td>
+<td class="cl-8fa4386a"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">59.96 (6.93)</span></p></td>
 </tr>
-<tr style="overflow-wrap:break-word;"><td colspan="8" class="cl-e2baddd9"><p class="cl-e2bab236"><span class="cl-e2b63df0">cohort1</span></p></td></tr>
+<tr style="overflow-wrap:break-word;"><td colspan="8" class="cl-8fa4384b"><p class="cl-8fa3f8b2"><span class="cl-8fa01f9f">cohort1</span></p></td></tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e2badde2"><p class="cl-e2bab236"><span class="cl-e2b63df1">mock</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">overall</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">age</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">–</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">Mean (SD)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">38.00 (7.94)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">12.56 (6.47)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">26.72 (7.83)</span></p></td>
-</tr>
-<tr style="overflow-wrap:break-word;">
-<td class="cl-e2baddec"><p class="cl-e2bab236"><span class="cl-e2b63df1"></span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">&lt;40</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">age</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">–</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">Mean (SD)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">38.61 (5.53)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">77.74 (1.08)</span></p></td>
-<td class="cl-e2badde3"><p class="cl-e2bab236"><span class="cl-e2b63df1">21.21 (4.11)</span></p></td>
+<td rowspan="3" class="cl-8fa43872"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">mock</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">overall</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">age</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">–</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">Mean (SD)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">38.00 (7.94)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">12.56 (6.47)</span></p></td>
+<td class="cl-8fa4386a"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">26.72 (7.83)</span></p></td>
 </tr>
 <tr style="overflow-wrap:break-word;">
-<td class="cl-e2baddf6"><p class="cl-e2bab236"><span class="cl-e2b63df1"></span></p></td>
-<td class="cl-e2baddf7"><p class="cl-e2bab236"><span class="cl-e2b63df1">&gt;=40</span></p></td>
-<td class="cl-e2baddf7"><p class="cl-e2bab236"><span class="cl-e2b63df1">age</span></p></td>
-<td class="cl-e2baddf7"><p class="cl-e2bab236"><span class="cl-e2b63df1">–</span></p></td>
-<td class="cl-e2baddf7"><p class="cl-e2bab236"><span class="cl-e2b63df1">Mean (SD)</span></p></td>
-<td class="cl-e2baddf7"><p class="cl-e2bab236"><span class="cl-e2b63df1">1.34 (5.30)</span></p></td>
-<td class="cl-e2baddf7"><p class="cl-e2bab236"><span class="cl-e2b63df1">93.47 (7.24)</span></p></td>
-<td class="cl-e2baddf7"><p class="cl-e2bab236"><span class="cl-e2b63df1">65.17 (8.21)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">&lt;40</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">age</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">–</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">Mean (SD)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">38.61 (5.53)</span></p></td>
+<td class="cl-8fa43869"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">77.74 (1.08)</span></p></td>
+<td class="cl-8fa4386a"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">21.21 (4.11)</span></p></td>
+</tr>
+<tr style="overflow-wrap:break-word;">
+<td class="cl-8fa43873"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">&gt;=40</span></p></td>
+<td class="cl-8fa43873"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">age</span></p></td>
+<td class="cl-8fa43873"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">–</span></p></td>
+<td class="cl-8fa43873"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">Mean (SD)</span></p></td>
+<td class="cl-8fa43873"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">1.34 (5.30)</span></p></td>
+<td class="cl-8fa43873"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">93.47 (7.24)</span></p></td>
+<td class="cl-8fa4387c"><p class="cl-8fa3f8b2"><span class="cl-8fa01fa8">65.17 (8.21)</span></p></td>
 </tr>
 </tbody>
 </table>

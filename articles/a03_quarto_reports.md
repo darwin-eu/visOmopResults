@@ -34,10 +34,11 @@ Next, we use the first R chunk to load packages, load data, and set
 options/variables used across the script. The results we use are
 obtained from mock data created with the `IncidencePrevalence` and
 `CohortCharacteristics` packages, which we have stored in the
-*\[inst\]*(<https://github.com/darwin-eu/visOmopResults/tree/main/inst>)
+[inst](https://github.com/darwin-eu/visOmopResults/tree/main/inst)
 folder of the packge.
 
 ``` r
+
 # Load necessary packages ----
 library(visOmopResults)
 library(IncidencePrevalence)
@@ -81,6 +82,7 @@ The report starts with a table showing baseline characteristics of the
 denominator cohort in our mock study.
 
 ``` r
+
 data$summarised_characteristics |>
   dplyr::filter(variable_name != "Sex") |>
   tableCharacteristics(
@@ -91,32 +93,32 @@ data$summarised_characteristics |>
   )
 ```
 
-| Variable name                | Variable level | Estimate name        | Sex                                    |                                        |                                        |
-|------------------------------|----------------|----------------------|----------------------------------------|----------------------------------------|----------------------------------------|
-|                              |                |                      | overall                                | Female                                 | Male                                   |
-| Number records               | –              | N                    | 2,564                                  | 1,302                                  | 1,262                                  |
-| Number subjects              | –              | N                    | 2,564                                  | 1,302                                  | 1,262                                  |
-| Cohort start date            | –              | Median \[Q25 - Q75\] | 2008-01-01 \[2008-01-01 - 2008-01-01\] | 2008-01-01 \[2008-01-01 - 2008-01-01\] | 2008-01-01 \[2008-01-01 - 2008-01-01\] |
-|                              |                | Range                | 2008-01-01 to 2008-01-01               | 2008-01-01 to 2008-01-01               | 2008-01-01 to 2008-01-01               |
-| Cohort end date              | –              | Median \[Q25 - Q75\] | 2018-01-01 \[2018-01-01 - 2018-01-01\] | 2018-01-01 \[2018-01-01 - 2018-01-01\] | 2018-01-01 \[2018-01-01 - 2018-01-01\] |
-|                              |                | Range                | 2008-01-17 to 2018-01-01               | 2008-01-17 to 2018-01-01               | 2009-03-24 to 2018-01-01               |
-| Age                          | –              | Median \[Q25 - Q75\] | 46 \[36 - 56\]                         | 45 \[36 - 55\]                         | 46 \[37 - 56\]                         |
-|                              |                | Mean (SD)            | 47.54 (14.81)                          | 47.52 (15.21)                          | 47.57 (14.40)                          |
-|                              |                | Range                | 21 to 99                               | 21 to 99                               | 21 to 98                               |
-| Prior observation            | –              | Median \[Q25 - Q75\] | 16,834 \[13,477 - 20,588\]             | 16,734 \[13,320 - 20,410\]             | 16,932 \[13,636 - 20,634\]             |
-|                              |                | Mean (SD)            | 17,545.28 (5,406.72)                   | 17,535.78 (5,551.58)                   | 17,555.07 (5,255.26)                   |
-|                              |                | Range                | 7,729 to 36,260                        | 7,929 to 36,260                        | 7,729 to 36,115                        |
-| Future observation           | –              | Median \[Q25 - Q75\] | 4,010 \[3,891 - 4,117\]                | 4,018 \[3,900 - 4,118\]                | 4,005 \[3,878 - 4,116\]                |
-|                              |                | Mean (SD)            | 3,924.53 (418.47)                      | 3,937.65 (405.74)                      | 3,910.98 (430.96)                      |
-|                              |                | Range                | 16 to 4,201                            | 16 to 4,199                            | 448 to 4,201                           |
-| Days in cohort               | –              | Median \[Q25 - Q75\] | 3,654 \[3,654 - 3,654\]                | 3,654 \[3,654 - 3,654\]                | 3,654 \[3,654 - 3,654\]                |
-|                              |                | Mean (SD)            | 3,594.61 (332.90)                      | 3,601.79 (324.60)                      | 3,587.20 (341.22)                      |
-|                              |                | Range                | 17 to 3,654                            | 17 to 3,654                            | 449 to 3,654                           |
-| Comorbidities flag -inf to 0 | Hiv            | N (%)                | 475 (18.53%)                           | 245 (18.82%)                           | 230 (18.23%)                           |
-|                              | Depression     | N (%)                | 2,531 (98.71%)                         | 1,285 (98.69%)                         | 1,246 (98.73%)                         |
-|                              | Asthma         | N (%)                | 1,234 (48.13%)                         | 623 (47.85%)                           | 611 (48.42%)                           |
-| Comedications flag -180 to 0 | Antidiabetes   | N (%)                | 26 (1.01%)                             | 11 (0.84%)                             | 15 (1.19%)                             |
-|                              | Opioids        | N (%)                | 49 (1.91%)                             | 27 (2.07%)                             | 22 (1.74%)                             |
+| Variable name | Variable level | Estimate name | Sex |  |  |
+|----|----|----|----|----|----|
+|  |  |  | overall | Female | Male |
+| Number records | – | N | 2,564 | 1,302 | 1,262 |
+| Number subjects | – | N | 2,564 | 1,302 | 1,262 |
+| Cohort start date | – | Median \[Q25 – Q75\] | 2008–01–01 \[2008–01–01 – 2008–01–01\] | 2008–01–01 \[2008–01–01 – 2008–01–01\] | 2008–01–01 \[2008–01–01 – 2008–01–01\] |
+|  |  | Range | 2008–01–01 to 2008–01–01 | 2008–01–01 to 2008–01–01 | 2008–01–01 to 2008–01–01 |
+| Cohort end date | – | Median \[Q25 – Q75\] | 2018–01–01 \[2018–01–01 – 2018–01–01\] | 2018–01–01 \[2018–01–01 – 2018–01–01\] | 2018–01–01 \[2018–01–01 – 2018–01–01\] |
+|  |  | Range | 2008–01–17 to 2018–01–01 | 2008–01–17 to 2018–01–01 | 2009–03–24 to 2018–01–01 |
+| Age | – | Median \[Q25 – Q75\] | 46 \[36 – 56\] | 45 \[36 – 55\] | 46 \[37 – 56\] |
+|  |  | Mean (SD) | 47.54 (14.81) | 47.52 (15.21) | 47.57 (14.40) |
+|  |  | Range | 21 to 99 | 21 to 99 | 21 to 98 |
+| Prior observation | – | Median \[Q25 – Q75\] | 16,834 \[13,477 – 20,588\] | 16,734 \[13,320 – 20,410\] | 16,932 \[13,636 – 20,634\] |
+|  |  | Mean (SD) | 17,545.28 (5,406.72) | 17,535.78 (5,551.58) | 17,555.07 (5,255.26) |
+|  |  | Range | 7,729 to 36,260 | 7,929 to 36,260 | 7,729 to 36,115 |
+| Future observation | – | Median \[Q25 – Q75\] | 4,010 \[3,891 – 4,117\] | 4,018 \[3,900 – 4,118\] | 4,005 \[3,878 – 4,116\] |
+|  |  | Mean (SD) | 3,924.53 (418.47) | 3,937.65 (405.74) | 3,910.98 (430.96) |
+|  |  | Range | 16 to 4,201 | 16 to 4,199 | 448 to 4,201 |
+| Days in cohort | – | Median \[Q25 – Q75\] | 3,654 \[3,654 – 3,654\] | 3,654 \[3,654 – 3,654\] | 3,654 \[3,654 – 3,654\] |
+|  |  | Mean (SD) | 3,594.61 (332.90) | 3,601.79 (324.60) | 3,587.20 (341.22) |
+|  |  | Range | 17 to 3,654 | 17 to 3,654 | 449 to 3,654 |
+| Comorbidities flag –inf to 0 | Hiv | N (%) | 475 (18.53%) | 245 (18.82%) | 230 (18.23%) |
+|  | Depression | N (%) | 2,531 (98.71%) | 1,285 (98.69%) | 1,246 (98.73%) |
+|  | Asthma | N (%) | 1,234 (48.13%) | 623 (47.85%) | 611 (48.42%) |
+| Comedications flag –180 to 0 | Antidiabetes | N (%) | 26 (1.01%) | 11 (0.84%) | 15 (1.19%) |
+|  | Opioids | N (%) | 49 (1.91%) | 27 (2.07%) | 22 (1.74%) |
 
 If the default order of variable names provided by
 [`tableCharacteristics()`](https://darwin-eu.github.io/CohortCharacteristics/reference/tableCharacteristics.html)
@@ -124,6 +126,7 @@ does not match the study requirements, we can create a customised table
 with this package.
 
 ``` r
+
 data$summarised_characteristics |>
   dplyr::filter(variable_name != "Sex") |>
   dplyr::mutate(
@@ -161,38 +164,39 @@ data$summarised_characteristics |>
   )
 ```
 
-| Variable name      | Variable level | Estimate name        | Sex                                    |                                        |                                        |
-|--------------------|----------------|----------------------|----------------------------------------|----------------------------------------|----------------------------------------|
-|                    |                |                      | overall                                | Male                                   | Female                                 |
-| Number records     | –              | N                    | 2,564                                  | 1,262                                  | 1,302                                  |
-| Number subjects    | –              | N                    | 2,564                                  | 1,262                                  | 1,302                                  |
-| Age                | –              | Median \[Q25 - Q75\] | 46 \[36 - 56\]                         | 46 \[37 - 56\]                         | 45 \[36 - 55\]                         |
-|                    |                | Mean (SD)            | 47.54 (14.81)                          | 47.57 (14.40)                          | 47.52 (15.21)                          |
-|                    |                | Range                | 21 to 99                               | 21 to 98                               | 21 to 99                               |
-| Days in cohort     | –              | Median \[Q25 - Q75\] | 3,654 \[3,654 - 3,654\]                | 3,654 \[3,654 - 3,654\]                | 3,654 \[3,654 - 3,654\]                |
-|                    |                | Mean (SD)            | 3,594.61 (332.90)                      | 3,587.20 (341.22)                      | 3,601.79 (324.60)                      |
-|                    |                | Range                | 17 to 3,654                            | 449 to 3,654                           | 17 to 3,654                            |
-| Prior observation  | –              | Median \[Q25 - Q75\] | 16,834 \[13,477 - 20,588\]             | 16,932 \[13,636 - 20,634\]             | 16,734 \[13,320 - 20,410\]             |
-|                    |                | Mean (SD)            | 17,545.28 (5,406.72)                   | 17,555.07 (5,255.26)                   | 17,535.78 (5,551.58)                   |
-|                    |                | Range                | 7,729 to 36,260                        | 7,729 to 36,115                        | 7,929 to 36,260                        |
-| Future observation | –              | Median \[Q25 - Q75\] | 4,010 \[3,891 - 4,117\]                | 4,005 \[3,878 - 4,116\]                | 4,018 \[3,900 - 4,118\]                |
-|                    |                | Mean (SD)            | 3,924.53 (418.47)                      | 3,910.98 (430.96)                      | 3,937.65 (405.74)                      |
-|                    |                | Range                | 16 to 4,201                            | 448 to 4,201                           | 16 to 4,199                            |
-| Cohort start date  | –              | Median \[Q25 - Q75\] | 2008-01-01 \[2008-01-01 - 2008-01-01\] | 2008-01-01 \[2008-01-01 - 2008-01-01\] | 2008-01-01 \[2008-01-01 - 2008-01-01\] |
-|                    |                | Range                | 2008-01-01 to 2008-01-01               | 2008-01-01 to 2008-01-01               | 2008-01-01 to 2008-01-01               |
-| Cohort end date    | –              | Median \[Q25 - Q75\] | 2018-01-01 \[2018-01-01 - 2018-01-01\] | 2018-01-01 \[2018-01-01 - 2018-01-01\] | 2018-01-01 \[2018-01-01 - 2018-01-01\] |
-|                    |                | Range                | 2008-01-17 to 2018-01-01               | 2009-03-24 to 2018-01-01               | 2008-01-17 to 2018-01-01               |
-| Comedications      | Opioids        | N (%)                | 49 (1.91%)                             | 22 (1.74%)                             | 27 (2.07%)                             |
-|                    | Antidiabetes   | N (%)                | 26 (1.01%)                             | 15 (1.19%)                             | 11 (0.84%)                             |
-| Comorbidities      | Asthma         | N (%)                | 1,234 (48.13%)                         | 611 (48.42%)                           | 623 (47.85%)                           |
-|                    | Depression     | N (%)                | 2,531 (98.71%)                         | 1,246 (98.73%)                         | 1,285 (98.69%)                         |
-|                    | HIV            | N (%)                | 475 (18.53%)                           | 230 (18.23%)                           | 245 (18.82%)                           |
+| Variable name | Variable level | Estimate name | Sex |  |  |
+|----|----|----|----|----|----|
+|  |  |  | overall | Male | Female |
+| Number records | – | N | 2,564 | 1,262 | 1,302 |
+| Number subjects | – | N | 2,564 | 1,262 | 1,302 |
+| Age | – | Median \[Q25 - Q75\] | 46 \[36 - 56\] | 46 \[37 - 56\] | 45 \[36 - 55\] |
+|  |  | Mean (SD) | 47.54 (14.81) | 47.57 (14.40) | 47.52 (15.21) |
+|  |  | Range | 21 to 99 | 21 to 98 | 21 to 99 |
+| Days in cohort | – | Median \[Q25 - Q75\] | 3,654 \[3,654 - 3,654\] | 3,654 \[3,654 - 3,654\] | 3,654 \[3,654 - 3,654\] |
+|  |  | Mean (SD) | 3,594.61 (332.90) | 3,587.20 (341.22) | 3,601.79 (324.60) |
+|  |  | Range | 17 to 3,654 | 449 to 3,654 | 17 to 3,654 |
+| Prior observation | – | Median \[Q25 - Q75\] | 16,834 \[13,477 - 20,588\] | 16,932 \[13,636 - 20,634\] | 16,734 \[13,320 - 20,410\] |
+|  |  | Mean (SD) | 17,545.28 (5,406.72) | 17,555.07 (5,255.26) | 17,535.78 (5,551.58) |
+|  |  | Range | 7,729 to 36,260 | 7,729 to 36,115 | 7,929 to 36,260 |
+| Future observation | – | Median \[Q25 - Q75\] | 4,010 \[3,891 - 4,117\] | 4,005 \[3,878 - 4,116\] | 4,018 \[3,900 - 4,118\] |
+|  |  | Mean (SD) | 3,924.53 (418.47) | 3,910.98 (430.96) | 3,937.65 (405.74) |
+|  |  | Range | 16 to 4,201 | 448 to 4,201 | 16 to 4,199 |
+| Cohort start date | – | Median \[Q25 - Q75\] | 2008-01-01 \[2008-01-01 - 2008-01-01\] | 2008-01-01 \[2008-01-01 - 2008-01-01\] | 2008-01-01 \[2008-01-01 - 2008-01-01\] |
+|  |  | Range | 2008-01-01 to 2008-01-01 | 2008-01-01 to 2008-01-01 | 2008-01-01 to 2008-01-01 |
+| Cohort end date | – | Median \[Q25 - Q75\] | 2018-01-01 \[2018-01-01 - 2018-01-01\] | 2018-01-01 \[2018-01-01 - 2018-01-01\] | 2018-01-01 \[2018-01-01 - 2018-01-01\] |
+|  |  | Range | 2008-01-17 to 2018-01-01 | 2009-03-24 to 2018-01-01 | 2008-01-17 to 2018-01-01 |
+| Comedications | Opioids | N (%) | 49 (1.91%) | 22 (1.74%) | 27 (2.07%) |
+|  | Antidiabetes | N (%) | 26 (1.01%) | 15 (1.19%) | 11 (0.84%) |
+| Comorbidities | Asthma | N (%) | 1,234 (48.13%) | 611 (48.42%) | 623 (47.85%) |
+|  | Depression | N (%) | 2,531 (98.71%) | 1,246 (98.73%) | 1,285 (98.69%) |
+|  | HIV | N (%) | 475 (18.53%) | 230 (18.23%) | 245 (18.82%) |
 
 Additionally, we can show the number of people in the overall cohort and
 stratified by sex. We use the `CohortCharacteristics` plotting function
 and then apply the DARWIN style and rotate the axis labels.
 
 ``` r
+
 data$summarised_characteristics |>
   dplyr::filter(variable_name %in% c("Number records")) |>
   plotCharacteristics(colour = "sex") +
@@ -210,6 +214,7 @@ group. We can do that with the plotting functions in
 labels for readability.
 
 ``` r
+
 data$incidence |>
   dplyr::filter(strata_name == "sex") |>
   plotIncidence(colour = "sex", facet = "sex", ribbon = TRUE) +
@@ -233,6 +238,7 @@ As an example, we have mock results for a measurement change after an
 intervention. The tibble looks like this:
 
 ``` r
+
 data$measurement_change
 #> # A tibble: 9 × 8
 #>   cohort_name sex     variable_name   median   min   max   q25   q75
@@ -255,6 +261,7 @@ format estimates and use the `header` argument in the
 function.
 
 ``` r
+
 data$measurement_change |> 
   tidyr::pivot_longer(
     cols      = c("median", "min", "max", "q25", "q75"),
@@ -278,19 +285,20 @@ data$measurement_change |>
   )
 ```
 
-| Variable        | Estimate             | Sex                     |                         |                         |
-|-----------------|----------------------|-------------------------|-------------------------|-------------------------|
-|                 |                      | Overall                 | Male                    | Female                  |
-| Value before    | Median \[Q25 - Q75\] | 60.00 \[55.00 - 77.25\] | 65.00 \[61.00 - 80.00\] | 53.00 \[48.00 - 59.00\] |
-|                 | Range                | 24.00 to 117.00         | 30.00 to 120.00         | 20.00 to 100.00         |
-| Value after     | Median \[Q25 - Q75\] | 58.00 \[55.00 - 72.00\] | 66.00 \[62.00 - 79.00\] | 50.00 \[47.00 - 60.00\] |
-|                 | Range                | 22.00 to 108.00         | 33.00 to 117.00         | 19.00 to 100.00         |
-| Change in value | Median \[Q25 - Q75\] | -2.00 \[0.00 - -5.25\]  | 1.00 \[1.00 - -1.00\]   | -3.00 \[-1.00 - 1.00\]  |
-|                 | Range                | -2.00 to -9.00          | 3.00 to -3.00           | -1.00 to 0.00           |
+| Variable | Estimate | Sex |  |  |
+|----|----|----|----|----|
+|  |  | Overall | Male | Female |
+| Value before | Median \[Q25 - Q75\] | 60.00 \[55.00 - 77.25\] | 65.00 \[61.00 - 80.00\] | 53.00 \[48.00 - 59.00\] |
+|  | Range | 24.00 to 117.00 | 30.00 to 120.00 | 20.00 to 100.00 |
+| Value after | Median \[Q25 - Q75\] | 58.00 \[55.00 - 72.00\] | 66.00 \[62.00 - 79.00\] | 50.00 \[47.00 - 60.00\] |
+|  | Range | 22.00 to 108.00 | 33.00 to 117.00 | 19.00 to 100.00 |
+| Change in value | Median \[Q25 - Q75\] | -2.00 \[0.00 - -5.25\] | 1.00 \[1.00 - -1.00\] | -3.00 \[-1.00 - 1.00\] |
+|  | Range | -2.00 to -9.00 | 3.00 to -3.00 | -1.00 to 0.00 |
 
 Additionally, we can visualise values before and after in a boxplot:
 
 ``` r
+
 data$measurement_change |>  
   dplyr::filter(variable_name %in% c("value_before", "value_after")) |>
   dplyr::mutate(
@@ -330,6 +338,7 @@ programmatically numbering them). In those cases, we can use
 [`cat()`](https://rdrr.io/r/base/cat.html) within a chunk:
 
 ``` r
+
 num_table <- 1
 cat(paste0(
   ':::{custom-style="Caption"}\n',

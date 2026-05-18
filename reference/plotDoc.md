@@ -16,6 +16,14 @@ Helper for consistent documentation of `plots`.
 
   Column or estimate name that is used as y variable.
 
+- axis1:
+
+  Column or estimate name that is used in the x-left axis.
+
+- axis2:
+
+  Column or estimate name that is used in the x-right axis.
+
 - width:
 
   Bar width, as in `geom_col()` of the `ggplot2` package.
