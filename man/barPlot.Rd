@@ -2,7 +2,8 @@
 % Please edit documentation in R/plot.R
 \name{barPlot}
 \alias{barPlot}
-\title{Create a bar plot visualisation from a \verb{<summarised_result>} object}
+\title{Create a bar plot visualisation from a data frame or a
+\verb{<summarised_result>} object.}
 \usage{
 barPlot(
   result,
@@ -58,7 +59,8 @@ the function will use the global setting defined via \code{setGlobalPlotOptions(
 A plot object.
 }
 \description{
-Create a bar plot visualisation from a \verb{<summarised_result>} object
+Create a bar plot visualisation from a data frame or a
+\verb{<summarised_result>} object.
 }
 \examples{
 result <- mockSummarisedResult() |> dplyr::filter(variable_name == "age")

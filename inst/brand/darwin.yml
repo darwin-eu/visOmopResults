@@ -12,7 +12,7 @@ logo:
 typography:
   base:
     family: Calibri
-    size: "11"
+    size: "11pt"
 
 defaults:
   shiny:
@@ -22,7 +22,7 @@ defaults:
     template: system.file("darwinReportRef.docx", package = "visOmopResults")
     plot:
       font_family: Calibri
-      font_size: "11"
+      font_size: "11pt"
       background_color: white
       header_color: darwin_blue
       header_text_color: white
@@ -33,50 +33,54 @@ defaults:
       legend_position: "right"
     table:
       font_family: Calibri
-      font_size: "9"
+      font_size: "9pt"
       border_color: darwin_blue
-      border_width: 1
+      border_width: 0.5
+      text_line_space: 1
+      text_space_before: 0
+      text_space_after: 6
       header:
         background_color: darwin_blue
         text_bold: TRUE
         align: center
         text_color: white
         border_color: white
-        font_size: 11
+        font_size: "9pt"
       header_name:
         background_color: darwin_blue
         text_bold: TRUE
         align: center
         text_color: white
         border_color: white
-        font_size: 11
+        font_size: "9pt"
       header_level:
         background_color: darwin_blue
         text_bold: TRUE
         align: center
         text_color: white
         border_color: white
-        font_size: 11
+        font_size: "9pt"
       column_name:
         background_color: darwin_blue
         text_bold: TRUE
         align: center
         text_color: white
         border_color: white
-        font_size: 11
+        font_size: "9pt"
       group_label:
         background_color: darwin_blue
         text_bold: TRUE
         text_color: white
         border_color: white
+        font_size: "9pt"
       title:
         text_bold: TRUE
         align: center
-        font_size: 15
+        font_size: "15pt"
       subtitle:
         text_bold: TRUE
         align: center
-        font_size: 12
+        font_size: "12pt"
       body:
         border_width: 0.5
         border_color: darwin_blue

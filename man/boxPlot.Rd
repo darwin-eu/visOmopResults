@@ -2,7 +2,8 @@
 % Please edit documentation in R/plot.R
 \name{boxPlot}
 \alias{boxPlot}
-\title{Create a box plot visualisation from a \verb{<summarised_result>} object}
+\title{Create a box plot visualisation from a data frame or a
+\verb{<summarised_result>} object.}
 \usage{
 boxPlot(
   result,
@@ -62,7 +63,8 @@ the function will use the global setting defined via \code{setGlobalPlotOptions(
 A ggplot2 object.
 }
 \description{
-Create a box plot visualisation from a \verb{<summarised_result>} object
+Create a box plot visualisation from a data frame or a
+\verb{<summarised_result>} object.
 }
 \examples{
 dplyr::tibble(year = "2000", q25 = 25, median = 50, q75 = 75, min = 0, max = 100) |>

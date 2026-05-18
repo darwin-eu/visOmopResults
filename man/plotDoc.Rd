@@ -10,6 +10,10 @@
 
 \item{y}{Column or estimate name that is used as y variable.}
 
+\item{axis1}{Column or estimate name that is used in the x-left axis.}
+
+\item{axis2}{Column or estimate name that is used in the x-right axis.}
+
 \item{width}{Bar width, as in \code{geom_col()} of the \code{ggplot2} package.}
 
 \item{just}{Adjustment for column placement, as in \code{geom_col()} of the

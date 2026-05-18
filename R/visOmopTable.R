@@ -110,7 +110,7 @@ visOmopTable <- function(result,
 
   # initial checks and preparation
   rename <- validateRename(rename, resultTidy)
-  if (!"cdm_name" %in% rename) rename <- c(rename, "CDM name" = "cdm_name")
+  if (!"cdm_name" %in% rename) rename <- c(rename, "Data source" = "cdm_name")
   groupColumn <- validateGroupColumn(groupColumn, colnames(resultTidy), sr = result, rename = rename)
   # default SR hide columns
   hide <- c(hide, "result_id", "estimate_type") |> unique()

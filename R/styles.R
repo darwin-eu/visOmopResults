@@ -38,7 +38,7 @@ brandToList <- function(content) {
   content <- updateColoursFromPalette(content = content)
 
   # collapse content
-  content <- collapseContent(content = content)
+  content <- collapseContent(content)
 
   # get information from labels
   x <- labels() |>
@@ -61,15 +61,14 @@ updateColoursFromPalette <- function(content) {
     content <- content |>
       rapply(
         f = \(x) {
-          if (is.character(x) && length(x) == 1) {
-            if (x %in% names(colours)) {
-              colours[[x]]
-            } else {
-              x
+          if (is.character(x)) {
+            for (k in seq_along(x)) {
+              if (x[k] %in% names(colours)) {
+                x[k] <- colours[[x[k]]]
+              }
             }
-          } else {
-            x
           }
+          x
         },
         how = "replace"
       )
@@ -77,10 +76,21 @@ updateColoursFromPalette <- function(content) {
   content
 }
 # collapse content into a list vector using : as separator for names
-collapseContent <- function(content) {
-  content <- unlist(content, recursive = TRUE, use.names = TRUE)
-  names(content) <- gsub("\\.", "\\:", names(content), fixed = FALSE)
-  as.list(content)
+collapseContent <- function(x, prefix = "") {
+  result <- list()
+
+  for (nm in names(x)) {
+    key <- ifelse(prefix == "", nm, paste0(prefix, ":", nm))
+    val <- x[[nm]]
+
+    if (is.list(val)) {
+      result <- c(result, collapseContent(val, prefix = key))
+    } else {
+      result[[key]] <- val
+    }
+  }
+
+  result
 }
 # labels hierarchy (do not use `.` in names as they will be converted to `:`)
 labels <- function() {
@@ -97,6 +107,10 @@ labels <- function() {
     plot_legend_position = c("defaults:visOmopResults:plot:legend_position"),
     plot_font_family = c("defaults:visOmopResults:plot:font_family", "typography:base:family"),
 
+    # plot palettes
+    plot_color_palette = c("defaults:visOmopResults:plot:color_palette"),
+    plot_fill_palette = c("defaults:visOmopResults:plot:fill_palette", "defaults:visOmopResults:plot:color_palette"),
+
     # table parameters
     # header
     table_header_background_color = c("defaults:visOmopResults:table:header:background_color", "color:background"),
@@ -104,52 +118,67 @@ labels <- function() {
     table_header_text_color = c("defaults:visOmopResults:table:header:text_color"),
     table_header_font_size = c("defaults:visOmopResults:table:header:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
     table_header_font_family = c("defaults:visOmopResults:table:header:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
-    table_header_align = c("defaults:visOmopResults:table:header:align"),
+    table_header_align = c("defaults:visOmopResults:table:header:align", "defaults:visOmopResults:table:align"),
     table_header_border_color = c("defaults:visOmopResults:table:header:border_color", "defaults:visOmopResults:table:border_color"),
     table_header_border_width = c("defaults:visOmopResults:table:header:border_width", "defaults:visOmopResults:table:border_width"),
+    table_header_text_line_space = c("defaults:visOmopResults:table:header:text_line_space", "defaults:visOmopResults:table:text_line_space"),
+    table_header_text_space_before = c("defaults:visOmopResults:table:header:text_space_before", "defaults:visOmopResults:table:text_space_before"),
+    table_header_text_space_after = c("defaults:visOmopResults:table:header:text_space_after", "defaults:visOmopResults:table:text_space_after"),
     # header name
     table_header_name_background_color = c("defaults:visOmopResults:table:header_name:background_color", "color:background"),
     table_header_name_text_bold = c("defaults:visOmopResults:table:header_name:text_bold"),
     table_header_name_text_color = c("defaults:visOmopResults:table:header_name:text_color"),
     table_header_name_font_size = c("defaults:visOmopResults:table:header_name:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
     table_header_name_font_family = c("defaults:visOmopResults:table:header_name:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
-    table_header_name_align = c("defaults:visOmopResults:table:header_name:align"),
+    table_header_name_align = c("defaults:visOmopResults:table:header_name:align", "defaults:visOmopResults:table:align"),
     table_header_name_border_color = c("defaults:visOmopResults:table:header_name:border_color", "defaults:visOmopResults:table:border_color"),
     table_header_name_border_width = c("defaults:visOmopResults:table:header_name:border_width", "defaults:visOmopResults:table:border_width"),
+    table_header_name_text_line_space = c("defaults:visOmopResults:table:header_name:text_line_space", "defaults:visOmopResults:table:text_line_space"),
+    table_header_name_text_space_before = c("defaults:visOmopResults:table:header_name:text_space_before", "defaults:visOmopResults:table:text_space_before"),
+    table_header_name_text_space_after = c("defaults:visOmopResults:table:header_name:text_space_after", "defaults:visOmopResults:table:text_space_after"),
     # header_level
     table_header_level_background_color = c("defaults:visOmopResults:table:header_level:background_color", "color:background"),
     table_header_level_text_bold = c("defaults:visOmopResults:table:header_level:text_bold"),
     table_header_level_text_color = c("defaults:visOmopResults:table:header_level:text_color"),
     table_header_level_font_size = c("defaults:visOmopResults:table:header_level:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
     table_header_level_font_family = c("defaults:visOmopResults:table:header_level:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
-    table_header_level_align = c("defaults:visOmopResults:table:header_level:align"),
+    table_header_level_align = c("defaults:visOmopResults:table:header_level:align", "defaults:visOmopResults:table:align"),
     table_header_level_border_color = c("defaults:visOmopResults:table:header_level:border_color", "defaults:visOmopResults:table:border_color"),
     table_header_level_border_width = c("defaults:visOmopResults:table:header_level:border_width", "defaults:visOmopResults:table:border_width"),
+    table_header_level_text_line_space = c("defaults:visOmopResults:table:header_level:text_line_space", "defaults:visOmopResults:table:text_line_space"),
+    table_header_level_text_space_before = c("defaults:visOmopResults:table:header_level:text_space_before", "defaults:visOmopResults:table:text_space_before"),
+    table_header_level_text_space_after = c("defaults:visOmopResults:table:header_level:text_space_after", "defaults:visOmopResults:table:text_space_after"),
     # column_name
     table_column_name_background_color = c("defaults:visOmopResults:table:column_name:background_color", "color:background"),
     table_column_name_text_bold = c("defaults:visOmopResults:table:column_name:text_bold"),
     table_column_name_text_color = c("defaults:visOmopResults:table:column_name:text_color"),
     table_column_name_font_size = c("defaults:visOmopResults:table:column_name:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
     table_column_name_font_family = c("defaults:visOmopResults:table:column_name:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
-    table_column_name_align = c("defaults:visOmopResults:table:column_name:align"),
+    table_column_name_align = c("defaults:visOmopResults:table:column_name:align", "defaults:visOmopResults:table:align"),
     table_column_name_border_color = c("defaults:visOmopResults:table:column_name:border_color", "defaults:visOmopResults:table:border_color"),
     table_column_name_border_width = c("defaults:visOmopResults:table:column_name:border_width", "defaults:visOmopResults:table:border_width"),
+    table_column_name_text_line_space = c("defaults:visOmopResults:table:column_name:text_line_space", "defaults:visOmopResults:table:text_line_space"),
+    table_column_name_text_space_before = c("defaults:visOmopResults:table:column_name:text_space_before", "defaults:visOmopResults:table:text_space_before"),
+    table_column_name_text_space_after = c("defaults:visOmopResults:table:column_name:text_space_after", "defaults:visOmopResults:table:text_space_after"),
     # group_label
     table_group_label_background_color = c("defaults:visOmopResults:table:group_label:background_color", "color:background"),
     table_group_label_text_bold = c("defaults:visOmopResults:table:group_label:text_bold"),
     table_group_label_text_color = c("defaults:visOmopResults:table:group_label:text_color"),
     table_group_label_font_size = c("defaults:visOmopResults:table:group_label:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
     table_group_label_font_family = c("defaults:visOmopResults:table:group_label:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
-    table_group_label_align = c("defaults:visOmopResults:table:group_label:align"),
+    table_group_label_align = c("defaults:visOmopResults:table:group_label:align", "defaults:visOmopResults:table:align"),
     table_group_label_border_color = c("defaults:visOmopResults:table:group_label:border_color", "defaults:visOmopResults:table:border_color"),
     table_group_label_border_width = c("defaults:visOmopResults:table:group_label:border_width", "defaults:visOmopResults:table:border_width"),
+    table_group_label_text_line_space = c("defaults:visOmopResults:table:group_label:text_line_space", "defaults:visOmopResults:table:text_line_space"),
+    table_group_label_text_space_before = c("defaults:visOmopResults:table:group_label:text_space_before", "defaults:visOmopResults:table:text_space_before"),
+    table_group_label_text_space_after = c("defaults:visOmopResults:table:group_label:text_space_after", "defaults:visOmopResults:table:text_space_after"),
     # title
     table_title_background_color = c("defaults:visOmopResults:table:title:background_color", "color:background"),
     table_title_text_bold = c("defaults:visOmopResults:table:title:text_bold"),
     table_title_text_color = c("defaults:visOmopResults:table:title:text_color"),
     table_title_font_size = c("defaults:visOmopResults:table:title:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
     table_title_font_family = c("defaults:visOmopResults:table:title:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
-    table_title_align = c("defaults:visOmopResults:table:title:align"),
+    table_title_align = c("defaults:visOmopResults:table:title:align", "defaults:visOmopResults:table:align"),
     table_title_border_color = c("defaults:visOmopResults:table:title:border_color", "defaults:visOmopResults:table:border_color"),
     table_title_border_width = c("defaults:visOmopResults:table:title:border_width", "defaults:visOmopResults:table:border_width"),
     # subtitle
@@ -158,7 +187,7 @@ labels <- function() {
     table_subtitle_text_color = c("defaults:visOmopResults:table:subtitle:text_color"),
     table_subtitle_font_size = c("defaults:visOmopResults:table:subtitle:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
     table_subtitle_font_family = c("defaults:visOmopResults:table:subtitle:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
-    table_subtitle_align = c("defaults:visOmopResults:table:subtitle:align"),
+    table_subtitle_align = c("defaults:visOmopResults:table:subtitle:align", "defaults:visOmopResults:table:align"),
     table_subtitle_border_color = c("defaults:visOmopResults:table:subtitle:border_color", "defaults:visOmopResults:table:border_color"),
     table_subtitle_border_width = c("defaults:visOmopResults:table:subtitle:border_width", "defaults:visOmopResults:table:border_width"),
     # body
@@ -167,9 +196,12 @@ labels <- function() {
     table_body_text_color = c("defaults:visOmopResults:table:body:text_color"),
     table_body_font_size = c("defaults:visOmopResults:table:body:font_size", "defaults:visOmopResults:table:font_size", "typography:base:size"),
     table_body_font_family = c("defaults:visOmopResults:table:body:font_family", "defaults:visOmopResults:table:font_family", "typography:base:family"),
-    table_body_align = c("defaults:visOmopResults:table:body:align"),
+    table_body_align = c("defaults:visOmopResults:table:body:align", "defaults:visOmopResults:table:align"),
     table_body_border_color = c("defaults:visOmopResults:table:body:border_color", "defaults:visOmopResults:table:border_color"),
-    table_body_border_width = c("defaults:visOmopResults:table:body:border_width", "defaults:visOmopResults:table:border_width")
+    table_body_border_width = c("defaults:visOmopResults:table:body:border_width", "defaults:visOmopResults:table:border_width"),
+    table_body_text_line_space = c("defaults:visOmopResults:table:body:text_line_space", "defaults:visOmopResults:table:text_line_space"),
+    table_body_text_space_before = c("defaults:visOmopResults:table:body:text_space_before", "defaults:visOmopResults:table:text_space_before"),
+    table_body_text_space_after = c("defaults:visOmopResults:table:body:text_space_after", "defaults:visOmopResults:table:text_space_after")
   )
 }
 
@@ -216,6 +248,13 @@ styleGt <- function(x) {
       nm6 <- paste0("table_", lab, "_font_family")
       nm7 <- paste0("table_", lab, "_text_color")
       nm8 <- paste0("table_", lab, "_border_width")
+      nm9 <- paste0("table_", lab, "_text_line_space")
+      nm10 <- paste0("table_", lab, "_text_space_before")
+      nm11 <- paste0("table_", lab, "_text_space_after")
+
+      if (any(c(nm9, nm10, nm11) %in% names(x))) {
+        cli::cli_inform("`text_line_space`, `text_space_before`, and `text_space_after` not supported for `gt`")
+      }
 
       res <- list()
 
@@ -233,7 +272,7 @@ styleGt <- function(x) {
         args$align <- x[[nm3]]
       }
       if (nm4 %in% names(x)) {
-        args$size <- as.numeric(x[[nm4]])
+        args$size <- as.numeric(gsub("pt", "", x[[nm4]]))
       }
       if (nm6 %in% names(x)) {
         args$font <- x[[nm6]]
@@ -279,6 +318,9 @@ styleFx <- function(x) {
       nm6 <- paste0("table_", lab, "_font_family")
       nm7 <- paste0("table_", lab, "_text_color")
       nm8 <- paste0("table_", lab, "_border_width")
+      nm9 <- paste0("table_", lab, "_text_line_space")
+      nm10 <- paste0("table_", lab, "_text_space_before")
+      nm11 <- paste0("table_", lab, "_text_space_after")
 
       res <- list()
 
@@ -296,6 +338,12 @@ styleFx <- function(x) {
       } else if (nm8 %in% names(x)) {
         args$border <- officer::fp_border(width = as.numeric(x[[nm8]]))
       }
+      if (nm10 %in% names(x)) {
+        args$margin.top <- as.numeric(x[[nm10]])
+      }
+      if (nm11 %in% names(x)) {
+        args$margin.bottom <- as.numeric(x[[nm11]])
+      }
       if (length(args) > 0) {
         res <- c(res, list(cell = do.call(what = officer::fp_cell, args = args)))
       }
@@ -306,7 +354,7 @@ styleFx <- function(x) {
         args$bold <- as.logical(x[[nm2]])
       }
       if (nm4 %in% names(x)) {
-        args$font.size <- as.numeric(x[[nm4]])
+        args$font.size <- as.numeric(gsub("pt", "", x[[nm4]]))
       }
       if (nm6 %in% names(x)) {
         args$font.family <- x[[nm6]]
@@ -319,8 +367,15 @@ styleFx <- function(x) {
       }
 
       # officer::fp_par
+      args <- list()
       if (nm3 %in% names(x)) {
-        res <- c(res, list(paragraph = officer::fp_par(text.align = x[[nm3]])))
+        args$text.align <- x[[nm3]]
+      }
+      if (nm9 %in% names(x)) {
+        args$line_spacing <- as.numeric(x[[nm9]])
+      }
+      if (length(args) > 0) {
+        res <- c(res, list(text = do.call(what = officer::fp_par, args = args)))
       }
 
       res
@@ -350,6 +405,13 @@ styleTT <- function(x) {
       nm6 <- paste0("table_", lab, "_font_family")
       nm7 <- paste0("table_", lab, "_text_color")
       nm8 <- paste0("table_", lab, "_border_width")
+      nm9 <- paste0("table_", lab, "_text_line_space")
+      nm10 <- paste0("table_", lab, "_text_space_before")
+      nm11 <- paste0("table_", lab, "_text_space_after")
+
+      if (any(c(nm9, nm10, nm11) %in% names(x))) {
+        cli::cli_inform("`text_line_space`, `text_space_before`, and `text_space_after` not supported for `gt`")
+      }
 
       res <- list(line = "lbtr")
 
@@ -363,7 +425,7 @@ styleTT <- function(x) {
         res$align <- substr(x[[nm3]], 1, 1)
       }
       if (nm4 %in% names(x)) {
-        res$fontsize <- as.numeric(x[[nm4]])
+        res$fontsize <- as.numeric(gsub("pt", "", x[[nm4]]))
       }
       if (nm5 %in% names(x)) {
         res$line_color <- x[[nm5]]
@@ -430,60 +492,6 @@ defaultReactable <- function() {
     "striped" = TRUE,
     "theme" = NULL
   )
-}
-
-# format plot style in ggplot2
-formatPlotStyle <- function(x, fontsizeRef = NULL) {
-  if (is.null(fontsizeRef)) {
-    fontSize <- as.numeric(x$plot_font_size)
-  } else {
-    fontSize <- fontsizeRef
-  }
-  colorBackrgound <- x$plot_background_color
-  colorHeader <- x$plot_header_color
-  colorGrid <- x$plot_grid_color
-  colorAxis <- x$plot_axis_color
-  colorBorder <- x$plot_border_color
-  legendPosition <- x$plot_legend_position
-  fontFamily <- x$plot_font_family
-  headerTextColour <- x$plot_header_text_color
-  headerTextBold <- NULL
-  if (!is.null(x$plot_header_text_bold)) {
-    if (x$plot_header_text_bold) {
-      headerTextBold <- "bold"
-    }
-  }
-
-  # check font
-  fontFamily <- safeFontFamily(fontFamily, registerFont = TRUE)
-
-  ggplot2::theme_bw() +
-    ggplot2::theme(
-      # facet
-      strip.text = ggplot2::element_text(face = headerTextBold, size = fontSize, colour = headerTextColour, family = fontFamily),
-      strip.background = ggplot2::element_rect(fill = colorHeader, colour = colorBorder),
-      strip.text.y.left = ggplot2::element_text(angle = 0, family = fontFamily),
-      strip.text.y.right = ggplot2::element_text(angle = 0, family = fontFamily),
-      # title
-      plot.title = ggplot2::element_text(face = "bold", size = fontSize+2),
-      # axis
-      axis.text.y = ggplot2::element_text(size = fontSize-1, color = colorAxis, family = fontFamily),
-      axis.text.x = ggplot2::element_text(size = fontSize-1, color = colorAxis, family = fontFamily),
-      axis.title.x = ggplot2::element_text(size = fontSize, vjust = 0, color = colorAxis, family = fontFamily),
-      axis.title.y = ggplot2::element_text(size = fontSize, vjust = 1.25, color = colorAxis, family = fontFamily),
-      # legend
-      legend.text = ggplot2::element_text(size = fontSize-1, family = fontFamily),
-      legend.title = ggplot2::element_text(size = fontSize, family = fontFamily),
-      legend.position = legendPosition,
-      # background
-      panel.background = ggplot2::element_rect(fill = colorBackrgound, colour = colorBackrgound),
-      plot.background = ggplot2::element_rect(fill = colorBackrgound, colour = colorBackrgound),
-      panel.border = ggplot2::element_rect(colour = colorBorder),
-      # grid
-      panel.grid.major = ggplot2::element_line(color = colorGrid, linewidth = .25),
-      # margin
-      plot.margin = grid::unit(c(0.35, 0.2, 0.3, 0.35), "cm")
-    )
 }
 
 # helper function: check fontFamily is installed and loaded

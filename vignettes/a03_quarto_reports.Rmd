@@ -44,7 +44,7 @@ execute:
 ---
 ```
 
-Next, we use the first R chunk to load packages, load data, and set options/variables used across the script. The results we use are obtained from mock data created with the `IncidencePrevalence` and `CohortCharacteristics` packages, which we have stored in the *[inst]*(https://github.com/darwin-eu/visOmopResults/tree/main/inst) folder of the packge.
+Next, we use the first R chunk to load packages, load data, and set options/variables used across the script. The results we use are obtained from mock data created with the `IncidencePrevalence` and `CohortCharacteristics` packages, which we have stored in the [inst](https://github.com/darwin-eu/visOmopResults/tree/main/inst) folder of the packge.
 
 ```{r, setup, echo=TRUE, eval=FALSE}
 # Load necessary packages ----

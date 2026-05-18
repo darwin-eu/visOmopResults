@@ -1,4 +1,10 @@
-# visOmopResults 1.4.2
+# visOmopResults 1.5.0
+
+* Update "darwin" style
+* Accept colour palettes in .yml styles
+* Add `alluvialPlot` function
+
+# visOmopResults 1.4.1
 
 * Handling not registered fonts for `ggplot2` without `extrafont` package
 * Numeric `estimate_value` column for `reactable` and `datatable`

@@ -111,6 +111,7 @@ visTable <- function(result,
   dontRename <- dontRename[dontRename %in% colnames(result)]
   estimateValue <- renameInternal("estimate_value", rename)
   rename <- rename[!rename %in% dontRename]
+  if (!"cdm_name" %in% rename & "cdm_name" %in% colnames(result)) rename <- c(rename, "Data source" = "cdm_name")
   # rename headers
   header <- purrr::map(header, renameInternal, cols = colnames(result), rename = rename) |> unlist()
   # rename group columns

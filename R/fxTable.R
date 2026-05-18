@@ -225,8 +225,13 @@ fxTableInternal <- function(x,
     }
   }
 
+  # Standardise table
   flex_x <- flex_x |>
-    flextable::padding(padding = 3, part = "all")
+    flextable::padding(padding = 3, part = "all") |>
+    flextable::hline_top(border = style$body$cell$border.bottom, part = "all") |>
+    flextable::vline_left(border = style$body$cell$border.bottom, part = "all") |>
+    flextable::vline_right(border = style$body$cell$border.bottom, part = "all") |>
+    flextable::set_table_properties(layout = "autofit", width = 1)
 
   return(flex_x)
 }
@@ -254,81 +259,80 @@ fxMergeRows <- function(fx_x, merge, groupColumn) {
   names(ind) <- merge
   merge <- names(sort(ind))
 
-  # Fill group column if necessary
-  indColGroup <- NULL
-  indRowGroup <- NULL
-
-  if (!length(groupColumn) == 0) {
-    if (groupColumn %in% colNms) {
-      groupCol <- fx_x$body$dataset |>
-        dplyr::select(dplyr::all_of(groupColumn)) |>
-        dplyr::mutate(dplyr::across(dplyr::everything(), as.character))
-
-      groupColsMatrix <- as.matrix(groupCol)
-
-      indRowGroup <- which(rowSums(!is.na(groupColsMatrix)) > 0)
-      filledGroupColsList <- lapply(groupColumn, function(col) {
-        groupCol <- as.character(fx_x$body$dataset[[col]])
-        for (k in 2:length(groupCol)) {
-          if (is.na(groupCol[k])) {
-            groupCol[k] <- groupCol[k - 1]
-          }
-        }
-        return(groupCol)
-      })
-      groupColsMatrix <- do.call(cbind, filledGroupColsList)
-
-      groupCol <- as.data.frame(groupColsMatrix, stringsAsFactors = FALSE)
-
-      indColGroup <- which(colnames(fx_x$body$dataset) %in% groupColumn)
-    }
-  }
-
-  for (k in seq_along(merge)) {
-
-    if (k > 1) {
-      prevMerged <- mergeCol
-      prevId <- prevMerged == dplyr::lag(prevMerged) & prevId
-    } else {
-      prevId <- rep(TRUE, nrow(fx_x$body$dataset))
-    }
-
-    col <- merge[k]
-    mergeCol <- fx_x$body$dataset[[col]]
-    mergeCol[is.na(mergeCol)] <- "this is NA"
-
-    if (length(groupColumn) != 0) {
-      if (groupColumn %in% colNms) {
-        id <- which(groupCol == dplyr::lag(groupCol) & mergeCol == dplyr::lag(mergeCol) & prevId)
-      } else {
-        id <- which(mergeCol == dplyr::lag(mergeCol) & prevId)
+  # Fill group column values (carry forward NAs) if groupColumn exists in data
+  groupCol <- NULL
+  if (length(groupColumn) > 0 && groupColumn %in% colNms) {
+    groupCol <- lapply(groupColumn, function(col) {
+      vals <- as.character(fx_x$body$dataset[[col]])
+      for (k in seq(2, length(vals))) {
+        if (is.na(vals[k])) vals[k] <- vals[k - 1]
       }
-    } else {
-      id <- which(mergeCol == dplyr::lag(mergeCol) & prevId)
-    }
-
-    # Apply merging and borders
-    if (length(id) > 0) {
-      fx_x <- fx_x |>
-        flextable::compose(
-          i = id, j = ind[k],
-          flextable::as_paragraph(flextable::as_chunk(""))
-        ) |>
-        flextable::border(
-          i = id[1:(length(id))]-1,
-          j = ind[k],
-          border.bottom = officer::fp_border(color = fx_x$body$styles$cells$background.color$data[1,1]),
-          part = "body"
-        )
-    }
-    fx_x <- fx_x |>
-      flextable::border(
-        i = which(!1:nrow(fx_x$body$dataset) %in% id),
-        j = ind[k],
-        border.top = officer::fp_border(color = fx_x$body$styles$cells$border.color.top$data[1,1]),
-        part = "body"
-      )
+      vals
+    })
+    groupCol <- as.data.frame(do.call(cbind, groupCol),
+                              stringsAsFactors = FALSE)
+    colnames(groupCol) <- groupColumn
   }
 
+  n_rows <- nrow(fx_x$body$dataset)
+
+  # Loop along cols to merge
+  for (k in seq_along(merge)) {
+    col <- merge[k]
+    col_idx <- ind[k]
+
+    mergeCol <- as.character(fx_x$body$dataset[[col]])
+    mergeCol[is.na(mergeCol)] <- "__NA__"
+
+    merge_with_prev <- rep(FALSE, n_rows)
+
+    for (i in seq(2, n_rows)) {
+      # Condition 1: consequtive rows with same value
+      same_val <- (mergeCol[i] == mergeCol[i - 1])
+
+      # Condition 2: previous column was also merged at this row boundary
+      if (k > 1) {
+        prev_merged <- prevMergeWithPrev  # logical from previous iteration
+        # row i merges with i-1 in prev col if prev_merged[i] is TRUE
+        prev_col_merged <- prev_merged[i]
+      } else {
+        prev_col_merged <- TRUE  # no constraint from a previous column
+      }
+
+      # Condition 3: group column matches (if applicable)
+      if (!is.null(groupCol)) {
+        same_group <- all(groupCol[i, ] == groupCol[i - 1, ])
+      } else {
+        same_group <- TRUE
+      }
+
+      merge_with_prev[i] <- same_val && prev_col_merged && same_group
+    }
+
+    # Save for next iteration
+    prevMergeWithPrev <- merge_with_prev
+
+    # Merge
+    i <- 2L
+    while (i <= n_rows) {
+      if (merge_with_prev[i]) {
+        # Start of a merge span: find how far it extends
+        span_start <- i - 1L
+        span_end <- i
+        while (span_end + 1L <= n_rows && merge_with_prev[span_end + 1L]) {
+          span_end <- span_end + 1L
+        }
+        fx_x <- fx_x |>
+          flextable::merge_at(
+            i = span_start:span_end,
+            j = col_idx,
+            part = "body"
+          )
+        i <- span_end + 1L
+      } else {
+        i <- i + 1L
+      }
+    }
+  }
   return(fx_x)
 }

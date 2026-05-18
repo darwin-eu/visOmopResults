@@ -106,6 +106,7 @@ formatTable <- function(x,
                         merge = "all_columns") {
   # Input checks
   type <- validateType(type = type, obj = "table")
+  enDash <- style == "darwin"
   style <- validateStyle(style = style, obj = "table", type = type)
   omopgenerics::assertTable(x)
   omopgenerics::assertCharacter(na, length = 1, null = TRUE)
@@ -125,6 +126,12 @@ formatTable <- function(x,
     cli::cli_inform("`x` will be ungrouped.")
   }
   tableTypeWarnings(type, delim, na, title, subtitle, caption, groupColumn, groupAsColumn, groupOrder, merge)
+
+  if (isTRUE(enDash)) {
+    x <- x |>
+      dplyr::mutate(dplyr::across(dplyr::everything(), ~ gsub("-", "\u2013", .x))) |>
+      dplyr::rename_with(.cols = dplyr::everything(), .fn = ~ gsub("-", "\u2013", .x))
+  }
 
   # format
   if (type == "gt") {

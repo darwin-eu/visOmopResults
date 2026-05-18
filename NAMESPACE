@@ -2,6 +2,7 @@
 
 export(addSettings)
 export(additionalColumns)
+export(alluvialPlot)
 export(barPlot)
 export(bind)
 export(boxPlot)

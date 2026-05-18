@@ -203,6 +203,101 @@ penguinsSummary |>
 Note that as we didnt specify x there is no levels in the x axis, but box plots
 are produced anyway.
 
+### Alluvial plot
+
+Alluvial plots display how observations are distributed across multiple  categorical axes and how they transition between categories. For this type of plot, each row of data in `results` represents a unique combination pattern of categories and their frequency.
+
+Let's create a simple example showing how penguins transition across species, island, and sex categories:
+
+```{r}
+alluvialData <- penguins |>
+  filter(!is.na(sex)) |>
+  count(species, island, sex, name = "count") 
+alluvialData |> glimpse()
+
+alluvialData |>
+  alluvialPlot(
+    x = c("species", "island", "sex"),
+    y = "count"
+  )
+```
+
+
+As with the other plot functions, `facet` and `style` arguments are supported:
+
+```{r}
+penguins |>
+  filter(!is.na(sex)) |>
+  mutate(year = as.character(year)) |>
+  count(species, island, sex, year, name = "count") |>
+  alluvialPlot(
+    x = c("species", "island", "sex"),
+    y = "count",
+    colour = "species",
+    facet = "year",
+    style = "darwin"
+  )
+```
+
+<!--
+### Sankey plot
+
+Sankey plots visualise directed flows between states (nodes). Unlike alluvial plots, which track observations across multiple categorical axes simultaneously, Sankey plots are defined by explicit `from` and `to` columns representing the 
+source and destination of each flow. Multiple transitions can be chained using the `transition` argument.
+
+In this example, we visualise the flow of penguins from their native island to their sex:
+
+```{r, echo=FALSE, eval=FALSE}
+penguins |>
+  filter(!is.na(sex)) |>
+  count(island, sex, name = "count") |>
+  sankeyPlot(
+    from   = "island",
+    to     = "sex",
+    y      = "count",
+    colour = "island"
+  )
+```
+
+When you have multiple sequential transitions, use the `transition` argument to
+identify which step each row belongs to. Note that flows must be conserved at 
+intermediate nodes: the total arriving at a node must equal the total leaving 
+it:
+
+```{r, echo=FALSE, eval=FALSE}
+penguins |>
+  filter(!is.na(sex)) |>
+  mutate(year = as.character(year)) |>
+  # first transition: species -> island
+  count(species, island, year, name = "count") |>
+  mutate(transition = 1L) |>
+  rename(from = species, to = island) |>
+  bind_rows(
+    # second transition: island -> sex
+    penguins |>
+      filter(!is.na(sex)) |>
+      mutate(year = as.character(year)) |>
+      count(island, sex, year, name = "count") |>
+      mutate(transition = 2L) |>
+      rename(from = island, to = sex)
+  ) |>
+  sankeyPlot(
+    from       = "from",
+    to         = "to",
+    y          = "count",
+    transition = "transition",
+    colour     = "from",
+    facet      = "year",
+    style      = "darwin"
+  )
+```
+
+Note that if you want to visualise how observations are distributed across 
+multiple categorical axes simultaneously — without explicit directed transitions 
+— use `alluvialPlot()` instead.
+
+-->
+
 ## Plotting style
 The package provides support for standard plot themes, which can be applied either after plot creation using the function `themeVisOmop()`, or directly at the time of creation via the `style` argument. To see available pre-defined styles use `plotStyle()`.
 

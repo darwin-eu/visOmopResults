@@ -215,6 +215,7 @@ test_that("Empty result object returns warning", {
   )
   expect_true(ggplot2::is_ggplot(output_plot))
 })
+
 test_that("test global style", {
   setGlobalPlotOptions(style = "darwin")
   result <- mockSummarisedResult() |>
@@ -239,4 +240,313 @@ test_that("test global style", {
     style = "default")
   expect_true("#e1e1e1" == p$theme$strip.background$fill)
   options(visOmopResults.plotStyle = NULL)
+})
+
+test_that("alluvial and sankey plots", {
+
+  get_labs <- function(x) x$labels
+  if ("get_labs" %in% getNamespaceExports("ggplot2")) {
+    get_labs <- ggplot2::get_labs
+  }
+
+  # Alluvial ----
+  result <- dplyr::tibble(
+    treatment_1 = c("A", "A", "A", "B", "B", "B", "C", "C"),
+    treatment_2 = c("A", "A", "B", "A", "B", "B", "B", "C"),
+    treatment_3 = c("A", "B", "B", "A", "A", "B", "B", "C"),
+    count       = c(22, 3, 5, 7, 3, 17, 4, 12)
+  )
+
+  # basic 2-axis call
+  expect_no_error(
+    p <- alluvialPlot(
+      result = result,
+      x = c("treatment_1", "treatment_2"),
+      y = "count"
+    )
+  )
+  expect_true(ggplot2::is_ggplot(p))
+
+  # 3 axes
+  expect_no_error(
+    p <- alluvialPlot(
+      result = result,
+      x = c("treatment_1", "treatment_2", "treatment_3"),
+      y = "count"
+    )
+  )
+  expect_true(ggplot2::is_ggplot(p))
+
+  # colour as single variable
+  expect_no_error(
+    p <- alluvialPlot(
+      result = result,
+      x = c("treatment_1", "treatment_2", "treatment_3"),
+      y = "count",
+      colour = "treatment_1"
+    )
+  )
+  expect_true(!is.null(get_labs(p)$fill))
+  expect_true(get_labs(p)$fill == "Treatment 1")
+
+  # colour as multiple variables (united)
+  expect_no_error(
+    p <- alluvialPlot(
+      result = result,
+      x = c("treatment_1", "treatment_2", "treatment_3"),
+      y = "count",
+      colour = c("treatment_1", "treatment_2")
+    )
+  )
+  expect_true(get_labs(p)$fill == "Treatment 1 treatment 2")
+
+  # facet
+  result_facet <- dplyr::bind_rows(
+    result |> dplyr::mutate(sex = "Female"),
+    result |> dplyr::mutate(sex = "Male")
+  )
+  expect_no_error(
+    p <- alluvialPlot(
+      result = result_facet,
+      x = c("treatment_1", "treatment_2", "treatment_3"),
+      y = "count",
+      facet = "sex"
+    )
+  )
+  expect_true(ggplot2::is_ggplot(p))
+
+  # style
+  expect_no_error(
+    p <- alluvialPlot(
+      result = result,
+      x = c("treatment_1", "treatment_2"),
+      y = "count",
+      style = "darwin"
+    )
+  )
+
+  # plotly
+  expect_true(
+    class(alluvialPlot(
+      result = result,
+      x = c("treatment_1", "treatment_2"),
+      y = "count",
+      type = "plotly"
+    ))[1] == "plotly"
+  )
+
+  # errors
+  expect_error(
+    alluvialPlot(result = result, x = "treatment_1", y = "count")
+  )
+  expect_error(
+    alluvialPlot(result = result, x = c("treatment_1", "nonexistent"), y = "count")
+  )
+  expect_error(
+    alluvialPlot(result = result, x = c("treatment_1", "treatment_2"), y = "nonexistent")
+  )
+  expect_error(
+    alluvialPlot(result = result, x = c("treatment_1", "treatment_2"), y = "count", style = "nostyle")
+  )
+
+  result <- dplyr::tibble(
+    treatment_1 = character(),
+    treatment_2 = character(),
+    count       = numeric()
+  )
+  expect_warning(
+    p <- alluvialPlot(
+      result = result,
+      x = c("treatment_1", "treatment_2"),
+      y = "count"
+    )
+  )
+  expect_true(ggplot2::is_ggplot(p))
+
+  # # Sankey ----
+  # sankey_data <- dplyr::tribble(
+  #   ~from, ~to,  ~transition, ~freq,
+  #   "A",   "A",  1,           40,
+  #   "A",   "B",  1,           20,
+  #   "B",   "A",  1,           10,
+  #   "B",   "B",  1,           30,
+  #   "A",   "A",  2,           30,
+  #   "A",   "B",  2,           20,
+  #   "B",   "A",  2,           15,
+  #   "B",   "B",  2,           35
+  # )
+  #
+  # expect_no_error(
+  #   p <- sankeyPlot(
+  #     result = sankey_data |> dplyr::filter(transition == 1),
+  #     from   = "from",
+  #     to     = "to",
+  #     y      = "freq"
+  #   )
+  # )
+  # expect_true(ggplot2::is_ggplot(p))
+  #
+  # # multiple transitions
+  # expect_no_error(
+  #   p <- sankeyPlot(
+  #     result     = sankey_data,
+  #     from       = "from",
+  #     to         = "to",
+  #     y          = "freq",
+  #     transition = "transition"
+  #   )
+  # )
+  # expect_true(ggplot2::is_ggplot(p))
+  #
+  # # colours
+  # expect_no_error(
+  #   p <- sankeyPlot(
+  #     result = sankey_data,
+  #     from   = "from",
+  #     to     = "to",
+  #     y      = "freq",
+  #     colour = c("from", "to")
+  #   )
+  # )
+  # # In sankey, fill label is styled
+  # expect_identical(get_labs(p)$fill, "From and To")
+  #
+  # # Faceting
+  # sankey_facet <- dplyr::bind_rows(
+  #   sankey_data |> dplyr::mutate(group = "Group 1"),
+  #   sankey_data |> dplyr::mutate(group = "Group 2")
+  # )
+  # expect_no_error(
+  #   p <- sankeyPlot(
+  #     result = sankey_facet,
+  #     from   = "from",
+  #     to     = "to",
+  #     y      = "freq",
+  #     facet  = "group",
+  #     transition = "transition"
+  #   )
+  # )
+  # expect_true(ggplot2::is_ggplot(p))
+  #
+  # # errors
+  # expect_error(
+  #   sankeyPlot(sankey_data, from = "wrong", to = "to", y = "freq")
+  # )
+  # expect_error(
+  #   sankeyPlot(sankey_data, from = "from", to = "to", y = "wrong")
+  # )
+  #
+  # # empty result
+  # expect_warning(
+  #   p <- sankeyPlot(
+  #     result = sankey_data |> dplyr::filter(freq > 1000),
+  #     from   = "from",
+  #     to     = "to",
+  #     y      = "freq"
+  #   ),
+  #   "result object is empty"
+  # )
+  # expect_true(ggplot2::is_ggplot(p))
+})
+
+test_that("test theming of plots", {
+  extractColours <- function(p, type = "colour") {
+    built <- ggplot2::ggplot_build(p)
+    lapply(built$data, function(layer_data) {
+      cols <- intersect(type, names(layer_data))
+      unlist(layer_data[cols])
+    }) |>
+      unlist() |>
+      unique() |>
+      purrr::keep(\(x) !is.na(x) & x != "NA")
+
+  }
+
+  style <- tempfile(fileext = ".yml")
+
+  colors <- c('#3db28c', '#a84c6f', '#29235c', '#7db356', '#f98e2b', '#475da7', '#addad9') |>
+    toupper()
+
+  brand <- system.file("brand", "default.yml", package = "visOmopResults") |>
+    brand.yml::read_brand_yml()
+  brand$defaults$visOmopResults$plot$color_palette <- colors
+  yaml::write_yaml(x = brand, file = style)
+
+  # no change
+  p <- barPlot(
+    result = dplyr::tibble(
+      x = 1:5,
+      y = 2 * x,
+      col = sprintf("%03i", x)
+    ),
+    x = "x",
+    y = "y"
+  )
+  expect_no_error(p <- p + themeVisOmop(style = style))
+  expect_true(length(extractColours(p)) == 0)
+
+  # 5 colurs
+  p <- barPlot(
+    result = dplyr::tibble(
+      x = 1:5,
+      y = 2 * x,
+      col = sprintf("%03i", x)
+    ),
+    x = "x",
+    y = "y",
+    colour = "col"
+  )
+  expect_no_error(p <- p + themeVisOmop(style = style))
+  expect_identical(extractColours(p), sortHue(colors[1:5], colors[1]))
+
+  # expand palette to 20 colours
+  p <- barPlot(
+    result = dplyr::tibble(
+      x = 1:20,
+      y = 2 * x,
+      col = sprintf("%03i", x)
+    ),
+    x = "x",
+    y = "y",
+    colour = "col"
+  )
+  expect_no_error(p <- p + themeVisOmop(style = style))
+  expect_true(colors[1] %in% extractColours(p))
+
+  # color from palette works
+  brand$defaults$visOmopResults$plot$color_palette <- c('my_blue', "#880808")
+  brand$color$palette$my_blue <- "#0000FF"
+  yaml::write_yaml(x = brand, file = style)
+
+  p <- barPlot(
+    result = dplyr::tibble(
+      x = 1:2,
+      y = 2 * x,
+      col = sprintf("%03i", x)
+    ),
+    x = "x",
+    y = "y",
+    colour = "col"
+  )
+  expect_no_error(p <- p + themeVisOmop(style = style))
+  expect_true(all(c("#0000FF", "#880808") %in% extractColours(p)))
+
+  # different fill and colour
+  brand <- system.file("brand", "default.yml", package = "visOmopResults") |>
+    brand.yml::read_brand_yml()
+  brand$defaults$visOmopResults$plot$color_palette <- c("#FF0000", "#00FF00")
+  brand$defaults$visOmopResults$plot$fill_palette <- c("#0000FF", "#FFFF00")
+  yaml::write_yaml(x = brand, file = style)
+
+  p <- ggplot2::ggplot(
+    dplyr::tibble(x = 1:2, y = 1:2, g = c("a", "b")),
+    ggplot2::aes(x = x, y = y, colour = g, fill = g)
+  ) +
+    ggplot2::geom_col() +
+    themeVisOmop(style = style)
+
+  expect_true("#0000FF" %in% extractColours(p, "fill"))
+  expect_true("#FF0000" %in% extractColours(p, "colour"))
+
+  unlink(style)
 })
