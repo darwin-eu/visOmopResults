@@ -6,28 +6,42 @@ reference:
 - title: Table functions
 - subtitle: Main functions
 - contents:
-  - matches("visOmopTable|visTable")
+  - visOmopTable
+  - visTable
 - subtitle: Additional table formating functions
 - contents:
-  - matches("format")
+  - formatTable
+  - formatEstimateName
+  - formatEstimateValue
+  - formatHeader
+  - formatMinCellCount
 - subtitle: Helper table functions
 - contents:
-  - matches("tableType|tableOptions|emptyTable|tableColumns|setGlobalTableOptions|tableStyle")
-
+  - setGlobalTableOptions
+  - tableColumns
+  - tableStyle
+  - tableType
+  - tableOptions
+  - emptyTable
 - title: Plot functions
 - contents:
-  - ends_with("Plot")
+  - barPlot
+  - scatterPlot
+  - boxPlot
+  - alluvialPlot
 - subtitle: Helper plot functions
 - contents:
-  - matches("themeVisOmop|plotColumns|setGlobalPlotOptions|plotStyle|plotType")
-
+  - setGlobalPlotOptions
+  - plotColumns
+  - plotStyle
+  - plotType
+  - themeVisOmop
+  - emptyPlot
 - title: Other functionalities
 - subtitle: To style text
 - contents:
-  - contains("customiseText")
-- subtitle: To get extra fonts
-- contents:
-  - contains("requireExtrafont")
+  - customiseText
 - subtitle: Mock `<summarised_result>`
 - contents:
-  - matches("mockSummarisedResult|data")
+  - mockSummarisedResult
+  - data

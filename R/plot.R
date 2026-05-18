@@ -14,7 +14,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#' Create a scatter plot visualisation from a `<summarised_result>` object
+#' Create a scatter plot visualisation from a data frame or a
+#' `<summarised_result>` object.
 #'
 #' @inheritParams plotDoc
 #'
@@ -129,7 +130,8 @@ scatterPlot <- function(result,
   return(p)
 }
 
-#' Create a box plot visualisation from a `<summarised_result>` object
+#' Create a box plot visualisation from a data frame or a
+#' `<summarised_result>` object.
 #'
 #' @inheritParams plotDoc
 #'
@@ -225,7 +227,8 @@ boxPlot <- function(result,
   return(p)
 }
 
-#' Create a bar plot visualisation from a `<summarised_result>` object
+#' Create a bar plot visualisation from a data frame or a
+#' `<summarised_result>` object.
 #'
 #' @inheritParams plotDoc
 #'
@@ -321,6 +324,334 @@ barPlot <- function(result,
   return(p)
 }
 
+
+#' Create a sankey plot visualisation from a data frame or a
+#' `<summarised_result>` object.
+#'
+#' @inheritParams plotDoc
+#' @param from A character string with the name of the column containing the
+#'   source node of each transition (where the flow starts).
+#' @param to A character string with the name of the column containing the
+#'   destination node of each transition (where the flow ends).
+#' @param y A character string with the name of the column containing the
+#'   flow weight (e.g. counts or frequencies). For plots with multiple
+#'   transitions, flows must be conserved — the total arriving at a node must
+#'   equal the total leaving it.
+#' @param transition A character string with the name of the column identifying
+#'   which transition step each row belongs to (e.g. 1, 2, 3 for first,
+#'   second and third transition). If `NULL` (default), a single transition is
+#'   assumed.
+#'
+#' @return A plot object.
+#' @noRd
+#'
+#' @examples
+#' # single transition
+#' result <- dplyr::tribble(
+#'   ~from, ~to,  ~freq,
+#'   "A",   "A",  40,
+#'   "A",   "B",  20,
+#'   "B",   "A",  10,
+#'   "B",   "B",  30
+#' )
+#'
+#' sankeyPlot(
+#'   result = result,
+#'   from   = "from",
+#'   to     = "to",
+#'   y      = "freq"
+#' )
+#'
+#' # multiple transitions — flows must be conserved at each intermediate node
+#' result <- dplyr::tribble(
+#'   ~from, ~to,  ~transition, ~freq,
+#'   "A",   "A",  1,           40,
+#'   "A",   "B",  1,           20,
+#'   "B",   "A",  1,           10,
+#'   "B",   "B",  1,           30,
+#'   "A",   "A",  2,           30,
+#'   "A",   "B",  2,           20,
+#'   "B",   "A",  2,           15,
+#'   "B",   "B",  2,           35
+#' )
+#'
+#' sankeyPlot(
+#'   result     = result,
+#'   from       = "from",
+#'   to         = "to",
+#'   y          = "freq",
+#'   transition = "transition",
+#'   colour     = "from"
+#' )
+#'
+#' # example with 3 nodes:
+#' result <- dplyr::tribble(
+#' ~from, ~to,  ~freq,
+#'   "A",   "A",  40,
+#'   "A",   "B",  20,
+#'   "A",   "C",  10,
+#'   "B",   "A",  10,
+#'   "B",   "B",  30,
+#'   "B",   "C",  5,
+#'   "C",   "A",  5,
+#'   "C",   "B",  8,
+#'   "C",   "C",  22
+#' )
+#'
+#' sankeyPlot(
+#'   result = result,
+#'   from   = "from",
+#'   to     = "to",
+#'   y      = "freq",
+#'   colour = "from"
+#' )
+sankeyPlot <- function(result,
+                       from,
+                       to,
+                       y,
+                       transition = NULL,
+                       colour = from,
+                       facet = NULL,
+                       style = NULL,
+                       type = NULL) {
+
+  rlang::check_installed("ggsankeyfier")
+
+  type  <- validateType(type = type, obj = "plot")
+  style <- validateStyle(style = style, obj = "plot", type = type)
+  omopgenerics::assertTable(result)
+  omopgenerics::assertCharacter(from, length = 1, minNumCharacter = 1)
+  omopgenerics::assertCharacter(to, length = 1, minNumCharacter = 1)
+  omopgenerics::assertCharacter(y, length = 1, minNumCharacter = 1)
+  omopgenerics::assertCharacter(transition, length = 1, null = TRUE)
+  validateFacet(facet)
+  omopgenerics::assertCharacter(colour, null = TRUE)
+
+  if (nrow(result) == 0) {
+    cli::cli_warn(c("!" = "result object is empty, returning empty plot."))
+    return(emptyPlot())
+  }
+
+  est <- unique(c(from, to, y, asCharacterFacet(facet), colour))
+  checkInData(result, est)
+  result <- cleanEstimates(result, est)
+  result <- tidyResult(result)
+
+  # if no transition column, treat all rows as a single transition
+  # transition would be in additional in case of summarised result???
+  if (is.null(transition)) {
+    result <- result |> dplyr::mutate(transition = 1L)
+    transition <- "transition"
+  }
+
+  colourLabel <- styleLabel(colour)  # before pipeline overwrites colour
+
+  # transform to ggsankeyfier format:
+  nodeLevels <- unique(result |> dplyr::pull(from))
+
+  ggsankeyfierResult <- result |>
+    dplyr::group_by(dplyr::across(dplyr::any_of(c(asCharacterFacet(facet))))) |>
+    dplyr::mutate(edge_id = dplyr::row_number()) |>
+    dplyr::ungroup() |>
+    tidyr::unite("colour", dplyr::all_of(colour), remove = FALSE, na.rm = TRUE) |>
+    tidyr::pivot_longer(
+      cols      = dplyr::all_of(c(from, to)),
+      names_to  = "connector",
+      values_to = "node"
+    ) |>
+    dplyr::mutate(
+      stage = factor(dplyr::if_else(
+        .data$connector == from,
+        .data[[transition]],
+        .data[[transition]] + 1L
+      )),
+      connector = dplyr::if_else(.data$connector == from, "from", "to"),
+      node      = factor(.data$node)
+    )
+
+  # prepare result
+  cols = list(x = "stage", y = y, fill = "colour", group = "node", connector = "connector", edge_id = "edge_id", label = "node")
+  result <- prepareColumns(ggsankeyfierResult, cols)
+  aes <- getAes(cols)
+
+  style   <- themeVisOmop(style = style)
+  fontFamily <- style$plot_font_family
+
+  pos <- ggsankeyfier::position_sankey(v_space = "auto", align = "justify", n_width = 0.15, order = "as_is", scale_height = TRUE)
+
+  p <- ggsankeyfierResult |>
+    singleSankey(aes, pos, fontFamily, colourLabel, style)
+
+  if (length(facet) > 0) {
+    p <- plotFacet(p, facet, scales = "free")
+  }
+
+  if (type == "plotly") {
+    p <- plotly::ggplotly(p)
+  }
+
+  return(p)
+}
+
+#' Create an alluvial plot visualisation from a data frame or a
+#' `<summarised_result>` object.
+#'
+#' @inheritParams plotDoc
+#' @param x A character vector of column names to use as alluvial axes, in
+#' order from left to right. Must contain at least 2 elements.
+#'
+#' @return A plot object.
+#' @export
+#'
+#' @examples
+#' result <- dplyr::tibble(
+#'   treatment_1 = c("A", "A", "A", "B", "B", "B", "C", "C"),
+#'   treatment_2 = c("A", "A", "B", "A", "B", "B", "B", "C"),
+#'   treatment_3 = c("A", "B", "B", "A", "A", "B", "B", "C"),
+#'   count       = c(22, 3, 5, 7, 3, 17, 4, 12)
+#' )
+#'
+#' # basic alluvial plot with 3 axes
+#' alluvialPlot(
+#'   result = result,
+#'   x = c("treatment_1", "treatment_2", "treatment_3"),
+#'   y = "count"
+#' )
+#'
+#' # colour by first axis
+#' alluvialPlot(
+#'   result = result,
+#'   x = c("treatment_1", "treatment_2", "treatment_3"),
+#'   y = "count",
+#'   colour = "treatment_1"
+#' )
+#'
+#' # colour by multiple variables
+#' alluvialPlot(
+#'   result = result,
+#'   x = c("treatment_1", "treatment_2", "treatment_3"),
+#'   y = "count",
+#'   colour = c("treatment_1", "treatment_2")
+#' )
+alluvialPlot <- function(result,
+                         x,
+                         y,
+                         colour = x,
+                         facet = NULL,
+                         style = NULL,
+                         type = NULL) {
+
+  rlang::check_installed("ggalluvial")
+
+  type  <- validateType(type = type, obj = "plot")
+  style <- validateStyle(style = style, obj = "plot", type = type)
+  omopgenerics::assertTable(result)
+  omopgenerics::assertCharacter(x, minNumCharacter = 1)
+  omopgenerics::assertCharacter(y, length = 1, minNumCharacter = 1)
+  validateFacet(facet)
+  omopgenerics::assertCharacter(colour, null = TRUE)
+
+  if (length(x) < 2) {
+    cli::cli_abort("{.var x} must contain at least 2 column names.")
+  }
+
+  if (nrow(result) == 0) {
+    cli::cli_warn(c("!" = "result object is empty, returning empty plot."))
+    return(emptyPlot())
+  }
+
+  est <- unique(c(x, y, asCharacterFacet(facet), colour))
+  checkInData(result, est)
+  result <- cleanEstimates(result, est)
+  result <- tidyResult(result)
+
+  axesNamed <- as.list(x) |> rlang::set_names(paste0("axis", seq_along(x)))
+  result |>
+    warnMultipleValues(cols = c(
+      axesNamed,
+      list(y = y, facet = asCharacterFacet(facet), colour = colour)
+    ))
+
+  # duplicate axes columns into axis1, axis2, ... — originals stay untouched
+  axis_new_names <- paste0("axis", seq_along(x))
+  for (k in seq_along(x)) {
+    result[[axis_new_names[k]]] <- result[[x[k]]]
+  }
+
+  # prepare result
+  # prepare colour column (unite if multiple variables)
+  cols <- c(
+    rlang::set_names(axis_new_names, axis_new_names),
+    list(y = y),
+    if (!is.null(colour)) list(fill = colour) else NULL
+  )
+  result <- prepareColumns(result, cols)
+  colour <- paste0(colour, collapse = "_")
+  aes <- getAes(cols)
+
+  # style
+  style <- themeVisOmop(style = style)
+  font_family <- style$plot_font_family
+
+  # axis labels: map axis1 -> original column name, cleaned up
+  axis_labels <- rlang::set_names(x, axis_new_names)
+
+  p <- ggplot2::ggplot(data = result, mapping = aes) +
+    ggalluvial::geom_alluvium(
+      {if (!is.null(colour))
+        ggplot2::aes(fill = .data[[colour]])
+        else
+          ggplot2::aes()},
+      alpha = 0.6
+    ) +
+    ggalluvial::geom_stratum(
+      fill = "#f8f9fa",   # neutral fill so boxes are visible
+      colour = "grey40", # lighter border
+      width = 1/3        # slightly narrower strata
+    ) +
+    ggalluvial::stat_stratum(
+      geom = "text",
+      ggplot2::aes(label = ggplot2::after_stat(.data$stratum)),
+      family = font_family,
+      size = 3,
+      fontface = "bold"
+    ) +
+    ggplot2::scale_x_discrete(labels = axis_labels) +
+    style +
+    ggplot2::labs(
+      fill = styleLabel(colour),
+      y = NULL
+    ) +
+    ggplot2::theme(legend.position = "none") +
+    style +
+    ggplot2::theme(
+      line = ggplot2::element_blank(),
+      rect = ggplot2::element_blank(),
+      axis.title = ggplot2::element_blank(),
+      axis.text.x = ggplot2::element_blank(),
+      axis.ticks.x = ggplot2::element_blank(),
+      axis.text.y = ggplot2::element_blank(),
+      axis.ticks.y = ggplot2::element_blank(),
+      axis.line = ggplot2::element_blank(),
+      panel.grid = ggplot2::element_blank(),
+      panel.background = ggplot2::element_blank(),
+      panel.border = ggplot2::element_blank(),
+      plot.background = ggplot2::element_blank(),
+      panel.grid.major = ggplot2::element_blank(),
+      legend.position = "none"
+    )
+
+  if (length(facet) > 0) {
+    p <- plotFacet(p, facet, scales = "free_y")
+  }
+
+  if (type == "plotly") {
+    p <- plotly::ggplotly(p)
+  }
+
+  return(p)
+}
+
 #' Returns an empty plot
 #'
 #' @param title Title to use in the empty plot.
@@ -377,12 +708,12 @@ getAes <- function(cols) {
     rlang::parse_expr() |>
     rlang::eval_tidy()
 }
-plotFacet <- function(p, facet) {
+plotFacet <- function(p, facet, scales = "fixed") {
   if (length(facet) > 0) {
     if (is.character(facet)) {
-      p <- p + ggplot2::facet_wrap(facets = facet)
+      p <- p + ggplot2::facet_wrap(facets = facet, scales = scales)
     } else {
-      p <- p + ggplot2::facet_grid(facet)
+      p <- p + ggplot2::facet_grid(facet, scales = scales)
     }
   }
   return(p)
@@ -500,3 +831,38 @@ addLabels <- function(cols, label) {
   return(c(cols, listLabs))
 }
 
+singleSankey <- function(data, aes, pos, fontFamily, colourLabel, style) {
+  data |>
+    ggplot2::ggplot(mapping = aes) +
+    ggsankeyfier::geom_sankeyedge(alpha = 0.6, position = pos, slope = 0.5) +
+    ggsankeyfier::geom_sankeynode(
+      position = pos,
+      fill = "#f8f9fa",
+      colour = "grey40"
+    ) +
+    ggplot2::geom_text(
+      stat = ggsankeyfier::StatSankeynode,
+      position = pos,
+      size = 3,
+      fontface = "bold",
+      family   = fontFamily
+    ) +
+    ggplot2::labs(fill = colourLabel, y = NULL, x = NULL) +
+    style +
+    ggplot2::theme(
+      line = ggplot2::element_blank(),
+      rect = ggplot2::element_blank(),
+      axis.title = ggplot2::element_blank(),
+      axis.text.x = ggplot2::element_blank(),
+      axis.ticks.x = ggplot2::element_blank(),
+      axis.text.y = ggplot2::element_blank(),
+      axis.ticks.y = ggplot2::element_blank(),
+      axis.line = ggplot2::element_blank(),
+      panel.grid = ggplot2::element_blank(),
+      panel.background = ggplot2::element_blank(),
+      panel.border = ggplot2::element_blank(),
+      plot.background = ggplot2::element_blank(),
+      panel.grid.major = ggplot2::element_blank(),
+      legend.position = "none"
+    )
+}

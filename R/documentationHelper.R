@@ -3,6 +3,8 @@
 #' @param result A `<summarised_result>` object.
 #' @param x Column or estimate name that is used as x variable.
 #' @param y Column or estimate name that is used as y variable.
+#' @param axis1 Column or estimate name that is used in the x-left axis.
+#' @param axis2 Column or estimate name that is used in the x-right axis.
 #' @param width Bar width, as in `geom_col()` of the `ggplot2` package.
 #' @param just Adjustment for column placement, as in `geom_col()` of the
 #' `ggplot2` package.

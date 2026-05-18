@@ -21,7 +21,7 @@ test_that("visTable with SR", {
   expect_true("gt_tbl" %in% class(gt1))
   expect_true("flextable" == class(fx1))
   expect_true(all(c(
-    'Result id', 'Cdm name', 'Group name', 'Group level', 'Strata name', 'Strata level',
+    'Result id', 'Data source', 'Group name', 'Group level', 'Strata name', 'Strata level',
     'Variable name', 'Variable level', 'Estimate name', 'Estimate type', 'Estimate value',
     'Additional name', 'Additional level'
   ) %in% colnames(gt1$`_data`)))

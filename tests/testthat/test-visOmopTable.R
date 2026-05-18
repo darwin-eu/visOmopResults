@@ -12,7 +12,7 @@ test_that("visOmopTable", {
       .options = list())
   )
   expect_true("gt_tbl" %in% class(gt1))
-  expect_true(all(c("CDM name", "Cohort name", "Age group", "Sex", "Variable name", "Variable level", "Estimate name", "Estimate value") %in%
+  expect_true(all(c("Data source", "Cohort name", "Age group", "Sex", "Variable name", "Variable level", "Estimate name", "Estimate value") %in%
                     colnames(gt1$`_data`)))
 
   expect_no_error(
@@ -26,7 +26,7 @@ test_that("visOmopTable", {
   )
   expect_true("gt_tbl" %in% class(gt2))
   expect_true(all(c(
-    'CDM name', 'Cohort name', 'Variable name', 'Variable level', 'Estimate name',
+    'Data source', 'Cohort name', 'Variable name', 'Variable level', 'Estimate name',
     '[header_name]Age group\n[header_level]overall\n[header_name]Sex\n[header_level]overall',
     '[header_name]Age group\n[header_level]<40\n[header_name]Sex\n[header_level]Male',
     '[header_name]Age group\n[header_level]>=40\n[header_name]Sex\n[header_level]Male',
@@ -276,7 +276,7 @@ test_that("don't want scientific",{
     header = "cdm_name",
     hide = NULL
   )
-  expect_true(res$`_data`$`[header_name]CDM name\n[header_level]test` == "100,000")
+  expect_true(res$`_data`$`[header_name]Data source\n[header_level]test` == "100,000")
 })
 
 test_that("estimates at the end", {
@@ -290,7 +290,7 @@ test_that("estimates at the end", {
   tab <- visOmopTable(result, settingsColumn = "package_name", type = "tibble")
   expect_equal(
     colnames(tab),
-    c('CDM name', 'Cohort name', 'Age group', 'Sex', 'Variable name',
+    c('Data source', 'Cohort name', 'Age group', 'Sex', 'Variable name',
       'Variable level', 'Something name', 'Package name', 'Estimate name',
       'Estimate value')
   )
@@ -313,7 +313,7 @@ test_that("columnOrder and factor", {
     columnOrder = c("cdm_name", "cohort_name", "age_group", "sex", "variable_name", "variable_level", "package_name", "estimate_name"),
     type = "tibble"
   )
-  expect_true(all(colnames(table) == c('CDM name', 'Cohort name', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', 'Estimate name', 'Estimate value')))
+  expect_true(all(colnames(table) == c('Data source', 'Cohort name', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', 'Estimate name', 'Estimate value')))
 
   table <- visOmopTable(
     result,
@@ -321,7 +321,7 @@ test_that("columnOrder and factor", {
     columnOrder = c("cdm_name", "cohort_name", "estimate_value", "age_group", "sex", "variable_name", "variable_level", "package_name", "estimate_name"),
     type = "tibble"
   )
-  expect_true(all(colnames(table) == c('CDM name', 'Cohort name', 'Estimate value', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', 'Estimate name')))
+  expect_true(all(colnames(table) == c('Data source', 'Cohort name', 'Estimate value', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', 'Estimate name')))
 
   table <- visOmopTable(
     result,
@@ -330,7 +330,7 @@ test_that("columnOrder and factor", {
     columnOrder = c("cdm_name", "cohort_name", "estimate_value", "age_group", "sex", "variable_name", "variable_level", "package_name", "estimate_name"),
     type = "tibble"
   )
-  expect_true(all(colnames(table) == c('CDM name', 'Cohort name', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', '[header_name]Estimate name\n[header_level]count', '[header_name]Estimate name\n[header_level]mean', '[header_name]Estimate name\n[header_level]sd', '[header_name]Estimate name\n[header_level]percentage')))
+  expect_true(all(colnames(table) == c('Data source', 'Cohort name', 'Age group', 'Sex', 'Variable name', 'Variable level', 'Package name', '[header_name]Estimate name\n[header_level]count', '[header_name]Estimate name\n[header_level]mean', '[header_name]Estimate name\n[header_level]sd', '[header_name]Estimate name\n[header_level]percentage')))
 
   table <- visOmopTable(
     result,

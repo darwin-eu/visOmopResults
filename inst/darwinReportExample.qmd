@@ -28,7 +28,7 @@ knitr::opts_chunk$set(
   out.width  = "95%",  # figures to occupy 95% of document width
   out.height = "auto",
   dpi        = 320,    # ensure figure quality
-  fig.width  = 6,      # fix width-height aspect ratio - can be modified for specific figures
+  fig.width  = 6,      # fix width-height aspect ratio, but it can be modified for specific figures
   fig.height = 3,
   results    = "asis"  # to use markdown inside R chunks with cat()
 )
@@ -47,7 +47,7 @@ num_fig <- 1
 ```{r}
 cat(paste0(
   ':::{custom-style="Caption"}\n',
-  '**Table ', num_table, ':** Baseline population characteristics.\n',
+  'Table ', num_table, '. Baseline population characteristics.\n',
   ':::\n'
 ))
 num_table <- num_table + 1
@@ -73,7 +73,7 @@ data$summarised_characteristics |>
     estimateName = c(
       "N (%)" = "<count> (<percentage>%)",
       "N" = "<count>",
-      "Median [Q25 - Q75]" = "<median> [<q25> - <q75>]",
+      "Median [Q25 – Q75]" = "<median> [<q25> – <q75>]",
       "Mean (SD)" = "<mean> (<sd>)",
       "Range" = "<min> to <max>"
     ),
@@ -96,7 +96,7 @@ HIV: Human Immunodeficiency Virus.
 
 ```{r}
 # Caption:
-cat(paste0(':::{custom-style="Caption"}\n **Figure ', num_fig, ':** Number of records in cohorts.\n:::\n'))
+cat(paste0(':::{custom-style="Caption"}\n Figure ', num_fig, '. Number of records in cohorts.\n:::\n'))
 num_fig <- num_fig + 1
 
 data$summarised_characteristics |>
@@ -109,7 +109,7 @@ data$summarised_characteristics |>
 
 ```{r}
 # Caption:
-cat(paste0(':::{custom-style="Caption"}\n **Figure ', num_fig, ':** Incidence over time statified by sex.\n:::\n'))
+cat(paste0(':::{custom-style="Caption"}\n Figure ', num_fig, '. Incidence over time statified by sex.\n:::\n'))
 num_fig <- num_fig + 1
 
 data$incidence |>
@@ -122,7 +122,7 @@ data$incidence |>
 
 ```{r}
 # Caption:
-cat(paste0(':::{custom-style="Caption"}\n **Table ', num_table, ':** Measurement value change after intervention.\n:::\n'))
+cat(paste0(':::{custom-style="Caption"}\n Table ', num_table, '. Measurement value change after intervention.\n:::\n'))
 num_table <- num_table + 1
 
 data$measurement_change |> 
@@ -140,7 +140,7 @@ data$measurement_change |>
   visTable(
     header = "sex",
     estimateName = c(
-      "Median [Q25- Q75]" = "<median> [<q25>, <q75>]",
+      "Median [Q25 – Q75]" = "<median> [<q25> – <q75>]",
       "Range" = "<min> to <max>]"
     ),
     hide = c("cohort_name", "estimate_type"),
@@ -151,7 +151,7 @@ data$measurement_change |>
 
 ```{r}
 # Caption:
-cat(paste0(':::{custom-style="Caption"}\n **Figure ', num_fig, ':** Measurement value change after intervention.\n:::\n'))
+cat(paste0(':::{custom-style="Caption"}\n Figure ', num_fig, '. Measurement value change after intervention.\n:::\n'))
 num_fig <- num_fig + 1
 
 data$measurement_change |>  

@@ -308,7 +308,7 @@ validateType <- function(type, obj, call = parent.frame()) {
   return(type)
 }
 
-validateStyle <- function(style, obj, type, fontsizeRef = NULL, call = parent.frame()) {
+validateStyle <- function(style, obj, type, call = parent.frame()) {
   # check if style is NULL
   if (is.null(style)) {
     key <- paste0("visOmopResults.", obj, "Style")
@@ -333,9 +333,9 @@ validateStyle <- function(style, obj, type, fontsizeRef = NULL, call = parent.fr
     if (obj == "table") {
       style <- formatTableStyle(x = internalStyle, type = type)
     } else if (obj == "plot") {
-      style <- formatPlotStyle(x = internalStyle, fontsizeRef = fontsizeRef)
+      style <- internalStyle
     }
-  } else {
+  } else if (obj == "table") {
     style <- validateCustomStyle(style = style, tableFormatType = type)
   }
 

@@ -63,7 +63,7 @@ The `.yml` structure can be divided into four main sections:
 
 - **Color:** Defines the color palette and the default `background` and `foreground` colors used when a plot/table section does not override them.
 - **Typography:** Defines default font families and sizes for base text, plots, and tables (these can be overridden in the plot/table sections).
-- **Plot:** Plot-specific settings such as background color, facet header color, header text color and bold, grid color, axis color, border color, and legend position. Font settings are taken from the typography section unless overridden here.
+- **Plot:** Plot-specific settings such as background color, facet header color and text, grid color, axis color, border color, plot colour and fill palettes, and legend position. Font settings are taken from the typography section unless overridden here.
 - **Table:** Table-specific settings. You can set an overall `border-color` and `border-width`, or override settings per table section. Table sections include: `header`, `header-name`, `header-level`, `column-name`, `group-label`, `title`, `subtitle`, and `body`. For each section you can set properties such as `background-color`, `text-color`, `text-bold`, `align`, `font-size`, `border-color`, and `border-width`.
 
 ## Style hierarchy
@@ -73,18 +73,18 @@ Each plot and table element follows a style hierarchy. If a value isn’t specif
 ```{r, echo=FALSE}
 tibble(
   "type" = "Plot",
-  "Part" = c("Background color", "Header (facet) color", "Header (facet) text color", "Header (facet) text bold", "Border color", "Grid color", "Axis color", "Legend position", "Font family", "Font size"),
-  "Option 1" = c("defaults:visOmopResults:plot:background-color", "defaults:visOmopResults:plot:header-color", "defaults:visOmopResults:plot:header-text-color", "defaults:visOmopResults:plot:header-text-bold", "defaults:visOmopResults:plot:border-color", "defaults:visOmopResults:plot:grid-major-color", "defaults:visOmopResults:plot:axis-color", "defaults:visOmopResults:plot:legend-position", "defaults:visOmopResults:plot:font_family", "defaults:visOmopResults:plot:font_size"),
-  "Option 2" = c("color:background", "color:foreground", "-", "color:foreground", "-", "color:foreground", "-", "-",  "typography:base:family", "defaults:visOmopResults:plot:font_size"),
-  "Option 3" = c(rep("-", 9), "typography:base:size")
+  "Part" = c("Background color", "Header (facet) color", "Header (facet) text color", "Header (facet) text bold", "Border color", "Grid color", "Axis color", "Legend position", "Font family", "Font size", "Colour palette", "Fill palette"),
+  "Option 1" = c("defaults:visOmopResults:plot:background-color", "defaults:visOmopResults:plot:header-color", "defaults:visOmopResults:plot:header-text-color", "defaults:visOmopResults:plot:header-text-bold", "defaults:visOmopResults:plot:border-color", "defaults:visOmopResults:plot:grid-major-color", "defaults:visOmopResults:plot:axis-color", "defaults:visOmopResults:plot:legend-position", "defaults:visOmopResults:plot:font_family", "defaults:visOmopResults:plot:font_size", "defaults:visOmopResults:plot:color_palette", "defaults:visOmopResults:plot:fill_palette"),
+  "Option 2" = c("color:background", "color:foreground", "-", "color:foreground", "-", "color:foreground", "-", "-",  "typography:base:family", "defaults:visOmopResults:plot:font_size", "-", "defaults:visOmopResults:plot:color_palette"),
+  "Option 3" = c(rep("-", 9), "typography:base:size", "-", "-")
 ) |> 
   bind_rows(
     tibble(
       "type" = "Table section",
-      "Part" = c("Background color", "Text bold", "Text color", "Text align", "Font size", "Font family", "Border color", "Border width"),
-      "Option 1" = c("defaults:visOmopResults:table:[section_name]:background-color", "defaults:visOmopResults:table:[section_name]:text-bold", "defaults:visOmopResults:table:[section_name]:text-color", "defaults:visOmopResults:table:[section_name]:align", "defaults:visOmopResults:table:[section_name]:font-size", "defaults:visOmopResults:table:[section_name]:font-family", "defaults:visOmopResults:table:[section_name]:border-color", "defaults:visOmopResults:table:[section_name]:border-width"),
-      "Option 2" = c("color:background", "-", "-", "-", "defaults:visOmopResults:table:font-size", "defaults:visOmopResults:table:font_family", "defaults:visOmopResults:table:border-color", "defaults:visOmopResults:table:border-width"),
-      "Option 3" = c("-", "-", "-", "-", "defaults:visOmopResults:typography:base:size", "typography:base:family", "-", "-")
+      "Part" = c("Background color", "Text bold", "Text color", "Text align", "Text line space", "Text space before", "Text space after", "Font size", "Font family", "Border color", "Border width"),
+      "Option 1" = c("defaults:visOmopResults:table:[section_name]:background-color", "defaults:visOmopResults:table:[section_name]:text-bold", "defaults:visOmopResults:table:[section_name]:text-color", "defaults:visOmopResults:table:[section_name]:align", "defaults:visOmopResults:table:[section_name]:text_line_space", "defaults:visOmopResults:table:[section_name]:text_space_before", "defaults:visOmopResults:table:[section_name]:text_space_after", "defaults:visOmopResults:table:[section_name]:font-size", "defaults:visOmopResults:table:[section_name]:font-family", "defaults:visOmopResults:table:[section_name]:border-color", "defaults:visOmopResults:table:[section_name]:border-width"),
+      "Option 2" = c("color:background", "-", "-", "defaults:visOmopResults:table:align", "defaults:visOmopResults:table:text_line_space", "defaults:visOmopResults:table:text_space_before", "defaults:visOmopResults:table:text_space_after", "defaults:visOmopResults:table:font-size", "defaults:visOmopResults:table:font_family", "defaults:visOmopResults:table:border-color", "defaults:visOmopResults:table:border-width"),
+      "Option 3" = c("-", "-", "-", "-", "-", "-", "-", "defaults:visOmopResults:typography:base:size", "typography:base:family", "-", "-")
     )
   ) |>
   visTable(groupColumn = "type")

@@ -17,7 +17,7 @@ logo:
 typography:
   base:
     family: Arial
-    size: "11"
+    size: "11pt"
 
 defaults:
   shiny:
@@ -26,7 +26,7 @@ defaults:
   visOmopResults:
     plot:
       font_family: sans
-      font_size: "11"
+      font_size: "11pt"
       background_color: white
       header_color: grey225
       header_text_color: black
@@ -37,7 +37,7 @@ defaults:
       legend_position: "right"
     table:
       font_family: Arial
-      font_size: "10"
+      font_size: "10pt"
       header:
         background_color: grey200
         text_bold: TRUE
@@ -65,14 +65,14 @@ defaults:
       title:
         background_color: transparent
         border_color: grey225
-        font_size: 15
+        font_size: "15pt"
         align: center
         text_bold: TRUE
       subtitle:
         background_color: transparent
         align: center
         border_color: grey225
-        font_size: 12
+        font_size: "12pt"
         text_bold: TRUE
       body:
         background_color: transparent
