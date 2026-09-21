@@ -2,7 +2,7 @@
 title: "DARWIN-EU PX-CY-Z: Tables and Figures"
 format:
   docx:
-    reference-doc: ../inst/darwinReportRef.docx
+    reference-doc: darwinReportRef.docx
     fig-cap-location: top
 execute:
   echo: false
@@ -20,7 +20,7 @@ library(tidyr)
 library(ggplot2)
 
 # Load data ----
-reportData <- here::here("inst", "mockReportData.RData")
+reportData <- here::here("inst", "mockData", "mockReportData.RData")
 load(reportData)
 
 # Global options ----

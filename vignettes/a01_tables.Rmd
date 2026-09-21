@@ -330,4 +330,4 @@ result |>
 
 - Use `visTable()` for quick formatting of generic `data.frame` inputs. Use `visOmopTable()` when working with `<summarised_result>` objects to leverage the specialized behavior (automatic splitting, settings columns, suppressed-value handling).
 - When you need fine-grained control over formatting build a pipeline using the `format*()` functions and finish with `formatTable()`.
-- Visit the [vignette](https://darwin-eu.github.io/visOmopResults/articles/a05_style.html) on `styles` to learn how to leverage build-in styles and create your own.
+- Visit the [Styles](a03_style.html) vignette to learn how to leverage build-in styles and create your own.

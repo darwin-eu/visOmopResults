@@ -90,12 +90,9 @@ visOmopTable <- function(result,
   header <- bc$header
   hide <- bc$hide
   groupColumn <- bc$groupColumn
-  if (length(header) > 0) {
-    neededCols <- validateHeader(result, header, hide, settingsColumn, TRUE)
-    hide <- neededCols$hide
-    settingsColumn <- neededCols$settingsColumn
-  }
-  resultTidy <- tidySummarisedResult(result, settingsColumn = settingsColumn, pivotEstimatesBy = NULL)
+  allSettings <- omopgenerics::settingsColumns(result = result, metadata = TRUE)
+  hideSettings <- setdiff(allSettings, settingsColumn)
+  resultTidy <- tidySummarisedResult(result, settingsColumn = allSettings, pivotEstimatesBy = NULL)
 
   # Checks
   factor <- validateFactor(factor, resultTidy)
@@ -113,7 +110,7 @@ visOmopTable <- function(result,
   if (!"cdm_name" %in% rename) rename <- c(rename, "Data source" = "cdm_name")
   groupColumn <- validateGroupColumn(groupColumn, colnames(resultTidy), sr = result, rename = rename)
   # default SR hide columns
-  hide <- c(hide, "result_id", "estimate_type") |> unique()
+  hide <- c(hide, hideSettings, "result_id", "estimate_type") |> unique()
   checkVisTableInputs(header, groupColumn, hide)
 
   if (length(factor) > 0) {
@@ -126,7 +123,7 @@ visOmopTable <- function(result,
   if (length(columnOrder) == 0) {
     resultTidy <- resultTidy |>
       dplyr::relocate(
-        dplyr::any_of(c(visOmopResults::additionalColumns(result), settingsColumn)),
+        dplyr::any_of(c(visOmopResults::additionalColumns(result), settingsColumn, hide)),
         .before = "estimate_name"
       )
   } else {
@@ -226,7 +223,7 @@ getColumnOrder <- function(currentOrder, newOrder, header, group, hide) {
     cli::cli_inform("Dropping the following from `columnOrder` as they are not part of the table: {newOrder[!newOrder %in% currentOrder]}")
     newOrder <- base::intersect(newOrder, currentOrder)
   }
-  newOrder <- c(newOrder, "result_id", "estimate_type", "estimate_value")
+  newOrder <- c(newOrder, hide, "result_id", "estimate_type", "estimate_value")
   notIn <- base::setdiff(currentOrder, newOrder)
   if (length(notIn) > 0) {
     cli::cli_inform("{.strong {notIn}} {?is/are} missing in `columnOrder`, will be added last.")

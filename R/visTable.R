@@ -16,7 +16,6 @@
 
 #' Generate a formatted table from a `<data.table>`
 #'
-#'
 #' @param result A table to format.
 #' @param header A vector specifying the elements to include in the header.
 #' The order of elements matters, with the first being the topmost header.
@@ -66,13 +65,10 @@ visTable <- function(result,
   omopgenerics::assertCharacter(header, null = TRUE)
   rename <- validateRename(rename, result)
   groupColumn <- validateGroupColumn(groupColumn, colnames(result), rename = rename)
+
   # .options
   omopgenerics::assertList(.options, named = TRUE)
   .options <- defaultTableOptions(.options)
-  if (length(header) > 0) {
-    neededCols <- validateHeader(result, header, hide)
-    hide <- neededCols$hide
-  }
   checkVisTableInputs(header, groupColumn, hide)
 
   if (nrow(result) == 0) return(emptyTable(type = type, style = style))
@@ -106,6 +102,11 @@ visTable <- function(result,
     }
   }
 
+  # Check header
+  if (length(header) > 0) {
+    hide <- validateHeader(result, hide)
+  }
+
   # rename and hide columns
   dontRename <- c("estimate_value")
   dontRename <- dontRename[dontRename %in% colnames(result)]
@@ -125,7 +126,6 @@ visTable <- function(result,
       .fn = ~ renameInternal(.x, rename = rename),
       .cols = !dplyr::all_of(c(dontRename))
     )
-
 
   # format header
   if (length(header) > 0) {

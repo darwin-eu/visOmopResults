@@ -34,6 +34,9 @@ checkStyle <- function(style, call = parent.frame()) {
 
 # transform the yaml to the internal list format
 brandToList <- function(content) {
+  # evaluate R expressions in palette settings
+  content <- resolvePaletteExpressions(content)
+
   # update colours from palette
   content <- updateColoursFromPalette(content = content)
 
@@ -54,6 +57,48 @@ brandToList <- function(content) {
 
   return(x)
 }
+
+# Evaluate R call expressions in palette settings while leaving palette names,
+# colour vectors, and other style values unchanged.
+resolvePaletteExpressions <- function(content) {
+  # add more labels here if needed
+  paletteNames <- c(
+    "color_palette", "fill_palette", "continuous_colour", "discrete_colour",
+    "continuous_fill", "discrete_fill"
+  )
+
+  plot <- content$defaults$visOmopResults$plot
+  if (is.null(plot)) {
+    return(content)
+  }
+
+  for (nm in intersect(names(plot), paletteNames)) {
+    value <- plot[[nm]]
+    if (!is.character(value) || length(value) != 1) next
+
+    expression <- tryCatch(
+      rlang::parse_expr(value),
+      error = function(e) NULL
+    )
+    if (!is.call(expression)) next
+
+    plot[[nm]] <- tryCatch(
+      rlang::eval_tidy(expression),
+      error = function(e) {
+        cli::cli_warn(c(
+          "!" = "Unable to evaluate palette expression in {.field {nm}}.",
+          "i" = "Expression: {.code {value}}",
+          "x" = conditionMessage(e)
+        ))
+        return(value)
+      }
+    )
+  }
+
+  content$defaults$visOmopResults$plot <- plot
+  content
+}
+
 # substitute colours from palette
 updateColoursFromPalette <- function(content) {
   colours <- content$color$palette
@@ -100,16 +145,20 @@ labels <- function() {
     plot_header_color = c("defaults:visOmopResults:plot:header_color", "color:foreground"),
     plot_header_text_color = c("defaults:visOmopResults:plot:header_text_color"),
     plot_header_text_bold = c("defaults:visOmopResults:plot:header_text_bold"),
-    plot_font_size = c("defaults:visOmopResults:plot:font_size", "defaults:visOmopResults:plot:font_size", "typography:base:size"),
+    plot_font_size = c("defaults:visOmopResults:plot:font_size", "typography:base:size"),
     plot_border_color = c("defaults:visOmopResults:plot:border_color", "color:foreground"),
     plot_grid_color = c("defaults:visOmopResults:plot:grid_major_color", "color:foreground"),
     plot_axis_color = c("defaults:visOmopResults:plot:axis_color"),
     plot_legend_position = c("defaults:visOmopResults:plot:legend_position"),
     plot_font_family = c("defaults:visOmopResults:plot:font_family", "typography:base:family"),
 
-    # plot palettes
-    plot_color_palette = c("defaults:visOmopResults:plot:color_palette"),
-    plot_fill_palette = c("defaults:visOmopResults:plot:fill_palette", "defaults:visOmopResults:plot:color_palette"),
+    # color palettes
+    continuous_colour = c("defaults:visOmopResults:plot:continuous_colour", "defaults:visOmopResults:plot:color_palette"),
+    discrete_colour = c("defaults:visOmopResults:plot:discrete_colour", "defaults:visOmopResults:plot:color_palette"),
+
+    # fill palettes
+    continuous_fill = c("defaults:visOmopResults:plot:continuous_fill", "defaults:visOmopResults:plot:fill_palette", "defaults:visOmopResults:plot:continuous_colour", "defaults:visOmopResults:plot:color_palette"),
+    discrete_fill = c("defaults:visOmopResults:plot:discrete_fill", "defaults:visOmopResults:plot:fill_palette", "defaults:visOmopResults:plot:discrete_colour", "defaults:visOmopResults:plot:color_palette"),
 
     # table parameters
     # header
@@ -253,7 +302,11 @@ styleGt <- function(x) {
       nm11 <- paste0("table_", lab, "_text_space_after")
 
       if (any(c(nm9, nm10, nm11) %in% names(x))) {
-        cli::cli_inform("`text_line_space`, `text_space_before`, and `text_space_after` not supported for `gt`")
+        cli::cli_inform(
+          "`text_line_space`, `text_space_before`, and `text_space_after` not supported for `gt`",
+          .frequency = "once",
+          .frequency_id = "gt_format_inform_once"
+        )
       }
 
       res <- list()
@@ -338,12 +391,6 @@ styleFx <- function(x) {
       } else if (nm8 %in% names(x)) {
         args$border <- officer::fp_border(width = as.numeric(x[[nm8]]))
       }
-      if (nm10 %in% names(x)) {
-        args$margin.top <- as.numeric(x[[nm10]])
-      }
-      if (nm11 %in% names(x)) {
-        args$margin.bottom <- as.numeric(x[[nm11]])
-      }
       if (length(args) > 0) {
         res <- c(res, list(cell = do.call(what = officer::fp_cell, args = args)))
       }
@@ -374,6 +421,12 @@ styleFx <- function(x) {
       if (nm9 %in% names(x)) {
         args$line_spacing <- as.numeric(x[[nm9]])
       }
+      if (nm10 %in% names(x)) {
+        args$padding.top <- as.numeric(x[[nm10]])
+      }
+      if (nm11 %in% names(x)) {
+        args$padding.bottom <- as.numeric(x[[nm11]])
+      }
       if (length(args) > 0) {
         res <- c(res, list(text = do.call(what = officer::fp_par, args = args)))
       }
@@ -391,7 +444,11 @@ styleTT <- function(x) {
 
   fontFamily <- x[grepl("font_family", names(x)) & grepl("table", names(x))] |> unlist() |> unique()
   if (length(fontFamily) > 0) {
-    cli::cli_warn("Font family is not currently available for customisation in `tinytable`")
+    cli::cli_warn(
+      "Font family is not currently available for customisation in `tinytable`",
+      .frequency = "once",
+      .frequency_id = "tinytable_format_warn_once"
+    )
   }
 
   labelsTinytable() |>
@@ -410,7 +467,11 @@ styleTT <- function(x) {
       nm11 <- paste0("table_", lab, "_text_space_after")
 
       if (any(c(nm9, nm10, nm11) %in% names(x))) {
-        cli::cli_inform("`text_line_space`, `text_space_before`, and `text_space_after` not supported for `gt`")
+        cli::cli_inform(
+          "`text_line_space`, `text_space_before`, and `text_space_after` not supported for `tinytable`",
+          .frequency = "once",
+          .frequency_id = "tinytable_format_inform_once"
+        )
       }
 
       res <- list(line = "lbtr")

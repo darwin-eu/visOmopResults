@@ -241,50 +241,60 @@ validateFactor <- function(factor, resultTidy) {
   return(invisible(factor))
 }
 
-validateHeader <- function(x, header, hide, settingsColumn = NULL, summarisedResult = FALSE) {
-  # Check current header
-  if (summarisedResult) {
-    xTest <- tidySummarisedResult(x, settingsColumn = settingsColumn, pivotEstimatesBy = NULL)
-  } else {
-    xTest <- x
-  }
-  xTest <- xTest |> dplyr::select(!dplyr::any_of(c(hide, "result_id", "estimate_type")))
-  xCols <- colnames(xTest)
+validateHeader <- function(xTest, hide) {
+  xTest <- xTest |>
+    dplyr::select(
+      -dplyr::any_of(c("result_id", "estimate_type", "estimate_value"))
+    )
+
+  # columns already visible in the table
+  visible <- setdiff(names(xTest), hide)
+
+  # columns that could be added if needed
+  candidates <- intersect(hide, names(xTest))
+
+  # check whether the currently visible columns uniquely identify rows
   combinations <- xTest |>
-    dplyr::group_by(dplyr::across(dplyr::any_of(xCols[xCols != "estimate_value"]))) |>
-    dplyr::tally() |>
+    dplyr::count(dplyr::across(dplyr::all_of(visible))) |>
     dplyr::filter(.data$n > 1)
 
-  # Solve if needed
-  if (nrow(combinations) > 0) {
-    if (summarisedResult) {
-      setCols <- omopgenerics::settingsColumns(x)
-      x <- x |>
-        addSettings() |>
-        splitAll()
-      hideSettings <- setCols[!setCols %in% settingsColumn]
-    }
-    x <- x |>
-      dplyr::select(!dplyr::any_of(c(header, "result_id", "estimate_type", "estimate_value")))
-    colCounts <- sapply(x, dplyr::n_distinct)
-    mustCols <- names(colCounts)[colCounts > 1]
-    hideNeeded <- mustCols %in% hide
-    if (any(hideNeeded)) {
-      cli::cli_warn("{.strong {mustCols[hideNeeded]}} column{?s} will be added to the table to create a header with unique values")
-      hide <- hide[!hide %in% mustCols[hideNeeded]]
-    }
-    if (summarisedResult) {
-      settingsNeeded <- mustCols %in% hideSettings
-      if (any(settingsNeeded)) {
-        cli::cli_warn("{.strong {mustCols[settingsNeeded]}} column{?s} from settings will be added to the table to create a header with unique values")
-        settingsColumn <- c(settingsColumn, mustCols[settingsNeeded])
-      }
-    }
+  # Already unique
+  if (nrow(combinations) == 0 || length(candidates) == 0) {
+    return(hide)
   }
 
-  return(list(hide = hide, settingsColumn = settingsColumn))
-}
+  # for each duplicated visible group --> calculate how many distinct values each hidden candidate has
+  # unhide those candidates with >1 unqiue values per group
+  candidateInfo <- xTest |>
+    dplyr::group_by(dplyr::across(dplyr::all_of(visible))) |>
+    dplyr::summarise(
+      n = dplyr::n(),
+      dplyr::across(
+        dplyr::all_of(candidates),
+        \(x) dplyr::n_distinct(x, na.rm = TRUE)
+      ),
+      .groups = "drop"
+    ) |>
+    dplyr::filter(.data$n > 1) |>
+    tidyr::pivot_longer(
+      cols = dplyr::all_of(candidates),
+      names_to = "column",
+      values_to = "n_unique"
+    ) |>
+    dplyr::filter(.data$n_unique > 1) |>
+    dplyr::distinct(.data$column) |>
+    dplyr::pull(.data$column)
 
+  if (length(candidateInfo) > 0) {
+    cli::cli_warn(
+      "{.strong {candidateInfo}} column{?s} will be added to the table to create a header with unique values"
+    )
+
+    hide <- setdiff(hide, candidateInfo)
+  }
+
+  hide
+}
 validateType <- function(type, obj, call = parent.frame()) {
   # check if type is NULL
   if (is.null(type)) {

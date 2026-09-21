@@ -70,7 +70,7 @@ We will use 3 different mock results, which are:
 
 # Shiny App: User Inteface
 
-The Shiny app has three panels, one for each result. All allow filtering by sex strata and provide panel-specific visualization options:
+The Shiny app has three panels, one for each result. All allow filtering by sex strata and provide panel-specific visualisation options:
 
 
 **- Baseline characteristics:** shows a `gt` table with controls for headers, groups, and hidden columns..
@@ -366,4 +366,55 @@ shinyApp(ui, server)
 ```
 
 
-You can find the complete code run the ShinyApp [here](https://github.com/darwin-eu/visOmopResults/blob/main/inst/app.R). 
+You can find the complete code run the ShinyApp [here](https://github.com/darwin-eu/visOmopResults/blob/main/inst/shinyApp/app.R). 
+
+
+# Other Resources
+
+## Styling the Shiny app
+
+As shown in the [Styles](a03_style.html) vignette, **visOmopResults** allows tables and plots to be styled consistently using a `_brand.yml` file. The same styling can be used when displaying results in a Shiny application.
+
+When a `_brand.yml` file is available, it can be used to style both the Shiny interface and the tables and plots produced with **visOmopResults** and packages that build on it.
+
+For example, the brand can be applied to the Shiny interface using **bslib**:
+
+```{r, eval=FALSE}
+ui <- bslib::page_navbar(
+  title = "visOmopResults for Shiny",
+  theme = bslib::bs_theme(brand = TRUE),
+  ...
+)
+```
+
+Similarly, **visOmopResults** can use the styling defined in `_brand.yml` when generating tables and plots. This helps maintain a consistent appearance between the Shiny interface and the results displayed within it.
+
+For details on defining a brand, customising styles, and applying styles globally to tables and plots, see the [Styles](a03_style.html) vignette.
+
+## Creating Shiny apps with OmopViewer
+
+The examples above demonstrate how **visOmopResults** can be used to build a custom Shiny application. When the aim is instead to quickly create an application for exploring OMOP results, we can use the [OmopViewer](https://CRAN.R-project.org/package=OmopViewer) R package.
+
+**OmopViewer** supports results from a range of OMOP-related R packages, as well as other results stored in the `summarised_result` format.
+
+For example, a static application can be generated from existing results using:
+
+```{r, eval=FALSE}
+library(OmopViewer)
+
+exportStaticApp(
+  result = result,
+  directory = tempdir()
+)
+```
+
+When creating a static application, **OmopViewer** generates an R project containing the Shiny application and its source code. This provides a useful starting point that can then be modified to meet the specific needs of a study, for example by changing the layout, adding filters, or adapting how results are displayed.
+
+For further customisation of tables and plots in the generated application, **visOmopResults** can be particularly useful. Its table and plotting functions can be used to modify existing visualisations or create new ones while maintaining a consistent approach to displaying OMOP results.
+
+In this way, **OmopViewer** can be used to quickly generate a Shiny application, while **visOmopResults** provides additional flexibility when more tailored visualisations or application components are required.
+
+
+
+
+

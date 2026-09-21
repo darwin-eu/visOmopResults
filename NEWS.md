@@ -1,3 +1,11 @@
+# visOmopResults 1.5.1
+
+* Update "darwin" style for flextable: removed extra line after cell text
+* Add support for continuos and discrete palette themes using `brand.yml`
+* Fix logic to update columns in tables when non-unique rows produced in header: only non-unique columns within each different group will be added
+* Add X label text for `alluvialPlot()`
+* Frequency of `gt` and `tinytable` non-supported style warnings updated to every 8h 
+
 # visOmopResults 1.5.0
 
 * Update "darwin" style

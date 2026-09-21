@@ -38,10 +38,7 @@ themeVisOmop <- function(style = NULL, fontsizeRef = NULL) {
   omopgenerics::assertNumeric(fontsizeRef, length = 1, null = TRUE)
   x <- validateStyle(style = style, obj = "plot", type = "ggplot")
 
-  c(
-    list(themeStyle(x = x, fontsizeRef = fontsizeRef)),
-    update_color_scale(x$plot_color_palette, x$plot_fill_palette)
-  )
+  themeStyle(x = x, fontsizeRef = fontsizeRef)
 }
 
 # format plot style in ggplot2
@@ -94,28 +91,30 @@ themeStyle <- function(x, fontsizeRef = NULL) {
       # grid
       panel.grid.major = ggplot2::element_line(color = colorGrid, linewidth = .25),
       # margin
-      plot.margin = grid::unit(c(0.35, 0.2, 0.3, 0.35), "cm")
+      plot.margin = grid::unit(c(0.35, 0.2, 0.3, 0.35), "cm"),
+      # palettes
+      palette.colour.discrete = paletteSet(x$discrete_colour),
+      palette.colour.continuous = paletteSet(x$continuous_colour),
+      palette.fill.discrete = paletteSet(x$discrete_fill),
+      palette.fill.continuous = paletteSet(x$continuous_fill)
     )
 }
 
-update_color_scale <- function(colorPalette, fillPalette) {
-  scales <- list()
-  if (length(colorPalette) > 0) {
-    scales <- c(scales, list(
-      ggplot2::scale_colour_discrete(
-        palette = newPlotPalette(colors = colorPalette)
-      )
-    ))
-  }
-  if (length(fillPalette) > 0) {
-    scales <- c(scales, list(
-      ggplot2::scale_fill_discrete(
-        palette = newPlotPalette(colors = fillPalette)
-      )
-    ))
+paletteSet <- function(...) {
+  sets <- list(...)
+  sets <- purrr::keep(sets, \(x) !is.null(x) && length(x) > 0)
+
+  if (length(sets) == 0) return(NULL)
+
+  palette <- sets[[1]]
+
+  if (is.character(palette) &&
+      length(palette) > 1 &&
+      all(grepl("^#[0-9A-Fa-f]{6}$", palette))) {
+    return(newPlotPalette(colors = palette))
   }
 
-  scales
+  palette
 }
 
 newPlotPalette <- function(colors) {
