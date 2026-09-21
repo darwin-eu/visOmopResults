@@ -548,5 +548,54 @@ test_that("test theming of plots", {
   expect_true("#0000FF" %in% extractColours(p, "fill"))
   expect_true("#FF0000" %in% extractColours(p, "colour"))
 
+  # named continuous palette works
+  continuousStyle <- validateStyle(style = "default", obj = "plot", type = "ggplot")
+  continuousStyle$continuous_colour <- "viridis"
+  p <- ggplot2::ggplot(
+    dplyr::tibble(x = 1:2, y = 1:2),
+    ggplot2::aes(x = x, y = y, colour = x)
+  ) +
+    ggplot2::geom_point() +
+    themeVisOmop(style = continuousStyle)
+
+  expect_no_error(ggplot2::ggplot_build(p))
+  expect_identical(p$theme$palette.colour.continuous, "viridis")
+
+  # palette functions work without being converted to a scale
+  functionStyle <- validateStyle(style = "default", obj = "plot", type = "ggplot")
+  functionStyle$discrete_colour <- grDevices::colorRampPalette(c("#FF0000", "#0000FF"))
+  p <- ggplot2::ggplot(
+    dplyr::tibble(x = 1:2, y = 1:2, g = c("a", "b")),
+    ggplot2::aes(x = x, y = y, colour = g)
+  ) +
+    ggplot2::geom_point() +
+    themeVisOmop(style = functionStyle)
+
+  expect_no_error(ggplot2::ggplot_build(p))
+  expect_true(all(c("#FF0000", "#0000FF") %in% extractColours(p)))
+
+  # palette expressions work when provided directly in a YAML file
+  expressionStyle <- tempfile(fileext = ".yml")
+  expressionStyleLines <- readLines(
+    system.file("brand", "default.yml", package = "visOmopResults")
+  )
+  legendPositionLine <- which(grepl("legend_position", expressionStyleLines))
+  expressionStyleLines[legendPositionLine] <- paste0(
+    expressionStyleLines[legendPositionLine],
+    "\n      discrete_colour: grDevices::colorRampPalette(c(\"#FF0000\", \"#0000FF\"))"
+  )
+  writeLines(expressionStyleLines, expressionStyle)
+
+  p <- ggplot2::ggplot(
+    dplyr::tibble(x = 1:2, y = 1:2, g = c("a", "b")),
+    ggplot2::aes(x = x, y = y, colour = g)
+  ) +
+    ggplot2::geom_point() +
+    themeVisOmop(style = expressionStyle)
+
+  expect_no_error(ggplot2::ggplot_build(p))
+  expect_true(all(c("#FF0000", "#0000FF") %in% extractColours(p)))
+
   unlink(style)
+  unlink(expressionStyle)
 })

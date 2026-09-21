@@ -474,13 +474,13 @@ sankeyPlot <- function(result,
   result <- prepareColumns(ggsankeyfierResult, cols)
   aes <- getAes(cols)
 
-  style   <- themeVisOmop(style = style)
+  styleTheme <- themeVisOmop(style = style)
   fontFamily <- style$plot_font_family
 
   pos <- ggsankeyfier::position_sankey(v_space = "auto", align = "justify", n_width = 0.15, order = "as_is", scale_height = TRUE)
 
   p <- ggsankeyfierResult |>
-    singleSankey(aes, pos, fontFamily, colourLabel, style)
+    singleSankey(aes, pos, fontFamily, colourLabel, styleTheme)
 
   if (length(facet) > 0) {
     p <- plotFacet(p, facet, scales = "free")
@@ -590,7 +590,7 @@ alluvialPlot <- function(result,
   aes <- getAes(cols)
 
   # style
-  style <- themeVisOmop(style = style)
+  styleTheme <- themeVisOmop(style = style)
   font_family <- style$plot_font_family
 
   # axis labels: map axis1 -> original column name, cleaned up
@@ -612,18 +612,31 @@ alluvialPlot <- function(result,
     ggalluvial::stat_stratum(
       geom = "text",
       ggplot2::aes(label = ggplot2::after_stat(.data$stratum)),
-      family = font_family,
+      # family = font_family,
       size = 3,
       fontface = "bold"
     ) +
-    ggplot2::scale_x_discrete(labels = axis_labels) +
-    style +
     ggplot2::labs(
       fill = styleLabel(colour),
       y = NULL
     ) +
     ggplot2::theme(legend.position = "none") +
-    style +
+    ggplot2::geom_text(
+      data = data.frame(
+        x = 1:length(axis_labels),
+        y = -Inf,
+        label = axis_labels
+      ),
+      ggplot2::aes(x = x, y = y, label = .data$label),
+      inherit.aes = FALSE, # Completely insulates this text from your data columns
+      vjust = 1,         # Pushes it cleanly below the plot frame
+      fontface = "bold",
+      size = 4,
+      # family = "Calibri"
+    ) +
+    ggplot2::coord_cartesian(clip = "off") +
+    ggplot2::xlab("") +
+    styleTheme +
     ggplot2::theme(
       line = ggplot2::element_blank(),
       rect = ggplot2::element_blank(),

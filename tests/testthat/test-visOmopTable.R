@@ -258,8 +258,7 @@ test_that("don't want scientific",{
     result = dplyr::tibble(
       result_id = 1L,
       cdm_name = "test",
-      group_name =
-        "overall",
+      group_name ="overall",
       group_level = "overall",
       strata_name = "overall",
       strata_level = "overall",
@@ -376,7 +375,6 @@ test_that("validate header works", {
     estimate_type = "integer",
     estimate_value = c("10", "20"),
     additional_name = "overall",
-
     additional_level = "overall"
   ) |>
     omopgenerics::newSummarisedResult(
@@ -393,13 +391,13 @@ test_that("validate header works", {
     cdm_name = "test",
     group_name = "overall",
     group_level = "overall",
-    strata_name = "strata",
-    strata_level = c("strata1", "strata2"),
+    strata_name = "strata_header &&& strata_forced_header",
+    strata_level = c("strata1 &&& op1", "strata2 &&& op1", "strata2 &&& op2", "strata2 &&& op2"),
     variable_name = "Number subjects",
     variable_level = NA_character_,
-    estimate_name = "count",
-    estimate_type = "integer",
-    estimate_value = c("10", "20"),
+    estimate_name = c("count", "count", "count", "percentage"),
+    estimate_type = c("integer", "integer", "integer", "percentage"),
+    estimate_value = c("10", "10", "20", "30"),
     additional_name = "overall",
     additional_level = "overall"
   ) |>
@@ -409,8 +407,45 @@ test_that("validate header works", {
         result_type = "prova"
       )
     )
-  expect_warning(newX <- visOmopTable(res, header = "variable_name", type = "tibble", hide = "strata"))
-  expect_true("Strata" %in% colnames(newX))
+  expect_warning(
+    newX <- visOmopTable(
+      res,
+      estimateName = c(
+        "N%" = "<count> <percentage>",
+        "N" = "<count>"
+      ),
+      header = "variable_name",
+      type = "tibble",
+      hide = c("strata_forced_header", "estimate_name")
+    )
+  )
+  expect_false("strata_forced_header" %in% colnames(newX))
+  expect_false("estimate_name" %in% colnames(newX))
+
+  newX <- visOmopTable(
+    res,
+    estimateName = c(
+      "N%" = "<count> <percentage>",
+      "N" = "<count>"
+    ),
+    header = "variable_name",
+    type = "tibble",
+    hide = "estimate_name"
+  )
+  expect_false("estimate_name" %in% colnames(newX))
+
+  newX <- visOmopTable(
+    res,
+    estimateName = c(
+      "N%" = "<count> <percentage>",
+      "N" = "<count>"
+    ),
+    header = "variable_name",
+    type = "tibble",
+    hide = "strata_forced_header"
+  )
+  expect_false("strata_forced_header" %in% colnames(newX))
+
 })
 
 test_that("test styles", {

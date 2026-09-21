@@ -26,7 +26,7 @@ options(rmarkdown.html_vignette.check_title = FALSE)
 
 # Quarto document settings
 
-In the header of the Quarto document, we can set a title to identify the study and the document. Additionally, we can point to a Word document containing the template styles for DARWIN reports. The DOCX template can be found [here](https://github.com/darwin-eu/visOmopResults/tree/main/inst), together with the Quarto script used to generate the report.
+In the header of the Quarto document, we can set a title to identify the study and the document. Additionally, we can point to a Word document containing the template styles for DARWIN reports. The DOCX template can be found [here](https://github.com/darwin-eu/visOmopResults/tree/main/inst/quarto), together with the Quarto script used to generate the report.
 
 A Quarto header for producing a Word report might look like this:
 
@@ -36,7 +36,6 @@ title: "DARWIN-EU PX-CY-Z: Tables and Figures"
 format:
   docx:
     reference-doc: inst/darwinReportRef.docx
-    fig-cap-location: top
 execute:
   echo: false
   message: false
@@ -44,7 +43,7 @@ execute:
 ---
 ```
 
-Next, we use the first R chunk to load packages, load data, and set options/variables used across the script. The results we use are obtained from mock data created with the `IncidencePrevalence` and `CohortCharacteristics` packages, which we have stored in the [inst](https://github.com/darwin-eu/visOmopResults/tree/main/inst) folder of the packge.
+Next, we use the first R chunk to load packages, load data, and set options/variables used across the script. The results we use are obtained from mock data created with the `IncidencePrevalence` and `CohortCharacteristics` packages, which we have stored in the [inst](https://github.com/darwin-eu/visOmopResults/tree/main/inst/mockData) folder of the packge.
 
 ```{r, setup, echo=TRUE, eval=FALSE}
 # Load necessary packages ----
@@ -76,7 +75,7 @@ setGlobalPlotOptions(style = style, type = plotType)
 setGlobalTableOptions(style = style, type = tableType)
 ```
 
-To use the Calibri font family for plots you will need to have the font installed, and for **Windows** registered in R graphics. See vignette on styles.
+To use the Calibri font family for plots you will need to have the font installed, and for **Windows** registered in R graphics. See the [Styles](a03_style.html) vignette.
 
 ```{r, echo=FALSE}
 # Load necessary packages ----
@@ -88,8 +87,7 @@ library(tidyr)
 library(ggplot2)
 
 # Load mock results stored in the package ----
-reportData <- system.file("mockReportData.RData", package = "visOmopResults")
-load(reportData)  # loads an object named `data` containing mock results
+reportData <- visOmopResults::data
 
 # DARWIN style for visOmopResults plots and tables.
 style <- "darwin"
@@ -99,8 +97,8 @@ setGlobalPlotOptions(style = style, type = plotType)
 setGlobalTableOptions(style = style, type = tableType)
 ```
 
-For tables we choose the `"flextable"` type because it transfers best to Word documents.
-To use the Calibri font family for plots you will need to have the font installed. See vignette on styles.
+For tables we choose the `"flextable"` type because it renders best to Word documents.
+To use the Calibri font family for plots you will need to have the font installed. See the [Styles](a03_style.html) vignette.
 
 # Characterisation results
 
@@ -263,4 +261,4 @@ It’s important that we use the chunk option `results = 'asis'` so that the con
 
 # Report example
 
-You can access an example Quarto script and the reference DOCX document [here](https://github.com/darwin-eu/visOmopResults/tree/main/inst).
+You can access an example Quarto script and the reference DOCX document [here](https://github.com/darwin-eu/visOmopResults/tree/main/inst/quarto).
