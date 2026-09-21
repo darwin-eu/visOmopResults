@@ -11,7 +11,7 @@ In the header of the Quarto document, we can set a title to identify the
 study and the document. Additionally, we can point to a Word document
 containing the template styles for DARWIN reports. The DOCX template can
 be found
-[here](https://github.com/darwin-eu/visOmopResults/tree/main/inst),
+[here](https://github.com/darwin-eu/visOmopResults/tree/main/inst/quarto),
 together with the Quarto script used to generate the report.
 
 A Quarto header for producing a Word report might look like this:
@@ -22,7 +22,6 @@ title: "DARWIN-EU PX-CY-Z: Tables and Figures"
 format:
   docx:
     reference-doc: inst/darwinReportRef.docx
-    fig-cap-location: top
 execute:
   echo: false
   message: false
@@ -34,7 +33,7 @@ Next, we use the first R chunk to load packages, load data, and set
 options/variables used across the script. The results we use are
 obtained from mock data created with the `IncidencePrevalence` and
 `CohortCharacteristics` packages, which we have stored in the
-[inst](https://github.com/darwin-eu/visOmopResults/tree/main/inst)
+[inst](https://github.com/darwin-eu/visOmopResults/tree/main/inst/mockData)
 folder of the packge.
 
 ``` r
@@ -69,12 +68,15 @@ setGlobalTableOptions(style = style, type = tableType)
 ```
 
 To use the Calibri font family for plots you will need to have the font
-installed, and for **Windows** registered in R graphics. See vignette on
-styles.
+installed, and for **Windows** registered in R graphics. See the
+[Styles](https://darwin-eu.github.io/visOmopResults/articles/a03_style.md)
+vignette.
 
-For tables we choose the `"flextable"` type because it transfers best to
+For tables we choose the `"flextable"` type because it renders best to
 Word documents. To use the Calibri font family for plots you will need
-to have the font installed. See vignette on styles.
+to have the font installed. See the
+[Styles](https://darwin-eu.github.io/visOmopResults/articles/a03_style.md)
+vignette.
 
 ## Characterisation results
 
@@ -114,11 +116,11 @@ data$summarised_characteristics |>
 | Days in cohort | – | Median \[Q25 – Q75\] | 3,654 \[3,654 – 3,654\] | 3,654 \[3,654 – 3,654\] | 3,654 \[3,654 – 3,654\] |
 |  |  | Mean (SD) | 3,594.61 (332.90) | 3,601.79 (324.60) | 3,587.20 (341.22) |
 |  |  | Range | 17 to 3,654 | 17 to 3,654 | 449 to 3,654 |
-| Comorbidities flag –inf to 0 | Hiv | N (%) | 475 (18.53%) | 245 (18.82%) | 230 (18.23%) |
+| Comorbidities flag –inf to 0 | Hiv | N (%) | 470 (18.33%) | 228 (17.51%) | 242 (19.18%) |
+|  | Asthma | N (%) | 1,246 (48.60%) | 628 (48.23%) | 618 (48.97%) |
 |  | Depression | N (%) | 2,531 (98.71%) | 1,285 (98.69%) | 1,246 (98.73%) |
-|  | Asthma | N (%) | 1,234 (48.13%) | 623 (47.85%) | 611 (48.42%) |
-| Comedications flag –180 to 0 | Antidiabetes | N (%) | 26 (1.01%) | 11 (0.84%) | 15 (1.19%) |
-|  | Opioids | N (%) | 49 (1.91%) | 27 (2.07%) | 22 (1.74%) |
+| Comedications flag –180 to 0 | Opioids | N (%) | 54 (2.11%) | 27 (2.07%) | 27 (2.14%) |
+|  | Antidiabetes | N (%) | 22 (0.86%) | 12 (0.92%) | 10 (0.79%) |
 
 If the default order of variable names provided by
 [`tableCharacteristics()`](https://darwin-eu.github.io/CohortCharacteristics/reference/tableCharacteristics.html)
@@ -185,11 +187,11 @@ data$summarised_characteristics |>
 |  |  | Range | 2008-01-01 to 2008-01-01 | 2008-01-01 to 2008-01-01 | 2008-01-01 to 2008-01-01 |
 | Cohort end date | – | Median \[Q25 - Q75\] | 2018-01-01 \[2018-01-01 - 2018-01-01\] | 2018-01-01 \[2018-01-01 - 2018-01-01\] | 2018-01-01 \[2018-01-01 - 2018-01-01\] |
 |  |  | Range | 2008-01-17 to 2018-01-01 | 2009-03-24 to 2018-01-01 | 2008-01-17 to 2018-01-01 |
-| Comedications | Opioids | N (%) | 49 (1.91%) | 22 (1.74%) | 27 (2.07%) |
-|  | Antidiabetes | N (%) | 26 (1.01%) | 15 (1.19%) | 11 (0.84%) |
-| Comorbidities | Asthma | N (%) | 1,234 (48.13%) | 611 (48.42%) | 623 (47.85%) |
+| Comedications | Opioids | N (%) | 54 (2.11%) | 27 (2.14%) | 27 (2.07%) |
+|  | Antidiabetes | N (%) | 22 (0.86%) | 10 (0.79%) | 12 (0.92%) |
+| Comorbidities | Asthma | N (%) | 1,246 (48.60%) | 618 (48.97%) | 628 (48.23%) |
 |  | Depression | N (%) | 2,531 (98.71%) | 1,246 (98.73%) | 1,285 (98.69%) |
-|  | HIV | N (%) | 475 (18.53%) | 230 (18.23%) | 245 (18.82%) |
+|  | HIV | N (%) | 470 (18.33%) | 242 (19.18%) | 228 (17.51%) |
 
 Additionally, we can show the number of people in the overall cohort and
 stratified by sex. We use the `CohortCharacteristics` plotting function
@@ -355,4 +357,4 @@ correctly interpreted by Quarto/Pandoc as Markdown.
 ## Report example
 
 You can access an example Quarto script and the reference DOCX document
-[here](https://github.com/darwin-eu/visOmopResults/tree/main/inst).
+[here](https://github.com/darwin-eu/visOmopResults/tree/main/inst/quarto).

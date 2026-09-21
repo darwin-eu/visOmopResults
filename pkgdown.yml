@@ -1,5 +1,5 @@
 pandoc: 3.8.3
-pkgdown: 2.2.0
+pkgdown: 2.2.1
 pkgdown_sha: ~
 articles:
   a01_tables: a01_tables.html
@@ -7,7 +7,7 @@ articles:
   a03_quarto_reports: a03_quarto_reports.html
   a04_shiny_apps: a04_shiny_apps.html
   a05_style: a05_style.html
-last_built: 2026-05-18T11:44Z
+last_built: 2026-09-21T21:27Z
 urls:
   reference: https://darwin-eu.github.io/visOmopResults/reference
   article: https://darwin-eu.github.io/visOmopResults/articles

@@ -77,7 +77,6 @@ alluvialPlot(
 )
 #> Warning: Some strata appear at multiple axes.
 #> Warning: Some strata appear at multiple axes.
-#> Warning: Ignoring empty aesthetic: `family`.
 
 
 # colour by first axis
@@ -89,7 +88,6 @@ alluvialPlot(
 )
 #> Warning: Some strata appear at multiple axes.
 #> Warning: Some strata appear at multiple axes.
-#> Warning: Ignoring empty aesthetic: `family`.
 
 
 # colour by multiple variables
@@ -101,5 +99,4 @@ alluvialPlot(
 )
 #> Warning: Some strata appear at multiple axes.
 #> Warning: Some strata appear at multiple axes.
-#> Warning: Ignoring empty aesthetic: `family`.
 ```

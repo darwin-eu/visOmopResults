@@ -50,7 +50,7 @@ color:
   background: white
   primary: darwin_blue
 logo:
-  path: https://www.ema.europa.eu/sites/default/files/styles/oe_bootstrap_theme_medium_no_crop/public/2024-07/DARWINEU_logo_LARGE.png?itok=NtwlLhSX
+  path: darwin
 typography:
   base:
     family: Calibri
