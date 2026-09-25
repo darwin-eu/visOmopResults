@@ -92,6 +92,8 @@ visOmopTable <- function(result,
   groupColumn <- bc$groupColumn
   allSettings <- omopgenerics::settingsColumns(result = result, metadata = TRUE)
   hideSettings <- setdiff(allSettings, settingsColumn)
+  # until CohortSymmetry PR #348 is in CRAN:
+  hideSettings <- setdiff(hideSettings, "cdm_name")
   resultTidy <- tidySummarisedResult(result, settingsColumn = allSettings, pivotEstimatesBy = NULL)
 
   # Checks

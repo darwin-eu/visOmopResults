@@ -75,7 +75,7 @@ setGlobalPlotOptions(style = style, type = plotType)
 setGlobalTableOptions(style = style, type = tableType)
 ```
 
-To use the Calibri font family for plots you will need to have the font installed, and for **Windows** registered in R graphics. See the [Styles](a03_style.html) vignette.
+To use the Calibri font family for plots you will need to have the font installed, and for **Windows** registered in R graphics. See the [Styles](a05_style.html) vignette.
 
 ```{r, echo=FALSE}
 # Load necessary packages ----
@@ -98,7 +98,7 @@ setGlobalTableOptions(style = style, type = tableType)
 ```
 
 For tables we choose the `"flextable"` type because it renders best to Word documents.
-To use the Calibri font family for plots you will need to have the font installed. See the [Styles](a03_style.html) vignette.
+To use the Calibri font family for plots you will need to have the font installed. See the [Styles](a05_style.html) vignette.
 
 # Characterisation results
 
