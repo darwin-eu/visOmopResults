@@ -373,7 +373,7 @@ You can find the complete code run the ShinyApp [here](https://github.com/darwin
 
 ## Styling the Shiny app
 
-As shown in the [Styles](a03_style.html) vignette, **visOmopResults** allows tables and plots to be styled consistently using a `_brand.yml` file. The same styling can be used when displaying results in a Shiny application.
+As shown in the [Styles](a05_style.html) vignette, **visOmopResults** allows tables and plots to be styled consistently using a `_brand.yml` file. The same styling can be used when displaying results in a Shiny application.
 
 When a `_brand.yml` file is available, it can be used to style both the Shiny interface and the tables and plots produced with **visOmopResults** and packages that build on it.
 
@@ -389,7 +389,7 @@ ui <- bslib::page_navbar(
 
 Similarly, **visOmopResults** can use the styling defined in `_brand.yml` when generating tables and plots. This helps maintain a consistent appearance between the Shiny interface and the results displayed within it.
 
-For details on defining a brand, customising styles, and applying styles globally to tables and plots, see the [Styles](a03_style.html) vignette.
+For details on defining a brand, customising styles, and applying styles globally to tables and plots, see the [Styles](a05_style.html) vignette.
 
 ## Creating Shiny apps with OmopViewer
 
