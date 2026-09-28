@@ -2,6 +2,8 @@
 
 ## visOmopResults 1.5.1
 
+CRAN release: 2026-09-25
+
 - Update “darwin” style for flextable: removed extra line after cell
   text
 - Add support for continuos and discrete palette themes using

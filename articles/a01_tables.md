@@ -544,5 +544,5 @@ result |>
   using the `format*()` functions and finish with
   [`formatTable()`](https://darwin-eu.github.io/visOmopResults/reference/formatTable.md).
 - Visit the
-  [Styles](https://darwin-eu.github.io/visOmopResults/articles/a03_style.md)
+  [Styles](https://darwin-eu.github.io/visOmopResults/articles/a05_style.md)
   vignette to learn how to leverage build-in styles and create your own.

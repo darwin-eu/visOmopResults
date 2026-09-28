@@ -400,7 +400,7 @@ You can find the complete code run the ShinyApp
 ### Styling the Shiny app
 
 As shown in the
-[Styles](https://darwin-eu.github.io/visOmopResults/articles/a03_style.md)
+[Styles](https://darwin-eu.github.io/visOmopResults/articles/a05_style.md)
 vignette, **visOmopResults** allows tables and plots to be styled
 consistently using a `_brand.yml` file. The same styling can be used
 when displaying results in a Shiny application.
@@ -428,7 +428,7 @@ displayed within it.
 
 For details on defining a brand, customising styles, and applying styles
 globally to tables and plots, see the
-[Styles](https://darwin-eu.github.io/visOmopResults/articles/a03_style.md)
+[Styles](https://darwin-eu.github.io/visOmopResults/articles/a05_style.md)
 vignette.
 
 ### Creating Shiny apps with OmopViewer

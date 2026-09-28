@@ -69,13 +69,13 @@ setGlobalTableOptions(style = style, type = tableType)
 
 To use the Calibri font family for plots you will need to have the font
 installed, and for **Windows** registered in R graphics. See the
-[Styles](https://darwin-eu.github.io/visOmopResults/articles/a03_style.md)
+[Styles](https://darwin-eu.github.io/visOmopResults/articles/a05_style.md)
 vignette.
 
 For tables we choose the `"flextable"` type because it renders best to
 Word documents. To use the Calibri font family for plots you will need
 to have the font installed. See the
-[Styles](https://darwin-eu.github.io/visOmopResults/articles/a03_style.md)
+[Styles](https://darwin-eu.github.io/visOmopResults/articles/a05_style.md)
 vignette.
 
 ## Characterisation results
